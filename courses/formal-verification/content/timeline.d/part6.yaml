@@ -1,0 +1,56 @@
+- year: 1973
+  lane: abstract-interpretation
+  title: Dataflow analysis as a fixpoint
+  people: Gary Kildall
+  chapter: abstract-interpretation
+  text: Compiler analyses as transfer functions over a lattice, iterated until nothing changes.
+  cite: [kildall1973]
+- year: 1978
+  lane: abstract-interpretation
+  title: Convex polyhedra
+  people: Patrick Cousot, Nicolas Halbwachs
+  chapter: better-abstractions
+  text: The first relational abstract domain discovers linear inequalities among a program's variables.
+  cite: [cousot1978]
+- year: 1997
+  lane: abstract-interpretation
+  title: Predicate abstraction
+  people: Susanne Graf, Hassen Saïdi
+  chapter: better-abstractions
+  text: A system abstracted by the truth values of a few predicates, its abstract state graph built with a theorem prover.
+  cite: [graf1997]
+- year: 2000
+  lane: abstract-interpretation
+  title: Counterexample-guided abstraction refinement
+  people: Edmund Clarke, Orna Grumberg, Somesh Jha, Yuan Lu, Helmut Veith
+  chapter: better-abstractions
+  text: Spurious counterexamples of an abstraction are analysed to refine it, until a counterexample is real or none is left.
+  cite: [clarke2000]
+- year: 2001
+  lane: industry
+  title: SLAM
+  people: Thomas Ball, Sriram Rajamani
+  chapter: better-abstractions
+  text: Predicate abstraction and refinement applied to Windows device drivers; later the engine of the Static Driver Verifier.
+  cite: [ball2001, ball2006]
+- year: 2003
+  lane: industry
+  title: Astrée
+  people: Bruno Blanchet, Patrick Cousot, Radhia Cousot and colleagues
+  chapter: abstract-interpretation
+  text: An analyser specialised to a family of safety-critical embedded programs proves the absence of run-time errors with few or no false alarms.
+  cite: [blanchet2003]
+- year: 2006
+  lane: abstract-interpretation
+  title: The octagon domain
+  people: Antoine Miné
+  chapter: better-abstractions
+  text: Constraints ±x ± y ≤ c, between intervals and polyhedra in cost and precision.
+  cite: [mine2006]
+- year: 2010
+  lane: industry
+  title: A few billion lines of code later
+  people: Al Bessey, Dawson Engler and colleagues
+  chapter: approximate
+  text: Lessons from selling a static bug-finder, among them that developers ignore tools whose reports they cannot trust.
+  cite: [bessey2010]
