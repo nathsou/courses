@@ -51,6 +51,8 @@ What if, instead of hand-writing peephole rules, we *searched* for the shortest 
 - **STOKE** (Schkufza, Sharma and Aiken, 2013) uses stochastic search to optimise x86-64 loops;
 - **Souper** (2017) finds missing peepholes in LLVM IR with an SMT solver, and many of its discoveries became new InstCombine rules.
 
+Checking a peephole rule is a question an SMT solver answers well: is there any input on which the rewritten code computes something different? [Chapter 14 of *For All Inputs*](../formal-verification/chapters/bits-and-arrays/), the formal verification course in this collection, asks it with a bit-vector solver, in the style of the Alive tool for LLVM's rewrites.
+
 <Aside kind="history">
 <p>Davidson and Fraser’s PO (1980) generalised peepholes into a retargetable optimiser over register-transfer lists: combine adjacent instructions symbolically, then ask the machine description whether the result is a legal instruction. That design became GCC’s `combine` pass and RTL, and lives on in the `define_peephole2` patterns of GCC machine descriptions.</p>
 </Aside>

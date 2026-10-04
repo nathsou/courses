@@ -42,6 +42,8 @@ The answer, first articulated by Nicolaas de Bruijn for his *Automath* system in
 This is the same idea as a capability system or a verified sandbox: a large untrusted component talks to a small trusted one through a narrow interface. Here the interface is "a term of the core calculus". The kernel is the only code whose correctness matters for soundness, so it is kept small, simple and heavily scrutinised. The course kernel follows the same split: a *frontend* (parser, elaborator, pattern-matching compiler) produces core terms, and a separate `TypeChecker` class re-checks every declaration before it enters the environment.
 </Engineer>
 
+The same split works for automated tools. In [*For All Inputs*](../formal-verification/chapters/what-did-we-prove/), the formal verification course in this collection, the SAT and SMT solvers are large and untrusted, and each of their answers comes with a certificate that a small checker re-checks.
+
 This puts enormous pressure on the design of the core calculus. It has to be:
 
 - **expressive** enough that all of mathematics (and the programs we want to verify) can be written in it;
