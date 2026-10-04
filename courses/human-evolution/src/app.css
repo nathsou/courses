@@ -84,6 +84,7 @@ main { min-width:0; }
 .chapter-original { font-size:.7rem; color:var(--muted); margin-top:1rem; line-height:1.6; }
 .prose { font-family:var(--font-text); font-size:1rem; line-height:1.9; }
 .prose p { margin:1rem 0; }
+.prose img { display:block; width:100%; height:auto; border-radius:5px; margin:1.5rem 0; }
 .prose h2 { font-family:var(--font-ui); font-size:1.35rem; font-weight:600; letter-spacing:-.02em; line-height:1.4; margin:3rem 0 1rem; scroll-margin-top:5rem; }
 .prose h3 { font-family:var(--font-ui); font-size:1rem; font-weight:650; margin:2rem 0 .7rem; }
 .prose ul,.prose ol { padding-left:1.5rem; }
@@ -102,7 +103,7 @@ summary { cursor:pointer; font-weight:600; }
 .widget > p { margin:.85rem 0 1.2rem; }
 .controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem 1.5rem; margin:1.25rem 0; }
 .controls label { display:flex; flex-direction:column; gap:.3rem; font-size:.77rem; font-weight:550; }
-.controls output { font-weight:400; color:var(--forest); font-variant-numeric:tabular-nums; }
+.controls .control-value { font-weight:400; color:var(--forest); font-variant-numeric:tabular-nums; }
 .controls select { width:100%; }
 .controls .switch { flex-direction:row; align-self:center; }
 .widget svg { width:100%; display:block; margin:1rem 0; }

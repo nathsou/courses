@@ -26,6 +26,10 @@ Walking can exchange gravitational potential and kinetic energy as the body move
 
 Running has a more spring-like pattern: tissues store and return some energy as the body lands and leaves the ground. The Achilles tendon, foot structures and other tissues can contribute. Elastic return reduces some active work, but muscles still support, stabilise and accelerate the body. Neither mechanism makes movement free.
 
+![Original schematic comparing the inverted-pendulum analogy for walking with the spring-like loading and recoil of running.](../../figures/movement.svg)
+
+*The dots indicate a conceptual centre of mass. These sketches show mechanisms, not measured movements or reconstructions of a fossil.*
+
 :::video 180-1860 Ape locomotion, bipedal anatomy, pendulum and spring mechanisms
 
 <p class="session-end">Stopping point: connect one anatomical feature to a mechanical task. Explain why that connection is not yet an account of its evolutionary origin.</p>

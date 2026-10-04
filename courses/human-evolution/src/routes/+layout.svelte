@@ -20,7 +20,7 @@
 </script>
 
 <a class="skip" href="#main">Skip to content</a>
-<header class="topbar">
+<header class="topbar" data-ready={preferences.ready}>
   <button class="course-sidebar-toggle" type="button" aria-controls="course-contents" aria-expanded="true" aria-label="Hide contents" data-sidebar-toggle>
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
   </button>
@@ -59,7 +59,7 @@
         </li>
       {/each}
     </ol>
-    <a class="resource-link" href="{base}/resources/" aria-current={page.url.pathname === `${base}/resources/` ? 'page' : undefined}>Sources & field glossary <span aria-hidden="true">↗</span></a>
+    <a class="resource-link" href="{base}/resources/" aria-current={page.url.pathname === `${base}/resources/` ? 'page' : undefined}>Sources & field glossary <span aria-hidden="true">→</span></a>
     <div class="sidebar-footer"><p>Jean-Jacques Hublin<br/>Collège de France · 2017</p><p>English adaptation with scientific updates. Guest talks are optional.</p></div>
   </nav>
   <main id="main" tabindex="-1">{@render children()}</main>

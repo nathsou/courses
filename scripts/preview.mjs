@@ -42,7 +42,7 @@ function run(command, commandArgs, options = {}) {
 
 if (!flag('skip-build')) {
   if (!flag('skip-install')) {
-    for (const course of ['astrophysics', 'cic', 'compiler-backends', 'incompleteness', 'proofs', 'elements']) {
+    for (const course of ['astrophysics', 'cic', 'proofs-are-programs', 'compiler-backends', 'incompleteness', 'proofs', 'elements', 'digital-circuits', 'particle-physics', 'mandarin', 'human-evolution']) {
       run('npm', ['ci', '--prefix', `courses/${course}`]);
     }
     run('pnpm', ['--dir', 'courses/language-models', 'install', '--frozen-lockfile']);

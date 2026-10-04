@@ -1,12 +1,12 @@
 # Human Evolution
 
-**Energy, childhood, and the environments we make.** A compact interactive adaptation of all six of Jean-Jacques Hublin’s 2017 Collège de France lectures, in their original order. About 9,700 words, six chapters with three reading sessions each, eleven focused figures and ten checked questions. Allow roughly four hours with activities; viewing the original nine-hour lecture series is optional.
+**Energy, childhood, and the environments we make.** A compact interactive adaptation of all six of Jean-Jacques Hublin’s 2017 Collège de France lectures, in their original order. About 9,800 words, six chapters with three reading sessions each, eleven focused figures and ten checked questions. Allow roughly four hours with activities; viewing the original nine-hour lecture series is optional.
 
 ![The course opening, captured from the running application](docs/screenshots/overview.png)
 
 ## Current progress — 4 October 2026
 
-The complete six-lecture text and application are implemented. The reader, model controls, source preferences and screenshots have been exercised in Chromium; type checks and the static build pass. The remaining implementation work is collection integration, broader browser workflow checks, scientific provenance documentation and PR completion. Screenshots below are from the current working course, not mockups.
+The entire course is implemented and integrated into the collection index, build, preview and Pages workflow. Nine model/content tests, Svelte type checks, standalone and deployment-prefix builds, Chromium learning/navigation workflows, and a focused static link/image/fragment audit pass. Browser checks cover every chapter, saved-work revision, source preferences, theme persistence, keyboard controls and mobile drawers at 390 and 844 pixels. The reading application makes no external requests. Screenshots below were freshly captured from the working course on 4 October 2026.
 
 | Chapter | Coverage | Investigations |
 | --- | --- | --- |
@@ -60,7 +60,7 @@ The collection build supplies this path automatically. Locally, the standalone c
 
 ## Sources and authoring
 
-[Plan](docs/PLAN.md) · [Scientific updates](docs/SCIENTIFIC-UPDATES.md) · [Research and transcript provenance](research/README.md). Raw captions remain in the repository’s research ZIP and are excluded from site assets. Original French titles and optional timestamped links connect the new English prose to the lectures.
+[Implemented plan](docs/PLAN.md) · [Source coverage and model provenance](docs/SOURCE-COVERAGE.md) · [Scientific updates](docs/SCIENTIFIC-UPDATES.md) · [Research and transcript provenance](research/README.md). Raw captions remain in the repository’s research ZIP and are excluded from site assets. Original French titles and optional timestamped links connect the new English prose to the lectures.
 
 All numerical figures declare illustrative inputs and model limits at the figure. The childhood plot is schematic; the published peak equivalents are identified separately. Changing the video preference preserves drafts and reading position. Notes stay on the device, can be downloaded, and are self-reviewed rather than automatically graded. Editing a reviewed note clears its self-review status; changing a multiple-choice selection invalidates its checked feedback.
 

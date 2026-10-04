@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --threshold error",
-    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "test": "node --experimental-strip-types tests/models.test.ts",
     "test:browser": "node scripts/browser-check.mjs",
     "screenshots": "node scripts/browser-check.mjs --screenshots"
   },

@@ -64,6 +64,10 @@ Great apes generally develop slowly, reproduce relatively late and invest heavil
 
 For a cohort of newborns, a survival curve describes the fraction still alive at each age. Its early decline can substantially lower life expectancy at birth even when some adults live for decades. “Life expectancy was low” is therefore not equivalent to “everyone died young.” Maximum lifespan, average lifespan and the probability of surviving to a particular age answer different questions.
 
+![Three schematic survival curves distinguish high early mortality, constant mortality rate and a late increase. They show fractions surviving, not the distribution of ages at death.](../../figures/survival.svg)
+
+*Original schematic. The area under a survival curve relates to average lifespan; the curves are not data for named species. A constant mortality rate produces an exponential decline in survival, not a straight-line survival curve.*
+
 Fossil samples add another complication. A collection of deaths is not automatically a representative population. Preservation, burial, recovery, age estimation and the circumstances that produced the assemblage all affect the distribution. Tooth wear can help classify adults, but wear rates also depend on diet and behaviour. An apparent change in the share of older fossils needs these alternatives considered before it becomes a demographic conclusion.
 
 The same caution applies to fertility. Energy availability can affect the ability to reproduce, but the number and timing of births also depend on health, mortality, institutions, preferences and access to resources. A correlation between national energy consumption and fertility cannot establish that metabolism caused the demographic pattern. Household expenditure, industrial fuel use and biological expenditure are different accounts.

@@ -8,7 +8,7 @@
   <aside class="video-reference" aria-label="Original lecture reference">
     <span class="eyebrow">Original lecture · French · {chapter.date}</span>
     <p><span lang="fr">{chapter.original}</span> · {label}</p>
-    <a href="https://www.youtube.com/watch?v={chapter.videoId}&t={start}s" target="_blank" rel="noreferrer">Open on YouTube at {time(start)} ↗</a>
+    <a href="https://www.youtube.com/watch?v={chapter.videoId}&t={start}s" target="_blank" rel="noreferrer">Open on YouTube at {time(start)} →</a>
     <small>Topic interval {time(start)}–{time(end)}. The link starts playback; it does not stop it. Later corrections are cited in the text.</small>
   </aside>
 {/if}

@@ -56,8 +56,8 @@ test('six complete chapters have three sessions, known activities and source int
     assert.equal((text.match(/^## Session /gm)??[]).length,3,chapter.slug);
     assert.ok(text.split(/\s+/).length>1200,chapter.slug);
     assert.ok(text.split(/\s+/).length<2200,chapter.slug);
-    for (const [,id] of text.matchAll(/^:::figure (.+)$/gm)) { assert.ok(figureIds.includes(id as typeof figureIds[number]),id); used.add(id!); }
-    for (const [,id] of text.matchAll(/^:::question (.+)$/gm)) assert.ok(questions[id!],id);
+    for (const [,id] of text.matchAll(/^:::figure (.+)$/gm)) { assert.ok(figureIds.includes(id as typeof figureIds[number]),id!); used.add(id!); }
+    for (const [,id] of text.matchAll(/^:::question (.+)$/gm)) assert.ok(questions[id!],id!);
     const ranges=[...text.matchAll(/^:::video (\d+)-(\d+) (.+)$/gm)];
     assert.equal(ranges.length,3,chapter.slug);
     for (const [,start,end] of ranges) assert.ok(Number(start)>=0&&Number(end)>Number(start)&&Number(end)<=chapter.duration);
@@ -79,7 +79,7 @@ test('every DOI in the prose is in the bibliography and raw captions are not pub
   const ids=refs.map((r:{id:string})=>r.id); assert.equal(new Set(ids).size,ids.length);
   for (const c of chapters) {
     const text=readFileSync(new URL(`../content/${c.slug}.md`,import.meta.url),'utf8');
-    for (const [,doi] of text.matchAll(/https:\/\/doi.org\/([^\s\)"<>]+)/g)) assert.ok(refs.some((r:{doi:string})=>r.doi===doi),doi);
+    for (const [,doi] of text.matchAll(/https:\/\/doi.org\/([^\s\)"<>]+)/g)) assert.ok(refs.some((r:{doi:string})=>r.doi===doi),doi!);
   }
   assert.ok(!readFileSync(new URL('../src/lib/content.ts',import.meta.url),'utf8').includes('research/'));
 });

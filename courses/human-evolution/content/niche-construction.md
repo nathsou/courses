@@ -16,7 +16,7 @@ Humans cut, burn, cultivate, build and move organisms. Some changes are delibera
 
 Hublin examines the ecological effects of human predation, including changes in animal communities and resource size. Selective harvesting can alter the distribution of sizes left in a population. But an archaeological change in shell size, for example, also requires checking species, habitat, climate and collection methods.
 
-Late-Quaternary large-animal extinctions differ between regions. Human arrival, hunting pressure, climate and ecological interactions can contribute at different times and scales. A coincidence between arrival and extinction is a starting point; stronger tests compare chronologies, mechanisms and alternative expectations. Recent global analyses have strengthened the case for a substantial human role, while a global association does not settle each local sequence.
+Late-Quaternary large-animal extinctions differ between regions. Human arrival, hunting pressure, climate and ecological interactions can contribute at different times and scales. A coincidence between arrival and extinction is a starting point; stronger tests compare chronologies, mechanisms and alternative expectations. [A global analysis by Lemoine and colleagues (2023)](https://doi.org/10.1016/j.ancene.2023.100403) strengthened the case for a substantial human role, while a global association does not settle each local sequence.
 
 Landscape burning can change vegetation and resource availability. Charcoal records may reflect natural as well as anthropogenic fire. To infer purposeful management, researchers combine the fire history with occupation, vegetation and other evidence rather than treating any charcoal as a human signature.
 

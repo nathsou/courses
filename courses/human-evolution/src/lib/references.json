@@ -246,5 +246,13 @@
     "authors": "Reed, Light, Allen et al.",
     "year": "2007",
     "role": "Parasite phylogeny"
+  },
+  {
+    "id": "lemoine-2023",
+    "doi": "10.1016/j.ancene.2023.100403",
+    "title": "Megafauna extinctions in the late-Quaternary are linked to human range expansion, not climate change",
+    "authors": "Lemoine, Buitenwerf, Svenning",
+    "year": "2023",
+    "role": "Global extinction chronology analysis"
   }
 ]
