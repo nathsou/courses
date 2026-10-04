@@ -109,3 +109,42 @@ fn fee(amount: u32, rate: u32) -> u32
     expect(r.checks.every((k) => k.status === 'proved')).toBe(true);
   });
 });
+
+describe('CEGAR and the hand-off to the verifier', () => {
+  const COUNT = `fn count(n: int)
+  requires n > 0
+{
+  var i = 0
+  var s = 0
+  while i < n {
+    s = s + i
+    i = i + 1
+  }
+  assert i == n
+}`;
+  it('refines a spurious counterexample, and the verifier accepts the invariant', async () => {
+    const { cegar } = await import('./cegar');
+    const { checkInvariant } = await import('./handoff');
+    const r = cegar(COUNT, 'count');
+    expect(r.status).toBe('safe');
+    expect(r.rounds[0]!.verdict).toBe('spurious');
+    expect(r.rounds[0]!.newPredicates).toContain('i < n');
+    const h = checkInvariant(COUNT, 'count', r.invariants[0]!.line, r.invariants[0]!.text);
+    expect(h.status).toBe('verified');
+    expect(checkInvariant(COUNT, 'count', 6, 'i < n').status).toBe('failed');
+  });
+  it('finds a real counterexample', async () => {
+    const { cegar } = await import('./cegar');
+    const r = cegar(`fn by_twos(n: int)
+  requires n >= 0
+{
+  var i = 0
+  while i < n {
+    i = i + 2
+  }
+  assert i == n
+}`, 'by_twos');
+    expect(r.status).toBe('unsafe');
+    expect(Number(r.rounds.at(-1)!.input!.n) % 2).toBe(1);
+  });
+});
