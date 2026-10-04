@@ -7,6 +7,7 @@ Set CHROMIUM_PATH to override /usr/bin/chromium.
 """
 import os
 import sys
+from urllib.parse import urljoin
 from playwright.sync_api import sync_playwright, expect
 
 BASE = (sys.argv[1] if len(sys.argv) > 1 else 'http://127.0.0.1:8000').rstrip('/')
@@ -85,7 +86,17 @@ with sync_playwright() as pw:
 
         # The same layout must keep working after a chapter/book route changes.
         opener.click()
-        sidebar.locator('a[href]:not(.course-index-link):not(.brand):not(.sidebar-home)').first.click()
+        for link in sidebar.locator('a[href]:not(.course-index-link):not(.brand):not(.sidebar-home)').all():
+            destination = urljoin(page.url, link.get_attribute('href'))
+            if destination != page.url:
+                break
+        else:
+            raise AssertionError(f'{course}: no chapter/book destination found')
+        link.click()
+        expect(page).to_have_url(destination)
+        # A link click closes the drawer before SPA navigation completes. Let the
+        # destination render and its afterNavigate hook run before reopening it.
+        page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
         expect(opener).to_have_attribute('aria-expanded', 'false')
         expect(sidebar).to_have_js_property('inert', True)
         expect(page.locator('.course-shell > main, .course-shell > .main')).to_have_js_property('inert', False)

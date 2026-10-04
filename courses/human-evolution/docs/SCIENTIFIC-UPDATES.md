@@ -25,7 +25,7 @@ The childhood figure should retain the empirical question in [Kuzawa et al., 201
 
 The cooking exercise should also include mechanical processing, grounded in [Zink and Lieberman, 2016](https://www.nature.com/articles/nature16990). More accessible food energy does not demonstrate when a technology arose. A measured present-day task cost is not automatically a calibrated cost for an extinct population.
 
-## Disposition of the remaining authoring audits
+## Completed authoring audits
 
 The handoff listed six further reviews. Each is now addressed in the delivered explanation, through a cited qualification or an explicit limit on inference. This completes the authoring decisions; it does not settle the underlying research questions.
 

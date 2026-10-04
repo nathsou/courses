@@ -133,7 +133,8 @@
   }
   .hero {
     padding: 4rem 2rem 3rem;
-    margin: 0 -2rem;
+    /* Keep the bleed within the home padding at intermediate viewport widths. */
+    margin: 0 calc(-1 * min(2rem, max(1rem, 3vw)));
     border-bottom: 1px solid var(--line);
   }
   @media (max-width: 640px) {

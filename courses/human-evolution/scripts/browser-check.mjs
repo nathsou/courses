@@ -101,6 +101,12 @@ try {
     await expect(note.getByRole('checkbox')).toBeChecked();
     await note.locator('textarea').fill('Revised: the community may also have a total shortfall.');
     await expect(note.getByRole('checkbox')).not.toBeChecked();
+    const exported = page.waitForEvent('download');
+    await note.getByRole('button',{name:'Download note'}).click();
+    const download = await exported;
+    if (download.suggestedFilename() !== 'human-evolution-life-history.txt') throw new Error('Unexpected note filename');
+    const exportedText = await readFile(await download.path(),'utf8');
+    if (!exportedText.includes('Revised: the community may also have a total shortfall.')) throw new Error('Export missed the current draft');
     const q = page.locator('.exercise').first();
     await q.getByRole('radio').first().check(); await q.getByRole('button').click();
     await expect(q.locator('.feedback')).toContainText('Answer checked.');

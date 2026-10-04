@@ -6,7 +6,7 @@
 
 ## Current progress — 4 October 2026
 
-The entire course is implemented and integrated into the collection index, build, preview and Pages workflow. Nine model/content tests, Svelte type checks, standalone and deployment-prefix builds, Chromium learning/navigation workflows, and a focused static link/image/fragment audit pass. Browser checks cover every chapter, saved-work revision, source preferences, theme persistence, keyboard controls and mobile drawers at 390 and 844 pixels. The reading application makes no external requests. Screenshots below were freshly captured from the working course on 4 October 2026.
+The entire course is implemented and integrated into the collection index, build, preview and Pages workflow. Nine model/content tests, Svelte type checks, standalone and deployment-prefix builds, Chromium learning/navigation workflows, and a focused static link/image/fragment audit pass. Browser checks cover every chapter, saved-work revision and note exports, source preferences, theme persistence, keyboard controls and mobile drawers at 390 and 844 pixels. The full collection builds all 13 courses under `/courses`; shared desktop/mobile/keyboard navigation checks pass across all 13, and the full static audit reports 332 pages with no issues. The reading application makes no external requests. Screenshots below were freshly captured from the working course on 4 October 2026.
 
 | Chapter | Coverage | Investigations |
 | --- | --- | --- |
