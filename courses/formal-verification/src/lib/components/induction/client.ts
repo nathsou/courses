@@ -51,3 +51,29 @@ export function runParam(req: import('$lib/fv/param/worker').ParamRequest, on: (
     worker.terminate();
   };
 }
+
+/** Run the Ledger's checks in a worker (chapter 28); returns a function that cancels them. */
+export function runLedger(req: import('$lib/fv/ledger/worker').LedgerRequest, on: (e: import('$lib/fv/ledger/worker').LedgerEvent) => void): () => void {
+  const worker = new Worker(new URL('../../fv/ledger/worker.ts', import.meta.url), { type: 'module', name: 'ledger' });
+  let live = true;
+  worker.onmessage = (e: MessageEvent<import('$lib/fv/ledger/worker').LedgerEvent>) => {
+    if (!live) return;
+    on(e.data);
+    if (e.data.kind === 'done') {
+      live = false;
+      worker.terminate();
+    }
+  };
+  worker.onerror = (e) => {
+    if (!live) return;
+    on({ kind: 'error', message: e.message || 'the checker stopped' });
+    on({ kind: 'done' });
+    live = false;
+    worker.terminate();
+  };
+  worker.postMessage(req);
+  return () => {
+    live = false;
+    worker.terminate();
+  };
+}

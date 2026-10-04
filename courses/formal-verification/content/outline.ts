@@ -124,7 +124,7 @@ export const PARTS: OutlinePart[] = [
     essay: 'trust',
     blurb: 'Assemble a verified system, then ask what was actually proved.',
     chapters: [
-      { slug: 'the-verified-ledger', number: '28', title: 'Capstone: the verified Ledger', summary: 'Specification, protocol and implementation, each checked, and the gaps between them.', flagship: 'Ledger dashboard', engines: ['explore', 'param', 'vcgen', 'heap', 'absint'], year: 2015, event: 'IronFleet' },
+      { slug: 'the-verified-ledger', number: '28', title: 'Capstone: the verified Ledger', summary: 'Specification, protocol and implementation, each checked, and the gaps between them.', flagship: 'Ledger dashboard', engines: ['explore', 'vcgen', 'heap', 'absint'], year: 2015, event: 'IronFleet' },
       { slug: 'what-did-we-prove', number: '29', title: 'What did we prove?', summary: 'Trusted computing bases, specification bugs, and bugs in verified systems.', flagship: 'TCB map', engines: [], year: 2011, event: 'Csmith tests CompCert' },
     ],
   },
