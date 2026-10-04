@@ -5,6 +5,7 @@
 -->
 <script lang="ts">
   import { badgeText, type Verdict } from '$lib/fv/engines';
+  import { tcbOf } from '$lib/fv/tcb';
 
   let { verdict, compact = false, open = false }: { verdict: Verdict; compact?: boolean; open?: boolean } = $props();
 
@@ -23,6 +24,7 @@
     : b.kind === 'error' ? 'Error'
     : 'Unknown',
   );
+  const tcb = $derived(tcbOf(verdict));
   const stats = $derived(Object.entries(verdict.stats ?? {}).filter(([, v]) => typeof v === 'number'));
 </script>
 
@@ -44,6 +46,10 @@
       <dd>
         {#if verdict.certificate.kind === 'none'}none{:else}{verdict.certificate.kind}
           {#if verdict.certificate.checked}<span class="vchip ok">✓ checked</span> by {verdict.certificate.checker}{:else}<span class="vchip maybe">not independently checked</span>{#if verdict.certificate.checker} ({verdict.certificate.checker}){/if}{/if}{/if}
+      </dd>
+      <dt>Trusts</dt>
+      <dd class="tcb" aria-label="Trusted computing base">
+        {#each tcb as p (p.name)}<span class="part {p.role}" title={p.role === 'trusted' ? 'trusted: the result depends on it being correct' : p.role === 'checked' ? 're-checked by a certificate checker' : 'not trusted: the result does not depend on it'}>{p.role === 'trusted' ? '●' : p.role === 'checked' ? '✓' : '○'} {p.name}</span>{/each}
       </dd>
       {#if verdict.assumptions.length}
         <dt>Assumes</dt>
@@ -164,6 +170,31 @@
   dd ul {
     margin: 0;
     padding-left: 1rem;
+  }
+  .tcb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  .part {
+    padding: 0 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.76rem;
+    white-space: nowrap;
+  }
+  .part.trusted {
+    border-color: color-mix(in srgb, var(--gold) 60%, var(--line));
+    color: var(--ink-2);
+  }
+  .part.checked {
+    border-color: var(--seal);
+    color: var(--seal-ink);
+    background: var(--seal-soft);
+  }
+  .part.untrusted {
+    border-style: dashed;
+    color: var(--mute);
   }
   .stats {
     display: flex;

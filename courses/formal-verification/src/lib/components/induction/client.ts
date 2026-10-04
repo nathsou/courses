@@ -77,3 +77,29 @@ export function runLedger(req: import('$lib/fv/ledger/worker').LedgerRequest, on
     worker.terminate();
   };
 }
+
+/** Run the engine room in a worker; returns a function that cancels it. */
+export function runEngineRoom(req: import('$lib/fv/verify/engineroom.worker').RoomRequest, on: (e: import('$lib/fv/verify/engineroom.worker').RoomEvent) => void): () => void {
+  const worker = new Worker(new URL('../../fv/verify/engineroom.worker.ts', import.meta.url), { type: 'module', name: 'engine-room' });
+  let live = true;
+  worker.onmessage = (e: MessageEvent<import('$lib/fv/verify/engineroom.worker').RoomEvent>) => {
+    if (!live) return;
+    on(e.data);
+    if (e.data.kind === 'done') {
+      live = false;
+      worker.terminate();
+    }
+  };
+  worker.onerror = (e) => {
+    if (!live) return;
+    on({ kind: 'error', message: e.message || 'the engines stopped' });
+    on({ kind: 'done' });
+    live = false;
+    worker.terminate();
+  };
+  worker.postMessage(req);
+  return () => {
+    live = false;
+    worker.terminate();
+  };
+}

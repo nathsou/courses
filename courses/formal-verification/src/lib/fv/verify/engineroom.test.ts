@@ -51,3 +51,21 @@ describe('the engine room', () => {
     expect(r.find((x) => x.engine === 'random testing')!.verdicts[0]!.badge.kind).toBe('tested');
   }, 60000);
 });
+
+test('chapter 26: with its loop invariants, count_down verifies', () => {
+  const src = `fn count_down(n: u32) -> u32 {
+  var i = n
+  var steps: u32 = 0
+  while i > 0
+    invariant steps + i == n
+    invariant i <= n
+  {
+    i = i - 1
+    steps = steps + 1
+  }
+  return steps
+}`;
+  const r = functionRoom(compile(src), 'count_down', src);
+  expect(r.find((x) => x.engine === 'program verifier')!.verdicts.map((v) => v.status)).toEqual(['verified']);
+  expect(r.find((x) => x.engine === 'interval analysis')!.verdicts[0]!.status).not.toBe('verified');
+}, 60000);

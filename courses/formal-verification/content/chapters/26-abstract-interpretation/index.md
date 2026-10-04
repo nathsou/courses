@@ -61,6 +61,22 @@ The analyser checks every operation that can fail: assertions, divisions, array 
 
 To triage an alarm, the course does what an engineer would: it looks for an input that really fails. It runs the function on boundary values (the ends of each type, 0, ±1, the constants in the code), then asks the symbolic executor of chapter 15 for an input that makes the same check fail. A failure the interpreter replays **confirms** the alarm. If none is found, the alarm stays **unconfirmed**: possibly false, possibly a failure that needs more loop iterations than were explored.
 
+The engine room runs the program engines of the course on one function. `count_down` cannot overflow: `steps` counts the iterations, and there are at most `n` of them. Random testing finds nothing, which proves nothing. Symbolic execution explores every path up to its unrolling bound and must cut the rest. The program verifier cannot prove the addition safe without a loop invariant relating `steps` to `i` and `n`. And the interval analysis, which describes each variable on its own, raises an alarm: a false one, which chapter 27's relational domain removes. Add `invariant steps + i == n` to the loop (and `invariant i <= n`) and watch the verifier's badge change.
+
+:::engine-room{title="One function, four engines"}
+```vouch
+fn count_down(n: u32) -> u32 {
+  var i = n
+  var steps: u32 = 0
+  while i > 0 {
+    i = i - 1
+    steps = steps + 1
+  }
+  return steps
+}
+```
+:::
+
 ## Ariane 5, re-enacted
 
 On 4 June 1996, about forty seconds after lift-off, the first Ariane 5 broke up. The inquiry board traced the failure to the inertial reference system. Software reused from Ariane 4 converted a 64-bit floating-point value, the horizontal bias, to a 16-bit signed integer. On Ariane 5's trajectory the value was larger than it had ever been on Ariane 4, the conversion failed, and the backup system, running the same software, had already failed the same way.:cite[lions1996]

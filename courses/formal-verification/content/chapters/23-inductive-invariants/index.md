@@ -112,6 +112,29 @@ A CTI for k-induction must be a path of k states, all satisfying the invariant, 
 
 Go back to the first workshop and move the slider. With k = 2 the CTI has three states; the solver keeps finding longer and longer unreachable paths into the bad state, until at **k = 17** there are none: Peterson's mutual exclusion invariant, alone, is 17-inductive. That is a proof, with no strengthening. It is also an opaque one. The four invariants above say *why* the algorithm works; "17-inductive" says only that the unreachable part of the state space has no path of 17 states into the bad state.
 
+The engine room shows the same contrast on Peterson's algorithm with only its mutual exclusion invariant. The explorer and the BDDs prove it for this instance by visiting every reachable state; bounded model checking finds nothing within its bound and proves nothing; k-induction, limited to k = 6 here, finds a counterexample to induction; and IC3, the subject of the next chapter, finds a strengthening on its own. Open each badge for its certificate and what it trusted.
+
+:::engine-room{title="One invariant, five engines" bound=10}
+```vouch
+system Peterson {
+  type Proc = 0..2
+  var flag: Proc -> bool = false
+  var turn: Proc = 0
+
+  process P(me: Proc) {
+    loop {
+      want: flag[me] = true
+      yield: turn = 1 - me
+      wait: await !flag[1 - me] || turn == me
+      critical: flag[me] = false
+    }
+  }
+
+  invariant mutex: !(P(0) at critical && P(1) at critical)
+}
+```
+:::
+
 :::bridge{course=digital-circuits chapter=state-machines}
 Sheeran, Singh and Stålmarck designed k-induction for hardware: their experiments verified FPGA cores.:cite[sheeran2000] *Digital Circuits* builds such machines from flip-flops and logic. The invariants of a circuit are facts about its registers, and the registers that a designer can never drive into a bad combination are exactly the unreachable states that defeat plain induction.
 :::

@@ -26,3 +26,5 @@ export { default as ReachLab } from '$lib/components/bdd/ReachLab.svelte';
 export { default as PeepholeCourt } from '$lib/components/rewrite/PeepholeCourt.svelte';
 /** The path tree explorer (chapter 15): `:::path-tree{fn="…"}` with a ```vouch block inside. */
 export { default as PathTree } from '$lib/components/symex/PathTree.svelte';
+/** The engine room: `:::engine-room{title="…" bound=10}` with a ```vouch system or function inside; every engine on it, side by side. */
+export { default as EngineRoom } from '$lib/components/verify/EngineRoom.svelte';

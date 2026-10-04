@@ -81,6 +81,24 @@ The dashboard below runs every check: the explorer on the specification, the ref
 
 ::ledger-dashboard{title="The Ledger"}
 
+Each layer was checked by the engine that suits it, and the engine room shows why the choice matters. Here is the implementation's `transfer` under every program engine. Random testing tries inputs and discards almost all of them, since few random arrays satisfy the precondition. Symbolic execution and the program verifier prove the contract. The interval analysis raises alarms: it does not know that `from` and `to` are valid indices, because the precondition relates them to the array's length, and intervals describe each variable alone.
+
+:::engine-room{title="transfer, under every program engine"}
+```vouch
+fn transfer(inout bal: [u64], from: int, to: int, amount: u64)
+  requires 0 <= from < len(bal) && 0 <= to < len(bal) && from != to
+  requires bal[from] >= amount
+  requires bal[to] <= 18446744073709551615 - amount
+  ensures bal[from] == old(bal[from]) - amount
+  ensures bal[to] == old(bal[to]) + amount
+  ensures forall k :: 0 <= k < len(bal) && k != from && k != to ==> bal[k] == old(bal[k])
+{
+  bal[from] = bal[from] - amount
+  bal[to] = bal[to] + amount
+}
+```
+:::
+
 ## The bug between the layers
 
 `on_local` fails, and the counterexample has `a` equal to `b`: a transfer from an account to itself.

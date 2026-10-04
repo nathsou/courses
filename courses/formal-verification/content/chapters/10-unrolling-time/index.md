@@ -103,6 +103,18 @@ Bounded model checking finds bugs; on its own it never proves that there are non
 
 There is a bound beyond which nothing new can happen. If every reachable state can be reached in at most d steps (d is the system's **diameter**), then checking up to d is a proof. Computing d exactly is as hard as the original problem, but Biere and his colleagues gave a bound that can itself be checked with SAT: the **recurrence diameter**, the length of the longest run that never repeats a state. Any state reachable at all is reachable by a run without repetitions, so if no run of length k + 1 can avoid repeating a state, checking up to k is complete.:cite[biere1999] For most systems the recurrence diameter is far too large to reach. Chapter 23 shows a better way to turn BMC into a proof: **k-induction**, which asks the solver to prove that k good steps always lead to a good next step.
 
+The **engine room** below runs one system under every engine in the course, side by side: the explorer of Part I, the BDDs of chapter 11, bounded model checking with a bound of 10, and the k-induction and IC3 of chapters 23 and 24. The odometer breaks its invariant after 15 ticks. Bounded model checking reports, honestly, that nothing fails within 10 steps; the engines that are not bounded find the run. Change the invariant to `n != 9` and BMC finds it too.
+
+:::engine-room{title="The engine room: one system, every engine" bound=10}
+```vouch
+system Odometer {
+  var n: 0..=20 = 0
+  action tick when n < 20 { n = n + 1 }
+  invariant not_fifteen: n != 15
+}
+```
+:::
+
 ## Hardware as a transition system
 
 A synchronous circuit is a transition system by construction. Its **registers** (flip-flops) are the state; the **combinational logic** between them computes the next state from the current one and the inputs; the **clock** is the step. BMC on hardware unrolls exactly the way the lab does, and the counterexample comes out the way hardware engineers already read simulations: as a waveform.
