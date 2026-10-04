@@ -180,6 +180,8 @@ There is one more thing to choose, and it is often worth more than the encoding:
 Four states need two flip-flops, and two flip-flops can hold four values, so nothing is left over. Three states also need two flip-flops, and the fourth code is a state that the machine was never meant to enter. Treating such codes as don't-cares gives smaller logic, and it means that if the register ever *does* land in one (from a power glitch, or a cosmic ray, or a clock that was too fast: Chapter 17) the machine does something arbitrary and may never come back. Safety-critical designs add arrows from every unused code to the reset state, and pay for them in gates.
 :::
 
+Proving that a machine never enters one of those codes, whatever its inputs, is the job of a model checker. [Chapter 23 of *For All Inputs*](/../formal-verification/chapters/inductive-invariants/) shows k-induction, a method invented for verifying hardware, and why the states a design never reaches are exactly what make such proofs hard.
+
 ## The same machine in DCL
 
 Writing a machine as a set of gates is a way of *drawing* it. In DCL, the course's hardware language, you write it the way the diagram reads: an enum of states, a register that holds one, and a `match` that says where each state goes next.
