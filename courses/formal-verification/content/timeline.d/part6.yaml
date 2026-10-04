@@ -52,5 +52,5 @@
   title: A few billion lines of code later
   people: Al Bessey, Dawson Engler and colleagues
   chapter: approximate
-  text: Lessons from selling a static bug-finder: developers ignore tools whose reports they cannot trust.
+  text: Lessons from selling a static bug-finder, among them that developers ignore tools whose reports they cannot trust.
   cite: [bessey2010]
