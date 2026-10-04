@@ -26,6 +26,7 @@
     id?: string;
     caption?: string;
   } = $props();
+  const uid = $props.id();
 
   // svelte-ignore state_referenced_locally
   let s = $state.raw(new Stepper(clauses, nvars));
@@ -202,7 +203,7 @@
   <div class="graph">
     <p class="h ui">Implication graph: an arrow from each literal of a reason to the literal it forced; rows are decision levels</p>
     <svg viewBox="0 0 {graph.w} {graph.h}" width={graph.w} height={graph.h} role="img" aria-label="Implication graph">
-      <defs><marker id="cdcl-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor" /></marker></defs>
+      <defs><marker id="{uid}-cdcl-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor" /></marker></defs>
       {#each graph.g.edges as e, i (i)}
         {@const a = graph.pos.get(e.from)}
         {@const b = graph.pos.get(e.to)}
@@ -213,9 +214,9 @@
           {#if dy === 0 && Math.abs(dx) > 90}
             <!-- Same row, skipping nodes: arc above them instead of running through them. -->
             {@const lift = 16 + Math.abs(dx) / 8}
-            <path d="M{a.x + 10},{a.y - 11} Q{(a.x + b.x) / 2},{a.y - lift * 2} {b.x - 10},{b.y - 12}" class="e" class:toc={e.to === 'conflict'} fill="none" marker-end="url(#cdcl-arr)" />
+            <path d="M{a.x + 10},{a.y - 11} Q{(a.x + b.x) / 2},{a.y - lift * 2} {b.x - 10},{b.y - 12}" class="e" class:toc={e.to === 'conflict'} fill="none" marker-end="url(#{uid}-cdcl-arr)" />
           {:else}
-            <line x1={a.x + (dx / d) * 15} y1={a.y + (dy / d) * 15} x2={b.x - (dx / d) * 17} y2={b.y - (dy / d) * 17} class="e" class:toc={e.to === 'conflict'} marker-end="url(#cdcl-arr)" />
+            <line x1={a.x + (dx / d) * 15} y1={a.y + (dy / d) * 15} x2={b.x - (dx / d) * 17} y2={b.y - (dy / d) * 17} class="e" class:toc={e.to === 'conflict'} marker-end="url(#{uid}-cdcl-arr)" />
           {/if}
         {/if}
       {/each}

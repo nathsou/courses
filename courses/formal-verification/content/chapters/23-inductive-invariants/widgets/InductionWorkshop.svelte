@@ -11,6 +11,8 @@
 
   let { code, title, caption, k: k0 = 1, maxK = 20, goal }: { code: string; title?: string; caption?: string; k?: number; maxK?: number; goal?: string } = $props();
 
+  const uid = $props.id();
+
   // svelte-ignore state_referenced_locally
   let source = $state(code.replace(/\n$/, ''));
   // svelte-ignore state_referenced_locally
@@ -63,8 +65,8 @@
     <div class="left">
       <textarea bind:value={source} rows={Math.min(30, source.split('\n').length + 1)} spellcheck="false" wrap="off" aria-label="The system"></textarea>
       <div class="bar ui">
-        <label for="iw-k">k = <b>{k}</b></label>
-        <input id="iw-k" type="range" min="1" max={maxK} bind:value={k} />
+        <label for="{uid}-iw-k">k = <b>{k}</b></label>
+        <input id="{uid}-iw-k" type="range" min="1" max={maxK} bind:value={k} />
         <button type="button" class="go" onclick={run} disabled={running}>{running ? 'Checking…' : 'Check by k-induction'}</button>
       </div>
       {#if stale && !running}<p class="ui hint">The code has changed since the last check.</p>{/if}

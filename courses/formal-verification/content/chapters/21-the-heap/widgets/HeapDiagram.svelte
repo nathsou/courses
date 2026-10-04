@@ -7,6 +7,7 @@
   import { parseAtom, show, star, type CHeap } from './heap';
 
   let { heap: h0, assertion: a0, caption }: { heap: CHeap; assertion: string[]; caption?: string } = $props();
+  const uid = $props.id();
 
   // svelte-ignore state_referenced_locally
   let heap = $state<CHeap>(structuredClone(h0));
@@ -61,7 +62,7 @@
 <figure class="hd">
   <div class="svgwrap">
     <svg viewBox="0 0 {width} {H}" style="min-width: {Math.min(width, 520)}px" role="img" aria-label="The heap">
-      <defs><marker id="hd-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah" /></marker></defs>
+      <defs><marker id="{uid}-hd-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah" /></marker></defs>
       {#each heap.objs as o, i (o.id)}
         {@const fs = Object.keys(o.fields)}
         {@const names = Object.entries(heap.vars).filter(([, t]) => t === o.id).map(([v]) => v)}
@@ -78,9 +79,9 @@
             {@const sx = x(i) + W - 14}
             {@const sy = fieldY(k) - 5}
             {#if j > i}
-              <path class="ptr" d="M{sx} {sy} C {sx + 30} {sy}, {x(j) - 30} 54, {x(j)} 60" marker-end="url(#hd-arrow)" />
+              <path class="ptr" d="M{sx} {sy} C {sx + 30} {sy}, {x(j) - 30} 54, {x(j)} 60" marker-end="url(#{uid}-hd-arrow)" />
             {:else}
-              <path class="ptr" d="M{sx} {sy} C {sx + 30} {sy + 60}, {x(j) + W / 2} {H - 10}, {x(j) + W / 2} {fieldY(Object.keys(heap.objs[j]!.fields).length - 1) + 10}" marker-end="url(#hd-arrow)" />
+              <path class="ptr" d="M{sx} {sy} C {sx + 30} {sy + 60}, {x(j) + W / 2} {H - 10}, {x(j) + W / 2} {fieldY(Object.keys(heap.objs[j]!.fields).length - 1) + 10}" marker-end="url(#{uid}-hd-arrow)" />
             {/if}
           {/if}
         {/each}

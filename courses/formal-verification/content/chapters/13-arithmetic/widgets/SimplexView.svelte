@@ -9,6 +9,8 @@
 
   let { constraints: initial, integer: initialInteger = false, view = [-1, 6, -1, 6], caption }: { constraints: string[]; integer?: boolean; view?: number[]; caption?: string } = $props();
 
+  const uid = $props.id();
+
   // svelte-ignore state_referenced_locally
   let text = $state(initial.join('\n'));
   // svelte-ignore state_referenced_locally
@@ -111,8 +113,8 @@
 <figure class="simplex">
   <div class="cols">
     <div class="left">
-      <label class="ui lab" for="lp-text">Constraints over x and y, one per line</label>
-      <textarea id="lp-text" bind:value={text} rows={Math.max(4, initial.length + 1)} spellcheck="false"></textarea>
+      <label class="ui lab" for="{uid}-lp-text">Constraints over x and y, one per line</label>
+      <textarea id="{uid}-lp-text" bind:value={text} rows={Math.max(4, initial.length + 1)} spellcheck="false"></textarea>
       <label class="ui chk"><input type="checkbox" bind:checked={integer} /> x and y must be integers (branch and bound)</label>
       {#if !parsed.ok}<p class="ui err">{parsed.error}</p>{/if}
       {#if parsed.ok && run && !integer}

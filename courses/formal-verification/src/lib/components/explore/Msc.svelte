@@ -61,6 +61,7 @@
     /** State variables to show under the chart (the intruder's knowledge, the participants' beliefs). */
     watch?: string[];
   } = $props();
+  const uid = $props.id();
 
   let rt = $state.raw<SystemRuntime | undefined>();
   let refine = $state.raw<Refinement | undefined>();
@@ -278,7 +279,7 @@
   {@const h = (c.steps.length + 1.5) * ROWH + 30}
   <div class="chart">
     <svg viewBox="0 0 {w} {h}" width={w} height={h} role="img" aria-label="Message sequence chart">
-      <defs><marker id="msc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor" /></marker></defs>
+      <defs><marker id="{uid}-msc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor" /></marker></defs>
       {#each lanes as name, i (i)}
         <text x={COLW * i + COLW / 2} y="16" class="lane-name">{name}</text>
         <line x1={COLW * i + COLW / 2} y1="24" x2={COLW * i + COLW / 2} y2={h - 6} class="lifeline" />
@@ -294,7 +295,7 @@
           <line {x1} {y1} x2={mx} y2={my} class="msg lost" />
           <text x={mx} y={my + 4} class="cross">✗</text>
         {:else}
-          <line {x1} {y1} {x2} {y2} class="msg" class:flight={a.doneAt === undefined} marker-end="url(#msc-arr)" />
+          <line {x1} {y1} {x2} {y2} class="msg" class:flight={a.doneAt === undefined} marker-end="url(#{uid}-msc-arr)" />
         {/if}
         <text x={(x1 + x2) / 2 + (x2 >= x1 ? 4 : -4)} y={(y1 + y2) / 2 - 4} class="msg-label" text-anchor={x2 >= x1 ? 'start' : 'end'}>{a.text}</text>
       {/each}

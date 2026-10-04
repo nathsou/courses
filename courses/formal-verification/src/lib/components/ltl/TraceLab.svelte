@@ -21,6 +21,7 @@
     caption?: string;
     automaton?: boolean;
   } = $props();
+  const uid = $props.id();
 
   // svelte-ignore state_referenced_locally
   let states = $state<string[][]>(trace?.states.map((s) => [...s]) ?? [[props[0]!], [props[0]!], [props[1] ?? props[0]!]]);
@@ -129,24 +130,24 @@
     <div class="aut">
       <p class="ui h">Büchi automaton for <code>{evaluated[selected]?.f}</code>: {aut.k} state{aut.k === 1 ? '' : 's'}. A run is accepted if it visits the double-circled states infinitely often{aut.b.accepting.length > 1 ? ' (one from each acceptance set)' : ''}.</p>
       <svg viewBox="0 0 {aut.size} {aut.size}" width={Math.min(aut.size, 460)} role="img" aria-label="The formula's automaton">
-        <defs><marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor" /></marker></defs>
+        <defs><marker id="{uid}-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor" /></marker></defs>
         {#each aut.b.succ as outs, i (i)}
           {#each outs as j (j)}
             {@const a = aut.pos[i]!}
             {@const c = aut.pos[j]!}
             {#if i === j}
-              <path d="M{a.x - 9},{a.y - 13} C{a.x - 32},{a.y - 52} {a.x + 32},{a.y - 52} {a.x + 9},{a.y - 13}" class="edge" marker-end="url(#arr)" />
+              <path d="M{a.x - 9},{a.y - 13} C{a.x - 32},{a.y - 52} {a.x + 32},{a.y - 52} {a.x + 9},{a.y - 13}" class="edge" marker-end="url(#{uid}-arr)" />
             {:else}
               {@const dx = c.x - a.x}
               {@const dy = c.y - a.y}
               {@const d = Math.hypot(dx, dy) || 1}
-              <line x1={a.x + (dx / d) * 18} y1={a.y + (dy / d) * 18} x2={c.x - (dx / d) * 20} y2={c.y - (dy / d) * 20} class="edge" marker-end="url(#arr)" />
+              <line x1={a.x + (dx / d) * 18} y1={a.y + (dy / d) * 18} x2={c.x - (dx / d) * 20} y2={c.y - (dy / d) * 20} class="edge" marker-end="url(#{uid}-arr)" />
             {/if}
           {/each}
         {/each}
         {#each aut.b.initial as i (i)}
           {@const a = aut.pos[i]!}
-          <line x1={a.x - 46} y1={a.y} x2={a.x - 20} y2={a.y} class="edge init" marker-end="url(#arr)" />
+          <line x1={a.x - 46} y1={a.y} x2={a.x - 20} y2={a.y} class="edge init" marker-end="url(#{uid}-arr)" />
         {/each}
         {#each aut.b.nodes as nd, i (nd.id)}
           {@const a = aut.pos[i]!}
