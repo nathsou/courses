@@ -630,3 +630,24 @@ Colour is never the only signal; ✓, ✗ and ? glyphs go with it. The index car
    steppers (`drive` exercises) and by reading *Under the hood* excerpts.
 5. **History.** The evolution of the field's theories and tools is a through-line (§3, through-line 9; §4,
    *How we got here*; §5, *Timeline* and *Family tree of tools*).
+
+## 15. Status (2026-10-04)
+
+All milestones, M0 to M8, are done: the 31 chapters, the seven part essays, appendices A to G, the engines of §7, the
+cross-cutting components of §5 (the engine room in chapters 10, 23, 26 and 28; the TCB meter in every badge), and
+the reciprocal links in Proofcraft, Digital Circuits, Language Models from Scratch, Incompleteness, CIC, Proofs Are
+Programs and SSA to Silicon.
+
+Where the result differs from the plan:
+
+- **Chapter 28.** The protocol layer is a sharded transfer protocol checked by refinement (chapter 4's checker),
+  not the parameterised two-phase commit; the implementation is connected to it by *step handlers* whose contracts
+  are the protocol's steps, which is where the bug between the layers (a self-transfer) is found. Two-phase commit
+  for every N stays in chapter 25.
+- **Chapter 29.** The audit has four cases (CompCert, Chapar, seL4's compiler assumption, and the Ledger's fee).
+- **Exercise kinds.** `play` and `drive` are not used as YAML exercises: the steppers (CDCL, wp, IC3, the induction
+  workshop) are driven directly as widgets.
+
+Quality gates, all passing: `npm run check` (0 errors), the full Vitest suite (every exercise's starter fails and its
+solution passes; every example in appendices B and E checks; every internal link resolves; every Ledger switch is
+caught by the checks the chapter names), `npm run build`, and the collection build and link audit.
