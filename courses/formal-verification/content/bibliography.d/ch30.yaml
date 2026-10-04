@@ -1,0 +1,80 @@
+muller2016:
+  authors: Peter Müller, Malte Schwerhoff and Alexander J. Summers
+  year: 2016
+  title: 'Viper: a verification infrastructure for permission-based reasoning'
+  venue: Verification, Model Checking, and Abstract Interpretation (VMCAI 2016), Lecture Notes in Computer Science 9583, 41–62
+clarke2004:
+  authors: Edmund Clarke, Daniel Kroening and Flavio Lerda
+  year: 2004
+  title: A tool for checking ANSI-C programs
+  venue: Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2004), Lecture Notes in Computer Science 2988, 168–176
+konnov2019:
+  authors: Igor Konnov, Jure Kukovec and Thanh-Hai Tran
+  year: 2019
+  title: TLA+ model checking made symbolic
+  venue: Proceedings of the ACM on Programming Languages 3 (OOPSLA), article 123
+cavada2014:
+  authors: Roberto Cavada, Alessandro Cimatti, Michele Dorigatti, Alberto Griggio, Alessandro Mariotti, Andrea Micheli, Sergio Mover, Marco Roveri and Stefano Tonetta
+  year: 2014
+  title: The nuXmv symbolic model checker
+  venue: Computer Aided Verification (CAV 2014), Lecture Notes in Computer Science 8559, 334–342
+brayton2010:
+  authors: Robert Brayton and Alan Mishchenko
+  year: 2010
+  title: 'ABC: an academic industrial-strength verification tool'
+  venue: Computer Aided Verification (CAV 2010), Lecture Notes in Computer Science 6174, 24–40
+demoura2021:
+  authors: Leonardo de Moura and Sebastian Ullrich
+  year: 2021
+  title: The Lean 4 theorem prover and programming language
+  venue: Automated Deduction (CADE 28), Lecture Notes in Computer Science 12699, 625–635
+bertot2004:
+  authors: Yves Bertot and Pierre Castéran
+  year: 2004
+  title: 'Interactive Theorem Proving and Program Development. Coq''Art: The Calculus of Inductive Constructions'
+  venue: Springer
+rocq2025:
+  authors: The Rocq development team
+  year: 2025
+  title: Release of Rocq 9.0
+  venue: rocq-prover.org, 12 March 2025
+nipkow2002:
+  authors: Tobias Nipkow, Lawrence C. Paulson and Markus Wenzel
+  year: 2002
+  title: 'Isabelle/HOL: A Proof Assistant for Higher-Order Logic'
+  venue: Lecture Notes in Computer Science 2283, Springer
+first2023:
+  authors: Emily First, Markus N. Rabe, Talia Ringer and Yuriy Brun
+  year: 2023
+  title: 'Baldur: whole-proof generation and repair with large language models'
+  venue: ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE 2023), 1229–1241
+acm2007turing:
+  authors: Association for Computing Machinery
+  year: 2008
+  title: 'A.M. Turing Award 2007: Edmund M. Clarke, E. Allen Emerson and Joseph Sifakis'
+  venue: amturing.acm.org
+leino2023:
+  authors: K. Rustan M. Leino
+  year: 2023
+  title: Program Proofs
+  venue: MIT Press
+lamport2002:
+  authors: Leslie Lamport
+  year: 2002
+  title: 'Specifying Systems: The TLA+ Language and Tools for Hardware and Software Engineers'
+  venue: Addison-Wesley
+kroening2016:
+  authors: Daniel Kroening and Ofer Strichman
+  year: 2016
+  title: 'Decision Procedures: An Algorithmic Point of View'
+  venue: Springer, second edition
+baier2008:
+  authors: Christel Baier and Joost-Pieter Katoen
+  year: 2008
+  title: Principles of Model Checking
+  venue: MIT Press
+rival2020:
+  authors: Xavier Rival and Kwangkeun Yi
+  year: 2020
+  title: 'Introduction to Static Analysis: An Abstract Interpretation Perspective'
+  venue: MIT Press
