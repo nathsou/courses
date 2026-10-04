@@ -25,7 +25,7 @@ Three questions decide most choices. What is being checked: code, a design befor
 
 ::tool-chooser{title="Which tool?"}
 
-Some tools appear in several families, because the families are techniques, not products. Frama-C runs a deductive verifier and an abstract interpreter over the same annotated C. Verus is a deductive verifier that leans on ownership, as separation logic does. The tools also descend from one another: Simplify's ideas went into ESC/Java, then Boogie, then Dafny; Smallfoot's into Infer. [Appendix F](/appendices/timeline-and-family-tree/) draws the family tree, and the [Rosetta appendix](/appendices/rosetta/) shows the same small examples in Vouch and in several of these tools.
+Some tools appear in several families, because the families are techniques, not products. Frama-C runs a deductive verifier and an abstract interpreter over the same annotated C. Verus is a deductive verifier that leans on ownership, as separation logic does. The tools also descend from one another: Simplify's ideas went into ESC/Java, then Boogie, then Dafny; Smallfoot's into Infer. [Appendix F](/appendix/timeline-and-family-tree/) draws the family tree, and the [Rosetta appendix](/appendix/rosetta/) shows the same small examples in Vouch and in several of these tools.
 
 :::bridge{course=cic chapter=lean}
 The proof assistants at the bottom of the table are where everything else can be checked from first principles. *The Calculus of Inductive Constructions* builds the logic of Rocq and Lean from the lambda calculus up, and ends with Lean.
@@ -69,11 +69,11 @@ Every part of the course ended at a limit, and the limits are where the field is
 
 The timeline of this course starts in 1949, with Alan Turing's short note on checking a large routine, which already split the proof into assertions that can be checked one by one.:cite[turing1949] Robert Floyd (1967) and Tony Hoare (1969) turned that into a method for proving programs;:cite[floyd1967,hoare1969] Amir Pnueli (1977) brought temporal logic to the behaviour of programs over time;:cite[pnueli1977] Patrick and Radhia Cousot (1977) made approximation a theory.:cite[cousot1977] In 1981 and 1982, Edmund Clarke and Allen Emerson, and independently Jean-Pierre Queille and Joseph Sifakis, gave the first algorithms that check a temporal property against every state of a finite system.:cite[clarke1981,queille1982] The ACM's Turing Award for 2007 went to Clarke, Emerson and Sifakis "for their role in developing Model-Checking into a highly effective verification technology that is widely adopted in the hardware and software industries".:cite[acm2007turing]
 
-Then came the engines: binary decision diagrams (1986), the Chaff SAT solver (2001), the Z3 SMT solver (2008).:cite[bryant1986,moskewicz2001,demoura2008] With them, the verified systems of Part VII became possible: a compiler and a kernel in 2009, distributed systems in 2015.:cite[leroy2009,klein2009,hawblitzel2015] [Appendix F](/appendices/timeline-and-family-tree/) has the whole timeline, and each part opens with an essay on its stretch of it.
+Then came the engines: binary decision diagrams (1986), the Chaff SAT solver (2001), the Z3 SMT solver (2008).:cite[bryant1986,moskewicz2001,demoura2008] With them, the verified systems of Part VII became possible: a compiler and a kernel in 2009, distributed systems in 2015.:cite[leroy2009,klein2009,hawblitzel2015] [Appendix F](/appendix/timeline-and-family-tree/) has the whole timeline, and each part opens with an essay on its stretch of it.
 
 ## Where to go next
 
-Pick one tool from the chooser and verify something small with it: the Ledger's `transfer`, a binary search, two-phase commit. The [Rosetta appendix](/appendices/rosetta/) has a starting point in several of them. Then, for depth:
+Pick one tool from the chooser and verify something small with it: the Ledger's `transfer`, a binary search, two-phase commit. The [Rosetta appendix](/appendix/rosetta/) has a starting point in several of them. Then, for depth:
 
 - **Programs:** Leino's *Program Proofs* teaches specification and proof with Dafny, from the beginning.:cite[leino2023]
 - **Systems:** Lamport's *Specifying Systems* is the book of TLA+;:cite[lamport2002] Jackson's *Software Abstractions* is the book of Alloy.:cite[jackson2006]

@@ -74,7 +74,7 @@
             <p class="th"><b>{t.name}</b> <span class="fam ui">{t.family}</span></p>
             <p class="bl">{t.blurb}</p>
             <p class="links ui">
-              The idea in this course: {#each t.chapters as c, k (c.slug)}{k ? ', ' : ''}<a href="{base}/chapters/{c.slug}/">chapter {c.label}</a>{/each}{#if t.rosetta}. Side by side with Vouch: <a href="{base}/appendices/rosetta/#{t.rosetta}">Rosetta</a>{/if}.
+              The idea in this course: {#each t.chapters as c, k (c.slug)}{k ? ', ' : ''}<a href="{base}/chapters/{c.slug}/">chapter {c.label}</a>{/each}{#if t.rosetta}. Side by side with Vouch: <a href="{base}/appendix/rosetta/#{t.rosetta}">Rosetta</a>{/if}.
             </p>
           </li>
         {/each}

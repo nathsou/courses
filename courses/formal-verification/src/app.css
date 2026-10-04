@@ -492,6 +492,11 @@ button {
   /* Long file paths must wrap on phones rather than widen the page. */
   overflow-wrap: anywhere;
 }
+/* In tables, short code (`bool`, `u64`) must not break mid-word: the table scrolls instead. */
+.article td > code,
+.article th > code {
+  overflow-wrap: break-word;
+}
 .article img {
   max-width: 100%;
   height: auto;
