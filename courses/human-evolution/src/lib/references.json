@@ -1,0 +1,258 @@
+[
+  {
+    "id": "kaplan-2000",
+    "doi": "10.1002/1520-6505%282000%299:4%3C156::AID-EVAN5%3E3.0.CO;2-7",
+    "title": "A theory of human life history evolution: Diet, intelligence, and longevity",
+    "authors": "Kaplan, Hill, Lancaster et al.",
+    "year": "2000",
+    "role": "Life history · theoretical synthesis"
+  },
+  {
+    "id": "navarrete-2011",
+    "doi": "10.1038/nature10629",
+    "title": "Energetics and the evolution of human brain size",
+    "authors": "Navarrete, van Schaik, Isler",
+    "year": "2011",
+    "role": "Comparative energetic constraints"
+  },
+  {
+    "id": "zink-2016",
+    "doi": "10.1038/nature16990",
+    "title": "Impact of meat and Lower Palaeolithic food processing techniques on chewing in humans",
+    "authors": "Zink, Lieberman",
+    "year": "2016",
+    "role": "Measured chewing and processing"
+  },
+  {
+    "id": "pontzer-2016",
+    "doi": "10.1038/nature17654",
+    "title": "Metabolic acceleration and the evolution of human brain size and life history",
+    "authors": "Pontzer, Brown, Raichlen et al.",
+    "year": "2016",
+    "role": "Measured total expenditure"
+  },
+  {
+    "id": "g-mez-robles-2023",
+    "doi": "10.1038/s41559-023-02253-z",
+    "title": "The evolution of human altriciality and brain development in comparative context",
+    "authors": "Gómez-Robles, Nicolaou, Smaers et al.",
+    "year": "2023 online / 2024 volume",
+    "role": "Comparative brain development"
+  },
+  {
+    "id": "morin-2024",
+    "doi": "10.1038/s41562-024-01876-x",
+    "title": "Ethnography and ethnohistory support the efficiency of hunting through endurance running in humans",
+    "authors": "Morin, Winterhalder",
+    "year": "2024",
+    "role": "Ethnographic records and energetic analysis"
+  },
+  {
+    "id": "daver-2022",
+    "doi": "10.1038/s41586-022-04901-z",
+    "title": "Postcranial evidence of late Miocene hominin bipedalism in Chad",
+    "authors": "Daver, Guy, Mackaye et al.",
+    "year": "2022",
+    "role": "Postcranial fossil evidence"
+  },
+  {
+    "id": "evershed-2022",
+    "doi": "10.1038/s41586-022-05010-7",
+    "title": "Dairying, diseases and the evolution of lactase persistence in Europe",
+    "authors": "Evershed, Davey Smith, Roffet-Salque et al.",
+    "year": "2022",
+    "role": "Archaeology, genetics and selection models"
+  },
+  {
+    "id": "zollikofer-2024",
+    "doi": "10.1038/s41586-024-08205-2",
+    "title": "Dental evidence for extended growth in early Homo from Dmanisi",
+    "authors": "Zollikofer, Beyrand, Lordkipanidze et al.",
+    "year": "2024",
+    "role": "Juvenile dental reconstruction"
+  },
+  {
+    "id": "davis-2025",
+    "doi": "10.1038/s41586-025-09855-6",
+    "title": "Earliest evidence of making fire",
+    "authors": "Davis, Hatch, Hoare et al.",
+    "year": "2025 online / 2026 volume",
+    "role": "Archaeological fire-making evidence"
+  },
+  {
+    "id": "sorensen-2018",
+    "doi": "10.1038/s41598-018-28342-9",
+    "title": "Neandertal fire-making technology inferred from microwear analysis",
+    "authors": "Sorensen, Claud, Soressi",
+    "year": "2018",
+    "role": "Tool microwear inference"
+  },
+  {
+    "id": "cypess-2009",
+    "doi": "10.1056/NEJMoa0810780",
+    "title": "Identification and Importance of Brown Adipose Tissue in Adult Humans",
+    "authors": "Cypess, Lehman, Williams et al.",
+    "year": "2009",
+    "role": "Imaging of active brown fat"
+  },
+  {
+    "id": "sockol-2007",
+    "doi": "10.1073/pnas.0703267104",
+    "title": "Chimpanzee locomotor energetics and the origin of human bipedalism",
+    "authors": "Sockol, Raichlen, Pontzer",
+    "year": "2007",
+    "role": "Measured comparative locomotion"
+  },
+  {
+    "id": "henry-2010",
+    "doi": "10.1073/pnas.1016868108",
+    "title": "Microfossils in calculus demonstrate consumption of plants and cooked foods in Neanderthal diets (Shanidar III, Iraq; Spy I and II, Belgium)",
+    "authors": "Henry, Brooks, Piperno",
+    "year": "2010 online / 2011 volume",
+    "role": "Dental calculus evidence"
+  },
+  {
+    "id": "dunsworth-2012",
+    "doi": "10.1073/pnas.1205282109",
+    "title": "Metabolic hypothesis for human altriciality",
+    "authors": "Dunsworth, Warrener, Deacon et al.",
+    "year": "2012",
+    "role": "Maternal energetic hypothesis"
+  },
+  {
+    "id": "kuzawa-2014",
+    "doi": "10.1073/pnas.1323099111",
+    "title": "Metabolic costs and evolutionary implications of human brain development",
+    "authors": "Kuzawa, Chugani, Grossman et al.",
+    "year": "2014",
+    "role": "Developmental glucose and growth estimates"
+  },
+  {
+    "id": "jaouen-2022",
+    "doi": "10.1073/pnas.2109315119",
+    "title": "A Neandertal dietary conundrum: Insights provided by tooth enamel Zn isotopes from Gabasa, Spain",
+    "authors": "Jaouen, Villalba-Mouco, Smith et al.",
+    "year": "2022",
+    "role": "Enamel zinc-isotope evidence"
+  },
+  {
+    "id": "aarts-2020",
+    "doi": "10.1093/molbev/msaa287",
+    "title": "Evolution of Hominin Detoxification: Neanderthal and Modern Human Ah Receptor Respond Similarly to TCDD",
+    "authors": "Aarts, Alink, Franssen et al.",
+    "year": "2020 online / 2021 volume",
+    "role": "Reconstructed receptors in human cells"
+  },
+  {
+    "id": "toups-2010",
+    "doi": "10.1093/molbev/msq234",
+    "title": "Origin of Clothing Lice Indicates Early Clothing Use by Anatomically Modern Humans in Africa",
+    "authors": "Toups, Kitchen, Light et al.",
+    "year": "2010 online / 2011 volume",
+    "role": "Parasite phylogeny and clothing inference"
+  },
+  {
+    "id": "lindenfors-2021",
+    "doi": "10.1098/rsbl.2021.0158",
+    "title": "‘Dunbar's number’ deconstructed",
+    "authors": "Lindenfors, Wartel, Lind",
+    "year": "2021",
+    "role": "Comparative reanalysis"
+  },
+  {
+    "id": "seymour-2016",
+    "doi": "10.1098/rsos.160305",
+    "title": "Fossil skulls reveal that blood flow rate to the brain increased faster than brain volume during human evolution",
+    "authors": "Seymour, Bosiocic, Snelling",
+    "year": "2016",
+    "role": "Anatomical blood-flow model"
+  },
+  {
+    "id": "seymour-2017",
+    "doi": "10.1098/rsos.170846",
+    "title": "Correction to ‘Fossil skulls reveal that blood flow rate to the brain increased faster than brain volume during human evolution’",
+    "authors": "Seymour, Bosiocic, Snelling",
+    "year": "2017",
+    "role": "Correction to the blood-flow model"
+  },
+  {
+    "id": "wroe-2018",
+    "doi": "10.1098/rspb.2018.0085",
+    "title": "Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting",
+    "authors": "Wroe, Parr, Ledogar et al.",
+    "year": "2018",
+    "role": "Computational facial-function models"
+  },
+  {
+    "id": "haeusler-2021",
+    "doi": "10.1111/brv.12744",
+    "title": "The obstetrical dilemma hypothesis: there's life in the old dog yet",
+    "authors": "Haeusler, Grunstra, Martin et al.",
+    "year": "2021",
+    "role": "Review of birth constraints"
+  },
+  {
+    "id": "neubauer-2018",
+    "doi": "10.1126/sciadv.aao5961",
+    "title": "The evolution of modern human brain shape",
+    "authors": "Neubauer, Hublin, Gunz",
+    "year": "2018",
+    "role": "Endocranial shape analysis"
+  },
+  {
+    "id": "roebroeks-2021",
+    "doi": "10.1126/sciadv.abj5567",
+    "title": "Landscape modification by Last Interglacial Neanderthals",
+    "authors": "Roebroeks, MacDonald, Scherjon et al.",
+    "year": "2021",
+    "role": "Landscape archaeology"
+  },
+  {
+    "id": "gilligan-2024",
+    "doi": "10.1126/sciadv.adp2887",
+    "title": "Paleolithic eyed needles and the evolution of dress",
+    "authors": "Gilligan, d’Errico, Doyon et al.",
+    "year": "2024",
+    "role": "Review of sewing and clothing evidence"
+  },
+  {
+    "id": "tosches-2018",
+    "doi": "10.1126/science.aar4237",
+    "title": "Evolution of pallium, hippocampus, and cortical cell types revealed by single-cell transcriptomics in reptiles",
+    "authors": "Tosches, Yamawaki, Naumann et al.",
+    "year": "2018",
+    "role": "Comparative single-cell evidence"
+  },
+  {
+    "id": "heide-2020",
+    "doi": "10.1126/science.abb2401",
+    "title": "Human-specific ARHGAP11B increases size and folding of primate neocortex in the fetal marmoset",
+    "authors": "Heide, Haffner, Murayama et al.",
+    "year": "2020",
+    "role": "Experimental cortical development"
+  },
+  {
+    "id": "wood-2023",
+    "doi": "10.1126/science.add5473",
+    "title": "Demographic and hormonal evidence for menopause in wild chimpanzees",
+    "authors": "Wood, Negrey, Brown et al.",
+    "year": "2023",
+    "role": "Demographic and hormonal observations"
+  },
+  {
+    "id": "reed-2007",
+    "doi": "10.1186/1741-7007-5-7",
+    "title": "Pair of lice lost or parasites regained: the evolutionary history of anthropoid primate lice",
+    "authors": "Reed, Light, Allen et al.",
+    "year": "2007",
+    "role": "Parasite phylogeny"
+  },
+  {
+    "id": "lemoine-2023",
+    "doi": "10.1016/j.ancene.2023.100403",
+    "title": "Megafauna extinctions in the late-Quaternary are linked to human range expansion, not climate change",
+    "authors": "Lemoine, Buitenwerf, Svenning",
+    "year": "2023",
+    "role": "Global extinction chronology analysis"
+  }
+]

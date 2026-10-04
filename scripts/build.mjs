@@ -68,6 +68,10 @@ const courses = [
       NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
     }),
   },
+  {
+    name: 'human-evolution',
+    env: (base) => ({ BASE_PATH: `${base}/human-evolution` }),
+  },
 ];
 const repository = process.env.GITHUB_REPOSITORY?.split('/')[1];
 const basePath = (process.env.COURSES_BASE_PATH ?? (repository ? `/${repository}` : '')).replace(/\/$/, '');

@@ -996,6 +996,12 @@ h1 {
   }
 }
 
+/* Human Evolution: an original branching diagram. */
+.card.evolution { background:light-dark(#e8eee3,#1d302a); }
+.evolution-tree { height:80px; margin-bottom:15px; }
+.evolution-tree svg { width:200px; height:85px; }
+.evolution-tree path { fill:none; stroke:light-dark(#285e4d,#8cbca5); stroke-width:2; stroke-linecap:round; }
+.evolution-tree circle { fill:light-dark(#a66c20,#ddad64); }
 /* 11 · For All Inputs: "The Notary" — certificate paper, a seal, red pencil */
 .notary {
   --cbg: #f6f1e4;

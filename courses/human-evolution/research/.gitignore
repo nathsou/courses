@@ -1,0 +1,4 @@
+# Loose source material stays local; hublin-transcripts.zip is the tracked handoff artifact.
+transcripts/
+retrieval-metadata/
+__pycache__/
