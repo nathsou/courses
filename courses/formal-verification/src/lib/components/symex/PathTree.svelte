@@ -274,7 +274,7 @@
   }
   @media (max-width: 820px) {
     .cols {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
   }
   .listing {

@@ -89,11 +89,15 @@
   }
   .pick {
     display: inline-flex;
+    flex-wrap: wrap;
+    max-width: 100%;
     gap: 0.5rem;
     align-items: center;
     font-size: 0.9rem;
   }
   select {
+    max-width: 100%;
+    min-width: 0;
     font: inherit;
     padding: 0.25rem 0.5rem;
     border: 1px solid var(--line-strong);

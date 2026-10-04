@@ -136,6 +136,12 @@
     margin: 0 -2rem;
     border-bottom: 1px solid var(--line);
   }
+  @media (max-width: 640px) {
+    .hero {
+      padding: 2.5rem 1rem 2rem;
+      margin: 0 -1rem;
+    }
+  }
   .hero::before {
     opacity: 0.6;
   }
