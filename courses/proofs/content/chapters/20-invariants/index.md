@@ -74,6 +74,8 @@ In the solved position both are even. Swapping $14$ and $15$ is a single transpo
 
 William Woolsey Johnson and William Edward Story proved this in 1879, before the craze even started, in the new *American Journal of Mathematics*.:cite[johnson-story] Story also proved the converse: every position with the right invariant *can* be solved — so exactly half of all arrangements are reachable.
 
+A computer can check this kind of argument as well. In [chapter 23 of *For All Inputs*](/../formal-verification/chapters/inductive-invariants/), the formal verification course in this collection, the parity invariant of a smaller sliding puzzle is handed to a SAT-based prover, which confirms that no move breaks it, and so that half of the arrangements can never be reached.
+
 ## A puzzle about proofs
 
 In *Gödel, Escher, Bach*, Douglas Hofstadter introduced a tiny formal system — a set of strings and rules for making new strings from old, like the formal systems of Chapter 12 in miniature.:cite[geb] You start with the string MI; can you produce MU?

@@ -1,0 +1,15 @@
+lacan1998:
+  authors: Philippe Lacan, Jean Noël Monfort, Le Vinh Quy Ribal, Alain Deutsch and Georges Gonthier
+  year: 1998
+  title: ARIANE 5 – the software reliability verification process
+  venue: Data Systems in Aerospace (DASIA 98), ESA Special Publication 422
+ball2006:
+  authors: Thomas Ball, Ella Bounimova, Byron Cook, Vladimir Levin, Jakob Lichtenberg, Con McGarvey, Bohus Ondrusek, Sriram K. Rajamani and Abdullah Ustuner
+  year: 2006
+  title: Thorough static analysis of device drivers
+  venue: European Conference on Computer Systems (EuroSys 2006), ACM, 73–85
+bessey2010:
+  authors: Al Bessey, Ken Block, Ben Chelf, Andy Chou, Bryan Fulton, Seth Hallem, Charles Henri-Gros, Asya Kamsky, Scott McPeak and Dawson Engler
+  year: 2010
+  title: 'A few billion lines of code later: using static analysis to find bugs in the real world'
+  venue: Communications of the ACM 53(2), 66–75

@@ -246,6 +246,8 @@ Babbage met the carry problem in brass. Adding two forty-digit numbers on a mach
 For his Analytical Engine, designed in the 1830s, Babbage devised the **anticipating carriage**: a mechanism that looked ahead along the wheels to see which of them would carry, and then carried in all of them in a single operation, whatever the number of digits.:cite[bromley1982] Allan Bromley’s study of the design of 1838 describes the mechanism in detail; the Analytical Engine itself was never completed. It is the same idea, and for the same reason, that electronic designers found again as *carry lookahead*.
 :::
 
+How can you be sure that the lookahead adder computes the same sums as the ripple adder? For 16 bits there are 2³² pairs of inputs, too many to try one by one. [Chapter 10 of *For All Inputs*](/../formal-verification/chapters/unrolling-time/), the formal verification course in this collection, checks the two designs against each other with a SAT solver, for every input at once, and finds a planted bug in the lookahead logic that a million random tests miss.
+
 ## Subtraction is addition
 
 We showed that −*x* is the inverse of *x*, plus one. So A − B is A + ¬B + 1: **invert B and add, with a carry in of 1**. The circuit needs almost nothing more than the adder. Put an XOR gate on each bit of B, with a control input SUB as its other input. Chapter 11 said that XOR with 0 passes a bit through and with 1 inverts it. Wire SUB also to the carry in of the adder, and that is all. With SUB = 0, the circuit adds; with SUB = 1, it inverts B and adds 1, so it subtracts.

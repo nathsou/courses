@@ -1,0 +1,25 @@
+mine2006:
+  authors: Antoine Miné
+  year: 2006
+  title: The octagon abstract domain
+  venue: Higher-Order and Symbolic Computation 19(1), 31–100
+cousot1978:
+  authors: Patrick Cousot and Nicolas Halbwachs
+  year: 1978
+  title: Automatic discovery of linear restraints among variables of a program
+  venue: Principles of Programming Languages (POPL 1978), ACM, 84–96
+graf1997:
+  authors: Susanne Graf and Hassen Saïdi
+  year: 1997
+  title: Construction of abstract state graphs with PVS
+  venue: Computer Aided Verification (CAV 1997), Lecture Notes in Computer Science 1254, 72–83
+clarke2000:
+  authors: Edmund Clarke, Orna Grumberg, Somesh Jha, Yuan Lu and Helmut Veith
+  year: 2000
+  title: Counterexample-guided abstraction refinement
+  venue: Computer Aided Verification (CAV 2000), Lecture Notes in Computer Science 1855, 154–169
+ball2001:
+  authors: Thomas Ball and Sriram K. Rajamani
+  year: 2001
+  title: Automatically validating temporal safety properties of interfaces
+  venue: Model Checking Software (SPIN 2001), Lecture Notes in Computer Science 2057, 102–122

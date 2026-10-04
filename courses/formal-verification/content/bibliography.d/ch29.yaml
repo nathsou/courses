@@ -1,0 +1,20 @@
+sewell2013:
+  authors: Thomas Sewell, Magnus O. Myreen and Gerwin Klein
+  year: 2013
+  title: Translation validation for a verified OS kernel
+  venue: Programming Language Design and Implementation (PLDI 2013), ACM, 471–481
+rice1953:
+  authors: H. Gordon Rice
+  year: 1953
+  title: Classes of recursively enumerable sets and their decision problems
+  venue: Transactions of the American Mathematical Society 74(2), 358–366
+lesani2016:
+  authors: Mohsen Lesani, Christian J. Bell and Adam Chlipala
+  year: 2016
+  title: 'Chapar: certified causally consistent distributed key-value stores'
+  venue: Principles of Programming Languages (POPL 2016), ACM, 357–370
+thompson1984:
+  authors: Ken Thompson
+  year: 1984
+  title: Reflections on trusting trust
+  venue: Communications of the ACM 27(8), 761–763

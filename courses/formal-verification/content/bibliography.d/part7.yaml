@@ -1,0 +1,20 @@
+hoare1996:
+  authors: C. A. R. Hoare
+  year: 1996
+  title: How did software get so reliable without proof?
+  venue: 'FME ''96: Industrial Benefit and Advances in Formal Methods, Lecture Notes in Computer Science 1051, 1–17'
+leroy2006:
+  authors: Xavier Leroy
+  year: 2006
+  title: 'Formal certification of a compiler back-end, or: programming a compiler with a proof assistant'
+  venue: Principles of Programming Languages (POPL 2006), ACM, 42–54
+ohearn2018:
+  authors: Peter W. O'Hearn
+  year: 2018
+  title: 'Continuous reasoning: scaling the impact of formal methods'
+  venue: Logic in Computer Science (LICS 2018), ACM/IEEE, 13–25
+cutler2024:
+  authors: Joseph W. Cutler, Craig Disselkoen, Aaron Eline, Shaobo He, Kyle Headley, Michael Hicks, Kesha Hietala, Eleftherios Ioannidis, John Kastner, Anwar Mamat, Darin McAdams, Matt McCutchen, Neha Rungta, Emina Torlak and Andrew M. Wells
+  year: 2024
+  title: 'Cedar: a new language for expressive, fast, safe, and analyzable authorization'
+  venue: Proceedings of the ACM on Programming Languages 8 (OOPSLA1)
