@@ -129,16 +129,40 @@ export function getValueOfExpression<T extends Node['type']>(context: Rule.RuleC
 }
 
 /**
- * The property `key` of an object literal: null if `expr` is not an object literal, undefined if it has no such
- * property. Only plain `key: value` properties are considered; a property hidden behind a spread is not found.
+ * The property `key` of an object literal, looking through spread elements whose argument resolves (through single
+ * writes) to another object literal. The last definition wins, as at run time.
+ *
+ * Three answers: the `Property` when it is found; `null` when `expr` is not an object literal, or when it certainly
+ * has no such property; `undefined` when it cannot tell, because a spread element could not be resolved.
  */
-export function getProperty(expr: Node | undefined | null, key: string, _context?: Rule.RuleContext): estree.Property | null | undefined {
+export function getProperty(expr: Node | undefined | null, key: string, context: Rule.RuleContext, seen = new Set<Node>()): estree.Property | null | undefined {
   if (expr?.type !== 'ObjectExpression') return null;
-  for (const p of expr.properties) {
-    if (p.type !== 'Property' || p.computed) continue;
-    if ((p.key.type === 'Identifier' && p.key.name === key) || (p.key.type === 'Literal' && p.key.value === key)) return p;
+  let unresolvedSpread = false;
+  for (let i = expr.properties.length - 1; i >= 0; i--) {
+    const p = expr.properties[i]!;
+    if (p.type === 'Property' && !p.computed && (isIdentifier(p.key, key) || (isStringLiteral(p.key) && p.key.value === key))) return p;
+    if (p.type === 'SpreadElement') {
+      const spread = getValueOfExpression(context, p.argument, 'ObjectExpression');
+      if (!spread || seen.has(spread) || spread === expr) {
+        unresolvedSpread = true;
+        continue;
+      }
+      seen.add(spread);
+      const found = getProperty(spread, key, context, seen);
+      seen.delete(spread);
+      if (found === undefined) unresolvedSpread = true;
+      else if (found !== null) return found;
+    }
   }
-  return undefined;
+  return unresolvedSpread ? undefined : null;
+}
+
+/** The property `key` of an object literal if its value is (through single writes) the literal `value`. */
+export function getPropertyWithValue(context: Rule.RuleContext, objectExpression: estree.ObjectExpression, key: string, value: estree.Literal['value']): estree.Property | undefined {
+  const property = getProperty(objectExpression, key, context);
+  if (!property) return undefined;
+  const literal = getValueOfExpression(context, property.value as Node, 'Literal');
+  return literal?.value === value ? property : undefined;
 }
 
 /** The static string of a literal or of a template literal without expressions; undefined when dynamic. */

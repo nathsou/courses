@@ -1,0 +1,36 @@
+scope:
+  term: scope
+  definition: "A region of a program in which the variables declared there can be referred to by name: global, module, function, block, and smaller ones."
+  chapter: scopes
+reference:
+  term: reference
+  definition: "An occurrence of a name in an expression. Resolving it finds the declaration it refers to; the scope manager records whether it reads, writes or both."
+  chapter: scopes
+shadowing:
+  term: shadowing
+  definition: "Declaring a variable with the same name as one in an enclosing scope, which then cannot be named inside the inner scope."
+  chapter: scopes
+hoisting:
+  term: hoisting
+  definition: "JavaScript's rule that `var` and function declarations belong to the whole enclosing function, wherever they are written in it."
+  chapter: scopes
+temporal dead zone:
+  term: temporal dead zone
+  definition: "The part of a block before a `let`, `const` or `class` declaration runs, in which the variable exists but reading it throws."
+  chapter: scopes
+scope manager:
+  term: scope manager
+  definition: "The component that computes a file's scopes, variables and references before rules run: eslint-scope, or @typescript-eslint/scope-manager."
+  chapter: scopes
+implicit global:
+  term: implicit global
+  definition: "A global variable created by writing to an undeclared name outside strict mode. S2703 reports them."
+  chapter: scopes
+single-write tracking:
+  term: single-write tracking
+  definition: "Taking the value of a variable written exactly once to be the expression written. Cheap, flow-insensitive, and used by many SonarJS rules through getValueOfExpression."
+  chapter: scopes
+flow-insensitive:
+  term: flow-insensitive
+  definition: "Of an analysis: ignoring the order in which statements run, so its answer holds (approximately) everywhere in the program."
+  chapter: scopes

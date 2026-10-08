@@ -4,7 +4,7 @@ import type estree from 'estree';
 import { loadLibs } from '../runtime/libs.js';
 import { lint } from '../runtime/lint.js';
 import { getFullyQualifiedName, importsModule } from './module.js';
-import { getValueOfExpression, getConstantValue } from './ast.js';
+import { getValueOfExpression, getConstantValue, getProperty } from './ast.js';
 import { LiveVariables, lva } from './lva.js';
 import { interceptReport } from './decorators.js';
 import { createRegExpRule } from './regex.js';
@@ -57,6 +57,33 @@ describe('getFullyQualifiedName', () => {
 });
 
 describe('value helpers', () => {
+  test('getProperty: found, absent, unknown; spreads; last wins', async () => {
+    const rule: Rule.RuleModule = {
+      create: (context) => ({
+        CallExpression(node) {
+          const p = getProperty(getValueOfExpression(context, node.arguments[0], 'ObjectExpression') ?? node.arguments[0], 'k', context);
+          context.report({ node, message: p === null ? 'null' : p === undefined ? 'undefined' : context.sourceCode.getText(p.value as estree.Node) });
+        },
+      }),
+    };
+    const code = [
+      'declare const f: (x: unknown) => void; declare const ext: object;',
+      'const base = { k: 1 };',
+      'f({ k: 2 });',
+      'f({ j: 2 });',
+      'f({ ...base });',
+      'f({ ...ext });',
+      'f({ k: 3, ...base });',
+      'f({ ...base, k: 4 });',
+      "f({ 'k': 5 });",
+      'f(42);',
+      'const loop: any = { ...loop };',
+      'f(loop);',
+    ].join('\n');
+    const issues = await run(code, rule, false);
+    expect(issues.map((i) => i.message)).toEqual(['2', 'null', '1', 'undefined', '1', '4', '5', 'null', 'undefined']);
+  });
+
   test('getValueOfExpression follows single writes', async () => {
     const rule: Rule.RuleModule = {
       create: (context) => ({

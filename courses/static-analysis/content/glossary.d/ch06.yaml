@@ -1,0 +1,12 @@
+cyclomatic complexity:
+  term: cyclomatic complexity
+  definition: "The number of linearly independent paths through a control-flow graph, in practice one plus the number of decision points (McCabe, 1976)."
+  chapter: cognitive-complexity
+Cognitive Complexity:
+  term: Cognitive Complexity
+  definition: "SonarSource's measure of how hard code is to understand: increments for breaks in the linear flow, more for nested ones. Enforced by S3776."
+  chapter: cognitive-complexity
+metric:
+  term: metric
+  definition: "A measurement SonarQube shows for every file and project (lines of code, complexity, duplications), independent of any rule."
+  chapter: cognitive-complexity

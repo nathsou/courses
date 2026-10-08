@@ -36,6 +36,8 @@ export const COMPILER_OPTIONS: ts.CompilerOptions = {
   esModuleInterop: true,
   allowSyntheticDefaultImports: true,
   allowImportingTsExtensions: true,
+  allowJs: true,
+  checkJs: false,
   noEmit: true,
   skipLibCheck: true,
   lib: ['lib.es2022.d.ts'],

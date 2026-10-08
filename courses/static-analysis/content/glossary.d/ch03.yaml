@@ -1,0 +1,28 @@
+rule module:
+  term: rule module
+  definition: "An ESLint rule: an object with `meta` (description, messages, options schema, fixability) and `create(context)`, which returns the listeners."
+  chapter: anatomy-of-a-rule
+listener:
+  term: listener
+  definition: "A function a rule registers for a selector; ESLint calls it with each matching node as it walks the tree, on entry or, with `:exit`, on exit."
+  chapter: anatomy-of-a-rule
+selector:
+  term: selector
+  definition: "A CSS-like pattern over syntax trees (esquery syntax), such as `CallExpression > MemberExpression.callee`, naming the nodes a listener receives."
+  chapter: anatomy-of-a-rule
+RSPEC:
+  term: RSPEC
+  definition: "SonarSource's repository of rule specifications: for each rule key, its title, description, type, impacts, tags, remediation and default quality profiles."
+  chapter: anatomy-of-a-rule
+original rule:
+  term: original rule
+  definition: "A SonarJS rule implemented in SonarJS itself, as opposed to a decorated or external rule. Only original rules ship in eslint-plugin-sonarjs."
+  chapter: anatomy-of-a-rule
+decorated rule:
+  term: decorated rule
+  definition: "A rule from another ESLint plugin, wrapped by SonarJS to change its behaviour, typically by filtering or rewording its reports."
+  chapter: anatomy-of-a-rule
+external rule:
+  term: external rule
+  definition: "A rule from another ESLint plugin that SonarJS runs as it is, under its own rule key and configuration."
+  chapter: anatomy-of-a-rule
