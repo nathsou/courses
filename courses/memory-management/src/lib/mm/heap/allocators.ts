@@ -75,8 +75,9 @@ function boundaryTag(heap: Heap) {
  * `fit` chooses where to place a request: the first free block that fits, the next one after the last
  * placement (a "roving pointer"), or the best (smallest) one.
  */
-export function implicitList(fit: Fit = 'first', opts: { coalesce?: boolean } = {}): AllocatorFactory {
+export function implicitList(fit: Fit = 'first', opts: { coalesce?: boolean; chunk?: number } = {}): AllocatorFactory {
   const doCoalesce = opts.coalesce ?? true;
+  const CHUNK = opts.chunk ?? 4096;
   return (heap) => {
     const b = boundaryTag(heap);
     let start = 0; // payload address of the prologue block
@@ -211,8 +212,9 @@ export function reallocVia(a: Allocator, heap: Heap, bp: number, size: number, p
  *
  *   free block:  header | next free | prev free | …unused… | footer
  */
-export function segregated(classes = 1, opts: { order?: 'lifo' | 'address'; fit?: 'first' | 'best' } = {}): AllocatorFactory {
+export function segregated(classes = 1, opts: { order?: 'lifo' | 'address'; fit?: 'first' | 'best'; chunk?: number } = {}): AllocatorFactory {
   const order = opts.order ?? 'lifo';
+  const CHUNK = opts.chunk ?? 4096;
   return (heap) => {
     const b = boundaryTag(heap);
     let heads = 0; // address of the array of list heads (one word per class)
@@ -362,7 +364,7 @@ export function segregated(classes = 1, opts: { order?: 'lifo' | 'address'; fit?
   };
 }
 
-export const explicitList = (order: 'lifo' | 'address' = 'lifo') => segregated(1, { order });
+export const explicitList = (order: 'lifo' | 'address' = 'lifo', chunk?: number) => segregated(1, { order, chunk });
 
 // ── 4. Size-class slabs ("in the style of" jemalloc's and mimalloc's small-object allocation) ──────────────
 /**

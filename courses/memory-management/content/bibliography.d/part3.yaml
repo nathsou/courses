@@ -1,0 +1,5 @@
+knuth1968:
+  authors: Donald E. Knuth
+  year: 1968
+  title: 'The Art of Computer Programming, Volume 1: Fundamental Algorithms'
+  venue: Addison-Wesley (section 2.5, Dynamic storage allocation)
