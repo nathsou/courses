@@ -10,6 +10,8 @@
     to: number;
     kind: 'ok' | 'bad' | 'warn' | 'secondary' | 'info';
     message?: string;
+    /** A short label drawn inline after the range (e.g. "+2"). */
+    label?: string;
   }
 </script>
 
@@ -90,7 +92,7 @@
         import('@codemirror/search'),
         import('./editorTheme'),
       ]);
-      const { EditorView, Decoration, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter, drawSelection, gutter, GutterMarker } = viewMod;
+      const { EditorView, Decoration, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter, drawSelection, gutter, GutterMarker, WidgetType } = viewMod;
       const { EditorState, StateField, StateEffect, RangeSet } = stateMod;
       const lspExt = lspUri ? await import('$lib/sa/lsp/client').then(async (m) => (await m.lspClient()).plugin(lspUri, lang === 'js' ? 'javascript' : 'typescript')) : [];
       if (destroyed) return;
@@ -116,6 +118,24 @@
           return s;
         }
       }
+      class Label extends WidgetType {
+        text: string;
+        kind: string;
+        constructor(text: string, kind: string) {
+          super();
+          this.text = text;
+          this.kind = kind;
+        }
+        eq(o: Label) {
+          return o.text === this.text && o.kind === this.kind;
+        }
+        toDOM() {
+          const s = document.createElement('span');
+          s.className = `cm-inline-label cm-inline-${this.kind}`;
+          s.textContent = this.text;
+          return s;
+        }
+      }
       const clampMarks = (doc: { length: number }, list: EditorMark[]) => list.map((m) => ({ ...m, from: Math.max(0, Math.min(m.from, doc.length)), to: Math.max(0, Math.min(m.to, doc.length)) }));
       const markField = StateField.define({
         create: () => ({ deco: Decoration.none, gutter: RangeSet.empty as import('@codemirror/state').RangeSet<InstanceType<typeof GutterMarker>> }),
@@ -124,7 +144,10 @@
             if (!e.is(setMarks)) continue;
             const list = clampMarks(tr.state.doc, e.value);
             const deco = Decoration.set(
-              list.filter((m) => m.to > m.from).map((m) => Decoration.mark({ class: `cm-mark-${m.kind}`, attributes: m.message ? { title: m.message } : {} }).range(m.from, m.to)),
+              [
+                ...list.filter((m) => m.to > m.from).map((m) => Decoration.mark({ class: `cm-mark-${m.kind}`, attributes: m.message ? { title: m.message } : {} }).range(m.from, m.to)),
+                ...list.filter((m) => m.label).map((m) => Decoration.widget({ widget: new Label(m.label!, m.kind), side: 1 }).range(m.to)),
+              ],
               true,
             );
             const byLine = new Map<number, EditorMark>();
@@ -177,6 +200,10 @@
         '.cm-mark-ok': { backgroundColor: 'var(--ok-soft)', borderBottom: '2px solid var(--ok)' },
         '.cm-mark-secondary': { borderBottom: '2px dotted var(--accent)' },
         '.cm-mark-info': { backgroundColor: 'var(--accent-soft)' },
+        '.cm-inline-label': { fontFamily: 'var(--font-mono)', fontSize: '0.68rem', fontWeight: '700', padding: '0 0.25rem', marginLeft: '0.2rem', borderRadius: '3px', border: '1px solid var(--line-strong)', color: 'var(--mute)', verticalAlign: '1px' },
+        '.cm-inline-warn': { borderColor: 'var(--maybe)', color: 'var(--maybe)' },
+        '.cm-inline-bad': { borderColor: 'var(--bad)', color: 'var(--bad)' },
+        '.cm-inline-ok': { borderColor: 'var(--ok)', color: 'var(--ok)' },
         '.cm-picked': { backgroundColor: 'var(--amber-soft)', outline: '1px solid var(--amber)', borderRadius: '2px' },
         '.cm-result-gutter': { width: '1.1rem' },
         '.glyph': { display: 'inline-block', width: '1rem', textAlign: 'center', fontWeight: '700', cursor: 'default' },

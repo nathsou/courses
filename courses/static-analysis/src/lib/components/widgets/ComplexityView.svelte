@@ -43,7 +43,7 @@
     for (let i = 0; i < line - 1; i++) o += (lines[i]?.length ?? 0) + 1;
     return o + column;
   }
-  const marks = $derived<EditorMark[]>(issues.flatMap((i) => i.secondaryLocations.map((s) => ({ from: offset(source, s.line, s.column), to: offset(source, s.endLine, s.endColumn), kind: s.message === '+1' ? 'info' : 'warn', message: s.message }))));
+  const marks = $derived<EditorMark[]>(issues.flatMap((i) => i.secondaryLocations.map((s) => ({ from: offset(source, s.line, s.column), to: offset(source, s.endLine, s.endColumn), kind: s.message === '+1' ? 'info' : 'warn', message: s.message, label: (s.message ?? '').split(' ')[0] }))));
   const functions = $derived(
     issues.map((i) => ({
       name: source.slice(offset(source, i.line, i.column), offset(source, i.endLine, i.endColumn)),

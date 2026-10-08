@@ -268,7 +268,7 @@
       else if (e.verdict === 'missing') out.push({ ...lineRange(text, e.line), kind: 'bad', message: `Expected an issue here${e.expected?.message ? `: ${e.expected.message}` : ''}` });
       else if (e.verdict === 'unexpected') out.push({ ...at, kind: 'bad', message: `Unexpected issue: ${a?.message}` });
       else out.push({ ...at, kind: 'warn', message: e.details.join('; ') });
-      for (const s of a?.secondaryLocations ?? []) out.push({ from: offsetOf(text, s.line, s.column), to: offsetOf(text, s.endLine, s.endColumn), kind: 'secondary', message: s.message ?? 'secondary location' });
+      for (const s of a?.secondaryLocations ?? []) out.push({ from: offsetOf(text, s.line, s.column), to: offsetOf(text, s.endLine, s.endColumn), kind: 'secondary', message: s.message ?? 'secondary location', label: s.message && s.message.length <= 28 ? s.message : undefined });
     }
     return out;
   });
