@@ -279,7 +279,7 @@
     fixtureEditor?.reveal(r.from, r.to);
   }
 
-  const answerFiles = $derived(Object.entries(spec.answer ?? {}));
+  const answerFiles = $derived(Object.entries((isMutants ? spec.answerFixtures : spec.answer) ?? {}));
   const visibleTotals = $derived.by(() => {
     if (isTests) return testsResult ? `${testsResult.tests.filter((t) => t.pass).length}/${testsResult.tests.length} tests pass` : '';
     if (!ruleResult) return '';
