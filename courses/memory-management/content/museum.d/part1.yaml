@@ -1,0 +1,8 @@
+- id: rowhammer-2014
+  title: Rowhammer
+  year: 2014–15
+  chapter: the-memory-hierarchy
+  reenacted: false
+  summary: Yoongu Kim and colleagues showed that repeatedly opening the same DRAM rows, millions of times between refreshes, could flip bits in *neighbouring* rows that were never accessed, on most of the commodity memory modules they tested. A year later Mark Seaborn and Thomas Dullien of Google’s Project Zero turned the effect into exploits, one of which flipped bits in page-table entries so that an unprivileged process gained write access to its own page tables, and with them to all of physical memory.
+  simplification: told as history; chapter 3 shows in the page-walk figure why one flipped bit in a page-table entry is enough.
+  cite: [kim2014, seaborn2015]

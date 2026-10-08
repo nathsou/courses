@@ -1,0 +1,42 @@
+cohen1980:
+  authors: Danny Cohen
+  year: 1980
+  title: 'On holy wars and a plea for peace'
+  venue: Internet Experiment Note 137 (1 April 1980); reprinted in IEEE Computer 14(10), 1981
+  url: https://www.rfc-editor.org/ien/ien137.txt
+riscvunpriv:
+  authors: Andrew Waterman, Krste Asanović and others (eds.)
+  year: 2019
+  title: 'The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA (document version 20191213)'
+  venue: RISC-V International
+  url: https://riscv.org/technical/specifications/
+riscvpriv:
+  authors: Andrew Waterman, Krste Asanović and John Hauser (eds.)
+  year: 2021
+  title: 'The RISC-V Instruction Set Manual, Volume II: Privileged Architecture (version 20211203)'
+  venue: RISC-V International
+  url: https://riscv.org/technical/specifications/
+kim2014:
+  authors: Yoongu Kim, Ross Daly, Jeremie Kim, Chris Fallin, Ji Hye Lee, Donghyuk Lee, Chris Wilkerson, Konrad Lai and Onur Mutlu
+  year: 2014
+  title: 'Flipping bits in memory without accessing them: an experimental study of DRAM disturbance errors'
+  venue: Proceedings of the 41st International Symposium on Computer Architecture (ISCA), 361–372
+  url: https://doi.org/10.1109/ISCA.2014.6853210
+seaborn2015:
+  authors: Mark Seaborn and Thomas Dullien
+  year: 2015
+  title: Exploiting the DRAM rowhammer bug to gain kernel privileges
+  venue: Google Project Zero blog, 9 March 2015
+  url: https://googleprojectzero.blogspot.com/2015/03/exploiting-dram-rowhammer-bug-to-gain.html
+wulf1995:
+  authors: Wm. A. Wulf and Sally A. McKee
+  year: 1995
+  title: 'Hitting the memory wall: implications of the obvious'
+  venue: ACM SIGARCH Computer Architecture News 23(1), 20–24
+  url: https://doi.org/10.1145/216585.216588
+kilburn1962:
+  authors: T. Kilburn, D. B. G. Edwards, M. J. Lanigan and F. H. Sumner
+  year: 1962
+  title: One-level storage system
+  venue: IRE Transactions on Electronic Computers EC-11(2), 223–235
+  url: https://doi.org/10.1109/TEC.1962.5219356

@@ -15,9 +15,9 @@
   const where = $derived(findEntry('chapter', exhibit.chapter));
 </script>
 
-<aside class="exhibit" class:compact aria-label="Bug museum exhibit: {exhibit.title}">
+<aside class="exhibit" class:compact aria-label="Museum exhibit: {exhibit.title}">
   <div class="plate ui">
-    <span class="label">Bug museum</span>
+    <span class="label">From the museum</span>
     <span class="year num">{exhibit.year}</span>
   </div>
   <div class="body">
@@ -28,7 +28,7 @@
       {#if exhibit.simplification}<span class="simp">Simplified: {exhibit.simplification}</span>{/if}
     </p>
   </div>
-  <div class="stamp ui" class:on={caught} aria-live="polite">{caught ? '✓ caught' : 'not yet caught'}</div>
+  <div class="stamp ui" class:on={caught} aria-live="polite">{caught ? '✓ re-enacted' : 'not yet re-enacted'}</div>
 </aside>
 
 <style>
