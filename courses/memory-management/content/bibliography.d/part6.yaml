@@ -13,3 +13,13 @@ jones2023:
   year: 2023
   title: 'The Garbage Collection Handbook: The Art of Automatic Memory Management, second edition'
   venue: CRC Press
+fenichel1969:
+  authors: Robert R. Fenichel and Jerome C. Yochelson
+  year: 1969
+  title: A LISP garbage-collector for virtual-memory computer systems
+  venue: Communications of the ACM 12(11), 611–612
+cheney1970:
+  authors: C. J. Cheney
+  year: 1970
+  title: A nonrecursive list compacting algorithm
+  venue: Communications of the ACM 13(11), 677–678
