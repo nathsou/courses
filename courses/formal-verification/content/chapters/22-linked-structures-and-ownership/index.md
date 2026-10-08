@@ -231,6 +231,10 @@ options:
 
 Ownership types give the frame for free. A function that takes `&mut x` cannot touch any object it was not handed, and the caller's other objects are untouched without any assertion saying so. That is chapter 21's frame rule, built into the type checker.
 
+:::bridge{course=memory-management chapter=ownership}
+*Memory Management* looks at ownership from the other side: as a way of deciding when memory is freed. Its chapter on ownership runs one program under single ownership, moves and borrows, and compares it with `malloc` and `free`, reference counting and garbage collection.
+:::
+
 ## Verifying Rust
 
 Several verifiers use this: the type checker has already proved the separation, so specifications need only talk about values.

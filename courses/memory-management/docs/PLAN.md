@@ -11,6 +11,32 @@ counting and tracing garbage collection. Everything on screen runs on a machine,
 set of memory managers written for the course, in TypeScript in the browser. Every run is recorded as a
 trace, so the course knows when each object was really last used and can show how close each strategy came.
 
+## Status (October 2026)
+
+**Complete.** All 29 chapters (0–28), the six part essays, appendices A–H, the museum (11 exhibits), the
+timeline (63 events), a glossary of 133 terms and the lab bench are written and published. Every chapter has at
+least one exercise; every build and Mote exercise is checked by the test suite (solution passes, starter fails),
+and the find-the-bug exercises are checked against the VM’s oracle. The *in progress* marks are removed from the
+README and the collection’s home page, and For All Inputs links back from its chapters 2 and 22.
+
+Where the course differs from this plan, the plan below is kept as written and the difference is recorded here:
+
+- **Mote** has structs, arrays, nullable pointers, function pointers and weak fields, but **no closures**. It
+  compiles to a **stack** VM, not a register VM. Its reference is appendix E rather than `docs/MOTE.md`.
+  Ownership is checked at run time (*use of moved value*), not by a separate checker.
+- **No swap.** Chapter 6’s replacement policies run on reference strings, apart from the kernel (appendix B).
+- **Traces are generated** with seeds, each with a provenance note; none are recorded from real programs
+  (open question 2).
+- **Rendering** is SVG and Canvas only; no ELK and no WebGL were needed. Progress lives in `localStorage`, with
+  JSON export and import; there is no IndexedDB store.
+- **Collectors in the wild** (chapter 26) compares five collector designs as toy models with stated costs, not
+  replays of the real systems.
+- **Exercise kinds**: `translate` is covered by chapter 3’s *Be the MMU* game and `layout` by chapter 1’s
+  build exercise, so neither has its own component. `debug` became the *find the bug* exercise (chapters 8
+  and 15).
+- **Optional chapters** 12, 20 and 27 shipped with the rest (open question 5). No real machine code is run
+  (open question 4, as assumed).
+
 ## 1. Positioning
 
 Several courses in the collection touch memory. None makes it the subject:

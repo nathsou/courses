@@ -47,6 +47,7 @@ export const COURSES: Record<string, CourseScheme> = {
   'digital-circuits': { title: 'Digital Circuits', chapters: () => slugsFrom('digital-circuits/content/outline.ts'), href: pathRoute('digital-circuits') },
   'particle-physics': { title: 'Particle Physics', chapters: () => slugsFrom('particle-physics/content/outline.ts'), href: pathRoute('particle-physics') },
   'language-models': { title: 'Language Models from Scratch', chapters: () => slugsFrom('language-models/course/content/outline.ts'), href: pathRoute('language-models') },
+  'memory-management': { title: 'Memory Management', chapters: () => slugsFrom('memory-management/content/outline.ts'), href: pathRoute('memory-management') },
 };
 
 const cache = new Map<string, Set<string>>();

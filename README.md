@@ -17,7 +17,7 @@ A collection of interactive textbooks. The [course index](site/index.html) links
 | Mandarin, Out Loud | `courses/mandarin/` | `/mandarin/` |
 | Human Evolution | `courses/human-evolution/` | `/human-evolution/` |
 | For All Inputs: formal verification from SAT solvers to verified systems | `courses/formal-verification/` | `/formal-verification/` |
-| Memory Management *(in progress)* | `courses/memory-management/` | `/memory-management/` |
+| Memory Management | `courses/memory-management/` | `/memory-management/` |
 
 Every course has an “All courses” link beside its contents and a compact contents toggle in its own header or drawer handle. Sidebars collapse on desktop and open as drawers on smaller screens; each course remembers its desktop preference. The shared navigation lives in `packages/course-navigation/`.
 
