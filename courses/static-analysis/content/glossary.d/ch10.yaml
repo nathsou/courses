@@ -1,0 +1,12 @@
+interceptor:
+  term: interceptor
+  definition: "A function that receives every report of a wrapped rule and decides what to report instead: the same, a changed version, or nothing. SonarJS's interceptReport builds decorated rules from one."
+  chapter: standing-on-other-rules
+false-positive class:
+  term: false-positive class
+  definition: "A recognisable pattern of code on which a rule's check is satisfied but its issue is not worth raising, removed from the rule with a precise condition."
+  chapter: standing-on-other-rules
+external issue:
+  term: external issue
+  definition: "An issue imported into SonarQube from a report produced by another tool, such as an ESLint JSON report, as opposed to one raised by SonarJS's own analysis."
+  chapter: standing-on-other-rules

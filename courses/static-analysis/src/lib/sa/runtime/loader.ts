@@ -5,6 +5,8 @@
  */
 import ts from 'typescript';
 import * as regexpp from '@eslint-community/regexpp';
+import { Linter } from 'eslint/universal';
+import type { Rule } from 'eslint';
 import { KIT_MODULES } from '../kit/index.js';
 
 export class LoadError extends Error {
@@ -16,10 +18,19 @@ export class LoadError extends Error {
   }
 }
 
+let coreRules: Map<string, Rule.RuleModule> | undefined;
+
 const BUILTINS: Record<string, unknown> = {
   typescript: ts,
   '@eslint-community/regexpp': regexpp,
   eslint: {},
+  // ESLint's core rules, as SonarJS gets them to decorate or run them as external rules (chapter 10).
+  'eslint/use-at-your-own-risk': {
+    get builtinRules(): Map<string, Rule.RuleModule> {
+      coreRules ??= new Linter({ configType: 'eslintrc' }).getRules();
+      return coreRules;
+    },
+  },
   estree: {},
   '@typescript-eslint/types': {},
 };

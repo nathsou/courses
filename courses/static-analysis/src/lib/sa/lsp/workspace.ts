@@ -23,7 +23,11 @@ const TYPES = import.meta.glob(
 
 /** Minimal package.json files so that `import … from 'eslint'` resolves to the declarations above. */
 const PACKAGES: Record<string, string> = {
-  '/node_modules/eslint/package.json': JSON.stringify({ name: 'eslint', types: 'lib/types/index.d.ts' }),
+  '/node_modules/eslint/package.json': JSON.stringify({
+    name: 'eslint',
+    types: 'lib/types/index.d.ts',
+    exports: { '.': { types: './lib/types/index.d.ts' }, './use-at-your-own-risk': { types: './lib/types/use-at-your-own-risk.d.ts' } },
+  }),
   '/node_modules/@eslint/core/package.json': JSON.stringify({ name: '@eslint/core', types: 'dist/esm/types.d.ts' }),
   '/node_modules/@types/estree/package.json': JSON.stringify({ name: '@types/estree', types: 'index.d.ts' }),
   '/node_modules/@types/json-schema/package.json': JSON.stringify({ name: '@types/json-schema', types: 'index.d.ts' }),
