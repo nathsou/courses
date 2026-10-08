@@ -1,0 +1,56 @@
+- year: 1960
+  lane: reference-counting
+  title: Reference counts
+  people: George E. Collins
+  chapter: counting-references
+  text: Each list cell keeps a count of the references to it and is erased when the count reaches zero.
+  cite: [collins1960]
+- year: 1976
+  lane: reference-counting
+  title: Deferred reference counting
+  people: L. Peter Deutsch, Daniel G. Bobrow
+  chapter: fast-reference-counting
+  text: References from the stack are not counted; a zero-count table holds candidates until the stack is scanned.
+  cite: [deutsch1976]
+- year: 1990
+  lane: reference-counting
+  title: Cyclic reference counting with local mark-scan
+  people: A. D. Martínez, R. Wachenchauzer, R. D. Lins
+  chapter: cycles
+  text: Subtract internal references from a suspect’s subgraph to find garbage cycles.
+  cite: [martinez1990]
+- year: 2001
+  lane: reference-counting
+  title: Concurrent cycle collection
+  people: David F. Bacon, V. T. Rajan
+  chapter: cycles
+  text: Trial deletion with candidate roots, run concurrently with the program in a Java virtual machine.
+  cite: [bacon2001]
+- year: 2001
+  lane: reference-counting
+  title: Coalescing count updates
+  people: Yossi Levanoni, Erez Petrank
+  chapter: fast-reference-counting
+  text: Only the first and last values of a field between collections change any count.
+  cite: [levanoni2001]
+- year: 2018
+  lane: reference-counting
+  title: Biased reference counting
+  people: Jiho Choi, Thomas Shull, Josep Torrellas
+  chapter: fast-reference-counting
+  text: The owning thread updates a local count without atomic instructions.
+  cite: [choi2018]
+- year: 2021
+  lane: reference-counting
+  title: Perceus
+  people: Alex Reinking, Ningning Xie, Leonardo de Moura, Daan Leijen
+  chapter: fast-reference-counting
+  text: Garbage-free reference counting with reuse, for functional programs that update in place.
+  cite: [reinking2021]
+- year: 2022
+  lane: reference-counting
+  title: Immortal objects in CPython
+  people: Eric Snow, Eddie Elizondo
+  chapter: fast-reference-counting
+  text: Objects whose count never changes, so that they can be truly immutable (Python 3.12).
+  cite: [pep683]

@@ -62,3 +62,37 @@ python-weakref:
   title: weakref, weak references
   venue: Python standard library documentation
   url: https://docs.python.org/3/library/weakref.html
+deutsch1976:
+  authors: L. Peter Deutsch and Daniel G. Bobrow
+  year: 1976
+  title: An efficient, incremental, automatic garbage collector
+  venue: Communications of the ACM 19(9), 522–526
+levanoni2001:
+  authors: Yossi Levanoni and Erez Petrank
+  year: 2001
+  title: An on-the-fly reference counting garbage collector for Java
+  venue: Proceedings of OOPSLA 2001
+choi2018:
+  authors: Jiho Choi, Thomas Shull and Josep Torrellas
+  year: 2018
+  title: 'Biased reference counting: minimizing atomic operations in garbage collection'
+  venue: PACT 2018
+  url: https://dl.acm.org/doi/abs/10.1145/3243176.3243195
+pep703:
+  authors: Sam Gross
+  year: 2023
+  title: 'PEP 703: making the global interpreter lock optional in CPython'
+  venue: Python Enhancement Proposals
+  url: https://peps.python.org/pep-0703/
+pep683:
+  authors: Eric Snow and Eddie Elizondo
+  year: 2022
+  title: 'PEP 683: immortal objects, using a fixed refcount'
+  venue: Python Enhancement Proposals (Python 3.12)
+  url: https://peps.python.org/pep-0683/
+reinking2021:
+  authors: Alex Reinking, Ningning Xie, Leonardo de Moura and Daan Leijen
+  year: 2021
+  title: 'Perceus: garbage free reference counting with reuse'
+  venue: PLDI 2021; extended version MSR-TR-2020-42
+  url: https://www.microsoft.com/en-us/research/publication/perceus-garbage-free-reference-counting-with-reuse/
