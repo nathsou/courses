@@ -60,6 +60,7 @@ export type VmEvent =
   | { t: number; kind: 'uaf'; addr: number; was: number; now?: number; pos: Pos; write: boolean }
   | { t: number; kind: 'double-free'; addr: number; was: number; pos: Pos }
   | { t: number; kind: 'invalid-free'; addr: number; pos: Pos }
+  | { t: number; kind: 'overflow'; addr: number; arr: number; index: number; length: number; pos: Pos; write: boolean }
   | { t: number; kind: 'gc'; label: string; freed: number; pause: number; live: number }
   | { t: number; kind: 'note'; text: string };
 
@@ -163,6 +164,10 @@ export class Vm {
 
   typeOf(obj: number): TypeInfo {
     const t = this.c.types[Math.floor(this.heap.peek(obj + HDR) / 16)];
+    if (t) return t;
+    // A header overwritten by an overflow (unchecked settings): the oracle still knows what the object was.
+    const r = this.record(obj);
+    if (r) return this.c.types[r.type]!;
     if (!t) throw new HeapError(`0x${obj.toString(16)} does not hold an object header (type ${Math.floor(this.heap.peek(obj + HDR) / 16)})`);
     return t;
   }
@@ -637,8 +642,11 @@ export class Vm {
         this.ptrCheck(arr, pos, op === 'GETI' ? 'index' : 'indexed write');
         this.use(arr, pos, op === 'SETI', ins!.ty);
         const len = this.heap.load64(arr + FIELDS);
-        if ((i < 0 || i >= len) && !this.manager.unchecked) this.fail(`index ${i} is out of bounds for an array of length ${len}`, pos);
         const slot = arr + FIELDS + 8 + i * 8;
+        if (i < 0 || i >= len) {
+          this.events.push({ t: this.time, kind: 'overflow', addr: slot, arr, index: i, length: len, pos, write: op === 'SETI' });
+          if (!this.manager.unchecked) this.fail(`index ${i} is out of bounds for an array of length ${len}`, pos);
+        }
         if (op === 'GETI') {
           const x = this.heap.load64(slot);
           if (a && own && x) this.heap.store64(slot, 0);

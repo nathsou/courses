@@ -1,0 +1,54 @@
+zlib2002:
+  authors: Mark Adler and Jean-loup Gailly
+  year: 2002
+  title: 'Zlib advisory 2002-03-11: zlib compression library corrupts malloc data structures via double free'
+  venue: zlib.net
+  url: https://www.zlib.net/advisory-2002-03-11.txt
+openssl2014:
+  authors: OpenSSL Project
+  year: 2014
+  title: 'OpenSSL security advisory: TLS heartbeat read overrun (CVE-2014-0160)'
+  venue: 7 April 2014
+  url: https://www.openssl.org/news/secadv/20140407.txt
+codenomicon2014:
+  authors: Codenomicon
+  year: 2014
+  title: The Heartbleed bug
+  venue: heartbleed.com
+  url: https://heartbleed.com/
+rfc6520:
+  authors: Robin Seggelmann, Michael Tüxen and Michael Williams
+  year: 2012
+  title: 'Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS) heartbeat extension'
+  venue: RFC 6520
+  url: https://www.rfc-editor.org/rfc/rfc6520
+chrome2019release:
+  authors: Google Chrome Releases
+  year: 2019
+  title: Stable channel update for desktop (CVE-2019-5786, use-after-free in FileReader)
+  venue: Chrome Releases blog, March 2019
+  url: https://chromereleases.googleblog.com/2019/03/stable-channel-update-for-desktop.html
+lecigne2019:
+  authors: Clement Lecigne
+  year: 2019
+  title: Disclosing vulnerabilities to protect users across platforms
+  venue: Google Online Security Blog, 7 March 2019
+  url: https://security.googleblog.com/2019/03/disclosing-vulnerabilities-to-protect.html
+msrc2019:
+  authors: Microsoft Security Response Center
+  year: 2019
+  title: We need a safer systems programming language
+  venue: MSRC blog, 18 July 2019
+  url: https://www.microsoft.com/en-us/msrc/blog/2019/07/we-need-a-safer-systems-programming-language
+chromium-memory-safety:
+  authors: The Chromium Projects
+  year: n.d.
+  title: Memory safety
+  venue: chromium.org
+  url: https://www.chromium.org/Home/chromium-security/memory-safety/
+vanderstoep2024:
+  authors: Jeff Vander Stoep and Alex Rebert
+  year: 2024
+  title: Eliminating memory safety vulnerabilities at the source
+  venue: Google Online Security Blog, 25 September 2024
+  url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html

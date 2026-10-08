@@ -7,3 +7,5 @@ export { default as HeapInspector } from '$lib/components/heap/HeapInspector.sve
 export { default as Scoreboard } from '$lib/components/heap/Scoreboard.svelte';
 /** The lab bench: `::lab-bench` (chapter 14; also the whole of /lab). */
 export { default as LabBench } from '$lib/components/heap/LabBench.svelte';
+/** The zoo: `:::zoo-run{title="…" checks}` with a ```mote block inside (chapters 15 and 16). */
+export { default as ZooRun } from '$lib/components/zoo/ZooRun.svelte';
