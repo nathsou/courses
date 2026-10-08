@@ -94,3 +94,61 @@ watson2019:
   title: An introduction to CHERI
   venue: University of Cambridge Computer Laboratory, technical report UCAM-CL-TR-941
   url: https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.pdf
+stroustrup-faq:
+  authors: Bjarne Stroustrup
+  year: n.d.
+  title: 'C++ style and technique FAQ: why doesn’t C++ provide a “finally” construct?'
+  venue: stroustrup.com
+  url: https://www.stroustrup.com/bs_faq2.html
+rustbook-ownership:
+  authors: Steve Klabnik and Carol Nichols
+  year: n.d.
+  title: 'The Rust Programming Language, chapter 4.1: What is ownership?'
+  venue: doc.rust-lang.org
+  url: https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html
+rustbook-references:
+  authors: Steve Klabnik and Carol Nichols
+  year: n.d.
+  title: 'The Rust Programming Language, chapter 4.2: References and borrowing'
+  venue: doc.rust-lang.org
+  url: https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
+rust-destructors:
+  authors: The Rust Reference
+  year: n.d.
+  title: Destructors
+  venue: doc.rust-lang.org
+  url: https://doc.rust-lang.org/reference/destructors.html
+rust2015:
+  authors: The Rust Core Team
+  year: 2015
+  title: Announcing Rust 1.0
+  venue: Rust Blog, 15 May 2015
+  url: https://blog.rust-lang.org/2015/05/15/Rust-1.0/
+gofaq:
+  authors: The Go Authors
+  year: n.d.
+  title: 'Frequently asked questions: how do I know whether a variable is allocated on the heap or the stack?'
+  venue: go.dev
+  url: https://go.dev/doc/faq#stack_or_heap
+grossman2002:
+  authors: Dan Grossman, Greg Morrisett, Trevor Jim, Michael Hicks, Yanling Wang and James Cheney
+  year: 2002
+  title: Region-based memory management in Cyclone
+  venue: Proceedings of PLDI 2002
+rust-influences:
+  authors: The Rust Reference
+  year: n.d.
+  title: Influences
+  venue: doc.rust-lang.org
+  url: https://doc.rust-lang.org/reference/influences.html
+hastings1992:
+  authors: Reed Hastings and Bob Joyce
+  year: 1992
+  title: 'Purify: fast detection of memory leaks and access errors'
+  venue: Proceedings of the Winter 1992 USENIX Conference, 125–136
+oncd2024:
+  authors: The White House Office of the National Cyber Director
+  year: 2024
+  title: 'Back to the building blocks: a path toward secure and measurable software'
+  venue: press release and technical report, 26 February 2024
+  url: https://bidenwhitehouse.archives.gov/oncd/briefing-room/2024/02/26/press-release-technical-report/

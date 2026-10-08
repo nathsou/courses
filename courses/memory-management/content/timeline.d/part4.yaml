@@ -1,0 +1,58 @@
+- year: 1987
+  lane: safety
+  title: Electric Fence
+  people: Bruce Perens
+  chapter: catching-them
+  text: A malloc debugger that puts an inaccessible page after every block; in use at Pixar from 1987.
+  cite: [efence]
+- year: 1992
+  lane: safety
+  title: Purify
+  people: Reed Hastings, Bob Joyce
+  chapter: catching-them
+  text: Checks inserted into compiled programs catch memory leaks and access errors.
+  cite: [hastings1992]
+- year: 2002
+  lane: failures
+  title: zlib’s double free
+  chapter: the-error-zoo
+  text: A crafted compressed stream makes the ubiquitous library free memory twice.
+  cite: [zlib2002]
+- year: 2002
+  lane: ownership
+  title: Regions in Cyclone
+  people: Dan Grossman and colleagues
+  chapter: ownership
+  text: Checked region-based memory management for a safe dialect of C.
+  cite: [grossman2002]
+- year: 2012
+  lane: safety
+  title: AddressSanitizer
+  people: Konstantin Serebryany, Derek Bruening, Alexander Potapenko, Dmitry Vyukov
+  chapter: catching-them
+  text: Shadow memory, redzones and a quarantine, at an average slowdown of 73%.
+  cite: [serebryany2012]
+- year: 2014
+  lane: failures
+  title: Heartbleed
+  chapter: the-error-zoo
+  text: A missing bounds check in OpenSSL reveals up to 64 KiB of server memory per heartbeat.
+  cite: [openssl2014]
+- year: 2015
+  lane: ownership
+  title: Rust 1.0
+  chapter: ownership
+  text: Ownership and borrowing, checked at compile time, in a systems language without a garbage collector.
+  cite: [rust2015]
+- year: 2019
+  lane: failures
+  title: Chrome’s FileReader use-after-free
+  chapter: the-error-zoo
+  text: A use-after-free exploited in the wild, chained with a Windows kernel bug.
+  cite: [chrome2019release, lecigne2019]
+- year: 2024
+  lane: safety
+  title: Memory safety becomes policy
+  chapter: the-error-zoo
+  text: The White House calls for memory-safe languages; Android’s share of memory-safety bugs falls to 24%.
+  cite: [oncd2024, vanderstoep2024]

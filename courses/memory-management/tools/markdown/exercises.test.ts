@@ -41,3 +41,21 @@ describe('Build exercises: the solution passes, the starter does not', () => {
   }
   if (!n) test.skip('no exercises yet', () => {});
 });
+
+describe('Mote exercises: the solution passes every check, the starter does not', async () => {
+  const { checkMote } = await import('../../src/lib/mm/mote/task');
+  let n = 0;
+  for (const ch of chapters) {
+    const md = readFileSync(path.join(root, ch, 'index.md'), 'utf8');
+    for (const m of md.matchAll(/^```mote-task\n([\s\S]*?)^```$/gm)) {
+      const ex = YAML.parse(m[1]!) as { id?: string; title?: string; setting: never; starter: string; solution: string; expect?: string[]; leaks?: boolean };
+      n++;
+      test(`${ch}: ${ex.title ?? ex.id ?? n}`, () => {
+        const good = checkMote(ex.solution, ex);
+        expect(good.checks.filter((c) => !c.passed).map((c) => `${c.name}: ${c.detail}`)).toEqual([]);
+        expect(checkMote(ex.starter, ex).ok).toBe(false);
+      });
+    }
+  }
+  if (!n) test.skip('no Mote exercises yet', () => {});
+});

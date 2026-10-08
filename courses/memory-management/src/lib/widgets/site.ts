@@ -9,3 +9,5 @@ export { default as Scoreboard } from '$lib/components/heap/Scoreboard.svelte';
 export { default as LabBench } from '$lib/components/heap/LabBench.svelte';
 /** The zoo: `:::zoo-run{title="…" checks}` with a ```mote block inside (chapters 15 and 16). */
 export { default as ZooRun } from '$lib/components/zoo/ZooRun.svelte';
+/** Lifetime bars: `:::lifetime-bars{title="…" setting="ownership"}` with a ```mote block inside (chapter 17). */
+export { default as LifetimeBars } from '$lib/components/zoo/LifetimeBars.svelte';
