@@ -1,6 +1,6 @@
 ---
 title: malloc
-summary: From Knuth’s boundary tags to thread caches: sixty years of allocators, and the surprising difficulty of measuring them.
+summary: From Knuth’s boundary tags to thread caches, sixty years of allocators and the surprising difficulty of measuring them.
 number: III
 ---
 

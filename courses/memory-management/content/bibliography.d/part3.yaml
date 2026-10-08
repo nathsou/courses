@@ -116,4 +116,4 @@ kernighan1988:
   authors: Brian W. Kernighan and Dennis M. Ritchie
   year: 1988
   title: The C Programming Language, second edition
-  venue: Prentice Hall (section 8.7, Example: a storage allocator)
+  venue: 'Prentice Hall (section 8.7, Example: a storage allocator)'
