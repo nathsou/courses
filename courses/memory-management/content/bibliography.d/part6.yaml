@@ -49,3 +49,33 @@ henderson2002:
   year: 2002
   title: Accurate garbage collection in an uncooperative environment
   venue: Proceedings of ISMM 2002
+steele1975:
+  authors: Guy L. Steele Jr.
+  year: 1975
+  title: Multiprocessing compactifying garbage collection
+  venue: Communications of the ACM 18(9), 495–508
+yuasa1990:
+  authors: Taiichi Yuasa
+  year: 1990
+  title: Real-time garbage collection on general-purpose machines
+  venue: Journal of Systems and Software 11(3), 181–198
+baker1978:
+  authors: Henry G. Baker Jr.
+  year: 1978
+  title: List processing in real time on a serial computer
+  venue: Communications of the ACM 21(4), 280–294
+brooks1984:
+  authors: Rodney A. Brooks
+  year: 1984
+  title: Trading data space for reduced time and code space in real-time garbage collection on stock hardware
+  venue: Proceedings of the 1984 ACM Symposium on LISP and Functional Programming
+cheng2001:
+  authors: Perry Cheng and Guy E. Blelloch
+  year: 2001
+  title: A parallel, real-time garbage collector
+  venue: Proceedings of PLDI 2001
+bacon2003:
+  authors: David F. Bacon, Perry Cheng and V. T. Rajan
+  year: 2003
+  title: A real-time garbage collector with low overhead and consistent utilization
+  venue: Proceedings of POPL 2003

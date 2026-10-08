@@ -16,6 +16,7 @@ import * as buddy from '../mm/kernel/buddy';
 import * as replace from '../mm/kernel/replace';
 import * as gc from '../mm/managers/gcapi';
 import * as benchMod from '../mm/check/bench';
+import * as explore from '../mm/explore/tricolour';
 
 export const LIBRARY: Record<string, unknown> = {
   '@mm/heap': { ...heapApi, ...words, WORD: allocators.WORD, ALIGN: allocators.ALIGN, MIN_BLOCK: allocators.MIN_BLOCK, align: allocators.align, pack: allocators.pack, blockSize: allocators.blockSize },
@@ -28,6 +29,7 @@ export const LIBRARY: Record<string, unknown> = {
   '@mm/replace': replace,
   '@mm/gc': gc,
   '@mm/bench': benchMod,
+  '@mm/explore': explore,
 };
 
 /** Lines added by `new Function` before the module body (for mapping stack traces). */

@@ -49,8 +49,8 @@
   const cols = $derived(Math.max(1, ...nodes.map((n) => n.col + 1)));
   const rows = $derived(Math.max(1, ...nodes.map((n) => n.row + 1), ...roots.map((r) => r.row + 1)));
   const W = $derived(ROOTW + 30 + cols * COLW);
-  const H = $derived(height ?? rows * ROWH + 10);
-  const pos = (n: GNode) => ({ x: ROOTW + 30 + n.col * COLW, y: 6 + n.row * ROWH });
+  const H = $derived(height ?? rows * ROWH + 34);
+  const pos = (n: GNode) => ({ x: ROOTW + 30 + n.col * COLW, y: 30 + n.row * ROWH });
   const byId = $derived(new Map(nodes.map((n) => [n.id, n])));
 
   function path(a: { x: number; y: number }, b: { x: number; y: number }, self = false): string {
@@ -64,6 +64,11 @@
       const yb = Math.max(a.y, b.y) + NH + 12;
       return `M ${a.x + NW / 2} ${a.y + NH} C ${a.x + NW / 2} ${yb + 20}, ${b.x + NW / 2} ${yb + 20}, ${b.x + NW / 2} ${b.y + NH + 2}`;
     }
+    if (b.x - a.x > COLW + 10 && Math.abs(a.y - b.y) < 5) {
+      // Skipping over a column on the same row: arc over the top so as not to pass behind the cards in between.
+      const top = a.y - 26;
+      return `M ${a.x + NW - 16} ${a.y} C ${a.x + NW} ${top}, ${b.x + 16} ${top}, ${b.x + 24} ${b.y - 1}`;
+    }
     const dx = Math.max(30, (x2 - x1) / 2);
     return `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${(x2 = x2 - 2)} ${y2}`;
   }
@@ -75,7 +80,7 @@
     <marker id="og-arrow-dead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah dead" /></marker>
   </defs>
   {#each roots as r (r.name)}
-    {@const y = 6 + r.row * ROWH}
+    {@const y = 30 + r.row * ROWH}
     <g class="root">
       <rect x="2" y={y + 8} width={ROOTW} height={NH - 16} rx="5" />
       <text x={ROOTW / 2 + 2} y={y + NH / 2 + 4} text-anchor="middle">{r.name}</text>
