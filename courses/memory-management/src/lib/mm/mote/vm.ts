@@ -91,6 +91,8 @@ export interface Manager {
   onSafepoint?(): void;
   collect?(reason: string): void;
   atExit?(): void;
+  /** A load or store of the word at `addr`, reached through a pointer to `obj` (detectors check it; may throw). */
+  access?(obj: number, addr: number, write: boolean, pos: Pos): void;
   /** Words of heap in use and capacity, for the dashboard. */
   usage?(): { used: number; capacity: number };
 }
@@ -610,6 +612,7 @@ export class Vm {
         this.ptrCheck(obj, pos, 'field read');
         this.use(obj, pos, false, ins!.ty);
         const slot = obj + FIELDS + a * 8;
+        this.manager.access?.(obj, slot, false, pos);
         const v = this.heap.load64(slot);
         if (b && own && v) this.heap.store64(slot, 0);
         this.push(v);
@@ -621,6 +624,7 @@ export class Vm {
         this.ptrCheck(obj, pos, 'field write');
         this.use(obj, pos, true, ins!.ty);
         const slot = obj + FIELDS + a * 8;
+        this.manager.access?.(obj, slot, true, pos);
         const old = this.heap.load64(slot);
         this.heap.store64(slot, v);
         const t = this.byAddr.has(obj) ? this.typeOf(obj) : undefined;
@@ -641,12 +645,14 @@ export class Vm {
         const arr = this.pop();
         this.ptrCheck(arr, pos, op === 'GETI' ? 'index' : 'indexed write');
         this.use(arr, pos, op === 'SETI', ins!.ty);
+        this.manager.access?.(arr, arr + FIELDS, false, pos);
         const len = this.heap.load64(arr + FIELDS);
         const slot = arr + FIELDS + 8 + i * 8;
         if (i < 0 || i >= len) {
           this.events.push({ t: this.time, kind: 'overflow', addr: slot, arr, index: i, length: len, pos, write: op === 'SETI' });
           if (!this.manager.unchecked) this.fail(`index ${i} is out of bounds for an array of length ${len}`, pos);
         }
+        this.manager.access?.(arr, slot, op === 'SETI', pos);
         if (op === 'GETI') {
           const x = this.heap.load64(slot);
           if (a && own && x) this.heap.store64(slot, 0);
@@ -666,6 +672,7 @@ export class Vm {
         const arr = this.pop();
         this.ptrCheck(arr, pos, 'length');
         this.use(arr, pos, false);
+        this.manager.access?.(arr, arr + FIELDS, false, pos);
         this.push(this.heap.load64(arr + FIELDS));
         break;
       }

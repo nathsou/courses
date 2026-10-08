@@ -52,3 +52,45 @@ vanderstoep2024:
   title: Eliminating memory safety vulnerabilities at the source
   venue: Google Online Security Blog, 25 September 2024
   url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
+efence:
+  authors: Bruce Perens
+  year: n.d.
+  title: efence(3), Electric Fence malloc debugger
+  venue: manual page
+  url: https://linux.die.net/man/3/efence
+valgrind-quickstart:
+  authors: Valgrind developers
+  year: n.d.
+  title: The Valgrind quick start guide
+  venue: valgrind.org
+  url: https://valgrind.org/docs/manual/quick-start.html
+valgrind-memcheck:
+  authors: Valgrind developers
+  year: n.d.
+  title: 'Memcheck: a memory error detector'
+  venue: Valgrind user manual, chapter 4
+  url: https://valgrind.org/docs/manual/mc-manual.html
+serebryany2012:
+  authors: Konstantin Serebryany, Derek Bruening, Alexander Potapenko and Dmitry Vyukov
+  year: 2012
+  title: 'AddressSanitizer: a fast address sanity checker'
+  venue: USENIX Annual Technical Conference (ATC 12)
+  url: https://www.usenix.org/system/files/conference/atc12/atc12-final39.pdf
+glibc-malloc-c:
+  authors: GNU C Library contributors
+  year: n.d.
+  title: malloc/malloc.c (safe-linking and tcache checks)
+  venue: glibc source code
+  url: https://sourceware.org/git/?p=glibc.git;a=blob;f=malloc/malloc.c
+linux-mte:
+  authors: The Linux kernel documentation
+  year: n.d.
+  title: Memory Tagging Extension (MTE) in AArch64 Linux
+  venue: kernel.org
+  url: https://www.kernel.org/doc/html/latest/arch/arm64/memory-tagging-extension.html
+watson2019:
+  authors: Robert N. M. Watson, Simon W. Moore, Peter Sewell and Peter G. Neumann
+  year: 2019
+  title: An introduction to CHERI
+  venue: University of Cambridge Computer Laboratory, technical report UCAM-CL-TR-941
+  url: https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.pdf
