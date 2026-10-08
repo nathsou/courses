@@ -23,3 +23,13 @@ cheney1970:
   year: 1970
   title: A nonrecursive list compacting algorithm
   venue: Communications of the ACM 13(11), 677–678
+lieberman1983:
+  authors: Henry Lieberman and Carl Hewitt
+  year: 1983
+  title: A real-time garbage collector based on the lifetimes of objects
+  venue: Communications of the ACM 26(6), 419–429
+ungar1984:
+  authors: David Ungar
+  year: 1984
+  title: 'Generation scavenging: a non-disruptive high performance storage reclamation algorithm'
+  venue: ACM SIGSOFT/SIGPLAN Software Engineering Symposium on Practical Software Development Environments

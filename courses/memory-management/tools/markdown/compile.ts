@@ -97,7 +97,7 @@ const BUILTIN_BLOCKS: Record<string, string> = {
   hint: 'Hint',
 };
 /** Directives whose first code block is passed to the widget as `code` (the rest is its caption). */
-const CODE_WIDGETS = new Set(['mote-run', 'dial', 'stack-stepper', 'stack-map-viewer', 'lifetime-bars', 'rc-stepper', 'zoo-run', 'full-stack']);
+const CODE_WIDGETS = new Set(['mote-run', 'dial', 'stack-stepper', 'stack-map-viewer', 'lifetime-bars', 'rc-stepper', 'zoo-run', 'full-stack', 'generations']);
 const THEOREM_KINDS = new Set(['theorem', 'lemma', 'corollary', 'proposition', 'conjecture', 'claim']);
 /** Exercise blocks (PLAN §5): fenced YAML compiled to a component. */
 const EXERCISE_BLOCKS: Record<string, string> = {
