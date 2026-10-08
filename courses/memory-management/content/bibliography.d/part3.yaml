@@ -112,3 +112,8 @@ bryant2016:
   year: 2016
   title: 'Computer Systems: A Programmer’s Perspective, third edition'
   venue: Pearson (section 9.9, Dynamic memory allocation)
+kernighan1988:
+  authors: Brian W. Kernighan and Dennis M. Ritchie
+  year: 1988
+  title: The C Programming Language, second edition
+  venue: Prentice Hall (section 8.7, Example: a storage allocator)
