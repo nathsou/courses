@@ -39,7 +39,7 @@ id: fast-allocators/tcache
 title: A thread cache
 storage: true
 prompt: |
-  Wrap the segregated-fits allocator from chapter 11 in a cache of recently freed blocks, as glibc’s tcache does. Blocks of 32, 48, …, 144 bytes (eight classes) get one LIFO list each, holding at most 7 blocks. The list heads and counts live in a small table in the heap, allocated from the inner allocator on first use. Complete the fast paths in `malloc` and `free`: pop from or push onto the class’s list. The tests replay traces through the checker, require a clear speed-up over the plain segregated allocator on the *Compiler* trace, and check that the cache really is bounded.
+  Wrap the segregated-fits allocator from chapter 11 in a cache of recently freed blocks, as glibc’s tcache does. Blocks of 32, 48, …, 144 bytes (eight classes) get one LIFO list each, holding at most 7 blocks. The list heads and counts live in a small table in the heap, allocated from the inner allocator on first use. Complete the fast paths in `malloc` and `free`: pop from or push onto the class’s list. The tests replay traces through the checker, require a clear speed-up over the plain segregated allocator on the *Compiler pass* trace, and check that the cache really is bounded.
 starter: |
   import type { Heap } from '@mm/heap';
   import { segregated } from '@mm/allocators';
@@ -163,7 +163,7 @@ hints:
   - "To pop: `p = load64(head(k))`, then `store64(head(k), load64(p))`. To push: `store64(p, load64(head(k)))`, then `store64(head(k), p)`."
 ```
 
-In the course’s cost model, the solution roughly halves the cycles per operation on the *Compiler* trace and cuts them by about a third on *Server*: those programs free and reallocate the same few sizes constantly, so most calls never reach the inner allocator. On *Trees*, which builds everything before freeing anything, and on *Phases*, the cache makes almost no difference. A cache only helps if blocks come back before they are wanted again.
+In the course’s cost model, the solution roughly halves the cycles per operation on the *Compiler pass* trace and cuts them by about a third on *Request server*: those programs free and reallocate the same few sizes constantly, so most calls never reach the inner allocator. On *Binary trees*, which builds everything before freeing anything, and on *Phases*, the cache makes almost no difference. A cache only helps if blocks come back before they are wanted again.
 
 ## False sharing
 

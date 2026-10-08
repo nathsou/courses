@@ -184,7 +184,7 @@ export const TRACE_BANK: AllocTrace[] = [
   { id: 'compiler', name: 'Compiler pass', description: 'Many small temporaries, a few long-lived tables.', provenance: 'Generated (seed 3), in the shape of an AST pass.', ops: compilerTrace() },
   { id: 'server', name: 'Request server', description: 'Bursts of buffers freed when each request ends.', provenance: 'Generated (seed 4).', ops: serverTrace() },
   { id: 'realloc', name: 'Growing buffers', description: 'Buffers grown with realloc while small temporaries come and go.', provenance: 'Generated (seed 5).', ops: reallocTrace() },
-  { id: 'trees', name: 'Binary trees', description: 'Complete binary trees built and dropped, after Boehm’s GCBench.', provenance: 'Generated.', ops: treesTrace() },
+  { id: 'trees', name: 'Binary trees', description: 'Complete binary trees built and dropped, in the manner of the GCBench benchmark.', provenance: 'Generated.', ops: treesTrace() },
   { id: 'random', name: 'Random', description: 'Uniform random sizes and frees: the trace that misleads.', provenance: 'Generated (seed 1).', ops: randomTrace(2000) },
   { id: 'adversary', name: 'Adversary', description: 'Holes everywhere and none big enough.', provenance: 'Generated, after Robson’s worst case.', ops: adversaryTrace() },
 ];

@@ -5,3 +5,5 @@ export { default as Dial } from '$lib/components/dial/Dial.svelte';
 export { default as HeapInspector } from '$lib/components/heap/HeapInspector.svelte';
 /** The scoreboard: `::scoreboard{traces="phases,random" allocators="first,best"}`. */
 export { default as Scoreboard } from '$lib/components/heap/Scoreboard.svelte';
+/** The lab bench: `::lab-bench` (chapter 14; also the whole of /lab). */
+export { default as LabBench } from '$lib/components/heap/LabBench.svelte';

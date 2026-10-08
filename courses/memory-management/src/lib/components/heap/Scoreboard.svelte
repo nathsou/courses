@@ -10,6 +10,7 @@
   import { TRACE_BANK } from '$lib/mm/trace/trace';
   import { runTrace, type CheckReport } from '$lib/mm/check/checker';
   import type { AllocatorFactory } from '$lib/mm/heap/api';
+  import { benchCapacity } from '$lib/mm/check/bench';
 
   let {
     traces = 'phases,compiler,server,trees,random,adversary',
@@ -19,7 +20,8 @@
     n,
     extra,
     extraLabel = 'Your allocator',
-  }: { traces?: string; allocators?: string; title?: string; caption?: string; n?: string; extra?: AllocatorFactory; extraLabel?: string } = $props();
+    limit = false,
+  }: { traces?: string; allocators?: string; title?: string; caption?: string; n?: string; extra?: AllocatorFactory; extraLabel?: string; limit?: boolean } = $props();
 
   const ts = $derived(traces.split(',').map((t) => TRACE_BANK.find((x) => x.id === t.trim())!).filter(Boolean));
   const as = $derived([...allocators.split(',').map((a) => REFERENCE.find((x) => x.id === a.trim())!).filter(Boolean), ...(extra ? [{ id: 'extra', label: extraLabel, make: extra }] : [])]);
@@ -34,7 +36,7 @@
       out[a.id] = {};
       for (const t of ts) {
         await new Promise((r) => setTimeout(r, 0));
-        out[a.id]![t.id] = runTrace(a.make, t.ops, { cache: true });
+        out[a.id]![t.id] = runTrace(a.make, t.ops, { cache: true, capacity: limit ? benchCapacity(t.ops) : undefined });
       }
       rows = { ...out };
     }
@@ -46,7 +48,7 @@
     if (extra) compute();
   });
 
-  const cell = (r?: CheckReport) => (!r ? '…' : !r.ok ? '✗' : metric === 'utilisation' ? `${Math.round(r.utilisation * 100)}%` : `${Math.round(r.cyclesPerOp)}`);
+  const cell = (r?: CheckReport) => (!r ? '…' : !r.ok ? (r.failure?.kind === 'null' ? 'out of memory' : '✗') : metric === 'utilisation' ? `${Math.round(r.utilisation * 100)}%` : `${Math.round(r.cyclesPerOp)}`);
   const shade = (r?: CheckReport) => {
     if (!r || !r.ok) return 0;
     return metric === 'utilisation' ? r.utilisation : Math.max(0, 1 - Math.log10(r.cyclesPerOp) / 3.5);

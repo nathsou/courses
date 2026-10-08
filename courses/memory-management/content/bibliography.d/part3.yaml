@@ -101,3 +101,14 @@ tofte1997:
   year: 1997
   title: Region-based memory management
   venue: Information and Computation 132(2), 109–176
+cmu2001malloclab:
+  authors: Carnegie Mellon University, CS 213
+  year: 2001
+  title: 'Malloc lab: writing a dynamic storage allocator'
+  venue: course assignment, Fall 2001
+  url: http://csapp.cs.cmu.edu/3e/malloclab.pdf
+bryant2016:
+  authors: Randal E. Bryant and David R. O’Hallaron
+  year: 2016
+  title: 'Computer Systems: A Programmer’s Perspective, third edition'
+  venue: Pearson (section 9.9, Dynamic memory allocation)
