@@ -44,6 +44,7 @@
     "eslint": "9.39.5",
     "katex": "^0.18.9",
     "path-browserify": "^1.0.1",
+    "scslre": "^0.3.0",
     "typescript": "6.0.3"
   },
   "devDependencies": {

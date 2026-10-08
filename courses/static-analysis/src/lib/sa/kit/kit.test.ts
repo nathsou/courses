@@ -179,6 +179,8 @@ describe('decorators and regex', () => {
     const rule = createRegExpRule((context) => ({ onQuantifierEnter(q) { if (q.max === Infinity && (q.element.type === 'Group' || q.element.type === 'CapturingGroup')) context.reportRegExpNode({ regexpNode: q, message: `nested ${q.raw}` }); } }));
     const issues = await run("const a = /(a+)+$/;\nconst b = new RegExp('(x*)*');\nconst c = /abc/;", rule, false);
     expect(issues.map((i) => i.message)).toEqual(['nested (a+)+', 'nested (x*)*']);
+    // Precise locations: the quantifier inside the literal, and inside the string (no escapes).
+    expect(issues.map((i) => [i.line, i.column, i.endColumn])).toEqual([[1, 11, 16], [2, 22, 27]]);
   });
 
   test('type helpers', async () => {

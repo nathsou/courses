@@ -1,0 +1,20 @@
+regular language:
+  term: regular language
+  definition: "A set of strings described by a regular expression with only characters, concatenation, alternation and repetition; equivalently, recognised by a finite automaton."
+  chapter: regular-expressions
+finite automaton:
+  term: finite automaton
+  definition: "A machine with finitely many states that reads a string one character at a time. A non-deterministic one (NFA) can be in several states at once; a deterministic one (DFA) in exactly one."
+  chapter: regular-expressions
+backtracking:
+  term: backtracking
+  definition: "The matching strategy of JavaScript's regex engines: try one option, and when the rest of the pattern fails, go back to the last choice and try the next."
+  chapter: regular-expressions
+ambiguity:
+  term: ambiguity
+  definition: "Of a pattern: the number of different ways it can match a string. Exponential ambiguity makes backtracking take exponential time on failing inputs."
+  chapter: regular-expressions
+ReDoS:
+  term: ReDoS
+  definition: "Regular expression denial of service: stalling a program with an input on which one of its patterns backtracks for a very long time."
+  chapter: regular-expressions

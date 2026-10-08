@@ -10,3 +10,5 @@ export { default as ComplexityView } from '$lib/components/widgets/ComplexityVie
 export { default as FqnView } from '$lib/components/widgets/FqnView.svelte';
 /** Occurrences of names labelled with their narrowed types, with a strict switch: `:::type-view{names="a,b"}` + a ```ts block. */
 export { default as TypeView } from '$lib/components/widgets/TypeView.svelte';
+/** Backtracking steps against input length, and scslre's verdict: `:::backtrack-view{pump="a" suffix="!"}` + a ```text block. */
+export { default as BacktrackView } from '$lib/components/widgets/BacktrackView.svelte';
