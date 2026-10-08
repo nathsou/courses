@@ -1,6 +1,6 @@
 ---
 title: One allocation, all the way down
-summary: Follow one `new` from a line of code to a row of capacitors, then turn a dial and watch five memory managers disagree about when to give it back.
+summary: Follow one new from a line of code to a row of capacitors, then turn a dial and watch five memory managers disagree about when to give it back.
 number: 0
 duration: 40 minutes
 ---
