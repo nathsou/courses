@@ -33,3 +33,38 @@ lea1996:
   title: A memory allocator
   venue: unpublished article describing dlmalloc (first version 1987)
   url: https://gee.cs.oswego.edu/dl/html/malloc.html
+glibcmallocinternals:
+  authors: GNU C Library contributors
+  year: n.d.
+  title: Overview of Malloc (MallocInternals)
+  venue: glibc wiki
+  url: https://sourceware.org/glibc/wiki/MallocInternals
+berger2000:
+  authors: Emery D. Berger, Kathryn S. McKinley, Robert D. Blumofe and Paul R. Wilson
+  year: 2000
+  title: 'Hoard: a scalable memory allocator for multithreaded applications'
+  venue: Proceedings of ASPLOS IX, 117–128
+  url: https://people.cs.umass.edu/~emery/pubs/berger-asplos2000.pdf
+ghemawat2005:
+  authors: Sanjay Ghemawat and Paul Menage
+  year: n.d.
+  title: 'TCMalloc: thread-caching malloc'
+  venue: gperftools documentation
+  url: https://goog-perftools.sourceforge.net/doc/tcmalloc.html
+evans2006:
+  authors: Jason Evans
+  year: 2006
+  title: A scalable concurrent malloc(3) implementation for FreeBSD
+  venue: BSDCan 2006
+  url: https://people.freebsd.org/~jasone/jemalloc/bsdcan2006/jemalloc.pdf
+leijen2019:
+  authors: Daan Leijen, Benjamin Zorn and Leonardo de Moura
+  year: 2019
+  title: 'Mimalloc: free list sharding in action'
+  venue: Microsoft Research technical report MSR-TR-2019-18; APLAS 2019
+  url: https://www.microsoft.com/en-us/research/publication/mimalloc-free-list-sharding-in-action/
+larson1998:
+  authors: Per-Åke Larson and Murali Krishnan
+  year: 1998
+  title: Memory allocation for long-running server applications
+  venue: Proceedings of ISMM 98, 176–185
