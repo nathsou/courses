@@ -195,10 +195,15 @@
     stroke: var(--free);
     stroke-dasharray: 4 3;
   }
-  .node.garbage rect,
+  .node.garbage rect {
+    fill: transparent;
+    stroke: var(--garbage);
+    stroke-dasharray: 5 3;
+  }
   .node.white rect {
-    fill: color-mix(in srgb, var(--garbage, var(--uaf)) 16%, var(--panel));
-    stroke: var(--garbage, var(--uaf));
+    fill: color-mix(in srgb, var(--leak) 14%, var(--panel));
+    stroke: var(--leak);
+    stroke-dasharray: 5 3;
   }
   .node.grey rect {
     fill: color-mix(in srgb, var(--mute) 30%, var(--panel));

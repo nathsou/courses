@@ -39,3 +39,26 @@ posix-unlink:
   title: unlink, unlinkat
   venue: The Open Group Base Specifications, Issue 8 (POSIX.1-2024)
   url: https://pubs.opengroup.org/onlinepubs/9799919799/functions/unlink.html
+bacon2001:
+  authors: David F. Bacon and V. T. Rajan
+  year: 2001
+  title: Concurrent cycle collection in reference counted systems
+  venue: ECOOP 2001, LNCS 2072
+  url: https://doi.org/10.1007/3-540-45337-7_12
+martinez1990:
+  authors: A. D. Martínez, R. Wachenchauzer and R. D. Lins
+  year: 1990
+  title: Cyclic reference counting with local mark-scan
+  venue: Information Processing Letters 34(1), 31–35
+cpython-gc:
+  authors: CPython developers
+  year: n.d.
+  title: Garbage collector design
+  venue: CPython InternalDocs/garbage_collector.md
+  url: https://github.com/python/cpython/blob/main/InternalDocs/garbage_collector.md
+python-weakref:
+  authors: Python Software Foundation
+  year: n.d.
+  title: weakref, weak references
+  venue: Python standard library documentation
+  url: https://docs.python.org/3/library/weakref.html
