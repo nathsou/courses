@@ -58,14 +58,14 @@ export function report(context: Rule.RuleContext, descriptor: Rule.ReportDescrip
   const { message, data } = descriptor as { message?: string; data?: Record<string, unknown> };
   if (context.settings.sonarRuntime) {
     if (message === undefined) throw new Error('report(): "message" is required to encode an issue for the analyser');
-    const { message: _m, messageId: _id, ...rest } = descriptor as Record<string, unknown>;
-    context.report({ ...rest, messageId: 'sonarRuntime', data: { ...data, sonarRuntimeData: encodeContents(expandMessage(message, data), secondaryLocations, cost) } } as Rule.ReportDescriptor);
+    const { message: _m, messageId: _id, ...rest } = descriptor as unknown as Record<string, unknown>;
+    context.report({ ...rest, messageId: 'sonarRuntime', data: { ...data, sonarRuntimeData: encodeContents(expandMessage(message, data), secondaryLocations, cost) } } as unknown as Rule.ReportDescriptor);
   } else if (message !== undefined && 'messageId' in descriptor) {
-    const { message: _m, ...rest } = descriptor as Record<string, unknown>;
-    context.report(rest as Rule.ReportDescriptor);
+    const { message: _m, ...rest } = descriptor as unknown as Record<string, unknown>;
+    context.report(rest as unknown as Rule.ReportDescriptor);
   } else if (message !== undefined) {
-    const { data: _d, ...rest } = descriptor as Record<string, unknown>;
-    context.report({ ...rest, message: expandMessage(message, data) } as Rule.ReportDescriptor);
+    const { data: _d, ...rest } = descriptor as unknown as Record<string, unknown>;
+    context.report({ ...rest, message: expandMessage(message, data) } as unknown as Rule.ReportDescriptor);
   } else {
     context.report(descriptor);
   }
@@ -75,4 +75,24 @@ export function report(context: Rule.RuleContext, descriptor: Rule.ReportDescrip
 export function decodeMessage(raw: string): EncodedMessage {
   const parsed = JSON.parse(raw) as EncodedMessage;
   return { message: parsed.message, secondaryLocations: parsed.secondaryLocations ?? [], cost: parsed.cost };
+}
+
+/**
+ * Where to report an issue about a whole function without underlining its whole body: its name if it has one,
+ * otherwise the `function` keyword, or the `=>` of an arrow function, or the key of the method or property it
+ * is the value of. (SonarJS's version handles a few more cases, such as class constructors and getters.)
+ */
+export function getMainFunctionTokenLocation(
+  fn: estree.FunctionDeclaration | estree.FunctionExpression | estree.ArrowFunctionExpression,
+  parent: estree.Node | undefined,
+  context: Rule.RuleContext,
+): AST.SourceLocation | null | undefined {
+  if (fn.type !== 'ArrowFunctionExpression' && fn.id) return fn.id.loc;
+  if (parent && (parent.type === 'MethodDefinition' || parent.type === 'Property')) return parent.key.loc;
+  if (parent?.type === 'VariableDeclarator' && parent.id.type === 'Identifier') return parent.id.loc;
+  const sourceCode = context.sourceCode;
+  if (fn.type === 'ArrowFunctionExpression') {
+    return sourceCode.getTokenBefore(fn.body, (t) => t.value === '=>')?.loc;
+  }
+  return sourceCode.getFirstToken(fn, (t) => t.value === 'function')?.loc;
 }

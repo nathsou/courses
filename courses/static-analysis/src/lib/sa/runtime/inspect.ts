@@ -158,7 +158,7 @@ export function inspect(code: string, libs: Map<string, string>, opts: { file?: 
           info.thrown = codePath.thrownSegments.map((s) => s.id);
           // Successors are linked as the analysis proceeds: read them once the path is complete.
           info.segments = [...top.byId.values()].map((s) => {
-            const o = top.objects.get(s.id)!;
+            const o = top.objects.get(s.id)! as Rule.CodePathSegment & { allNextSegments: Rule.CodePathSegment[]; allPrevSegments: Rule.CodePathSegment[] };
             return { ...s, next: o.allNextSegments.map((x) => x.id), prev: o.allPrevSegments.map((x) => x.id), nodes: maximal(s, top.byId) };
           });
           out.codePaths.push(info);

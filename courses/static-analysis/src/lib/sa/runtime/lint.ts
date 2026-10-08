@@ -27,6 +27,8 @@ export interface Issue {
   cost?: number;
   fix?: Fix;
   suggestions?: { desc: string; fix: Fix }[];
+  /** The message as ESLint produced it, before the analyser decodes it (for the `sonarRuntime` encoding). */
+  raw?: { messageId?: string; message: string };
 }
 
 export interface ParseError {
@@ -125,6 +127,7 @@ export function lint(req: LintRequest): LintResult {
         secondaryLocations,
         cost,
         fix: toFix(m.fix),
+        raw: m.messageId === 'sonarRuntime' ? { messageId: m.messageId, message: m.message } : undefined,
         suggestions: m.suggestions?.map((s) => ({ desc: s.desc, fix: toFix(s.fix)! })),
       });
     }

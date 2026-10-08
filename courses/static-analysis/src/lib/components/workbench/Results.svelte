@@ -33,6 +33,17 @@
         </button>
         <span class="what">{WHAT[e.verdict]}</span>
         {#if e.actual}<q class="msg">{e.actual.message}</q>{:else if e.expected?.message}<q class="msg expected">{e.expected.message}</q>{/if}
+        {#if e.actual && (e.actual.raw || e.actual.cost !== undefined || e.actual.suggestions?.length || e.actual.fix)}
+          <details class="anatomy">
+            <summary>Issue anatomy</summary>
+            {#if e.actual.raw}
+              <p class="lbl">What ESLint produced (message id <code>{e.actual.raw.messageId}</code>):</p>
+              <pre>{e.actual.raw.message}</pre>
+            {/if}
+            <p class="lbl">What the analyser makes of it:</p>
+            <pre>{JSON.stringify({ line: e.actual.line, column: e.actual.column, endLine: e.actual.endLine, endColumn: e.actual.endColumn, message: e.actual.message, secondaryLocations: e.actual.secondaryLocations, cost: e.actual.cost, quickFixes: [...(e.actual.fix ? [{ fix: e.actual.fix }] : []), ...(e.actual.suggestions ?? []).map((s) => ({ desc: s.desc, fix: s.fix }))] }, null, 2)}</pre>
+          </details>
+        {/if}
         {#if e.details.length}
           <ul class="details">
             {#each e.details as d, k (k)}<li>{d}</li>{/each}
@@ -143,6 +154,29 @@
   .errors {
     color: var(--bad);
     font-size: 0.82rem;
+  }
+  .anatomy {
+    flex-basis: 100%;
+    padding-left: 2.6rem;
+    font-size: 0.78rem;
+  }
+  .anatomy summary {
+    cursor: pointer;
+    color: var(--accent-ink);
+  }
+  .anatomy .lbl {
+    margin: 0.3rem 0 0.1rem;
+    color: var(--mute);
+  }
+  .anatomy pre {
+    margin: 0;
+    font-size: 0.74rem;
+    background: var(--pn);
+    padding: 0.4rem 0.5rem;
+    border-radius: 4px;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
   .hidden-src summary {
     cursor: pointer;

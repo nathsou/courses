@@ -48,15 +48,6 @@ export default defineConfig({
   plugins: [sveltekit(), markdownDevCompiler(), nodeBuiltinsForWorkers()],
   environments: {
     client: {
-      resolve: {
-        // typescript-eslint imports a few Node built-ins it never uses when given a ready-made program. Pre-bundled
-        // dependencies (dev) do not go through resolve plugins, so the browser gets the same stand-ins as aliases.
-        alias: [
-      { find: /^(node:)?path(\/posix)?$/, replacement: 'path-browserify' },
-      { find: /^(node:)?(fs|os|url|module|fs\/promises)$/, replacement: fileURLToPath(new URL('./src/lib/sa/runtime/node-stubs.ts', import.meta.url)) },
-      { find: /^esquery$/, replacement: 'esquery/dist/esquery.min.js' },
-        ],
-      },
       // The dev dependency optimiser bundles node_modules with Rolldown, outside the plugin pipeline above.
       optimizeDeps: { rolldownOptions: { plugins: [nodeBuiltinsForWorkers()] } },
     },
