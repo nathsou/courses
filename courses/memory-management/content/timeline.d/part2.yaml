@@ -1,0 +1,48 @@
+- year: 1965
+  lane: allocators
+  title: The buddy system
+  people: Kenneth Knowlton
+  chapter: the-kernels-allocators
+  text: Blocks of power-of-two sizes, split in halves and merged with their buddies; still the page allocator of the Linux kernel.
+  cite: [knowlton1965]
+- year: 1988
+  lane: failures
+  title: The Morris worm
+  chapter: the-stack
+  text: A stack buffer overflow in fingerd helps a worm spread across the Internet.
+  cite: [spafford1989]
+- year: 1994
+  lane: allocators
+  title: The slab allocator
+  people: Jeff Bonwick
+  chapter: the-kernels-allocators
+  text: One cache per object type, slabs of equal slots, constructed objects kept for reuse.
+  cite: [bonwick1994]
+- year: 1996
+  lane: safety
+  title: Smashing the stack for fun and profit
+  people: Aleph One
+  chapter: the-stack
+  text: A step-by-step explanation of stack buffer overflow exploits, published in Phrack.
+  cite: [aleph1996]
+- year: 1998
+  lane: safety
+  title: StackGuard
+  people: Crispin Cowan and colleagues
+  chapter: the-stack
+  text: Compiler-inserted canaries detect overflows before a function returns.
+  cite: [cowan1998]
+- year: 2001
+  lane: safety
+  title: Address space layout randomisation
+  people: PaX Team
+  chapter: anatomy-of-an-address-space
+  text: Stack, heap, libraries and program are placed at random offsets each time a program starts.
+  cite: [pax2001]
+- year: 2017
+  lane: failures
+  title: The stack clash
+  people: Qualys
+  chapter: anatomy-of-an-address-space
+  text: Large stack frames that jump over the guard page let the stack collide with other memory.
+  cite: [qualys2017]

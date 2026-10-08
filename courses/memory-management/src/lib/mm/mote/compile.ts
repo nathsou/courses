@@ -96,6 +96,10 @@ export interface Compiled {
 export const CODE_BASE = 0x40_0000;
 export const fnAddress = (id: number) => CODE_BASE + id * 0x40;
 export const fnFromAddress = (a: number) => ((a - CODE_BASE) % 0x40 === 0 ? (a - CODE_BASE) / 0x40 : -1);
+/** Return addresses saved in frames: an instruction address inside the caller (4 bytes per instruction). */
+export const RET_BASE = 0x80_0000;
+export const retAddress = (fn: number, pc: number) => RET_BASE + fn * 0x1_0000 + pc * 4;
+export const retDecode = (a: number) => ({ fn: Math.floor((a - RET_BASE) / 0x1_0000), pc: ((a - RET_BASE) % 0x1_0000) / 4 });
 
 const INT: TypeExpr = { k: 'int' };
 const BOOL: TypeExpr = { k: 'bool' };

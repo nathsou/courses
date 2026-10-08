@@ -39,7 +39,8 @@
   }
 
   $effect(() => {
-    setLine?.(highlightLine);
+    const line = highlightLine; // read it first, so the effect tracks it even before the editor exists
+    setLine?.(line);
   });
 
   onMount(() => {

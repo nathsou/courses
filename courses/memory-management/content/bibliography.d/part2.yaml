@@ -1,0 +1,48 @@
+qualys2017:
+  authors: Qualys Research Team
+  year: 2017
+  title: 'The Stack Clash'
+  venue: Qualys security advisory, 19 June 2017
+  url: https://www.qualys.com/2017/06/19/stack-clash/stack-clash.txt
+aleph1996:
+  authors: Aleph One (Elias Levy)
+  year: 1996
+  title: Smashing the stack for fun and profit
+  venue: Phrack 7(49), file 14
+  url: http://phrack.org/issues/49/14.html
+cowan1998:
+  authors: Crispin Cowan, Calton Pu, Dave Maier, Heather Hinton, Jonathan Walpole, Peat Bakke, Steve Beattie, Aaron Grier, Perry Wagle and Qian Zhang
+  year: 1998
+  title: 'StackGuard: automatic adaptive detection and prevention of buffer-overflow attacks'
+  venue: 7th USENIX Security Symposium
+  url: https://www.usenix.org/conference/7th-usenix-security-symposium/stackguard-automatic-adaptive-detection-and-prevention
+spafford1989:
+  authors: Eugene H. Spafford
+  year: 1989
+  title: 'The Internet worm program: an analysis'
+  venue: ACM SIGCOMM Computer Communication Review 19(1), 17–57
+  url: https://doi.org/10.1145/66093.66095
+knowlton1965:
+  authors: Kenneth C. Knowlton
+  year: 1965
+  title: A fast storage allocator
+  venue: Communications of the ACM 8(10), 623–624
+  url: https://doi.org/10.1145/365628.365655
+bonwick1994:
+  authors: Jeff Bonwick
+  year: 1994
+  title: 'The slab allocator: an object-caching kernel memory allocator'
+  venue: Proceedings of the USENIX Summer 1994 Technical Conference
+  url: https://www.usenix.org/conference/usenix-summer-1994-technical-conference/slab-allocator-object-caching-kernel
+pax2001:
+  authors: PaX Team
+  year: 2001
+  title: Address space layout randomization
+  venue: PaX documentation
+  url: https://pax.grsecurity.net/docs/aslr.txt
+bonwick2001:
+  authors: Jeff Bonwick and Jonathan Adams
+  year: 2001
+  title: 'Magazines and vmem: extending the slab allocator to many CPUs and arbitrary resources'
+  venue: Proceedings of the 2001 USENIX Annual Technical Conference
+  url: https://www.usenix.org/conference/2001-usenix-annual-technical-conference/magazines-and-vmem-extending-slab-allocator-many

@@ -9,7 +9,7 @@
  * The VM also runs the **oracle** (PLAN §8): it records when each object is born, last used, becomes unreachable
  * and is freed, so the lifetime chart can compare every memory manager with the truth.
  */
-import { compile, fnAddress, fnFromAddress, type Compiled, type FnInfo, type Instr, type TypeInfo } from './compile';
+import { compile, fnAddress, fnFromAddress, retAddress, type Compiled, type FnInfo, type Instr, type TypeInfo } from './compile';
 import { MoteError, type Pos } from './syntax';
 import { WordMemory } from '../heap/words';
 import { HeapError } from '../heap/api';
@@ -351,7 +351,7 @@ export class Vm {
     const fp = callerFp - this.frameWords(fn) * 8;
     if (fp < this.stackLimit) throw new RuntimeError(`stack overflow: ${this.frames.length} frames deep, the next frame would cross the guard page at 0x${(this.stackLimit - 4096).toString(16)}`, fn.pos);
     const caller = this.frames.length ? this.top : undefined;
-    this.stack.store64(fp, caller ? fnAddress(caller.fn.id) + caller.pc : 0);
+    this.stack.store64(fp, caller ? retAddress(caller.fn.id, caller.pc) : 0);
     this.stack.store64(fp + 8, callerFp);
     for (let i = 0; i < fn.locals.length + fn.maxStack; i++) this.stack.poke(fp + 16 + i * 8, 0);
     const f: Frame = { fn, pc: 0, fp, depth: 0, ...(this.manager.ownership ? { moved: new Set<number>() } : {}) };
