@@ -61,7 +61,7 @@
     let width = 0;
     for (const lvl of [...rows.keys()].sort((a, b) => a - b)) {
       const row = rows.get(lvl)!;
-      let x = 10;
+      let x = 40;
       let rowH = 0;
       for (const id of row) {
         const s = segs.find((q) => q.id === id)!;
@@ -75,7 +75,8 @@
       width = Math.max(width, x);
       y += rowH + GAP_Y;
     }
-    const edges: { d: string; back: boolean }[] = [];
+    const edges: { d: string; back: boolean; dead: boolean }[] = [];
+    const reachable = new Map(segs.map((q) => [q.id, q.reachable]));
     for (const s of segs) {
       const a = boxes.get(s.id)!;
       for (const n of s.next) {
@@ -88,13 +89,21 @@
           const x2 = b.x + b.w;
           const y2 = b.y + b.h / 2;
           const bulge = Math.max(x1, x2) + 28;
-          edges.push({ d: `M${x1},${y1} C${bulge},${y1} ${bulge},${y2} ${x2 + 4},${y2}`, back: true });
+          edges.push({ d: `M${x1},${y1} C${bulge},${y1} ${bulge},${y2} ${x2 + 4},${y2}`, back: true, dead: !reachable.get(n) });
+        } else if (level.get(n)! - level.get(s.id)! > 1) {
+          // An edge that skips a layer goes around the left, not behind the boxes in between.
+          const x1 = a.x;
+          const y1 = a.y + a.h / 2;
+          const x2 = b.x - 4;
+          const y2 = b.y + b.h / 2;
+          const bulge = Math.min(a.x, b.x) - 30;
+          edges.push({ d: `M${x1},${y1} C${bulge},${y1} ${bulge},${y2} ${x2},${y2}`, back: false, dead: !reachable.get(n) });
         } else {
           const x1 = a.x + a.w / 2;
           const y1 = a.y + a.h;
           const x2 = b.x + b.w / 2;
           const y2 = b.y - 4;
-          edges.push({ d: `M${x1},${y1} C${x1},${(y1 + y2) / 2} ${x2},${(y1 + y2) / 2} ${x2},${y2}`, back: false });
+          edges.push({ d: `M${x1},${y1} C${x1},${(y1 + y2) / 2} ${x2},${(y1 + y2) / 2} ${x2},${y2}`, back: false, dead: !reachable.get(n) });
         }
       }
     }
@@ -112,7 +121,7 @@
     </marker>
   </defs>
   {#each layout.edges as e, i (i)}
-    <path d={e.d} class="edge" class:back={e.back} marker-end="url(#cpg-arrow-{uid})" />
+    <path d={e.d} class="edge" class:back={e.back} class:dead={e.dead} marker-end="url(#cpg-arrow-{uid})" />
   {/each}
   {#each path.segments as s (s.id)}
     {@const b = layout.boxes.get(s.id)!}
@@ -154,6 +163,10 @@
   .edge.back {
     stroke: var(--accent);
     stroke-dasharray: 5 3;
+  }
+  .edge.dead {
+    stroke-dasharray: 2 3;
+    opacity: 0.6;
   }
   .head {
     fill: var(--edge);
