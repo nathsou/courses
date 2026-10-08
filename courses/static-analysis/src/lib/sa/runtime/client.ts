@@ -79,7 +79,7 @@ export async function runTestsRemote(files: Record<string, string>, entry: strin
   return r;
 }
 
-export async function inspectRemote(code: string, opts: { file?: string; types?: boolean } = {}): Promise<InspectResult> {
+export async function inspectRemote(code: string, opts: { file?: string; types?: boolean; strict?: boolean } = {}): Promise<InspectResult> {
   const r = await call<InspectResult>({ kind: 'inspect', code, ...opts }, limit(10_000));
   warm = true;
   return r;

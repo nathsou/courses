@@ -139,10 +139,10 @@ export function getProperty(expr: Node | undefined | null, key: string, context:
   if (expr?.type !== 'ObjectExpression') return null;
   let unresolvedSpread = false;
   for (let i = expr.properties.length - 1; i >= 0; i--) {
-    const p = expr.properties[i]!;
+    const p: estree.Property | estree.SpreadElement = expr.properties[i]!;
     if (p.type === 'Property' && !p.computed && (isIdentifier(p.key, key) || (isStringLiteral(p.key) && p.key.value === key))) return p;
     if (p.type === 'SpreadElement') {
-      const spread = getValueOfExpression(context, p.argument, 'ObjectExpression');
+      const spread: estree.ObjectExpression | undefined = getValueOfExpression(context, p.argument, 'ObjectExpression');
       if (!spread || seen.has(spread) || spread === expr) {
         unresolvedSpread = true;
         continue;

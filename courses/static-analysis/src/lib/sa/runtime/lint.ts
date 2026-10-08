@@ -49,6 +49,8 @@ export interface LintRequest {
   targets?: string[];
   /** Build a TypeScript program so rules get type information (default true). */
   types?: boolean;
+  /** Compiler options on top of the course's defaults (strict, ES2022). */
+  compilerOptions?: ts.CompilerOptions;
   libs: Map<string, string>;
   /** Extra listener: called with each file's SourceCode after linting (for the inspector). */
   settings?: Record<string, unknown>;
@@ -73,7 +75,7 @@ function toFix(f: Rule.Fix | undefined): Fix | undefined {
 }
 
 export function lint(req: LintRequest): LintResult {
-  const program = req.types === false ? undefined : createInMemoryProgram({ files: req.files, libs: req.libs });
+  const program = req.types === false ? undefined : createInMemoryProgram({ files: req.files, libs: req.libs, options: req.compilerOptions });
   const linter = new Linter({ configType: 'flat', cwd: '/' });
   const plugin = { rules: req.rules };
   const rules: Linter.RulesRecord = {};

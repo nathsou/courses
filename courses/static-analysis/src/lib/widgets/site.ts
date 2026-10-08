@@ -8,3 +8,5 @@ export { default as SelectorLab } from '$lib/components/widgets/SelectorLab.svel
 export { default as ComplexityView } from '$lib/components/widgets/ComplexityView.svelte';
 /** Every call labelled with its fully qualified name: `:::fqn-view` + a ```ts block. */
 export { default as FqnView } from '$lib/components/widgets/FqnView.svelte';
+/** Occurrences of names labelled with their narrowed types, with a strict switch: `:::type-view{names="a,b"}` + a ```ts block. */
+export { default as TypeView } from '$lib/components/widgets/TypeView.svelte';

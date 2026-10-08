@@ -35,8 +35,13 @@ export function isAny(type: ts.Type): boolean {
   return (type.flags & (ts.TypeFlags.Any | ts.TypeFlags.Unknown)) !== 0;
 }
 
+/** Is `type` string-like: `string`, a string literal type, a template literal type, or the `String` wrapper? */
 export function isStringType(type: ts.Type): boolean {
-  return (type.flags & ts.TypeFlags.StringLike) !== 0;
+  return (type.flags & ts.TypeFlags.StringLike) !== 0 || type.symbol?.name === 'String';
+}
+
+export function isBigIntType(type: ts.Type): boolean {
+  return (type.flags & ts.TypeFlags.BigIntLike) !== 0;
 }
 
 export function isNumberType(type: ts.Type): boolean {
@@ -73,4 +78,42 @@ export function isThenable(node: estree.Node, services: RequiredParserServices):
   const checker = services.program.getTypeChecker();
   const thenType = checker.getTypeOfSymbolAtLocation(then, services.esTreeNodeToTSNodeMap.get(node));
   return thenType.getCallSignatures().length > 0;
+}
+
+/** Is the node's type exactly `null` or `undefined` at that point? (Not a union that includes them.) */
+export function isUndefinedOrNull(node: estree.Node, services: RequiredParserServices): boolean {
+  const flags = getTypeFromTreeNode(node, services).getFlags();
+  return (flags & ts.TypeFlags.Undefined) !== 0 || (flags & ts.TypeFlags.Null) !== 0;
+}
+
+/** Is `type` an array type, `T[]` or `Array<T>` (not a tuple)? */
+export function isArrayType(type: ts.Type, services: RequiredParserServices): type is ts.TypeReference {
+  return services.program.getTypeChecker().isArrayType(type);
+}
+
+/**
+ * Is `type` an array, a union of arrays, or a type parameter constrained to one? `T extends number[]` is
+ * array-like; so is `string[] | number[]`.
+ */
+export function isArrayLikeType(type: ts.Type, services: RequiredParserServices): boolean {
+  const constrained = services.program.getTypeChecker().getBaseConstraintOfType(type) ?? type;
+  return getUnionTypes(constrained).every((t) => isArrayType(t, services));
+}
+
+function isArrayOf(type: ts.Type, services: RequiredParserServices, element: (t: ts.Type) => boolean): boolean {
+  if (!isArrayType(type, services)) return false;
+  const [elementType] = services.program.getTypeChecker().getTypeArguments(type);
+  return !!elementType && element(elementType);
+}
+
+export function isStringArray(type: ts.Type, services: RequiredParserServices): boolean {
+  return isArrayOf(type, services, isStringType);
+}
+
+export function isNumberArray(type: ts.Type, services: RequiredParserServices): boolean {
+  return isArrayOf(type, services, isNumberType);
+}
+
+export function isBigIntArray(type: ts.Type, services: RequiredParserServices): boolean {
+  return isArrayOf(type, services, isBigIntType);
 }

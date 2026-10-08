@@ -92,7 +92,7 @@ function serialise(node: estree.Node, keys: Record<string, readonly string[]>): 
   return { type: node.type, range: (node as unknown as { range: [number, number] }).range, label: label(node), children };
 }
 
-export function inspect(code: string, libs: Map<string, string>, opts: { file?: string; types?: boolean } = {}): InspectResult {
+export function inspect(code: string, libs: Map<string, string>, opts: { file?: string; types?: boolean; strict?: boolean } = {}): InspectResult {
   const out: InspectResult = { scopes: [], types: [], codePaths: [], tokens: [] };
   const file = opts.file ?? '/inspect/input.ts';
   const recorder: Rule.RuleModule = {
@@ -190,7 +190,7 @@ export function inspect(code: string, libs: Map<string, string>, opts: { file?: 
       }
     },
   };
-  const r = lint({ files: { [file]: code }, rules: { INSPECT: recorder }, libs, types: opts.types !== false });
+  const r = lint({ files: { [file]: code }, rules: { INSPECT: recorder }, libs, types: opts.types !== false, compilerOptions: opts.strict === false ? { strict: false } : undefined });
   if (r.parseErrors.length) out.parseError = `${r.parseErrors[0]!.line}:${r.parseErrors[0]!.column + 1} ${r.parseErrors[0]!.message}`;
   if (r.ruleErrors.length) out.parseError = r.ruleErrors[0]!.message;
   // Code paths end inner-first; show them in source order.
