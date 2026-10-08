@@ -49,8 +49,27 @@ describe('getFullyQualifiedName', () => {
     expect(issues.map((i) => i.message)).toEqual(['child_process', 'crypto', 'child_process.exec', 'child_process.exec', 'crypto.createHash', 'Math.random', 'express', 'child_process.execFile', 'null']);
   });
 
+  test('new, paths, default specifiers, single writes, chains', async () => {
+    const rule: Rule.RuleModule = { create: (context) => ({ 'CallExpression, NewExpression'(node: estree.Node) { context.report({ node, message: String(getFullyQualifiedName(context, node)) }); } }) };
+    const code = [
+      "const { Bucket } = require('aws-cdk-lib/aws-s3');",
+      "import { default as exp } from 'express';",
+      "let cp = require('child_process'); cp = {};",
+      "let fs; fs = require('fs');",
+      'new Bucket();',
+      'exp();',
+      "cp.exec('ls');",
+      "fs.readFileSync('x');",
+      "require('child_process').exec('ls');",
+      "fs?.promises.readFile('x');",
+      "fs[name]('x');",
+    ].join('\n');
+    const issues = await run(code, rule, false);
+    expect(issues.map((i) => i.message)).toEqual(['aws-cdk-lib.aws-s3', 'child_process', 'fs', 'aws-cdk-lib.aws-s3.Bucket', 'express', 'null', 'fs.readFileSync', 'child_process.exec', 'child_process', 'fs.promises.readFile', 'null']);
+  });
+
   test('importsModule', async () => {
-    const rule: Rule.RuleModule = { create: (context) => ({ 'Program:exit'(node) { context.report({ node, message: `${importsModule(context, 'fs')},${importsModule(context, 'path')}` }); } }) };
+    const rule: Rule.RuleModule = { create: (context) => ({ 'Program:exit'(node) { context.report({ node, message: `${importsModule(context, ['fs'])},${importsModule(context, ['path', 'os'])}` }); } }) };
     const issues = await run("const fs = require('node:fs');\nexport {};", rule, false);
     expect(issues[0]!.message).toBe('true,false');
   });

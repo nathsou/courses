@@ -1,0 +1,12 @@
+fully qualified name:
+  term: fully qualified name
+  definition: "The path by which a value is reached from a module or a global, independently of local names: `child_process.exec`, `Math.random`. SonarJS's rules match APIs by it."
+  chapter: modules-and-fqns
+module specifier:
+  term: module specifier
+  definition: "The string that names a module in an import or a `require`: a package (`express`), a path in a package (`aws-cdk-lib/aws-s3`), a built-in (`node:fs`) or a relative path (`./db`)."
+  chapter: modules-and-fqns
+dependency manifest:
+  term: dependency manifest
+  definition: "A file declaring a project's dependencies, such as package.json. SonarJS reads them to decide which library-specific rules to run."
+  chapter: modules-and-fqns

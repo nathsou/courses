@@ -68,9 +68,11 @@ export function loadModule(files: Record<string, string>, entry: string, extraBu
     const require = (spec: string): unknown => {
       if (spec in extraBuiltins) return extraBuiltins[spec];
       if (spec in BUILTINS) return BUILTINS[spec];
-      const helper = /(?:^|\/)helpers\/([\w-]+)(?:\.js|\.ts)?$/.exec(spec);
-      // A helper the reader wrote in this exercise wins over the kit's.
-      if (helper && !(resolvePath(actual, spec).replace(/\.js$/, '.ts') in files)) {
+      // A kit helper, by its resolved path (`../helpers/ast.js` from a rule, `./ast.js` from another helper). A
+      // helper the reader wrote in this exercise wins over the kit's.
+      const resolved = spec.startsWith('.') || spec.startsWith('/') ? resolvePath(actual, spec) : spec;
+      const helper = /(?:^|\/)helpers\/([\w-]+)(?:\.js|\.ts)?$/.exec(resolved);
+      if (helper && !(resolved.replace(/\.js$/, '.ts') in files)) {
         const kit = KIT_MODULES[helper[1]!];
         if (kit) return kit;
       }
