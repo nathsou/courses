@@ -1,0 +1,165 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+address:
+  term: address
+  definition: The number of a byte in memory. Every larger value is identified by the address of its first byte.
+  chapter: bytes-and-addresses
+word:
+  term: word
+  definition: 'The natural unit of a machine’s registers and memory accesses: 64 bits, eight bytes, on the machines in this course.'
+  chapter: bytes-and-addresses
+little-endian:
+  term: little-endian
+  definition: Storing the least significant byte of a value at the lowest address. RISC-V and x86 are little-endian.
+  chapter: bytes-and-addresses
+alignment:
+  term: alignment
+  definition: A value is aligned when its address is a multiple of its size (or of a required power of two). `malloc` returns 16-byte-aligned addresses on 64-bit machines.
+  chapter: bytes-and-addresses
+padding:
+  term: padding
+  definition: Unused bytes inserted between or after the fields of a struct so that each field is aligned.
+  chapter: bytes-and-addresses
+pointer:
+  term: pointer
+  definition: A value that holds an address. Underneath every reference in every language is a pointer.
+  chapter: bytes-and-addresses
+cache:
+  term: cache
+  definition: 'A small, fast memory that keeps copies of recently used data from a larger, slower one. Processors have several levels: L1, L2, L3.'
+  chapter: the-memory-hierarchy
+cache-line:
+  term: cache line
+  definition: 'The unit a cache stores and fetches: 64 bytes on most current processors. Touching one byte brings in its whole line.'
+  chapter: the-memory-hierarchy
+set-associative:
+  term: set-associative cache
+  definition: A cache in which each line can live in only one *set* of a few *ways*, chosen by its address. Lines that map to the same set compete for it.
+  chapter: the-memory-hierarchy
+conflict-miss:
+  term: conflict miss
+  definition: A cache miss caused by too many lines mapping to the same set, even though the cache as a whole has room.
+  chapter: the-memory-hierarchy
+locality:
+  term: locality
+  definition: The tendency of programs to reuse data they used recently (*temporal* locality) and to use data near what they used recently (*spatial* locality). Caches work because of it.
+  chapter: the-memory-hierarchy
+dram:
+  term: DRAM
+  definition: 'Dynamic RAM: main memory, built from capacitors arranged in banks of rows. Dense and cheap, but slow, and it must be refreshed.'
+  chapter: the-memory-hierarchy
+memory-wall:
+  term: memory wall
+  definition: Wulf and McKee’s name for the growing gap between processor speed and memory latency, which would eventually make memory the limit on performance.
+  chapter: the-memory-hierarchy
+rowhammer:
+  term: Rowhammer
+  definition: 'Flipping bits in one DRAM row by repeatedly activating its neighbours: a hardware fault that software can trigger.'
+  chapter: the-memory-hierarchy
+virtual-address:
+  term: virtual address
+  definition: An address as a program uses it. The MMU translates it into a physical address through the page tables.
+  chapter: virtual-memory
+physical-address:
+  term: physical address
+  definition: An address in the machine’s real memory.
+  chapter: virtual-memory
+page:
+  term: page
+  definition: 'The unit of virtual memory: 4 KiB on RISC-V and most other machines. Every page is mapped, or not, as a whole.'
+  chapter: virtual-memory
+frame:
+  term: frame
+  definition: A page-sized, page-aligned block of physical memory, which a page can be mapped to.
+  chapter: virtual-memory
+page-table:
+  term: page table
+  definition: The tree of tables, kept in memory, that maps a process’s virtual pages to frames. Sv39 uses three levels.
+  chapter: virtual-memory
+pte:
+  term: page-table entry
+  definition: 'One 64-bit entry of a page table: a frame number and flag bits (valid, readable, writable, executable, user, global, accessed, dirty).'
+  chapter: virtual-memory
+mmu:
+  term: MMU
+  definition: 'The memory-management unit: the hardware that translates virtual addresses into physical ones on every access, walking the page tables when it must.'
+  chapter: virtual-memory
+page-walk:
+  term: page walk
+  definition: 'Following a virtual address through each level of the page tables to its leaf entry: three memory reads in Sv39.'
+  chapter: virtual-memory
+sv39:
+  term: Sv39
+  definition: 'RISC-V’s 39-bit virtual-memory scheme: three levels of 512-entry page tables over 4 KiB pages, 512 GiB of address space.'
+  chapter: virtual-memory
+superpage:
+  term: superpage
+  definition: 'A leaf entry above the lowest level, mapping a larger aligned block in one entry: in Sv39, a 2 MiB megapage or a 1 GiB gigapage.'
+  chapter: virtual-memory
+address-space:
+  term: address space
+  definition: The set of virtual addresses a process can use, and what they map to. Each process has its own.
+  chapter: virtual-memory
+segmentation-fault:
+  term: segmentation fault
+  definition: 'What the kernel reports when a program touches an address it has no right to: the access is a bug, and the program is usually stopped.'
+  chapter: virtual-memory
+tlb:
+  term: TLB
+  definition: 'The translation lookaside buffer: a small cache of recent translations, so that most accesses need no page walk.'
+  chapter: the-tlb
+tlb-reach:
+  term: TLB reach
+  definition: 'How much memory the TLB can map at once: its number of entries times the page size. Superpages extend it.'
+  chapter: the-tlb
+asid:
+  term: ASID
+  definition: 'An address-space identifier: a tag on TLB entries saying which process they belong to, so that switching processes need not flush the TLB.'
+  chapter: the-tlb
+tlb-shootdown:
+  term: TLB shootdown
+  definition: Making other processor cores drop stale translations after a page table changes, by interrupting them.
+  chapter: the-tlb
+kpti:
+  term: kernel page-table isolation
+  definition: 'Unmapping most of the kernel while user code runs, at the cost of extra TLB misses: the defence against Meltdown.'
+  chapter: the-tlb
+page-fault:
+  term: page fault
+  definition: The trap the processor raises when a translation fails or an access is not allowed. The kernel handles it, and usually fixes the mapping and retries.
+  chapter: page-faults
+demand-paging:
+  term: demand paging
+  definition: Mapping a page only when it is first touched, on the page fault that touch causes.
+  chapter: page-faults
+copy-on-write:
+  term: copy-on-write
+  definition: Sharing a page read-only between processes until one of them writes to it, then giving the writer its own copy. It makes `fork` cheap.
+  chapter: page-faults
+overcommit:
+  term: overcommit
+  definition: Promising processes more memory than the machine has, on the bet that most of it will never be touched.
+  chapter: page-faults
+working-set:
+  term: working set
+  definition: The pages a program has used in its recent past, and is likely to use again soon.
+  chapter: choosing-a-victim
+thrashing:
+  term: thrashing
+  definition: Spending most of the time moving pages in and out of memory because the working sets of the running programs do not fit.
+  chapter: choosing-a-victim
+lru:
+  term: LRU
+  definition: 'Least recently used: evict whatever was used longest ago. A good guess at the future, and expensive to do exactly.'
+  chapter: choosing-a-victim
+clock:
+  term: Clock
+  definition: An approximation of LRU that sweeps a hand over the frames, giving each page whose accessed bit is set a second chance.
+  chapter: choosing-a-victim
+opt:
+  term: OPT
+  definition: 'Bélády’s optimal replacement: evict the page that will be used furthest in the future. Impossible in practice, and the yardstick for every real policy.'
+  chapter: choosing-a-victim
+belady-anomaly:
+  term: Bélády’s anomaly
+  definition: More frames causing more page faults, which FIFO replacement can suffer and stack algorithms such as LRU cannot.
+  chapter: choosing-a-victim

@@ -1,0 +1,37 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+reference-counting:
+  term: reference counting
+  definition: Keeping, in each object, a count of the pointers to it, and freeing it when the count reaches zero.
+  chapter: counting-references
+cascade:
+  term: cascade
+  definition: The chain of frees that follows when freeing one object drops the counts of the objects it points to to zero, and so on.
+  chapter: counting-references
+reference-cycle:
+  term: reference cycle
+  definition: Objects that point to each other in a loop. Their counts never reach zero, so reference counting alone never frees them.
+  chapter: cycles
+weak-reference:
+  term: weak reference
+  definition: 'A reference that does not keep its target alive: it is not counted, or not traced, and is cleared when the target is freed.'
+  chapter: cycles
+trial-deletion:
+  term: trial deletion
+  definition: 'Finding garbage cycles by subtracting the counts that come from inside a group of objects: whatever is left at zero is held only by the group itself.'
+  chapter: cycles
+deferred-rc:
+  term: deferred reference counting
+  definition: Not counting pointers from the stack, and freeing objects whose counts are zero only after checking that no stack slot points to them.
+  chapter: fast-reference-counting
+zero-count-table:
+  term: zero-count table
+  definition: In deferred reference counting, the objects whose heap counts have reached zero, waiting for the next stack scan.
+  chapter: fast-reference-counting
+biased-rc:
+  term: biased reference counting
+  definition: Giving each object an owning thread that updates its count without atomic instructions, while other threads use a separate, atomic count.
+  chapter: fast-reference-counting
+immortal-object:
+  term: immortal object
+  definition: An object whose count is never updated and which is never freed, such as `None` in recent versions of CPython.
+  chapter: fast-reference-counting

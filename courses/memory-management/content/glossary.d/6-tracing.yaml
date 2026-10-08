@@ -1,0 +1,153 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+root:
+  term: root
+  definition: 'A pointer the program can use directly, without going through another object: a global variable, or a local variable in a running function.'
+  chapter: reachability
+reachable:
+  term: reachable
+  definition: An object is reachable if a chain of pointers leads to it from a root. Tracing collectors keep exactly the reachable objects.
+  chapter: reachability
+garbage:
+  term: garbage
+  definition: Objects that are no longer reachable. The program can never use them again, so their memory can be reused.
+  chapter: reachability
+liveness:
+  term: liveness
+  definition: An object is live if the program will use it again. Reachability is a safe approximation of liveness, since an unreachable object can never be used, but not an exact one.
+  chapter: reachability
+drag:
+  term: drag
+  definition: 'The time between an object’s last use and the moment it is freed: memory held for nothing.'
+  chapter: reachability
+mark-sweep:
+  term: mark–sweep
+  definition: A tracing collector that marks every reachable object, then sweeps the heap and frees whatever is unmarked.
+  chapter: reachability
+tricolour:
+  term: tricolour abstraction
+  definition: 'Describing a collection in progress with three colours: white (not yet reached), grey (reached, its pointers not yet scanned) and black (reached and scanned).'
+  chapter: reachability
+mark-compact:
+  term: mark–compact
+  definition: A collector that marks, then slides the survivors together to one end of the heap, leaving all the free space in one piece.
+  chapter: moving-collectors
+copying-collector:
+  term: copying collector
+  definition: A collector that copies the reachable objects from one space to another and abandons the old space whole. Its work is proportional to what survives.
+  chapter: moving-collectors
+semispace:
+  term: semispace
+  definition: 'One of the two halves of a copying collector’s heap: allocation fills from-space, and a collection copies the survivors into to-space.'
+  chapter: moving-collectors
+forwarding-pointer:
+  term: forwarding pointer
+  definition: The new address left in an object’s old copy, so that every other pointer to it can be updated.
+  chapter: moving-collectors
+cheney:
+  term: Cheney’s algorithm
+  definition: 'Copying collection with no stack or work list: to-space itself is the queue of objects to scan, between a scan pointer and a free pointer.'
+  chapter: moving-collectors
+generational-hypothesis:
+  term: weak generational hypothesis
+  definition: The observation that most objects die young.
+  chapter: generations
+nursery:
+  term: nursery
+  definition: The young generation, where new objects are allocated and which is collected often.
+  chapter: generations
+promotion:
+  term: promotion
+  definition: Moving an object that has survived long enough from the nursery to the old generation.
+  chapter: generations
+minor-collection:
+  term: minor collection
+  definition: Collecting only the nursery. A *major* collection collects the whole heap.
+  chapter: generations
+write-barrier:
+  term: write barrier
+  definition: 'Code the compiler adds to every pointer store, to tell the collector about it: for generations, to record old-to-young pointers; for concurrent marking, to stop objects being lost.'
+  chapter: generations
+remembered-set:
+  term: remembered set
+  definition: 'The set of places in the old generation that may point into the nursery: extra roots for a minor collection.'
+  chapter: generations
+card-marking:
+  term: card marking
+  definition: Dividing the old generation into small cards and marking a card’s byte in a table whenever a pointer in it is written, so that a minor collection scans only marked cards.
+  chapter: generations
+safepoint:
+  term: safepoint
+  definition: A point in the program where a collection may happen, and where the compiler records which stack slots and registers hold pointers.
+  chapter: finding-roots
+stack-map:
+  term: stack map
+  definition: The compiler’s record, for one safepoint, of which stack slots hold pointers.
+  chapter: finding-roots
+precise-collection:
+  term: precise collection
+  definition: Collection that knows exactly which words are pointers, from stack maps and object layouts.
+  chapter: finding-roots
+conservative-collection:
+  term: conservative collection
+  definition: Collection that treats any word that looks like a pointer into the heap as one. It needs no help from the compiler, but cannot move what such words point to, and can keep garbage alive.
+  chapter: finding-roots
+false-retention:
+  term: false retention
+  definition: Memory kept alive by a number that only looks like a pointer.
+  chapter: finding-roots
+shadow-stack:
+  term: shadow stack
+  definition: A separate stack of pointer variables that generated code maintains explicitly, so that a collector can find the roots without stack maps.
+  chapter: finding-roots
+mutator:
+  term: mutator
+  definition: 'The program, as the collector sees it: the thing that changes the object graph while the collector tries to trace it.'
+  chapter: concurrent-collection
+incremental-collection:
+  term: incremental collection
+  definition: Doing a collection in small steps interleaved with the program, instead of in one pause.
+  chapter: concurrent-collection
+concurrent-collection:
+  term: concurrent collection
+  definition: Collecting on other threads at the same time as the program runs.
+  chapter: concurrent-collection
+strong-tricolour-invariant:
+  term: strong tricolour invariant
+  definition: No black object points to a white one. Insertion barriers, such as Dijkstra’s, maintain it.
+  chapter: concurrent-collection
+snapshot-at-the-beginning:
+  term: snapshot at the beginning
+  definition: 'Keeping everything that was reachable when marking began, by shading the old target of every overwritten pointer: a deletion barrier, such as Yuasa’s.'
+  chapter: concurrent-collection
+read-barrier:
+  term: read barrier
+  definition: Code added to pointer loads, used by concurrent copying collectors so that the program never sees an object’s stale copy.
+  chapter: concurrent-collection
+mmu-utilisation:
+  term: minimum mutator utilisation
+  definition: For a time window of a given length, the smallest fraction of any such window in which the program, rather than the collector, ran.
+  chapter: concurrent-collection
+pause-time:
+  term: pause time
+  definition: How long the program is stopped for a collection.
+  chapter: collectors-in-the-wild
+throughput:
+  term: throughput
+  definition: The fraction of total time the program spends doing its own work rather than collecting.
+  chapter: collectors-in-the-wild
+headroom:
+  term: headroom
+  definition: Free memory a concurrent collector needs so that the program can keep allocating while a collection runs.
+  chapter: collectors-in-the-wild
+finaliser:
+  term: finaliser
+  definition: Code a collector runs some time after an object becomes unreachable, before freeing it. When, on which thread, and whether at all are not guaranteed.
+  chapter: finalisers-and-weak-references
+resurrection:
+  term: resurrection
+  definition: A finaliser storing a pointer to its own object somewhere reachable, bringing it back to life.
+  chapter: finalisers-and-weak-references
+ephemeron:
+  term: ephemeron
+  definition: A key–value pair in which the value is kept alive only as long as the key is reachable by other paths. JavaScript’s `WeakMap` is built on them.
+  chapter: finalisers-and-weak-references

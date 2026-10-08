@@ -1,0 +1,53 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+vma:
+  term: memory area
+  definition: 'A range of a process’s address space with one kind of contents and one set of permissions: the text, the heap, a mapped file, the stack. The kernel’s real record of a process’s memory.'
+  chapter: anatomy-of-an-address-space
+program-break:
+  term: program break
+  definition: The end of the heap segment. The `brk` system call (and `sbrk`) moves it.
+  chapter: anatomy-of-an-address-space
+mmap:
+  term: mmap
+  definition: The system call that maps a new area of memory, anonymous or backed by a file, anywhere in the address space.
+  chapter: anatomy-of-an-address-space
+guard-page:
+  term: guard page
+  definition: An unmapped page placed next to an area, such as below a stack, so that running off its end faults instead of corrupting a neighbour.
+  chapter: anatomy-of-an-address-space
+aslr:
+  term: address space layout randomisation
+  definition: Placing the stack, heap, libraries and program at random addresses on each run, so that an attacker cannot predict them.
+  chapter: anatomy-of-an-address-space
+stack-frame:
+  term: stack frame
+  definition: 'The block of stack a function call uses: its return address, saved registers and local variables. Pushed on call, popped on return.'
+  chapter: the-stack
+stack-pointer:
+  term: stack pointer
+  definition: The register that marks the top of the stack. Allocating a frame is moving it.
+  chapter: the-stack
+dangling-pointer:
+  term: dangling pointer
+  definition: A pointer to memory that has been freed or popped. Using it reads or writes whatever lives there now.
+  chapter: the-stack
+escape-analysis:
+  term: escape analysis
+  definition: A compiler analysis that proves an object never outlives the function that creates it, so that it can be allocated on the stack instead of the heap.
+  chapter: the-stack
+buddy-system:
+  term: buddy system
+  definition: An allocator of power-of-two blocks that splits blocks in halves to allocate and merges a block with its *buddy* to free. Linux uses it for physical pages.
+  chapter: the-kernels-allocators
+slab-allocator:
+  term: slab allocator
+  definition: An allocator that keeps one cache per object type, each made of slabs of equal-sized objects, so that allocation needs no search and no headers.
+  chapter: the-kernels-allocators
+external-fragmentation:
+  term: external fragmentation
+  definition: 'Free memory split into pieces too small to use: plenty of space in total, but no single gap big enough.'
+  chapter: fragmentation
+internal-fragmentation:
+  term: internal fragmentation
+  definition: Memory wasted inside allocated blocks, by rounding a request up to a block size.
+  chapter: fragmentation

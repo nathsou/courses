@@ -38,7 +38,7 @@ Statements end at a new line or a semicolon. An expression never continues onto 
 | `bool` | `true`, `false` | |
 | `S` or `S?` | a pointer to a struct `S`, or `null` | the `?` documents that it may be null; the language does not check |
 | `[T]` | a pointer to an array of `T`, or `null` | arrays have a fixed length |
-| `fn(T, U) -> R` | a pointer to a function | |
+| `fn(T) -> R` | a pointer to a function | any number of parameters |
 
 Every struct and array lives in the heap, and a variable of struct or array type holds a pointer to it. Assigning one copies the pointer, not the object, which is the whole reason memory management is hard.
 

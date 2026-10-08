@@ -1,0 +1,69 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+bump-allocator:
+  term: bump allocator
+  definition: An allocator that hands out memory by advancing a pointer and never reuses anything. The fastest possible `malloc`.
+  chapter: a-heap-from-scratch
+header:
+  term: header
+  definition: The word an allocator stores just before each block, holding its size and whether it is in use.
+  chapter: a-heap-from-scratch
+payload:
+  term: payload
+  definition: 'The part of a block that belongs to the program: what `malloc` returns a pointer to.'
+  chapter: a-heap-from-scratch
+free-list:
+  term: free list
+  definition: 'The allocator’s record of free blocks. *Implicit*: found by walking every block by its size. *Explicit*: the free blocks are linked to each other through their own unused payloads.'
+  chapter: a-heap-from-scratch
+boundary-tag:
+  term: boundary tag
+  definition: A copy of a block’s header at its end (a footer), so that the block after it can find where it starts. Knuth’s device for constant-time coalescing.
+  chapter: a-heap-from-scratch
+splitting:
+  term: splitting
+  definition: Cutting a free block that is bigger than a request into an allocated block and a smaller free one.
+  chapter: a-heap-from-scratch
+coalescing:
+  term: coalescing
+  definition: 'Merging a freed block with free neighbours into one bigger free block. (Chapter 20 uses the word for something else: skipping intermediate reference-count updates.)'
+  chapter: a-heap-from-scratch
+first-fit:
+  term: first fit
+  definition: Placing a request in the first free block big enough for it. *Next fit* starts the search where the last one stopped; *best fit* takes the smallest block that fits.
+  chapter: fragmentation
+segregated-fits:
+  term: segregated fits
+  definition: Keeping a separate free list for each range of sizes, so that a request searches only lists that can satisfy it.
+  chapter: fragmentation
+size-class:
+  term: size class
+  definition: One of a fixed set of block sizes that requests are rounded up to. Blocks of one class are interchangeable.
+  chapter: fragmentation
+utilisation:
+  term: utilisation
+  definition: 'Peak live data divided by peak heap size: the fraction of the memory an allocator obtained that the program was actually using.'
+  chapter: fragmentation
+thread-cache:
+  term: thread cache
+  definition: A small per-thread stock of free blocks of each size class, so that most allocations need no lock. glibc calls its own the tcache.
+  chapter: fast-allocators
+false-sharing:
+  term: false sharing
+  definition: Two threads writing to different data that happens to share a cache line, so that the line bounces between their cores.
+  chapter: fast-allocators
+blowup:
+  term: blowup
+  definition: 'The memory a concurrent allocator uses divided by what an ideal single-threaded allocator would use: the cost of memory freed in one thread’s heap and needed in another’s.'
+  chapter: fast-allocators
+arena:
+  term: arena
+  definition: A region of memory that objects are bump-allocated from and that is freed all at once. Also called a region. (glibc uses the word differently, for one of its independent heaps.)
+  chapter: arenas-pools-and-regions
+pool:
+  term: pool
+  definition: An allocator for objects of one size, keeping a free list of them.
+  chapter: arenas-pools-and-regions
+performance-index:
+  term: performance index
+  definition: 'The malloc lab’s score: a weighted sum of utilisation and speed, out of 100.'
+  chapter: the-malloc-lab
