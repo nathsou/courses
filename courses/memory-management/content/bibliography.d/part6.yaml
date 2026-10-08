@@ -79,3 +79,67 @@ bacon2003:
   year: 2003
   title: A real-time garbage collector with low overhead and consistent utilization
   venue: Proceedings of POPL 2003
+howarth2020:
+  authors: Jesse Howarth
+  year: 2020
+  title: Why Discord is switching from Go to Rust
+  venue: Discord blog, 4 February 2020
+  url: https://discord.com/blog/why-discord-is-switching-from-go-to-rust
+go-gc-guide:
+  authors: The Go Authors
+  year: n.d.
+  title: A guide to the Go garbage collector
+  venue: go.dev
+  url: https://go.dev/doc/gc-guide
+marshall2019:
+  authors: Peter Marshall
+  year: 2019
+  title: 'Trash talk: the Orinoco garbage collector'
+  venue: V8 blog, 3 January 2019
+  url: https://v8.dev/blog/trash-talk
+jep248:
+  authors: Stefan Johansson
+  year: 2015
+  title: 'JEP 248: make G1 the default garbage collector'
+  venue: OpenJDK (delivered in JDK 9)
+  url: https://openjdk.org/jeps/248
+jep333:
+  authors: Per Lidén and Stefan Karlsson
+  year: 2018
+  title: 'JEP 333: ZGC, a scalable low-latency garbage collector (experimental)'
+  venue: OpenJDK (delivered in JDK 11)
+  url: https://openjdk.org/jeps/333
+zgc-wiki:
+  authors: OpenJDK
+  year: n.d.
+  title: The Z Garbage Collector
+  venue: OpenJDK wiki
+  url: https://wiki.openjdk.org/display/zgc/Main
+jep189:
+  authors: Christine H. Flood and Roman Kennke
+  year: 2014
+  title: 'JEP 189: Shenandoah, a low-pause-time garbage collector (experimental)'
+  venue: OpenJDK (delivered in JDK 12)
+  url: https://openjdk.org/jeps/189
+dotnet-gc:
+  authors: Microsoft
+  year: n.d.
+  title: Fundamentals of garbage collection
+  venue: .NET documentation, learn.microsoft.com
+  url: https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals
+erlang-gc:
+  authors: The Erlang/OTP team
+  year: n.d.
+  title: Erlang garbage collector
+  venue: ERTS documentation, erlang.org
+  url: https://www.erlang.org/doc/apps/erts/garbagecollection
+blackburn2008:
+  authors: Stephen M. Blackburn and Kathryn S. McKinley
+  year: 2008
+  title: 'Immix: a mark-region garbage collector with space efficiency, fast collection, and mutator performance'
+  venue: Proceedings of PLDI 2008
+zhao2022:
+  authors: Wenyu Zhao, Stephen M. Blackburn and Kathryn S. McKinley
+  year: 2022
+  title: Low-latency, high-throughput garbage collection
+  venue: Proceedings of PLDI 2022
