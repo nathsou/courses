@@ -14,7 +14,7 @@
 
   onMount(() => {
     theme.init();
-    return mountSidebar('memory-management', state => (nav.sidebarOpen = state.open));
+    return mountSidebar('static-analysis', state => (nav.sidebarOpen = state.open));
   });
   afterNavigate(closeSidebar);
 </script>

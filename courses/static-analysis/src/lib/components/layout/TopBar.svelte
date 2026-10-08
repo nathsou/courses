@@ -9,9 +9,8 @@
   let scrolled = $state(false);
   const on = (p: string) => page.url.pathname.startsWith(`${base}/${p}`);
   const links = [
-    { path: 'lab', icon: 'bench', label: 'The lab bench', title: 'The lab bench: write an allocator and score it' },
-    { path: 'appendix/museum', icon: 'museum', label: 'The museum', title: 'The museum: historic memory failures, re-enacted' },
-    { path: 'appendix/glossary-and-bibliography', icon: 'timeline', label: 'Timeline and glossary', title: 'Glossary, timeline and bibliography' },
+    { path: 'workbench', icon: 'bench', label: 'The workbench', title: 'The workbench: write a rule and run it on the corpus' },
+    { path: 'appendix/glossary-and-bibliography', icon: 'timeline', label: 'Glossary and bibliography', title: 'Glossary, timeline and bibliography' },
   ] as const;
 </script>
 
@@ -23,9 +22,11 @@
   </button>
   <a class="brand" href="{base}/">
     <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M2 16H30M16 2V30" class="w" />
-      <path d="M4 4L28 28" class="w s" />
-      <ellipse cx="16" cy="16" rx="10" ry="5" transform="rotate(-38 16 16)" class="ring" />
+      <path d="M16 4L27 15L16 26L5 15Z" class="w" />
+      <circle cx="16" cy="4" r="2.6" class="ring" />
+      <circle cx="27" cy="15" r="2.6" class="ring" />
+      <circle cx="5" cy="15" r="2.6" class="ring" />
+      <circle cx="16" cy="26" r="3.2" class="ring top" />
     </svg>
     <span class="name">{COURSE_TITLE}</span>
   </a>
@@ -36,18 +37,6 @@
       <Icon name={l.icon} />
     </a>
   {/each}
-  {#if theme.resolved === 'light'}
-    <button
-      class="icon-btn"
-      class:current={theme.paper === 'white'}
-      onclick={() => theme.setPaper(theme.paper === 'white' ? 'default' : 'white')}
-      aria-pressed={theme.paper === 'white'}
-      aria-label="White page background"
-      title={theme.paper === 'white' ? 'Back to the warm paper background' : 'Use a plain white page background'}
-    >
-      <Icon name="page" />
-    </button>
-  {/if}
   <button class="icon-btn" onclick={() => theme.set(theme.resolved === 'dark' ? 'light' : 'dark')} aria-label="Switch to {theme.resolved === 'dark' ? 'light' : 'dark'} theme" title="Switch to {theme.resolved === 'dark' ? 'light' : 'dark'} theme">
     <Icon name={theme.resolved === 'dark' ? 'sun' : 'moon'} />
   </button>
@@ -98,6 +87,10 @@
     stroke: var(--line-strong);
     stroke-width: 1.2;
     fill: none;
+  }
+  .ring.top {
+    fill: var(--amber);
+    stroke: var(--amber);
   }
   .w.s {
     stroke: var(--copper);

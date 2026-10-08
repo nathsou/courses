@@ -21,10 +21,16 @@
         ? 'How we got here'
         : `Chapter ${entry.number}${part ? (part.id === '0' || part.id === 'E' ? ` · ${part.title}` : ` · Part ${part.id} — ${part.title}`) : ''}${entry.optional ? ' · ◇ optional' : ''}`,
   );
-  // The header's emblem: a 4 × 4 core plane whose magnetised rings spell the chapter number in binary.
+  // The header's emblem: the Hasse diagram of the subsets of {a, b, c, d}, a 16-element lattice (chapter 13). The
+  // subset whose members are the 1-bits of the chapter number is lit, with every subset below it.
   const sealNumber = $derived(entry.number);
-  const bits = $derived(/^\d+$/.test(entry.number) ? Number(entry.number) : entry.number.charCodeAt(0));
-  const CORES = Array.from({ length: 16 }, (_, i) => ({ i, x: 25 + (i % 4) * 36.5, y: 25 + Math.floor(i / 4) * 36.5 }));
+  const bits = $derived(/^\d+$/.test(entry.number) ? Number(entry.number) % 16 : entry.number.charCodeAt(0) % 16);
+  const popcount = (n: number) => n.toString(2).replace(/0/g, '').length;
+  const RANKS = [0, 1, 2, 3, 4].map((k) => Array.from({ length: 16 }, (_, i) => i).filter((i) => popcount(i) === k));
+  const NODES = RANKS.flatMap((rank, k) => rank.map((i, j) => ({ i, x: 80 + (j - (rank.length - 1) / 2) * 26, y: 140 - k * 30 })));
+  const pos = (i: number) => NODES.find((n) => n.i === i)!;
+  const EDGES = NODES.flatMap((n) => [0, 1, 2, 3].filter((b) => !(n.i & (1 << b))).map((b) => ({ a: n.i, b: n.i | (1 << b) })));
+  const below = (x: number, y: number) => (x & y) === x;
   const sealTitle = $derived(entry.kind === 'chapter' ? `${entry.number}. ${meta.title}` : meta.title);
   const prereqs = $derived((meta.prerequisites ?? []).map((s) => findEntry('chapter', s) ?? findEntry('appendix', s)).filter((e) => e !== undefined));
 
@@ -64,14 +70,12 @@
 
 <article class="article">
   <header class="chapter-head wide">
-    <svg class="seal" viewBox="0 0 160 160" role="img" aria-label="Chapter {sealNumber} in binary on a plane of magnetic cores">
-      {#each [0, 1, 2, 3] as k (k)}
-        <path class="wire" d="M8 {25 + k * 36.5}H152M{25 + k * 36.5} 8V152" />
+    <svg class="seal" viewBox="0 0 160 160" role="img" aria-label="Emblem: the lattice of subsets of four elements, with chapter {sealNumber} lit in binary">
+      {#each EDGES as e (`${e.a}-${e.b}`)}
+        <line class="wire" class:on={below(e.b, bits)} x1={pos(e.a).x} y1={pos(e.a).y} x2={pos(e.b).x} y2={pos(e.b).y} />
       {/each}
-      <path class="sense" d="M8 8L152 152" />
-      {#each CORES as c (c.i)}
-        {@const on = ((bits >> (15 - c.i)) & 1) === 1}
-        <ellipse class="core" class:on cx={c.x} cy={c.y} rx="11" ry="5.6" transform="rotate(-38 {c.x} {c.y})" />
+      {#each NODES as n (n.i)}
+        <circle class="core" class:on={below(n.i, bits)} class:top={n.i === bits} cx={n.x} cy={n.y} r={n.i === bits ? 6.5 : 4.5} />
       {/each}
     </svg>
     <div class="head-text">
@@ -230,7 +234,7 @@
     background: color-mix(in srgb, var(--sig-high) 12%, var(--panel));
   }
 
-  /* The emblem: a core plane. */
+  /* The emblem: the lattice of subsets of four elements, with the chapter number lit. */
   .seal {
     grid-column: 2;
     grid-row: 1;
@@ -241,45 +245,28 @@
   }
   .seal .wire {
     stroke: var(--line-strong);
-    stroke-width: 1;
-    fill: none;
+    stroke-width: 1.2;
   }
-  .seal .sense {
-    stroke: color-mix(in srgb, var(--copper) 55%, transparent);
-    stroke-width: 1;
-    stroke-dasharray: 3 3;
+  .seal .wire.on {
+    stroke: var(--amber);
+    stroke-width: 2;
   }
   .seal .core {
     fill: var(--panel);
-    stroke: var(--meta);
-    stroke-width: 3.2;
+    stroke: var(--line-strong);
+    stroke-width: 1.6;
   }
   .seal .core.on {
     stroke: var(--amber);
     fill: var(--amber-soft);
-    filter: drop-shadow(0 0 3px var(--amber-glow));
   }
-  .layers {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0 0;
-    font-size: 0.74rem;
+  .seal .core.top {
+    fill: var(--amber);
+    filter: drop-shadow(0 0 4px var(--amber-glow));
   }
-  .layers li {
-    padding: 0.12rem 0.55rem;
-    border-radius: 99px;
-    border: 1px dashed var(--line-strong);
-    color: var(--mute);
-  }
-  .layers li.lit {
-    border-style: solid;
-    border-color: var(--copper);
-    background: var(--copper-soft);
-    color: var(--fg);
-    font-weight: 600;
+  .track {
+    margin: 0.8rem 0 0;
+    font-size: 0.78rem;
   }
   @media (max-width: 720px) {
     .chapter-head {

@@ -4,10 +4,10 @@
  */
 import { browser } from '$app/environment';
 
-const SOLVED_KEY = 'memory-management:solved';
-const DRAFT_KEY = 'memory-management:drafts';
-const CAUGHT_KEY = 'memory-management:caught';
-const VISITED_KEY = 'memory-management:visited';
+const SOLVED_KEY = 'static-analysis:solved';
+const DRAFT_KEY = 'static-analysis:drafts';
+const CAUGHT_KEY = 'static-analysis:caught';
+const VISITED_KEY = 'static-analysis:visited';
 
 function read<T>(key: string, fallback: T): T {
   if (!browser) return fallback;

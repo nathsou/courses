@@ -1,24 +1,21 @@
-@import '@fontsource-variable/fraunces/full.css';
-@import '@fontsource-variable/fraunces/full-italic.css';
-@import '@fontsource-variable/lora';
-@import '@fontsource-variable/lora/wght-italic.css';
-@import '@fontsource-variable/manrope';
+@import '@fontsource-variable/schibsted-grotesk';
+@import '@fontsource-variable/schibsted-grotesk/wght-italic.css';
+@import '@fontsource-variable/literata/opsz.css';
+@import '@fontsource-variable/literata/opsz-italic.css';
 @import '@fontsource-variable/jetbrains-mono';
 @import 'katex/dist/katex.min.css';
 
-/* ───────────────────────── Design tokens: "Core" ─────────────────────────
-   Light: the warm paper of a 1960s programming manual, ink-blue text, copper accents, and part headers
-   decorated with a magnetic core plane (rings threaded on a grid of wires).
-   Dark: an amber hex dump on near-black, like a phosphor terminal.
+/* ───────────────────────── Design tokens: "Lamp and lattice" ─────────────────────────
+   Light: drafting paper, ink-blue text and an amber highlighter, the colours of a code review printed out.
+   Dark: a reviewer's desk at night, slate with an amber lamp.
+   Decoration is a lattice: the Hasse diagram of the subsets of a four-element set (chapter 13), drawn faintly on
+   part headers and lit in binary on each chapter's emblem.
 
    Every colour is written once as light-dark(light, dark). The theme is chosen by `color-scheme`:
    `system` follows the OS, and `data-theme` on <html> (the collection's shared `theme` key) forces one.
 
-   Memory figures use one encoding everywhere (PLAN §14), never by colour alone:
-   allocated = filled (--alloc), free = empty with a hatched border (--free), metadata = grey with a header
-   glyph (--meta), garbage = faded with a dashed outline (--garbage), use-after-free = red with ✗ (--uaf),
-   leak = open-ended bar with an arrowhead (--leak), pointers = arrows with a dot at the source (--pointer).
-   Tricolour marking: white, grey and black are drawn empty, half-filled and filled, labelled W, G and B. */
+   Results use one encoding everywhere, never colour alone: matched ✓ (green, solid underline), missing or
+   unexpected ✗ (red, wavy underline), mismatch ≠ (amber), secondary location ◦ (blue, dotted underline). */
 
 :root {
   color-scheme: light dark;
@@ -31,60 +28,43 @@
 }
 
 :root {
-  --font-display: 'Fraunces Variable', Fraunces, 'Iowan Old Style', Georgia, serif;
-  --font-ui: 'Manrope Variable', Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-body: 'Lora Variable', Lora, 'Iowan Old Style', Charter, Georgia, serif;
+  --font-display: 'Schibsted Grotesk Variable', 'Schibsted Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-ui: 'Schibsted Grotesk Variable', 'Schibsted Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Literata Variable', Literata, 'Iowan Old Style', Charter, Georgia, serif;
   --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* ── Paper and ink ── */
-  --bg: light-dark(#f4efe3, #0e1013);
-  --fg: light-dark(#1d2431, #ece4d2);
-  --ink-2: light-dark(#3b4557, #c8bfa9);
-  --mute: light-dark(#646d7c, #948b78);
-  --pn: light-dark(#ebe4d3, #16191e);
-  --panel: light-dark(#fbf8f0, #121418);
-  --line: light-dark(#dacfb7, #272b32);
-  --line-strong: light-dark(#b5a785, #444a54);
-  --grid-minor: light-dark(rgb(176 83 42 / 0.05), rgb(255 181 71 / 0.035));
-  --grid-major: light-dark(rgb(176 83 42 / 0.09), rgb(255 181 71 / 0.06));
+  --bg: light-dark(#f4f4ef, #10141a);
+  --fg: light-dark(#18212d, #e7e4db);
+  --ink-2: light-dark(#384353, #c3c0b6);
+  --mute: light-dark(#5f6876, #9a978e);
+  --pn: light-dark(#e9eae3, #171c24);
+  --panel: light-dark(#fbfbf7, #131820);
+  --line: light-dark(#d6d8cd, #262d38);
+  --line-strong: light-dark(#a9ad9e, #435062);
+  --grid-minor: light-dark(rgb(31 78 140 / 0.05), rgb(242 181 82 / 0.035));
+  --grid-major: light-dark(rgb(31 78 140 / 0.09), rgb(242 181 82 / 0.06));
   --grid-size: 24px;
 
-  /* ── Core inks ── */
-  --ink-blue: light-dark(#23407a, #9db7f0);
-  --ink-blue-soft: light-dark(rgb(35 64 122 / 0.1), rgb(157 183 240 / 0.12));
-  --copper: light-dark(#a9501f, #f08d55);
-  --copper-soft: light-dark(rgb(169 80 31 / 0.11), rgb(240 141 85 / 0.13));
-  --amber: light-dark(#946000, #ffb547);
-  --amber-soft: light-dark(rgb(148 96 0 / 0.11), rgb(255 181 71 / 0.12));
-  --amber-glow: light-dark(rgb(148 96 0 / 0.2), rgb(255 181 71 / 0.35));
-  --green: light-dark(#1d6a46, #74d19c);
-  --green-soft: light-dark(rgb(29 106 70 / 0.11), rgb(116 209 156 / 0.12));
-  --red: light-dark(#bb3324, #ff7d6b);
-  --red-soft: light-dark(rgb(187 51 36 / 0.1), rgb(255 125 107 / 0.13));
-  --violet: light-dark(#6d3f9e, #c8a2ff);
-  --violet-soft: light-dark(rgb(109 63 158 / 0.1), rgb(200 162 255 / 0.13));
-  --wire-ink: light-dark(rgb(169 80 31 / 0.22), rgb(255 181 71 / 0.16));
+  /* ── Inks ── */
+  --ink-blue: light-dark(#1f4e8c, #8fb4f2);
+  --ink-blue-soft: light-dark(rgb(31 78 140 / 0.1), rgb(143 180 242 / 0.13));
+  --copper: light-dark(#a24a1d, #f0935e);
+  --copper-soft: light-dark(rgb(162 74 29 / 0.1), rgb(240 147 94 / 0.13));
+  --amber: light-dark(#8f5d00, #f2b552);
+  --amber-soft: light-dark(rgb(232 170 40 / 0.2), rgb(242 181 82 / 0.15));
+  --amber-glow: light-dark(rgb(143 93 0 / 0.2), rgb(242 181 82 / 0.35));
+  --green: light-dark(#1b6a45, #72d39d);
+  --green-soft: light-dark(rgb(27 106 69 / 0.1), rgb(114 211 157 / 0.12));
+  --red: light-dark(#b2342a, #ff806e);
+  --red-soft: light-dark(rgb(178 52 42 / 0.09), rgb(255 128 110 / 0.13));
+  --violet: light-dark(#663f9b, #c6a3ff);
+  --violet-soft: light-dark(rgb(102 63 155 / 0.1), rgb(198 163 255 / 0.13));
+  --teal: light-dark(#0f6966, #5fd2c6);
+  --teal-soft: light-dark(rgb(15 105 102 / 0.1), rgb(95 210 198 / 0.13));
+  --wire-ink: light-dark(rgb(31 78 140 / 0.18), rgb(242 181 82 / 0.14));
 
-  /* ── Memory figures ── */
-  --alloc: light-dark(#2f5d9b, #6fa8ff);
-  --alloc-soft: light-dark(rgb(47 93 155 / 0.16), rgb(111 168 255 / 0.18));
-  --free: light-dark(#a99f88, #59606b);
-  --free-bg: light-dark(#f8f4ea, #15181c);
-  --meta: light-dark(#7d7869, #858b98);
-  --meta-soft: light-dark(rgb(125 120 105 / 0.2), rgb(133 139 152 / 0.22));
-  --garbage: light-dark(#aaa290, #50545d);
-  --uaf: var(--red);
-  --leak: light-dark(#c25e0c, #ffa94d);
-  --pointer: var(--violet);
-  --page-c: light-dark(#0f6a68, #5fd2c6);
-  --page-soft: light-dark(rgb(15 106 104 / 0.12), rgb(95 210 198 / 0.13));
-  --frame-c: light-dark(#7a5a24, #e2bf7a);
-  --frame-soft: light-dark(rgb(122 90 36 / 0.12), rgb(226 191 122 / 0.13));
-  --mark-w: light-dark(#fbf8f0, #121418);
-  --mark-g: light-dark(#a39a86, #6d7380);
-  --mark-b: light-dark(#1d2431, #ece4d2);
-
-  /* ── Legacy names used by the shared components (kept so copied components work) ── */
+  /* ── Legacy names used by the shared components ── */
   --seal: var(--green);
   --seal-ink: light-dark(#155236, #9be3b7);
   --seal-soft: var(--green-soft);
@@ -93,33 +73,30 @@
   --pencil: var(--red);
   --pencil-soft: var(--red-soft);
   --guilloche: var(--wire-ink);
-  --state: light-dark(#fbf8f0, #1c2027);
+  --state: light-dark(#fbfbf7, #1b212b);
   --state-line: light-dark(#5b6576, #8d96a6);
-  --trace: var(--copper);
-  --edge: light-dark(#8a8370, #5d6170);
-  --track: var(--copper);
-  --track-ink: light-dark(#8a3f15, #f5a87c);
-  --track-soft: var(--copper-soft);
+  --trace: var(--ink-blue);
+  --edge: light-dark(#7d8494, #66708a);
+  --track: var(--ink-blue);
+  --track-ink: light-dark(#173e72, #a9c6f7);
+  --track-soft: var(--ink-blue-soft);
   --phosphor: var(--amber);
   --phosphor-ink: var(--amber);
   --phosphor-glow: var(--amber-glow);
   --ac: var(--ink-blue);
-  --sig-high: var(--amber);
-  --sig-high-glow: var(--amber-soft);
-  --sig-low: light-dark(#5b6b7e, #7a8ba1);
-  --sig-x: var(--red);
-  --sig-current: var(--ink-blue);
+  --page-c: var(--teal);
+  --page-soft: var(--teal-soft);
 
   /* ── Callout hues ── */
   --c-note: light-dark(#4a5f80, #9fb2cf);
   --c-tip: var(--green);
   --c-warning: var(--red);
-  --c-key: var(--copper);
+  --c-key: var(--amber);
   --c-question: light-dark(#1d5fa8, #7fb9ff);
   --c-challenge: var(--violet);
-  --c-lab: var(--page-c);
+  --c-lab: var(--teal);
   --c-programmer: light-dark(#34509f, #93a6ff);
-  --c-hood: light-dark(#5a5f69, #a3a9b5);
+  --c-hood: light-dark(#4f5866, #a3a9b5);
   --c-deeper: light-dark(#86397c, #e29ad6);
   --c-industry: light-dark(#7a5a24, #e2bf7a);
   --c-proved: var(--green);
@@ -137,50 +114,50 @@
   --maybe-soft: light-dark(rgb(194 112 0 / 0.12), rgb(255 178 62 / 0.12));
 
   /* ── Charts ── */
-  --series-1: light-dark(#2f5d9b, #6fa8ff);
-  --series-2: light-dark(#b8652e, #f08d55);
-  --series-3: light-dark(#1d6a46, #74d19c);
+  --series-1: light-dark(#1f4e8c, #8fb4f2);
+  --series-2: light-dark(#b8652e, #f0935e);
+  --series-3: light-dark(#1b6a45, #72d39d);
   --series-4: light-dark(#86397c, #e29ad6);
-  --series-5: light-dark(#946000, #ffb547);
-  --series-6: light-dark(#0e7a74, #4fd6c8);
-  --series-7: light-dark(#bb3324, #ff7d6b);
+  --series-5: light-dark(#8f5d00, #f2b552);
+  --series-6: light-dark(#0f6966, #5fd2c6);
+  --series-7: light-dark(#b2342a, #ff806e);
   --series-8: light-dark(#5b6b7e, #9aa8b8);
 
   /* ── Code (Shiki uses its own themes in tools/markdown/render.ts with the same values) ── */
-  --code-keyword: light-dark(#7b2f6e, #e3a0d6);
-  --code-string: light-dark(#0b6e44, #8ee0b0);
-  --code-number: light-dark(#9c4f1c, #f0a870);
-  --code-comment: light-dark(#6b6658, #8f8a7d);
-  --code-fn: light-dark(#1f4f9f, #8fbaff);
-  --code-type: light-dark(#0c6a66, #66d6c8);
+  --code-keyword: light-dark(#7a2d6c, #e3a0d6);
+  --code-string: light-dark(#0b6a43, #8ee0b0);
+  --code-number: light-dark(#9a4c1a, #f0a870);
+  --code-comment: light-dark(#666a60, #8e8b80);
+  --code-fn: light-dark(#1d4c96, #8fbaff);
+  --code-type: light-dark(#0c6763, #66d6c8);
   --code-spec: light-dark(#8a5d00, #e6c06a);
   --code-def: var(--fg);
   --code-prop: light-dark(#34509f, #a7b6ff);
-  --code-punct: light-dark(#4d5462, #b1b7c2);
+  --code-punct: light-dark(#4a5260, #b1b7c2);
 
-  --shadow: 0 1px 2px light-dark(rgb(60 40 10 / 0.07), rgb(0 0 0 / 0.4));
-  --shadow-lg: 0 1px 2px light-dark(rgb(60 40 10 / 0.08), rgb(0 0 0 / 0.5)), 0 14px 36px -12px light-dark(rgb(60 40 10 / 0.22), rgb(0 0 0 / 0.7));
+  --shadow: 0 1px 2px light-dark(rgb(20 30 50 / 0.07), rgb(0 0 0 / 0.4));
+  --shadow-lg: 0 1px 2px light-dark(rgb(20 30 50 / 0.08), rgb(0 0 0 / 0.5)), 0 14px 36px -12px light-dark(rgb(20 30 50 / 0.22), rgb(0 0 0 / 0.7));
   --radius: 6px;
   --radius-sm: 4px;
   --sidebar-w: 18rem;
   --main-w: 41rem;
   --margin-w: 16rem;
 
-  /* ── Legacy names used by the shared components and charts (aliases, keep) ── */
+  /* ── Aliases used by the shared components and charts ── */
   --page: var(--bg);
   --ink: var(--fg);
   --ink-3: var(--mute);
   --surface: var(--panel);
   --surface-2: var(--pn);
-  --surface-3: light-dark(#e3dac3, #1d2026);
+  --surface-3: light-dark(#e2e4da, #1e2530);
   --rule: var(--line);
   --rule-strong: var(--line-strong);
   --border: var(--line-strong);
   --accent: var(--ac);
-  --accent-2: var(--track);
+  --accent-2: var(--amber);
   --accent-soft: var(--track-soft);
   --accent-ink: var(--track-ink);
-  --on-accent: light-dark(#fbf8f0, #0e1013);
+  --on-accent: light-dark(#fbfbf7, #10141a);
   --focus: light-dark(#1f5fd1, #9fc4ff);
   --chart-surface: var(--panel);
   --grid: var(--line);
@@ -196,22 +173,22 @@
   --break: var(--c-warning);
   --challenge: var(--c-challenge);
   --term-hl: var(--amber-soft);
-  --term-hl-strong: light-dark(rgb(148 96 0 / 0.24), rgb(255 181 71 / 0.26));
+  --term-hl-strong: light-dark(rgb(232 170 40 / 0.32), rgb(242 181 82 / 0.26));
   --wire: light-dark(#3a4350, #8494a8);
 }
 
 /* Reader option: a plain white page in the light theme (the dark theme is unaffected). */
 :root[data-paper='white'] {
-  --bg: light-dark(#ffffff, #0e1013);
-  --panel: light-dark(#ffffff, #121418);
-  --pn: light-dark(#f4f3ef, #16191e);
-  --line: light-dark(#e3e0d8, #272b32);
-  --line-strong: light-dark(#bdb8aa, #444a54);
-  --surface-3: light-dark(#e9e7e1, #1d2026);
+  --bg: light-dark(#ffffff, #10141a);
+  --panel: light-dark(#ffffff, #131820);
+  --pn: light-dark(#f3f4f0, #171c24);
+  --line: light-dark(#e1e3da, #262d38);
+  --line-strong: light-dark(#b5b9ab, #435062);
+  --surface-3: light-dark(#e8eae2, #1e2530);
 }
 
-/* The core plane: ferrite rings threaded on a diagonal grid of wires, as in a magnetic core memory.
-   Used on part headers and the home hero. A tiled SVG mask, tinted by --wire-ink. */
+/* The lattice: small Hasse diagrams (the subsets of a two-element set: a diamond with dots at its corners),
+   tiled diagonally. Used on part headers and the home hero. A tiled SVG mask, tinted by --wire-ink. */
 .core-plane {
   position: relative;
   isolation: isolate;
@@ -222,8 +199,8 @@
   inset: 0;
   z-index: -1;
   background-color: var(--wire-ink);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cg fill='none' stroke='black'%3E%3Cpath d='M0 14H28M14 0V28' stroke-width='0.5'/%3E%3Cpath d='M0 0L28 28' stroke-width='0.35'/%3E%3Cellipse cx='14' cy='14' rx='5.2' ry='2.6' transform='rotate(45 14 14)' stroke-width='1.6'/%3E%3C/g%3E%3C/svg%3E") repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cg fill='none' stroke='black'%3E%3Cpath d='M0 14H28M14 0V28' stroke-width='0.5'/%3E%3Cpath d='M0 0L28 28' stroke-width='0.35'/%3E%3Cellipse cx='14' cy='14' rx='5.2' ry='2.6' transform='rotate(45 14 14)' stroke-width='1.6'/%3E%3C/g%3E%3C/svg%3E") repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='black' stroke-width='0.9'%3E%3Cpath d='M16 4L26 14L16 24L6 14Z'/%3E%3C/g%3E%3Cg fill='black'%3E%3Ccircle cx='16' cy='4' r='1.9'/%3E%3Ccircle cx='26' cy='14' r='1.9'/%3E%3Ccircle cx='16' cy='24' r='1.9'/%3E%3Ccircle cx='6' cy='14' r='1.9'/%3E%3C/g%3E%3C/svg%3E") repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='black' stroke-width='0.9'%3E%3Cpath d='M16 4L26 14L16 24L6 14Z'/%3E%3C/g%3E%3Cg fill='black'%3E%3Ccircle cx='16' cy='4' r='1.9'/%3E%3Ccircle cx='26' cy='14' r='1.9'/%3E%3Ccircle cx='16' cy='24' r='1.9'/%3E%3Ccircle cx='6' cy='14' r='1.9'/%3E%3C/g%3E%3C/svg%3E") repeat;
   pointer-events: none;
 }
 /* Kept for copied components that still ask for the old pattern. */
@@ -384,14 +361,13 @@ kbd,
   content: '';
   position: absolute;
   left: 0;
-  top: -6px;
-  width: 14px;
-  height: 8px;
-  border-radius: 50%;
-  border: 2.5px solid var(--copper);
+  top: -5px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--amber);
   background: var(--bg);
   box-sizing: border-box;
-  transform: rotate(-35deg);
+  transform: rotate(45deg);
 }
 .article h2::after {
   content: '';

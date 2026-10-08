@@ -4,7 +4,7 @@
  */
 import { browser } from '$app/environment';
 
-const KEY = 'memory-management:impl';
+const KEY = 'static-analysis:impl';
 
 function read(): Record<string, { code: string; at: number }> {
   if (!browser) return {};

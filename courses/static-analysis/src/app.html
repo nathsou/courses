@@ -10,7 +10,7 @@
       try {
         const t = localStorage.getItem('theme');
         if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
-        if (localStorage.getItem('memory-management:sidebar') === 'collapsed') document.documentElement.dataset.sidebar = 'collapsed';
+        if (localStorage.getItem('static-analysis:sidebar') === 'collapsed') document.documentElement.dataset.sidebar = 'collapsed';
         if (localStorage.getItem('paper') === 'white') document.documentElement.dataset.paper = 'white';
       } catch {}
     </script>

@@ -65,9 +65,9 @@ function benchTheme(name: string, type: 'light' | 'dark', c: Record<'fg' | 'bg' 
     ],
   };
 }
-// "Core" code themes: the --code-* tokens of app.css.
-const THEME_LIGHT = benchTheme('core-light', 'light', { fg: '#1b2333', bg: '#ebe4d3', keyword: '#7b2f6e', string: '#0b6e44', number: '#9c4f1c', comment: '#6b6658', fn: '#1f4f9f', type: '#0c6a66', prop: '#34509f', punct: '#4d5462', spec: '#8a5d00' });
-const THEME_DARK = benchTheme('core-dark', 'dark', { fg: '#ece4d2', bg: '#16191e', keyword: '#e3a0d6', string: '#8ee0b0', number: '#f0a870', comment: '#8f8a7d', fn: '#8fbaff', type: '#66d6c8', prop: '#a7b6ff', punct: '#b1b7c2', spec: '#e6c06a' });
+// Code themes: the --code-* tokens of app.css, on the code panel colour (--pn).
+const THEME_LIGHT = benchTheme('core-light', 'light', { fg: '#18212d', bg: '#e9eae3', keyword: '#7a2d6c', string: '#0b6a43', number: '#9a4c1a', comment: '#5f645a', fn: '#1d4c96', type: '#0c6763', prop: '#34509f', punct: '#4a5260', spec: '#8a5d00' });
+const THEME_DARK = benchTheme('core-dark', 'dark', { fg: '#e7e4db', bg: '#171c24', keyword: '#e3a0d6', string: '#8ee0b0', number: '#f0a870', comment: '#8e8b80', fn: '#8fbaff', type: '#66d6c8', prop: '#a7b6ff', punct: '#b1b7c2', spec: '#e6c06a' });
 
 let highlighter: Promise<Highlighter> | undefined;
 

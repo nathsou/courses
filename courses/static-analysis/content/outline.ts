@@ -43,7 +43,7 @@ export const PARTS: OutlinePart[] = [
     blurb: 'One issue followed from the editor back to the ten lines of code that raised it, and the theorem that says every rule must be wrong sometimes.',
     chapters: [
       { slug: 'one-issue', number: '0', title: 'One issue, end to end', summary: 'An issue in your editor, the rule that raised it, and your first rule: ten lines that find Math.random wherever it hides.', flagship: 'Rule workbench', track: 'A' },
-      { slug: 'every-rule-is-approximate', number: '1', title: 'Why every rule is approximate', summary: 'The halting problem, Rice’s theorem, false positives and false negatives, and why SonarQube has Security Hotspots.', flagship: 'The impossible analyser', track: 'A', year: 1953, event: 'Rice’s theorem' },
+      { slug: 'every-rule-is-approximate', number: '1', title: 'Why every rule is approximate', summary: 'The halting problem, Rice’s theorem, false positives and false negatives, and rules that ask for a review instead of a verdict.', flagship: 'The impossible analyser', track: 'A', year: 1953, event: 'Rice’s theorem' },
     ],
   },
   {
