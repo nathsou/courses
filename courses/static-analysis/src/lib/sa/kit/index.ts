@@ -31,6 +31,3 @@ export const KIT_MODULES: Record<string, unknown> = {
   regex,
   type,
 };
-
-/** The kit's sources, for the editor (read-only files under /rules/helpers/). */
-export const KIT_SOURCES = import.meta.glob(['./*.ts', '!./index.ts', '!./*.test.ts'], { query: '?raw', import: 'default' }) as Record<string, () => Promise<string>>;

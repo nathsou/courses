@@ -1,94 +1,90 @@
 /**
- * Every TypeScript exercise in the chapters is checked the way a reader's answer would be: the reference solution
- * must pass every test (and the storage rule, where it applies), and the starter must not already pass.
+ * Every workbench exercise in the content is checked the way a reader's work would be:
+ * - `rule`: the reference passes its visible and hidden fixtures, and the starter does not pass all of them;
+ * - `helper`: the reference passes its visible and hidden tests, and the starter does not;
+ * - `fixtures`: the fixtures given as the reference pass with the correct rule and catch every mutant, and the
+ *   starter fixtures do not catch them all;
+ * - `workbench` (playgrounds): the starter loads and every fixture is valid comment-based syntax.
  */
 import { describe, expect, test } from 'vitest';
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import YAML from 'yaml';
-import { runInWorker } from '../../src/lib/exercise/run';
+import { loadLibs } from '../../src/lib/sa/runtime/libs';
+import { runRule } from '../../src/lib/sa/runtime/run';
+import { runTests } from '../../src/lib/sa/runtime/tests';
+import { parseExpectations } from '../../src/lib/sa/runtime/comment-based';
+import { absoluteFiles, entryPath, keyOf, testPath, type WorkbenchSpec } from '../../src/lib/sa/exercise';
 
-const root = path.resolve(import.meta.dirname, '../../content/chapters');
-const chapters = existsSync(root) ? readdirSync(root).filter((c) => existsSync(path.join(root, c, 'index.md'))) : [];
+const root = path.resolve(import.meta.dirname, '../../content');
+const docs = ['chapters', 'appendices', 'parts'].flatMap((dir) => {
+  const d = path.join(root, dir);
+  return existsSync(d) ? readdirSync(d).map((c) => path.join(d, c, 'index.md')).filter((f) => existsSync(f)) : [];
+});
 
-interface Ex {
-  id?: string;
-  title?: string;
-  starter: string;
-  solution: string;
-  tests: string;
-  storage?: boolean;
+export function workbenchBlocks(md: string): { kind: string; spec: WorkbenchSpec }[] {
+  return [...md.matchAll(/^```(rule|helper|fixtures|workbench)\n([\s\S]*?)^```$/gm)].map((m) => ({ kind: m[1]!, spec: { ...(YAML.parse(m[2]!) as WorkbenchSpec), kind: m[1]! } }));
 }
 
-describe('Build exercises: the solution passes, the starter does not', () => {
-  let n = 0;
-  for (const ch of chapters) {
-    const md = readFileSync(path.join(root, ch, 'index.md'), 'utf8');
-    for (const m of md.matchAll(/^```build\n([\s\S]*?)^```$/gm)) {
-      const ex = YAML.parse(m[1]!) as Ex;
-      if (!ex || typeof ex !== 'object' || !('tests' in ex)) continue;
-      n++;
-      test(`${ch}: ${ex.title ?? ex.id ?? n}`, async () => {
-        const good = await runInWorker({ id: 'x', code: ex.solution, tests: ex.tests, storage: ex.storage });
-        expect(good.storage ?? []).toEqual([]);
-        expect(good.error ?? 'ok').toBe('ok');
-        expect(good.results.filter((r) => !r.passed).map((r) => `${r.name}: ${r.error}`)).toEqual([]);
-        expect(good.results.length).toBeGreaterThan(0);
-        const bad = await runInWorker({ id: 'x', code: ex.starter, tests: ex.tests, storage: ex.storage });
-        expect(bad.ok && bad.results.every((r) => r.passed)).toBe(false);
-      }, 60000);
-    }
-  }
-  if (!n) test.skip('no exercises yet', () => {});
-});
+function ruleRun(spec: WorkbenchSpec, files: Record<string, string>, fixtures: Record<string, string>, libs: Map<string, string>) {
+  return runRule({ ruleFiles: absoluteFiles(spec, files), entry: entryPath(spec), ruleKey: keyOf(spec), fixtures, options: spec.options, types: spec.types, libs });
+}
 
-describe('Mote exercises: the solution passes every check, the starter does not', async () => {
-  const { checkMote } = await import('../../src/lib/mm/mote/task');
-  let n = 0;
-  for (const ch of chapters) {
-    const md = readFileSync(path.join(root, ch, 'index.md'), 'utf8');
-    for (const m of md.matchAll(/^```mote-task\n([\s\S]*?)^```$/gm)) {
-      const ex = YAML.parse(m[1]!) as { id?: string; title?: string; setting: never; starter: string; solution: string; expect?: string[]; leaks?: boolean };
-      n++;
-      test(`${ch}: ${ex.title ?? ex.id ?? n}`, () => {
-        const good = checkMote(ex.solution, ex);
-        expect(good.checks.filter((c) => !c.passed).map((c) => `${c.name}: ${c.detail}`)).toEqual([]);
-        expect(checkMote(ex.starter, ex).ok).toBe(false);
-      });
-    }
-  }
-  if (!n) test.skip('no Mote exercises yet', () => {});
-});
+function describeFailures(r: ReturnType<typeof runRule>): string[] {
+  if (r.loadError) return [`load error: ${r.loadError}`];
+  return [
+    ...r.ruleErrors.map((e) => `rule error: ${e.message}`),
+    ...r.fixtures.flatMap((f) => [...f.check.errors.map((e) => `${f.name}: ${e}`), ...f.check.entries.filter((e) => e.verdict !== 'matched').map((e) => `${f.name}:${e.line} ${e.verdict} ${e.actual?.message ?? e.expected?.message ?? ''} ${e.details.join('; ')}`)]),
+  ];
+}
 
-describe('Find-the-bug exercises: the answer and every note point at real lines, and Mote answers match the oracle', async () => {
-  const { Vm } = await import('../../src/lib/mm/mote/vm');
-  const { compile } = await import('../../src/lib/mm/mote/compile');
-  const { makeManager } = await import('../../src/lib/mm/managers/managers');
-  const ORACLE: Record<string, string> = { uaf: 'uaf', double: 'double-free', overflow: 'overflow', invalid: 'invalid-free' };
-  let n = 0;
-  for (const ch of chapters) {
-    const md = readFileSync(path.join(root, ch, 'index.md'), 'utf8');
-    for (const m of md.matchAll(/^```debug\n([\s\S]*?)^```$/gm)) {
-      const ex = YAML.parse(m[1]!) as { id: string; code: string; lang?: string; answer: { line?: number; lines?: number[]; kind?: string }; kinds?: { id: string }[]; notes?: Record<string, string> };
-      n++;
-      test(`${ch}: ${ex.id}`, () => {
-        const count = ex.code.replace(/\n$/, '').split('\n').length;
-        const right = ex.answer.lines ?? [ex.answer.line!];
-        for (const l of right) expect(l >= 1 && l <= count).toBe(true);
-        for (const k of Object.keys(ex.notes ?? {})) {
-          expect(Number(k) >= 1 && Number(k) <= count).toBe(true);
-          expect(right).not.toContain(Number(k));
+describe('workbench exercises', () => {
+  let count = 0;
+  for (const doc of docs) {
+    const md = readFileSync(doc, 'utf8');
+    for (const { kind, spec } of workbenchBlocks(md)) {
+      count++;
+      const name = `${path.relative(root, doc)}: ${spec.id}`;
+      test(name, async () => {
+        const libs = await loadLibs();
+        expect(spec.id, 'every exercise needs an id').toBeTruthy();
+        if (kind === 'rule') {
+          expect(spec.answer, 'a rule exercise needs an answer').toBeTruthy();
+          const fixtures = { ...spec.fixtures, ...spec.hidden };
+          const good = ruleRun(spec, { ...spec.files, ...spec.answer }, fixtures, libs);
+          expect(describeFailures(good)).toEqual([]);
+          const bad = ruleRun(spec, spec.files, fixtures, libs);
+          expect(bad.pass, 'the starter must not already pass').toBe(false);
+        } else if (kind === 'helper') {
+          const tests = { ...spec.tests, ...spec.hiddenTests };
+          const run = (files: Record<string, string>) =>
+            Object.keys(tests).map((t) => runTests({ ...absoluteFiles(spec, files), ...Object.fromEntries(Object.entries(tests).map(([n, s]) => [testPath(n), s])) }, testPath(t), libs));
+          const good = run({ ...spec.files, ...spec.answer });
+          expect(good.flatMap((r) => [r.loadError ?? '', ...r.tests.filter((t) => !t.pass).map((t) => `${t.name}: ${t.message}`)]).filter(Boolean)).toEqual([]);
+          expect(good.every((r) => r.tests.length > 0)).toBe(true);
+          const bad = run(spec.files);
+          expect(bad.every((r) => r.pass), 'the starter must not already pass').toBe(false);
+        } else if (kind === 'fixtures') {
+          const reference = spec.answer ?? spec.files;
+          const goodFixtures = (spec as WorkbenchSpec & { answerFixtures?: Record<string, string> }).answerFixtures;
+          expect(goodFixtures, 'a fixtures exercise needs answerFixtures').toBeTruthy();
+          const ok = ruleRun(spec, reference, goodFixtures!, libs);
+          expect(describeFailures(ok)).toEqual([]);
+          for (const [m, code] of Object.entries(spec.mutants ?? {})) {
+            const r = ruleRun(spec, { ...reference, [spec.entry ?? 'rule.ts']: code }, goodFixtures!, libs);
+            expect(r.loadError, `mutant ${m} must load`).toBeUndefined();
+            expect(r.pass, `the reference fixtures must catch mutant ${m}`).toBe(false);
+          }
+          const starterCatchesAll = Object.values(spec.mutants ?? {}).every((code) => !ruleRun(spec, { ...reference, [spec.entry ?? 'rule.ts']: code }, spec.fixtures ?? {}, libs).pass);
+          expect(starterCatchesAll, 'the starter fixtures must not already catch every mutant').toBe(false);
+        } else {
+          for (const [n, src] of Object.entries(spec.fixtures ?? {})) expect(parseExpectations(src).errors, n).toEqual([]);
+          const r = ruleRun(spec, spec.files, spec.fixtures ?? {}, libs);
+          expect(r.loadError).toBeUndefined();
+          expect(r.ruleErrors).toEqual([]);
         }
-        if (ex.answer.kind) expect(ex.kinds?.map((k) => k.id)).toContain(ex.answer.kind);
-        if ((ex.lang ?? 'mote') === 'mote' && ex.answer.kind && ORACLE[ex.answer.kind]) {
-          const vm = new Vm(compile(ex.code), makeManager('manual'), {});
-          let guard = 0;
-          while (vm.status !== 'done' && vm.status !== 'error' && guard++ < 1e6) vm.step();
-          const lines = vm.events.filter((e) => e.kind === ORACLE[ex.answer.kind!]).map((e) => (e as { pos?: { line: number } }).pos?.line);
-          expect(lines).toEqual(expect.arrayContaining(right));
-        }
-      });
+      }, 120_000);
     }
   }
-  if (!n) test.skip('no find-the-bug exercises yet', () => {});
+  test('found exercises', () => expect(count).toBeGreaterThan(0));
 });

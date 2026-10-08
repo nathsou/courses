@@ -54,7 +54,7 @@ export function transpile(source: string, fileName: string): string {
 }
 
 /** Evaluates `entry` from `files` and returns its exports. */
-export function loadModule(files: Record<string, string>, entry: string): Record<string, unknown> {
+export function loadModule(files: Record<string, string>, entry: string, extraBuiltins: Record<string, unknown> = {}): Record<string, unknown> {
   const cache = new Map<string, { exports: Record<string, unknown> }>();
   const load = (file: string): Record<string, unknown> => {
     const cached = cache.get(file);
@@ -66,6 +66,7 @@ export function loadModule(files: Record<string, string>, entry: string): Record
     cache.set(file, module);
     const code = transpile(files[actual]!, actual);
     const require = (spec: string): unknown => {
+      if (spec in extraBuiltins) return extraBuiltins[spec];
       if (spec in BUILTINS) return BUILTINS[spec];
       const helper = /(?:^|\/)helpers\/([\w-]+)(?:\.js|\.ts)?$/.exec(spec);
       // A helper the reader wrote in this exercise wins over the kit's.

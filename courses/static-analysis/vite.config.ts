@@ -31,6 +31,8 @@ function nodeBuiltinsForWorkers(): Plugin {
   return {
     name: 'node-builtins-for-workers',
     enforce: 'pre',
+    // In dev, workers are served through the client environment; in builds, through `worker.plugins`.
+    applyToEnvironment: (env) => env.name === 'client',
     resolveId(id) {
       const bare = id.replace(/^node:/, '');
       if (bare === 'path' || bare === 'path/posix') return this.resolve('path-browserify');
@@ -43,7 +45,22 @@ function nodeBuiltinsForWorkers(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [sveltekit(), markdownDevCompiler()],
+  plugins: [sveltekit(), markdownDevCompiler(), nodeBuiltinsForWorkers()],
+  environments: {
+    client: {
+      resolve: {
+        // typescript-eslint imports a few Node built-ins it never uses when given a ready-made program. Pre-bundled
+        // dependencies (dev) do not go through resolve plugins, so the browser gets the same stand-ins as aliases.
+        alias: [
+      { find: /^(node:)?path(\/posix)?$/, replacement: 'path-browserify' },
+      { find: /^(node:)?(fs|os|url|module|fs\/promises)$/, replacement: fileURLToPath(new URL('./src/lib/sa/runtime/node-stubs.ts', import.meta.url)) },
+      { find: /^esquery$/, replacement: 'esquery/dist/esquery.min.js' },
+        ],
+      },
+      // The dev dependency optimiser bundles node_modules with Rolldown, outside the plugin pipeline above.
+      optimizeDeps: { rolldownOptions: { plugins: [nodeBuiltinsForWorkers()] } },
+    },
+  },
   server: {
     fs: { allow: ['..'] },
     watch: { ignored: ['**/build/**'] },

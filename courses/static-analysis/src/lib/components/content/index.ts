@@ -29,3 +29,5 @@ export { default as Numeric } from '../exercise/Numeric.svelte';
 
 
 
+export { default as Workbench } from '../workbench/Workbench.svelte';
+export { default as Source } from './Source.svelte';

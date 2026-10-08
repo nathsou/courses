@@ -21,8 +21,8 @@ describe('code rendering', () => {
   });
 });
 
-test('Mote code blocks are highlighted with the course grammar', async () => {
-  const html = await highlight('struct Node { next: Node? }\nfn main() { let n = new Node { next: null } }', 'mote');
-  expect(html).toContain('struct');
+test('TypeScript code blocks are highlighted', async () => {
+  const html = await highlight('export const rule: Rule.RuleModule = { create(context) { return {}; } };', 'typescript');
+  expect(html).toContain('rule');
   expect(new Set([...html.matchAll(/--shiki-light:(#[a-fA-F0-9]+)/g)].map((m) => m[1])).size).toBeGreaterThan(2);
 });

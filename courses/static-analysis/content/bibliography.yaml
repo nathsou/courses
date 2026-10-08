@@ -1,0 +1,12 @@
+# Course bibliography. Chapters add their own entries in bibliography.d/<chapter>.yaml.
+sonarjs:
+  authors: SonarSource
+  year: 2026
+  title: "SonarJS, commit da2c402"
+  venue: GitHub
+  url: https://github.com/SonarSource/SonarJS/tree/da2c4022381bbd9896bc275f6a3a5bd45e8e3263
+rspec:
+  authors: SonarSource
+  year: 2026
+  title: RSPEC, the rule specifications
+  url: https://sonarsource.github.io/rspec/

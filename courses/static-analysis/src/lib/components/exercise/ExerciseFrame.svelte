@@ -15,6 +15,7 @@
     solutionLabel = 'Show a solution',
     children,
     footer,
+    wide = false,
   }: {
     id: string;
     kind: string;
@@ -25,6 +26,8 @@
     solutionLabel?: string;
     children: Snippet;
     footer?: Snippet;
+    /** Span into the right margin (the workbench needs room for the inspector). */
+    wide?: boolean;
   } = $props();
 
   let shownHints = $state(0);
@@ -37,7 +40,7 @@
   const solved = $derived(mounted && progress.isSolved(id));
 </script>
 
-<section class="exercise" class:solved aria-label="{kind}{title ? `: ${title}` : ''}">
+<section class="exercise" class:wide class:solved aria-label="{kind}{title ? `: ${title}` : ''}">
   <header class="ui">
     <span class="kind"><Icon name="exercises" size={14} /> {kind}</span>
     {#if title}<span class="title">{title}</span>{/if}

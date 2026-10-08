@@ -82,7 +82,7 @@ interface Ctx {
 }
 
 const CALLOUTS = new Set(['note', 'tip', 'warning', 'info', 'lab', 'breakit', 'challenge', 'exercises', 'definition', 'key', 'question', 'aside', 'programmer', 'hood', 'deeper', 'real', 'fermi', 'experiments', 'industry', 'proved', 'wild', 'whofrees']);
-const TEXT_DIRECTIVES = new Set(['sidenote', 'cite', 'term', 'kbd']);
+const TEXT_DIRECTIVES = new Set(['sidenote', 'cite', 'term', 'kbd', 'source']);
 const BUILTIN_BLOCKS: Record<string, string> = {
   history: 'History',
   equation: 'Equation',
@@ -95,28 +95,31 @@ const BUILTIN_BLOCKS: Record<string, string> = {
   level: 'ZoomLevel',
   hints: 'Hints',
   hint: 'Hint',
+  source: 'Source',
 };
 /** Directives whose first code block is passed to the widget as `code` (the rest is its caption). */
-const CODE_WIDGETS = new Set(['mote-run', 'dial', 'stack-stepper', 'stack-map-viewer', 'lifetime-bars', 'rc-stepper', 'zoo-run', 'full-stack', 'generations']);
+const CODE_WIDGETS = new Set(['ast-explorer', 'code-path-view', 'fixpoint-stepper', 'interval-stepper', 'taint-tracer', 'path-tree', 'call-graph-view', 'points-to-view', 'ifds-view', 'complexity-view', 'backtrack-view', 'galois-view', 'datalog-console', 'fuzzer-race', 'leak-a-bit', 'injection-playground', 'domain-compare']);
 const THEOREM_KINDS = new Set(['theorem', 'lemma', 'corollary', 'proposition', 'conjecture', 'claim']);
 /** Exercise blocks (PLAN §5): fenced YAML compiled to a component. */
 const EXERCISE_BLOCKS: Record<string, string> = {
   parsons: 'Parsons',
   numeric: 'Numeric',
-  build: 'CodeExercise',
-  'mote-task': 'MoteExercise',
-  debug: 'DebugExercise',
+  rule: 'Workbench',
+  helper: 'Workbench',
+  fixtures: 'Workbench',
+  workbench: 'Workbench',
 };
 /**
  * Fields of the exercises that are data, not Markdown: code, configurations, expected answers, fixtures.
  * They are passed through untouched.
  */
-const CODE_RAW = ['starter', 'solution', 'tests', 'harness', 'code', 'expect', 'answer', 'answers', 'struct', 'config', 'setting', 'settings', 'events', 'checks', 'kind', 'traces', 'api', 'va', 'satp', 'tables', 'access', 'fields', 'program', 'error', 'event'];
+const WORKBENCH_RAW = ['answerFixtures', 'files', 'fixtures', 'hidden', 'tests', 'hiddenTests', 'answer', 'options', 'key', 'entry', 'mutants', 'readonly', 'inspector', 'types', 'corpus', 'kind'];
 const RAW_FIELDS: Record<string, string[]> = {
   numeric: ['answer', 'tolerance', 'unit', 'factor', 'units'],
-  build: CODE_RAW,
-  'mote-task': CODE_RAW,
-  debug: [...CODE_RAW, 'lang', 'kinds', 'notes'],
+  rule: WORKBENCH_RAW,
+  helper: WORKBENCH_RAW,
+  fixtures: WORKBENCH_RAW,
+  workbench: WORKBENCH_RAW,
 };
 /** YAML fields of exercise blocks that hold Markdown (rendered at build time). */
 const MARKDOWN_FIELDS = new Set(['prompt', 'question', 'text', 'solution', 'why', 'explain', 'hint', 'hints', 'lines', 'distractors', 'rubric', 'feedback', 'note', 'success', 'options', 'label']);
@@ -391,6 +394,9 @@ function transformDirective(ctx: Ctx, node: Directive, parent: Parent, index: nu
       tag = 'B.GlossaryTerm';
     } else if (name === 'kbd') {
       tag = 'B.Kbd';
+    } else if (name === 'source') {
+      tag = 'B.Source';
+      extra.inline = true;
     } else {
       tag = 'B.Sidenote';
     }
@@ -513,13 +519,6 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
           ctx.asyncJobs.push(
             (async () => {
               const rendered = await renderFields(data, false, RAW_FIELDS[kind]);
-              // A debug exercise shows its code line by line, each line highlighted on its own so it can be a button.
-              if (kind === 'debug' && typeof data.code === 'string') {
-                const lang = String(data.lang ?? 'mote');
-                rendered.lineHtml = await Promise.all(
-                  data.code.replace(/\n$/, '').split('\n').map(async (line) => /<code>([\s\S]*)<\/code>/.exec(await highlight(line || ' ', lang))?.[1] ?? ''),
-                );
-              }
               ctx.components[i]!.props = `spec={withBase(${JSON.stringify({ ...rendered, id, kind })})}`;
             })(),
           );
@@ -551,7 +550,7 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
         const link = node as Link;
         if (link.url.startsWith('/') && !link.url.startsWith('//')) {
           // Links to the other courses of the collection live beside this course, not inside it: go up one level.
-          const sibling = /^\/(astrophysics|cic|proofs-are-programs|compiler-backends|language-models|incompleteness|elements|proofs|digital-circuits|particle-physics|mandarin|human-evolution|formal-verification)\//.test(link.url);
+          const sibling = /^\/(astrophysics|cic|proofs-are-programs|compiler-backends|language-models|incompleteness|elements|proofs|digital-circuits|particle-physics|mandarin|human-evolution|formal-verification|memory-management)\//.test(link.url);
           link.url = sibling ? `__COURSE_BASE__/..${link.url}` : `__COURSE_BASE__${link.url}`;
         }
         return;

@@ -11,6 +11,7 @@ declare function setTimeout(callback: () => void, ms?: number): number;
 declare function fetch(url: string, init?: { method?: string; body?: string; headers?: Record<string, string> }): Promise<{ status: number; text(): Promise<string>; json(): Promise<unknown> }>;
 declare const process: { env: Record<string, string | undefined>; argv: string[]; exit(code?: number): never };
 declare function require(id: string): any;
+declare class URL { constructor(url: string, base?: string); readonly hostname: string; readonly pathname: string; readonly protocol: string; readonly searchParams: { get(name: string): string | null }; toString(): string }
 declare const module: { exports: any };
 
 declare module 'express' {
