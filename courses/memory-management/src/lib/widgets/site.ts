@@ -13,3 +13,5 @@ export { default as ZooRun } from '$lib/components/zoo/ZooRun.svelte';
 export { default as LifetimeBars } from '$lib/components/zoo/LifetimeBars.svelte';
 /** The reference-counting stepper: `:::rc-stepper{title="…" setting="rc"}` with a ```mote block inside (chapters 18–19). */
 export { default as RcStepper } from '$lib/components/graph/RcStepper.svelte';
+/** The full-stack replay: `:::full-stack{settings="manual,rc,mark-sweep"}` with a ```mote block inside (chapter 28). */
+export { default as FullStack } from '$lib/components/zoo/FullStack.svelte';

@@ -14,6 +14,8 @@ export class WordMemory implements Heap {
   stats = { loads: 0, stores: 0, sbrkCalls: 0 };
   /** Words written by the program since the last reset of `dirty` (for figures that flash changes). */
   dirty?: Set<number>;
+  /** Called on every counted access (for figures that replay the accesses on the simulated machine). */
+  trace?: (addr: number, write: boolean) => void;
 
   constructor(
     readonly base: number,
@@ -43,12 +45,15 @@ export class WordMemory implements Heap {
 
   load64(addr: number): number {
     this.stats.loads++;
-    return this.words[this.index(addr)]!;
+    const v = this.words[this.index(addr)]!;
+    this.trace?.(addr, false);
+    return v;
   }
   store64(addr: number, v: number): void {
     this.stats.stores++;
     this.words[this.index(addr)] = v;
     this.dirty?.add(addr);
+    this.trace?.(addr, true);
   }
   /** Uncounted access for collectors' bookkeeping views and figures. */
   peek(addr: number): number {
@@ -88,5 +93,6 @@ export class WordMemory implements Heap {
     this.words.copyWithin(b, a, a + n);
     this.stats.loads += n;
     this.stats.stores += n;
+    if (this.trace) for (let i = 0; i < n; i++) (this.trace(from + i * 8, false), this.trace(to + i * 8, true));
   }
 }

@@ -184,3 +184,21 @@ mdn-finreg:
   title: FinalizationRegistry
   venue: MDN Web Docs
   url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry
+kwon2023:
+  authors: Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody Hao Yu, Joseph E. Gonzalez, Hao Zhang and Ion Stoica
+  year: 2023
+  title: Efficient memory management for large language model serving with PagedAttention
+  venue: SOSP 2023
+  url: https://arxiv.org/abs/2309.06180
+zakai2023:
+  authors: Alon Zakai
+  year: 2023
+  title: A new way to bring garbage collected programming languages efficiently to WebAssembly
+  venue: V8 blog, 1 November 2023
+  url: https://v8.dev/blog/wasm-gc-porting
+ostep:
+  authors: Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau
+  year: n.d.
+  title: 'Operating Systems: Three Easy Pieces'
+  venue: Arpaci-Dusseau Books (free online)
+  url: https://pages.cs.wisc.edu/~remzi/OSTEP/

@@ -43,6 +43,7 @@
     setLine?.(line);
   });
 
+  let observer: IntersectionObserver | undefined;
   onMount(() => {
     let destroyed = false;
     (async () => {
@@ -142,9 +143,17 @@
       });
       setLine = (n) => view?.dispatch({ effects: setLineEffect.of(n) });
       setLine(highlightLine);
+      // Line heights measured before the web fonts arrive, or while the editor is off screen, can leave the
+      // gutter out of step with the text: measure again once the fonts are ready and whenever it comes into view.
+      document.fonts?.ready.then(() => view?.requestMeasure());
+      observer = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) view?.requestMeasure();
+      });
+      observer.observe(host);
     })();
     return () => {
       destroyed = true;
+      observer?.disconnect();
       view?.destroy();
     };
   });
