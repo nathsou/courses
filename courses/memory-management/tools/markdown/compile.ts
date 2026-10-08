@@ -105,8 +105,6 @@ const EXERCISE_BLOCKS: Record<string, string> = {
   numeric: 'Numeric',
   build: 'CodeExercise',
   'mote-task': 'MoteExercise',
-  translate: 'TranslateExercise',
-  layout: 'LayoutExercise',
   debug: 'DebugExercise',
 };
 /**
@@ -118,9 +116,7 @@ const RAW_FIELDS: Record<string, string[]> = {
   numeric: ['answer', 'tolerance', 'unit', 'factor', 'units'],
   build: CODE_RAW,
   'mote-task': CODE_RAW,
-  translate: CODE_RAW,
-  layout: CODE_RAW,
-  debug: CODE_RAW,
+  debug: [...CODE_RAW, 'lang', 'kinds', 'notes'],
 };
 /** YAML fields of exercise blocks that hold Markdown (rendered at build time). */
 const MARKDOWN_FIELDS = new Set(['prompt', 'question', 'text', 'solution', 'why', 'explain', 'hint', 'hints', 'lines', 'distractors', 'rubric', 'feedback', 'note', 'success', 'options', 'label']);
@@ -517,6 +513,13 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
           ctx.asyncJobs.push(
             (async () => {
               const rendered = await renderFields(data, false, RAW_FIELDS[kind]);
+              // A debug exercise shows its code line by line, each line highlighted on its own so it can be a button.
+              if (kind === 'debug' && typeof data.code === 'string') {
+                const lang = String(data.lang ?? 'mote');
+                rendered.lineHtml = await Promise.all(
+                  data.code.replace(/\n$/, '').split('\n').map(async (line) => /<code>([\s\S]*)<\/code>/.exec(await highlight(line || ' ', lang))?.[1] ?? ''),
+                );
+              }
               ctx.components[i]!.props = `spec={withBase(${JSON.stringify({ ...rendered, id, kind })})}`;
             })(),
           );

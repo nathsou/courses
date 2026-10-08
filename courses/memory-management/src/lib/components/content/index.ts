@@ -28,3 +28,4 @@ export { default as Parsons } from '../exercise/Parsons.svelte';
 export { default as Numeric } from '../exercise/Numeric.svelte';
 export { default as CodeExercise } from '../exercise/CodeExercise.svelte';
 export { default as MoteExercise } from '../exercise/MoteExercise.svelte';
+export { default as DebugExercise } from '../exercise/DebugExercise.svelte';

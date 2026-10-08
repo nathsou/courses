@@ -59,3 +59,36 @@ describe('Mote exercises: the solution passes every check, the starter does not'
   }
   if (!n) test.skip('no Mote exercises yet', () => {});
 });
+
+describe('Find-the-bug exercises: the answer and every note point at real lines, and Mote answers match the oracle', async () => {
+  const { Vm } = await import('../../src/lib/mm/mote/vm');
+  const { compile } = await import('../../src/lib/mm/mote/compile');
+  const { makeManager } = await import('../../src/lib/mm/managers/managers');
+  const ORACLE: Record<string, string> = { uaf: 'uaf', double: 'double-free', overflow: 'overflow', invalid: 'invalid-free' };
+  let n = 0;
+  for (const ch of chapters) {
+    const md = readFileSync(path.join(root, ch, 'index.md'), 'utf8');
+    for (const m of md.matchAll(/^```debug\n([\s\S]*?)^```$/gm)) {
+      const ex = YAML.parse(m[1]!) as { id: string; code: string; lang?: string; answer: { line?: number; lines?: number[]; kind?: string }; kinds?: { id: string }[]; notes?: Record<string, string> };
+      n++;
+      test(`${ch}: ${ex.id}`, () => {
+        const count = ex.code.replace(/\n$/, '').split('\n').length;
+        const right = ex.answer.lines ?? [ex.answer.line!];
+        for (const l of right) expect(l >= 1 && l <= count).toBe(true);
+        for (const k of Object.keys(ex.notes ?? {})) {
+          expect(Number(k) >= 1 && Number(k) <= count).toBe(true);
+          expect(right).not.toContain(Number(k));
+        }
+        if (ex.answer.kind) expect(ex.kinds?.map((k) => k.id)).toContain(ex.answer.kind);
+        if ((ex.lang ?? 'mote') === 'mote' && ex.answer.kind && ORACLE[ex.answer.kind]) {
+          const vm = new Vm(compile(ex.code), makeManager('manual'), {});
+          let guard = 0;
+          while (vm.status !== 'done' && vm.status !== 'error' && guard++ < 1e6) vm.step();
+          const lines = vm.events.filter((e) => e.kind === ORACLE[ex.answer.kind!]).map((e) => (e as { pos?: { line: number } }).pos?.line);
+          expect(lines).toEqual(expect.arrayContaining(right));
+        }
+      });
+    }
+  }
+  if (!n) test.skip('no find-the-bug exercises yet', () => {});
+});

@@ -190,6 +190,47 @@ The message’s `body` lies where the button’s `onClick` was. The attacker cho
 
 The program never calls `grantAdmin`. The attacker did, by choosing which bytes the dangling pointer would find. That is **type confusion**: the code reads memory through a pointer of one type while the memory holds an object of another. Real exploits must also learn addresses (chapter 7’s randomisation exists to stop exactly this) and defeat other defences, but the core is the same, and it is why use-after-free bugs in browsers are treated as critical.
 
+Now find one yourself. This program has one memory error, and an attacker who can choose a message’s contents gets something they should not.
+
+```debug
+id: the-error-zoo/find-it
+title: Who is an administrator?
+prompt: "Run under the manual setting, this program prints “welcome, administrator”, although nobody is. Click the line where the memory error happens, and say what kind it is."
+lang: mote
+code: |
+  struct Session { user: int, admin: bool }
+  struct Message { length: int, text: int }
+
+  fn main() {
+    let s = new Session { user: 42, admin: false }
+    let m = new Message { length: 5, text: 0 }
+    free(s)
+    let n = new Message { length: 1, text: 1 }
+    if s.admin {
+      print("welcome, administrator")
+    }
+    free(m)
+    free(n)
+  }
+answer:
+  line: 9
+  kind: uaf
+kinds:
+  - { id: uaf, label: use after free }
+  - { id: double, label: double free }
+  - { id: overflow, label: heap overflow }
+  - { id: leak, label: leak }
+  - { id: invalid, label: invalid free }
+notes:
+  "7": "Freeing `s` is fine on its own, if nothing uses `s` afterwards. Does anything?"
+  "8": "Allocating a new message is innocent. But look at which block the allocator gives it, and at what still points there."
+  "12": "`m` is freed once, after its last use: correct."
+  "13": "`n` is freed once, after its last use: correct."
+hints:
+  - "A `Session` and a `Message` are the same size, so the allocator can give one’s freed block to the other."
+explain: "Line 9 reads `s.admin` after line 7 freed `s`. Line 8’s message is the same size, so the size-class allocator hands it `s`’s old block, and `s.admin` now reads the message’s `text` field, which the sender set to 1. The bug is the use on line 9, not the free on line 7: freeing `s` was right, using it afterwards was not. It is the type confusion above, with a boolean instead of a function pointer."
+```
+
 ::museum{exhibit="chrome-2019"}
 
 ## How common is this?

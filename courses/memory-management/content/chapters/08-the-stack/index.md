@@ -100,6 +100,54 @@ When `make_counter` returns, its frame is popped. `c` still holds the address wh
 
 The stack can be this fast only because it assumes no pointer to a frame outlives the frame. Languages that cannot guarantee that assumption, because closures capture variables or objects escape their function, must allocate those variables somewhere else: on the heap, where they need a different way of being freed. Chapter 17 shows how Rust proves the assumption at compile time (its borrow checker rejects the code above), and how Go and Java’s compilers use **escape analysis** to put an object on the stack when they can prove it does not escape.
 
+The obvious case is easy to spot. Here is a less obvious one, of the kind compilers miss.
+
+```debug
+id: the-stack/escape
+title: The parser that remembered too much
+prompt: "This C program (the `#include` lines are left out) prints `1`, as expected, most of the time. Click the line that lets a pointer to a stack frame outlive the frame."
+lang: c
+code: |
+  struct parser { const char *input; int *depth; };
+
+  void init(struct parser *p, const char *text, int *depth) {
+      p->input = text;
+      p->depth = depth;
+  }
+
+  struct parser *new_parser(const char *text) {
+      struct parser *p = malloc(sizeof *p);
+      int depth = 0;
+      init(p, text, &depth);
+      return p;
+  }
+
+  void open_bracket(struct parser *p) {
+      *p->depth += 1;
+  }
+
+  int main(void) {
+      struct parser *p = new_parser("((()))");
+      open_bracket(p);
+      printf("%d\n", *p->depth);
+      free(p);
+  }
+answer:
+  line: 11
+notes:
+  "4": "A string literal lives for the whole run of the program, so keeping a pointer to it is safe."
+  "5": "`init` stores whatever pointer it is given. That is fine when the pointer lives at least as long as the parser: the problem is what it is given, and by whom."
+  "9": "The parser is on the heap, so it outlives `new_parser`: returning it is fine."
+  "10": "A local variable is fine on its own. What matters is where its address goes."
+  "12": "Returning `p`, a pointer to the heap, is fine."
+  "16": "This is where the program writes through the dangling pointer, so it is where things break. But the pointer was dangling already: where was it created?"
+  "22": "This reads through the dangling pointer. But it was dangling already: where was it created?"
+  "20": "A string literal lives for the whole run of the program."
+hints:
+  - "Which variables live in `new_parser`’s frame, and which of their addresses leave it?"
+explain: "Line 11 passes the address of `depth`, a local of `new_parser`, to `init`, which stores it in a parser on the heap. The parser outlives the call; `depth` dies when `new_parser` returns. When we compiled this with GCC 13 at `-O0`, there was no warning, and the program printed `1` anyway, because nothing had reused that stack slot yet. With `-O2`, the only warning was that `depth` was used uninitialised: a symptom, pointing at line 16, not at the cause. AddressSanitizer, with its stack-use-after-return check switched on, reported a stack use after return in `open_bracket` (chapter 16). The fix is to give the counter the parser’s lifetime: make `depth` an `int` field of the struct, not a pointer."
+```
+
 :::programmer
 Every local variable in Java, Go, Python or JavaScript also lives in a stack frame. What you cannot do in those languages is take its address: you can only copy its value. That restriction is exactly what makes stack allocation safe.
 :::
