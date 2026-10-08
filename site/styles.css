@@ -1099,3 +1099,81 @@ h1 {
   color: var(--cmute);
   line-height: 1.5;
 }
+
+/* 15 · Memory Management: "Core" — a hex dump with a chunk header, a free chunk and one lifetime bar */
+.core {
+  --cbg: #f4efe3;
+  --cfg: #1d2431;
+  --cac: #a9501f;
+  background:
+    radial-gradient(circle at 92% 12%, rgb(148 96 0 / 0.12), transparent 40%),
+    var(--cbg);
+}
+:root[data-theme='dark'] .core {
+  --cbg: #0e1013;
+  --cfg: #ece4d2;
+  --cac: #ffb547;
+  background:
+    radial-gradient(circle at 92% 12%, rgb(255 181 71 / 0.12), transparent 40%),
+    var(--cbg);
+}
+.core .dump {
+  font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--cfg);
+  margin-bottom: 14px;
+}
+.core .dump p {
+  margin: 0;
+  white-space: nowrap;
+}
+.core .ad {
+  color: var(--cac);
+}
+.core .hd {
+  background: rgb(125 120 105 / 0.22);
+  padding: 0 2px;
+}
+.core .py {
+  color: light-dark(#2f5d9b, #6fa8ff);
+}
+:root[data-theme='dark'] .core .py {
+  color: #6fa8ff;
+}
+.core .fr {
+  opacity: 0.55;
+}
+.core .arrow {
+  color: #6d3f9e;
+}
+:root[data-theme='dark'] .core .arrow {
+  color: #c8a2ff;
+}
+.core .bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 8px !important;
+}
+.core .bar i {
+  display: inline-block;
+  height: 7px;
+}
+.core .bar .use {
+  width: 70px;
+  background: #2f5d9b;
+}
+:root[data-theme='dark'] .core .bar .use {
+  background: #6fa8ff;
+}
+.core .bar .drag {
+  width: 60px;
+  background: repeating-linear-gradient(45deg, #aaa290 0 2px, transparent 2px 4px);
+  border-right: 2px solid var(--cfg);
+}
+.core .bar span {
+  margin-left: 6px;
+  font-size: 11px;
+  color: var(--cac);
+}
