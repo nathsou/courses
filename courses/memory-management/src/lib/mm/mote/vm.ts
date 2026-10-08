@@ -529,6 +529,19 @@ export class Vm {
         }
         break;
       }
+      case 'DROP': {
+        // A pointer local goes out of scope: ownership drops what it owns; reference counting releases it.
+        const addr = this.slotAddr(f, a);
+        const v = this.stack.load64(addr);
+        const l = f.fn.locals[a]!;
+        if (v) {
+          this.stack.store64(addr, 0);
+          this.manager.onStore?.(addr, v, 0, 0, false);
+          if (own && !l.borrow && !f.moved?.has(a)) this.drop(v, pos);
+        }
+        f.moved?.delete(a);
+        break;
+      }
       case 'GLOAD':
       case 'GMOVE': {
         const addr = DATA_BASE + a * 8;

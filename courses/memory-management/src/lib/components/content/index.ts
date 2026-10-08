@@ -26,3 +26,4 @@ export { default as Hints } from './Hints.svelte';
 export { default as Hint } from './Hint.svelte';
 export { default as Parsons } from '../exercise/Parsons.svelte';
 export { default as Numeric } from '../exercise/Numeric.svelte';
+export { default as CodeExercise } from '../exercise/CodeExercise.svelte';

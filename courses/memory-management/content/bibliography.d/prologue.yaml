@@ -1,0 +1,6 @@
+rojemo1996:
+  authors: Niklas Röjemo and Colin Runciman
+  year: 1996
+  title: 'Lag, drag, void and use: heap profiling and space-efficient compilation revisited'
+  venue: Proceedings of the First ACM SIGPLAN International Conference on Functional Programming (ICFP), 34–41
+  url: https://doi.org/10.1145/232627.232633

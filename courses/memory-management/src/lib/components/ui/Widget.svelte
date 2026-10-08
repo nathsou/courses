@@ -87,7 +87,7 @@
   </header>
   {#if controls}<div class="controls ui">{@render controls()}</div>{/if}
   <div class="body" class:grid-paper={grid}>{@render children()}</div>
-  {#if caption}<figcaption class="ui">{caption}</figcaption>{/if}
+  {#if caption}<figcaption class="ui">{@html caption}</figcaption>{/if}
 </figure>
 
 <style>

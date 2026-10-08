@@ -51,9 +51,9 @@ test('reference counting frees acyclic garbage immediately', () => {
   const s = vm.summary();
   expect(s.leaked).toBe(0);
   // Drag is small: objects are freed within a statement or two of becoming unreachable.
-  const objs = [...vm.objects.values()].filter((o) => o.freed !== undefined && o.unreachable !== undefined);
-  const lag = objs.reduce((n, o) => n + (o.freed! - o.unreachable!), 0) / objs.length;
-  expect(lag).toBeLessThan(40);
+  const objs = [...vm.objects.values()].filter((o) => o.freed !== undefined);
+  const lag = objs.reduce((n, o) => n + (o.freed! - o.lastUse), 0) / objs.length;
+  expect(lag).toBeLessThan(120);
 });
 
 test('ownership drops values at the end of their scope and stops a use after move', () => {

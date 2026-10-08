@@ -49,7 +49,7 @@ export const PARTS: OutlinePart[] = [
     title: 'Prologue',
     blurb: 'One allocation followed all the way down, and the question every layer answers differently.',
     chapters: [
-      { slug: 'one-allocation', number: '0', title: 'One allocation, all the way down', summary: 'Follow `new Point(1, 2)` from a line of code to a row of capacitors, then turn the dial and watch five memory managers disagree about when to free it.', flagship: 'The zoom and the dial', layers: ['dram', 'frames', 'pages', 'chunks', 'objects'] },
+      { slug: 'one-allocation', number: '0', title: 'One allocation, all the way down', summary: 'Follow one new Point from a line of code to a row of capacitors, then turn the dial and watch five memory managers disagree about when to free it.', flagship: 'The zoom and the dial', layers: ['dram', 'frames', 'pages', 'chunks', 'objects'] },
     ],
   },
   {

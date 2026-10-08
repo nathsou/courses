@@ -13,7 +13,7 @@ export type Op =
   | 'FN' | 'CALL' | 'CALLV' | 'RET' | 'RETV'
   | 'JMP' | 'JZ' | 'JNZ' | 'POP' | 'DUP'
   | 'ADD' | 'SUB' | 'MUL' | 'DIV' | 'MOD' | 'EQ' | 'NE' | 'LT' | 'LE' | 'GT' | 'GE' | 'NEG' | 'NOT'
-  | 'PRINT' | 'FREE' | 'GC' | 'ASSERT' | 'RAND';
+  | 'PRINT' | 'FREE' | 'GC' | 'ASSERT' | 'RAND' | 'DROP';
 
 export interface Instr {
   op: Op;
@@ -437,10 +437,14 @@ export function compile(src: string): Compiled {
       return ft.ret;
     }
 
+    /** A block; at its end, pointer locals declared in it go out of scope (DROP: see the VM). */
     function block(stmts: Stmt[]) {
       scopes.push(new Map());
       for (const s of stmts) stmt(s);
-      scopes.pop();
+      const scope = scopes.pop()!;
+      const last = stmts.at(-1);
+      if (last && (last.k === 'return' || last.k === 'break' || last.k === 'continue')) return;
+      for (const slot of [...scope.values()].reverse()) if (fn.locals[slot]!.ptr && !fn.locals[slot]!.param) emit('DROP', last?.pos ?? fn.pos, slot);
     }
 
     function stmt(s: Stmt) {

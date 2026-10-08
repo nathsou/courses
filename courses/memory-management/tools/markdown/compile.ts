@@ -103,8 +103,8 @@ const THEOREM_KINDS = new Set(['theorem', 'lemma', 'corollary', 'proposition', '
 const EXERCISE_BLOCKS: Record<string, string> = {
   parsons: 'Parsons',
   numeric: 'Numeric',
-  ts: 'CodeExercise',
-  mote: 'MoteExercise',
+  build: 'CodeExercise',
+  'mote-task': 'MoteExercise',
   translate: 'TranslateExercise',
   layout: 'LayoutExercise',
   debug: 'DebugExercise',
@@ -116,8 +116,8 @@ const EXERCISE_BLOCKS: Record<string, string> = {
 const CODE_RAW = ['starter', 'solution', 'tests', 'harness', 'code', 'expect', 'answer', 'answers', 'struct', 'config', 'setting', 'settings', 'events', 'checks', 'kind', 'traces', 'api', 'va', 'satp', 'tables', 'access', 'fields', 'program', 'error', 'event'];
 const RAW_FIELDS: Record<string, string[]> = {
   numeric: ['answer', 'tolerance', 'unit', 'factor', 'units'],
-  ts: CODE_RAW,
-  mote: CODE_RAW,
+  build: CODE_RAW,
+  'mote-task': CODE_RAW,
   translate: CODE_RAW,
   layout: CODE_RAW,
   debug: CODE_RAW,
