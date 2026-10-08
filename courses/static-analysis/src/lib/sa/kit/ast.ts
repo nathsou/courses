@@ -25,14 +25,9 @@ export function isMethodCall(node: Node | undefined | null): node is estree.Call
   return node?.type === 'CallExpression' && node.callee.type === 'MemberExpression' && !node.callee.computed && node.callee.property.type === 'Identifier';
 }
 
-/**
- * Is `call` a call `receiver.name(…)` where `receiver` is the identifier `objectName` (any receiver if
- * `objectName` is undefined), `name` is one of `methodNames`, and the call has exactly `arity` arguments?
- */
-export function isCallingMethod(call: Node | undefined | null, arity: number, objectName: string | undefined, ...methodNames: string[]): call is estree.CallExpression {
-  if (!isMethodCall(call) || call.arguments.length !== arity) return false;
-  const { object, property } = call.callee;
-  return (objectName === undefined || isIdentifier(object, objectName)) && isIdentifier(property, ...methodNames);
+/** Is `call` a call `receiver.name(…)` with `name` among `methodNames` and exactly `arity` arguments? */
+export function isCallingMethod(call: Node | undefined | null, arity: number, ...methodNames: string[]): call is estree.CallExpression & { callee: estree.MemberExpression & { property: estree.Identifier } } {
+  return isMethodCall(call) && call.arguments.length === arity && isIdentifier(call.callee.property, ...methodNames);
 }
 
 const FUNCTION_NODES = new Set(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression']);
@@ -136,27 +131,42 @@ export function getValueOfExpression<T extends Node['type']>(context: Rule.RuleC
   return value.type === type ? (value as Extract<Node, { type: T }>) : undefined;
 }
 
-/** The property `key` of an object literal (only plain `key: value` properties, not spreads or computed keys). */
-export function getProperty(object: estree.ObjectExpression, key: string): estree.Property | undefined {
-  for (const p of object.properties) {
+/**
+ * The property `key` of an object literal: null if `expr` is not an object literal, undefined if it has no such
+ * property. Only plain `key: value` properties are considered; a property hidden behind a spread is not found.
+ */
+export function getProperty(expr: Node | undefined | null, key: string, _context?: Rule.RuleContext): estree.Property | null | undefined {
+  if (expr?.type !== 'ObjectExpression') return null;
+  for (const p of expr.properties) {
     if (p.type !== 'Property' || p.computed) continue;
     if ((p.key.type === 'Identifier' && p.key.name === key) || (p.key.type === 'Literal' && p.key.value === key)) return p;
   }
   return undefined;
 }
 
+/** The static string of a literal or of a template literal without expressions; undefined when dynamic. */
+export function getStaticExpressionValue(expression: Node): string | undefined {
+  if (expression.type === 'Literal' && !('regex' in expression)) {
+    const { value } = expression;
+    if (typeof value === 'string') return value;
+    return typeof value === 'number' || typeof value === 'bigint' ? String(value) : '';
+  }
+  if (expression.type === 'TemplateLiteral' && expression.expressions.length === 0) return expression.quasis[0]?.value.cooked ?? undefined;
+  return undefined;
+}
+
 /**
- * The value of a constant expression, when it can be computed without running the program: literals, template
- * literals without expressions, and identifiers written once with such a value. Undefined otherwise.
+ * Course helper (not in SonarJS): the value of a constant expression, following single writes. Literals,
+ * template literals without expressions, and identifiers written once with such a value; undefined otherwise.
  */
-export function getStaticExpressionValue(context: Rule.RuleContext, node: Node | undefined | null): string | number | boolean | null | undefined {
+export function getConstantValue(context: Rule.RuleContext, node: Node | undefined | null): string | number | boolean | null | undefined {
   if (!node) return undefined;
   const n = unwrapTypeScriptExpression(node);
   if (n.type === 'Literal' && !('regex' in n)) return n.value as string | number | boolean | null;
   if (n.type === 'TemplateLiteral' && n.expressions.length === 0) return n.quasis[0]?.value.cooked ?? undefined;
   if (n.type === 'Identifier') {
     const value = getUniqueWriteUsage(context, n.name, n);
-    return value && value !== n ? getStaticExpressionValue(context, value) : undefined;
+    return value && value !== n ? getConstantValue(context, value) : undefined;
   }
   return undefined;
 }

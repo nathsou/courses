@@ -13,6 +13,8 @@
     const a = authors.replace(/\s*\([^)]*\)/g, '').trim();
     const org = /(Collaboration|Working Group|Group|Foundation|Organization|NobelPrize\.org|CERN|Initiative)/.exec(a);
     if (org && !/\b[A-Z]\.\s/.test(a.slice(0, org.index))) return a.slice(0, org.index + org[0].length).trim();
+    // Organisations and projects (no initials anywhere) keep their whole name.
+    if (!/\b[A-Z]\.\s/.test(a) && !a.includes(',')) return a;
     const raw = a.split(/\s*(?:,| and |&)\s*/).filter(Boolean);
     const etal = raw.some((x) => /^(et al\.?|others)$/i.test(x)) || /et al\.?$/.test(a);
     const list = raw.filter((x) => !/^(et al\.?|others)$/i.test(x)).map((x) => x.replace(/\s*et al\.?$/, ''));

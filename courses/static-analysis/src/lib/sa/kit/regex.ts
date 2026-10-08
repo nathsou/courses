@@ -9,7 +9,7 @@ import type { Rule } from 'eslint';
 import type estree from 'estree';
 import { RegExpParser, visitRegExpAST, type AST } from '@eslint-community/regexpp';
 import type { RegExpVisitor } from '@eslint-community/regexpp/visitor';
-import { getStaticExpressionValue } from './ast.js';
+import { getConstantValue } from './ast.js';
 
 export interface RegexRuleContext extends Rule.RuleContext {
   /** The literal or call being analysed. */
@@ -49,8 +49,8 @@ export function createRegExpRule(handlers: (context: RegexRuleContext) => RegExp
         },
         'CallExpression, NewExpression'(node: estree.CallExpression | estree.NewExpression) {
           if (node.callee.type !== 'Identifier' || node.callee.name !== 'RegExp') return;
-          const pattern = getStaticExpressionValue(context, node.arguments[0] as estree.Node | undefined);
-          const flags = node.arguments[1] ? getStaticExpressionValue(context, node.arguments[1] as estree.Node) : '';
+          const pattern = getConstantValue(context, node.arguments[0] as estree.Node | undefined);
+          const flags = node.arguments[1] ? getConstantValue(context, node.arguments[1] as estree.Node) : '';
           if (typeof pattern === 'string' && typeof (flags ?? '') === 'string') check(node, pattern, String(flags ?? ''));
         },
       } as Rule.RuleListener;

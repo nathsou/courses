@@ -1,0 +1,10 @@
+estree:
+  authors: ESTree
+  year: 2026
+  title: The ESTree specification
+  url: https://github.com/estree/estree
+typescripteslint:
+  authors: typescript-eslint
+  year: 2026
+  title: "typescript-eslint: AST specification and parser documentation"
+  url: https://typescript-eslint.io/packages/typescript-estree/

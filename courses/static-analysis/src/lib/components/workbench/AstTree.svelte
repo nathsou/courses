@@ -14,6 +14,7 @@
     selected,
     onpick,
     depth = 0,
+    openDepth = 2,
   }: {
     node: AstNode;
     field?: string;
@@ -21,12 +22,14 @@
     selected?: [number, number] | null;
     onpick: (n: AstNode) => void;
     depth?: number;
+    /** Nodes shallower than this start open. */
+    openDepth?: number;
   } = $props();
 
   const contains = $derived(cursor !== undefined && node.range[0] <= cursor && cursor <= node.range[1]);
   const hasKids = $derived(node.children.some((c) => c.nodes.length));
   let open = $state<boolean | undefined>(undefined);
-  const isOpen = $derived(open ?? (depth < 2 || contains));
+  const isOpen = $derived(open ?? (depth < openDepth || contains));
   /** The deepest node containing the cursor is the "current" one. */
   const current = $derived(contains && !node.children.some((c) => c.nodes.some((n) => cursor! >= n.range[0] && cursor! <= n.range[1])));
   const isSelected = $derived(!!selected && selected[0] === node.range[0] && selected[1] === node.range[1]);
@@ -47,7 +50,7 @@
     <ul>
       {#each node.children as c (c.key)}
         {#each c.nodes as child, i (i)}
-          <Self node={child} field={c.list ? `${c.key}[${i}]` : c.key} {cursor} {selected} {onpick} depth={depth + 1} />
+          <Self node={child} field={c.list ? `${c.key}[${i}]` : c.key} {cursor} {selected} {onpick} {openDepth} depth={depth + 1} />
         {/each}
       {/each}
     </ul>

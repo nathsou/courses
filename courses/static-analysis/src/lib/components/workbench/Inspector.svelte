@@ -9,7 +9,7 @@
   import AstTree from './AstTree.svelte';
   import CodePathGraph from './CodePathGraph.svelte';
 
-  type Tab = 'tree' | 'scopes' | 'types' | 'paths';
+  type Tab = 'tokens' | 'tree' | 'scopes' | 'types' | 'paths';
   let {
     code,
     cursor,
@@ -29,7 +29,7 @@
   } = $props();
 
   const uid = $props.id();
-  const LABELS: Record<Tab, string> = { tree: 'Tree', scopes: 'Scopes', types: 'Types', paths: 'Code paths' };
+  const LABELS: Record<Tab, string> = { tokens: 'Tokens', tree: 'Tree', scopes: 'Scopes', types: 'Types', paths: 'Code paths' };
   let tab = $state<Tab>(initial);
   let result = $state<InspectResult | null>(null);
   let error = $state<string | null>(null);
@@ -83,6 +83,16 @@
   const shownPath = $derived(result?.codePaths.find((p) => p.id === chosenPath) ?? pathAtCursor);
 
   const slice = (r: [number, number]) => code.slice(r[0], r[1]);
+  /** Small trees open further, so that the shape of the code shows at a glance. */
+  const openDepth = $derived.by(() => {
+    let count = 0;
+    const walk = (n: AstNode) => {
+      count++;
+      for (const c of n.children) for (const k of c.nodes) walk(k);
+    };
+    if (result?.ast) walk(result.ast);
+    return count < 60 ? 8 : count < 150 ? 5 : 2;
+  });
   const lineOf = (offset: number) => code.slice(0, offset).split('\n').length;
 </script>
 
@@ -99,8 +109,14 @@
     {/if}
     {#if !result}
       <p class="hint">Loading the parser…</p>
+    {:else if tab === 'tokens'}
+      <ol class="tokens">
+        {#each result.tokens as t, i (i)}
+          <li><button class="tok" class:at={cursor !== undefined && t.range[0] <= cursor && cursor <= t.range[1]} title="{t.type} {t.range[0]}–{t.range[1]}" onclick={() => onpick?.(t.range)}><span class="tt">{t.type}</span> <span class="tv">{t.type === 'Block' || t.type === 'Line' ? (t.type === 'Line' ? '//' : '/*') + t.value.slice(0, 30) : t.value}</span></button></li>
+        {/each}
+      </ol>
     {:else if tab === 'tree' && result.ast}
-      <ul class="tree"><AstTree node={result.ast} {cursor} {selected} onpick={pick} /></ul>
+      <ul class="tree"><AstTree node={result.ast} {cursor} {selected} {openDepth} onpick={pick} /></ul>
     {:else if tab === 'scopes'}
       {#each result.scopes as s, i (i)}
         <section class="scope" style:margin-left="{s.depth * 0.9}rem">
@@ -205,6 +221,36 @@
     max-height: 26rem;
     min-height: 10rem;
     font-family: var(--font-mono);
+  }
+  .tokens {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  .tok {
+    font: inherit;
+    font-size: 0.74rem;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--panel);
+    color: var(--fg);
+    padding: 0.05rem 0.3rem;
+    cursor: pointer;
+  }
+  .tok.at {
+    background: var(--amber-soft);
+    border-color: var(--amber);
+  }
+  .tt {
+    color: var(--mute);
+    font-size: 0.66rem;
+  }
+  .tv {
+    color: var(--code-string);
+    white-space: pre;
   }
   .tree {
     list-style: none;

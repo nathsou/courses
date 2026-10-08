@@ -48,8 +48,16 @@ export interface CodePathInfo {
   loops: [string, string][];
 }
 
+export interface TokenInfo {
+  type: string;
+  value: string;
+  range: [number, number];
+}
+
 export interface InspectResult {
   ast?: AstNode;
+  /** Tokens and comments, in source order. */
+  tokens: TokenInfo[];
   scopes: ScopeInfo[];
   /** Range → type, for identifiers and expressions (when type information is on). */
   types: { range: [number, number]; type: string; nodeType: string }[];
@@ -85,7 +93,7 @@ function serialise(node: estree.Node, keys: Record<string, readonly string[]>): 
 }
 
 export function inspect(code: string, libs: Map<string, string>, opts: { file?: string; types?: boolean } = {}): InspectResult {
-  const out: InspectResult = { scopes: [], types: [], codePaths: [] };
+  const out: InspectResult = { scopes: [], types: [], codePaths: [], tokens: [] };
   const file = opts.file ?? '/inspect/input.ts';
   const recorder: Rule.RuleModule = {
     create(context) {
@@ -100,6 +108,9 @@ export function inspect(code: string, libs: Map<string, string>, opts: { file?: 
       return {
         Program(node: estree.Program) {
           out.ast = serialise(node, sourceCode.visitorKeys);
+          out.tokens = sourceCode
+            .getTokens(node, { includeComments: true })
+            .map((t) => ({ type: t.type, value: t.value, range: t.range as [number, number] }));
           const walk = (scope: Scope.Scope, depth: number) => {
             out.scopes.push({
               type: scope.type,

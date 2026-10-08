@@ -98,7 +98,7 @@ const BUILTIN_BLOCKS: Record<string, string> = {
   source: 'Source',
 };
 /** Directives whose first code block is passed to the widget as `code` (the rest is its caption). */
-const CODE_WIDGETS = new Set(['ast-explorer', 'code-path-view', 'fixpoint-stepper', 'interval-stepper', 'taint-tracer', 'path-tree', 'call-graph-view', 'points-to-view', 'ifds-view', 'complexity-view', 'backtrack-view', 'galois-view', 'datalog-console', 'fuzzer-race', 'leak-a-bit', 'injection-playground', 'domain-compare']);
+const CODE_WIDGETS = new Set(['confusion-grid', 'halting-gadget', 'ast-explorer', 'code-path-view', 'fixpoint-stepper', 'interval-stepper', 'taint-tracer', 'path-tree', 'call-graph-view', 'points-to-view', 'ifds-view', 'complexity-view', 'backtrack-view', 'galois-view', 'datalog-console', 'fuzzer-race', 'leak-a-bit', 'injection-playground', 'domain-compare']);
 const THEOREM_KINDS = new Set(['theorem', 'lemma', 'corollary', 'proposition', 'conjecture', 'claim']);
 /** Exercise blocks (PLAN §5): fenced YAML compiled to a component. */
 const EXERCISE_BLOCKS: Record<string, string> = {
@@ -358,7 +358,9 @@ function transformDirective(ctx: Ctx, node: Directive, parent: Parent, index: nu
   if (node.type === 'containerDirective' && CODE_WIDGETS.has(name)) {
     const code = node.children.find((c) => c.type === 'code') as Code | undefined;
     if (!code) throw new Error(`${path.relative(ctx.contentRoot, ctx.file)}: :::${name} needs a code block inside.`);
-    extra.code = code.value;
+    // A ```yaml block is data (parsed at build time); any other block is code.
+    if (code.lang === 'yaml') extra.data = parseYamlBlock(ctx, code.value, name);
+    else extra.code = code.value;
     const rest = node.children.filter((c) => c !== code);
     node.children = rest as typeof node.children;
     const component = resolveComponent(ctx, name);

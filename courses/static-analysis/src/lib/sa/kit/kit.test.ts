@@ -4,7 +4,7 @@ import type estree from 'estree';
 import { loadLibs } from '../runtime/libs.js';
 import { lint } from '../runtime/lint.js';
 import { getFullyQualifiedName, importsModule } from './module.js';
-import { getValueOfExpression, getStaticExpressionValue } from './ast.js';
+import { getValueOfExpression, getConstantValue } from './ast.js';
 import { LiveVariables, lva } from './lva.js';
 import { interceptReport } from './decorators.js';
 import { createRegExpRule } from './regex.js';
@@ -70,8 +70,8 @@ describe('value helpers', () => {
     expect(issues.map((i) => i.message)).toEqual(['object with 2', 'unknown']);
   });
 
-  test('getStaticExpressionValue', async () => {
-    const rule: Rule.RuleModule = { create: (context) => ({ 'CallExpression > *.arguments'(node: estree.Node) { context.report({ node, message: String(JSON.stringify(getStaticExpressionValue(context, node))) }); } }) };
+  test('getConstantValue', async () => {
+    const rule: Rule.RuleModule = { create: (context) => ({ 'CallExpression > *.arguments'(node: estree.Node) { context.report({ node, message: String(JSON.stringify(getConstantValue(context, node))) }); } }) };
     const issues = await run("const k = 'secret';\nf(k);\nf(`t`);\nf(1 + 1);\nfunction f(_: unknown) {}", rule, false);
     expect(issues.map((i) => i.message)).toEqual(['"secret"', '"t"', undefined].map((x) => (x === undefined ? 'undefined' : x)));
   });
