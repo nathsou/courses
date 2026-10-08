@@ -89,22 +89,19 @@ export function getVariableFromScope(scope: Scope.Scope | null, name: string): S
 }
 
 /**
- * The expression written to the variable `name` if it is written exactly once, otherwise undefined.
- *
- * "Written" includes the initialiser of its declaration. Parameters are never considered (their value comes from
- * every caller), and neither are variables written in a loop header or by destructuring.
+ * The expression written to `variable` if it is written exactly once, otherwise undefined. "Written" includes the
+ * initialiser of its declaration. The expression is eslint-scope's `writeExpr`: for a destructuring declaration
+ * such as `const { url } = req.body`, that is the whole right-hand side, `req.body`, not the property.
  */
-export function getUniqueWriteUsage(context: Rule.RuleContext, name: string, node: Node): Node | undefined {
-  const variable = getVariableFromName(context, name, node);
+export function getUniqueWriteReference(variable: Scope.Variable | undefined): Node | undefined {
   if (!variable) return undefined;
-  if (variable.defs.some((d) => d.type === 'Parameter' || d.type === 'ImportBinding' || d.type === 'FunctionName' || d.type === 'ClassName')) return undefined;
   const writes = variable.references.filter((r) => r.isWrite());
-  if (writes.length !== 1) return undefined;
-  const write = writes[0]!;
-  const parent = (write.identifier as Node & { parent?: Node }).parent;
-  if (parent?.type === 'VariableDeclarator' && parent.id === write.identifier && parent.init) return parent.init;
-  if (parent?.type === 'AssignmentExpression' && parent.operator === '=' && parent.left === write.identifier) return parent.right;
-  return undefined;
+  return writes.length === 1 && writes[0]!.writeExpr ? (writes[0]!.writeExpr as Node) : undefined;
+}
+
+/** The expression written to the variable `name` visible from `node`, if it is written exactly once. */
+export function getUniqueWriteUsage(context: Rule.RuleContext, name: string, node: Node): Node | undefined {
+  return getUniqueWriteReference(getVariableFromName(context, name, node));
 }
 
 /** If `node` is an identifier written exactly once, the expression written to it; otherwise `node` itself. */
