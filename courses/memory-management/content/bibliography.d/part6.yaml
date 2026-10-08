@@ -3,3 +3,13 @@ mccarthy1960:
   year: 1960
   title: Recursive functions of symbolic expressions and their computation by machine, part I
   venue: Communications of the ACM 3(4), 184–195
+dijkstra1978:
+  authors: Edsger W. Dijkstra, Leslie Lamport, A. J. Martin, C. S. Scholten and E. F. M. Steffens
+  year: 1978
+  title: 'On-the-fly garbage collection: an exercise in cooperation'
+  venue: Communications of the ACM 21(11), 966–975
+jones2023:
+  authors: Richard Jones, Antony Hosking and Eliot Moss
+  year: 2023
+  title: 'The Garbage Collection Handbook: The Art of Automatic Memory Management, second edition'
+  venue: CRC Press
