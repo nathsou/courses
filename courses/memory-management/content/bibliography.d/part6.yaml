@@ -33,3 +33,19 @@ ungar1984:
   year: 1984
   title: 'Generation scavenging: a non-disruptive high performance storage reclamation algorithm'
   venue: ACM SIGSOFT/SIGPLAN Software Engineering Symposium on Practical Software Development Environments
+boehm1988:
+  authors: Hans-Juergen Boehm and Mark Weiser
+  year: 1988
+  title: Garbage collection in an uncooperative environment
+  venue: Software—Practice and Experience 18(9), 807–820
+boehm-gc:
+  authors: Hans-J. Boehm
+  year: n.d.
+  title: A garbage collector for C and C++
+  venue: hboehm.info
+  url: https://www.hboehm.info/gc/
+henderson2002:
+  authors: Fergus Henderson
+  year: 2002
+  title: Accurate garbage collection in an uncooperative environment
+  venue: Proceedings of ISMM 2002
