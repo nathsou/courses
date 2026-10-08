@@ -1,0 +1,16 @@
+- id: apollo11-1969
+  title: Apollo 11’s 1202 alarm
+  year: 1969
+  chapter: arenas-pools-and-regions
+  reenacted: false
+  summary: During the descent to the Moon on 20 July 1969, the Lunar Module’s computer raised alarm 1202, then 1201, five alarms in all. Its operating system gave every job one of eight fixed “core sets” of registers, and vector jobs one of five “VAC areas”. A switch setting for the rendezvous radar made its interface steal roughly 13% of the computer’s time; the guidance job could no longer finish before its next copy was scheduled, copies piled up, and the pools ran out. With no core set to hand out, the Executive called BAILOUT, a software restart that rebuilt only the most recent copy of each vital job and threw the rest away. The restart shed the load, and the landing continued.
+  simplification: told as history. The chapter draws only the memory lesson (fixed pools, and freeing everything at once) from a story that is mostly about timing.
+  cite: [eyles2004]
+- id: spirit-2004
+  title: Spirit’s reset loop
+  year: 2004
+  chapter: arenas-pools-and-regions
+  reenacted: false
+  summary: On 21 January 2004, Sol 18 of its mission, the Mars rover Spirit began resetting over and over. Its flash file system kept a private pool of RAM describing every directory, and deleted files kept their entries, so the pool grew with the largest number of files each directory had ever held. A configuration error let the pool grow without limit, taking memory from the rest of the system; when an allocation finally failed, another configuration error suspended the task instead of failing the request, and the health monitor reset the computer. Every reset re-mounted the file system and rebuilt the same oversized pool. Engineers booted Spirit without its flash, deleted files, and later reformatted it; the rover returned to normal operation on Sol 32.
+  simplification: told as history; the arena timeline’s “never reset” mode shows the shape of the problem, not the rover’s software.
+  cite: [reeves2005]

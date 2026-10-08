@@ -68,3 +68,36 @@ larson1998:
   year: 1998
   title: Memory allocation for long-running server applications
   venue: Proceedings of ISMM 98, 176–185
+eyles2004:
+  authors: Don Eyles
+  year: 2004
+  title: Tales from the Lunar Module guidance computer
+  venue: 27th Annual AAS Guidance and Control Conference, paper AAS 04-064
+  url: https://www.doneyles.com/LM/Tales.html
+reeves2005:
+  authors: Glenn Reeves and Tracy Neilson
+  year: 2005
+  title: The Mars rover Spirit FLASH anomaly
+  venue: IEEE Aerospace Conference, paper 1426
+  url: https://ntrs.nasa.gov/citations/20060044140
+berger2002:
+  authors: Emery D. Berger, Benjamin G. Zorn and Kathryn S. McKinley
+  year: 2002
+  title: Reconsidering custom memory allocation
+  venue: Proceedings of OOPSLA 2002, 1–12
+  url: https://people.cs.umass.edu/~emery/pubs/berger-oopsla2002.pdf
+hanson1990:
+  authors: David R. Hanson
+  year: 1990
+  title: Fast allocation and deallocation of memory based on object lifetimes
+  venue: Software—Practice and Experience 20(1), 5–12
+ross1967:
+  authors: D. T. Ross
+  year: 1967
+  title: The AED free storage package
+  venue: Communications of the ACM 10(8), 481–492
+tofte1997:
+  authors: Mads Tofte and Jean-Pierre Talpin
+  year: 1997
+  title: Region-based memory management
+  venue: Information and Computation 132(2), 109–176
