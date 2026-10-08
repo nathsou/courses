@@ -11,3 +11,5 @@ export { default as LabBench } from '$lib/components/heap/LabBench.svelte';
 export { default as ZooRun } from '$lib/components/zoo/ZooRun.svelte';
 /** Lifetime bars: `:::lifetime-bars{title="…" setting="ownership"}` with a ```mote block inside (chapter 17). */
 export { default as LifetimeBars } from '$lib/components/zoo/LifetimeBars.svelte';
+/** The reference-counting stepper: `:::rc-stepper{title="…" setting="rc"}` with a ```mote block inside (chapters 18–19). */
+export { default as RcStepper } from '$lib/components/graph/RcStepper.svelte';

@@ -892,6 +892,8 @@ export interface ManagerOptions {
   barrier?: Barrier;
   generationalBarrier?: boolean;
   nurseryBytes?: number;
+  /** Reference counting with cycles: run trial deletion once there are more candidate roots than this. */
+  rcThreshold?: number;
 }
 
 export function makeManager(s: Setting, o: ManagerOptions = {}): Manager & { stats: ManagerStats } {
@@ -903,7 +905,7 @@ export function makeManager(s: Setting, o: ManagerOptions = {}): Manager & { sta
     case 'rc':
       return new RcManager({ make: o.allocator });
     case 'rc-cycles':
-      return new RcManager({ cycles: true, make: o.allocator });
+      return new RcManager({ cycles: true, make: o.allocator, threshold: o.rcThreshold });
     case 'mark-sweep':
       return new MarkSweepManager({ trigger: o.trigger, make: o.allocator });
     case 'conservative':
