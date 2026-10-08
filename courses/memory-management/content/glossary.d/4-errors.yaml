@@ -1,0 +1,61 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+use-after-free:
+  term: use after free
+  definition: Reading or writing through a pointer to a block that has been freed. If the block has been reused, the program reads or overwrites someone else’s data.
+  chapter: the-error-zoo
+double-free:
+  term: double free
+  definition: Freeing the same block twice. Many allocators then hand it out twice, to two owners at once.
+  chapter: the-error-zoo
+invalid-free:
+  term: invalid free
+  definition: Freeing a pointer that `malloc` never returned, such as one into the middle of a block.
+  chapter: the-error-zoo
+buffer-overflow:
+  term: buffer overflow
+  definition: 'Writing past the end of a block, into whatever lies next to it: another block, or the allocator’s own bookkeeping. Reading past the end is an *over-read*.'
+  chapter: the-error-zoo
+memory-leak:
+  term: memory leak
+  definition: Memory that is never freed although the program no longer needs it. In a long-running program, leaks add up.
+  chapter: the-error-zoo
+type-confusion:
+  term: type confusion
+  definition: Using memory as one type when it holds another, for example through a dangling pointer to a block that has been reused. Attackers use it to turn a use-after-free into control of the program.
+  chapter: the-error-zoo
+shadow-memory:
+  term: shadow memory
+  definition: A separate area of memory that records, for each piece of real memory, whether it may be accessed. AddressSanitizer uses one shadow byte for eight bytes of memory.
+  chapter: catching-them
+redzone:
+  term: redzone
+  definition: Poisoned bytes placed around each block, so that an access just past its end is caught.
+  chapter: catching-them
+quarantine:
+  term: quarantine
+  definition: Holding freed blocks back from reuse for a while, so that a use-after-free finds poisoned memory rather than a new object.
+  chapter: catching-them
+memory-tagging:
+  term: memory tagging
+  definition: Hardware that gives each 16-byte granule of memory a small tag and each pointer a matching tag, and checks them on every access. Arm’s MTE is one.
+  chapter: catching-them
+capability:
+  term: capability
+  definition: In CHERI, a pointer that carries its bounds and permissions, protected by a hidden tag bit, and can only be derived from another capability with the same or narrower rights.
+  chapter: catching-them
+ownership:
+  term: ownership
+  definition: The rule that every object has exactly one owner, and is freed when its owner goes away. Rust enforces it at compile time.
+  chapter: ownership
+move:
+  term: move
+  definition: Transferring ownership from one variable to another. The old variable may not be used again.
+  chapter: ownership
+borrow:
+  term: borrow
+  definition: A temporary, non-owning reference, which the compiler checks cannot outlive the owner.
+  chapter: ownership
+raii:
+  term: RAII
+  definition: '“Resource acquisition is initialisation”: tying a resource to an object’s lifetime, so that the object’s destructor releases it.'
+  chapter: ownership

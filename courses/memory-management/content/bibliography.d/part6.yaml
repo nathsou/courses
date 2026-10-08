@@ -1,0 +1,204 @@
+mccarthy1960:
+  authors: John McCarthy
+  year: 1960
+  title: Recursive functions of symbolic expressions and their computation by machine, part I
+  venue: Communications of the ACM 3(4), 184–195
+dijkstra1978:
+  authors: Edsger W. Dijkstra, Leslie Lamport, A. J. Martin, C. S. Scholten and E. F. M. Steffens
+  year: 1978
+  title: 'On-the-fly garbage collection: an exercise in cooperation'
+  venue: Communications of the ACM 21(11), 966–975
+jones2023:
+  authors: Richard Jones, Antony Hosking and Eliot Moss
+  year: 2023
+  title: 'The Garbage Collection Handbook: The Art of Automatic Memory Management, second edition'
+  venue: CRC Press
+fenichel1969:
+  authors: Robert R. Fenichel and Jerome C. Yochelson
+  year: 1969
+  title: A LISP garbage-collector for virtual-memory computer systems
+  venue: Communications of the ACM 12(11), 611–612
+cheney1970:
+  authors: C. J. Cheney
+  year: 1970
+  title: A nonrecursive list compacting algorithm
+  venue: Communications of the ACM 13(11), 677–678
+lieberman1983:
+  authors: Henry Lieberman and Carl Hewitt
+  year: 1983
+  title: A real-time garbage collector based on the lifetimes of objects
+  venue: Communications of the ACM 26(6), 419–429
+ungar1984:
+  authors: David Ungar
+  year: 1984
+  title: 'Generation scavenging: a non-disruptive high performance storage reclamation algorithm'
+  venue: ACM SIGSOFT/SIGPLAN Software Engineering Symposium on Practical Software Development Environments
+boehm1988:
+  authors: Hans-Juergen Boehm and Mark Weiser
+  year: 1988
+  title: Garbage collection in an uncooperative environment
+  venue: Software—Practice and Experience 18(9), 807–820
+boehm-gc:
+  authors: Hans-J. Boehm
+  year: n.d.
+  title: A garbage collector for C and C++
+  venue: hboehm.info
+  url: https://www.hboehm.info/gc/
+henderson2002:
+  authors: Fergus Henderson
+  year: 2002
+  title: Accurate garbage collection in an uncooperative environment
+  venue: Proceedings of ISMM 2002
+steele1975:
+  authors: Guy L. Steele Jr.
+  year: 1975
+  title: Multiprocessing compactifying garbage collection
+  venue: Communications of the ACM 18(9), 495–508
+yuasa1990:
+  authors: Taiichi Yuasa
+  year: 1990
+  title: Real-time garbage collection on general-purpose machines
+  venue: Journal of Systems and Software 11(3), 181–198
+baker1978:
+  authors: Henry G. Baker Jr.
+  year: 1978
+  title: List processing in real time on a serial computer
+  venue: Communications of the ACM 21(4), 280–294
+brooks1984:
+  authors: Rodney A. Brooks
+  year: 1984
+  title: Trading data space for reduced time and code space in real-time garbage collection on stock hardware
+  venue: Proceedings of the 1984 ACM Symposium on LISP and Functional Programming
+cheng2001:
+  authors: Perry Cheng and Guy E. Blelloch
+  year: 2001
+  title: A parallel, real-time garbage collector
+  venue: Proceedings of PLDI 2001
+bacon2003:
+  authors: David F. Bacon, Perry Cheng and V. T. Rajan
+  year: 2003
+  title: A real-time garbage collector with low overhead and consistent utilization
+  venue: Proceedings of POPL 2003
+howarth2020:
+  authors: Jesse Howarth
+  year: 2020
+  title: Why Discord is switching from Go to Rust
+  venue: Discord blog, 4 February 2020
+  url: https://discord.com/blog/why-discord-is-switching-from-go-to-rust
+go-gc-guide:
+  authors: The Go Authors
+  year: n.d.
+  title: A guide to the Go garbage collector
+  venue: go.dev
+  url: https://go.dev/doc/gc-guide
+marshall2019:
+  authors: Peter Marshall
+  year: 2019
+  title: 'Trash talk: the Orinoco garbage collector'
+  venue: V8 blog, 3 January 2019
+  url: https://v8.dev/blog/trash-talk
+jep248:
+  authors: Stefan Johansson
+  year: 2015
+  title: 'JEP 248: make G1 the default garbage collector'
+  venue: OpenJDK (delivered in JDK 9)
+  url: https://openjdk.org/jeps/248
+jep333:
+  authors: Per Lidén and Stefan Karlsson
+  year: 2018
+  title: 'JEP 333: ZGC, a scalable low-latency garbage collector (experimental)'
+  venue: OpenJDK (delivered in JDK 11)
+  url: https://openjdk.org/jeps/333
+zgc-wiki:
+  authors: OpenJDK
+  year: n.d.
+  title: The Z Garbage Collector
+  venue: OpenJDK wiki
+  url: https://wiki.openjdk.org/display/zgc/Main
+jep189:
+  authors: Christine H. Flood and Roman Kennke
+  year: 2014
+  title: 'JEP 189: Shenandoah, a low-pause-time garbage collector (experimental)'
+  venue: OpenJDK (delivered in JDK 12)
+  url: https://openjdk.org/jeps/189
+dotnet-gc:
+  authors: Microsoft
+  year: n.d.
+  title: Fundamentals of garbage collection
+  venue: .NET documentation, learn.microsoft.com
+  url: https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals
+erlang-gc:
+  authors: The Erlang/OTP team
+  year: n.d.
+  title: Erlang garbage collector
+  venue: ERTS documentation, erlang.org
+  url: https://www.erlang.org/doc/apps/erts/garbagecollection
+blackburn2008:
+  authors: Stephen M. Blackburn and Kathryn S. McKinley
+  year: 2008
+  title: 'Immix: a mark-region garbage collector with space efficiency, fast collection, and mutator performance'
+  venue: Proceedings of PLDI 2008
+zhao2022:
+  authors: Wenyu Zhao, Stephen M. Blackburn and Kathryn S. McKinley
+  year: 2022
+  title: Low-latency, high-throughput garbage collection
+  venue: Proceedings of PLDI 2022
+jep421:
+  authors: Brent Christian and Stuart Marks
+  year: 2021
+  title: 'JEP 421: deprecate finalization for removal'
+  venue: OpenJDK (delivered in JDK 18)
+  url: https://openjdk.org/jeps/421
+jls12:
+  authors: James Gosling and others
+  year: 2023
+  title: 'The Java Language Specification, Java SE 21 edition, chapter 12: Execution (§12.6, Finalization of class instances)'
+  venue: Oracle
+  url: https://docs.oracle.com/javase/specs/jls/se21/html/jls-12.html
+java-lang-ref:
+  authors: Oracle
+  year: n.d.
+  title: Package java.lang.ref
+  venue: Java SE 21 API documentation
+  url: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ref/package-summary.html
+hayes1997:
+  authors: Barry Hayes
+  year: 1997
+  title: 'Ephemerons: a new finalization mechanism'
+  venue: Proceedings of OOPSLA 1997
+mdn-weakmap:
+  authors: MDN contributors
+  year: n.d.
+  title: WeakMap
+  venue: MDN Web Docs
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap
+mdn-weakref:
+  authors: MDN contributors
+  year: n.d.
+  title: WeakRef
+  venue: MDN Web Docs
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef
+mdn-finreg:
+  authors: MDN contributors
+  year: n.d.
+  title: FinalizationRegistry
+  venue: MDN Web Docs
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry
+kwon2023:
+  authors: Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody Hao Yu, Joseph E. Gonzalez, Hao Zhang and Ion Stoica
+  year: 2023
+  title: Efficient memory management for large language model serving with PagedAttention
+  venue: SOSP 2023
+  url: https://arxiv.org/abs/2309.06180
+zakai2023:
+  authors: Alon Zakai
+  year: 2023
+  title: A new way to bring garbage collected programming languages efficiently to WebAssembly
+  venue: V8 blog, 1 November 2023
+  url: https://v8.dev/blog/wasm-gc-porting
+ostep:
+  authors: Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau
+  year: n.d.
+  title: 'Operating Systems: Three Easy Pieces'
+  venue: Arpaci-Dusseau Books (free online)
+  url: https://pages.cs.wisc.edu/~remzi/OSTEP/

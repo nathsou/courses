@@ -72,6 +72,14 @@ const courses = [
     name: 'human-evolution',
     env: (base) => ({ BASE_PATH: `${base}/human-evolution` }),
   },
+  {
+    // Memory Management: the same single-package SvelteKit setup as For All Inputs.
+    name: 'memory-management',
+    env: (base) => ({
+      BASE_PATH: `${base}/memory-management`,
+      NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
+    }),
+  },
 ];
 const repository = process.env.GITHUB_REPOSITORY?.split('/')[1];
 const basePath = (process.env.COURSES_BASE_PATH ?? (repository ? `/${repository}` : '')).replace(/\/$/, '');

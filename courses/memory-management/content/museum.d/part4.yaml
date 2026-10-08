@@ -1,0 +1,32 @@
+- id: zlib-2002
+  title: zlib’s double free
+  year: 2002
+  chapter: the-error-zoo
+  reenacted: true
+  summary: zlib, the compression library inside a vast number of programs, could be made to free the same memory twice by a specially crafted invalid compressed stream. Its authors’ advisory was titled, accurately, “zlib compression library corrupts malloc data structures via double free”. The bug had been present since zlib 1.0.9 in 1998 and had been reported before, but, as the advisory admits, its security implications were not appreciated until 2002, when an invalid PNG file crashed zlib and several people pointed out what a double free can lead to. zlib 1.1.4 fixed it on 11 March 2002.
+  simplification: the zoo’s double-free figure shows the general mechanism on the course’s size-class allocator, not zlib’s code.
+  cite: [zlib2002]
+- id: heartbleed-2014
+  title: Heartbleed
+  year: 2014
+  chapter: the-error-zoo
+  reenacted: true
+  summary: The TLS heartbeat extension lets one side of a connection send a message with a payload and its length, and requires the other side to send back an exact copy of the payload; a message whose stated length is too large must be discarded. OpenSSL 1.0.1 to 1.0.1f did not check, and copied back as many bytes as the request claimed, “up to 64k of memory” per heartbeat, from whatever lay beyond the real payload. Its discoverers attacked their own servers and recovered private keys, user names and passwords, and the contents of messages. OpenSSL 1.0.1g fixed it on 7 April 2014.
+  simplification: the over-read figure re-enacts the shape of the bug (an echo that trusts a claimed length) on Mote arrays; it does not model TLS.
+  cite: [rfc6520, openssl2014, codenomicon2014]
+- id: chrome-2019
+  title: Chrome’s FileReader use-after-free
+  year: 2019
+  chapter: the-error-zoo
+  reenacted: false
+  summary: On 27 February 2019 Google’s Threat Analysis Group reported a use-after-free in Chrome’s FileReader that was being exploited in the wild, chained with a Windows kernel bug to escape the browser’s sandbox. Chrome shipped a fix on 1 March, CVE-2019-5786. The course shows the concept, a dangling pointer into memory reused by an object of another type, and does not reconstruct the exploit.
+  simplification: concept only; the type-confusion figure uses its own toy program.
+  cite: [chrome2019release, lecigne2019]
+- id: memory-safety-statistics
+  title: How many vulnerabilities are memory-safety bugs
+  year: 2019–24
+  chapter: the-error-zoo
+  reenacted: false
+  summary: Microsoft reported in 2019 that memory-safety issues were the root cause of about 70% of the vulnerabilities it fixes and assigns a CVE. The Chromium project found the same proportion, around 70%, of its serious security bugs, with half of those being use-after-free bugs. In 2024 Google reported that the share of Android’s vulnerabilities that were memory-safety bugs had fallen from 76% to 24% over six years, as new code moved to memory-safe languages.
+  simplification: statistics, not a re-enactment.
+  cite: [msrc2019, chromium-memory-safety, vanderstoep2024]

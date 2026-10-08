@@ -1,0 +1,37 @@
+name: Memory Management — checks
+
+# Tests, type checks and a build for courses/memory-management. (Deployment is in deploy.yml.)
+on:
+  push:
+    branches: [main]
+    paths: ['courses/memory-management/**', '.github/workflows/memory-management.yml']
+  pull_request:
+    paths: ['courses/memory-management/**', '.github/workflows/memory-management.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: courses/memory-management
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --experimental-strip-types
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: courses/memory-management/package-lock.json
+      - run: npm ci
+      - name: Library, widget and content tests
+        run: npm test
+      - name: Type-check (svelte-check)
+        run: npm run check
+      - name: Build
+        run: npm run build

@@ -1,0 +1,75 @@
+- year: 1967
+  lane: allocators
+  title: Zones
+  people: Douglas T. Ross
+  chapter: arenas-pools-and-regions
+  text: The AED free storage package lets a program free a whole zone of storage at once.
+  cite: [ross1967]
+- year: 1969
+  lane: failures
+  title: Apollo 11’s 1202 alarm
+  chapter: arenas-pools-and-regions
+  text: The Lunar Module’s computer runs out of core sets during the descent; a restart sheds the load.
+  cite: [eyles2004]
+- year: 1971
+  lane: allocators
+  title: The worst case for allocators
+  people: J. M. Robson
+  chapter: fragmentation
+  text: Every allocator can be forced to waste memory by a factor that grows with the logarithm of the size range.
+  cite: [robson1971]
+- year: 1987
+  lane: allocators
+  title: dlmalloc
+  people: Doug Lea
+  chapter: fragmentation
+  text: Segregated fits with boundary tags; the ancestor of glibc’s malloc.
+  cite: [lea1996]
+- year: 1990
+  lane: allocators
+  title: Arenas by lifetime
+  people: David R. Hanson
+  chapter: arenas-pools-and-regions
+  text: Allocate objects with the same lifetime in the same arena, and free the arena in one step.
+  cite: [hanson1990]
+- year: 1995
+  lane: allocators
+  title: The allocator survey
+  people: Paul Wilson, Mark Johnstone, Michael Neely, David Boles
+  chapter: fragmentation
+  text: Real programs are not random; allocators should be judged on real traces.
+  cite: [wilson1995]
+- year: 1997
+  lane: allocators
+  title: Region inference
+  people: Mads Tofte, Jean-Pierre Talpin
+  chapter: arenas-pools-and-regions
+  text: A compiler for ML decides where every object’s region begins and ends.
+  cite: [tofte1997]
+- year: 2000
+  lane: allocators
+  title: Hoard
+  people: Emery Berger and colleagues
+  chapter: fast-allocators
+  text: Per-processor heaps that return memory to a global heap, bounding blowup.
+  cite: [berger2000]
+- year: 2004
+  lane: failures
+  title: Spirit’s reset loop
+  chapter: arenas-pools-and-regions
+  text: A memory pool allowed to grow without limit puts a Mars rover into a reset loop.
+  cite: [reeves2005]
+- year: 2006
+  lane: allocators
+  title: jemalloc
+  people: Jason Evans
+  chapter: fast-allocators
+  text: Many arenas, assigned round-robin, for FreeBSD’s C library.
+  cite: [evans2006]
+- year: 2019
+  lane: allocators
+  title: mimalloc
+  people: Daan Leijen, Ben Zorn, Leonardo de Moura
+  chapter: fast-allocators
+  text: Free list sharding, with one free list per 64 KiB page.
+  cite: [leijen2019]

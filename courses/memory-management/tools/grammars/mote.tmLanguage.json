@@ -1,0 +1,18 @@
+{
+  "scopeName": "source.mote",
+  "name": "mote",
+  "patterns": [
+    { "name": "comment.line.double-slash.mote", "match": "//.*$" },
+    { "name": "string.quoted.double.mote", "begin": "\"", "end": "\"", "patterns": [{ "name": "constant.character.escape.mote", "match": "\\\\." }] },
+    { "name": "keyword.control.mote", "match": "\\b(if|else|while|for|in|return|break|continue)\\b" },
+    { "name": "storage.type.mote", "match": "\\b(fn|struct|let|var)\\b" },
+    { "name": "keyword.operator.new.mote", "match": "\\b(new|free|move|drop)\\b" },
+    { "name": "constant.language.mote", "match": "\\b(true|false|null)\\b" },
+    { "name": "support.type.mote", "match": "\\b(int|bool|str)\\b" },
+    { "name": "entity.name.type.mote", "match": "\\b[A-Z][A-Za-z0-9_]*\\b" },
+    { "name": "constant.numeric.mote", "match": "\\b(0x[0-9a-fA-F_]+|[0-9][0-9_]*)\\b" },
+    { "name": "support.function.mote", "match": "\\b(print|len|weak|upgrade)\\b(?=\\s*\\()" },
+    { "name": "entity.name.function.mote", "match": "\\b[a-z_][A-Za-z0-9_]*\\b(?=\\s*\\()" },
+    { "name": "keyword.operator.mote", "match": "(->|==|!=|<=|>=|&&|\\|\\||[-+*/%<>=!?&.])" }
+  ]
+}

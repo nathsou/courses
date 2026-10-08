@@ -1,0 +1,117 @@
+- year: 1960
+  lane: tracing
+  title: Mark–sweep
+  people: John McCarthy
+  chapter: reachability
+  text: LISP reclaims storage by marking everything reachable and returning the rest to the free list.
+  cite: [mccarthy1960]
+- year: 1969
+  lane: tracing
+  title: Copying collection
+  people: Robert Fenichel, Jerome Yochelson
+  chapter: moving-collectors
+  text: Live data is copied to a fresh space; garbage is never touched.
+  cite: [fenichel1969]
+- year: 1970
+  lane: tracing
+  title: Cheney’s algorithm
+  people: C. J. Cheney
+  chapter: moving-collectors
+  text: Breadth-first copying with two pointers into to-space, and no recursion.
+  cite: [cheney1970]
+- year: 1975
+  lane: tracing
+  title: Concurrent collection
+  people: Guy L. Steele Jr.
+  chapter: concurrent-collection
+  text: A compacting collector running alongside the program on a multiprocessor.
+  cite: [steele1975]
+- year: 1978
+  lane: tracing
+  title: The tricolour invariant
+  people: Edsger W. Dijkstra, Leslie Lamport and colleagues
+  chapter: concurrent-collection
+  text: On-the-fly collection reasoned about with white, grey and black objects and a write barrier.
+  cite: [dijkstra1978]
+- year: 1978
+  lane: tracing
+  title: Real-time copying
+  people: Henry G. Baker Jr.
+  chapter: concurrent-collection
+  text: Incremental copying with a read barrier.
+  cite: [baker1978]
+- year: 1983
+  lane: tracing
+  title: Generations
+  people: Henry Lieberman, Carl Hewitt
+  chapter: generations
+  text: Collect young objects often and old ones rarely.
+  cite: [lieberman1983]
+- year: 1984
+  lane: tracing
+  title: Generation scavenging
+  people: David Ungar
+  chapter: generations
+  text: The classic two-generation design, with a nursery and promotion.
+  cite: [ungar1984]
+- year: 1988
+  lane: tracing
+  title: Conservative collection
+  people: Hans-Juergen Boehm, Mark Weiser
+  chapter: finding-roots
+  text: Garbage collection for C, scanning the stack without knowing which words are pointers.
+  cite: [boehm1988]
+- year: 1990
+  lane: tracing
+  title: Snapshot at the beginning
+  people: Taiichi Yuasa
+  chapter: concurrent-collection
+  text: A deletion barrier that preserves everything reachable when marking started.
+  cite: [yuasa1990]
+- year: 1997
+  lane: tracing
+  title: Ephemerons
+  people: Barry Hayes
+  chapter: finalisers-and-weak-references
+  text: Key–value pairs whose value is alive only if the key is.
+  cite: [hayes1997]
+- year: 2003
+  lane: tracing
+  title: Metronome
+  people: David F. Bacon, Perry Cheng, V. T. Rajan
+  chapter: concurrent-collection
+  text: A real-time collector scheduled by time, for consistent mutator utilisation.
+  cite: [bacon2003]
+- year: 2008
+  lane: tracing
+  title: Immix
+  people: Stephen M. Blackburn, Kathryn S. McKinley
+  chapter: collectors-in-the-wild
+  text: Mark-region collection with blocks and lines.
+  cite: [blackburn2008]
+- year: 2018
+  lane: tracing
+  title: ZGC
+  people: Per Lidén, Stefan Karlsson
+  chapter: collectors-in-the-wild
+  text: A concurrent compacting collector for Java with coloured pointers and load barriers.
+  cite: [jep333]
+- year: 2020
+  lane: failures
+  title: Discord’s two-minute spikes
+  chapter: collectors-in-the-wild
+  text: Forced collections scanning a large cache cause periodic latency spikes.
+  cite: [howarth2020]
+- year: 2021
+  lane: tracing
+  title: Finalisation deprecated in Java
+  chapter: finalisers-and-weak-references
+  text: JEP 421 deprecates finalisers for removal.
+  cite: [jep421]
+- year: 2022
+  lane: tracing
+  title: LXR
+  people: Wenyu Zhao, Stephen M. Blackburn, Kathryn S. McKinley
+  chapter: collectors-in-the-wild
+  text: Reference counting and occasional tracing together, for low latency and high throughput.
+  cite: [zhao2022]

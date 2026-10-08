@@ -1,0 +1,30 @@
+drepper2007:
+  authors: Ulrich Drepper
+  year: 2007
+  title: What Every Programmer Should Know About Memory
+  venue: Red Hat, Inc.
+  url: https://www.akkadia.org/drepper/cpumemory.pdf
+toomanylists:
+  authors: The rust-unofficial project
+  year: n.d.
+  title: 'Learning Rust With Entirely Too Many Linked Lists, section 2.7: Drop'
+  venue: rust-unofficial.github.io
+  url: https://rust-unofficial.github.io/too-many-lists/first-drop.html
+springer2022:
+  authors: Stefan Springer
+  year: 2022
+  title: Deep recursion in deinit should not happen
+  venue: Swift Forums
+  url: https://forums.swift.org/t/deep-recursion-in-deinit-should-not-happen/54987
+ms-unique-ptr:
+  authors: Microsoft
+  year: n.d.
+  title: 'How to: Create and use unique_ptr instances'
+  venue: C++ language reference, learn.microsoft.com
+  url: https://learn.microsoft.com/en-us/cpp/cpp/how-to-create-and-use-unique-ptr-instances
+mdn-memory:
+  authors: MDN contributors
+  year: n.d.
+  title: Memory management
+  venue: MDN Web Docs
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Memory_management

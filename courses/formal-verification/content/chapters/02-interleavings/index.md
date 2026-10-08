@@ -406,6 +406,10 @@ This is **state explosion**. The count multiplies with each process because ever
 
 Neither technique changes the shape of the curve. They divide the count; they do not stop it from multiplying. The real answers to state explosion are in later parts: represent sets of states symbolically (Part II), or prove an invariant that covers any number of processes (Part V).
 
+:::bridge{course=memory-management chapter=concurrent-collection}
+*Memory Management* uses the same exhaustive search on a garbage collector: it tries every interleaving of a collector’s steps and a program’s pointer writes, and finds the shortest one in which the collector frees an object the program can still reach, unless a write barrier is in place.
+:::
+
 ## Under the hood: processes are actions
 
 The explorer of Chapter 1 understood only actions. Processes are **compiled** into the same form. Each process gets a hidden variable, its **program counter** (`pc`), which records the label it is at. The body is compiled to instructions (statements, `await`, branches and jumps) and each label becomes a point where a step ends. A process step is then an action like any other: in a state where the process is at label ℓ, run the instructions from ℓ until the next label, and set `pc` to that label. If an `await` on the way is false, the step is not enabled.

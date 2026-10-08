@@ -1,0 +1,119 @@
+knuth1968:
+  authors: Donald E. Knuth
+  year: 1968
+  title: 'The Art of Computer Programming, Volume 1: Fundamental Algorithms'
+  venue: Addison-Wesley (section 2.5, Dynamic storage allocation)
+robson1971:
+  authors: J. M. Robson
+  year: 1971
+  title: An estimate of the store size necessary for dynamic storage allocation
+  venue: Journal of the ACM 18(3), 416–423
+  url: https://doi.org/10.1145/321650.321658
+robson1974:
+  authors: J. M. Robson
+  year: 1974
+  title: Bounds for some functions concerning dynamic storage allocation
+  venue: Journal of the ACM 21(3), 491–499
+  url: https://doi.org/10.1145/321832.321846
+wilson1995:
+  authors: Paul R. Wilson, Mark S. Johnstone, Michael Neely and David Boles
+  year: 1995
+  title: 'Dynamic storage allocation: a survey and critical review'
+  venue: International Workshop on Memory Management (IWMM 95), LNCS 986, 1–116
+  url: https://doi.org/10.1007/3-540-60368-9_19
+johnstone1998:
+  authors: Mark S. Johnstone and Paul R. Wilson
+  year: 1998
+  title: 'The memory fragmentation problem: solved?'
+  venue: Proceedings of the First International Symposium on Memory Management (ISMM 98), 26–36
+  url: https://doi.org/10.1145/286860.286864
+lea1996:
+  authors: Doug Lea
+  year: 1996
+  title: A memory allocator
+  venue: unpublished article describing dlmalloc (first version 1987)
+  url: https://gee.cs.oswego.edu/dl/html/malloc.html
+glibcmallocinternals:
+  authors: GNU C Library contributors
+  year: n.d.
+  title: Overview of Malloc (MallocInternals)
+  venue: glibc wiki
+  url: https://sourceware.org/glibc/wiki/MallocInternals
+berger2000:
+  authors: Emery D. Berger, Kathryn S. McKinley, Robert D. Blumofe and Paul R. Wilson
+  year: 2000
+  title: 'Hoard: a scalable memory allocator for multithreaded applications'
+  venue: Proceedings of ASPLOS IX, 117–128
+  url: https://people.cs.umass.edu/~emery/pubs/berger-asplos2000.pdf
+ghemawat2005:
+  authors: Sanjay Ghemawat and Paul Menage
+  year: n.d.
+  title: 'TCMalloc: thread-caching malloc'
+  venue: gperftools documentation
+  url: https://goog-perftools.sourceforge.net/doc/tcmalloc.html
+evans2006:
+  authors: Jason Evans
+  year: 2006
+  title: A scalable concurrent malloc(3) implementation for FreeBSD
+  venue: BSDCan 2006
+  url: https://people.freebsd.org/~jasone/jemalloc/bsdcan2006/jemalloc.pdf
+leijen2019:
+  authors: Daan Leijen, Benjamin Zorn and Leonardo de Moura
+  year: 2019
+  title: 'Mimalloc: free list sharding in action'
+  venue: Microsoft Research technical report MSR-TR-2019-18; APLAS 2019
+  url: https://www.microsoft.com/en-us/research/publication/mimalloc-free-list-sharding-in-action/
+larson1998:
+  authors: Per-Åke Larson and Murali Krishnan
+  year: 1998
+  title: Memory allocation for long-running server applications
+  venue: Proceedings of ISMM 98, 176–185
+eyles2004:
+  authors: Don Eyles
+  year: 2004
+  title: Tales from the Lunar Module guidance computer
+  venue: 27th Annual AAS Guidance and Control Conference, paper AAS 04-064
+  url: https://www.doneyles.com/LM/Tales.html
+reeves2005:
+  authors: Glenn Reeves and Tracy Neilson
+  year: 2005
+  title: The Mars rover Spirit FLASH anomaly
+  venue: IEEE Aerospace Conference, paper 1426
+  url: https://ntrs.nasa.gov/citations/20060044140
+berger2002:
+  authors: Emery D. Berger, Benjamin G. Zorn and Kathryn S. McKinley
+  year: 2002
+  title: Reconsidering custom memory allocation
+  venue: Proceedings of OOPSLA 2002, 1–12
+  url: https://people.cs.umass.edu/~emery/pubs/berger-oopsla2002.pdf
+hanson1990:
+  authors: David R. Hanson
+  year: 1990
+  title: Fast allocation and deallocation of memory based on object lifetimes
+  venue: Software—Practice and Experience 20(1), 5–12
+ross1967:
+  authors: D. T. Ross
+  year: 1967
+  title: The AED free storage package
+  venue: Communications of the ACM 10(8), 481–492
+tofte1997:
+  authors: Mads Tofte and Jean-Pierre Talpin
+  year: 1997
+  title: Region-based memory management
+  venue: Information and Computation 132(2), 109–176
+cmu2001malloclab:
+  authors: Carnegie Mellon University, CS 213
+  year: 2001
+  title: 'Malloc lab: writing a dynamic storage allocator'
+  venue: course assignment, Fall 2001
+  url: http://csapp.cs.cmu.edu/3e/malloclab.pdf
+bryant2016:
+  authors: Randal E. Bryant and David R. O’Hallaron
+  year: 2016
+  title: 'Computer Systems: A Programmer’s Perspective, third edition'
+  venue: Pearson (section 9.9, Dynamic memory allocation)
+kernighan1988:
+  authors: Brian W. Kernighan and Dennis M. Ritchie
+  year: 1988
+  title: The C Programming Language, second edition
+  venue: 'Prentice Hall (section 8.7, Example: a storage allocator)'

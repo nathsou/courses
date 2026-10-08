@@ -1,0 +1,154 @@
+zlib2002:
+  authors: Mark Adler and Jean-loup Gailly
+  year: 2002
+  title: 'Zlib advisory 2002-03-11: zlib compression library corrupts malloc data structures via double free'
+  venue: zlib.net
+  url: https://www.zlib.net/advisory-2002-03-11.txt
+openssl2014:
+  authors: OpenSSL Project
+  year: 2014
+  title: 'OpenSSL security advisory: TLS heartbeat read overrun (CVE-2014-0160)'
+  venue: 7 April 2014
+  url: https://www.openssl.org/news/secadv/20140407.txt
+codenomicon2014:
+  authors: Codenomicon
+  year: 2014
+  title: The Heartbleed bug
+  venue: heartbleed.com
+  url: https://heartbleed.com/
+rfc6520:
+  authors: Robin Seggelmann, Michael Tüxen and Michael Williams
+  year: 2012
+  title: 'Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS) heartbeat extension'
+  venue: RFC 6520
+  url: https://www.rfc-editor.org/rfc/rfc6520
+chrome2019release:
+  authors: Google Chrome Releases
+  year: 2019
+  title: Stable channel update for desktop (CVE-2019-5786, use-after-free in FileReader)
+  venue: Chrome Releases blog, March 2019
+  url: https://chromereleases.googleblog.com/2019/03/stable-channel-update-for-desktop.html
+lecigne2019:
+  authors: Clement Lecigne
+  year: 2019
+  title: Disclosing vulnerabilities to protect users across platforms
+  venue: Google Online Security Blog, 7 March 2019
+  url: https://security.googleblog.com/2019/03/disclosing-vulnerabilities-to-protect.html
+msrc2019:
+  authors: Microsoft Security Response Center
+  year: 2019
+  title: We need a safer systems programming language
+  venue: MSRC blog, 18 July 2019
+  url: https://www.microsoft.com/en-us/msrc/blog/2019/07/we-need-a-safer-systems-programming-language
+chromium-memory-safety:
+  authors: The Chromium Projects
+  year: n.d.
+  title: Memory safety
+  venue: chromium.org
+  url: https://www.chromium.org/Home/chromium-security/memory-safety/
+vanderstoep2024:
+  authors: Jeff Vander Stoep and Alex Rebert
+  year: 2024
+  title: Eliminating memory safety vulnerabilities at the source
+  venue: Google Online Security Blog, 25 September 2024
+  url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
+efence:
+  authors: Bruce Perens
+  year: n.d.
+  title: efence(3), Electric Fence malloc debugger
+  venue: manual page
+  url: https://linux.die.net/man/3/efence
+valgrind-quickstart:
+  authors: Valgrind developers
+  year: n.d.
+  title: The Valgrind quick start guide
+  venue: valgrind.org
+  url: https://valgrind.org/docs/manual/quick-start.html
+valgrind-memcheck:
+  authors: Valgrind developers
+  year: n.d.
+  title: 'Memcheck: a memory error detector'
+  venue: Valgrind user manual, chapter 4
+  url: https://valgrind.org/docs/manual/mc-manual.html
+serebryany2012:
+  authors: Konstantin Serebryany, Derek Bruening, Alexander Potapenko and Dmitry Vyukov
+  year: 2012
+  title: 'AddressSanitizer: a fast address sanity checker'
+  venue: USENIX Annual Technical Conference (ATC 12)
+  url: https://www.usenix.org/system/files/conference/atc12/atc12-final39.pdf
+glibc-malloc-c:
+  authors: GNU C Library contributors
+  year: n.d.
+  title: malloc/malloc.c (safe-linking and tcache checks)
+  venue: glibc source code
+  url: https://sourceware.org/git/?p=glibc.git;a=blob;f=malloc/malloc.c
+linux-mte:
+  authors: The Linux kernel documentation
+  year: n.d.
+  title: Memory Tagging Extension (MTE) in AArch64 Linux
+  venue: kernel.org
+  url: https://www.kernel.org/doc/html/latest/arch/arm64/memory-tagging-extension.html
+watson2019:
+  authors: Robert N. M. Watson, Simon W. Moore, Peter Sewell and Peter G. Neumann
+  year: 2019
+  title: An introduction to CHERI
+  venue: University of Cambridge Computer Laboratory, technical report UCAM-CL-TR-941
+  url: https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.pdf
+stroustrup-faq:
+  authors: Bjarne Stroustrup
+  year: n.d.
+  title: 'C++ style and technique FAQ: why doesn’t C++ provide a “finally” construct?'
+  venue: stroustrup.com
+  url: https://www.stroustrup.com/bs_faq2.html
+rustbook-ownership:
+  authors: Steve Klabnik and Carol Nichols
+  year: n.d.
+  title: 'The Rust Programming Language, chapter 4.1: What is ownership?'
+  venue: doc.rust-lang.org
+  url: https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html
+rustbook-references:
+  authors: Steve Klabnik and Carol Nichols
+  year: n.d.
+  title: 'The Rust Programming Language, chapter 4.2: References and borrowing'
+  venue: doc.rust-lang.org
+  url: https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
+rust-destructors:
+  authors: The Rust Reference
+  year: n.d.
+  title: Destructors
+  venue: doc.rust-lang.org
+  url: https://doc.rust-lang.org/reference/destructors.html
+rust2015:
+  authors: The Rust Core Team
+  year: 2015
+  title: Announcing Rust 1.0
+  venue: Rust Blog, 15 May 2015
+  url: https://blog.rust-lang.org/2015/05/15/Rust-1.0/
+gofaq:
+  authors: The Go Authors
+  year: n.d.
+  title: 'Frequently asked questions: how do I know whether a variable is allocated on the heap or the stack?'
+  venue: go.dev
+  url: https://go.dev/doc/faq#stack_or_heap
+grossman2002:
+  authors: Dan Grossman, Greg Morrisett, Trevor Jim, Michael Hicks, Yanling Wang and James Cheney
+  year: 2002
+  title: Region-based memory management in Cyclone
+  venue: Proceedings of PLDI 2002
+rust-influences:
+  authors: The Rust Reference
+  year: n.d.
+  title: Influences
+  venue: doc.rust-lang.org
+  url: https://doc.rust-lang.org/reference/influences.html
+hastings1992:
+  authors: Reed Hastings and Bob Joyce
+  year: 1992
+  title: 'Purify: fast detection of memory leaks and access errors'
+  venue: Proceedings of the Winter 1992 USENIX Conference, 125–136
+oncd2024:
+  authors: The White House Office of the National Cyber Director
+  year: 2024
+  title: 'Back to the building blocks: a path toward secure and measurable software'
+  venue: press release and technical report, 26 February 2024
+  url: https://bidenwhitehouse.archives.gov/oncd/briefing-room/2024/02/26/press-release-technical-report/

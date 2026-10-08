@@ -1,0 +1,8 @@
+- id: discord-2020
+  title: Discord’s two-minute spikes
+  year: 2020
+  chapter: collectors-in-the-wild
+  reenacted: false
+  summary: Discord’s Read States service, written in Go, kept a large in-memory cache and allocated very little. Yet every two minutes or so its latency and CPU use spiked. The cause was the Go runtime, which forces a collection if none has run for two minutes, “regardless of heap growth”. Each forced collection had to scan the entire cache to establish that its entries were still referenced, and tuning the collector’s GOGC setting changed nothing, because the program did not allocate fast enough to trigger collections any sooner. Smaller caches made the spikes smaller but the cache less effective. The team rewrote the service in Rust, which has no garbage collector.
+  simplification: told as history; the dashboard’s concurrent model shows why the work of a collection grows with the live data it must scan.
+  cite: [howarth2020]

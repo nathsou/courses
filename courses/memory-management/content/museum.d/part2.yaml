@@ -1,0 +1,8 @@
+- id: morris-1988
+  title: The Morris worm
+  year: 1988
+  chapter: the-stack
+  reenacted: false
+  summary: On 2 November 1988 a self-replicating program spread across the Internet and brought a large fraction of its machines to a crawl. One of its ways in was the `fingerd` service on VAX computers, which read a line of input into a 512-byte buffer on the stack with the C library function `gets`, which does not know how big its buffer is. The worm sent a longer line, overwrote the return address of the function, and made it return into code the worm had sent along.
+  simplification: told as history; the chapter explains the mechanism with a C example rather than re-enacting the VAX attack.
+  cite: [spafford1989]
