@@ -1,0 +1,8 @@
+- id: instagram-2017
+  title: Instagram and Python’s garbage collector
+  year: 2016–17
+  chapter: page-faults
+  reenacted: false
+  summary: Instagram’s web servers ran Python under a master process that forked many workers, which were meant to share most of the master’s memory copy-on-write. Engineers found that shared memory was steadily turning into private memory. The culprit was CPython’s cycle collector, which writes to a header inside every object it examines, even objects that stay alive; every such write to a shared page triggered a copy. Turning the collector off gave them about ten per cent more capacity. A follow-up proposed `gc.freeze()`, which moves everything allocated before the fork into a permanent generation the collector never touches; it was added in Python 3.7.
+  simplification: told as history; the fork theatre shows the mechanism (a write to a shared page copies it), not CPython itself.
+  cite: [instagram2017a, instagram2017b]

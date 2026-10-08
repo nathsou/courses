@@ -6,3 +6,11 @@
   summary: Yoongu Kim and colleagues showed that repeatedly opening the same DRAM rows, millions of times between refreshes, could flip bits in *neighbouring* rows that were never accessed, on most of the commodity memory modules they tested. A year later Mark Seaborn and Thomas Dullien of Google’s Project Zero turned the effect into exploits, one of which flipped bits in page-table entries so that an unprivileged process gained write access to its own page tables, and with them to all of physical memory.
   simplification: told as history; chapter 3 shows in the page-walk figure why one flipped bit in a page-table entry is enough.
   cite: [kim2014, seaborn2015]
+- id: meltdown-2018
+  title: Meltdown
+  year: 2018
+  chapter: the-tlb
+  reenacted: false
+  summary: Moritz Lipp and colleagues showed that many processors would, *speculatively*, carry out a load from a kernel page before the U = 0 permission check took effect, and leave a trace of the loaded value in the cache, where a timing measurement could recover it. Any program could read all of kernel memory, which on most systems mapped all of physical memory. The fix that operating systems shipped in early 2018, kernel page-table isolation, grew out of an earlier proposal, KAISER, to unmap the kernel from user address spaces.
+  simplification: told as history; the chapter’s figures show its cost (address-space switches), not the attack.
+  cite: [lipp2018, gruss2017]

@@ -40,3 +40,68 @@ kilburn1962:
   title: One-level storage system
   venue: IRE Transactions on Electronic Computers EC-11(2), 223–235
   url: https://doi.org/10.1109/TEC.1962.5219356
+lipp2018:
+  authors: Moritz Lipp, Michael Schwarz, Daniel Gruss, Thomas Prescher, Werner Haas, Anders Fogh, Jann Horn, Stefan Mangard, Paul Kocher, Daniel Genkin, Yuval Yarom and Mike Hamburg
+  year: 2018
+  title: 'Meltdown: reading kernel memory from user space'
+  venue: 27th USENIX Security Symposium, 973–990
+  url: https://www.usenix.org/conference/usenixsecurity18/presentation/lipp
+gruss2017:
+  authors: Daniel Gruss, Moritz Lipp, Michael Schwarz, Richard Fellner, Clémentine Maurice and Stefan Mangard
+  year: 2017
+  title: 'KASLR is dead: long live KASLR'
+  venue: Engineering Secure Software and Systems (ESSoS 2017), LNCS 10379, 161–176
+  url: https://doi.org/10.1007/978-3-319-62105-0_11
+instagram2017a:
+  authors: Instagram Engineering
+  year: 2017
+  title: Dismissing Python garbage collection at Instagram
+  venue: Instagram Engineering blog, January 2017
+  url: https://instagram-engineering.com/dismissing-python-garbage-collection-at-instagram-4dca40b29172
+instagram2017b:
+  authors: Zekun Li
+  year: 2017
+  title: Copy-on-write friendly Python garbage collection
+  venue: Instagram Engineering blog, 20 December 2017
+  url: https://instagram-engineering.com/copy-on-write-friendly-python-garbage-collection-ad6ed5233ddf
+belady1966:
+  authors: L. A. Belady
+  year: 1966
+  title: A study of replacement algorithms for a virtual-storage computer
+  venue: IBM Systems Journal 5(2), 78–101
+  url: https://doi.org/10.1147/sj.52.0078
+belady1969:
+  authors: L. A. Belady, R. A. Nelson and G. S. Shedler
+  year: 1969
+  title: An anomaly in space-time characteristics of certain programs running in a paging machine
+  venue: Communications of the ACM 12(6), 349–353
+  url: https://doi.org/10.1145/363011.363155
+mattson1970:
+  authors: R. L. Mattson, J. Gecsei, D. R. Slutz and I. L. Traiger
+  year: 1970
+  title: Evaluation techniques for storage hierarchies
+  venue: IBM Systems Journal 9(2), 78–117
+  url: https://doi.org/10.1147/sj.92.0078
+corbato1968:
+  authors: F. J. Corbató
+  year: 1968
+  title: A paging experiment with the Multics system
+  venue: MIT Project MAC report MAC-M-384; published in Feshbach and Ingard (eds.), In Honor of Philip M. Morse, MIT Press, 1969
+denning1968:
+  authors: Peter J. Denning
+  year: 1968
+  title: The working set model for program behavior
+  venue: Communications of the ACM 11(5), 323–333
+  url: https://doi.org/10.1145/363095.363141
+wilkes1965:
+  authors: M. V. Wilkes
+  year: 1965
+  title: Slave memories and dynamic storage allocation
+  venue: IEEE Transactions on Electronic Computers EC-14(2), 270–271
+  url: https://doi.org/10.1109/PGEC.1965.264263
+denning1970:
+  authors: Peter J. Denning
+  year: 1970
+  title: Virtual memory
+  venue: ACM Computing Surveys 2(3), 153–189
+  url: https://doi.org/10.1145/356571.356573

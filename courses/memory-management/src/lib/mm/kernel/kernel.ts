@@ -36,6 +36,22 @@ export type KernelEvent =
   | { kind: 'syscall'; pid: number; name: string; detail: string }
   | { kind: 'frame'; op: 'alloc' | 'free'; frame: number };
 
+/** What a copy-on-write fault handler can do (chapter 5's exercise plugs its own handler in). */
+export interface CowFault {
+  /** The faulting page's current entry. */
+  pte: { ppn: number; flags: number };
+  /** How many page-table entries map a frame. */
+  refs(frame: number): number;
+  /** A fresh frame (contents undefined), with a reference count of 1. */
+  allocFrame(): number;
+  copyFrame(from: number, to: number): void;
+  /** Drop one reference to a frame; frees it when none remain. */
+  release(frame: number): void;
+  /** Install a new entry for the faulting page. */
+  setPte(ppn: number, flags: number): void;
+}
+export type CowHandler = (f: CowFault) => void;
+
 export class Segfault extends Error {
   constructor(
     readonly pid: number,
@@ -93,6 +109,8 @@ export class Kernel {
   processes: Process[] = [];
   events: KernelEvent[] = [];
   current?: Process;
+  /** Replace the built-in copy-on-write handling (chapter 5). */
+  cowHandler?: CowHandler;
   private nextPid = 1;
 
   constructor(frames = 1024, cost?: CostModel) {
@@ -181,6 +199,27 @@ export class Kernel {
       this.refs.set(frame, 1);
       p.pt.map(page, frame, flags | PTE.A | (access === 'w' ? PTE.D : 0));
       this.events.push({ kind: 'fault', pid: p.pid, va, access, resolution: vma.file ? 'file' : 'demand-zero', frame });
+      return true;
+    }
+    if (access === 'w' && pte.flags & COW && this.cowHandler) {
+      this.cowHandler({
+        pte: { ...pte },
+        refs: (f) => this.refs.get(f) ?? 0,
+        allocFrame: () => {
+          const f = this.allocFrame(false);
+          this.refs.set(f, 1);
+          return f;
+        },
+        copyFrame: (from, to) => {
+          this.machine.phys.copyFrame(from, to);
+          this.machine.charge('copy', this.machine.cost.pageCopy);
+        },
+        release: (f) => this.release(f),
+        setPte: (ppn, flags) => p.pt.set(page, ppn, flags | PTE.V),
+      });
+      this.machine.tlb.flush({ va: page, asid: p.asid });
+      const now = p.pt.get(page)!;
+      this.events.push({ kind: 'fault', pid: p.pid, va, access, resolution: now.ppn === pte.ppn ? 'cow-reuse' : 'cow-copy', frame: now.ppn, from: pte.ppn });
       return true;
     }
     if (access === 'w' && pte.flags & COW) {

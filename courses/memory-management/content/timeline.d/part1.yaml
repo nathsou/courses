@@ -1,0 +1,76 @@
+- year: 1962
+  lane: virtual-memory
+  title: The Atlas one-level store
+  people: Tom Kilburn and colleagues
+  chapter: virtual-memory
+  text: The first machine to translate every address in hardware, moving 512-word pages between core and drum behind the program’s back.
+  cite: [kilburn1962]
+- year: 1965
+  lane: hardware
+  title: Slave memories
+  people: Maurice Wilkes
+  chapter: the-memory-hierarchy
+  text: 'A short paper proposes a small, fast memory in front of main memory that keeps copies of recently used words: the cache.'
+  cite: [wilkes1965]
+- year: 1966
+  lane: virtual-memory
+  title: OPT, the optimal replacement policy
+  people: László Bélády
+  chapter: choosing-a-victim
+  text: A study of replacement algorithms at IBM sets the unreachable benchmark every real policy is measured against.
+  cite: [belady1966]
+- year: 1968
+  lane: virtual-memory
+  title: Working sets and thrashing
+  people: Peter Denning
+  chapter: choosing-a-victim
+  text: A program needs its working set in memory to make progress; a system that cannot hold all of them collapses.
+  cite: [denning1968]
+- year: 1968
+  lane: virtual-memory
+  title: Clock replacement in Multics
+  people: Fernando Corbató
+  chapter: choosing-a-victim
+  text: A paging experiment on Multics uses the accessed bit and a rotating hand to approximate LRU cheaply.
+  cite: [corbato1968]
+- year: 1969
+  lane: virtual-memory
+  title: Bélády’s anomaly
+  people: László Bélády, Robert Nelson and Gerald Shedler
+  chapter: choosing-a-victim
+  text: With FIFO replacement, giving a program more memory can make it fault more.
+  cite: [belady1969]
+- year: 1970
+  lane: virtual-memory
+  title: Stack algorithms
+  people: Richard Mattson and colleagues
+  chapter: choosing-a-victim
+  text: LRU and OPT keep, with n frames, a subset of what they keep with n + 1, so more memory never hurts them.
+  cite: [mattson1970]
+- year: 1995
+  lane: hardware
+  title: The memory wall
+  people: William Wulf and Sally McKee
+  chapter: the-memory-hierarchy
+  text: Processor speed outruns memory speed; eventually memory latency alone sets the pace of computing.
+  cite: [wulf1995]
+- year: 2014
+  lane: failures
+  title: Rowhammer
+  people: Yoongu Kim and colleagues
+  chapter: the-memory-hierarchy
+  text: Repeatedly opening DRAM rows flips bits in neighbouring rows; a year later the effect is used to rewrite page tables.
+  cite: [kim2014, seaborn2015]
+- year: 2017
+  lane: failures
+  title: Instagram turns off Python’s collector
+  chapter: page-faults
+  text: Garbage-collector writes to object headers defeat copy-on-write sharing between forked workers.
+  cite: [instagram2017a]
+- year: 2018
+  lane: failures
+  title: Meltdown and page-table isolation
+  people: Moritz Lipp and colleagues
+  chapter: the-tlb
+  text: Speculative execution reads kernel memory past the U bit; operating systems unmap the kernel from user page tables.
+  cite: [lipp2018]

@@ -23,7 +23,7 @@ export const LIBRARY: Record<string, unknown> = {
   '@mm/trace': trace,
   '@mm/sv39': { ...sv39, ...phys },
   '@mm/cache': cache,
-  '@mm/kernel': { ...kernel, ...buddy },
+  '@mm/kernel': { ...kernel, ...buddy, PTE: sv39.PTE },
   '@mm/replace': replace,
   '@mm/gc': gc,
 };
