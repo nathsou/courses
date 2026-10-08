@@ -2,3 +2,5 @@
 // that take code, as a `:::kebab-name{…}` container with a code block inside.
 /** Code and what the parser made of it: `:::ast-explorer{tabs="tokens,tree"}` + a ```ts block. */
 export { default as AstExplorer } from '$lib/components/widgets/AstExplorer.svelte';
+/** Type a selector, see the nodes it matches: `:::selector-lab{selector="…" presets="a|b"}` + a ```ts block. */
+export { default as SelectorLab } from '$lib/components/widgets/SelectorLab.svelte';

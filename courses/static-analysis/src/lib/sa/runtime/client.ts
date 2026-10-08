@@ -7,6 +7,7 @@ import type { RuleRunResult } from './run.js';
 import type { TestsResult } from './tests.js';
 import type { InspectResult } from './inspect.js';
 import type { CorpusResult } from './corpus.js';
+import type { SelectResult } from './select.js';
 
 type Pending = { resolve: (v: unknown) => void; reject: (e: Error) => void; timer: ReturnType<typeof setTimeout> };
 
@@ -93,4 +94,10 @@ export async function runCorpusRemote(request: Extract<Body, { kind: 'corpus' }>
 /** Start loading the runner before it is needed (e.g. when an exercise scrolls into view). */
 export function prewarm(): void {
   if (!warm) void inspectRemote('0;').catch(() => {});
+}
+
+export async function selectRemote(code: string, selector: string): Promise<SelectResult> {
+  const r = await call<SelectResult>({ kind: 'select', code, selector }, limit(10_000));
+  warm = true;
+  return r;
 }

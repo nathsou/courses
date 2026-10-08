@@ -113,7 +113,7 @@ export class TypeScriptLanguageServer {
   constructor(private readonly opts: ServerOptions) {
     const host: ts.LanguageServiceHost = {
       getCompilationSettings: () => COMPILER_OPTIONS,
-      getScriptFileNames: () => [...this.docs.keys(), ...[...opts.files.keys()].filter((f) => f.startsWith('/rules/') || f === '/corkboard-env.d.ts')],
+      getScriptFileNames: () => [...this.docs.keys(), ...[...opts.files.keys()].filter((f) => f.startsWith('/rules/') || f === '/corkboard-env.d.ts' || f === '/workbench-test.d.ts')],
       getScriptVersion: (f) => String(this.docs.get(f)?.version ?? 0),
       getScriptSnapshot: (f) => {
         const text = this.read(f);

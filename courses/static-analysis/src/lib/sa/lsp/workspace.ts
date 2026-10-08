@@ -6,6 +6,7 @@
 import { loadLibs } from '../runtime/libs.js';
 import { KIT_SOURCES } from '../kit/sources.js';
 import { CORKBOARD_ENV, CORKBOARD_ENV_FILE } from '../runtime/corkboard-env.js';
+import { WORKBENCH_TEST_DTS, WORKBENCH_TEST_FILE } from './workbench-test.js';
 
 const TYPES = import.meta.glob(
   [
@@ -40,6 +41,7 @@ export function loadWorkspaceFiles(): Promise<Map<string, string>> {
     for (const [path, text] of Object.entries(PACKAGES)) files.set(path, text);
     for (const [path, load] of Object.entries(KIT_SOURCES)) files.set(`/rules/helpers/${path.replace('./', '')}`, await load());
     files.set(CORKBOARD_ENV_FILE, CORKBOARD_ENV);
+    files.set(WORKBENCH_TEST_FILE, WORKBENCH_TEST_DTS);
     return files;
   })();
   return cache;
