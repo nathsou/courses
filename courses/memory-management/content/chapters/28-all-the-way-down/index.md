@@ -10,6 +10,22 @@ The course began with one allocation, a single `Point`, followed down through th
 
 Twenty-seven chapters later, here is a whole program, with every layer open at once.
 
+Before you run it, a last prediction.
+
+```predict
+q: "The program below builds a 300-node list, sums it twice and frees it. Under which memory manager does it make the most loads and stores to memory, counting the manager’s own?"
+options:
+  - text: Manual, with malloc and free
+    why: "About 7,000: the allocator’s bookkeeping on every `malloc` and `free`, and nothing extra on a pointer copy. Only copying makes fewer."
+  - text: Reference counting
+    correct: true
+    why: "About 18,400. Every time a pointer is copied into a variable or a field, two counts change, one up and one down, and walking the list moves `cur` three hundred times per sum."
+  - text: Mark–sweep
+    why: "About 12,200: its allocator keeps free lists much as `malloc` does, and the list outgrows its trigger, so one collection runs. Second, not first."
+  - text: Copying
+    why: "About 3,300, the fewest: allocation is a pointer bump, the frees are ignored, and the heap never fills, so no collection runs and nothing is copied."
+```
+
 ## Every layer at once
 
 :::full-stack{settings="manual,rc,mark-sweep,copying" n="28.1"}
