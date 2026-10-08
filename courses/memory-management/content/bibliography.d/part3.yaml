@@ -3,3 +3,33 @@ knuth1968:
   year: 1968
   title: 'The Art of Computer Programming, Volume 1: Fundamental Algorithms'
   venue: Addison-Wesley (section 2.5, Dynamic storage allocation)
+robson1971:
+  authors: J. M. Robson
+  year: 1971
+  title: An estimate of the store size necessary for dynamic storage allocation
+  venue: Journal of the ACM 18(3), 416–423
+  url: https://doi.org/10.1145/321650.321658
+robson1974:
+  authors: J. M. Robson
+  year: 1974
+  title: Bounds for some functions concerning dynamic storage allocation
+  venue: Journal of the ACM 21(3), 491–499
+  url: https://doi.org/10.1145/321832.321846
+wilson1995:
+  authors: Paul R. Wilson, Mark S. Johnstone, Michael Neely and David Boles
+  year: 1995
+  title: 'Dynamic storage allocation: a survey and critical review'
+  venue: International Workshop on Memory Management (IWMM 95), LNCS 986, 1–116
+  url: https://doi.org/10.1007/3-540-60368-9_19
+johnstone1998:
+  authors: Mark S. Johnstone and Paul R. Wilson
+  year: 1998
+  title: 'The memory fragmentation problem: solved?'
+  venue: Proceedings of the First International Symposium on Memory Management (ISMM 98), 26–36
+  url: https://doi.org/10.1145/286860.286864
+lea1996:
+  authors: Doug Lea
+  year: 1996
+  title: A memory allocator
+  venue: unpublished article describing dlmalloc (first version 1987)
+  url: https://gee.cs.oswego.edu/dl/html/malloc.html
