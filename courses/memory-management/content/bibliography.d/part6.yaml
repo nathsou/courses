@@ -143,3 +143,44 @@ zhao2022:
   year: 2022
   title: Low-latency, high-throughput garbage collection
   venue: Proceedings of PLDI 2022
+jep421:
+  authors: Brent Christian and Stuart Marks
+  year: 2021
+  title: 'JEP 421: deprecate finalization for removal'
+  venue: OpenJDK (delivered in JDK 18)
+  url: https://openjdk.org/jeps/421
+jls12:
+  authors: James Gosling and others
+  year: 2023
+  title: 'The Java Language Specification, Java SE 21 edition, chapter 12: Execution (§12.6, Finalization of class instances)'
+  venue: Oracle
+  url: https://docs.oracle.com/javase/specs/jls/se21/html/jls-12.html
+java-lang-ref:
+  authors: Oracle
+  year: n.d.
+  title: Package java.lang.ref
+  venue: Java SE 21 API documentation
+  url: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ref/package-summary.html
+hayes1997:
+  authors: Barry Hayes
+  year: 1997
+  title: 'Ephemerons: a new finalization mechanism'
+  venue: Proceedings of OOPSLA 1997
+mdn-weakmap:
+  authors: MDN contributors
+  year: n.d.
+  title: WeakMap
+  venue: MDN Web Docs
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap
+mdn-weakref:
+  authors: MDN contributors
+  year: n.d.
+  title: WeakRef
+  venue: MDN Web Docs
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef
+mdn-finreg:
+  authors: MDN contributors
+  year: n.d.
+  title: FinalizationRegistry
+  venue: MDN Web Docs
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry
