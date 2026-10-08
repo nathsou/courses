@@ -1,0 +1,12 @@
+mccabe1976:
+  authors: T. J. McCabe
+  year: 1976
+  title: A complexity measure
+  venue: "IEEE Transactions on Software Engineering, SE-2(4), 308–320"
+  url: https://doi.org/10.1109/TSE.1976.233837
+campbell2018:
+  authors: G. A. Campbell
+  year: 2018
+  title: "Cognitive complexity: an overview and evaluation"
+  venue: "Proceedings of the 2018 International Conference on Technical Debt (TechDebt '18), 57–58"
+  url: https://doi.org/10.1145/3194164.3194186

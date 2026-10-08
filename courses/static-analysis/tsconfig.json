@@ -26,5 +26,5 @@
     "content/**/*.svelte"
   ],
   // The corpus is code to analyse (with planted bugs and fake modules), not code of the course.
-  "exclude": ["content/corpus/**"]
+  "exclude": ["content/corpus/**", "src/lib/sa/rules/*.ts"]
 }

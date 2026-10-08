@@ -4,3 +4,5 @@
 export { default as AstExplorer } from '$lib/components/widgets/AstExplorer.svelte';
 /** Type a selector, see the nodes it matches: `:::selector-lab{selector="…" presets="a|b"}` + a ```ts block. */
 export { default as SelectorLab } from '$lib/components/widgets/SelectorLab.svelte';
+/** Cognitive Complexity per function, increments marked: `:::complexity-view` + a ```ts block. */
+export { default as ComplexityView } from '$lib/components/widgets/ComplexityView.svelte';
