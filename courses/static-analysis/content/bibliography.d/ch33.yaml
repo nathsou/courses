@@ -1,0 +1,34 @@
+moller2024:
+  authors: A. Møller, M. I. Schwartzbach
+  year: 2024
+  title: Static Program Analysis
+  venue: "Lecture notes, Aarhus University"
+  url: https://cs.au.dk/~amoeller/spa/
+nielson1999:
+  authors: F. Nielson, H. R. Nielson, C. Hankin
+  year: 1999
+  title: Principles of Program Analysis
+  venue: "Springer"
+  url: https://doi.org/10.1007/978-3-662-03811-6
+rival2020:
+  authors: X. Rival, K. Yi
+  year: 2020
+  title: "Introduction to Static Analysis: An Abstract Interpretation Perspective"
+  venue: "MIT Press"
+cousot2021:
+  authors: P. Cousot
+  year: 2021
+  title: Principles of Abstract Interpretation
+  venue: "MIT Press"
+kroening2016:
+  authors: D. Kroening, O. Strichman
+  year: 2016
+  title: "Decision Procedures: An Algorithmic Point of View (2nd edition)"
+  venue: "Springer"
+  url: https://doi.org/10.1007/978-3-662-50497-0
+zeller2024:
+  authors: A. Zeller, R. Gopinath, M. Böhme, G. Fraser, C. Holler
+  year: 2024
+  title: The Fuzzing Book
+  venue: "Online book, CISPA Helmholtz Center for Information Security"
+  url: https://www.fuzzingbook.org/
