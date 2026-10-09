@@ -10,6 +10,9 @@ import { settings } from '$lib/state/settings.svelte';
 
 type Manifest = Record<string, string>;
 
+/** A few milliseconds of silent WAV, played on the first tap to unlock audio on mobile. */
+const SILENCE = 'data:audio/wav;base64,UklGRsQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+
 /** The text a clip is keyed by: overrides stripped, whitespace trimmed. */
 export const clipKey = (text: string) => plain(text).replace(/\s+/g, '').trim();
 
@@ -35,7 +38,9 @@ class Speech {
 
   /** Warm the manifest so the first click plays immediately. */
   prepare(): void {
-    if (browser) void this.loadManifest();
+    if (!browser) return;
+    void this.loadManifest();
+    for (const type of ['pointerdown', 'keydown', 'touchend'] as const) window.addEventListener(type, this.unlock, { capture: true, passive: true });
   }
 
   async has(text: string): Promise<boolean> {
@@ -87,23 +92,67 @@ class Speech {
     }
   }
 
+  /**
+   * One audio element for every clip. Mobile browsers only let an element play outside a tap once
+   * it has played inside one, so a "play all" loop must keep using the element the tap unlocked.
+   */
+  private element(): HTMLAudioElement {
+    if (!this.audio) {
+      this.audio = new Audio();
+      this.audio.preload = 'auto';
+    }
+    return this.audio;
+  }
+
+  /** Unlock audio and the speech voice on the learner's first tap or key press. */
+  private unlock = () => {
+    for (const type of ['pointerdown', 'keydown', 'touchend'] as const) window.removeEventListener(type, this.unlock, true);
+    const a = this.element();
+    if (!a.src) {
+      a.src = SILENCE;
+      a.play().then(() => (a.src === SILENCE ? a.pause() : undefined)).catch(() => {});
+    }
+    if ('speechSynthesis' in window && !speechSynthesis.speaking) {
+      const u = new SpeechSynthesisUtterance('');
+      u.volume = 0;
+      speechSynthesis.speak(u);
+    }
+  };
+
+  /** Resolves true once the clip has played (or was paused by the system part-way through). */
   private playFile(src: string, rate: number, token: number): Promise<boolean> {
     return new Promise((resolve) => {
+      const a = this.element();
       let settled = false;
+      let started = false;
       const finish = (played: boolean) => {
         if (settled) return;
         settled = true;
+        a.removeEventListener('playing', onPlaying);
+        a.removeEventListener('ended', onEnded);
+        a.removeEventListener('error', onError);
+        a.removeEventListener('pause', onPause);
         if (this.finish === cancel) this.finish = null;
         resolve(played);
       };
       const cancel = () => finish(false);
+      const onPlaying = () => (started = true);
+      const onEnded = () => finish(true);
+      const onError = () => finish(false);
+      // A clip that reaches its end fires "pause" just before "ended"; a pause queued by an
+      // earlier stop() arrives before this clip's "playing". Only a pause mid-clip ends it here.
+      const onPause = () => {
+        if (started && !a.ended) finish(true);
+      };
       this.finish = cancel;
-      const a = new Audio(src);
+      a.addEventListener('playing', onPlaying);
+      a.addEventListener('ended', onEnded);
+      a.addEventListener('error', onError);
+      a.addEventListener('pause', onPause);
+      a.src = src;
+      a.defaultPlaybackRate = rate;
       a.playbackRate = rate;
       a.preservesPitch = true;
-      this.audio = a;
-      a.onended = () => finish(true);
-      a.onerror = a.onpause = () => finish(false);
       a.play().catch(() => finish(false));
       if (token !== this.token) a.pause();
     });
@@ -135,7 +184,10 @@ class Speech {
     if (voice) u.voice = voice;
     u.rate = 0.9 * rate;
     await new Promise<void>((resolve) => {
+      // Some voices never report the end (or never start outside a tap): do not wait forever.
+      const watchdog = setTimeout(() => finish(), 2500 + (text.length * 700) / Math.max(0.3, u.rate));
       const finish = () => {
+        clearTimeout(watchdog);
         if (this.finish === finish) this.finish = null;
         resolve();
       };

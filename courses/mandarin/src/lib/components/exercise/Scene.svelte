@@ -27,6 +27,16 @@
   const t = $derived(data.turns[turn]);
   const order = $derived(t ? shuffle(t.options.map((_, i) => i), `${id}:${turn}:${round}`) : []);
 
+  // Audio follows the conversation; it never holds it up, so one tap is always one reply.
+  let voice = 0;
+  async function speak(texts: (string | undefined)[]) {
+    const id = ++voice;
+    for (const text of texts) {
+      if (id !== voice) return;
+      if (text) await speech.say(text);
+    }
+  }
+
   function start() {
     log = [];
     turn = 0;
@@ -35,38 +45,38 @@
     tried = new Set();
     say(0);
   }
-  function say(k: number) {
+  /** Adds the partner's opening line for turn `k`; returns it so the caller can voice it. */
+  function say(k: number, voiced = true): string | undefined {
     const tt = data.turns[k];
-    if (tt?.they) {
-      log = [...log, { from: 'they', zh: tt.they, en: tt.theyEn }];
-      void speech.say(tt.they);
-    }
+    if (!tt?.they) return undefined;
+    log = [...log, { from: 'they', zh: tt.they, en: tt.theyEn }];
+    if (voiced) void speak([tt.they]);
+    return tt.they;
   }
   $effect(() => {
     void round;
     untrack(start);
   });
 
-  async function choose(i: number) {
-    const o = t!.options[i]!;
+  function choose(i: number) {
+    if (finished || !t) return;
+    const o = t.options[i]!;
     if (tried.has(i)) return;
     if (o.ok) {
       log = [...log, { from: 'you', zh: o.zh, en: o.en }];
       sfx('right', settings.data.sounds);
-      await speech.say(o.zh);
-      if (o.reply) {
-        log = [...log, { from: 'they', zh: o.reply, en: o.replyEn }];
-        await speech.say(o.reply);
-      }
+      if (o.reply) log = [...log, { from: 'they', zh: o.reply, en: o.replyEn }];
       tried = new Set();
+      let next: string | undefined;
       if (turn + 1 >= data.turns.length) {
         finished = true;
         report(misses <= Math.floor(data.turns.length / 2));
         sfx('done', settings.data.sounds);
       } else {
         turn++;
-        say(turn);
+        next = say(turn, false);
       }
+      void speak([o.zh, o.reply, next]);
     } else {
       misses++;
       tried = new Set([...tried, i]);
@@ -74,7 +84,7 @@
       log = [...log, { from: 'you', zh: o.zh, en: o.en, miss: true }];
       if (o.reply) {
         log = [...log, { from: 'they', zh: o.reply, en: o.replyEn, miss: true }];
-        void speech.say(o.reply);
+        void speak([o.reply]);
       }
     }
   }
