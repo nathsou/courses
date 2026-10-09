@@ -20,3 +20,5 @@ export { default as LatticeLab } from '$lib/components/widgets/LatticeLab.svelte
 export { default as FollowIssue } from '$lib/components/widgets/FollowIssue.svelte';
 /** Issues to classify as true positive, false positive or accepted: `:::triage-board` + a ```yaml block. */
 export { default as TriageBoard } from '$lib/components/widgets/TriageBoard.svelte';
+/** A set of integers, its abstraction and concretisation, and transformers compared: `::galois-view{domains="…" exprs="x + 1|x * x"}`. */
+export { default as GaloisView } from '$lib/components/widgets/GaloisView.svelte';

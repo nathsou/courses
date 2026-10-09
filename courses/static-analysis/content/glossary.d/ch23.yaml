@@ -1,0 +1,24 @@
+concretisation:
+  term: concretisation
+  definition: "The function γ that gives the set of concrete values (or states) an abstract value stands for."
+  chapter: soundness
+abstraction:
+  term: abstraction
+  definition: "The function α that gives the most precise abstract value describing a set of concrete values, when one exists."
+  chapter: soundness
+Galois connection:
+  term: Galois connection
+  definition: "A pair of monotone functions α and γ with α(S) ⊑ a exactly when S ⊆ γ(a): the link between concrete sets and abstract values in abstract interpretation."
+  chapter: soundness
+collecting semantics:
+  term: collecting semantics
+  definition: "The exact set of states that executions can reach at each program point. Abstract analyses over-approximate it."
+  chapter: soundness
+best transformer:
+  term: best transformer
+  definition: "The most precise sound abstract version of a concrete function f: α ∘ f ∘ γ."
+  chapter: soundness
+compositional evaluation:
+  term: compositional evaluation
+  definition: "Evaluating an expression in an abstract domain operator by operator. Sound, but it loses precision when a value is used more than once, as in x − x."
+  chapter: soundness
