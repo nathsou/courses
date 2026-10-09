@@ -1,0 +1,20 @@
+live variable:
+  term: live variable
+  definition: "A variable that some path from the current point reads before writing. Its current value may still matter."
+  chapter: liveness
+dead store:
+  term: dead store
+  definition: "An assignment whose value is never read: the variable is not live just after it. S1854 reports them."
+  chapter: liveness
+backward analysis:
+  term: backward analysis
+  definition: "A dataflow analysis whose facts flow against the edges of the control-flow graph, from the exit towards the entry, such as liveness."
+  chapter: liveness
+gen and kill:
+  term: gen and kill
+  definition: "The two sets that summarise a block in a bit-vector analysis: what it generates (for liveness, variables read before written) and what it kills (variables written)."
+  chapter: liveness
+may analysis:
+  term: may analysis
+  definition: "An analysis whose facts hold on some path (joined by union), such as liveness. A must analysis's facts hold on every path (joined by intersection)."
+  chapter: liveness

@@ -1,0 +1,16 @@
+fixture:
+  term: fixture
+  definition: "A file of test code for a rule. In comment-based testing, its comments say where issues are expected."
+  chapter: testing-rules
+comment-based testing:
+  term: comment-based testing
+  definition: "SonarJS's test format: `// Noncompliant` comments in a fixture give each expected issue's line, message, primary and secondary locations and quick fixes."
+  chapter: testing-rules
+mutation testing:
+  term: mutation testing
+  definition: "Judging a test suite by whether it fails on deliberately broken versions (mutants) of the code it tests."
+  chapter: testing-rules
+ruling:
+  term: ruling
+  definition: "SonarJS's regression test: every rule runs on a corpus of real open-source projects, and the issues are compared with a recorded expectation."
+  chapter: testing-rules

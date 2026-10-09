@@ -1,0 +1,32 @@
+abstract interpretation:
+  term: abstract interpretation
+  definition: "The theory of static analyses as approximations of a program's executions: programs run on abstract values that stand for sets of concrete ones, and fixpoints of abstract equations over-approximate what can happen."
+  chapter: intervals-and-widening
+interval:
+  term: interval
+  definition: "An abstract value [a, b] standing for every integer between a and b; bounds may be infinite."
+  chapter: intervals-and-widening
+abstract execution:
+  term: abstract execution
+  definition: "Running a program on abstract values instead of concrete ones, so that one run covers every execution."
+  chapter: intervals-and-widening
+non-relational domain:
+  term: non-relational domain
+  definition: "An abstract domain that tracks each variable separately, and so cannot express relations between variables such as i = j."
+  chapter: intervals-and-widening
+alarm:
+  term: alarm
+  definition: "A possible run-time error that an analysis could not rule out. A false alarm is one on code that cannot fail."
+  chapter: intervals-and-widening
+widening:
+  term: widening
+  definition: "An operator ∇ that replaces the join at loop heads, giving an upper bound of its arguments and forcing every increasing chain to stabilise, so that analyses over lattices of infinite height terminate."
+  chapter: intervals-and-widening
+narrowing operator:
+  term: narrowing (abstract interpretation)
+  definition: "Decreasing iterations after a widened fixpoint, controlled by an operator Δ, that recover some of the precision widening gave up while staying sound."
+  chapter: intervals-and-widening
+post-fixpoint:
+  term: post-fixpoint
+  definition: "A fact x with F(x) ⊑ x: applying the equations once more gives facts at least as precise. Widening produces one; narrowing descends from it."
+  chapter: intervals-and-widening

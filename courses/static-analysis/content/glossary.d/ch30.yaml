@@ -1,0 +1,32 @@
+explicit flow:
+  term: explicit flow
+  definition: "Information that moves by being copied or computed from: an assignment, an argument, a return value."
+  chapter: implicit-flows
+implicit flow:
+  term: implicit flow
+  definition: "Information that moves through control flow: a secret decides whether an assignment runs, so its result reveals the secret."
+  chapter: implicit-flows
+pc label:
+  term: pc label
+  definition: "The security label of the program counter: what the decision to be at the current point depends on. Assignments take its label as well as their operands'."
+  chapter: implicit-flows
+post-dominator:
+  term: post-dominator
+  definition: "A node p post-dominates n when every path from n to the exit passes through p."
+  chapter: implicit-flows
+control dependence:
+  term: control dependence
+  definition: "A node is control-dependent on a condition when one branch of the condition always leads to it and the other may avoid it."
+  chapter: implicit-flows
+noninterference:
+  term: noninterference
+  definition: "Goguen and Meseguer's definition of confidentiality: runs that differ only in their secret inputs produce the same public outputs."
+  chapter: implicit-flows
+covert channel:
+  term: covert channel
+  definition: "A way to leak information that a program's outputs do not show: termination, timing, memory use, caches."
+  chapter: implicit-flows
+declassification:
+  term: declassification
+  definition: "Deliberately making a value derived from secrets public, at a point the program marks, such as the result of a password check."
+  chapter: implicit-flows

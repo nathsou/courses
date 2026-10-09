@@ -1,0 +1,48 @@
+miller1990:
+  authors: B. P. Miller, L. Fredriksen, B. So
+  year: 1990
+  title: An empirical study of the reliability of UNIX utilities
+  venue: "Communications of the ACM, 33(12), 32–44"
+  url: https://doi.org/10.1145/96267.96279
+afl:
+  authors: M. Zalewski
+  year: 2014
+  title: "american fuzzy lop: technical details"
+  venue: "Project documentation"
+  url: https://lcamtuf.coredump.cx/afl/technical_details.txt
+aschermann2019:
+  authors: C. Aschermann, S. Schumilo, T. Blazytko, R. Gawlik, T. Holz
+  year: 2019
+  title: "REDQUEEN: fuzzing with input-to-state correspondence"
+  venue: "Network and Distributed System Security Symposium (NDSS 2019)"
+  url: https://www.ndss-symposium.org/ndss-paper/redqueen-fuzzing-with-input-to-state-correspondence/
+godefroid2005:
+  authors: P. Godefroid, N. Klarlund, K. Sen
+  year: 2005
+  title: "DART: directed automated random testing"
+  venue: "Proceedings of the 2005 ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI '05), 213–223"
+  url: https://doi.org/10.1145/1065010.1065036
+sen2005:
+  authors: K. Sen, D. Marinov, G. Agha
+  year: 2005
+  title: "CUTE: a concolic unit testing engine for C"
+  venue: "Proceedings of ESEC/FSE 2005, 263–272"
+  url: https://doi.org/10.1145/1081706.1081750
+godefroid2008:
+  authors: P. Godefroid, M. Y. Levin, D. Molnar
+  year: 2008
+  title: Automated whitebox fuzz testing
+  venue: "Network and Distributed System Security Symposium (NDSS 2008)"
+  url: https://www.ndss-symposium.org/ndss2008/automated-whitebox-fuzz-testing/
+bounimova2013:
+  authors: E. Bounimova, P. Godefroid, D. Molnar
+  year: 2013
+  title: "Billions and billions of constraints: whitebox fuzz testing in production"
+  venue: "Proceedings of the 35th International Conference on Software Engineering (ICSE 2013)"
+  url: https://2013.icse-conferences.org/content/billions-and-billions-constraints-whitebox-fuzz-testing-production.html
+stephens2016:
+  authors: N. Stephens, J. Grosen, C. Salls, A. Dutcher, R. Wang, J. Corbetta, Y. Shoshitaishvili, C. Kruegel, G. Vigna
+  year: 2016
+  title: "Driller: augmenting fuzzing through selective symbolic execution"
+  venue: "Network and Distributed System Security Symposium (NDSS 2016)"
+  url: https://www.ndss-symposium.org/wp-content/uploads/2017/09/driller-augmenting-fuzzing-through-selective-symbolic-execution.pdf

@@ -1,0 +1,12 @@
+branch-local fact:
+  term: branch-local fact
+  definition: "A fact that holds within one branch of a condition because the syntax guarantees the branch runs after the test, such as x being truthy inside if (x)."
+  chapter: without-a-cfg
+guard clause:
+  term: guard clause
+  definition: "An if statement at the start of a block that leaves (return, throw, break, continue) when a condition fails, so that the condition holds for the rest of the block."
+  chapter: without-a-cfg
+edge refinement:
+  term: edge refinement
+  definition: "In a dataflow analysis, changing the facts along a specific edge, typically what a condition says on its true or false branch."
+  chapter: without-a-cfg

@@ -1,0 +1,48 @@
+ferrante1987:
+  authors: J. Ferrante, K. J. Ottenstein, J. D. Warren
+  year: 1987
+  title: The program dependence graph and its use in optimization
+  venue: "ACM Transactions on Programming Languages and Systems, 9(3), 319–349"
+  url: https://doi.org/10.1145/24039.24041
+denning1976:
+  authors: D. E. Denning
+  year: 1976
+  title: A lattice model of secure information flow
+  venue: "Communications of the ACM, 19(5), 236–243"
+  url: https://doi.org/10.1145/360051.360056
+denning1977:
+  authors: D. E. Denning, P. J. Denning
+  year: 1977
+  title: Certification of programs for secure information flow
+  venue: "Communications of the ACM, 20(7), 504–513"
+  url: https://doi.org/10.1145/359636.359712
+goguen1982:
+  authors: J. A. Goguen, J. Meseguer
+  year: 1982
+  title: Security policies and security models
+  venue: "Proceedings of the 1982 IEEE Symposium on Security and Privacy, 11–20"
+  url: https://doi.org/10.1109/SP.1982.10014
+volpano1996:
+  authors: D. Volpano, C. Irvine, G. Smith
+  year: 1996
+  title: A sound type system for secure flow analysis
+  venue: "Journal of Computer Security, 4(2–3), 167–187"
+  url: https://doi.org/10.3233/JCS-1996-42-304
+hunt2006:
+  authors: S. Hunt, D. Sands
+  year: 2006
+  title: On flow-sensitive security types
+  venue: "Proceedings of the 33rd ACM Symposium on Principles of Programming Languages (POPL '06), 79–90"
+  url: https://doi.org/10.1145/1111037.1111045
+myers1999:
+  authors: A. C. Myers
+  year: 1999
+  title: "JFlow: practical mostly-static information flow control"
+  venue: "Proceedings of the 26th ACM Symposium on Principles of Programming Languages (POPL '99), 228–241"
+  url: https://doi.org/10.1145/292540.292561
+sabelfeld2003:
+  authors: A. Sabelfeld, A. C. Myers
+  year: 2003
+  title: Language-based information-flow security
+  venue: "IEEE Journal on Selected Areas in Communications, 21(1), 5–19"
+  url: https://doi.org/10.1109/JSAC.2002.806121

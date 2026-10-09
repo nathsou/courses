@@ -1,0 +1,8 @@
+SonarQube for IDE:
+  term: SonarQube for IDE
+  definition: "Sonar's extension for VS Code, JetBrains IDEs, Eclipse and Visual Studio (formerly SonarLint), which runs the same analysers on the files being edited."
+  chapter: ide-and-server
+connected mode:
+  term: connected mode
+  definition: "Binding a project in SonarQube for IDE to a SonarQube project, so that the IDE uses its quality profile and synchronises issue statuses."
+  chapter: ide-and-server

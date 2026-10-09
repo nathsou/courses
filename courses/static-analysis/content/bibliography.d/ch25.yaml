@@ -1,0 +1,18 @@
+dean1995:
+  authors: J. Dean, D. Grove, C. Chambers
+  year: 1995
+  title: Optimization of object-oriented programs using static class hierarchy analysis
+  venue: "ECOOP '95, LNCS 952, 77–101"
+  url: https://doi.org/10.1007/3-540-49538-X_5
+bacon1996:
+  authors: D. F. Bacon, P. F. Sweeney
+  year: 1996
+  title: Fast static analysis of C++ virtual function calls
+  venue: "Proceedings of the 11th ACM Conference on Object-Oriented Programming, Systems, Languages, and Applications (OOPSLA '96), 324–341"
+  url: https://research.google/pubs/fast-static-analysis-of-c-virtual-function-calls/
+feldthaus2013:
+  authors: A. Feldthaus, M. Schäfer, M. Sridharan, J. Dolby, F. Tip
+  year: 2013
+  title: Efficient construction of approximate call graphs for JavaScript IDE services
+  venue: "Proceedings of the 35th International Conference on Software Engineering (ICSE 2013), 752–761"
+  url: https://2013.icse-conferences.org/content/efficient-construction-approximate-call-graphs-javascript-ide-services.html

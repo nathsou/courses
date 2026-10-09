@@ -1,0 +1,29 @@
+sharir1981:
+  authors: M. Sharir, A. Pnueli
+  year: 1981
+  title: Two approaches to interprocedural data flow analysis
+  venue: "In S. S. Muchnick and N. D. Jones (eds.), Program Flow Analysis: Theory and Applications, Prentice-Hall, 189–234"
+reps1995:
+  authors: T. Reps, S. Horwitz, M. Sagiv
+  year: 1995
+  title: Precise interprocedural dataflow analysis via graph reachability
+  venue: "Proceedings of the 22nd ACM Symposium on Principles of Programming Languages (POPL '95), 49–61"
+  url: https://doi.org/10.1145/199448.199462
+reps1998:
+  authors: T. Reps
+  year: 1998
+  title: Program analysis via graph reachability
+  venue: "Information and Software Technology, 40(11–12), 701–726"
+  url: https://doi.org/10.1016/S0950-5849(98)00093-7
+arzt2014:
+  authors: S. Arzt, S. Rasthofer, C. Fritz, E. Bodden, A. Bartel, J. Klein, Y. Le Traon, D. Octeau, P. McDaniel
+  year: 2014
+  title: "FlowDroid: precise context, flow, field, object-sensitive and lifecycle-aware taint analysis for Android apps"
+  venue: "Proceedings of the 35th ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI '14), 259–269"
+  url: https://doi.org/10.1145/2594291.2594299
+calcagno2015:
+  authors: C. Calcagno, D. Distefano, J. Dubreil, D. Gabi, P. Hooimeijer, M. Luca, P. O'Hearn, I. Papakonstantinou, J. Purbrick, D. Rodriguez
+  year: 2015
+  title: Moving fast with software verification
+  venue: "NASA Formal Methods (NFM 2015), LNCS 9058, 3–11"
+  url: https://doi.org/10.1007/978-3-319-17524-9_1

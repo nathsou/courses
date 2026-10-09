@@ -1,0 +1,20 @@
+call graph:
+  term: call graph
+  definition: "A graph with one node per function and an edge from each call site to every function it may invoke."
+  chapter: call-graphs
+class hierarchy analysis:
+  term: class hierarchy analysis
+  definition: "CHA: resolving a method call o.m() to m as declared or inherited in o's static type and every override in its subclasses. Without static types, it amounts to resolution by name."
+  chapter: call-graphs
+rapid type analysis:
+  term: rapid type analysis
+  definition: "RTA: class hierarchy analysis restricted to classes instantiated in reachable code, computed as a fixpoint of reachability and instantiation."
+  chapter: call-graphs
+field-based:
+  term: field-based
+  definition: "Of an analysis of objects: using one abstract location per property name, whatever the object, instead of one per object and property."
+  chapter: call-graphs
+abstract location:
+  term: abstract location
+  definition: "A name for a set of run-time storage places that an analysis treats as one: a variable, a parameter, a return value, a property name, or the objects created at one allocation site."
+  chapter: call-graphs

@@ -45,6 +45,7 @@ jobs:
             courses/human-evolution/package-lock.json
             courses/formal-verification/package-lock.json
             courses/memory-management/package-lock.json
+            courses/static-analysis/package-lock.json
 
       - name: Install dependencies
         run: |
@@ -61,6 +62,7 @@ jobs:
           npm ci --prefix courses/human-evolution
           npm ci --prefix courses/formal-verification
           npm ci --prefix courses/memory-management
+          npm ci --prefix courses/static-analysis
           pnpm --dir courses/language-models install --frozen-lockfile
 
       - name: Fetch the Mandarin course audio

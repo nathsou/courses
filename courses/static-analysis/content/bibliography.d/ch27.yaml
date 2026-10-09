@@ -1,0 +1,35 @@
+andersen1994:
+  authors: L. O. Andersen
+  year: 1994
+  title: Program analysis and specialization for the C programming language
+  venue: "PhD thesis, DIKU, University of Copenhagen (DIKU report 94/19)"
+steensgaard1996:
+  authors: B. Steensgaard
+  year: 1996
+  title: Points-to analysis in almost linear time
+  venue: "Proceedings of the 23rd ACM Symposium on Principles of Programming Languages (POPL '96), 32–41"
+  url: https://doi.org/10.1145/237721.237727
+whaley2004:
+  authors: J. Whaley, M. S. Lam
+  year: 2004
+  title: Cloning-based context-sensitive pointer alias analysis using binary decision diagrams
+  venue: "Proceedings of the ACM SIGPLAN 2004 Conference on Programming Language Design and Implementation (PLDI '04), 131–144"
+  url: https://doi.org/10.1145/996841.996859
+bravenboer2009:
+  authors: M. Bravenboer, Y. Smaragdakis
+  year: 2009
+  title: Strictly declarative specification of sophisticated points-to analyses
+  venue: "Proceedings of the 24th ACM SIGPLAN Conference on Object-Oriented Programming, Systems, Languages, and Applications (OOPSLA '09), 243–262"
+  url: https://doi.org/10.1145/1640089.1640108
+jordan2016:
+  authors: H. Jordan, B. Scholz, P. Subotić
+  year: 2016
+  title: "Soufflé: on synthesis of program analyzers"
+  venue: "Computer Aided Verification (CAV 2016), LNCS 9780, 422–430"
+  url: https://doi.org/10.1007/978-3-319-41540-6_23
+avgustinov2016:
+  authors: P. Avgustinov, O. de Moor, M. P. Jones, M. Schäfer
+  year: 2016
+  title: "QL: object-oriented queries on relational data"
+  venue: "30th European Conference on Object-Oriented Programming (ECOOP 2016), LIPIcs 56, 2:1–2:25"
+  url: https://doi.org/10.4230/LIPIcs.ECOOP.2016.2

@@ -1,0 +1,44 @@
+injection:
+  term: injection
+  definition: "A vulnerability where input pasted into code for another interpreter (SQL, HTML, a shell…) is read as code, changing what the program does."
+  chapter: how-injection-works
+SQL injection:
+  term: SQL injection
+  definition: "Injection into a database query built from strings; prevented by parameterised queries."
+  chapter: how-injection-works
+parameterised query:
+  term: parameterised query
+  definition: "A query sent with placeholders and, separately, the values to bind to them, so that no value can change the query's structure."
+  chapter: how-injection-works
+cross-site scripting:
+  term: cross-site scripting
+  definition: "XSS: injection of HTML or JavaScript into a page served to other users, running in their browser with their session. Reflected, stored or DOM-based."
+  chapter: how-injection-works
+output encoding:
+  term: output encoding
+  definition: "Escaping data for the syntax of the context it is written into (HTML text, attribute, URL, script), so that it is displayed rather than interpreted."
+  chapter: how-injection-works
+command injection:
+  term: command injection
+  definition: "Injection into a command line run by a shell; prevented by starting programs without a shell, with an array of arguments."
+  chapter: how-injection-works
+path traversal:
+  term: path traversal
+  definition: "Using .. or absolute paths in a file name to read or write files outside the directory a program intended."
+  chapter: how-injection-works
+server-side request forgery:
+  term: server-side request forgery
+  definition: "SSRF: making a server send requests to a URL the attacker chooses, typically to reach internal services or cloud metadata."
+  chapter: how-injection-works
+source:
+  term: source
+  definition: "In taint analysis, an operation that introduces untrusted data, such as reading a request's query string."
+  chapter: how-injection-works
+sink:
+  term: sink
+  definition: "In taint analysis, an operation that must not receive untrusted data, such as running a SQL query or writing HTML."
+  chapter: how-injection-works
+sanitizer:
+  term: sanitizer
+  definition: "In taint analysis, an operation whose result is safe for a given kind of sink whatever its input, such as HTML encoding."
+  chapter: how-injection-works

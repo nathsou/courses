@@ -1,0 +1,20 @@
+primary location:
+  term: primary location
+  definition: "The range of code an issue is attached to, where it is shown in the editor and in SonarQube."
+  chapter: reporting
+secondary location:
+  term: secondary location
+  definition: "An additional range of code, with an optional message, that helps explain an issue: the other operand, the previous definition, each increment of a complexity."
+  chapter: reporting
+cost:
+  term: cost
+  definition: "A number an issue carries for rules whose remediation function is linear, such as the points of complexity over the threshold; SonarQube turns it into an estimated effort."
+  chapter: reporting
+quick fix:
+  term: quick fix
+  definition: "An edit offered with an issue that resolves it. SonarJS turns an ESLint fix, or each suggestion, into a quick fix shown in the IDE."
+  chapter: reporting
+suggestion:
+  term: suggestion
+  definition: "An ESLint fix that is offered but never applied automatically, because it may change behaviour."
+  chapter: reporting

@@ -1,0 +1,17 @@
+# Course glossary. Chapters add their own entries in glossary.d/<chapter>.yaml; this file holds the core terms.
+issue:
+  term: issue
+  definition: "A problem a rule reports at a place in the code: a message, a primary location, optional secondary locations and an optional quick fix. SonarQube shows issues in the IDE and on the server."
+  chapter: one-issue
+rule:
+  term: rule
+  definition: "A check that an analyser runs on code. In SonarJS a rule is an ESLint rule module: a `create` function that returns listeners for kinds of syntax."
+  chapter: one-issue
+rule key:
+  term: rule key
+  definition: "A rule's identifier in Sonar's products and in RSPEC, such as S1764. The same key names the rule in every language that implements it."
+  chapter: one-issue
+quality profile:
+  term: quality profile
+  definition: "The set of rules SonarQube runs on a project, with their parameters. *Sonar way* is the default profile."
+  chapter: one-issue

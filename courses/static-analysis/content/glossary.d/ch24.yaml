@@ -1,0 +1,24 @@
+product domain:
+  term: product domain
+  definition: "Two abstract domains run side by side on pairs of facts; a property is proven if either component proves it."
+  chapter: combining-domains
+reduced product:
+  term: reduced product
+  definition: "A product whose components tighten each other after every step, through a reduction that keeps the set of states described."
+  chapter: combining-domains
+trace partitioning:
+  term: trace partitioning
+  definition: "Keeping separate facts for different classes of execution paths instead of joining them, to avoid the precision lost at joins."
+  chapter: combining-domains
+relational domain:
+  term: relational domain
+  definition: "An abstract domain that tracks constraints between variables, such as x − y ≤ c, and not only facts about each variable alone."
+  chapter: combining-domains
+difference-bound matrix:
+  term: difference-bound matrix
+  definition: "A matrix holding, for each pair of variables x and y, the best known c with x − y ≤ c. The representation of the zone domain, put in canonical form by a shortest-path closure."
+  chapter: combining-domains
+octagon:
+  term: octagon
+  definition: "Miné's relational domain of constraints ±x ± y ≤ c, with cubic-time operations."
+  chapter: combining-domains

@@ -1,0 +1,96 @@
+johnson1978lint:
+  authors: S. C. Johnson
+  year: 1978
+  title: Lint, a C program checker
+  venue: "Computing Science Technical Report 65, Bell Laboratories"
+jslint:
+  authors: D. Crockford
+  year: 2002
+  title: "JSLint: the JavaScript code quality tool"
+  venue: "Project site"
+  url: https://www.jslint.com/
+zakas2013eslint:
+  authors: N. C. Zakas
+  year: 2013
+  title: Introducing ESLint
+  venue: "Blog post, July 2013"
+  url: https://humanwhocodes.com/blog/2013/07/introducing-eslint/
+siek2006:
+  authors: J. G. Siek, W. Taha
+  year: 2006
+  title: Gradual typing for functional languages
+  venue: "Scheme and Functional Programming Workshop 2006, 81–92"
+kleene1956:
+  authors: S. C. Kleene
+  year: 1956
+  title: Representation of events in nerve nets and finite automata
+  venue: "In C. E. Shannon and J. McCarthy (eds.), Automata Studies, Princeton University Press, 3–41"
+aho1986:
+  authors: A. V. Aho, R. Sethi, J. D. Ullman
+  year: 1986
+  title: "Compilers: Principles, Techniques, and Tools"
+  venue: "Addison-Wesley"
+eslintcodepath:
+  authors: ESLint
+  year: 2016
+  title: Code path analysis details
+  venue: "ESLint documentation"
+  url: https://eslint.org/docs/latest/extend/code-path-analysis
+cousot1976:
+  authors: P. Cousot, R. Cousot
+  year: 1976
+  title: Static determination of dynamic properties of programs
+  venue: "Proceedings of the 2nd International Symposium on Programming, Paris, 106–130"
+lions1996:
+  authors: J.-L. Lions (chair)
+  year: 1996
+  title: "ARIANE 5 Flight 501 failure: report by the Inquiry Board"
+  venue: "European Space Agency and CNES"
+  url: https://esamultimedia.esa.int/docs/esa-x-1819eng.pdf
+lacan1998:
+  authors: P. Lacan, J. N. Monfort, L. V. Q. Ribal, A. Deutsch, G. Gonthier
+  year: 1998
+  title: "ARIANE 5: the software reliability verification process"
+  venue: "Proceedings of DASIA 98 (Data Systems in Aerospace), ESA SP-422, 201–205"
+hind2001:
+  authors: M. Hind
+  year: 2001
+  title: "Pointer analysis: haven't we solved this problem yet?"
+  venue: "Proceedings of the 2001 ACM SIGPLAN-SIGSOFT Workshop on Program Analysis for Software Tools and Engineering (PASTE '01), 54–61"
+  url: https://doi.org/10.1145/379605.379665
+rfp1998:
+  authors: rain.forest.puppy
+  year: 1998
+  title: NT web technology vulnerabilities
+  venue: "Phrack, 8(54), article 8"
+  url: http://phrack.org/issues/54/8.html
+livshits2005:
+  authors: V. B. Livshits, M. S. Lam
+  year: 2005
+  title: Finding security vulnerabilities in Java applications with static analysis
+  venue: "Proceedings of the 14th USENIX Security Symposium, 271–286"
+  url: https://www.usenix.org/conference/14th-usenix-security-symposium/finding-security-vulnerabilities-java-applications-static
+jovanovic2006:
+  authors: N. Jovanovic, C. Kruegel, E. Kirda
+  year: 2006
+  title: "Pixy: a static analysis tool for detecting web application vulnerabilities"
+  venue: "2006 IEEE Symposium on Security and Privacy, 258–263"
+  url: https://doi.org/10.1109/SP.2006.29
+boyer1975:
+  authors: R. S. Boyer, B. Elspas, K. N. Levitt
+  year: 1975
+  title: "SELECT: a formal system for testing and debugging programs by symbolic execution"
+  venue: "Proceedings of the International Conference on Reliable Software, 234–245"
+  url: https://doi.org/10.1145/800027.808445
+clarke1976:
+  authors: L. A. Clarke
+  year: 1976
+  title: A system to generate test data and symbolically execute programs
+  venue: "IEEE Transactions on Software Engineering, SE-2(3), 215–222"
+  url: https://doi.org/10.1109/TSE.1976.233817
+demoura2008:
+  authors: L. de Moura, N. Bjørner
+  year: 2008
+  title: "Z3: an efficient SMT solver"
+  venue: "Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2008), LNCS 4963, 337–340"
+  url: https://doi.org/10.1007/978-3-540-78800-3_24

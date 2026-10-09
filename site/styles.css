@@ -1177,3 +1177,81 @@ h1 {
   font-size: 11px;
   color: var(--cac);
 }
+
+/* 16 · Every Path at Once (static analysis): a line with a squiggle, its issue, and a tree of paths */
+.everypath {
+  --cbg: #f3f5f8;
+  --cfg: #18202c;
+  --cmute: #5c6675;
+  --cac: #2c5fa8;
+  --cbad: #c23b2e;
+  background:
+    linear-gradient(90deg, rgb(44 95 168 / 0.07) 0 26px, transparent 26px),
+    var(--cbg);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+:root[data-theme='dark'] .everypath {
+  --cbg: #10141b;
+  --cfg: #e4e9f1;
+  --cmute: #8f9aab;
+  --cac: #7fb0ff;
+  --cbad: #ff7a6b;
+  background:
+    linear-gradient(90deg, rgb(127 176 255 / 0.07) 0 26px, transparent 26px),
+    var(--cbg);
+}
+.everypath .lint {
+  position: relative;
+  padding-left: 34px;
+  min-height: 92px;
+}
+.everypath .code {
+  margin: 0;
+  font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  font-size: 13px;
+  color: var(--cfg);
+}
+.everypath .kw {
+  color: var(--cac);
+}
+.everypath .dup {
+  text-decoration: underline wavy var(--cbad);
+  text-underline-offset: 3px;
+}
+.everypath .issue {
+  display: inline-block;
+  margin: 8px 0 0;
+  padding: 2px 8px;
+  border: 1px solid var(--cbad);
+  border-radius: 4px;
+  font-size: 11.5px;
+  color: var(--cbad);
+}
+.everypath .paths {
+  position: absolute;
+  right: 0;
+  top: 34px;
+  width: 92px;
+  height: auto;
+}
+.everypath .paths path {
+  fill: none;
+  stroke: var(--cmute);
+  stroke-width: 1.6;
+}
+.everypath .paths circle {
+  fill: var(--cac);
+}
+.everypath .paths .x {
+  fill: var(--cbad);
+}
+.everypath h2 {
+  margin: 14px 0 10px;
+  font-size: 32px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.everypath .desc {
+  color: var(--cmute);
+  line-height: 1.5;
+}

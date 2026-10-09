@@ -1,0 +1,30 @@
+turing1936:
+  authors: A. M. Turing
+  year: 1936
+  title: "On computable numbers, with an application to the Entscheidungsproblem"
+  venue: "Proceedings of the London Mathematical Society, s2-42(1), 230–265 (published 1936–37)"
+  url: https://doi.org/10.1112/plms/s2-42.1.230
+rice1953:
+  authors: H. G. Rice
+  year: 1953
+  title: Classes of recursively enumerable sets and their decision problems
+  venue: "Transactions of the American Mathematical Society, 74(2), 358–366"
+  url: https://doi.org/10.1090/S0002-9947-1953-0053041-6
+bessey2010:
+  authors: A. Bessey, K. Block, B. Chelf, A. Chou, B. Fulton, S. Hallem, C. Henri-Gros, A. Kamsky, S. McPeak and D. Engler
+  year: 2010
+  title: "A few billion lines of code later: using static analysis to find bugs in the real world"
+  venue: "Communications of the ACM, 53(2), 66–75"
+  url: https://doi.org/10.1145/1646353.1646374
+sadowski2018:
+  authors: C. Sadowski, E. Aftandilian, A. Eagle, L. Miller-Cushon and C. Jaspan
+  year: 2018
+  title: Lessons from building static analysis tools at Google
+  venue: "Communications of the ACM, 61(4), 58–66"
+  url: https://doi.org/10.1145/3188720
+livshits2015soundiness:
+  authors: B. Livshits, M. Sridharan, Y. Smaragdakis, O. Lhoták, J. N. Amaral, B.-Y. E. Chang, S. Z. Guyer, U. P. Khedker, A. Møller and D. Vardoulakis
+  year: 2015
+  title: "In defense of soundiness: a manifesto"
+  venue: "Communications of the ACM, 58(2), 44–46"
+  url: https://doi.org/10.1145/2644805

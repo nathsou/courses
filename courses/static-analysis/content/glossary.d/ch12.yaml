@@ -1,0 +1,24 @@
+control-flow graph:
+  term: control-flow graph
+  definition: "A graph whose nodes are pieces of straight-line code and whose edges say where execution can go next. Abbreviated CFG."
+  chapter: code-paths
+basic block:
+  term: basic block
+  definition: "A maximal sequence of statements that run one after the other, entered only at the top and left only at the bottom."
+  chapter: code-paths
+back edge:
+  term: back edge
+  definition: "An edge of a control-flow graph that goes back to an earlier point, closing a loop."
+  chapter: code-paths
+code path:
+  term: code path
+  definition: "ESLint's control-flow graph of a function or of a file's top level, made of code path segments and announced to rules by events."
+  chapter: code-paths
+code path segment:
+  term: code path segment
+  definition: "A node of an ESLint code path, comparable to a basic block, with its successors, predecessors and whether it is reachable."
+  chapter: code-paths
+reachable:
+  term: reachable
+  definition: "Of a point of a control-flow graph: connected to the entry by a path. Syntactic reachability over-approximates what can actually run."
+  chapter: code-paths

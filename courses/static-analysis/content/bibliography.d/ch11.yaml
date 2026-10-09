@@ -1,0 +1,45 @@
+thompson1968:
+  authors: K. Thompson
+  year: 1968
+  title: "Programming techniques: Regular expression search algorithm"
+  venue: "Communications of the ACM, 11(6), 419–422"
+  url: https://doi.org/10.1145/363347.363387
+cox2007:
+  authors: R. Cox
+  year: 2007
+  title: "Regular expression matching can be simple and fast (but is slow in Java, Perl, PHP, Python, Ruby, ...)"
+  url: https://swtch.com/~rsc/regexp/regexp1.html
+v8nonbacktracking:
+  authors: The V8 team
+  year: 2021
+  title: An additional non-backtracking RegExp engine
+  venue: V8 blog
+  url: https://v8.dev/blog/non-backtracking-regexp
+weideman2016:
+  authors: N. Weideman, B. van der Merwe, M. Berglund, B. Watson
+  year: 2016
+  title: Analyzing matching time behavior of backtracking regular expression matchers by using ambiguity of NFA
+  venue: "Implementation and Application of Automata (CIAA 2016), LNCS 9705, 322–334"
+  url: https://doi.org/10.1007/978-3-319-40946-7_27
+stackoverflow2016:
+  authors: Stack Exchange
+  year: 2016
+  title: Outage postmortem, July 20, 2016
+  url: https://stackstatus.tumblr.com/post/147710624694/outage-postmortem-july-20-2016
+cloudflare2019:
+  authors: J. Graham-Cumming
+  year: 2019
+  title: Details of the Cloudflare outage on July 2, 2019
+  venue: The Cloudflare Blog
+  url: https://blog.cloudflare.com/details-of-the-cloudflare-outage-on-july-2-2019/
+davis2018:
+  authors: J. C. Davis, C. A. Coghlan, F. Servant, D. Lee
+  year: 2018
+  title: "The impact of regular expression denial of service (ReDoS) in practice: an empirical study at the ecosystem scale"
+  venue: "ESEC/FSE 2018, 246–256"
+  url: https://doi.org/10.1145/3236024.3236027
+scslre:
+  authors: RunDevelopment
+  year: 2023
+  title: "scslre: static analysis of super-linear backtracking in JavaScript regular expressions"
+  url: https://github.com/RunDevelopment/scslre

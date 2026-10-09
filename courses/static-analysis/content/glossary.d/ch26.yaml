@@ -1,0 +1,36 @@
+taint:
+  term: taint
+  definition: "The property of a value derived from untrusted input (a source). Taint analysis asks whether tainted values can reach sensitive operations (sinks) without passing through a sanitizer."
+  chapter: summaries-and-ifds
+supergraph:
+  term: supergraph
+  definition: "The control-flow graphs of all functions of a program, joined by edges from each call to the callee's entry and from the callee's exit back to the statement after the call."
+  chapter: summaries-and-ifds
+context-sensitive:
+  term: context-sensitive
+  definition: "Of an interprocedural analysis: keeping apart the facts that come from different calling contexts, so that a callee's results return only to the call that produced them."
+  chapter: summaries-and-ifds
+call string:
+  term: call string
+  definition: "A calling context represented by the last k call sites on the stack; analyses tag facts with call strings to keep contexts apart."
+  chapter: summaries-and-ifds
+summary:
+  term: summary
+  definition: "A description of a function's effect, from facts at its entry to facts at its exit, computed once and applied at every call."
+  chapter: summaries-and-ifds
+realizable path:
+  term: realizable path
+  definition: "A path through the supergraph on which every return goes back to the call it came from: its call and return edges form matched parentheses."
+  chapter: summaries-and-ifds
+IFDS:
+  term: IFDS
+  definition: "Interprocedural, finite, distributive, subset problems: the class of dataflow analyses that Reps, Horwitz and Sagiv solve precisely as reachability in the exploded supergraph."
+  chapter: summaries-and-ifds
+distributive:
+  term: distributive
+  definition: "Of a flow function over sets: f(X ∪ Y) = f(X) ∪ f(Y), so that it can be computed one fact at a time."
+  chapter: summaries-and-ifds
+exploded supergraph:
+  term: exploded supergraph
+  definition: "The graph whose nodes are (statement, fact) pairs and whose edges are the edges of the flow functions; IFDS facts hold where its nodes are reachable."
+  chapter: summaries-and-ifds

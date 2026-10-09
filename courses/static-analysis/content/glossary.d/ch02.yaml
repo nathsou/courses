@@ -1,0 +1,20 @@
+token:
+  term: token
+  definition: "A word of the language produced by the lexer: a keyword, identifier, punctuator or literal. Whitespace is dropped; comments are kept aside."
+  chapter: source-to-estree
+abstract syntax tree:
+  term: abstract syntax tree
+  definition: "A tree of the program's syntax that keeps what matters for its meaning and drops the rest (parentheses, semicolons). Rules work on it."
+  chapter: source-to-estree
+ESTree:
+  term: ESTree
+  definition: "The community specification of JavaScript syntax trees, produced by most JavaScript parsers and used by ESLint and SonarJS."
+  chapter: source-to-estree
+TSESTree:
+  term: TSESTree
+  definition: "ESTree extended with nodes for TypeScript-only syntax (their types start with TS), produced by typescript-eslint."
+  chapter: source-to-estree
+visitor keys:
+  term: visitor keys
+  definition: "For each node type, the properties that hold its child nodes, in source order. ESLint walks the tree through them."
+  chapter: source-to-estree

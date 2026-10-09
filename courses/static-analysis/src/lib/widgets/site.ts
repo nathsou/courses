@@ -1,0 +1,44 @@
+// Course-wide widgets used in chapters. Each export is used in Markdown as `::kebab-name{prop=…}` or, for widgets
+// that take code, as a `:::kebab-name{…}` container with a code block inside.
+/** Code and what the parser made of it: `:::ast-explorer{tabs="tokens,tree"}` + a ```ts block. */
+export { default as AstExplorer } from '$lib/components/widgets/AstExplorer.svelte';
+/** Type a selector, see the nodes it matches: `:::selector-lab{selector="…" presets="a|b"}` + a ```ts block. */
+export { default as SelectorLab } from '$lib/components/widgets/SelectorLab.svelte';
+/** Cognitive Complexity per function, increments marked: `:::complexity-view` + a ```ts block. */
+export { default as ComplexityView } from '$lib/components/widgets/ComplexityView.svelte';
+/** Every call labelled with its fully qualified name: `:::fqn-view` + a ```ts block. */
+export { default as FqnView } from '$lib/components/widgets/FqnView.svelte';
+/** Occurrences of names labelled with their narrowed types, with a strict switch: `:::type-view{names="a,b"}` + a ```ts block. */
+export { default as TypeView } from '$lib/components/widgets/TypeView.svelte';
+/** Backtracking steps against input length, and scslre's verdict: `:::backtrack-view{pump="a" suffix="!"}` + a ```text block. */
+export { default as BacktrackView } from '$lib/components/widgets/BacktrackView.svelte';
+/** A dataflow analysis stepped through its worklist: `:::fixpoint-stepper{analysis="liveness"}` + a ```js block. */
+export { default as FixpointStepper } from '$lib/components/widgets/FixpointStepper.svelte';
+/** Hasse diagrams with join and meet: `::lattice-lab{presets="powerset,flat,sign,notlattice"}`. */
+export { default as LatticeLab } from '$lib/components/widgets/LatticeLab.svelte';
+/** A pipeline, stage by stage, with the data at each boundary: `:::follow-issue` + a ```yaml block of stages. */
+export { default as FollowIssue } from '$lib/components/widgets/FollowIssue.svelte';
+/** Issues to classify as true positive, false positive or accepted: `:::triage-board` + a ```yaml block. */
+export { default as TriageBoard } from '$lib/components/widgets/TriageBoard.svelte';
+/** A set of integers, its abstraction and concretisation, and transformers compared: `::galois-view{domains="…" exprs="x + 1|x * x"}`. */
+export { default as GaloisView } from '$lib/components/widgets/GaloisView.svelte';
+/** Several abstract interpreters, check by check: `:::domain-compare{analyses="intervals,parity,reduced"}` + a ```js block. */
+export { default as DomainCompare } from '$lib/components/widgets/DomainCompare.svelte';
+/** A module's call graph by name, RTA or function-value flow: `:::call-graph-view{algorithms="names,rta,flow"}` + a ```js block. */
+export { default as CallGraphView } from '$lib/components/widgets/CallGraphView.svelte';
+/** The exploded supergraph of an IFDS taint problem: `:::ifds-view` + a ```js block. */
+export { default as IfdsView } from '$lib/components/widgets/IfdsView.svelte';
+/** Andersen's and Steensgaard's points-to graphs for a snippet: `:::points-to-view` + a ```js block. */
+export { default as PointsToView } from '$lib/components/widgets/PointsToView.svelte';
+/** Facts, rules and queries, evaluated naively and semi-naively: `:::datalog-console` + a ```text block. */
+export { default as DatalogConsole } from '$lib/components/widgets/DatalogConsole.svelte';
+/** SQL, HTML, shell, path and request injection, simulated: `::injection-playground{kinds="sql,html"}`. */
+export { default as InjectionPlayground } from '$lib/components/widgets/InjectionPlayground.svelte';
+/** Flows from request data to sinks in an Express module: `:::taint-tracer{rules="sql,xss"}` + a ```js block. */
+export { default as TaintTracer } from '$lib/components/widgets/TaintTracer.svelte';
+/** Leak a secret through control flow; taint against information flow: `:::leak-a-bit` + a ```js block. */
+export { default as LeakABit } from '$lib/components/widgets/LeakABit.svelte';
+/** Symbolic execution as a tree of paths, with inputs and findings: `:::path-tree{bound="4"}` + a ```js block. */
+export { default as PathTree } from '$lib/components/widgets/PathTree.svelte';
+/** Random, coverage-guided, concolic and hybrid test generation racing on one function: `:::fuzzer-race` + a ```js block. */
+export { default as FuzzerRace } from '$lib/components/widgets/FuzzerRace.svelte';

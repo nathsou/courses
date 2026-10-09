@@ -1,0 +1,28 @@
+false positive:
+  term: false positive
+  definition: "An issue raised on code that does not have the problem the rule looks for."
+  chapter: every-rule-is-approximate
+false negative:
+  term: false negative
+  definition: "A real problem that a rule does not report."
+  chapter: every-rule-is-approximate
+sound:
+  term: sound
+  definition: "Of an analysis, for a given property: it reports every real instance (no false negatives). Usually obtained by over-approximating what the program can do."
+  chapter: every-rule-is-approximate
+complete:
+  term: complete
+  definition: "Of an analysis, for a given property: everything it reports is real (no false positives)."
+  chapter: every-rule-is-approximate
+precision:
+  term: precision
+  definition: "The share of a rule's issues that are real: TP / (TP + FP)."
+  chapter: every-rule-is-approximate
+recall:
+  term: recall
+  definition: "The share of the real problems a rule reports: TP / (TP + FN)."
+  chapter: every-rule-is-approximate
+Rice's theorem:
+  term: Rice's theorem
+  definition: "Every non-trivial property of what programs compute is undecidable (Rice, 1953)."
+  chapter: every-rule-is-approximate

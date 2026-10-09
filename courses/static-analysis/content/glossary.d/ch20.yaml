@@ -1,0 +1,16 @@
+RSPEC metadata:
+  term: RSPEC metadata
+  definition: "The machine-readable part of a rule's specification: title, type, remediation, tags, scope, languages, quick-fix status and default quality profiles. SonarJS generates its rule metadata from it."
+  chapter: shipping-a-rule
+Sonar way:
+  term: Sonar way
+  definition: "The built-in quality profile Sonar recommends for each language; the rules it contains are on by default."
+  chapter: shipping-a-rule
+suggestion versus fix:
+  term: suggestion versus fix
+  definition: "An ESLint fix can be applied automatically; a suggestion is offered for a person to apply. A change that is not equivalent in every case, such as inverting < when NaN is possible, belongs in a suggestion."
+  chapter: shipping-a-rule
+EslintHook:
+  term: EslintHook
+  definition: "SonarJS's Java API through which other plugins run their own ESLint rules or data-collecting hooks inside SonarJS's analysis, from a rules bundle they ship."
+  chapter: shipping-a-rule
