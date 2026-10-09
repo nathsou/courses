@@ -1,0 +1,16 @@
+rule filter:
+  term: rule filter
+  definition: "One of the checks SonarJS applies before linting a file to decide whether an active rule runs on it: file type, language, analysis mode, ECMAScript version, dependencies and others."
+  chapter: inside-one-analysis
+duplication tokens:
+  term: duplication tokens
+  definition: "The normalised token stream of a file that SonarQube's copy-paste detection compares across files. SonarJS replaces string literals with a placeholder and leaves imports out."
+  chapter: inside-one-analysis
+NOSONAR:
+  term: NOSONAR
+  definition: "A comment that silences every issue on its line. SonarJS reports the lines that carry it; the platform's filter removes their issues."
+  chapter: inside-one-analysis
+embedded JavaScript:
+  term: embedded JavaScript
+  definition: "JavaScript inside another file: Vue components, HTML script elements, and AWS function code inlined in YAML templates. SonarJS analyses it with locations mapped back to the enclosing file."
+  chapter: inside-one-analysis
