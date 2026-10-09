@@ -16,3 +16,5 @@ export { default as BacktrackView } from '$lib/components/widgets/BacktrackView.
 export { default as FixpointStepper } from '$lib/components/widgets/FixpointStepper.svelte';
 /** Hasse diagrams with join and meet: `::lattice-lab{presets="powerset,flat,sign,notlattice"}`. */
 export { default as LatticeLab } from '$lib/components/widgets/LatticeLab.svelte';
+/** A pipeline, stage by stage, with the data at each boundary: `:::follow-issue` + a ```yaml block of stages. */
+export { default as FollowIssue } from '$lib/components/widgets/FollowIssue.svelte';

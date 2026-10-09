@@ -1,0 +1,16 @@
+scanner:
+  term: scanner
+  definition: "The program that analyses a project for SonarQube: it downloads the analysers and the quality profile, indexes the files, runs the sensors and uploads a report."
+  chapter: scanner-to-node
+sensor:
+  term: sensor
+  definition: "A plugin's entry point in an analysis: it receives the indexed files and reports issues, metrics, highlighting and duplication tokens. SonarJS's is WebSensor."
+  chapter: scanner-to-node
+bridge:
+  term: bridge
+  definition: "SonarJS's link between its Java plugin and the Node.js process that runs ESLint: a gRPC service started and leased by the plugin."
+  chapter: scanner-to-node
+lease:
+  term: lease
+  definition: "A stream the Java side keeps open to the Node.js server for the life of an analysis. When it ends, the server shuts down."
+  chapter: scanner-to-node
