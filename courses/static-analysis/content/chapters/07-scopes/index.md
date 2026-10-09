@@ -215,6 +215,7 @@ One more exception comes from an idiom. `const { password, ...safe } = user` dec
 id: scopes/unused-variables
 title: Unused local variables and functions
 key: S1481
+corpus: true
 types: false
 inspector: [scopes, tree]
 prompt: |

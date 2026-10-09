@@ -113,6 +113,7 @@ The starter does the plumbing: it creates a `LiveVariables` for each segment, ad
 id: liveness/dead-stores
 title: Unused assignments
 key: S1854
+corpus: true
 types: false
 inspector: [paths, scopes]
 prompt: |

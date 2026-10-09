@@ -173,6 +173,7 @@ You can catch the most common exponential patterns without an automaton. The cla
 id: regular-expressions/nested-quantifiers
 title: Nested unbounded quantifiers
 key: S5852
+corpus: true
 types: false
 prompt: |
   Implement a heuristic version of S5852. Report a quantifier with `max === Infinity` whose element is a group (capturing or not) with an alternative containing an unbounded quantified element (`max === Infinity`) such that every *other* element of that alternative is optional (a quantifier with `min === 0`). Report on the outer quantifier.

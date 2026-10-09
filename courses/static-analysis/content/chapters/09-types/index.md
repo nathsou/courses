@@ -108,6 +108,7 @@ When `onReady` calls its callback before the last line runs, `socket` is not `nu
 id: types/null-dereference
 title: Properties of null and undefined
 key: S2259
+corpus: true
 inspector: [types, tree]
 prompt: |
   Report a non-optional member access `x.p` whose object is an identifier with a type, at that point, of exactly `null` or `undefined` (the kit's `isUndefinedOrNull(node, services)`). Report each variable at most once per file. Skip variables written in a function other than the one containing the access. The inspector's **types** tab shows the type at the cursor.

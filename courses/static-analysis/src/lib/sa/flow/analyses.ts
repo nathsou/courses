@@ -158,5 +158,55 @@ export const constants: Analysis<Env> = {
   },
 };
 
-export const ANALYSES = { constants, liveness, reaching: reachingDefinitions } as const;
+// ——— Truthiness (forward, flat per variable, refined along branches) ———
+
+/** 'truthy', 'falsy', ⊤ (unknown) or ⊥ (no value yet), per variable. */
+function truthOf(e: estree.Node | null | undefined, env: Env): Flat {
+  if (!e) return TOP;
+  if (e.type === 'Literal') return 'regex' in e && e.regex ? 'truthy' : e.value ? 'truthy' : 'falsy';
+  if (e.type === 'Identifier') return e.name === 'undefined' && !(e.name in env) ? 'falsy' : (env[e.name] ?? TOP);
+  if (e.type === 'ObjectExpression' || e.type === 'ArrayExpression' || e.type === 'ArrowFunctionExpression' || e.type === 'FunctionExpression') return 'truthy';
+  if (e.type === 'UnaryExpression' && e.operator === '!') {
+    const v = truthOf(e.argument, env);
+    return v === 'truthy' ? 'falsy' : v === 'falsy' ? 'truthy' : v;
+  }
+  return TOP;
+}
+
+/** What taking the `outcome` branch of `test` says about variables. */
+function refine(test: estree.Node, outcome: boolean, env: Record<string, Flat>, vars: Set<string>): void {
+  if (test.type === 'Identifier' && vars.has(test.name)) env[test.name] = outcome ? 'truthy' : 'falsy';
+  else if (test.type === 'UnaryExpression' && test.operator === '!') refine(test.argument, !outcome, env, vars);
+  else if (test.type === 'LogicalExpression' && test.operator === '&&' && outcome) {
+    refine(test.left, true, env, vars);
+    refine(test.right, true, env, vars);
+  } else if (test.type === 'LogicalExpression' && test.operator === '||' && !outcome) {
+    refine(test.left, false, env, vars);
+    refine(test.right, false, env, vars);
+  }
+}
+
+export const truthiness: Analysis<Env> = {
+  name: 'Truthiness',
+  direction: 'forward',
+  lattice: constants.lattice,
+  boundary: (cfg) => Object.fromEntries(cfg.params.map((p) => [p, TOP])),
+  transfer: (node, env) => {
+    if (node.defs.length === 0 || node.kind === 'entry') return env;
+    const out: Record<string, Flat> = { ...env };
+    if (node.kind === 'declare') for (const d of node.defs) out[d] = node.text.startsWith('function') ? 'truthy' : 'falsy';
+    else if (node.kind === 'assign' && node.value && node.defs.length === 1) out[node.defs[0]!] = truthOf(node.value, env);
+    else for (const d of node.defs) out[d] = TOP;
+    return out;
+  },
+  edge: (from, to, env, cfg) => {
+    // Only a two-way branch says something: succ[0] is taken when the test is true, succ[1] when it is false.
+    if (from.kind !== 'cond' || !from.test || from.succ.length !== 2 || from.succ[0] === from.succ[1]) return env;
+    const out: Record<string, Flat> = { ...env };
+    refine(from.test, to === from.succ[0], out, new Set(cfg.variables));
+    return out;
+  },
+};
+
+export const ANALYSES = { constants, liveness, reaching: reachingDefinitions, truthiness } as const;
 export type AnalysisKey = keyof typeof ANALYSES;

@@ -60,3 +60,26 @@ describe('analyses', () => {
     expect(r.input[lineOf(cfg, 'return')]).toEqual(['n@7', 'n@param', 'x@2', 'y@3', 'y@6', 'z@9']);
   });
 });
+
+describe('truthiness', () => {
+  test('guards and branches refine facts', async () => {
+    const { truthiness } = await import('./analyses.js');
+    const cfg = buildCfg(`function d(user, posts) {
+      if (!user) {
+        return '';
+      }
+      for (const post of posts) {
+        if (user && post) {
+          log(post);
+        }
+      }
+      if (posts) { log(1); }
+      return posts;
+    }`);
+    const r = solve(cfg, truthiness);
+    const inner = cfg.nodes.find((n) => n.text === 'if (user && post)')!.id;
+    expect(r.input[inner]!.user).toBe('truthy');
+    const after = cfg.nodes.find((n) => n.text.startsWith('return posts'))!.id;
+    expect(r.input[after]!.posts).toBe('⊤');
+  });
+});

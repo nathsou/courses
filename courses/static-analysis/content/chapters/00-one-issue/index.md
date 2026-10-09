@@ -67,6 +67,7 @@ The bottom editor holds a **fixture**: code the rule runs on, annotated with wha
 id: one-issue/random
 title: Find every call to Math.random
 key: S2245
+corpus: true
 prompt: |
   The starting rule matches calls written literally as `Math.random()`. Press **Run**: two calls in the fixture slip past it, and it flags one call that is not `Math.random` at all. Make the rule find every call to `Math.random`, and only those. Then press **Submit**, which also runs fixtures you cannot see.
 files:

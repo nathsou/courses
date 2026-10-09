@@ -87,6 +87,7 @@ The fix is to give every variable a definition on every path from the entry: `le
 id: reaching-definitions/redundant-assignments
 title: Redundant assignments
 key: S4165
+corpus: true
 types: false
 inspector: [paths, scopes]
 prompt: |

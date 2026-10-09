@@ -90,7 +90,7 @@
           <p class="err">Unknown analysis “{analysis}”.</p>
         {:else if step}
           <p><strong>Node n{step.node}</strong> <code>{nodeText(step.node)}</code></p>
-          <p>{chosen.direction === 'forward' ? 'In (join of predecessors)' : 'Out (join of successors)'}: <code>{fmt(step.input)}</code></p>
+          <p>{chosen.direction === 'forward' ? (chosen.edge ? 'In (join over the incoming edges, each refined by its branch)' : 'In (join of predecessors)') : 'Out (join of successors)'}: <code>{fmt(step.input)}</code></p>
           <p>{chosen.direction === 'forward' ? 'Out' : 'In'}: <code>{fmt(step.before)}</code> → <code>{fmt(step.after)}</code> {#if step.changed}<span class="chg">changed: its {chosen.direction === 'forward' ? 'successors' : 'predecessors'} go back on the worklist</span>{:else}<span class="same">unchanged</span>{/if}</p>
           <p>Worklist: {#if step.worklist.length}{#each step.worklist as w (w)}<code class="wl">n{w}</code>{/each}{:else}<em>empty: fixpoint reached</em>{/if}</p>
         {:else}

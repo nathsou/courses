@@ -18,12 +18,13 @@ Planted issues in Corkboard (for authors; the corpus files carry no markers):
 | `routes/posts.ts` search | SQL built from the query string | S2077 / taint (chapter 29) |
 | `routes/posts.ts` `DELETE … + req.params.id` | SQL built from a path parameter | S2077 / taint |
 | `routes/posts.ts` post page | unescaped body in HTML | XSS (chapter 29) |
-| `routes/posts.ts` latest | `find` result used without a check | S2259 |
+| `routes/posts.ts` latest | `find` result used without a check (a union with `undefined`: TypeScript's strict mode reports it, S2259 does not) | S2259 (chapter 9) |
 | `routes/attachments.ts` | path from a request parameter | path traversal (chapter 29) |
-| `routes/attachments.ts` delete | `let removed = false` overwritten | S1854 |
+| `routes/attachments.ts` delete | `let removed = false` overwritten (a defensive initialisation: S1854's exceptions keep it quiet) | S1854 (chapter 14) |
 | `routes/preview.ts` | `fetch` of a request URL; logging request data | SSRF, log injection (chapter 29) |
 | `routes/auth.ts` | hard-coded secret and password, md5, `Math.random` token | S2068, S4790, S2245 |
 | `routes/admin.ts` | shell command built from the request | command injection (chapter 29) |
 | `services/notices.ts` | dead stores, `x = x`, invariant return, nested identical test, optional chain dereference | S1854, S4165, S3516, S2589, S2259 |
+| `services/digest.ts` | a test made redundant by an early return (found only with flow), a look-alike without the return | S2589 (chapter 16) |
 | `util/validate.ts` | catastrophic backtracking; `x.length === x.length` | S5852, S1764 |
 | `util/text.ts` `renderMarkup` | deeply nested branching | S3776 |

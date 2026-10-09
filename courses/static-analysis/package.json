@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "test": "svelte-kit sync && vitest run",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --threshold error",
-    "typecheck": "npm run check"
+    "typecheck": "npm run check",
+    "corpus:sync": "CORPUS_SYNC=1 vitest run tools/markdown/corpus.test.ts"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",

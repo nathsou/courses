@@ -20,6 +20,11 @@ export interface Analysis<T> {
   boundary(cfg: Cfg): T;
   /** From the fact before the node (in the analysis's direction) to the fact after it. */
   transfer(node: CfgNode, fact: T, cfg: Cfg): T;
+  /**
+   * Optional refinement of the fact flowing along the edge `from → to` (forward analyses): what the branch taken
+   * says, such as "the condition was true" (chapter 16).
+   */
+  edge?(from: CfgNode, to: number, fact: T, cfg: Cfg): T;
   /** Optional widening, applied at loop heads after the first visits (Part V). */
   widen?(previous: T, next: T): T;
 }
@@ -65,7 +70,8 @@ export function solve<T>(cfg: Cfg, analysis: Analysis<T>, maxSteps = 5000): Solu
   const steps: Step<T>[] = [];
   while (worklist.length && steps.length < maxSteps) {
     const n = worklist.shift()!;
-    const inFact = n === start ? analysis.boundary(cfg) : preds(n).reduce((acc, p) => lattice.join(acc, output[p]!), lattice.bottom);
+    const along = (p: number) => (forward && analysis.edge ? analysis.edge(cfg.nodes[p]!, n, output[p]!, cfg) : output[p]!);
+    const inFact = n === start ? analysis.boundary(cfg) : preds(n).reduce((acc, p) => lattice.join(acc, along(p)), lattice.bottom);
     input[n] = inFact;
     let out = analysis.transfer(cfg.nodes[n]!, inFact, cfg);
     const count = (visits.get(n) ?? 0) + 1;

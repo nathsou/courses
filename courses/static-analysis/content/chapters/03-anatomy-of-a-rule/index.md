@@ -229,6 +229,7 @@ S1764's details, as SonarJS implements them:
 id: anatomy-of-a-rule/s1764
 title: Identical sub-expressions
 key: S1764
+corpus: true
 inspector: [tree, tokens]
 prompt: |
   The starter rule flags every binary expression whose sides are equivalent, on the whole expression. Make it match the behaviour described above. Report with the kit's `report` (from `../helpers/location.js`), passing `message`, `messageId`, `data` and `node`, and a secondary location built with `toSecondaryLocation(left)`.
