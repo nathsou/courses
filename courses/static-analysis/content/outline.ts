@@ -109,7 +109,7 @@ export const PARTS: OutlinePart[] = [
     track: 'B',
     blurb: 'Abstract interpretation: compute facts about every execution at once by computing with descriptions of values instead of values.',
     chapters: [
-      { slug: 'intervals-and-widening', number: '22', title: 'Intervals and widening', summary: 'Abstract values, abstract execution, the interval domain, and widening to make loops terminate.', flagship: 'Interval stepper', track: 'B', year: 1977, event: 'Cousot and Cousot' },
+      { slug: 'intervals-and-widening', number: '22', title: 'Intervals and widening', summary: 'Abstract values, abstract execution, the interval domain, widening to make loops terminate and narrowing to recover precision.', flagship: 'Fixpoint stepper with widening', track: 'B', year: 1977, event: 'Cousot and Cousot' },
       { slug: 'soundness', number: '23', title: 'Soundness', summary: 'Abstraction and concretisation, Galois connections, best transformers, and testing a domain against the interpreter.', flagship: 'Galois view', track: 'B' },
       { slug: 'combining-domains', number: '24', title: 'Combining domains', summary: 'Products, reduced products, trace partitioning, and relational domains in brief.', flagship: 'Domain comparison', track: 'B', optional: true, year: 2001, event: 'Miné’s octagons' },
     ],
@@ -121,9 +121,9 @@ export const PARTS: OutlinePart[] = [
     track: 'B',
     blurb: 'Call graphs, summaries, IFDS as graph reachability, and the pointer analyses that tell you which objects a name can hold.',
     chapters: [
-      { slug: 'call-graphs', number: '25', title: 'Call graphs', summary: 'Callbacks, closures and methods; call graphs from names, classes and points-to; soundiness.', flagship: 'Call-graph view', track: 'B' },
+      { slug: 'call-graphs', number: '25', title: 'Call graphs', summary: 'Callbacks, closures and methods; call graphs by name, by rapid type analysis and by following function values; what makes them unsound.', flagship: 'Call-graph view', track: 'B' },
       { slug: 'summaries-and-ifds', number: '26', title: 'Summaries and IFDS', summary: 'Inlining versus summaries, context sensitivity, and IFDS: dataflow as reachability along matched calls and returns.', flagship: 'Exploded supergraph', track: 'B', year: 1995, event: 'Reps, Horwitz and Sagiv' },
-      { slug: 'points-to-and-datalog', number: '27', title: 'Points-to analysis and Datalog', summary: 'Aliasing, Andersen against Steensgaard, and pointer analysis as four Datalog rules.', flagship: 'Datalog console', track: 'B', optional: true, year: 1994, event: 'Andersen’s thesis' },
+      { slug: 'points-to-and-datalog', number: '27', title: 'Points-to analysis and Datalog', summary: 'Aliasing, Andersen against Steensgaard, and pointer analysis as four Datalog rules.', flagship: 'Points-to graph and Datalog console', track: 'B', optional: true, year: 1994, event: 'Andersen’s thesis' },
     ],
   },
   {
@@ -134,7 +134,7 @@ export const PARTS: OutlinePart[] = [
     blurb: 'Untrusted data flowing into dangerous places: injection explained from the ground up, then tracked through a program.',
     chapters: [
       { slug: 'how-injection-works', number: '28', title: 'How injection works', summary: 'HTTP, SQL, HTML, shells and paths; SQL injection, XSS, path traversal, command injection and SSRF; why parameters and escaping work.', flagship: 'Injection playground', track: 'B', year: 1998, event: 'SQL injection described in Phrack' },
-      { slug: 'taint-analysis', number: '29', title: 'Taint analysis', summary: 'Sources, sinks, sanitizers, validators and passthroughs; taint across functions; a Hotspot turned into a proof of a vulnerability.', flagship: 'Taint tracer', track: 'B', year: 2014, event: 'FlowDroid' },
+      { slug: 'taint-analysis', number: '29', title: 'Taint analysis', summary: 'Sources, sinks, sanitizers, validators and passthroughs; taint across functions with witnesses; a taint-proven SQL injection rule.', flagship: 'Taint tracer', track: 'B', year: 2014, event: 'FlowDroid' },
       { slug: 'implicit-flows', number: '30', title: 'Implicit flows and noninterference', summary: 'Leaking a secret one branch at a time, the pc label, and security type systems.', flagship: 'Leak-a-bit', track: 'B', optional: true, year: 1976, event: 'Denning’s lattice model' },
     ],
   },
@@ -146,7 +146,7 @@ export const PARTS: OutlinePart[] = [
     blurb: 'Symbolic execution: run the program on symbols instead of values, and ask a solver which inputs take each path.',
     chapters: [
       { slug: 'symbolic-execution', number: '31', title: 'Symbolic execution', summary: 'Path conditions, path trees, satisfiability, a SAT solver and bit-blasting, and a path-sensitive null check.', flagship: 'Path tree', track: 'B', year: 1976, event: 'King’s symbolic execution' },
-      { slug: 'fuzzing-and-concolic', number: '32', title: 'Fuzzing and concolic testing', summary: 'Random and coverage-guided fuzzing, magic numbers, and concrete-plus-symbolic execution.', flagship: 'Fuzzer race', track: 'B', optional: true, year: 2005, event: 'DART' },
+      { slug: 'fuzzing-and-concolic', number: '32', title: 'Fuzzing and concolic testing', summary: 'Random and coverage-guided fuzzing, magic numbers, concolic testing, and hybrid fuzzers.', flagship: 'Fuzzer race', track: 'B', optional: true, year: 2005, event: 'DART' },
     ],
   },
   {

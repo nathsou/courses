@@ -1,0 +1,315 @@
+# Events of the course timeline. Fields: year, month?, lane, title, people?, chapter?, parts?, text, cite?
+- year: 1936
+  lane: theory
+  title: The halting problem
+  people: Alan Turing
+  chapter: every-rule-is-approximate
+  text: No program can decide, for every program and input, whether it stops. Every analyser lives with this limit.
+  cite: [turing1936]
+- year: 1953
+  lane: theory
+  title: Rice’s theorem
+  people: Henry Gordon Rice
+  chapter: every-rule-is-approximate
+  text: Every non-trivial property of what programs compute is undecidable, so every rule approximates.
+  cite: [rice1953]
+- year: 1955
+  lane: theory
+  title: A lattice-theoretical fixpoint theorem
+  people: Alfred Tarski
+  chapter: lattices-and-fixpoints
+  text: Monotone functions on complete lattices have least fixpoints, the solutions every dataflow analysis computes.
+  cite: [tarski1955]
+- year: 1956
+  lane: theory
+  title: Regular expressions
+  people: Stephen Kleene
+  chapter: regular-expressions
+  parts: [II]
+  text: An algebra of the events that finite automata recognise.
+  cite: [kleene1956]
+- year: 1968
+  lane: tools
+  title: Regular expressions compiled to automata
+  people: Ken Thompson
+  chapter: regular-expressions
+  parts: [II]
+  text: Matching in linear time by simulating an automaton; backtracking engines came later, and with them ReDoS.
+  cite: [thompson1968]
+- year: 1970
+  lane: dataflow
+  title: Control flow analysis
+  people: Frances Allen
+  chapter: code-paths
+  text: Programs as graphs of basic blocks, with dominators, intervals and loops, for optimising compilers.
+  cite: [allen1970]
+- year: 1971
+  lane: paths
+  title: SAT is NP-complete
+  people: Stephen Cook
+  chapter: symbolic-execution
+  text: The first NP-complete problem, and thirty years later the engine of symbolic execution.
+  cite: [cook1971]
+- year: 1973
+  lane: dataflow
+  title: A unified approach to global program optimisation
+  people: Gary Kildall
+  chapter: lattices-and-fixpoints
+  text: Every classical dataflow analysis is one algorithm over a lattice.
+  cite: [kildall1973]
+- year: 1976
+  lane: theory
+  title: McCabe’s cyclomatic complexity
+  people: Thomas McCabe
+  chapter: cognitive-complexity
+  parts: [I]
+  text: Counting independent paths as a measure of how hard a function is to test.
+  cite: [mccabe1976]
+- year: 1976
+  lane: paths
+  title: Symbolic execution and program testing
+  people: James King
+  chapter: symbolic-execution
+  text: Running programs on symbols, one path at a time; with SELECT and Clarke’s system, the first symbolic executors.
+  cite: [king1976]
+- year: 1976
+  lane: security
+  title: A lattice model of secure information flow
+  people: Dorothy Denning
+  chapter: implicit-flows
+  text: Security classes form a lattice, information flows upward, and branches carry flows too.
+  cite: [denning1976]
+- year: 1977
+  lane: abstract-interpretation
+  title: Abstract interpretation
+  people: Patrick Cousot, Radhia Cousot
+  chapter: intervals-and-widening
+  text: Static analyses as approximations of executions, with widening for lattices of infinite height.
+  cite: [cousot1977]
+- year: 1977
+  lane: dataflow
+  title: Monotone frameworks
+  people: John Kam, Jeffrey Ullman
+  chapter: lattices-and-fixpoints
+  text: The conditions under which iterative dataflow analysis gives the right answer.
+  cite: [kam1977]
+- year: 1978
+  lane: tools
+  title: lint
+  people: Stephen Johnson
+  chapter: anatomy-of-a-rule
+  parts: [I]
+  text: A separate checker for C programs that the compiler accepts but that are probably wrong.
+  cite: [johnson1978lint]
+- year: 1981
+  lane: interprocedural
+  title: Two approaches to interprocedural dataflow analysis
+  people: Micha Sharir, Amir Pnueli
+  chapter: summaries-and-ifds
+  text: Call strings and summaries, the two ways to keep calling contexts apart.
+  cite: [sharir1981]
+- year: 1982
+  lane: security
+  title: Noninterference
+  people: Joseph Goguen, José Meseguer
+  chapter: implicit-flows
+  text: A program keeps a secret if changing the secret changes nothing an observer can see.
+  cite: [goguen1982]
+- year: 1990
+  lane: paths
+  title: Fuzz
+  people: Barton Miller, Lars Fredriksen, Bryan So
+  chapter: fuzzing-and-concolic
+  text: Random input crashes a quarter to a third of the UNIX utilities.
+  cite: [miller1990]
+- year: 1994
+  lane: interprocedural
+  title: Inclusion-based points-to analysis
+  people: Lars Ole Andersen
+  chapter: points-to-and-datalog
+  text: Assignments as inclusions between sets of objects.
+  cite: [andersen1994]
+- year: 1995
+  lane: interprocedural
+  title: IFDS
+  people: Thomas Reps, Susan Horwitz, Mooly Sagiv
+  chapter: summaries-and-ifds
+  text: Interprocedural dataflow analysis as reachability along matched calls and returns.
+  cite: [reps1995]
+- year: 1995
+  lane: tools
+  title: JavaScript
+  people: Brendan Eich
+  chapter: source-to-estree
+  parts: [I]
+  text: A scripting language for Netscape’s browser, written in weeks, used everywhere.
+- year: 1996
+  lane: interprocedural
+  title: Points-to analysis in almost linear time
+  people: Bjarne Steensgaard
+  chapter: points-to-and-datalog
+  text: Unification instead of inclusion, with union-find.
+  cite: [steensgaard1996]
+- year: 1996
+  month: 6
+  lane: abstract-interpretation
+  title: Ariane 5 flight 501
+  chapter: intervals-and-widening
+  text: An unhandled overflow in a 16-bit conversion destroys the rocket 37 seconds after launch.
+  cite: [lions1996]
+- year: 1998
+  lane: security
+  title: SQL injection described in Phrack
+  people: rain.forest.puppy
+  chapter: how-injection-works
+  text: Database commands smuggled in through a web request’s parameters.
+  cite: [rfp1998]
+- year: 2001
+  lane: paths
+  title: Chaff
+  people: Matthew Moskewicz, Conor Madigan, Ying Zhao, Lintao Zhang, Sharad Malik
+  chapter: symbolic-execution
+  text: Watched literals and VSIDS make clause-learning SAT solvers fast on industrial problems.
+  cite: [moskewicz2001]
+- year: 2001
+  lane: abstract-interpretation
+  title: Difference-bound matrices and octagons
+  people: Antoine Miné
+  chapter: combining-domains
+  text: Weakly relational domains with cubic-time operations.
+  cite: [mine2001dbm]
+- year: 2002
+  lane: tools
+  title: JSLint
+  people: Douglas Crockford
+  chapter: anatomy-of-a-rule
+  parts: [I]
+  text: A linter for a good subset of JavaScript.
+  cite: [jslint]
+- year: 2003
+  month: 11
+  lane: abstract-interpretation
+  title: Astrée proves the A340’s flight software free of run-time errors
+  chapter: intervals-and-widening
+  text: 132,000 lines of C, with zero false alarms.
+  cite: [astree]
+- year: 2004
+  lane: interprocedural
+  title: Points-to analysis in Datalog
+  people: John Whaley, Monica Lam
+  chapter: points-to-and-datalog
+  text: Context-sensitive pointer analysis for Java as a few Datalog rules.
+  cite: [whaley2004]
+- year: 2005
+  lane: paths
+  title: DART
+  people: Patrice Godefroid, Nils Klarlund, Koushik Sen
+  chapter: fuzzing-and-concolic
+  text: Concrete and symbolic execution together, the start of concolic testing.
+  cite: [godefroid2005]
+- year: 2005
+  lane: security
+  title: Taint analysis for Java web applications
+  people: Benjamin Livshits, Monica Lam
+  chapter: taint-analysis
+  text: SQL injection and cross-site scripting found by a points-to-based taint analysis.
+  cite: [livshits2005]
+- year: 2008
+  lane: practice
+  title: SonarSource founded
+  chapter: scanner-to-node
+  text: A company around an open-source platform for code quality, later SonarQube.
+- year: 2008
+  lane: paths
+  title: KLEE
+  people: Cristian Cadar, Daniel Dunbar, Dawson Engler
+  chapter: symbolic-execution
+  text: Symbolic execution of real systems code, with high-coverage tests for the GNU coreutils.
+  cite: [cadar2008]
+- year: 2010
+  lane: practice
+  title: A few billion lines of code later
+  people: Al Bessey and colleagues
+  chapter: false-positives
+  text: What happened when Coverity’s checkers met customers.
+  cite: [bessey2010]
+- year: 2012
+  month: 10
+  lane: tools
+  title: TypeScript 0.8
+  people: Anders Hejlsberg
+  chapter: types
+  parts: [II]
+  text: Optional types for JavaScript, and a compiler whose narrowing every type-dependent rule uses.
+- year: 2013
+  lane: interprocedural
+  title: Field-based call graphs for JavaScript
+  people: Asger Feldthaus, Max Schäfer, Manu Sridharan, Julian Dolby, Frank Tip
+  chapter: call-graphs
+  text: Cheap, approximate call graphs good enough for IDE services.
+  cite: [feldthaus2013]
+- year: 2013
+  month: 7
+  lane: tools
+  title: ESLint
+  people: Nicholas Zakas
+  chapter: anatomy-of-a-rule
+  parts: [I]
+  text: A linter whose every rule is a plug-in over a shared syntax tree.
+  cite: [zakas2013eslint]
+- year: 2013
+  lane: paths
+  title: american fuzzy lop
+  people: Michał Zalewski
+  chapter: fuzzing-and-concolic
+  text: Coverage-guided fuzzing without configuration.
+  cite: [afl]
+- year: 2014
+  lane: security
+  title: FlowDroid
+  people: Steven Arzt and colleagues
+  chapter: taint-analysis
+  text: IFDS-based taint analysis for Android apps.
+  cite: [arzt2014]
+- year: 2015
+  lane: practice
+  title: Tricorder
+  people: Caitlin Sadowski and colleagues
+  chapter: false-positives
+  text: Google’s analysis platform keeps the analyses developers find useful.
+  cite: [sadowski2015tricorder]
+- year: 2015
+  lane: practice
+  title: Infer, open-sourced
+  people: Cristiano Calcagno, Dino Distefano, Peter O’Hearn and colleagues
+  chapter: summaries-and-ifds
+  text: Compositional analysis on every code change at Facebook’s scale.
+  cite: [calcagno2015]
+- year: 2016
+  lane: tools
+  title: Code path analysis in ESLint
+  chapter: code-paths
+  parts: [III]
+  text: Control-flow graphs for every rule, as segments built during traversal.
+  cite: [eslintcodepath]
+- year: 2017
+  lane: practice
+  title: Cognitive Complexity
+  people: G. Ann Campbell
+  chapter: cognitive-complexity
+  parts: [I]
+  text: A metric designed to match how hard code is to understand.
+  cite: [campbell2018]
+- year: 2019
+  lane: practice
+  title: Semmle joins GitHub
+  chapter: points-to-and-datalog
+  parts: [VI]
+  text: Its QL query engine becomes CodeQL.
+  cite: [avgustinov2016]
+- year: 2026
+  month: 4
+  lane: practice
+  title: SonarJS moves to gRPC
+  chapter: scanner-to-node
+  text: The Java plugin and the Node.js process switch from HTTP and WebSockets to a typed gRPC contract.
