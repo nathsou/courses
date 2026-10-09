@@ -24,6 +24,8 @@ export interface SettingsData extends TutorSettings {
   typeAnswers: boolean;
   /** Little chimes for right and wrong answers. */
   sounds: boolean;
+  /** Show how each character is built in the lessons' word lists. */
+  charParts: boolean;
 }
 
 const KEY = 'mandarin:settings';
@@ -37,6 +39,7 @@ const DEFAULTS: SettingsData = {
   newPerDay: 10,
   typeAnswers: false,
   sounds: true,
+  charParts: true,
   ...tutorSettings({}),
 };
 

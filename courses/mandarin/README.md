@@ -114,13 +114,18 @@ sh scripts/refresh.sh path/to/complete.json path/to/LXGWWenKai-Regular.ttf
 
 This rebuilds the dictionary (`content/data/lexicon.json`, `chars.json`) from the
 [Complete HSK Vocabulary](https://github.com/drkameleon/complete-hsk-vocabulary) dataset, copies
-stroke data for every character, and subsets the LXGW WenKai font to the characters in use.
+stroke data for every character, rebuilds how each character is put together
+(`content/data/components.json`, from [Make Me a Hanzi](https://github.com/skishore/makemeahanzi)),
+and subsets the LXGW WenKai font to the characters in use.
 `npm test` reports any character that lacks a reading, a glyph or stroke data.
 
 ## Credits and licences
 
 - Vocabulary: Complete HSK Vocabulary (MIT), with definitions from CC-CEDICT (CC BY-SA 4.0);
   learner glosses in `content/data/extra.ts`.
+- Character components (meaning and sound parts, origins): Make Me a Hanzi `dictionary.txt`
+  (LGPL-3.0-or-later, `content/data/components.LICENSE.md`), with part names in
+  `content/data/characters.ts`.
 - Stroke data: hanzi-writer-data, derived from Make Me a Hanzi (Arphic Public License,
   `static/strokes/LICENSE`); animation and quizzes by hanzi-writer (MIT).
 - Font: LXGW WenKai (SIL Open Font License 1.1, `src/lib/assets/fonts/OFL.txt`), subset.

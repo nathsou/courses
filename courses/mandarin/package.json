@@ -16,6 +16,7 @@
     "audio": "node --experimental-strip-types scripts/generate-audio.ts",
     "audio:texts": "WRITE=1 vitest run tools/audio/collect.test.ts",
     "strokes": "node --experimental-strip-types scripts/copy-strokes.ts",
+    "components": "node --experimental-strip-types scripts/build-components.ts",
     "audio:pack": "node --experimental-strip-types scripts/audio-release.ts pack",
     "audio:fetch": "node --experimental-strip-types scripts/audio-release.ts fetch",
     "test:browser": "playwright test"
