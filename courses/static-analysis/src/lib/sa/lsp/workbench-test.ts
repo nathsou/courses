@@ -12,6 +12,10 @@ declare module 'workbench:test' {
     toBeTruthy(): void;
     toBeFalsy(): void;
     toBeUndefined(): void;
+    toBeGreaterThan(n: number): void;
+    toBeGreaterThanOrEqual(n: number): void;
+    toBeLessThan(n: number): void;
+    toBeLessThanOrEqual(n: number): void;
     toHaveLength(n: number): void;
     toThrow(): void;
   };

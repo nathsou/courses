@@ -12,6 +12,8 @@
     picked,
     onpick,
     facts,
+    labels,
+    changed,
   }: {
     path: CodePathInfo;
     code: string;
@@ -19,6 +21,10 @@
     onpick?: (segmentId: string, range?: [number, number]) => void;
     /** Optional text per segment (e.g. analysis facts), shown under its code. */
     facts?: Record<string, string>;
+    /** Optional lines to show instead of a segment's code (for graphs that are not ESLint's). */
+    labels?: Record<string, string[]>;
+    /** Segments to mark as changed (e.g. by the last step of an analysis). */
+    changed?: string | null;
   } = $props();
 
   const uid = $props.id();
@@ -50,13 +56,27 @@
       }
     }
     for (const s of segs) if (!level.has(s.id)) level.set(s.id, 0);
+    const wrap = (t: string, width = 30) => {
+      const out: string[] = [];
+      let line = '';
+      for (const word of t.split(/(?<=[ ,])/)) {
+        if (line && (line + word).length > width) {
+          out.push(line.trimEnd());
+          line = '';
+        }
+        line += word;
+      }
+      if (line) out.push(line.trimEnd());
+      return out;
+    };
     const text = (s: (typeof segs)[number]) => {
+      if (labels?.[s.id]) return labels[s.id]!.map((t) => (t.length > 30 ? `${t.slice(0, 29)}…` : t));
       const lines = s.nodes.map((n) => code.slice(n.range[0], n.range[1]).replace(/\s+/g, ' ')).map((t) => (t.length > 30 ? `${t.slice(0, 29)}…` : t));
       return lines.length ? lines.slice(0, 6) : ['(empty)'];
     };
     const rows = new Map<number, string[]>();
     for (const s of segs) rows.set(level.get(s.id)!, [...(rows.get(level.get(s.id)!) ?? []), s.id]);
-    const boxes = new Map<string, { x: number; y: number; w: number; h: number; lines: string[]; fact?: string }>();
+    const boxes = new Map<string, { x: number; y: number; w: number; h: number; lines: string[]; fact?: string[] }>();
     let y = 10;
     let width = 0;
     for (const lvl of [...rows.keys()].sort((a, b) => a - b)) {
@@ -66,8 +86,8 @@
       for (const id of row) {
         const s = segs.find((q) => q.id === id)!;
         const lines = text(s);
-        const fact = facts?.[id];
-        const h = 22 + lines.length * LINE + (fact ? LINE + 6 : 0);
+        const fact = facts?.[id] !== undefined ? wrap(facts[id]!) : undefined;
+        const h = 22 + lines.length * LINE + (fact ? fact.length * LINE + 6 : 0);
         boxes.set(id, { x, y, w: W, h, lines, fact });
         x += W + GAP_X;
         rowH = Math.max(rowH, h);
@@ -131,6 +151,7 @@
       class:initial={s.id === path.initial}
       class:final={finals.has(s.id)}
       class:picked={picked === s.id}
+      class:changed={changed === s.id}
       role="button"
       tabindex="0"
       aria-label="Segment {s.id}{s.reachable ? '' : ' (unreachable)'}"
@@ -143,7 +164,9 @@
         <text x={b.x + 8} y={b.y + 32 + j * LINE} class="code">{l}</text>
       {/each}
       {#if b.fact}
-        <text x={b.x + 8} y={b.y + 32 + b.lines.length * LINE + 4} class="fact">{b.fact}</text>
+        {#each b.fact as f, j (j)}
+          <text x={b.x + 8} y={b.y + 32 + (b.lines.length + j) * LINE + 4} class="fact">{f}</text>
+        {/each}
       {/if}
     </g>
   {/each}
@@ -198,6 +221,10 @@
   .seg.picked rect {
     fill: var(--amber-soft);
     stroke: var(--amber);
+  }
+  .seg.changed rect {
+    stroke: var(--accent);
+    stroke-width: 2.4;
   }
   .id {
     font-size: 10px;

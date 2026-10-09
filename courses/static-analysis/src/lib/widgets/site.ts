@@ -12,3 +12,7 @@ export { default as FqnView } from '$lib/components/widgets/FqnView.svelte';
 export { default as TypeView } from '$lib/components/widgets/TypeView.svelte';
 /** Backtracking steps against input length, and scslre's verdict: `:::backtrack-view{pump="a" suffix="!"}` + a ```text block. */
 export { default as BacktrackView } from '$lib/components/widgets/BacktrackView.svelte';
+/** A dataflow analysis stepped through its worklist: `:::fixpoint-stepper{analysis="liveness"}` + a ```js block. */
+export { default as FixpointStepper } from '$lib/components/widgets/FixpointStepper.svelte';
+/** Hasse diagrams with join and meet: `::lattice-lab{presets="powerset,flat,sign,notlattice"}`. */
+export { default as LatticeLab } from '$lib/components/widgets/LatticeLab.svelte';

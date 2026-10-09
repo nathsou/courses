@@ -54,6 +54,10 @@ export function expect(actual: unknown) {
     toBeTruthy: () => !!actual || fail(`expected a truthy value, got ${show(actual)}`),
     toBeFalsy: () => !actual || fail(`expected a falsy value, got ${show(actual)}`),
     toBeUndefined: () => actual === undefined || fail(`expected undefined, got ${show(actual)}`),
+    toBeGreaterThan: (n: number) => (actual as number) > n || fail(`expected more than ${n}, got ${String(actual)}`),
+    toBeGreaterThanOrEqual: (n: number) => (actual as number) >= n || fail(`expected at least ${n}, got ${String(actual)}`),
+    toBeLessThan: (n: number) => (actual as number) < n || fail(`expected less than ${n}, got ${String(actual)}`),
+    toBeLessThanOrEqual: (n: number) => (actual as number) <= n || fail(`expected at most ${n}, got ${String(actual)}`),
     toHaveLength: (n: number) => (actual as { length: number })?.length === n || fail(`expected length ${n}, got ${(actual as { length?: number })?.length}`),
     toThrow: () => {
       try {

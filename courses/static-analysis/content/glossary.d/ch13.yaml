@@ -1,0 +1,36 @@
+dataflow analysis:
+  term: dataflow analysis
+  definition: "An analysis that attaches a fact to each point of a control-flow graph and propagates facts along its edges until they stop changing."
+  chapter: lattices-and-fixpoints
+partial order:
+  term: partial order
+  definition: "A reflexive, antisymmetric and transitive relation. In an analysis, it orders facts by precision: a ⊑ b when a says at least as much as b."
+  chapter: lattices-and-fixpoints
+lattice:
+  term: lattice
+  definition: "A partial order in which every two elements have a least upper bound (join, ⊔) and a greatest lower bound (meet, ⊓)."
+  chapter: lattices-and-fixpoints
+join:
+  term: join
+  definition: "The least upper bound of two facts: the most precise fact true whenever either is. Analyses join facts where control-flow paths meet."
+  chapter: lattices-and-fixpoints
+height:
+  term: height
+  definition: "Of a lattice: the length of its longest strictly increasing chain. Finite height guarantees that fixpoint iteration terminates."
+  chapter: lattices-and-fixpoints
+monotone:
+  term: monotone
+  definition: "Of a transfer function: more precise inputs give outputs at least as precise (a ⊑ b implies f(a) ⊑ f(b))."
+  chapter: lattices-and-fixpoints
+fixpoint:
+  term: fixpoint
+  definition: "A value that a function maps to itself. A dataflow analysis computes the least fixpoint of its equations."
+  chapter: lattices-and-fixpoints
+worklist:
+  term: worklist
+  definition: "The queue of nodes whose facts may need recomputing, in the standard algorithm for solving dataflow equations."
+  chapter: lattices-and-fixpoints
+meet over all paths:
+  term: meet over all paths
+  definition: "The ideal solution of a dataflow problem: the facts of every path to a point, combined. Equal to the fixpoint solution for distributive transfer functions. Abbreviated MOP."
+  chapter: lattices-and-fixpoints

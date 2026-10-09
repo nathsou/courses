@@ -1,0 +1,18 @@
+tarski1955:
+  authors: A. Tarski
+  year: 1955
+  title: A lattice-theoretical fixpoint theorem and its applications
+  venue: "Pacific Journal of Mathematics, 5(2), 285–309"
+  url: https://doi.org/10.2140/pjm.1955.5.285
+kildall1973:
+  authors: G. A. Kildall
+  year: 1973
+  title: A unified approach to global program optimization
+  venue: "Proceedings of the 1st ACM Symposium on Principles of Programming Languages (POPL '73), 194–206"
+  url: https://doi.org/10.1145/512927.512945
+kam1977:
+  authors: J. B. Kam, J. D. Ullman
+  year: 1977
+  title: Monotone data flow analysis frameworks
+  venue: "Acta Informatica, 7(3), 305–317"
+  url: https://doi.org/10.1007/BF00290339
