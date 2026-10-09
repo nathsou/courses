@@ -161,6 +161,43 @@ questions:
     answer: 1
 ```
 
+Group chats are where 在, 着 and 快…了 really live. Here's one from outside a cinema, five minutes before the film.
+
+```read
+title: "Group chat: where are you?"
+setting: A group chat between three friends who are meeting at the cinema.
+text: |
+  马克：你们在哪儿呢？电影快要开始了！
+  小红：我在公交车上。路上车太多了，可是我快到了！
+  大卫：我在洗手间，等我一会儿！
+  马克：好。我拿着票，在门口等你们。
+  小红：对不起！我每次都来晚。
+en: |
+  Mark: Where are you two? The film's about to start!
+  Xiaohong: I'm on the bus. There's far too much traffic, but I'm nearly there!
+  David: I'm in the toilet, wait for me a moment!
+  Mark: OK. I've got the tickets; I'm waiting for you at the entrance.
+  Xiaohong: Sorry! I'm late every time.
+questions:
+  - claim: 电影已经开始了。
+    answer: false
+    explain: 电影快要开始了 — it's about to start, not started yet.
+  - prompt: Where is 大卫?
+    options: [在公交车上, 在洗手间, 在门口]
+    answer: 1
+  - claim: 马克拿着票。
+    answer: true
+  - prompt: What does 小红 say about herself?
+    options: [She's late every time., She's never late., She doesn't like films.]
+    answer: 0
+```
+
+```write
+title: Write what's happening
+chars: 等着每
+recall: [每天, 正在, 手表, 帮忙]
+```
+
 ```compose
 task: Describe what you (or someone near you) are doing right now, and something that's about to happen.
 target: 在 / 正在 + verb; 快要…了

@@ -190,6 +190,52 @@ questions:
 小学生 | primary school pupil
 ```
 
+Now a real letter. 小红 has a new pen friend, and this is the first thing she tells them:
+
+```read
+title: 小红's family
+setting: The start of a letter from 小红 to a new pen friend.
+text: |
+  你好！我叫小红。
+  我家有五口人：爷爷、奶奶、爸爸、妈妈和我。
+  我没有哥哥，也没有姐姐。
+  我爸爸是医生，我妈妈是老师。
+  我们家有两只狗和一只猫。
+  那只小猫是奶奶的。
+  你家有几口人？你有哥哥吗？
+  小红
+en: |
+  Hello! My name is Xiaohong.
+  There are five people in my family: grandpa, grandma, dad, mum and me.
+  I don't have an older brother, or an older sister.
+  My dad is a doctor, and my mum is a teacher.
+  Our family has two dogs and a cat.
+  That little cat is grandma's.
+  How many people are there in your family? Do you have an older brother?
+  Xiaohong
+questions:
+  - prompt: How many people are in 小红's family?
+    options: ['4', '5', '6']
+    answer: 1
+  - claim: 小红有一个哥哥。
+    answer: false
+    explain: 我没有哥哥 — she has no older brother. She asks whether you have one.
+  - claim: 小红的妈妈是医生。
+    answer: false
+    explain: Her dad is the doctor (我爸爸是医生); her mum is a teacher.
+  - claim: 小红家有两只狗。
+    answer: true
+  - prompt: Whose is the little cat?
+    options: [小红的, 奶奶的, 爸爸的]
+    answer: 1
+```
+
+```write
+title: Write your family
+chars: 家有哥
+recall: [哥哥, 没有, 家人 | family members, 妹妹]
+```
+
 ```compose
 task: Describe your family in one or two sentences, e.g. how many people there are and who they are.
 target: 有 / 没有 with measure words (个, 口)

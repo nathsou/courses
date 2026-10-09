@@ -265,6 +265,47 @@ turns:
 end: Your phone buzzes a minute later. 喂？
 ```
 
+Numbers are everywhere in messages too. Here is one from 安娜 to 小红:
+
+```read
+title: A message from 安娜
+setting: A text message from 安娜 to 小红, a few days after they met.
+text: |
+  小红，你好！
+  我是安娜，我二十五岁，是学生。
+  你多大？你也是学生吗？
+  我手机号是一三六，二零三四，五七九八。
+  你手机号是多少？
+  谢谢！再见！
+  安娜
+en: |
+  Hi Xiaohong!
+  It's Anna. I'm twenty-five, and I'm a student.
+  How old are you? Are you a student too?
+  My mobile number is 136 2034 5798.
+  What's your mobile number?
+  Thanks! Bye!
+  Anna
+questions:
+  - prompt: How old is 安娜?
+    options: ['15', '25', '52']
+    answer: 1
+  - claim: 安娜手机号是一三六，二零三四，五七八九。
+    answer: false
+    explain: Look at the last four digits. She wrote 五七九八 (5798), not 五七八九 (5789).
+  - claim: 安娜是学生。
+    answer: true
+  - prompt: What does 安娜 want to know?
+    options: [小红's age and phone number, 小红's name, What time it is]
+    answer: 0
+```
+
+```write
+title: Write the numbers
+chars: 五六八九
+recall: [多少, 手机, 五十八 | fifty-eight, 九十六 | ninety-six]
+```
+
 :::key
 - 11–99 are built like sums: 二十一 = two ten one.
 - 百 hundred, 千 thousand, 万 ten thousand; 零 fills gaps.

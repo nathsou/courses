@@ -184,6 +184,56 @@ items:
     en: I've been to Beijing
 ```
 
+One last read, and the longest: a page from 马克's diary, with patterns from right across the course. Try it without pinyin first.
+
+```read
+title: 马克's diary
+setting: A page from the diary 马克 has kept since he moved to Beijing.
+text: |
+  二月十号，星期六，晴。
+  我来北京已经一年了。
+  去年我只会说“你好”，现在我汉语说得还不错。
+  我家离学校有点儿远，每天坐地铁去上课，路上要二十分钟。
+  王老师教得非常好。虽然写汉字有点儿累，但是很有意思。
+  我的朋友小红经常帮我学习汉语。
+  上个星期，我们一起去上海旅游了。上海比北京热多了！
+  我们吃了很多好吃的菜，可是我最喜欢的还是北京的饺子。
+  下个月我要考试，所以从明天开始，我每天都要学习两个小时。
+  今天晚上别看电视了，早点儿睡觉吧！
+en: |
+  Saturday 10 February. Sunny.
+  I've been in Beijing for a year now.
+  Last year all I could say was "hello"; now my Chinese is pretty good.
+  My home is a bit far from school; I take the metro to class every day, and the journey takes twenty minutes.
+  Teacher Wang teaches really well. Although writing characters is a bit tiring, it's very interesting.
+  My friend Xiaohong often helps me study Chinese.
+  Last week we went to Shanghai on holiday together. Shanghai is much warmer than Beijing!
+  We ate lots of delicious food, but my favourite is still Beijing's dumplings.
+  I've got an exam next month, so starting tomorrow I'm going to study for two hours every day.
+  No TV tonight: get to bed a bit earlier!
+questions:
+  - prompt: How long has 马克 been in Beijing?
+    options: [一个月, 半年, 一年]
+    answer: 2
+  - claim: 马克家离学校很近。
+    answer: false
+    explain: 我家离学校有点儿远 — it's a bit far; he takes the metro, twenty minutes each way.
+  - claim: 马克觉得写汉字没意思。
+    answer: false
+    explain: 虽然写汉字有点儿累，但是很有意思 — tiring, but very interesting.
+  - prompt: What is 马克's favourite food?
+    options: [上海的菜, 北京的饺子, 北京烤鸭]
+    answer: 1
+  - claim: 从明天开始，马克每天都要学习两个小时。
+    answer: true
+```
+
+```write
+title: Last strokes
+chars: 别万肉
+recall: [别, 咖啡, 绿茶, 饭馆]
+```
+
 ```scene
 title: At the café
 setting: A busy café near your university. You're meeting a classmate who arrives late.

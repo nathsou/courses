@@ -194,6 +194,52 @@ turns:
 end: You scan the QR code and walk off with four apples for 12 kuai.
 ```
 
+小红 is planning a shopping trip. Read her message and work out what she will buy:
+
+```read
+title: 小红's shopping plans
+setting: A text message from 小红 to 马克.
+text: |
+  马克，你好！
+  明天我想去买东西。
+  上午去超市，苹果很便宜，一个两块。
+  下午去书店，我想买两本书。
+  那个商店的衣服很漂亮，一件三百块，太贵了！
+  我只买书和苹果。
+  你也想去吗？
+  小红
+en: |
+  Hi Mark!
+  Tomorrow I want to go shopping.
+  In the morning I'm going to the supermarket; the apples are really cheap, two kuai each.
+  In the afternoon I'm going to the bookshop; I'd like to buy two books.
+  The clothes in that shop are lovely, but they're three hundred kuai each. Far too expensive!
+  I'm only buying books and apples.
+  Do you want to come too?
+  Xiaohong
+questions:
+  - prompt: How much is one apple at the supermarket?
+    options: [两块, 三块, 十二块]
+    answer: 0
+  - claim: 那个商店的衣服很便宜。
+    answer: false
+    explain: 一件三百块，太贵了 — at 300 kuai each they're far too expensive. It's the apples that are cheap.
+  - prompt: What will 小红 do in the afternoon?
+    options: [Go to the supermarket, Buy two books, Buy some clothes]
+    answer: 1
+  - claim: 小红明天想买衣服。
+    answer: false
+    explain: 我只买书和苹果 — she's only buying books and apples.
+  - claim: 超市的苹果很便宜。
+    answer: true
+```
+
+```write
+title: Write your shopping list
+chars: 买卖钱
+recall: [多少钱, 便宜, 衣服, 商店]
+```
+
 ```roleplay
 title: Bargain hunter
 setting: A clothes market in Shanghai. You like a T-shirt on a stall.

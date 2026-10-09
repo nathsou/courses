@@ -210,6 +210,50 @@ turns:
 end: Ticket in hand. Tomorrow, Shanghai.
 ```
 
+Before any visit in China, expect a message like this one: how to get there, how long it takes, and which way to turn.
+
+```read
+title: Directions from 小红
+setting: A text message from 小红 the day before 马克 lands in Beijing.
+text: |
+  马克，你好！
+  明天你从机场到我家，坐地铁吧。
+  坐地铁要一个小时，打车要四十分钟，可是太贵了。
+  我家离地铁站很近，走路只要五分钟。
+  从地铁站出来往右走，我家在一个超市旁边。
+  到了超市给我打电话！
+  小红
+en: |
+  Hi Mark!
+  Tomorrow, when you come from the airport to my place, take the metro.
+  The metro takes an hour; a taxi takes forty minutes, but it's too expensive.
+  My home is very close to the metro station: it's only five minutes' walk.
+  Come out of the station and turn right; my home is next to a supermarket.
+  Give me a call when you get to the supermarket!
+  Xiaohong
+questions:
+  - claim: 小红家离地铁站很远。
+    answer: false
+    explain: 我家离地铁站很近 — it's close, only five minutes on foot.
+  - prompt: How long does the metro take from the airport?
+    options: [五分钟, 四十分钟, 一个小时]
+    answer: 2
+  - claim: 小红觉得打车太贵了。
+    answer: true
+  - prompt: Which way should 马克 go when he comes out of the station?
+    options: [往左走, 往右走, 往前走]
+    answer: 1
+  - prompt: What is next to 小红's home?
+    options: [A hotel, A supermarket, A bus stop]
+    answer: 1
+```
+
+```write
+title: Write the way
+chars: 从远近
+recall: [多远, 走路, 地铁, 左边]
+```
+
 ```roleplay
 title: Getting to the airport
 setting: You're at your hotel's front desk in Guangzhou and need to get to the airport for a flight this afternoon.

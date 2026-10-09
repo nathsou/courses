@@ -158,6 +158,39 @@ items:
     answer: 0
 ```
 
+Here's an invitation that puts 能, 可以, 会, 认识 and 知道 to work in five lines.
+
+```read
+title: An invitation from 马克
+setting: A text message from a friend about this evening.
+text: |
+  大卫，你好！
+  今天晚上七点你能来我家吗？
+  我们看电影，也可以唱歌。
+  小红也来。你认识她吗？她很会唱歌！
+  我不知道你喜欢看什么电影，你想看什么？
+  马克
+en: |
+  Hi David!
+  Can you come to my place at seven this evening?
+  We'll watch a film, and we can sing too.
+  Xiaohong is coming as well. Do you know her? She's a really good singer!
+  I don't know what films you like. What would you like to watch?
+  Mark
+questions:
+  - claim: 今天晚上他们去电影院看电影。
+    answer: false
+    explain: 来我家 — they're watching the film at 马克's place, not at the cinema.
+  - claim: 小红会唱歌。
+    answer: true
+  - claim: 马克知道大卫喜欢什么电影。
+    answer: false
+    explain: 我不知道你喜欢看什么电影 — that's why he asks.
+  - prompt: Who else is coming?
+    options: [小红, 王老师, 大卫的妈妈]
+    answer: 0
+```
+
 ## A day
 
 ```story
@@ -189,6 +222,12 @@ questions:
 中学生 | secondary school pupil
 小学生 | primary school pupil
 正在 | in the middle of (doing)
+```
+
+```write
+title: Write what you do
+chars: 看听说写
+recall: [唱歌, 说话, 工作, 知道]
 ```
 
 ```compose
