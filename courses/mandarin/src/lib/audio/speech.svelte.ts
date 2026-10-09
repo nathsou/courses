@@ -104,18 +104,13 @@ class Speech {
     return this.audio;
   }
 
-  /** Unlock audio and the speech voice on the learner's first tap or key press. */
+  /** Unlock clip playback on the learner's first tap or key press. */
   private unlock = () => {
     for (const type of ['pointerdown', 'keydown', 'touchend'] as const) window.removeEventListener(type, this.unlock, true);
     const a = this.element();
     if (!a.src) {
       a.src = SILENCE;
       a.play().then(() => (a.src === SILENCE ? a.pause() : undefined)).catch(() => {});
-    }
-    if ('speechSynthesis' in window && !speechSynthesis.speaking) {
-      const u = new SpeechSynthesisUtterance('');
-      u.volume = 0;
-      speechSynthesis.speak(u);
     }
   };
 
@@ -184,8 +179,9 @@ class Speech {
     if (voice) u.voice = voice;
     u.rate = 0.9 * rate;
     await new Promise<void>((resolve) => {
-      // Some voices never report the end (or never start outside a tap): do not wait forever.
-      const watchdog = setTimeout(() => finish(), 2500 + (text.length * 700) / Math.max(0.3, u.rate));
+      // Some voices never report the end (or never start outside a tap): give up well after any
+      // real utterance would have finished, so a "play all" loop cannot stall for good.
+      const watchdog = setTimeout(() => finish(), 8000 + (text.length * 1000) / Math.max(0.3, u.rate));
       const finish = () => {
         clearTimeout(watchdog);
         if (this.finish === finish) this.finish = null;
