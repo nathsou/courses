@@ -172,6 +172,50 @@ turns:
 end: Back to bed. 好好休息。
 ```
 
+Chinese diaries traditionally start with the date, the day and the weather. Here's one of 马克's.
+
+```read
+title: 马克's diary
+setting: A page from Mark's diary.
+text: |
+  十一月五日 星期二 阴
+  今天天气不太好，有点儿冷。
+  早上我很累，不想起床。
+  下午下雨了，我在家休息。
+  晚上小红给我打电话。
+  她说明天晴，不冷。
+  我们明天去看电影，我非常高兴！
+en: |
+  Tuesday 5 November, overcast
+  The weather wasn't great today; it was a bit cold.
+  In the morning I was very tired and didn't want to get up.
+  In the afternoon it started raining, so I rested at home.
+  In the evening Xiaohong phoned me.
+  She said tomorrow will be sunny and not cold.
+  We're going to see a film tomorrow, and I'm really happy!
+questions:
+  - claim: 今天天气很好。
+    answer: false
+    explain: 今天天气不太好 — it's tomorrow that should be sunny.
+  - claim: 下午马克在家休息。
+    answer: true
+  - prompt: Who phoned 马克 in the evening?
+    options: [王老师, 小红, 大卫]
+    answer: 1
+  - prompt: What will the weather be like tomorrow?
+    options: ["Sunny, not cold", Rainy and cold, Overcast]
+    answer: 0
+  - prompt: Why is 马克 so happy?
+    options: [He's going to see a film tomorrow., He isn't tired any more., It's snowing.]
+    answer: 0
+```
+
+```write
+title: Write the weather
+chars: 冷热雨
+recall: [天气, 下雨, 医生, 非常]
+```
+
 ```compose
 task: Describe today's weather and how you feel, in one or two sentences.
 target: Adjective sentences with 很, 非常, 有点儿 or 太…了 (no 是)

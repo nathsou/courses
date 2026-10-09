@@ -238,6 +238,53 @@ turns:
 end: Table booked. 明天见！
 ```
 
+Your teacher has changed the timetable. Read the message and work out when you need to turn up:
+
+```read
+title: A message from 王老师
+setting: A message from your Chinese teacher in the class group chat, sent on a Thursday.
+text: |
+  你们好！
+  明天是十月九号，星期五。
+  明天上午不上课。
+  下午两点半上课，四点下课。
+  星期六和星期天不上课。
+  星期一早上八点上课。
+  明天见！
+  王老师
+en: |
+  Hello, everyone!
+  Tomorrow is the 9th of October, a Friday.
+  There's no class tomorrow morning.
+  Class starts at half past two in the afternoon and finishes at four.
+  There's no class on Saturday or Sunday.
+  On Monday, class starts at eight in the morning.
+  See you tomorrow!
+  Wang Laoshi
+questions:
+  - claim: 明天上午上课。
+    answer: false
+    explain: 明天上午不上课 — no class tomorrow morning. It starts in the afternoon.
+  - prompt: What time does class start tomorrow?
+    options: ['2:00', '2:30', '4:00']
+    answer: 1
+  - prompt: How long is tomorrow's class?
+    options: [One hour, An hour and a half, Two hours]
+    answer: 1
+    explain: From 两点半 to 四点 is an hour and a half.
+  - claim: 星期天不上课。
+    answer: true
+  - prompt: What day of the week is 十月九号?
+    options: [星期四, 星期五, 星期六]
+    answer: 1
+```
+
+```write
+title: Write the date
+chars: 今天年点
+recall: [今天, 明天, 今年, 几点]
+```
+
 ```compose
 task: Write a sentence about your day, with at least one time in it. For example, when you get up or go to work.
 target: Time words before the verb, big to small (上午八点)

@@ -90,8 +90,29 @@ export function validateExercise(kind: string, d: unknown, where: string): strin
       if (!Array.isArray(d.paragraphs) || !d.paragraphs.length) errors.push(`${where}: needs paragraphs`);
       ((d.questions as unknown[]) ?? []).forEach((q, i) => chooseItem(q, `${where} question ${i + 1}`, errors));
       break;
-    case 'write':
-      if (!str(d.chars)) errors.push(`${where}: needs chars`);
+    case 'write': {
+      const han = (x: unknown) => str(x) && /\p{Script=Han}/u.test(String(x));
+      const recall = d.recall;
+      if (d.chars === undefined && recall === undefined) errors.push(`${where}: needs chars or recall`);
+      if (d.chars !== undefined && !han(d.chars)) errors.push(`${where}: chars needs Chinese characters`);
+      if (recall !== undefined) {
+        if (!Array.isArray(recall) || !recall.length) errors.push(`${where}: recall needs a list of words`);
+        else recall.forEach((w, i) => {
+          if (!han(String(w).split('|')[0])) errors.push(`${where} recall ${i + 1}: needs a Chinese word`);
+        });
+      }
+      break;
+    }
+    case 'read':
+      if (!str(d.text)) errors.push(`${where}: needs text`);
+      if (!Array.isArray(d.questions) || !d.questions.length) errors.push(`${where}: needs questions`);
+      else
+        (d.questions as unknown[]).forEach((q, i) => {
+          if (isObj(q) && 'claim' in q) {
+            if (!str(q.claim)) errors.push(`${where} question ${i + 1}: needs a claim`);
+            if (typeof q.answer !== 'boolean') errors.push(`${where} question ${i + 1}: answer must be true or false`);
+          } else chooseItem(q, `${where} question ${i + 1}`, errors);
+        });
       break;
     case 'speak':
       items(d, where, errors);

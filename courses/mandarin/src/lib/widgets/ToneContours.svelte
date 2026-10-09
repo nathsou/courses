@@ -7,6 +7,7 @@
   import { speech } from '$lib/audio/speech.svelte';
   import { mark } from '$lib/zh/pinyin';
   import Icon from '$lib/components/ui/Icon.svelte';
+  import { onDestroy } from 'svelte';
 
   let { base = 'ma', chars = '妈麻马骂', meanings = 'mum|hemp|horse|to scold' }: { base?: string; chars?: string; meanings?: string } = $props();
   const glosses = $derived(meanings.split('|'));
@@ -42,11 +43,26 @@
     if (active === i) setTimeout(() => (active === i ? (active = null) : null), 300);
   }
 
+  let run = 0;
+  let playingAll = $state(false);
+  function stopAll() {
+    run++;
+    playingAll = false;
+    active = null;
+    speech.stop();
+  }
+  onDestroy(() => { if (playingAll) stopAll(); });
+
   async function playAll() {
+    if (playingAll) return stopAll();
+    const id = ++run;
+    playingAll = true;
     for (let i = 0; i < 4; i++) {
+      if (id !== run) return;
       await play(i);
       await new Promise((r) => setTimeout(r, 300));
     }
+    if (id === run) playingAll = false;
   }
 </script>
 
@@ -54,7 +70,7 @@
   <div class="grid">
     {#each [1, 2, 3, 4] as tone, i (tone)}
       {@const tn = tone as 1 | 2 | 3 | 4}
-      <button class="card t{tone}" class:active={active === i} onclick={() => play(i)} aria-label="Tone {tone}: {mark(base, tn)}, {glosses[i]}. Play.">
+      <button class="card t{tone}" class:active={active === i} onclick={() => { if (playingAll) { run++; playingAll = false; } void play(i); }} aria-label="Tone {tone}: {mark(base, tn)}, {glosses[i]}. Play.">
         <svg viewBox="0 0 {W} {H}" aria-hidden="true">
           {#each [1, 2, 3, 4, 5] as l (l)}<line x1="4" x2={W - 4} y1={y(l)} y2={y(l)} />{/each}
           <path d={path(tn)} />
@@ -69,7 +85,7 @@
     {/each}
   </div>
   <figcaption class="ui">
-    <button class="btn small" onclick={playAll}><Icon name="play" size={14} />Play all four</button>
+    <button class="btn small" onclick={playAll}><Icon name={playingAll ? 'stop' : 'play'} size={14} />{playingAll ? 'Stop' : 'Play all four'}</button>
     The lines are the five pitch levels of your own voice, 5 at the top. Tap a card to hear it.
   </figcaption>
 </figure>

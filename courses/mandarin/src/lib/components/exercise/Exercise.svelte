@@ -12,6 +12,7 @@
   import Scene from './Scene.svelte';
   import Story from './Story.svelte';
   import Write from './Write.svelte';
+  import Read from './Read.svelte';
   import Speak from './Speak.svelte';
   import Roleplay from './Roleplay.svelte';
   import Compose from './Compose.svelte';
@@ -29,6 +30,7 @@
     scene: [Scene, 'Scene', 'chat'],
     story: [Story, 'Story', 'book'],
     write: [Write, 'Writing', 'brush'],
+    read: [Read, 'Reading', 'book'],
     speak: [Speak, 'Tone mirror', 'mic'],
     roleplay: [Roleplay, 'Conversation partner', 'chat'],
     compose: [Compose, 'Your own sentence', 'brush'],

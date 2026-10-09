@@ -12,7 +12,7 @@
  *   ::widget-name{prop=…}        an interactive widget from $lib/widgets (WidgetName.svelte)
  *   ```words                     a word list: one word per line, optional "| gloss"
  *   ```dialogue                  a dialogue: "Speaker: 中文 | English" per line
- *   ```choose / tones / pinyin / order / match / fill / sort / scene / story / write /
+ *   ```choose / tones / pinyin / order / match / fill / sort / scene / story / write / read /
  *      speak / roleplay / compose
  *                                exercises, as YAML (see src/lib/exercises/types.ts)
  *

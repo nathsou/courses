@@ -60,3 +60,19 @@ export const RADICALS: { r: string; name: string; means: string; chars: string }
   { r: '钅', name: 'metal', means: 'metal, money', chars: '钱钟铅银错' },
   { r: '纟', name: 'silk', means: 'thread, textiles', chars: '红给绿经级' },
 ];
+
+/**
+ * Names for character parts, where the generated glosses (content/data/components.json) are
+ * missing or misleading: strokes, and the squeezed side or top forms of whole characters.
+ */
+export const PART_NAMES: Record<string, string> = {
+  丨: 'vertical stroke', 丿: 'falling stroke', 丶: 'dot', 乛: 'hook stroke', 亅: 'hook', 乚: 'hook stroke',
+  丷: 'two dots', '⺍': 'small (top form of 小)', '⺌': 'small (top form of 小)', '⺊': 'divination (top form of 卜)',
+  '⺈': 'knife (top form of 刀)', 氺: 'water (form of 水)', 龶: 'life (top form of 生)', 吂: 'lose, die',
+  亻: 'person (side form of 人)', 氵: 'water (side form of 水)', 扌: 'hand (side form of 手)',
+  忄: 'heart (side form of 心)', 讠: 'speech (side form of 言)', 饣: 'food (side form of 食)',
+  钅: 'metal (side form of 金)', 纟: 'silk (side form of 糸)', 艹: 'grass (top form of 艸)',
+  辶: 'walking', 刂: 'knife (side form of 刀)', 礻: 'altar, spirit (side form of 示)', 衤: 'clothes (side form of 衣)',
+  犭: 'animal (side form of 犬)', 灬: 'fire (bottom form of 火)', 阝: 'hill or town', 宀: 'roof', 冖: 'cover',
+  亠: 'lid', 囗: 'enclosure', 彐: 'snout', 疒: 'sickness', 广: 'shelter', 尸: 'body', 夂: 'walking slowly',
+};

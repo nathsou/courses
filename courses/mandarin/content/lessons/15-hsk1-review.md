@@ -181,6 +181,59 @@ pairs:
   - [男, 女]
 ```
 
+Finally, a real message with words from all of Part 3. Try it without pinyin; every word in it is one you have met.
+
+```read
+title: An email from 小红
+setting: An email from a friend who is away visiting family.
+text: |
+  马克：
+  你好！我现在在上海，住在我姐姐家。
+  上海很大，也很漂亮。这儿的衣服很便宜，我想买很多！
+  可是今天天气不太好，下雨了，有点儿冷。
+  姐姐有两个孩子，一个儿子，一个女儿。
+  儿子八岁，女儿今年五岁了。
+  他们都很喜欢我，也喜欢听我唱歌。
+  我星期天坐飞机回北京。
+  星期一晚上你有时间吗？我们去饭店吃饭吧！
+  我想吃饺子，你呢？
+  小红
+en: |
+  Mark,
+  Hi! I'm in Shanghai at the moment, staying at my older sister's.
+  Shanghai is big, and very beautiful. Clothes are really cheap here; I want to buy loads!
+  But the weather isn't great today: it's started raining, and it's a bit cold.
+  My sister has two children, a son and a daughter.
+  Her son is eight, and her daughter turned five this year.
+  They both like me a lot, and they like listening to me sing.
+  I'm flying back to Beijing on Sunday.
+  Are you free on Monday evening? Let's go out for a meal!
+  I'd like dumplings. What about you?
+  Xiaohong
+questions:
+  - claim: 小红住在她哥哥家。
+    answer: false
+    explain: 住在我姐姐家 — she's staying with her older sister, not her brother.
+  - claim: 今天上海下雨了。
+    answer: true
+  - prompt: How old is her sister's daughter?
+    options: [五岁, 七岁, 八岁]
+    answer: 0
+    explain: 女儿今年五岁了. Eight (八岁) is the son.
+  - prompt: How is 小红 getting back to Beijing?
+    options: [坐火车, 坐飞机, 开车]
+    answer: 1
+  - prompt: What does 小红 suggest for Monday evening?
+    options: [Seeing a film, Eating at a restaurant, Phoning her sister]
+    answer: 1
+```
+
+```write
+title: Write the little words
+chars: 了们见
+recall: [大家, 再见, 我们, 女朋友]
+```
+
 ```scene
 title: Meeting a friend's family
 setting: 小红 has invited you to her parents' home for dinner. Her mother opens the door.

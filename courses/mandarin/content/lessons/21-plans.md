@@ -144,6 +144,50 @@ questions:
     answer: 1
 ```
 
+小林 has sent the rest of the birthday invitations by group message. Read it, then check the details.
+
+```read
+title: A birthday invitation
+setting: A message 小林 posts in a group chat of friends.
+text: |
+  大家好！
+  这个星期六是我的生日，我想请大家来我家玩儿。
+  下午三点我们一起在学校踢足球，晚上六点在我家吃饭。
+  我妈妈会做很多好吃的菜。
+  不要送东西，你们来就好！
+  不能来的朋友，请告诉我。
+  小林
+en: |
+  Hi everyone!
+  This Saturday is my birthday, and I'd like to invite you all round to my place.
+  At three in the afternoon we'll play football together at school, and at six in the evening we'll have dinner at my home.
+  My mum is going to make lots of delicious dishes.
+  Don't bring presents; just come!
+  If you can't come, please let me know.
+  Xiaolin
+questions:
+  - claim: 小林的生日是星期天。
+    answer: false
+    explain: 这个星期六是我的生日 — it's on Saturday.
+  - prompt: What will they do at three o'clock?
+    options: [踢足球, 吃饭, 跳舞]
+    answer: 0
+  - prompt: Who is cooking dinner?
+    options: [小林, 小林的妈妈, 小林的朋友们]
+    answer: 1
+  - claim: 小林希望朋友们送东西。
+    answer: false
+    explain: 不要送东西，你们来就好 — no presents, just come.
+  - claim: 不能来的朋友要告诉小林。
+    answer: true
+```
+
+```write
+title: Write the plan
+chars: 球笑花
+recall: [一起, 足球, 生日, 快乐]
+```
+
 ```compose
 task: Invite a friend to do something with you this weekend, with a time and place.
 target: 一起 + verb + 吧; time and place before the verb

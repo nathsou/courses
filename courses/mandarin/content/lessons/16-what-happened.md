@@ -192,6 +192,47 @@ questions:
     answer: 1
 ```
 
+Diaries are where 了 and 过 live. Watch for both in this one.
+
+```read
+title: 大卫's diary
+setting: A page from David's diary.
+text: |
+  十月三日 星期六 晴
+  今天我和小红去了北京大学。
+  我没去过那儿，这是第一次。
+  中午我们吃了饺子，我吃了十五个！
+  下午我们看了一个电影。
+  电影非常好看，可是我已经忘了它的名字。
+  晚上十点我回家了。我很累，可是很高兴。
+en: |
+  Saturday 3 October, sunny
+  Today Xiaohong and I went to Peking University.
+  I'd never been there; this was the first time.
+  At lunchtime we had dumplings. I ate fifteen!
+  In the afternoon we watched a film.
+  The film was really good, but I've already forgotten what it was called.
+  I got home at ten in the evening. I'm tired, but happy.
+questions:
+  - claim: 今天是大卫第一次去北京大学。
+    answer: true
+  - claim: 大卫记得那个电影的名字。
+    answer: false
+    explain: 我已经忘了它的名字 — he's already forgotten it.
+  - prompt: How many dumplings did 大卫 eat?
+    options: [五个, 十个, 十五个]
+    answer: 2
+  - prompt: When did 大卫 get home?
+    options: [中午, 下午, 晚上十点]
+    answer: 2
+```
+
+```write
+title: Write comings and goings
+chars: 进出门
+recall: [已经, 出门, 回来, 开始]
+```
+
 ```compose
 task: Write about something you did last weekend, and something you have never done.
 target: Verb + 了 for a completed action; 没 + verb + 过 for never

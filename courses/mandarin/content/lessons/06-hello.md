@@ -261,6 +261,49 @@ turns:
 end: 小红 smiles and pulls up a chair. Your first conversation in Chinese!
 ```
 
+That evening, a message pops up on your language-exchange app. Read it without pinyin first, and switch it on only if you get stuck.
+
+```read
+title: A message from 安娜
+setting: A message from another learner on a language-exchange app.
+text: |
+  你好！
+  我叫安娜。我不是中国人。
+  我是学生，我喜欢汉语。
+  小红是中国人，她也是学生。
+  我们是同学，也是朋友。
+  你呢？你是哪国人？你也是学生吗？
+  认识你很高兴！
+  安娜
+en: |
+  Hello!
+  My name is Anna. I'm not Chinese.
+  I'm a student, and I like Chinese.
+  Xiaohong is Chinese; she's a student too.
+  We're classmates, and friends too.
+  What about you? Where are you from? Are you a student too?
+  Nice to meet you!
+  Anna
+questions:
+  - claim: 安娜是中国人。
+    answer: false
+    explain: 我不是中国人 — Anna says she isn't Chinese. It's 小红 who is.
+  - claim: 小红是学生。
+    answer: true
+  - prompt: Who is Chinese?
+    options: [安娜, 小红, Both of them]
+    answer: 1
+  - prompt: What are 安娜 and 小红 to each other?
+    options: [Teacher and student, Classmates and friends, They have never met]
+    answer: 1
+```
+
+```write
+title: Write who you are
+chars: 你我是
+recall: [我们, 老师, 学生, 中国人]
+```
+
 ```roleplay
 title: Meet someone new
 setting: You are at a language exchange in Beijing. A friendly student sits down next to you.

@@ -28,10 +28,14 @@
   const hanCount = $derived(tokens.reduce((n, t) => n + (t.s?.length ?? 0), 0));
   const showPlay = $derived(play ?? (size === 'inline' && hanCount >= 4));
 
+  /** Words tapped open, whose pinyin stays visible in "pinyin on tap" mode. */
+  let shown = $state<Set<number>>(new Set());
+
   function openWord(e: Event, i: number) {
     const t = tokens[i]!;
     if (plain) return;
     e.stopPropagation();
+    if (!shown.has(i)) shown = new Set([...shown, i]);
     popover.open(t, e.currentTarget as HTMLElement);
     void speech.say(t.t);
   }
@@ -54,6 +58,7 @@
         onclick={(e) => openWord(e, i)}
         onkeydown={(e) => key(e, i)}
         class:playing={speech.playing === t.t}
+        class:shown={shown.has(i)}
         >{#each t.s as s, k (k)}<ruby class="t{s.tone}">{s.ch}<rt>{s.py}</rt></ruby>{/each}</span
       >{:else}<span class="punct">{t.t}</span>{/if}{/each}{#if showPlay}<PlayButton text={stripReadings(text)} small />{/if}</span
 >
@@ -87,10 +92,19 @@
   .word.plain {
     cursor: inherit;
   }
-  .word:not(.plain):hover,
   .word:focus-visible,
   .word.playing {
     background: color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+  /* Hover effects only where there is a real pointer: on iOS a :hover rule that changes what is
+     visible turns the first tap into a hover, so buttons containing Chinese needed two taps. */
+  @media (hover: hover) {
+    .word:not(.plain):hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+    }
+    :global(:root[data-pinyin='tap']) .zh:not(.show-py) .word:hover rt {
+      visibility: visible;
+    }
   }
   ruby {
     ruby-position: over;
@@ -117,7 +131,7 @@
   :global(:root[data-pinyin='tap']) .zh:not(.show-py) rt {
     visibility: hidden;
   }
-  :global(:root[data-pinyin='tap']) .zh:not(.show-py) .word:hover rt,
+  :global(:root[data-pinyin='tap']) .zh:not(.show-py) .word.shown rt,
   :global(:root[data-pinyin='tap']) .zh:not(.show-py) .word:focus-visible rt {
     visibility: visible;
   }

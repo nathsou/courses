@@ -5,6 +5,8 @@
   import { deck } from '$lib/srs/deck.svelte';
   import { popover } from './popover.svelte';
   import PlayButton from './PlayButton.svelte';
+  import CharBuild from './CharBuild.svelte';
+  import { build } from '$lib/zh/components';
   import Icon from '../ui/Icon.svelte';
   import { wordCardPosition } from './position';
 
@@ -58,9 +60,14 @@
     {#if parts.length}
       <ul class="parts">
         {#each parts as p, i (i)}
-          <li><span class="zh-font">{p.ch}</span> <span class="t{p.tone} pp">{p.py}</span> <span class="pg">{p.e?.g ?? ''}</span></li>
+          <li>
+            <span class="zh-font">{p.ch}</span> <span class="t{p.tone} pp">{p.py}</span> <span class="pg">{p.e?.g ?? ''}</span>
+            {#if build(p.ch)}<span class="built"><CharBuild ch={p.ch} head={false} /></span>{/if}
+          </li>
         {/each}
       </ul>
+    {:else if t.t.length === 1 && build(t.t)}
+      <p class="built single"><CharBuild ch={t.t} /></p>
     {/if}
     <div class="foot">
       {#if level}<span class="hsk" title={LIST_NAMES[settings.data.list]}>HSK {level}</span>{/if}
@@ -145,6 +152,17 @@
   .pg {
     color: var(--ink-2);
     font-size: 0.82rem;
+  }
+  .built {
+    display: block;
+    font-size: 0.8rem;
+    margin: 0 0 0.25rem 0.2rem;
+  }
+  .built.single {
+    margin: 0.5rem 0 0;
+    padding-top: 0.45rem;
+    border-top: 1px dashed var(--line);
+    font-size: 0.85rem;
   }
   .foot {
     display: flex;

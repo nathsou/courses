@@ -76,7 +76,10 @@ export function collect(root: string): Map<string, Tier> {
         walk(data, 'lessons');
         // Sentence builders speak the assembled sentence.
         if (c.lang === 'order') for (const it of data.items ?? []) add(String(it.zh).replace(/\s+/g, ''), 'lessons');
-        if (c.lang === 'write') for (const ch of String(data.chars)) add(ch, 'lessons');
+        if (c.lang === 'write') {
+          for (const ch of String(data.chars ?? '')) add(ch, 'lessons');
+          for (const w of data.recall ?? []) add(String(w).split('|')[0]!.trim(), 'lessons');
+        }
       }
     });
   }

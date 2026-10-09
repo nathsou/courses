@@ -153,6 +153,45 @@ questions:
     answer: 1
 ```
 
+Here's the note that came back with 马克's exam paper. Watch for 得, 有点儿 and 一点儿.
+
+```read
+title: A note from 王老师
+setting: A note written at the top of 马克's marked exam paper.
+text: |
+  马克，你好！
+  这次考试你考得很好，是我们班第二名！
+  你汉语说得很好，汉字也写得很漂亮。
+  可是你写得有点儿慢，有两个题没做完。
+  下次请写得快一点儿。
+  王老师
+en: |
+  Hello Mark,
+  You did very well in this exam: second in our class!
+  You speak Chinese very well, and your characters are beautiful too.
+  But you write a bit slowly, and you didn't finish two of the questions.
+  Next time, please write a bit faster.
+  Teacher Wang
+questions:
+  - prompt: Where did 马克 come in his class?
+    options: [第一名, 第二名, 第三名]
+    answer: 1
+  - claim: 马克的汉字写得很漂亮。
+    answer: true
+  - claim: 马克写字写得很快。
+    answer: false
+    explain: 你写得有点儿慢 — he writes a bit slowly, which is why he didn't finish two questions.
+  - prompt: What does 王老师 want next time?
+    options: [Neater characters, Faster writing, More speaking]
+    answer: 1
+```
+
+```write
+title: Write it well
+chars: 得考教
+recall: [考试, 教室, 书包, 自己]
+```
+
 ```compose
 task: Say one thing you do well and one thing you don't do very well.
 target: Verb (+ object) + 得 + description

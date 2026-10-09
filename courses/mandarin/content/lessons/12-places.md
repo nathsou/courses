@@ -195,6 +195,45 @@ turns:
 end: You pay by scanning a QR code on the seat back and jump out.
 ```
 
+Now a friend tells you how to find her new flat. Read it without pinyin first.
+
+```read
+title: A message from 小红
+setting: A text message from a friend who has just moved.
+text: |
+  大卫，你好！
+  我的新家在学校后面，超市旁边。
+  我家前面有一个书店，书店的左边是医院。
+  明天下午三点你来我家，好吗？
+  你坐出租车到超市，给我打电话。
+  小红
+en: |
+  Hi David!
+  My new home is behind the school, next to the supermarket.
+  There's a bookshop in front of my place, and the hospital is to the left of the bookshop.
+  Come to my place tomorrow at three in the afternoon, OK?
+  Take a taxi to the supermarket and give me a call.
+  Xiaohong
+questions:
+  - claim: 小红的家在学校前面。
+    answer: false
+    explain: 在学校后面 — it's behind the school. It's the bookshop that is in front of her home.
+  - claim: 小红家前面有一个书店。
+    answer: true
+  - prompt: What is next to 小红's home?
+    options: [The school, The supermarket, The hospital]
+    answer: 1
+  - prompt: What should 大卫 do when he gets to the supermarket?
+    options: [Phone 小红, Take a taxi, Go into the bookshop]
+    answer: 0
+```
+
+```write
+title: Write where you're going
+chars: 在去回
+recall: [回家, 学校, 医院, 这儿]
+```
+
 ```roleplay
 title: Ask for directions
 setting: You're outside a metro station in Shanghai and need to find a bookshop.

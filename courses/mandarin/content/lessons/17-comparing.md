@@ -165,6 +165,47 @@ items:
     answer: 1
 ```
 
+Now a real decision. 安娜 is stuck in a shop and asks a friend for help.
+
+```read
+title: Red or white?
+setting: A text message from a friend who is out shopping.
+text: |
+  小红，我在商店里，看了两件衣服。
+  红色的三百块，白色的两百块。
+  红色的比白色的贵一百块，可是也好看多了。
+  白色的跟我家里的一件一样，我已经有了。
+  这儿也有绿色的，可是太长了。
+  你觉得我买红色的还是白色的？
+  安娜
+en: |
+  Xiaohong, I'm in a shop and I've looked at two tops.
+  The red one is 300 kuai, the white one is 200 kuai.
+  The red one is 100 kuai more expensive than the white one, but it's much nicer too.
+  The white one is the same as one I've got at home; I already have it.
+  There's a green one here as well, but it's too long.
+  Do you think I should buy the red one or the white one?
+  Anna
+questions:
+  - claim: 白色的衣服比红色的贵。
+    answer: false
+    explain: 红色的比白色的贵一百块 — the red one costs 100 kuai more.
+  - claim: 绿色的衣服太长了。
+    answer: true
+  - prompt: How much is the red one?
+    options: [一百块, 两百块, 三百块]
+    answer: 2
+  - prompt: Why doesn't 安娜 want the white one?
+    options: [It's too long., She already has one just like it., It's too expensive.]
+    answer: 1
+```
+
+```write
+title: Write a comparison
+chars: 比高快
+recall: [一样, 红色, 不错, 还是]
+```
+
 ```compose
 task: Compare two people, places or things you know well.
 target: A 比 B + adjective (+ amount); or A 跟 B 一样

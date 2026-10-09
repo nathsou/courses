@@ -46,7 +46,8 @@ Fenced YAML blocks; shapes are in `src/lib/exercises/types.ts` and checked by
 | `sort` | Deal items into buckets: `items: [[text, bucket], …]`. |
 | `scene` | A conversation with choices; wrong options need an in-character `reply`. |
 | `story` | Graded reader: paragraphs (`zh`, `en`) and comprehension `questions`. |
-| `write` | Stroke-order writing for `chars`. |
+| `write` | Writing. `chars`: watch each character's stroke order, then trace it. `recall`: words to write from memory (hear it, see the pinyin and meaning, write on an empty grid); `米饭 \| rice` overrides the gloss. |
+| `read` | Reading comprehension: a short real-world `text` (use `text: \|` for several lines), an optional `setting` and `en`, then `questions`: choose items, or `{claim: 中文, answer: true/false}` for HSK-style 对/错. Pinyin is off until the learner switches it on. |
 | `speak` | The tone mirror on each item. |
 | `roleplay`, `compose` | Optional AI partner (needs the learner's API key). |
 

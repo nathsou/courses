@@ -97,6 +97,7 @@
     <p class="sample">Preview: <Zh text="我喜欢学汉语。" size="md" /></p>
     <label class="row ui"><input type="checkbox" checked={settings.data.toneColours} onchange={(e) => settings.set('toneColours', e.currentTarget.checked)} /> Colour pinyin by tone (<span class="t1 c">1</span> <span class="t2 c">2</span> <span class="t3 c">3</span> <span class="t4 c">4</span> <span class="t5 c">neutral</span>)</label>
     <label class="row ui"><input type="checkbox" checked={settings.data.translations} onchange={(e) => settings.set('translations', e.currentTarget.checked)} /> Show English translations in dialogues straight away</label>
+    <label class="row ui"><input type="checkbox" checked={settings.data.charParts} onchange={(e) => settings.set('charParts', e.currentTarget.checked)} /> Show how characters are built (meaning and sound parts) in word lists</label>
   </section>
 
   <section class="card">

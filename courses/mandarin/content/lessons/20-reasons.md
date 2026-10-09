@@ -135,6 +135,52 @@ items:
     answer: 0
 ```
 
+Sooner or later you'll need to write a message like this one: who you are, why you can't come, and when you hope to be back.
+
+```read
+title: An email to 王老师
+setting: An email 马克 sends his Chinese teacher early in the morning.
+text: |
+  王老师：
+  您好！我是马克。
+  因为我生病了，所以今天不能来上课。
+  我昨天晚上头疼，今天眼睛也有点儿疼。
+  医生说我可能太累了，让我在家休息两天。
+  虽然我不能来上课，但是我会在家学习。
+  希望星期五能来上课。
+  马克
+en: |
+  Dear Teacher Wang,
+  Hello! It's Mark.
+  Because I'm ill, I can't come to class today.
+  I had a headache last night, and today my eyes hurt a bit too.
+  The doctor says I'm probably overtired, and told me to rest at home for two days.
+  Although I can't come to class, I'll study at home.
+  I hope I can come to class on Friday.
+  Mark
+questions:
+  - claim: 马克的手很疼。
+    answer: false
+    explain: It's his head (头疼) and his eyes (眼睛也有点儿疼), not his hands.
+  - prompt: What did the doctor tell 马克 to do?
+    options: [吃药, 在家休息两天, 去医院]
+    answer: 1
+  - claim: 医生说马克可能太累了。
+    answer: true
+  - claim: 马克在家不学习。
+    answer: false
+    explain: 虽然我不能来上课，但是我会在家学习 — he'll study at home.
+  - prompt: When does 马克 hope to be back in class?
+    options: [明天, 星期五, 下个星期]
+    answer: 1
+```
+
+```write
+title: Write what's wrong
+chars: 因疼药
+recall: [因为, 所以, 头疼, 身体]
+```
+
 ```scene
 title: The doctor's
 setting: A clinic in Shanghai. You've had a bad cold for three days.
