@@ -1,0 +1,36 @@
+alias:
+  term: alias
+  definition: "Two names that may refer to the same storage, such as two variables pointing to one object."
+  chapter: points-to-and-datalog
+points-to analysis:
+  term: points-to analysis
+  definition: "An analysis that computes, for each variable and field, the set of abstract objects it may refer to."
+  chapter: points-to-and-datalog
+allocation site:
+  term: allocation site
+  definition: "The expression that creates an object; points-to analyses use it as the name of every object it creates."
+  chapter: points-to-and-datalog
+Andersen's analysis:
+  term: Andersen's analysis
+  definition: "Inclusion-based points-to analysis: an assignment v = w means that v may point to everything w may point to."
+  chapter: points-to-and-datalog
+Steensgaard's analysis:
+  term: Steensgaard's analysis
+  definition: "Unification-based points-to analysis: an assignment merges what both sides point to into one class, solved in almost linear time with union-find."
+  chapter: points-to-and-datalog
+union-find:
+  term: union-find
+  definition: "A data structure for disjoint sets supporting near-constant-time merging (union) and representative lookup (find)."
+  chapter: points-to-and-datalog
+Datalog:
+  term: Datalog
+  definition: "A logic language of facts and rules without functions, whose programs mean the least set of facts closed under their rules, computed bottom-up."
+  chapter: points-to-and-datalog
+semi-naive evaluation:
+  term: semi-naive evaluation
+  definition: "Bottom-up Datalog evaluation that only fires a rule on combinations including at least one fact new since the previous round."
+  chapter: points-to-and-datalog
+object sensitivity:
+  term: object sensitivity
+  definition: "A form of context sensitivity for object-oriented code that distinguishes the analysis of a method by the receiver objects of the calls that lead to it."
+  chapter: points-to-and-datalog

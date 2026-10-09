@@ -28,3 +28,7 @@ export { default as DomainCompare } from '$lib/components/widgets/DomainCompare.
 export { default as CallGraphView } from '$lib/components/widgets/CallGraphView.svelte';
 /** The exploded supergraph of an IFDS taint problem: `:::ifds-view` + a ```js block. */
 export { default as IfdsView } from '$lib/components/widgets/IfdsView.svelte';
+/** Andersen's and Steensgaard's points-to graphs for a snippet: `:::points-to-view` + a ```js block. */
+export { default as PointsToView } from '$lib/components/widgets/PointsToView.svelte';
+/** Facts, rules and queries, evaluated naively and semi-naively: `:::datalog-console` + a ```text block. */
+export { default as DatalogConsole } from '$lib/components/widgets/DatalogConsole.svelte';
