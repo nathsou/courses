@@ -32,3 +32,5 @@ export { default as IfdsView } from '$lib/components/widgets/IfdsView.svelte';
 export { default as PointsToView } from '$lib/components/widgets/PointsToView.svelte';
 /** Facts, rules and queries, evaluated naively and semi-naively: `:::datalog-console` + a ```text block. */
 export { default as DatalogConsole } from '$lib/components/widgets/DatalogConsole.svelte';
+/** SQL, HTML, shell, path and request injection, simulated: `::injection-playground{kinds="sql,html"}`. */
+export { default as InjectionPlayground } from '$lib/components/widgets/InjectionPlayground.svelte';
