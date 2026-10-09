@@ -1,0 +1,42 @@
+king1976:
+  authors: J. C. King
+  year: 1976
+  title: Symbolic execution and program testing
+  venue: "Communications of the ACM, 19(7), 385–394"
+  url: https://doi.org/10.1145/360248.360252
+cook1971:
+  authors: S. A. Cook
+  year: 1971
+  title: The complexity of theorem-proving procedures
+  venue: "Proceedings of the 3rd ACM Symposium on Theory of Computing (STOC '71), 151–158"
+  url: https://doi.org/10.1145/800157.805047
+marquessilva1999:
+  authors: J. P. Marques-Silva, K. A. Sakallah
+  year: 1999
+  title: "GRASP: a search algorithm for propositional satisfiability"
+  venue: "IEEE Transactions on Computers, 48(5), 506–521"
+  url: https://doi.org/10.1109/12.769433
+moskewicz2001:
+  authors: M. W. Moskewicz, C. F. Madigan, Y. Zhao, L. Zhang, S. Malik
+  year: 2001
+  title: "Chaff: engineering an efficient SAT solver"
+  venue: "Proceedings of the 38th Design Automation Conference (DAC 2001), 530–535"
+  url: https://doi.org/10.1145/378239.379017
+een2003:
+  authors: N. Eén, N. Sörensson
+  year: 2003
+  title: An extensible SAT-solver
+  venue: "Theory and Applications of Satisfiability Testing (SAT 2003), LNCS 2919, 502–518"
+  url: https://doi.org/10.1007/978-3-540-24605-3_37
+cadar2008:
+  authors: C. Cadar, D. Dunbar, D. Engler
+  year: 2008
+  title: "KLEE: unassisted and automatic generation of high-coverage tests for complex systems programs"
+  venue: "Proceedings of the 8th USENIX Symposium on Operating Systems Design and Implementation (OSDI '08), 209–224"
+  url: https://www.usenix.org/legacy/event/osdi08/tech/full_papers/cadar/cadar.pdf
+clangsa:
+  authors: The LLVM Project
+  year: 2025
+  title: Clang Static Analyzer
+  venue: "Documentation"
+  url: https://clang.llvm.org/docs/ClangStaticAnalyzer.html

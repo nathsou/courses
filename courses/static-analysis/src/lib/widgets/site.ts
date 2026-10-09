@@ -38,3 +38,5 @@ export { default as InjectionPlayground } from '$lib/components/widgets/Injectio
 export { default as TaintTracer } from '$lib/components/widgets/TaintTracer.svelte';
 /** Leak a secret through control flow; taint against information flow: `:::leak-a-bit` + a ```js block. */
 export { default as LeakABit } from '$lib/components/widgets/LeakABit.svelte';
+/** Symbolic execution as a tree of paths, with inputs and findings: `:::path-tree{bound="4"}` + a ```js block. */
+export { default as PathTree } from '$lib/components/widgets/PathTree.svelte';

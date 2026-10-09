@@ -1,0 +1,40 @@
+symbolic execution:
+  term: symbolic execution
+  definition: "Running a program on symbols instead of values, one path at a time, with a solver deciding which paths are possible."
+  chapter: symbolic-execution
+path condition:
+  term: path condition
+  definition: "The conjunction of the branch conditions along a path, as a formula over the inputs. The path exists if and only if the formula is satisfiable."
+  chapter: symbolic-execution
+path explosion:
+  term: path explosion
+  definition: "The exponential growth of the number of paths with branches and loops, the main limit of symbolic execution."
+  chapter: symbolic-execution
+SAT:
+  term: SAT
+  definition: "The Boolean satisfiability problem: does an assignment make every clause of a formula true? NP-complete, yet routinely solved for large structured instances."
+  chapter: symbolic-execution
+unit propagation:
+  term: unit propagation
+  definition: "In a SAT solver: when all literals of a clause but one are false, setting the last one true, and repeating."
+  chapter: symbolic-execution
+CDCL:
+  term: CDCL
+  definition: "Conflict-driven clause learning: SAT solving that learns a clause from each conflict and backjumps, the basis of modern solvers."
+  chapter: symbolic-execution
+SMT:
+  term: SMT
+  definition: "Satisfiability modulo theories: solvers that combine SAT with decision procedures for arithmetic, bit-vectors, arrays and more."
+  chapter: symbolic-execution
+bit-blasting:
+  term: bit-blasting
+  definition: "Translating fixed-width integer formulas into SAT by representing every bit as a Boolean variable and every operation as a circuit."
+  chapter: symbolic-execution
+Tseitin transformation:
+  term: Tseitin transformation
+  definition: "Encoding a circuit as clauses with one new variable per gate, keeping the formula linear in the size of the circuit."
+  chapter: symbolic-execution
+under-approximation:
+  term: under-approximation
+  definition: "An analysis that considers only some of a program's behaviours: what it reports is real, but it may miss behaviours. The opposite of over-approximation."
+  chapter: symbolic-execution
