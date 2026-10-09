@@ -1,0 +1,16 @@
+definition:
+  term: definition
+  definition: "In dataflow analysis: a statement that gives a variable a value, including declarations, assignments and parameters."
+  chapter: reaching-definitions
+reaching definition:
+  term: reaching definition
+  definition: "A definition of a variable from which some path reaches the current point without redefining the variable."
+  chapter: reaching-definitions
+use-definition chain:
+  term: use-definition chain
+  definition: "The link from a read of a variable to the definitions that reach it."
+  chapter: reaching-definitions
+value set:
+  term: value set
+  definition: "The set of literal values a variable may hold at a point, or unknown: the facts of SonarJS's reaching-definitions helper, used by S4165."
+  chapter: reaching-definitions
