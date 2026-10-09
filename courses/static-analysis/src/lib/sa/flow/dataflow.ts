@@ -27,6 +27,10 @@ export interface Analysis<T> {
   edge?(from: CfgNode, to: number, fact: T, cfg: Cfg): T;
   /** Optional widening, applied at loop heads after the first visits (Part V). */
   widen?(previous: T, next: T): T;
+  /** Optional narrowing, applied in decreasing rounds after the widened fixpoint (Part V). */
+  narrow?(previous: T, next: T): T;
+  /** Facts that are alarms at a node (false alarms included), given the fact before it (Part V). */
+  alarms?(node: CfgNode, fact: T, cfg: Cfg): string[];
 }
 
 export interface Step<T> {
@@ -39,6 +43,8 @@ export interface Step<T> {
   changed: boolean;
   /** The worklist after the step. */
   worklist: number[];
+  /** Which phase of the solver made the step. */
+  phase?: 'ascend' | 'narrow';
 }
 
 export interface Solution<T> {
@@ -54,7 +60,16 @@ export interface Solution<T> {
  * Solves `analysis` on `cfg` with a worklist, initialised with every node in reverse postorder (forward) or
  * postorder (backward). `output[n]` is the fact flowing out of `n` in the analysis's direction.
  */
-export function solve<T>(cfg: Cfg, analysis: Analysis<T>, maxSteps = 5000): Solution<T> {
+export interface SolveOptions {
+  maxSteps?: number;
+  /** Use the analysis's widening (default true, if it has one). */
+  widening?: boolean;
+  /** Decreasing rounds with the analysis's narrowing after the fixpoint (default 0). */
+  narrowRounds?: number;
+}
+
+export function solve<T>(cfg: Cfg, analysis: Analysis<T>, options: SolveOptions | number = {}): Solution<T> {
+  const { maxSteps = 5000, widening = true, narrowRounds = 0 } = typeof options === 'number' ? { maxSteps: options } : options;
   const { lattice } = analysis;
   const forward = analysis.direction === 'forward';
   const order = forward ? reversePostorder(cfg) : reversePostorder(cfg).reverse();
@@ -76,7 +91,7 @@ export function solve<T>(cfg: Cfg, analysis: Analysis<T>, maxSteps = 5000): Solu
     let out = analysis.transfer(cfg.nodes[n]!, inFact, cfg);
     const count = (visits.get(n) ?? 0) + 1;
     visits.set(n, count);
-    if (analysis.widen && loopHeads.has(n) && count > 2) out = analysis.widen(output[n]!, out);
+    if (widening && analysis.widen && loopHeads.has(n) && count > 2) out = analysis.widen(output[n]!, out);
     const before = output[n]!;
     const changed = !lattice.equal(before, out);
     if (changed) {
@@ -85,5 +100,21 @@ export function solve<T>(cfg: Cfg, analysis: Analysis<T>, maxSteps = 5000): Solu
     }
     steps.push({ node: n, input: inFact, before, after: out, changed, worklist: [...worklist] });
   }
-  return { input, output, steps, truncated: worklist.length > 0 };
+  const truncated = worklist.length > 0;
+  // Narrowing: recompute every node in order, keeping what the narrowing operator allows, for a few rounds.
+  if (!truncated && analysis.narrow) {
+    for (let round = 0; round < narrowRounds; round++) {
+      for (const n of order) {
+        const along = (p: number) => (forward && analysis.edge ? analysis.edge(cfg.nodes[p]!, n, output[p]!, cfg) : output[p]!);
+        const inFact = n === start ? analysis.boundary(cfg) : preds(n).reduce((acc, p) => lattice.join(acc, along(p)), lattice.bottom);
+        input[n] = inFact;
+        const before = output[n]!;
+        const out = analysis.narrow(before, analysis.transfer(cfg.nodes[n]!, inFact, cfg));
+        const changed = !lattice.equal(before, out);
+        if (changed) output[n] = out;
+        steps.push({ node: n, input: inFact, before, after: out, changed, worklist: [], phase: 'narrow' });
+      }
+    }
+  }
+  return { input, output, steps, truncated };
 }

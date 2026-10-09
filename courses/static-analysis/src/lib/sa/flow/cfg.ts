@@ -27,6 +27,8 @@ export interface CfgNode {
   value?: estree.Expression;
   /** For `cond` nodes: the test expression. */
   test?: estree.Expression;
+  /** For `expr`, `return` and `throw` nodes: the expression evaluated. */
+  expr?: estree.Node;
 }
 
 export interface Cfg {
@@ -132,7 +134,7 @@ export function readsOf(node: estree.Node | null | undefined, vars: Set<string>)
         return;
       default:
         for (const [k, v] of Object.entries(n)) {
-          if (k === 'type' || k === 'range' || k === 'loc') continue;
+          if (k === 'type' || k === 'range' || k === 'loc' || k === 'parent' || k === 'typeAnnotation' || k === 'returnType' || k === 'typeParameters' || k === 'typeArguments') continue;
           if (Array.isArray(v)) v.forEach((c) => c && typeof c === 'object' && typeof (c as estree.Node).type === 'string' && visit(c as estree.Node));
           else if (v && typeof v === 'object' && typeof (v as estree.Node).type === 'string') visit(v as estree.Node);
         }
@@ -214,18 +216,18 @@ export function lowerFunction(fn: FunctionNode, source: string): Cfg {
         }
         if (e.type === 'AssignmentExpression' && e.left.type !== 'Identifier') {
           // `obj.p = v` writes memory, not a variable: it reads obj (and v).
-          return link(add('expr', text(s), range(s), [], readsOf(e, vars)));
+          return link(add('expr', text(s), range(s), [], readsOf(e, vars), { expr: e }));
         }
-        return link(add('expr', text(s), range(s), [], readsOf(e, vars)));
+        return link(add('expr', text(s), range(s), [], readsOf(e, vars), { expr: e }));
       }
       case 'ReturnStatement': {
-        const id = add('return', text(s), range(s), [], readsOf(s.argument, vars));
+        const id = add('return', text(s), range(s), [], readsOf(s.argument, vars), s.argument ? { expr: s.argument } : {});
         for (const f of from) edge(f, id);
         edge(id, exit);
         return [];
       }
       case 'ThrowStatement': {
-        const id = add('throw', text(s), range(s), [], readsOf(s.argument, vars));
+        const id = add('throw', text(s), range(s), [], readsOf(s.argument, vars), { expr: s.argument });
         for (const f of from) edge(f, id);
         edge(id, exit);
         return [];

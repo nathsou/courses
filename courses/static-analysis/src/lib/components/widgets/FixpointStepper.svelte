@@ -12,7 +12,10 @@
   import { solve, type Analysis } from '$lib/sa/flow/dataflow';
   import { ANALYSES, type AnalysisKey } from '$lib/sa/flow/analyses';
 
-  let { code, analysis = 'constants', n, caption, title, subtitle }: { code: string; analysis?: AnalysisKey | string; n?: string; caption?: string; title?: string; subtitle?: string } = $props();
+  let { code, analysis = 'constants', controls = '', n, caption, title, subtitle }: { code: string; analysis?: AnalysisKey | string; controls?: string; n?: string; caption?: string; title?: string; subtitle?: string } = $props();
+  const shown = $derived(new Set(controls.split(',').map((c) => c.trim())));
+  let widening = $state(true);
+  let narrowing = $state(false);
 
   // svelte-ignore state_referenced_locally
   let source = $state(code);
@@ -28,7 +31,7 @@
       return { error: e instanceof CfgError ? e.message : String(e) };
     }
   });
-  const solution = $derived(built.cfg && chosen ? solve(built.cfg, chosen) : undefined);
+  const solution = $derived(built.cfg && chosen ? solve(built.cfg, chosen, { widening, narrowRounds: narrowing ? 2 : 0 }) : undefined);
   $effect(() => {
     void solution;
     k = 0;
@@ -66,7 +69,23 @@
   const facts = $derived.by(() => {
     if (!built.cfg || !current || !chosen) return {};
     const cfg = built.cfg;
-    return Object.fromEntries(cfg.nodes.map((node) => [`n${node.id}`, current[node.id] === undefined ? '·' : `${chosen.direction === 'forward' ? '↓' : '↑'} ${chosen.lattice.format(current[node.id], cfg)}`]));
+    return Object.fromEntries(
+      cfg.nodes.map((node) => {
+        const fact = current[node.id] === undefined ? '·' : `${chosen.direction === 'forward' ? '↓' : '↑'} ${chosen.lattice.format(current[node.id], cfg)}`;
+        const warn = alarms.get(node.id);
+        return [`n${node.id}`, warn ? `⚠ ${fact}` : fact];
+      }),
+    );
+  });
+  /** Alarms at the fixpoint, from the facts flowing into each node. */
+  const alarms = $derived.by(() => {
+    const out = new Map<number, string[]>();
+    if (!built.cfg || !solution || !chosen?.alarms || !done) return out;
+    for (const node of built.cfg.nodes) {
+      const found = chosen.alarms(node, solution.input[node.id], built.cfg);
+      if (found.length) out.set(node.id, found);
+    }
+    return out;
   });
   const fmt = (v: unknown) => (built.cfg && chosen ? chosen.lattice.format(v, built.cfg) : '');
   const nodeText = (id: number) => built.cfg?.nodes[id]?.text ?? '';
@@ -76,6 +95,12 @@
   <div class="fs">
     <div class="left">
       <CodeEditor bind:this={editor} value={source} lang="js" minLines={8} label="Function" onchange={(c) => (source = c)} highlight={step && built.cfg?.nodes[step.node]?.range ? { from: built.cfg.nodes[step.node]!.range![0], to: built.cfg.nodes[step.node]!.range![1] } : null} />
+      {#if shown.has('widening') || shown.has('narrowing')}
+        <div class="toggles ui">
+          {#if shown.has('widening')}<label><input type="checkbox" bind:checked={widening} /> widening at loop heads</label>{/if}
+          {#if shown.has('narrowing')}<label><input type="checkbox" bind:checked={narrowing} disabled={!widening} /> narrowing after the fixpoint</label>{/if}
+        </div>
+      {/if}
       <div class="controls ui">
         <button onclick={() => (k = Math.max(0, k - 1))} disabled={k === 0}>Back</button>
         <button class="primary" onclick={() => (k = Math.min(solution?.steps.length ?? 0, k + 1))} disabled={done}>Step</button>
@@ -89,7 +114,7 @@
         {:else if !chosen}
           <p class="err">Unknown analysis “{analysis}”.</p>
         {:else if step}
-          <p><strong>Node n{step.node}</strong> <code>{nodeText(step.node)}</code></p>
+          <p><strong>Node n{step.node}</strong> <code>{nodeText(step.node)}</code>{#if step.phase === 'narrow'} <span class="phase">narrowing</span>{/if}</p>
           <p>{chosen.direction === 'forward' ? (chosen.edge ? 'In (join over the incoming edges, each refined by its branch)' : 'In (join of predecessors)') : 'Out (join of successors)'}: <code>{fmt(step.input)}</code></p>
           <p>{chosen.direction === 'forward' ? 'Out' : 'In'}: <code>{fmt(step.before)}</code> → <code>{fmt(step.after)}</code> {#if step.changed}<span class="chg">changed: its {chosen.direction === 'forward' ? 'successors' : 'predecessors'} go back on the worklist</span>{:else}<span class="same">unchanged</span>{/if}</p>
           <p>Worklist: {#if step.worklist.length}{#each step.worklist as w (w)}<code class="wl">n{w}</code>{/each}{:else}<em>empty: fixpoint reached</em>{/if}</p>
@@ -97,6 +122,13 @@
           <p>Every fact starts at ⊥. The worklist holds every node; press <strong>Step</strong>.</p>
         {/if}
         {#if done && solution && !solution.truncated}<p class="fix">Fixpoint after {solution.steps.length} steps.</p>{/if}
+        {#if alarms.size}
+          <ul class="alarms">
+            {#each [...alarms] as [id, list] (id)}{#each list as a, j (j)}<li>⚠ <code>{nodeText(id)}</code>: {a}</li>{/each}{/each}
+          </ul>
+        {:else if done && chosen?.alarms && solution && !solution.truncated}
+          <p class="fix">No alarms: every division and assertion is proven safe.</p>
+        {/if}
         {#if solution?.truncated}<p class="err">Stopped after {solution.steps.length} steps without reaching a fixpoint.</p>{/if}
       </div>
     </div>
@@ -178,6 +210,26 @@
   .fix {
     color: var(--ok);
     font-weight: 600;
+  }
+  .toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    font-size: 0.84rem;
+    margin-top: 0.5rem;
+  }
+  .phase {
+    font-size: 0.75rem;
+    color: var(--accent-ink);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 0 0.4rem;
+  }
+  .alarms {
+    list-style: none;
+    padding: 0;
+    margin: 0.3rem 0;
+    color: var(--maybe);
   }
   .err {
     color: var(--bad);
