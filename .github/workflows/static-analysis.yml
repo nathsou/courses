@@ -1,0 +1,39 @@
+name: Every Path at Once — checks
+
+# Tests, type checks, the SonarJS reference check and a build for courses/static-analysis. (Deployment is in deploy.yml.)
+on:
+  push:
+    branches: [main]
+    paths: ['courses/static-analysis/**', '.github/workflows/static-analysis.yml']
+  pull_request:
+    paths: ['courses/static-analysis/**', '.github/workflows/static-analysis.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: courses/static-analysis
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --experimental-strip-types
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: courses/static-analysis/package-lock.json
+      - run: npm ci
+      - name: Engines, widgets, exercises and content tests
+        run: npm test
+      - name: Type-check (svelte-check)
+        run: npm run check
+      - name: Every SonarJS reference resolves at the pinned commit
+        run: npm run check:sources
+      - name: Build
+        run: npm run build

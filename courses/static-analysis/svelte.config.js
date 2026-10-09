@@ -3,10 +3,10 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { markdown } from './tools/markdown/preprocess.ts';
 
 /**
- * Base path: BASE_PATH if set, otherwise the collection's COURSES_BASE_PATH + /formal-verification when built from
+ * Base path: BASE_PATH if set, otherwise the collection's COURSES_BASE_PATH + /static-analysis when built from
  * the monorepo root (scripts/build.mjs), otherwise the domain root (local dev).
  */
-const base = process.env.BASE_PATH ?? (process.env.COURSES_BASE_PATH !== undefined ? `${process.env.COURSES_BASE_PATH}/formal-verification` : '');
+const base = process.env.BASE_PATH ?? (process.env.COURSES_BASE_PATH !== undefined ? `${process.env.COURSES_BASE_PATH}/static-analysis` : '');
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {

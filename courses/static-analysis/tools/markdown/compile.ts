@@ -552,7 +552,7 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
         const link = node as Link;
         if (link.url.startsWith('/') && !link.url.startsWith('//')) {
           // Links to the other courses of the collection live beside this course, not inside it: go up one level.
-          const sibling = /^\/(astrophysics|cic|proofs-are-programs|compiler-backends|language-models|incompleteness|elements|proofs|digital-circuits|particle-physics|mandarin|human-evolution|formal-verification|memory-management)\//.test(link.url);
+          const sibling = /^\/(astrophysics|cic|proofs-are-programs|compiler-backends|language-models|incompleteness|elements|proofs|digital-circuits|particle-physics|mandarin|human-evolution|formal-verification|memory-management|static-analysis)\//.test(link.url);
           link.url = sibling ? `__COURSE_BASE__/..${link.url}` : `__COURSE_BASE__${link.url}`;
         }
         return;
