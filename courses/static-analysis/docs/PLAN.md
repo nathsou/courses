@@ -210,3 +210,8 @@ See §10 at the end of the file (updated as chapters land).
 ## 10. Status log
 
 - 2026-10-08: plan written; browser spike (ESLint 9 + typescript-eslint + TypeScript type checker in a worker) works.
+- 2026-10-09: Track A complete (chapters 0–21), with exercises checked in CI, the corpus with expected
+  issues for nine rules (`npm run corpus:sync`), and `npm run check:sources` (74 references resolve). Widgets
+  built: AST explorer, selector lab, complexity view, FQN view, type view, backtracking counter, code-path graph,
+  fixpoint stepper (constants, liveness, reaching definitions, truthiness), lattice lab, follow the issue,
+  triage board. Next: Track B engines and chapters 22–33, part essays, appendices.

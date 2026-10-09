@@ -180,7 +180,9 @@ The last Java stage has a detail that matters beyond SonarJS. The file's result 
 
 ::source{path="sonar-plugin/api/src/main/java/org/sonar/plugins/javascript/api/JsAnalysisConsumer.java" symbol="void accept(JsFile jsFile)"}
 
-What those consumers do is outside this repository. In particular, SonarJS's own repository does not show how Sonar's commercial security analysis tracks taint in JavaScript: it shows the hand-off point. Part VII of this course explains taint analysis on its own terms.
+What the consumers do is outside SonarJS's repository, but its documentation names two of them. Sonar's architecture analysis reads the trees of every file, unchanged ones included, to build import and dependency graphs. And Sonar's security analysis used to run its taint-analysis rules inside SonarJS, through the hook API of chapter 20, producing an intermediate representation (files called UCFGs) that SonarJS cached between analyses; the repository records that this integration and its cache were removed in November 2025. How Sonar's products analyse taint in JavaScript today is not something the repository shows, and this course does not guess. Part VII explains taint analysis on its own terms.
+
+::source{path="docs/sonar-cache.md" title="The cache's history" note="The section on analysis modes lists the external plugins that registered hooks for unchanged files; the history table dates the removal of the security analysis's UCFG caching."}
 
 ## What can go wrong
 

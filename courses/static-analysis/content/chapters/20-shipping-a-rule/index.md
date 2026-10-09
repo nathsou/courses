@@ -207,7 +207,7 @@ SonarJS is also a platform. Other Sonar analysers that need JavaScript rules do 
 
 - a **`RulesBundle`** gives the path of the bundle in the jar; SonarJS deploys it and the Node.js side loads its rules at startup, alongside its own;
 - a **`CustomRuleRepository`** declares a rule repository and its check classes, each implementing **`EslintHook`**: the rule's ESLint key, its configurations, the file types it targets, the analysis modes it runs in, the extensions it skips. Activated by quality profiles, they raise issues like any SonarJS rule;
-- an **`EslintHook`** registered directly, without a repository, runs on every file whatever the quality profile, and cannot raise issues: it collects data for an analyser that works across files. Such hooks are typically the ones that declare the `SKIP_UNCHANGED` analysis mode, because a cross-file analysis needs to see unchanged files too.
+- an **`EslintHook`** registered directly, without a repository, runs on every file whatever the quality profile, and cannot raise issues: it collects data for an analyser that works across files. Such hooks are typically the ones that declare the `SKIP_UNCHANGED` analysis mode, because a cross-file analysis needs to see unchanged files too. SonarJS's documentation names one: Sonar's architecture analysis registers a hook that runs on unchanged files to collect import graphs.
 
 ::source{path="sonar-plugin/api/src/main/java/org/sonar/plugins/javascript/api/EslintHook.java" symbol="public interface EslintHook"}
 
