@@ -14,6 +14,8 @@ export interface Trace {
   visits: { node: number; state: State }[];
   /** How the run ended. */
   outcome: 'returned' | 'threw' | 'assertion failed' | 'out of steps';
+  /** The returned value, if the run ended with `return e`. */
+  value?: Value;
 }
 
 export class InterpretError extends Error {}
@@ -32,6 +34,7 @@ export function evaluate(e: estree.Node, state: State): Value {
       if (e.operator === '!') return !v;
       if (e.operator === '-') return -(v as number);
       if (e.operator === '+') return +(v as number);
+      if (e.operator === '~') return ~(v as number);
       throw new InterpretError(`Unsupported operator ${e.operator}`);
     }
     case 'LogicalExpression': {
@@ -55,12 +58,21 @@ export function evaluate(e: estree.Node, state: State): Value {
         case '>=': return l >= r;
         case '===': case '==': return l === r;
         case '!==': case '!=': return l !== r;
+        case '&': return l & r;
+        case '|': return l | r;
+        case '^': return l ^ r;
+        case '<<': return l << r;
+        case '>>': return l >> r;
+        case '>>>': return l >>> r;
         default: throw new InterpretError(`Unsupported operator ${e.operator}`);
       }
     }
     case 'CallExpression':
-      // Only `assert(c)` is supported, as a statement; see `interpret`.
+      // `declassify(x)` is the identity at run time (chapter 30); `assert(c)` is a statement, see `interpret`.
+      if (e.callee.type === 'Identifier' && e.callee.name === 'declassify' && e.arguments[0]) return evaluate(e.arguments[0] as estree.Node, state);
       throw new InterpretError('Calls are not supported in expressions');
+    case 'ConditionalExpression':
+      return evaluate(e.test, state) ? evaluate(e.consequent, state) : evaluate(e.alternate, state);
     default:
       throw new InterpretError(`Unsupported expression ${e.type}`);
   }
@@ -82,8 +94,7 @@ export function interpret(cfg: Cfg, args: Record<string, number>, maxSteps = 10_
       case 'exit':
         return { visits, outcome: 'returned' };
       case 'return':
-        if (node.expr) evaluate(node.expr, state);
-        return { visits, outcome: 'returned' };
+        return { visits, outcome: 'returned', value: node.expr ? evaluate(node.expr, state) : undefined };
       case 'throw':
         return { visits, outcome: 'threw' };
       case 'assign':

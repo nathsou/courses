@@ -36,3 +36,5 @@ export { default as DatalogConsole } from '$lib/components/widgets/DatalogConsol
 export { default as InjectionPlayground } from '$lib/components/widgets/InjectionPlayground.svelte';
 /** Flows from request data to sinks in an Express module: `:::taint-tracer{rules="sql,xss"}` + a ```js block. */
 export { default as TaintTracer } from '$lib/components/widgets/TaintTracer.svelte';
+/** Leak a secret through control flow; taint against information flow: `:::leak-a-bit` + a ```js block. */
+export { default as LeakABit } from '$lib/components/widgets/LeakABit.svelte';
