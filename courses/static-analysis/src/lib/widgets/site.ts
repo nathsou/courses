@@ -18,3 +18,5 @@ export { default as FixpointStepper } from '$lib/components/widgets/FixpointStep
 export { default as LatticeLab } from '$lib/components/widgets/LatticeLab.svelte';
 /** A pipeline, stage by stage, with the data at each boundary: `:::follow-issue` + a ```yaml block of stages. */
 export { default as FollowIssue } from '$lib/components/widgets/FollowIssue.svelte';
+/** Issues to classify as true positive, false positive or accepted: `:::triage-board` + a ```yaml block. */
+export { default as TriageBoard } from '$lib/components/widgets/TriageBoard.svelte';

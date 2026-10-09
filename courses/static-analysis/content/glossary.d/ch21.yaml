@@ -1,0 +1,16 @@
+Clean as You Code:
+  term: Clean as You Code
+  definition: "Sonar's methodology of keeping new code clean: quality gates look at the issues on new code, and pull requests show the issues on changed lines."
+  chapter: false-positives
+effective false-positive rate:
+  term: effective false-positive rate
+  definition: "The share of reported issues that developers do not act on or consider wrong, as opposed to the analysis's own notion of a false positive (Google's Tricorder)."
+  chapter: false-positives
+accepted issue:
+  term: accepted issue
+  definition: "An issue a reviewer considers valid but decides not to fix. It no longer counts in the quality gate, and keeps its author and comment."
+  chapter: false-positives
+research log:
+  term: research log
+  definition: "A written survey behind a rule's exceptions: which cases were supported, how they are detected and tested, and which were rejected and why."
+  chapter: false-positives
