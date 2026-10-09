@@ -8,6 +8,7 @@ import * as regexpp from '@eslint-community/regexpp';
 import { Linter } from 'eslint/universal';
 import type { Rule } from 'eslint';
 import { KIT_MODULES } from '../kit/index.js';
+import { allowlistValidates, findTaintFlows, isRequestSource } from '../taint/taint.js';
 
 export class LoadError extends Error {
   constructor(
@@ -33,6 +34,8 @@ const BUILTINS: Record<string, unknown> = {
   },
   estree: {},
   '@typescript-eslint/types': {},
+  // The taint analysis of chapter 29, for rules that report flows from sources to sinks.
+  'workbench:taint': { findTaintFlows, isRequestSource, allowlistValidates },
 };
 
 function dirname(p: string): string {

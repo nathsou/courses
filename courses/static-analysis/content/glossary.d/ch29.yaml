@@ -1,0 +1,20 @@
+validator:
+  term: validator
+  definition: "In taint analysis, a condition that makes data safe on one of its branches, such as an allowlist check."
+  chapter: taint-analysis
+passthrough:
+  term: passthrough
+  definition: "In taint analysis, an operation whose result is tainted when its inputs are, such as string concatenation or an unknown library call."
+  chapter: taint-analysis
+witness:
+  term: witness
+  definition: "A concrete path that explains an analysis result; for a taint issue, the steps from the source to the sink."
+  chapter: taint-analysis
+second-order injection:
+  term: second-order injection
+  definition: "Injection where the untrusted data is stored first (in a database, a file) and used in a sink later, by another request."
+  chapter: taint-analysis
+access path:
+  term: access path
+  definition: "A variable followed by a sequence of fields, such as user.address.city, used by taint analyses to track data stored in objects; usually truncated to a fixed length."
+  chapter: taint-analysis

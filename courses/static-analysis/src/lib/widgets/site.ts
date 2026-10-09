@@ -34,3 +34,5 @@ export { default as PointsToView } from '$lib/components/widgets/PointsToView.sv
 export { default as DatalogConsole } from '$lib/components/widgets/DatalogConsole.svelte';
 /** SQL, HTML, shell, path and request injection, simulated: `::injection-playground{kinds="sql,html"}`. */
 export { default as InjectionPlayground } from '$lib/components/widgets/InjectionPlayground.svelte';
+/** Flows from request data to sinks in an Express module: `:::taint-tracer{rules="sql,xss"}` + a ```js block. */
+export { default as TaintTracer } from '$lib/components/widgets/TaintTracer.svelte';

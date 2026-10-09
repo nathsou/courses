@@ -26,6 +26,8 @@ export interface TaintModel {
   sink(call: estree.CallExpression): { args: number[]; label: string } | undefined;
   /** Whether a call returns a clean value whatever its arguments. */
   sanitizer(call: estree.CallExpression): boolean;
+  /** Variables that a condition proves safe on the branch where it evaluates to `outcome` (an allowlist check). */
+  validates?(test: estree.Node, outcome: boolean): string[];
 }
 
 const calleeName = (call: estree.CallExpression) => (call.callee.type === 'Identifier' ? call.callee.name : call.callee.type === 'MemberExpression' && !call.callee.computed && call.callee.property.type === 'Identifier' ? call.callee.property.name : undefined);
@@ -42,6 +44,9 @@ export interface Leak {
   fact: string;
   sink: string;
   range?: [number, number];
+  /** The sink call and the tainted argument, as source ranges. */
+  call?: [number, number];
+  argument?: [number, number];
 }
 
 /** A call from a statement to a function of the module. */
@@ -73,11 +78,105 @@ export interface Result {
   work: number;
 }
 
-export function buildSupergraph(source: string, entry?: string): Supergraph {
+type FunctionNode = Parameters<typeof lowerFunction>[0];
+
+/** `f(…)` or `await f(…)` where `f` is a function of the module. */
+function moduleCall(e: estree.Node | null | undefined, names: Set<string>): estree.CallExpression | undefined {
+  const inner = e?.type === 'AwaitExpression' ? e.argument : e;
+  return inner?.type === 'CallExpression' && inner.callee.type === 'Identifier' && names.has(inner.callee.name) ? inner : undefined;
+}
+
+/**
+ * Hoists calls to module functions nested inside larger expressions into temporaries declared just before their
+ * statement, as compilers do when lowering to three-address code: `res.send(render(x))` becomes
+ * `const $c1 = render(x); res.send($c1)`. Each call then has its own node in the supergraph, with call and return
+ * edges. Calls under `&&`, `?:` or in loop conditions are hoisted too, as if they always ran once: an
+ * over-approximation that only adds flows.
+ */
+function hoistNestedCalls(fn: FunctionNode, names: Set<string>) {
+  let count = 0;
+  const range = (n: estree.Node) => (n as estree.Node & { range: [number, number] }).range;
+  const extract = (root: estree.Node | null | undefined, isWhole: boolean, out: estree.Statement[]): void => {
+    if (!root || typeof root !== 'object') return;
+    const visit = (parent: Record<string, unknown>, key: string, n: estree.Node, top: boolean) => {
+      if (n.type === 'FunctionExpression' || n.type === 'ArrowFunctionExpression') return;
+      for (const [k, v] of Object.entries(n)) {
+        if (k === 'range' || k === 'loc' || k === 'parent') continue;
+        if (Array.isArray(v)) v.forEach((c, i) => c && typeof c === 'object' && 'type' in c && visit(v as unknown as Record<string, unknown>, String(i), c as estree.Node, false));
+        else if (v && typeof v === 'object' && 'type' in v) visit(n as unknown as Record<string, unknown>, k, v as estree.Node, top && n.type === 'AwaitExpression');
+      }
+      if (!top && n.type === 'CallExpression' && n.callee.type === 'Identifier' && names.has(n.callee.name)) {
+        const id = `$c${++count}`;
+        out.push({ type: 'VariableDeclaration', kind: 'const', declarations: [{ type: 'VariableDeclarator', id: { type: 'Identifier', name: id }, init: n, range: range(n) } as estree.VariableDeclarator], range: range(n) } as estree.VariableDeclaration);
+        parent[key] = { type: 'Identifier', name: id, range: range(n) };
+      }
+    };
+    const holder = { root } as Record<string, unknown>;
+    visit(holder, 'root', root, isWhole);
+  };
+  const block = (b: estree.BlockStatement) => {
+    const body: estree.Statement[] = [];
+    for (const st of b.body) {
+      const before: estree.Statement[] = [];
+      statement(st, before);
+      body.push(...before, st);
+    }
+    b.body = body;
+  };
+  const statement = (st: estree.Statement, before: estree.Statement[]) => {
+    switch (st.type) {
+      case 'ExpressionStatement':
+        return extract(st.expression, true, before);
+      case 'VariableDeclaration':
+        for (const d of st.declarations) extract(d.init, true, before);
+        return;
+      case 'ReturnStatement':
+        return extract(st.argument, true, before);
+      case 'IfStatement':
+        extract(st.test, false, before);
+        for (const b of [st.consequent, st.alternate]) if (b) b.type === 'BlockStatement' ? block(b) : statement(b, before);
+        return;
+      case 'WhileStatement':
+      case 'DoWhileStatement':
+        extract(st.test, false, before);
+        if (st.body.type === 'BlockStatement') block(st.body);
+        return;
+      case 'ForStatement':
+      case 'ForInStatement':
+      case 'ForOfStatement':
+        if (st.body.type === 'BlockStatement') block(st.body);
+        return;
+      case 'BlockStatement':
+        return block(st);
+      case 'TryStatement':
+        block(st.block);
+        if (st.handler) block(st.handler.body);
+        if (st.finalizer) block(st.finalizer);
+        return;
+      default:
+        return;
+    }
+  };
+  if (fn.body.type === 'BlockStatement') block(fn.body);
+}
+
+/**
+ * Builds the supergraph of the module's top-level functions, plus any `functions` given (such as route handlers
+ * written inline), under the names given.
+ */
+export function buildSupergraph(source: string, options: string | { entry?: string; functions?: { name: string; node: FunctionNode }[] } = {}): Supergraph {
+  const { entry, functions = [] } = typeof options === 'string' ? { entry: options } : options;
+  const declared = parseFunctions(source);
+  const names = new Set(declared.map((f) => lowerFunction(f, source).name));
   const fns = new Map<string, Cfg>();
-  for (const f of parseFunctions(source)) {
+  for (const f of declared) {
+    hoistNestedCalls(f, names);
     const cfg = lowerFunction(f, source);
     fns.set(cfg.name, cfg);
+  }
+  for (const { name, node } of functions) {
+    hoistNestedCalls(node, names);
+    fns.set(name, { ...lowerFunction(node, source), name });
   }
   if (!fns.size) throw new CfgError('No function found');
   const entryName = entry && fns.has(entry) ? entry : fns.has('main') ? 'main' : [...fns.keys()][0]!;
@@ -86,8 +185,8 @@ export function buildSupergraph(source: string, entry?: string): Supergraph {
   for (const [name, cfg] of fns) {
     const m = new Map<number, CallInfo>();
     for (const node of cfg.nodes) {
-      const e = node.kind === 'assign' ? node.value : node.kind === 'expr' || node.kind === 'return' ? node.expr : undefined;
-      if (e?.type === 'CallExpression' && e.callee.type === 'Identifier' && fns.has(e.callee.name)) {
+      const e = moduleCall(node.kind === 'assign' ? node.value : node.kind === 'expr' || node.kind === 'return' ? node.expr : undefined, new Set(fns.keys()));
+      if (e && e.callee.type === 'Identifier') {
         m.set(node.id, { callee: e.callee.name, args: e.arguments as estree.Node[], target: node.kind === 'assign' ? node.defs[0] : node.kind === 'return' ? RET : undefined });
       }
     }
@@ -170,6 +269,12 @@ export function normalFlow(node: CfgNode, d: string, model: TaintModel): string[
   return [d];
 }
 
+/** The flow along the edge to a node's `k`-th successor: a validating condition cleans what it checks. */
+function alongEdge(node: CfgNode, k: number, d: string, model: TaintModel): string[] {
+  if (node.kind !== 'cond' || !node.test || !model.validates || d === ZERO || node.succ.length !== 2) return [d];
+  return model.validates(node.test, k === 0).includes(d) ? [] : [d];
+}
+
 function callFlow(call: CallInfo, callee: Cfg, d: string, model: TaintModel): string[] {
   if (d === ZERO) {
     const out = [ZERO];
@@ -193,11 +298,11 @@ function callToReturnFlow(call: CallInfo, d: string): string[] {
 function leaksAt(fn: string, node: CfgNode, d: string, model: TaintModel): Leak[] {
   const out: Leak[] = [];
   for (const s of sinkCalls(valueOf(node), model)) {
-    const bad = s.args.some((i) => {
+    const range = (n: estree.Node) => (n as estree.Node & { range?: [number, number] }).range;
+    for (const i of s.args) {
       const a = s.call.arguments[i] as estree.Node | undefined;
-      return a && (d === ZERO ? !!generates(a, model) : carries(a, d, model));
-    });
-    if (bad) out.push({ fn, node: node.id, fact: d, sink: s.label, range: node.range });
+      if (a && (d === ZERO ? !!generates(a, model) : carries(a, d, model))) out.push({ fn, node: node.id, fact: d, sink: s.label, range: node.range, call: range(s.call), argument: range(a) });
+    }
   }
   return out;
 }
@@ -206,6 +311,8 @@ export interface SolveOptions {
   model?: TaintModel;
   /** Match each return with its call (IFDS); false follows every return to every caller. */
   contextSensitive?: boolean;
+  /** Functions to start from, with Λ (default: the graph's entry). Route handlers are all entry points. */
+  entries?: string[];
 }
 
 /** One edge of the exploded supergraph. */
@@ -231,7 +338,9 @@ export function explodedEdges(graph: Supergraph, model: TaintModel = TOY_MODEL):
           for (const d2 of callFlow(call, callee, d, model)) out.push({ from: { fn, node: node.id, fact: d }, to: { fn: call.callee, node: callee.entry, fact: d2 }, kind: 'call' });
           for (const r of node.succ) for (const d2 of callToReturnFlow(call, d)) out.push({ from: { fn, node: node.id, fact: d }, to: { fn, node: r, fact: d2 }, kind: 'call-to-return' });
         } else {
-          for (const m of node.succ) for (const d2 of normalFlow(node, d, model)) out.push({ from: { fn, node: node.id, fact: d }, to: { fn, node: m, fact: d2 }, kind: 'normal' });
+          node.succ.forEach((m, k) => {
+            for (const d1 of normalFlow(node, d, model)) for (const d2 of alongEdge(node, k, d1, model)) out.push({ from: { fn, node: node.id, fact: d }, to: { fn, node: m, fact: d2 }, kind: 'normal' });
+          });
         }
       }
       if (call && callee)
@@ -250,7 +359,7 @@ export function solveTaint(graph: Supergraph, options: SolveOptions = {}): Resul
   let work = 0;
   const mark = (fn: string, node: number, fact: string) => {
     reached.get(fn)!.add(`${node}|${fact}`);
-    for (const l of leaksAt(fn, graph.fns.get(fn)!.nodes[node]!, fact, model)) leaks.set(`${l.fn}:${l.node}:${l.sink}`, l);
+    for (const l of leaksAt(fn, graph.fns.get(fn)!.nodes[node]!, fact, model)) leaks.set(`${l.fn}:${l.node}:${l.sink}:${l.argument?.join('-')}`, leaks.get(`${l.fn}:${l.node}:${l.sink}:${l.argument?.join('-')}`) ?? l);
   };
 
   if (options.contextSensitive === false) {
@@ -258,9 +367,11 @@ export function solveTaint(graph: Supergraph, options: SolveOptions = {}): Resul
     // reachable at all, whichever call the facts came from.
     const edges = explodedEdges(graph, model);
     const key = (p: { fn: string; node: number; fact: string }) => `${p.fn}:${p.node}:${p.fact}`;
-    const entryCfg = graph.fns.get(graph.entry)!;
-    const seen = new Set([key({ fn: graph.entry, node: entryCfg.entry, fact: ZERO })]);
-    mark(graph.entry, entryCfg.entry, ZERO);
+    const seen = new Set<string>();
+    for (const e of options.entries ?? [graph.entry]) {
+      seen.add(key({ fn: e, node: graph.fns.get(e)!.entry, fact: ZERO }));
+      mark(e, graph.fns.get(e)!.entry, ZERO);
+    }
     let changed = true;
     while (changed) {
       changed = false;
@@ -289,8 +400,7 @@ export function solveTaint(graph: Supergraph, options: SolveOptions = {}): Resul
     worklist.push([fn, d1, n, d2]);
     mark(fn, n, d2);
   };
-  const entryCfg = graph.fns.get(graph.entry)!;
-  propagate(graph.entry, ZERO, entryCfg.entry, ZERO);
+  for (const e of options.entries ?? [graph.entry]) propagate(e, ZERO, graph.fns.get(e)!.entry, ZERO);
   while (worklist.length) {
     const [fn, d1, n, d2] = worklist.shift()!;
     work++;
@@ -315,7 +425,9 @@ export function solveTaint(graph: Supergraph, options: SolveOptions = {}): Resul
         for (const d5 of returnFlow(info, d2)) for (const r of callerNode.succ) propagate(c.fn, c.d1, r, d5);
       }
     } else {
-      for (const m of node.succ) for (const d3 of normalFlow(node, d2, model)) propagate(fn, d1, m, d3);
+      node.succ.forEach((m, k) => {
+        for (const d3 of normalFlow(node, d2, model)) for (const d4 of alongEdge(node, k, d3, model)) propagate(fn, d1, m, d4);
+      });
     }
   }
   return { graph, reached, leaks: [...leaks.values()], summaries, work };
@@ -324,6 +436,62 @@ export function solveTaint(graph: Supergraph, options: SolveOptions = {}): Resul
 /** Runs the analysis on source code. */
 export function analyseTaint(source: string, options: SolveOptions & { entry?: string } = {}): Result {
   return solveTaint(buildSupergraph(source, options.entry), options);
+}
+
+export interface WitnessStep {
+  fn: string;
+  node: number;
+  fact: string;
+  /** How the step was reached from the previous one. */
+  kind: ExplodedEdge['kind'] | 'start';
+}
+
+/**
+ * A realizable path in the exploded supergraph from an entry to a leak, through reached nodes only: the flow that
+ * explains the leak. Calls are matched with returns up to a depth of `maxDepth`. The steps before the tainted
+ * value appears (where only Λ holds) are dropped.
+ */
+export function witness(result: Result, leak: Leak, options: SolveOptions & { maxDepth?: number } = {}): WitnessStep[] | undefined {
+  const model = options.model ?? TOY_MODEL;
+  const { graph, reached } = result;
+  const edges = explodedEdges(graph, model);
+  const out = new Map<string, ExplodedEdge[]>();
+  const at = (p: { fn: string; node: number; fact: string }) => `${p.fn}:${p.node}:${p.fact}`;
+  for (const e of edges) out.set(at(e.from), [...(out.get(at(e.from)) ?? []), e]);
+  type State = { fn: string; node: number; fact: string; stack: string[]; prev?: State; kind: WitnessStep['kind'] };
+  const key = (s: State) => `${at(s)}|${s.stack.join(',')}`;
+  const queue: State[] = (options.entries ?? [graph.entry]).map((e) => ({ fn: e, node: graph.fns.get(e)!.entry, fact: ZERO, stack: [], kind: 'start' as const }));
+  const seen = new Set(queue.map(key));
+  const maxDepth = options.maxDepth ?? 4;
+  while (queue.length) {
+    const s = queue.shift()!;
+    if (s.fn === leak.fn && s.node === leak.node && s.fact === leak.fact) {
+      const steps: WitnessStep[] = [];
+      for (let x: State | undefined = s; x; x = x.prev) steps.unshift({ fn: x.fn, node: x.node, fact: x.fact, kind: x.kind });
+      // The source is read on the statement before the first tainted fact; if the leak's own fact is Λ, the source
+      // is in the sink's statement itself.
+      const first = steps.findIndex((st) => st.fact !== ZERO);
+      return first < 0 ? steps.slice(-1) : first === 0 ? steps : steps.slice(first - 1);
+    }
+    for (const e of out.get(at(s)) ?? []) {
+      if (!reached.get(e.to.fn)!.has(`${e.to.node}|${e.to.fact}`)) continue;
+      let stack = s.stack;
+      if (e.kind === 'call') {
+        if (stack.length >= maxDepth) continue;
+        stack = [...stack, `${s.fn}:${s.node}`];
+      } else if (e.kind === 'return') {
+        if (stack.length) {
+          if (stack.at(-1) !== `${e.to.fn}:${e.call}`) continue;
+          stack = stack.slice(0, -1);
+        }
+      }
+      const next: State = { fn: e.to.fn, node: e.to.node, fact: e.to.fact, stack, prev: s, kind: e.kind };
+      if (seen.has(key(next))) continue;
+      seen.add(key(next));
+      queue.push(next);
+    }
+  }
+  return undefined;
 }
 
 
