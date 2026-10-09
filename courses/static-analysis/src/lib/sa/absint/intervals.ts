@@ -162,6 +162,14 @@ function findDivisions(e: estree.Node | null | undefined, out: estree.BinaryExpr
   }
 }
 
+function collectNames(e: estree.Node, out: Set<string>) {
+  if (e.type === 'Identifier') out.add(e.name);
+  else if (e.type === 'BinaryExpression' || e.type === 'LogicalExpression') {
+    collectNames(e.left as estree.Node, out);
+    collectNames(e.right, out);
+  } else if (e.type === 'UnaryExpression') collectNames(e.argument, out);
+}
+
 const envBottom: IntervalEnv = {};
 
 /** The condition of an `assert(condition)` statement. */
@@ -243,8 +251,12 @@ export const intervals: Analysis<IntervalEnv> = {
     }
     const condition = assertion(node);
     if (condition) {
-      if (!refineIntervals(condition, true, env)) out.push('assertion always fails');
-      else if (refineIntervals(condition, false, env)) out.push('assertion may fail');
+      const names = new Set<string>();
+      collectNames(condition, names);
+      const known = [...names].filter((v) => v in env).map((v) => `${v}∈${formatInterval(env[v]!)}`);
+      const where = known.length ? ` (before it, ${known.join(', ')})` : '';
+      if (!refineIntervals(condition, true, env)) out.push(`assertion always fails${where}`);
+      else if (refineIntervals(condition, false, env)) out.push(`assertion may fail${where}`);
     }
     return out;
   },

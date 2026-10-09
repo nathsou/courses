@@ -86,12 +86,13 @@ export function solve<T>(cfg: Cfg, analysis: Analysis<T>, options: SolveOptions 
   while (worklist.length && steps.length < maxSteps) {
     const n = worklist.shift()!;
     const along = (p: number) => (forward && analysis.edge ? analysis.edge(cfg.nodes[p]!, n, output[p]!, cfg) : output[p]!);
-    const inFact = n === start ? analysis.boundary(cfg) : preds(n).reduce((acc, p) => lattice.join(acc, along(p)), lattice.bottom);
-    input[n] = inFact;
-    let out = analysis.transfer(cfg.nodes[n]!, inFact, cfg);
+    let inFact = n === start ? analysis.boundary(cfg) : preds(n).reduce((acc, p) => lattice.join(acc, along(p)), lattice.bottom);
     const count = (visits.get(n) ?? 0) + 1;
     visits.set(n, count);
-    if (widening && analysis.widen && loopHeads.has(n) && count > 2) out = analysis.widen(output[n]!, out);
+    // Widening at loop heads, from the third visit: the head's input jumps past what the iterations so far showed.
+    if (widening && analysis.widen && loopHeads.has(n) && count > 2) inFact = analysis.widen(input[n]!, inFact);
+    input[n] = inFact;
+    const out = analysis.transfer(cfg.nodes[n]!, inFact, cfg);
     const before = output[n]!;
     const changed = !lattice.equal(before, out);
     if (changed) {
@@ -101,15 +102,17 @@ export function solve<T>(cfg: Cfg, analysis: Analysis<T>, options: SolveOptions 
     steps.push({ node: n, input: inFact, before, after: out, changed, worklist: [...worklist] });
   }
   const truncated = worklist.length > 0;
-  // Narrowing: recompute every node in order, keeping what the narrowing operator allows, for a few rounds.
+  // Narrowing: recompute every node in order for a few rounds. Starting from a post-fixpoint, each round stays sound
+  // and can only become more precise; at loop heads, the narrowing operator decides which bounds may come back.
   if (!truncated && analysis.narrow) {
     for (let round = 0; round < narrowRounds; round++) {
       for (const n of order) {
         const along = (p: number) => (forward && analysis.edge ? analysis.edge(cfg.nodes[p]!, n, output[p]!, cfg) : output[p]!);
-        const inFact = n === start ? analysis.boundary(cfg) : preds(n).reduce((acc, p) => lattice.join(acc, along(p)), lattice.bottom);
+        let inFact = n === start ? analysis.boundary(cfg) : preds(n).reduce((acc, p) => lattice.join(acc, along(p)), lattice.bottom);
+        if (loopHeads.has(n)) inFact = analysis.narrow(input[n]!, inFact);
         input[n] = inFact;
         const before = output[n]!;
-        const out = analysis.narrow(before, analysis.transfer(cfg.nodes[n]!, inFact, cfg));
+        const out = analysis.transfer(cfg.nodes[n]!, inFact, cfg);
         const changed = !lattice.equal(before, out);
         if (changed) output[n] = out;
         steps.push({ node: n, input: inFact, before, after: out, changed, worklist: [], phase: 'narrow' });

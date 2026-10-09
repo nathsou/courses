@@ -38,7 +38,7 @@ describe('interval analysis', () => {
     const assertNode = at(cfg, 'assert');
     // On the exit edge, i >= 10: [10, +∞]. The assertion may fail: a false alarm.
     expect(formatInterval(r.input[assertNode]!.i!)).toBe('[10, +∞]');
-    expect(intervals.alarms!(cfg.nodes[assertNode]!, r.input[assertNode]!, cfg)).toEqual(['assertion may fail']);
+    expect(intervals.alarms!(cfg.nodes[assertNode]!, r.input[assertNode]!, cfg)).toEqual(['assertion may fail (before it, i∈[10, +∞])']);
   });
   test('narrowing removes the false alarm', () => {
     const r = solve(cfg, intervals, { narrowRounds: 2 });

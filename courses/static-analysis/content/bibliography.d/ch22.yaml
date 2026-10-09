@@ -1,0 +1,30 @@
+cousot1977:
+  authors: P. Cousot, R. Cousot
+  year: 1977
+  title: "Abstract interpretation: a unified lattice model for static analysis of programs by construction or approximation of fixpoints"
+  venue: "Proceedings of the 4th ACM Symposium on Principles of Programming Languages (POPL '77), 238–252"
+  url: https://doi.org/10.1145/512950.512973
+bourdoncle1993:
+  authors: F. Bourdoncle
+  year: 1993
+  title: Efficient chaotic iteration strategies with widenings
+  venue: "Formal Methods in Programming and Their Applications, LNCS 735, 128–141"
+  url: https://doi.org/10.1007/BFb0039704
+blanchet2003:
+  authors: B. Blanchet, P. Cousot, R. Cousot, J. Feret, L. Mauborgne, A. Miné, D. Monniaux, X. Rival
+  year: 2003
+  title: A static analyzer for large safety-critical software
+  venue: "Proceedings of the ACM SIGPLAN 2003 Conference on Programming Language Design and Implementation (PLDI '03), 196–207"
+  url: https://doi.org/10.1145/781131.781153
+astree:
+  authors: The Astrée team
+  year: 2003
+  title: "The Astrée static analyzer"
+  venue: "Project page, École normale supérieure"
+  url: https://www.astree.ens.fr/
+cuoq2012:
+  authors: P. Cuoq, F. Kirchner, N. Kosmatov, V. Prevosto, J. Signoles, B. Yakobowski
+  year: 2012
+  title: "Frama-C: a software analysis perspective"
+  venue: "Software Engineering and Formal Methods (SEFM 2012), LNCS 7504, 233–247"
+  url: https://doi.org/10.1007/978-3-642-33826-7_16

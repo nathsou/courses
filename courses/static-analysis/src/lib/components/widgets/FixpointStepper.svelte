@@ -31,7 +31,7 @@
       return { error: e instanceof CfgError ? e.message : String(e) };
     }
   });
-  const solution = $derived(built.cfg && chosen ? solve(built.cfg, chosen, { widening, narrowRounds: narrowing ? 2 : 0 }) : undefined);
+  const solution = $derived(built.cfg && chosen ? solve(built.cfg, chosen, { widening, narrowRounds: narrowing ? 2 : 0, maxSteps: 400 }) : undefined);
   $effect(() => {
     void solution;
     k = 0;
@@ -80,7 +80,7 @@
   /** Alarms at the fixpoint, from the facts flowing into each node. */
   const alarms = $derived.by(() => {
     const out = new Map<number, string[]>();
-    if (!built.cfg || !solution || !chosen?.alarms || !done) return out;
+    if (!built.cfg || !solution || solution.truncated || !chosen?.alarms || !done) return out;
     for (const node of built.cfg.nodes) {
       const found = chosen.alarms(node, solution.input[node.id], built.cfg);
       if (found.length) out.set(node.id, found);
@@ -129,7 +129,7 @@
         {:else if done && chosen?.alarms && solution && !solution.truncated}
           <p class="fix">No alarms: every division and assertion is proven safe.</p>
         {/if}
-        {#if solution?.truncated}<p class="err">Stopped after {solution.steps.length} steps without reaching a fixpoint.</p>{/if}
+        {#if done && solution?.truncated}<p class="err">Stopped after {solution.steps.length} steps without reaching a fixpoint: the facts were still growing.</p>{/if}
       </div>
     </div>
     <div class="graph">
