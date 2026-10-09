@@ -22,7 +22,7 @@
     { id: 'mirror', title: 'Tone mirror', zh: '镜', icon: 'mic', text: 'Say it; see your pitch drawn over the target.', best: [] },
     { id: 'numbers', title: 'Number drills', zh: '数', icon: 'sparkle', text: 'Numbers, prices, times, dates and phone numbers, endlessly.', best: [] },
     { id: 'measure', title: 'Measure words', zh: '个', icon: 'cards', text: '一本书, 一杯茶: pick the right measure word.', best: ['measure'] },
-    { id: 'write', title: 'Writing', zh: '写', icon: 'brush', text: 'Write characters from your deck, stroke by stroke.', best: [] },
+    { id: 'write', title: 'Writing', zh: '写', icon: 'brush', text: 'Trace characters from your deck, or write its words from memory.', best: [] },
     { id: 'map', title: 'Town map', zh: '路', icon: 'map', text: '左边, 右边, 前面, 后面: find the building.', best: [] },
     { id: 'family', title: 'Family tree', zh: '家', icon: 'chat', text: 'Who is 爸爸的妈妈? Follow the chain.', best: [] },
     { id: 'builder', title: 'Character builder', zh: '字', icon: 'lightbulb', text: 'Combine parts into characters. Find them all.', best: [] },
