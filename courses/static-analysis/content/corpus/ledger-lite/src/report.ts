@@ -24,3 +24,11 @@ export function normalise(input: string): string {
   s = s.toLowerCase();
   return s;
 }
+
+export function isSettled(ledger: Ledger, account: string): boolean {
+  return !(ledger.balance(account) !== 0);
+}
+
+export function overdrawn(ledger: Ledger, account: string, limit: number): boolean {
+  return !(ledger.balance(account) >= -limit);
+}
