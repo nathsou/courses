@@ -101,10 +101,38 @@ export interface Story {
   questions?: ChooseItem[];
 }
 
-/** Write characters stroke by stroke. */
+/** Write characters stroke by stroke. Give `chars`, `recall`, or both (characters come first). */
 export interface Write {
   title?: string;
-  chars: string;
+  /** Watch each character's stroke order, then trace it over a faint outline. */
+  chars?: string;
+  /**
+   * Write words from memory: hear the word and see its pinyin and meaning, then write it on an
+   * empty grid. "米饭 | rice" overrides the dictionary gloss.
+   */
+  recall?: string[];
+}
+
+/** A true-or-false statement about a reading text (HSK's 对/错 questions). */
+export interface Judge {
+  claim: string;
+  answer: boolean;
+  explain?: string;
+}
+
+/**
+ * Reading comprehension: a short real-world text (a message, a notice, a menu) read without
+ * pinyin by default, then questions about it.
+ */
+export interface Read {
+  title?: string;
+  /** What the text is and where you find it, in English. */
+  setting?: string;
+  /** The text. Line breaks are kept. */
+  text: string;
+  /** A translation, shown once the questions are done. */
+  en?: string;
+  questions: (ChooseItem | Judge)[];
 }
 
 /** Say it and see your pitch against the target tone. */
@@ -138,4 +166,4 @@ export interface Compose {
   examples?: string[];
 }
 
-export type ExerciseData = Choose | Tones | PinyinEx | Order | Match | Fill | Sort | Scene | Story | Write | Speak | Roleplay | Compose;
+export type ExerciseData = Choose | Tones | PinyinEx | Order | Match | Fill | Sort | Scene | Story | Write | Read | Speak | Roleplay | Compose;

@@ -219,6 +219,43 @@ turns:
 end: You leave full, warm, and with the owner's approval.
 ```
 
+```read
+title: A note from 小红
+setting: A note slipped under your door.
+text: |
+  你好！
+  今天晚上我们去饭店吃饭，好吗？
+  那个饭店的饺子非常好吃，面条儿也很好吃。
+  我不想吃米饭。我要一杯牛奶，你想喝茶吗？
+  晚上七点见！
+  小红
+en: |
+  Hi!
+  Shall we go out to a restaurant to eat this evening?
+  The dumplings at that restaurant are delicious, and the noodles are very good too.
+  I don't feel like rice. I'll have a glass of milk; would you like tea?
+  See you at seven this evening!
+  Xiaohong
+questions:
+  - claim: 小红想吃米饭。
+    answer: false
+    explain: 我不想吃米饭 — she doesn't feel like rice.
+  - claim: 那个饭店的饺子很好吃。
+    answer: true
+  - prompt: What will 小红 drink?
+    options: [茶, 牛奶, 水]
+    answer: 1
+  - prompt: When are you meeting?
+    options: [早上七点, 晚上七点, 中午十二点]
+    answer: 1
+```
+
+```write
+title: Write your order
+chars: 吃喝饭
+recall: [米饭, 吃饭, 喝茶]
+```
+
 ```roleplay
 title: Order dinner
 setting: A small family restaurant in Chengdu. The waiter comes to your table with a notepad.
