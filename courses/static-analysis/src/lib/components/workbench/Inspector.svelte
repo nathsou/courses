@@ -4,6 +4,7 @@
   recording rule with the real Linter in the runner worker.
 -->
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { inspectRemote } from '$lib/sa/runtime/client';
   import type { AstNode, InspectResult } from '$lib/sa/runtime/inspect';
   import AstTree from './AstTree.svelte';
@@ -55,7 +56,7 @@
       } finally {
         if (mine === token) loading = false;
       }
-    }, result ? 350 : 0);
+    }, untrack(() => result) ? 350 : 0); // untracked: depending on the result would re-inspect forever
     return () => clearTimeout(timer);
   });
 
