@@ -40,3 +40,5 @@ export { default as TaintTracer } from '$lib/components/widgets/TaintTracer.svel
 export { default as LeakABit } from '$lib/components/widgets/LeakABit.svelte';
 /** Symbolic execution as a tree of paths, with inputs and findings: `:::path-tree{bound="4"}` + a ```js block. */
 export { default as PathTree } from '$lib/components/widgets/PathTree.svelte';
+/** Random, coverage-guided, concolic and hybrid test generation racing on one function: `:::fuzzer-race` + a ```js block. */
+export { default as FuzzerRace } from '$lib/components/widgets/FuzzerRace.svelte';

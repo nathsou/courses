@@ -1,0 +1,28 @@
+fuzzing:
+  term: fuzzing
+  definition: "Testing a program on large numbers of generated inputs, looking for crashes, hangs and failed checks."
+  chapter: fuzzing-and-concolic
+coverage-guided fuzzing:
+  term: coverage-guided fuzzing
+  definition: "Fuzzing that keeps the inputs reaching new branches in a corpus and mutates them, so that progress accumulates."
+  chapter: fuzzing-and-concolic
+corpus:
+  term: corpus
+  definition: "In fuzzing, the set of inputs kept because they reached new coverage, from which new inputs are mutated."
+  chapter: fuzzing-and-concolic
+concolic testing:
+  term: concolic testing
+  definition: "Running a program concretely while computing the symbolic condition of each branch taken, then solving negated conditions for inputs that take new paths."
+  chapter: fuzzing-and-concolic
+concrete fallback:
+  term: concretisation (concolic testing)
+  definition: "Using an operation's concrete value when the solver cannot model it, which keeps the run real but stops steering through that value."
+  chapter: fuzzing-and-concolic
+hybrid fuzzing:
+  term: hybrid fuzzing
+  definition: "Fuzzing that calls a solver, as concolic testing does, only when mutation stops finding new coverage."
+  chapter: fuzzing-and-concolic
+harness:
+  term: harness
+  definition: "The code that feeds a fuzzer's or a test generator's inputs to the code under test."
+  chapter: fuzzing-and-concolic
