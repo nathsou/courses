@@ -6,6 +6,8 @@ import type estree from 'estree';
 import type { Cfg, CfgNode } from './cfg.js';
 import type { Analysis, Lattice } from './dataflow.js';
 import { intervals } from '../absint/intervals.js';
+import { intervalsPartitioned, intervalsReducedParity, parityAnalysis } from '../absint/combine.js';
+import { zones } from '../absint/zones.js';
 
 // ——— Sets, ordered by inclusion ———
 
@@ -209,5 +211,5 @@ export const truthiness: Analysis<Env> = {
   },
 };
 
-export const ANALYSES = { constants, liveness, reaching: reachingDefinitions, truthiness, intervals } as const;
+export const ANALYSES = { constants, liveness, reaching: reachingDefinitions, truthiness, intervals, parity: parityAnalysis, reduced: intervalsReducedParity, partitioned: intervalsPartitioned, zones } as const;
 export type AnalysisKey = keyof typeof ANALYSES;

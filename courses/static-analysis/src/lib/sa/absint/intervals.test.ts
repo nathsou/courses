@@ -8,7 +8,7 @@ const at = (cfg: ReturnType<typeof buildCfg>, prefix: string) => cfg.nodes.find(
 
 describe('interval arithmetic', () => {
   test('multiplication takes the extreme products', () => {
-    expect(formatInterval(times(iv(-2, 3), iv(4, 5)))).toBe('[-10, 15]');
+    expect(formatInterval(times(iv(-2, 3), iv(4, 5)))).toBe('[−10, 15]');
     expect(formatInterval(times(iv(0, Infinity), iv(2, 2)))).toBe('[0, +∞]');
   });
   test('widening and narrowing', () => {
@@ -53,7 +53,7 @@ describe('interval analysis', () => {
     const c = buildCfg(`function f(x) { let d = x % 3; return 10 / d; }`);
     const r = solve(c, intervals);
     const ret = at(c, 'return');
-    expect(intervals.alarms!(c.nodes[ret]!, r.input[ret]!, c)).toEqual(['possible division by zero: the divisor is in [-2, 2]']);
+    expect(intervals.alarms!(c.nodes[ret]!, r.input[ret]!, c)).toEqual(['possible division by zero: the divisor is in [−2, 2]']);
   });
   test('infeasible branches are unreachable', () => {
     const c = buildCfg(`function f(x) { let y = 5; if (y > 10) { x = 1; } return x; }`);

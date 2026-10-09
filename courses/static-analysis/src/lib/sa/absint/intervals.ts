@@ -7,7 +7,9 @@
  */
 import type estree from 'estree';
 import type { Cfg, CfgNode } from '../flow/cfg.js';
-import type { Analysis } from '../flow/dataflow.js';
+import { assertion, checksWith, findDivisions, type CheckingAnalysis } from './checks.js';
+
+export { assertion };
 
 /** An interval, or null for ⊥ (no value: the point is unreachable for this variable). */
 export type Interval = { lo: number; hi: number } | null;
@@ -41,7 +43,8 @@ export function narrowInterval(old: Interval, next: Interval): Interval {
   return iv(old.lo === -Infinity ? next.lo : old.lo, old.hi === Infinity ? next.hi : old.hi);
 }
 
-const fmtBound = (n: number) => (n === Infinity ? '+∞' : n === -Infinity ? '−∞' : String(n));
+/** Bounds with a typographic minus, as in the course's text. */
+export const fmtBound = (n: number) => (n === Infinity ? '+∞' : n === -Infinity ? '−∞' : String(n).replace('-', '−'));
 export const formatInterval = (a: Interval) => (a ? (a.lo === a.hi ? `${fmtBound(a.lo)}` : `[${fmtBound(a.lo)}, ${fmtBound(a.hi)}]`) : '⊥');
 
 // Multiplication of bounds, with 0 × ∞ = 0 (the bound of an interval that contains 0 stays finite).
@@ -152,16 +155,6 @@ export function refineIntervals(test: estree.Node, outcome: boolean, env: Interv
   return out;
 }
 
-function findDivisions(e: estree.Node | null | undefined, out: estree.BinaryExpression[]) {
-  if (!e || typeof e !== 'object') return;
-  if (e.type === 'BinaryExpression' && (e.operator === '/' || e.operator === '%')) out.push(e);
-  for (const [k, v] of Object.entries(e)) {
-    if (k === 'parent' || k === 'range' || k === 'loc') continue;
-    if (Array.isArray(v)) v.forEach((c) => c && typeof c === 'object' && 'type' in c && findDivisions(c as estree.Node, out));
-    else if (v && typeof v === 'object' && 'type' in v) findDivisions(v as estree.Node, out);
-  }
-}
-
 function collectNames(e: estree.Node, out: Set<string>) {
   if (e.type === 'Identifier') out.add(e.name);
   else if (e.type === 'BinaryExpression' || e.type === 'LogicalExpression') {
@@ -172,14 +165,7 @@ function collectNames(e: estree.Node, out: Set<string>) {
 
 const envBottom: IntervalEnv = {};
 
-/** The condition of an `assert(condition)` statement. */
-export function assertion(node: CfgNode): estree.Node | undefined {
-  const e = node.kind === 'expr' ? node.expr : undefined;
-  if (e?.type === 'CallExpression' && e.callee.type === 'Identifier' && e.callee.name === 'assert' && e.arguments[0]) return e.arguments[0] as estree.Node;
-  return undefined;
-}
-
-export const intervals: Analysis<IntervalEnv> = {
+export const intervals: CheckingAnalysis<IntervalEnv> = {
   name: 'Intervals',
   direction: 'forward',
   lattice: {
@@ -243,8 +229,7 @@ export const intervals: Analysis<IntervalEnv> = {
   alarms: (node, env) => {
     if (env === envBottom) return [];
     const out: string[] = [];
-    const divisions: estree.BinaryExpression[] = [];
-    findDivisions(node.value ?? node.test ?? node.expr ?? null, divisions);
+    const divisions = findDivisions(node.value ?? node.test ?? node.expr ?? null);
     for (const d of divisions) {
       const divisor = evalInterval(d.right, env);
       if (divisor && divisor.lo <= 0 && divisor.hi >= 0) out.push(`possible division by zero: the divisor is in ${formatInterval(divisor)}`);
@@ -260,4 +245,18 @@ export const intervals: Analysis<IntervalEnv> = {
     }
     return out;
   },
+  checks: (node, env, cfg) =>
+    checksWith(
+      {
+        isBottom: (e) => e === envBottom,
+        divisor: (e, env) => {
+          const v = evalInterval(e, env);
+          return { nonZero: !v || v.lo > 0 || v.hi < 0, value: v && v.lo === v.hi ? `is ${formatInterval(v)}` : `is in ${formatInterval(v)}` };
+        },
+        refine: (c, outcome, env) => refineIntervals(c, outcome, env) ?? envBottom,
+      },
+      node,
+      env,
+      cfg,
+    ),
 };

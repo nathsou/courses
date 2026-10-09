@@ -97,7 +97,7 @@ export const constants: Domain<Constant> = {
   meet: (a, b) => (a.kind === 'top' ? b : b.kind === 'top' ? a : a.kind === 'const' && b.kind === 'const' && a.value === b.value ? a : BOT_C),
   of: (n) => ({ kind: 'const', value: n }),
   has: (a, n) => a.kind === 'top' || (a.kind === 'const' && a.value === n),
-  format: (a) => (a.kind === 'bot' ? '⊥' : a.kind === 'top' ? '⊤' : String(a.value)),
+  format: (a) => (a.kind === 'bot' ? '⊥' : a.kind === 'top' ? '⊤' : String(a.value).replace('-', '−')),
   neg: (a) => (a.kind === 'const' ? { kind: 'const', value: -a.value } : a),
   // 0 times anything is 0, even ⊤: a small precision gain over plain lifting.
   mul: (a, b) => (a.kind === 'bot' || b.kind === 'bot' ? BOT_C : (a.kind === 'const' && a.value === 0) || (b.kind === 'const' && b.value === 0) ? { kind: 'const', value: 0 } : lift((x, y) => x * y)(a, b)),
@@ -124,7 +124,7 @@ export const ranges: Domain<Range> = {
   has: (a, n) => !!a && a.lo <= n && n <= a.hi,
   format: (a) => {
     if (!a) return '⊥';
-    const f = (n: number) => (n === Infinity ? '+∞' : n === -Infinity ? '−∞' : String(n));
+    const f = (n: number) => (n === Infinity ? '+∞' : n === -Infinity ? '−∞' : String(n).replace('-', '−'));
     return a.lo === a.hi ? `[${f(a.lo)}]` : `[${f(a.lo)}, ${f(a.hi)}]`;
   },
   neg: (a) => a && { lo: -a.hi, hi: -a.lo },

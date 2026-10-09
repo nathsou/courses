@@ -28,7 +28,7 @@ describe.each(Object.values(DOMAINS) as Domain<unknown>[])('$name', (d) => {
 
 test('x - x is imprecise compositionally', () => {
   const x = parseExpr('x - x');
-  expect(DOMAINS.intervals.format(evalAbstract(DOMAINS.intervals, x, { lo: 0, hi: 10 }))).toBe('[-10, 10]');
+  expect(DOMAINS.intervals.format(evalAbstract(DOMAINS.intervals, x, { lo: 0, hi: 10 }))).toBe('[−10, 10]');
   expect(DOMAINS.intervals.format(evalBest(DOMAINS.intervals, x, { lo: 0, hi: 10 }, window))).toBe('[0]');
   expect(DOMAINS.parity.format(evalAbstract(DOMAINS.parity, x, 'odd'))).toBe('even');
   expect(DOMAINS.signs.format(evalAbstract(DOMAINS.signs, x, 'pos'))).toBe('⊤');

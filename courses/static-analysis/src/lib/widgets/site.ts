@@ -22,3 +22,5 @@ export { default as FollowIssue } from '$lib/components/widgets/FollowIssue.svel
 export { default as TriageBoard } from '$lib/components/widgets/TriageBoard.svelte';
 /** A set of integers, its abstraction and concretisation, and transformers compared: `::galois-view{domains="…" exprs="x + 1|x * x"}`. */
 export { default as GaloisView } from '$lib/components/widgets/GaloisView.svelte';
+/** Several abstract interpreters, check by check: `:::domain-compare{analyses="intervals,parity,reduced"}` + a ```js block. */
+export { default as DomainCompare } from '$lib/components/widgets/DomainCompare.svelte';

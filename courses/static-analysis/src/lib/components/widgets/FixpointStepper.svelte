@@ -8,7 +8,8 @@
   import CodeEditor from '$lib/editor/CodeEditor.svelte';
   import CodePathGraph from '$lib/components/workbench/CodePathGraph.svelte';
   import type { CodePathInfo } from '$lib/sa/runtime/inspect';
-  import { buildCfg, CfgError, type Cfg } from '$lib/sa/flow/cfg';
+  import { buildCfg, CfgError, type Cfg, type CfgNode } from '$lib/sa/flow/cfg';
+  import { alarmsFrom, type CheckingAnalysis } from '$lib/sa/absint/checks';
   import { solve, type Analysis } from '$lib/sa/flow/dataflow';
   import { ANALYSES, type AnalysisKey } from '$lib/sa/flow/analyses';
 
@@ -80,9 +81,11 @@
   /** Alarms at the fixpoint, from the facts flowing into each node. */
   const alarms = $derived.by(() => {
     const out = new Map<number, string[]>();
-    if (!built.cfg || !solution || solution.truncated || !chosen?.alarms || !done) return out;
+    const check = chosen as CheckingAnalysis<unknown> | undefined;
+    const find = check?.alarms ?? (check?.checks ? (node: CfgNode, fact: unknown, cfg: Cfg) => alarmsFrom(check.checks(node, fact, cfg)) : undefined);
+    if (!built.cfg || !solution || solution.truncated || !find || !done) return out;
     for (const node of built.cfg.nodes) {
-      const found = chosen.alarms(node, solution.input[node.id], built.cfg);
+      const found = find(node, solution.input[node.id], built.cfg);
       if (found.length) out.set(node.id, found);
     }
     return out;
@@ -126,7 +129,7 @@
           <ul class="alarms">
             {#each [...alarms] as [id, list] (id)}{#each list as a, j (j)}<li>⚠ <code>{nodeText(id)}</code>: {a}</li>{/each}{/each}
           </ul>
-        {:else if done && chosen?.alarms && solution && !solution.truncated}
+        {:else if done && (chosen?.alarms || 'checks' in (chosen ?? {})) && solution && !solution.truncated}
           <p class="fix">No alarms: every division and assertion is proven safe.</p>
         {/if}
         {#if done && solution?.truncated}<p class="err">Stopped after {solution.steps.length} steps without reaching a fixpoint: the facts were still growing.</p>{/if}

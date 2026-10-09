@@ -1,0 +1,24 @@
+mauborgne2005:
+  authors: L. Mauborgne, X. Rival
+  year: 2005
+  title: Trace partitioning in abstract interpretation based static analyzers
+  venue: "Programming Languages and Systems (ESOP 2005), LNCS 3444, 5–20"
+  url: https://doi.org/10.1007/978-3-540-31987-0_2
+mine2001dbm:
+  authors: A. Miné
+  year: 2001
+  title: A new numerical abstract domain based on difference-bound matrices
+  venue: "Programs as Data Objects (PADO 2001), LNCS 2053, 155–172"
+  url: https://doi.org/10.1007/3-540-44978-7_10
+mine2006octagon:
+  authors: A. Miné
+  year: 2006
+  title: The octagon abstract domain
+  venue: "Higher-Order and Symbolic Computation, 19(1), 31–100"
+  url: https://doi.org/10.1007/s10990-006-8609-1
+cousot1978:
+  authors: P. Cousot, N. Halbwachs
+  year: 1978
+  title: Automatic discovery of linear restraints among variables of a program
+  venue: "Proceedings of the 5th ACM Symposium on Principles of Programming Languages (POPL '78), 84–96"
+  url: https://doi.org/10.1145/512760.512770
