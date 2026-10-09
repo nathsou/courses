@@ -7,7 +7,7 @@ parser services:
   definition: "What typescript-eslint gives rules besides the tree: the TypeScript program and the maps between ESTree nodes and TypeScript nodes, when the file was parsed with a program."
   chapter: types
 narrowing:
-  term: narrowing
+  term: narrowing (types)
   definition: "TypeScript's computation of a more precise type for a variable at a given point, from the conditions and assignments that control flow passes through to reach it."
   chapter: types
 flow-sensitive:

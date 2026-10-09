@@ -22,8 +22,8 @@ widening:
   term: widening
   definition: "An operator ∇ that replaces the join at loop heads, giving an upper bound of its arguments and forcing every increasing chain to stabilise, so that analyses over lattices of infinite height terminate."
   chapter: intervals-and-widening
-narrowing:
-  term: narrowing
+narrowing operator:
+  term: narrowing (abstract interpretation)
   definition: "Decreasing iterations after a widened fixpoint, controlled by an operator Δ, that recover some of the precision widening gave up while staying sound."
   chapter: intervals-and-widening
 post-fixpoint:

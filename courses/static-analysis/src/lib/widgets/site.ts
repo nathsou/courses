@@ -26,3 +26,5 @@ export { default as GaloisView } from '$lib/components/widgets/GaloisView.svelte
 export { default as DomainCompare } from '$lib/components/widgets/DomainCompare.svelte';
 /** A module's call graph by name, RTA or function-value flow: `:::call-graph-view{algorithms="names,rta,flow"}` + a ```js block. */
 export { default as CallGraphView } from '$lib/components/widgets/CallGraphView.svelte';
+/** The exploded supergraph of an IFDS taint problem: `:::ifds-view` + a ```js block. */
+export { default as IfdsView } from '$lib/components/widgets/IfdsView.svelte';

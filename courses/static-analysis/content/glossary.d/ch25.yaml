@@ -10,10 +10,6 @@ rapid type analysis:
   term: rapid type analysis
   definition: "RTA: class hierarchy analysis restricted to classes instantiated in reachable code, computed as a fixpoint of reachability and instantiation."
   chapter: call-graphs
-flow-insensitive:
-  term: flow-insensitive
-  definition: "Of an analysis: ignoring the order of statements, as if every assignment could happen at any time. Cheaper and less precise than a flow-sensitive analysis."
-  chapter: call-graphs
 field-based:
   term: field-based
   definition: "Of an analysis of objects: using one abstract location per property name, whatever the object, instead of one per object and property."
