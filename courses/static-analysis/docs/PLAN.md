@@ -215,3 +215,15 @@ See §10 at the end of the file (updated as chapters land).
   built: AST explorer, selector lab, complexity view, FQN view, type view, backtracking counter, code-path graph,
   fixpoint stepper (constants, liveness, reaching definitions, truthiness), lattice lab, follow the issue,
   triage board. Next: Track B engines and chapters 22–33, part essays, appendices.
+- 2026-10-09: Track B complete (chapters 22–33), with its engines in `src/lib/sa/`: intervals with widening and
+  narrowing, numeric domains with Galois-connection tests, products, reduced products, partitioning and zones
+  (`absint/`); a concrete CFG interpreter used to test every domain's soundness (`flow/interpret.ts`); call
+  graphs by name, RTA and function-value flow, IFDS taint with summaries and witnesses, Andersen and Steensgaard
+  (`interproc/`); a Datalog engine with naive and semi-naive evaluation (`datalog/`); injection simulators,
+  Express taint configurations and the `workbench:taint` module, information flow with control dependence
+  (`taint/`); a CDCL SAT solver, a bit-blaster with no-overflow side conditions, a symbolic executor, and random,
+  coverage-guided, concolic and hybrid test generators (`symex/`). Widgets: Galois view, domain comparison,
+  call-graph view, exploded supergraph, points-to graph, Datalog console, injection playground, taint tracer,
+  leak-a-bit, path tree, fuzzer race. Eight part essays, the timeline, appendices A–E. The course is built,
+  deployed and checked in CI with the rest of the collection; 107 SonarJS references resolve; every page has
+  been checked at 360 px.
