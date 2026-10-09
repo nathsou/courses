@@ -24,3 +24,5 @@ export { default as TriageBoard } from '$lib/components/widgets/TriageBoard.svel
 export { default as GaloisView } from '$lib/components/widgets/GaloisView.svelte';
 /** Several abstract interpreters, check by check: `:::domain-compare{analyses="intervals,parity,reduced"}` + a ```js block. */
 export { default as DomainCompare } from '$lib/components/widgets/DomainCompare.svelte';
+/** A module's call graph by name, RTA or function-value flow: `:::call-graph-view{algorithms="names,rta,flow"}` + a ```js block. */
+export { default as CallGraphView } from '$lib/components/widgets/CallGraphView.svelte';

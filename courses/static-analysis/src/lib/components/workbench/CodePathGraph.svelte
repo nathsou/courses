@@ -111,13 +111,15 @@
           const bulge = Math.max(x1, x2) + 28;
           edges.push({ d: `M${x1},${y1} C${bulge},${y1} ${bulge},${y2} ${x2 + 4},${y2}`, back: true, dead: !reachable.get(n) });
         } else if (level.get(n)! - level.get(s.id)! > 1) {
-          // An edge that skips a layer goes around the left, not behind the boxes in between.
+          // An edge that skips a layer goes around the left, not behind the boxes in between, then along the gap
+          // above the target's row, and into the target from the top.
           const x1 = a.x;
           const y1 = a.y + a.h / 2;
-          const x2 = b.x - 4;
-          const y2 = b.y + b.h / 2;
-          const bulge = Math.min(a.x, b.x) - 30;
-          edges.push({ d: `M${x1},${y1} C${bulge},${y1} ${bulge},${y2} ${x2},${y2}`, back: false, dead: !reachable.get(n) });
+          const bulge = Math.min(a.x, b.x) - 24;
+          const gap = b.y - GAP_Y / 2;
+          const x2 = b.x + b.w / 2;
+          const y2 = b.y - 4;
+          edges.push({ d: `M${x1},${y1} C${bulge},${y1} ${bulge},${y1} ${bulge},${y1 + 12} L${bulge},${gap - 8} Q${bulge},${gap} ${bulge + 8},${gap} L${x2 - 8},${gap} Q${x2},${gap} ${x2},${gap + 8} L${x2},${y2}`, back: false, dead: !reachable.get(n) });
         } else {
           const x1 = a.x + a.w / 2;
           const y1 = a.y + a.h;
