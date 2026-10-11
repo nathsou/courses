@@ -152,7 +152,7 @@ Mia: Und du, Ben? Was wünschst du dir? | And you, Ben? What would you like?
 Ben: Ich? Ein Weihnachten ohne Stress! | Me? A Christmas without stress!
 ```
 
-With {schenken} (to give as a present), {geben}, {schicken}, {zeigen} and {bringen}, the person who receives is in the **dative**, the thing given in the **accusative**: {Wir schenken **ihr** (D) **ein Fotobuch** (A).} You met this in lesson 14. The order of the two objects follows a simple rule of thumb:
+With {schenken} (to give as a present), {geben}, {schicken}, {zeigen} and {bringen}, the person who receives is in the **dative**, the thing given in the **accusative**: {Wir schenken ihr ein Fotobuch} ({ihr} dative, {ein Fotobuch} accusative). You met this in lesson 14. The order of the two objects follows a simple rule of thumb:
 
 | | | |
 | --- | --- | --- |
@@ -205,10 +205,10 @@ items:
 
 In lesson 17 you met reflexive verbs with {mich} and {dich}: {Ich freue mich}, {Ich habe mich erkältet}. Some reflexive verbs take a **dative** pronoun instead, and the rule for when is simple: **if the sentence already has an accusative object, the reflexive pronoun is dative.**
 
-- {Ich wünsche **mir** ein Fahrrad.} (the bike is the accusative; so {mir})
-- {Wir sehen **uns** das Feuerwerk **an**.}
-- {Ich kaufe **mir** neue Schuhe.}
-- {Wasch **dir** die Hände!}
+- {Ich wünsche mir ein Fahrrad.} (the bike is the accusative, so {mir})
+- {Wir sehen uns das Feuerwerk an.}
+- {Ich kaufe mir neue Schuhe.}
+- {Wasch dir die Hände!}
 
 The dative reflexive pronouns differ from the accusative ones **only for ich and du**:
 

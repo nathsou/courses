@@ -67,13 +67,13 @@ pairs:
 
 Look at these pairs and see where the -er and -es come from:
 
-| with der/das | with ein |
+| with der, die, das | with ein, eine |
 | --- | --- |
 | {der alte Mann} | {ein alter Mann} |
 | {das kleine Kind} | {ein kleines Kind} |
 | {die nette Frau} | {eine nette Frau} |
 
-{Der} tells you "masculine, nominative" all by itself, so the adjective after it can take a plain **-e**. But {ein} could be masculine or neuter: it gives nothing away. So the adjective takes over the ending that {der} would have shown, **-er**: {ein alter Mann}. In the same way {das} → **-es**: {ein kleines Kind}. With {eine} the article already shows the feminine (that -e), so the adjective relaxes: {eine nette Frau}.
+In {der alte Mann}, the article {der} already says "masculine, nominative", so the adjective can take a plain **-e**. But {ein} could be masculine or neuter: it gives nothing away. So the adjective takes over the ending that {der} would have shown, **-er**: {ein alter Mann}. In the same way {das} → **-es**: {ein kleines Kind}. With {eine} the article already shows the feminine (that -e), so the adjective relaxes: {eine nette Frau}.
 
 :::key
 **If the article shows gender and case, the adjective ends in -e or -en. If the article does not show them, or there is no article, the adjective shows them itself, with the ending of {der}, {die} or {das}.**
@@ -117,7 +117,7 @@ After {der}, {die}, {das} (and {dieser}, {welcher}, {jeder}, which end the same 
 | accusative | {den alten Mann} -en | {die nette Frau} -e | {das kleine Kind} -e | {die neuen Schuhe} -en |
 | dative | {dem alten Mann} -en | {der netten Frau} -en | {dem kleinen Kind} -en | {den neuen Schuhen} -en |
 
-**-e in five places, -en everywhere else.** The five -e are the places where the article is {der}, {die} or {das} in the singular nominative or accusative: the "dictionary" forms. Every {den}, every {dem}, the dative {der} and the whole plural take -en.
+**-e in five places, -en everywhere else.** The five -e are the places where the article is the "dictionary" form {der}, {die} or {das} (nominative and accusative singular). Every {den}, every {dem}, the dative {der} and the whole plural take -en.
 
 ::adjective-endings
 
@@ -514,9 +514,9 @@ items:
 
 ```roleplay
 title: Who am I picking up?
-setting: Your friend Hannah has offered to pick up your brother or sister (or a friend) from Vienna airport, but she has never met them.
-goal: Describe the person so that Hannah will recognise them (at least two things about their appearance, and their clothes), and say what they are like.
-partner: Hannah, 30, from Vienna, practical and a bit forgetful
+setting: Your friend Clara has offered to pick up your brother or sister (or a friend) from Vienna airport, but she has never met them.
+goal: Describe the person so that Clara will recognise them (at least two things about their appearance, and their clothes), and say what they are like.
+partner: Clara, 30, from Vienna, practical and a bit forgetful
 opener: Also, ich hole deine Schwester morgen vom Flughafen ab. Aber wie sieht sie eigentlich aus?
 openerEn: So, I'm picking your sister up from the airport tomorrow. But what does she actually look like?
 words: [groß, klein, Haare, Brille, tragen, Jacke, nett, lustig, schüchtern]

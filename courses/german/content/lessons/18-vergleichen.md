@@ -94,11 +94,11 @@ German uses two little words for comparing, and English speakers mix them up bec
 
 | | German | English |
 | --- | --- | --- |
-| different | {Berlin ist **größer als** Wien.} | bigger **than** |
-| the same | {Wien ist **so schön wie** Berlin.} | **as** beautiful **as** |
-| not the same | {Bern ist **nicht so groß wie** Zürich.} | **not as** big **as** |
-| exactly the same | {Ich bin **genauso alt wie** du.} | **just as** old **as** |
-| twice | {Österreich ist **doppelt so groß wie** die Schweiz.} | **twice as** big **as** |
+| different | {Berlin ist größer als Wien.} | bigger **than** |
+| the same | {Wien ist so schön wie Berlin.} | **as** beautiful **as** |
+| not the same | {Bern ist nicht so groß wie Zürich.} | **not as** big **as** |
+| exactly the same | {Ich bin genauso alt wie du.} | **just as** old **as** |
+| twice | {Österreich ist doppelt so groß wie die Schweiz.} | **twice as** big **as** |
 
 So: a comparative (-er) goes with **als**; the plain adjective with **so … wie**.
 
@@ -280,9 +280,9 @@ items:
 
 To say something is the fastest, cheapest or best, use **am** + adjective + **-sten**:
 
-- {Der Bus ist billig, das Fahrrad ist billiger, aber zu Fuß gehen ist **am billigsten**.}
-- {Der ICE fährt **am schnellsten**.}
-- {Im Juli ist es hier **am heißesten**.}
+- {Der Bus ist billig, das Fahrrad ist billiger, aber zu Fuß gehen ist am billigsten.}
+- {Der ICE fährt am schnellsten.}
+- {Im Juli ist es hier am heißesten.}
 
 After **d, t, s, ß** and **z** an extra e makes it pronounceable: {am ältesten}, {am leichtesten}, {am heißesten}, {am kürzesten}, {am interessantesten}. One famous exception: {groß} → {am größten}.
 
@@ -332,26 +332,26 @@ items:
 
 ```dialogue
 title: Wien oder Zürich?
-Aylin: Ich habe zwei Jobangebote, eins in Wien und eins in Zürich. | I've got two job offers, one in Vienna and one in Zurich.
+Lena: Ich habe zwei Jobangebote, eins in Wien und eins in Zürich. | I've got two job offers, one in Vienna and one in Zurich.
 Noah: Wow! Und welches ist besser? | Wow! And which one is better?
-Aylin: In Zürich verdiene ich mehr. Viel mehr. | In Zurich I'd earn more. Much more.
+Lena: In Zürich verdiene ich mehr. Viel mehr. | In Zurich I'd earn more. Much more.
 Noah: Ja, aber Zürich ist auch viel teurer als Wien. | Yes, but Zurich is also much more expensive than Vienna.
-Aylin: Das stimmt. Und ich finde Wien schöner. | That's true. And I think Vienna is more beautiful.
+Lena: Das stimmt. Und ich finde Wien schöner. | That's true. And I think Vienna is more beautiful.
 Noah: Und größer! Wien hat rund zwei Millionen Einwohner, Zürich nur gut 400.000. | And bigger! Vienna has around two million inhabitants, Zurich only just over 400,000.
-Aylin: Aber Zürich liegt direkt am See, und die Berge sind näher. | But Zurich is right on the lake, and the mountains are closer.
+Lena: Aber Zürich liegt direkt am See, und die Berge sind näher. | But Zurich is right on the lake, and the mountains are closer.
 Noah: Was ist dir denn am wichtigsten? | So what matters most to you?
-Aylin: Am wichtigsten? Die Arbeit. Und die Arbeit in Wien ist interessanter. | Most? The work. And the work in Vienna is more interesting.
+Lena: Am wichtigsten? Die Arbeit. Und die Arbeit in Wien ist interessanter. | What matters most? The work. And the work in Vienna is more interesting.
 Noah: Na also. Dann ist die Antwort doch klar! | There you go. Then the answer's obvious!
-Aylin: Ja … aber in Zürich verdiene ich so viel mehr! | Yes … but in Zurich I'd earn so much more!
+Lena: Ja … aber in Zürich verdiene ich so viel mehr! | Yes … but in Zurich I'd earn so much more!
 ```
 
 ```choose
 title: Wien oder Zürich?
 items:
-  - prompt: Where would Aylin earn more?
+  - prompt: Where would Lena earn more?
     options: [in Zurich, in Vienna, the same in both]
     answer: 0
-  - prompt: What is most important to Aylin?
+  - prompt: What is most important to Lena?
     options: [the work, the money, the mountains]
     answer: 0
     explain: "{Am wichtigsten? Die Arbeit.}"
@@ -506,10 +506,10 @@ turns:
         ok: true
       - de: Ist es auch schneller wie dieses hier?
         en: Is it faster as this one here, too?
-        reply: Schneller als dieses hier? Ein bisschen. Aber in der Stadt ist das nicht so wichtig.
-        replyEn: Faster than this one? A little. But in town that's not so important.
-  - they: Ein bisschen. Aber für die Stadt ist dieses hier genauso gut. Und es ist 250 Euro billiger.
-    theyEn: A little. But for town this one is just as good. And it's 250 euros cheaper.
+        reply: Schneller als dieses hier? Moment, ich erkläre es Ihnen.
+        replyEn: Faster than this one? One moment, let me explain.
+  - they: Ein bisschen schneller, ja. Aber für die Stadt ist dieses hier genauso gut. Und es ist 250 Euro billiger.
+    theyEn: A little faster, yes. But for town this one is just as good. And it's 250 euros cheaper.
     options:
       - de: Gut, dann nehme ich dieses hier.
         en: Fine, then I'll take this one.

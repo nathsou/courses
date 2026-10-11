@@ -18,7 +18,7 @@ This lesson is set around things people lose and the places that find them again
 Here are two sentences, and the same information in one:
 
 - {Ich habe eine Mitbewohnerin. Sie spricht fünf Sprachen.}
-- {Ich habe eine Mitbewohnerin, **die** fünf Sprachen spricht.}
+- {Ich habe eine Mitbewohnerin, die fünf Sprachen spricht.}
 
 The relative pronoun {die} does two jobs: it points back to {Mitbewohnerin}, and it starts a subordinate clause. Four rules cover almost everything:
 
@@ -76,11 +76,11 @@ The last item is the whole secret of relative clauses. The case of the noun in t
 
 ## Den, dem, denen: the case comes from the clause
 
-{Der Film, **der** gestern im Fernsehen lief, war langweilig.} The film ran: the pronoun is the subject, so nominative.
+{Der Film, der gestern im Fernsehen lief, war langweilig.} The film ran: the pronoun is the subject, so nominative.
 
-{Der Film, **den** ich gestern gesehen habe, war langweilig.} I saw it: the pronoun is the object, so accusative.
+{Der Film, den ich gestern gesehen habe, war langweilig.} I saw it: the pronoun is the object, so accusative.
 
-{Die Frau, **der** ich im Zug geholfen habe, hat mir eine Karte geschrieben.} I helped her ({helfen} + dative): so dative.
+{Die Frau, der ich im Zug geholfen habe, hat mir eine Karte geschrieben.} I helped her ({helfen} + dative): so dative.
 
 Here is the whole table. It is the definite article with **two differences**: the dative plural is {denen}, not {den}, and the genitive has its own forms (next-but-one section).
 
@@ -196,8 +196,8 @@ items:
 
 ## Whose: dessen and deren
 
-{Das ist der Autor, **dessen** Roman ich gerade lese.} That's the author whose novel I'm reading.
-{Das ist die Autorin, **deren** Roman ich gerade lese.} That's the author (a woman) whose novel I'm reading.
+- {Das ist der Autor, dessen Roman ich gerade lese.} That's the author whose novel I'm reading.
+- {Das ist die Autorin, deren Roman ich gerade lese.} That's the author (a woman) whose novel I'm reading.
 
 "Whose" is {dessen} or {deren}, and the rule is the one English uses for "his" and "her": the **owner** decides, not the thing owned.
 
@@ -252,8 +252,8 @@ items:
 
 ## With prepositions, and wo for places
 
-{Das ist die Freundin, **mit der** ich in Wien studiert habe.} That's the friend I studied with in Vienna.
-{Das Hotel, **in dem** wir gewohnt haben, lag direkt am See.} The hotel we stayed in was right on the lake.
+- {Das ist die Freundin, mit der ich in Wien studiert habe.} That's the friend I studied with in Vienna.
+- {Das Hotel, in dem wir gewohnt haben, lag direkt am See.} The hotel we stayed in was right on the lake.
 
 English can leave the preposition dangling at the end ("the friend I studied **with**"). German cannot: the preposition goes **first**, at the start of the relative clause, and it decides the case of the pronoun as usual:
 

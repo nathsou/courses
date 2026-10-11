@@ -7,7 +7,7 @@ goals:
   - check every B1 grammar point in mixed drills, with a one-page summary to keep
 ---
 
-You have reached the end of B1, the level the Goethe-Institut describes as "independent use": you can follow the main points of clear standard German, deal with most situations on a trip or at work, write simple connected texts on familiar topics and give reasons for your opinions. Look back at the last ten lessons and you will see how much grammar that takes: two past tenses, relative clauses, the passive, the Konjunktiv II, zu-infinitives, prepositional verbs, the genitive, connectors and indirect questions.
+You have reached the end of B1, the first of the two "independent user" levels of the Common European Framework: you can follow the main points of clear standard German, deal with most situations on a trip or at work, write simple connected texts on familiar topics and give reasons for your opinions. Look back at the last nine lessons and you will see how much grammar that takes: two past tenses, relative clauses, the passive, the Konjunktiv II, zu-infinitives, prepositional verbs, the genitive, connectors and indirect questions.
 
 This lesson teaches nothing new. It puts all of that to work: a story set in a Viennese apartment building, the kinds of text you meet in the B1 exam, a debate about cars in a small town, mixed drills of everything, two writing tasks, and, at the very end, the whole of B1 grammar on one page.
 
@@ -136,13 +136,22 @@ en: |
   Whether the plan really goes ahead will in the end be decided by the townspeople themselves: a vote is to be held in March.
 questions:
   - de: In dem Text geht es um …
-    options: [einen Plan für eine autofreie Altstadt., den Bau eines neuen Rathauses., ein Schuhgeschäft, das schließen muss.]
+    options:
+      - einen Plan für eine autofreie Altstadt.
+      - den Bau eines neuen Rathauses.
+      - ein Schuhgeschäft, das schließen muss.
     answer: 0
   - de: Nach dem Plan dürfen in Zukunft … in die Altstadt fahren.
-    options: [nur Anwohner, Lieferwagen und Taxis, nur Fahrräder und Busse, alle Autos, aber nur am Wochenende]
+    options:
+      - nur Anwohner, Lieferwagen und Taxis
+      - nur Fahrräder und Busse
+      - alle Autos, aber nur am Wochenende
     answer: 0
   - de: Statt der Parkplätze …
-    options: [soll es Bäume, Bänke und Radwege geben., soll ein Parkhaus gebaut werden., sollen neue Geschäfte eröffnet werden.]
+    options:
+      - soll es Bäume, Bänke und Radwege geben.
+      - soll ein Parkhaus gebaut werden.
+      - sollen neue Geschäfte eröffnet werden.
     answer: 0
     explain: "The car park is to be built {außerhalb der Altstadt}, not where the parking spaces are now."
   - de: Klaus Weber befürchtet, dass …
@@ -238,7 +247,7 @@ turns:
         replyEn: In your opinion more people would come, you say? I'll believe that when I see it.
       - de: Ich verstehe Ihre Sorge. Aber es würden mehr Leute kommen, wenn es dort ruhiger würde sein.
         en: I understand your concern. But more people would come if it would be quieter.
-        reply: Wenn es ruhiger wäre? Ruhig wäre es dann bestimmt, weil keiner mehr kommt!
+        reply: Wenn es ruhiger wäre? Ruhig wäre es dann bestimmt, weil keiner mehr käme!
         replyEn: If it were quieter? It certainly would be quiet, because nobody would come any more!
   - they: Und woher wissen Sie das? Haben Sie Beispiele?
     theyEn: And how do you know that? Do you have any examples?
@@ -382,6 +391,10 @@ items:
       - Ich wünschte, ich hätte Zeit.
   - prompt: "Join with {um … zu}: {Sie spart Geld. Sie will nach Kanada reisen.}"
     answer: Sie spart Geld, um nach Kanada zu reisen.
+  - prompt: "Join with {ohne … zu}: {Er ging weiter. Er sagte kein Wort.}"
+    answer: Er ging weiter, ohne ein Wort zu sagen.
+  - prompt: "Use {brauchen}: {Du musst morgen nicht kommen.}"
+    answer: [Du brauchst morgen nicht zu kommen., Morgen brauchst du nicht zu kommen.]
   - prompt: "Replace {weil} with {wegen}: {Wir bleiben zu Hause, weil es regnet.}"
     answer: [Wegen des Regens bleiben wir zu Hause., Wir bleiben wegen des Regens zu Hause.]
   - prompt: "Ask about the thing (to a friend): {Ich denke an den Urlaub.}"
@@ -461,8 +474,8 @@ goal: Agree on when and where, food and drink, who invites people, and a present
 partner: Mia, your co-worker, friendly but with ideas of her own; uses du
 opener: Du, hast du schon gehört? Dragan hört Ende des Monats bei uns auf. Wollen wir eine Abschiedsfeier für ihn organisieren?
 openerEn: Have you heard? Dragan is leaving us at the end of the month. Shall we organise a farewell party for him?
-words: [Wie wäre es, wenn …, Ich schlage vor, dass …, Da hast du recht, zwar … aber, Lass uns …, sich kümmern um, Was hältst du davon?]
-checks: [made at least two suggestions using the Konjunktiv II or ich schlage vor, reacted to Mia's ideas with agreement or polite disagreement, agreed on time, place, food and a present]
+words: ['Wie wäre es, wenn …', 'Ich schlage vor, dass …', Da hast du recht, zwar … aber, Lass uns …, sich kümmern um, Was hältst du davon?]
+checks: [made at least two suggestions using the Konjunktiv II or ich schlage vor, reacted to Mia's ideas with agreement or polite disagreement, 'agreed on time, place, food and a present']
 ```
 
 ```speak

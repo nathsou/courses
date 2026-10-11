@@ -8,7 +8,7 @@ goals:
   - talk about plans, predictions and promises with werden
 ---
 
-{Was machen Sie beruflich?} is one of the first questions Germans ask a new acquaintance, often before "Where are you from?". Work matters here: {Beruf} is related to {Berufung}, a calling. This lesson gives you the words for jobs and workplaces, takes you through a job advert, an application and a phone call to a hotel in Salzburg, and adds three pieces of grammar you need to talk about a working life: **als** and **wenn** for "when", the **Präteritum** of the verbs every story uses, and the **future** with {werden}.
+{Was machen Sie beruflich?} is one of the first questions Germans ask a new acquaintance. Work matters here: {Beruf} is related to {Berufung}, a calling. This lesson gives you the words for jobs and workplaces, takes you through a job advert, an application and a phone call to a hotel in Salzburg, and adds three pieces of grammar you need to talk about a working life: **als** and **wenn** for "when", the **Präteritum** of the verbs every story uses, and the **future** with {werden}.
 
 One warning for returners before we start: {ich will} does **not** mean "I will". It means "I want". "I will" is {ich werde}. If that sentence alone sticks, the lesson has paid for itself.
 
@@ -192,7 +192,7 @@ Business calls follow a script, and knowing it takes most of the fear out of the
 | {Vielen Dank, auf Wiederhören!} | {Gern geschehen. Auf Wiederhören!} |
 
 :::note
-To ask for a man, say {Kann ich bitte **Herrn** Wagner sprechen?} {Herr} adds an -n in every case except the nominative. You will meet more nouns like this at B1.
+To ask for a man, say {Kann ich bitte Herrn Wagner sprechen?}, with **{Herrn}**: {Herr} adds an -n in every case except the nominative. You will meet more nouns like this at B1.
 :::
 
 ```words
@@ -411,13 +411,13 @@ items:
 
 ## Ich werde …: the future
 
-The future tense is {werden} + an **infinitive at the end**, the same bracket as with modal verbs:
+To talk about the future ({die Zukunft}), German uses {werden} + an **infinitive at the end**, the same bracket as with modal verbs:
 
-| | | |
-| --- | --- | --- |
-| {ich werde … arbeiten} | {wir werden … arbeiten} | |
-| {du wirst … arbeiten} | {ihr werdet … arbeiten} | |
-| {er/sie/es wird … arbeiten} | {sie/Sie werden … arbeiten} | |
+| singular | plural |
+| --- | --- |
+| {ich werde … arbeiten} | {wir werden … arbeiten} |
+| {du wirst … arbeiten} | {ihr werdet … arbeiten} |
+| {er/sie/es wird … arbeiten} | {sie/Sie werden … arbeiten} |
 
 German uses it less than English uses "will". For plans with a time word, the **present** is normal: {Nächstes Jahr arbeite ich in Wien.} The future with {werden} is for:
 

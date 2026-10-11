@@ -30,10 +30,10 @@ After many verbs, a second action follows as **zu + infinitive**, at the very en
 | {empfehlen}, {vorschlagen} | {Die Ärztin hat mir empfohlen, mehr zu laufen.} |
 | {erlauben}, {verbieten} | {Meine Eltern haben mir verboten, allein Zug zu fahren.} |
 
-With {bitten}, {empfehlen}, {erlauben} and {verbieten}, the person you ask, advise or allow is the one who does the zu-action: {Ich bitte **dich**, leiser zu sprechen}: you speak more quietly.
+With {bitten}, {empfehlen}, {erlauben} and {verbieten}, the person you ask, advise or allow is the one who does the zu-action: {Ich bitte dich, leiser zu sprechen}: you speak more quietly.
 
 :::mistake
-**Modal verbs never take zu**: {Ich muss arbeiten}, {Ich kann schwimmen}, {Ich möchte dich nicht stören}. Nor do {werden} ({Ich werde kommen}), {lassen} ({Ich lasse das Auto reparieren}), verbs of perception ({Ich höre ihn singen}) and {gehen} or {bleiben} with an activity ({Wir gehen schwimmen}). {Ich möchte zu essen} is one of the commonest returner slips.
+**Modal verbs never take zu**: {Ich muss arbeiten}, {Ich kann schwimmen}, {Ich möchte dich nicht stören}. Nor do {werden} ({Ich werde kommen}), {lassen} ({Ich lasse das Auto reparieren}), verbs of perception ({Ich höre ihn singen}) and {gehen} with an activity ({Wir gehen schwimmen}). {Ich muss morgen zu arbeiten} is one of the commonest returner slips.
 :::
 
 :::note
@@ -54,39 +54,32 @@ empfehlen (empfiehlt, empfahl, hat empfohlen) | to recommend
 vor|schlagen (schlägt vor, schlug vor, hat vorgeschlagen) | to suggest
 ```
 
-```fill
+```choose
 title: zu or no zu?
 items:
-  - de: Ich muss heute lange ___ arbeiten.
-    options: [(no zu), zu]
+  - prompt: 'I have to work late today.'
+    options: ['Ich muss heute lange arbeiten.', 'Ich muss heute lange zu arbeiten.']
     answer: 0
-    en: I have to work late today.
     explain: "{müssen} is a modal verb: never zu."
-  - de: Ich versuche, jeden Tag ___ laufen.
-    options: [zu, (no zu)]
+  - prompt: 'I try to run every day.'
+    options: ['Ich versuche, jeden Tag zu laufen.', 'Ich versuche, jeden Tag laufen.']
     answer: 0
-    en: I try to run every day.
-  - de: Kannst du mir kurz ___ helfen?
-    options: [(no zu), zu]
+  - prompt: 'Can you help me for a moment?'
+    options: ['Kannst du mir kurz helfen?', 'Kannst du mir kurz zu helfen?']
     answer: 0
-    en: Can you help me for a moment?
-  - de: Wir haben vergessen, Milch ___ kaufen.
-    options: [zu, (no zu)]
+  - prompt: 'We forgot to buy milk.'
+    options: ['Wir haben vergessen, Milch zu kaufen.', 'Wir haben vergessen, Milch kaufen.']
     answer: 0
-    en: We forgot to buy milk.
-  - de: Ich möchte dich nicht ___ stören.
-    options: [(no zu), zu]
+  - prompt: 'I don''t want to disturb you.'
+    options: ['Ich möchte dich nicht stören.', 'Ich möchte dich nicht zu stören.']
     answer: 0
-    en: I don't want to disturb you.
     explain: "{möchten} is a modal verb too."
-  - de: Wir gehen heute Abend ___ tanzen.
-    options: [(no zu), zu]
+  - prompt: 'We''re going dancing tonight.'
+    options: ['Wir gehen heute Abend tanzen.', 'Wir gehen heute Abend zu tanzen.']
     answer: 0
-    en: We're going dancing tonight.
-  - de: Hör bitte auf, so laut ___ telefonieren!
-    options: [zu, (no zu)]
+  - prompt: 'Please stop talking so loudly on the phone!'
+    options: ['Hör bitte auf, so laut zu telefonieren!', 'Hör bitte auf, so laut telefonieren!']
     answer: 0
-    en: Please stop talking so loudly on the phone!
 ```
 
 ```conjugate
@@ -205,7 +198,7 @@ Lena: Elias, hast du schon angefangen, deine Sachen einzupacken? | Elias, have y
 Elias: Noch nicht. Ich hatte keine Zeit, Kartons zu kaufen. | Not yet. I haven't had time to buy boxes.
 Lena: Du brauchst keine zu kaufen. Mein Bruder hat versprochen, uns zwanzig Stück mitzubringen. | You don't need to buy any. My brother has promised to bring us twenty.
 Elias: Super. Und wer hilft uns am Samstag? | Great. And who's helping us on Saturday?
-Lena: Ich habe Mehmet und Sophie gebeten, um neun zu kommen. Ich habe ihnen ein Frühstück versprochen, damit sie pünktlich sind. | I've asked Mehmet and Sophie to come at nine. I've promised them breakfast so that they're on time.
+Lena: Ich habe Mehmet und Sophie gebeten, gleich morgens zu kommen. Ich habe ihnen ein Frühstück versprochen, damit sie pünktlich sind. | I've asked Mehmet and Sophie to come first thing in the morning. I've promised them breakfast so that they're on time.
 Elias: Gute Idee. Und vergiss nicht, den Vermieter anzurufen, um einen Termin für die Schlüssel auszumachen. | Good idea. And don't forget to ring the landlord to arrange a time for the keys.
 Lena: Hab ich schon gemacht. Er kommt am Montag. Und jetzt schlage ich vor, eine Pizza zu bestellen, statt den ganzen Abend Kartons zu packen. | Already done. He's coming on Monday. And now I suggest we order a pizza instead of packing boxes all evening.
 Elias: Das ist der beste Vorschlag, den ich heute gehört habe! | That's the best suggestion I've heard all day!
@@ -310,8 +303,8 @@ items:
 
 ## ohne … zu, statt … zu
 
-{Er ist gegangen, ohne sich zu verabschieden.} He left without saying goodbye.
-{Statt zu lernen, hat sie den ganzen Abend Serien geschaut.} Instead of studying, she watched series all evening.
+- {Er ist gegangen, ohne sich zu verabschieden.} He left without saying goodbye.
+- {Statt zu lernen, hat sie den ganzen Abend Serien geschaut.} Instead of studying, she watched series all evening.
 
 Two more pairs work just like {um … zu}: **ohne … zu** (without …ing) and **statt … zu** or **anstatt … zu** (instead of …ing). Notice that English uses the -ing form where German uses zu + infinitive. When the subjects differ, use {ohne dass} and {statt dass} with a full clause: {Er ist gegangen, ohne dass ich es gemerkt habe.}
 

@@ -27,8 +27,10 @@ The passive is the verb {werden} plus the participle at the end of the sentence.
 
 To turn an active sentence into a passive one, the **accusative object becomes the subject**, so it moves into the nominative:
 
-- active: {Man repariert **den** Wagen.} Someone is repairing the car.
-- passive: {**Der** Wagen wird repariert.} The car is being repaired.
+- active: {Man repariert den Wagen.} Someone is repairing the car.
+- passive: {Der Wagen wird repariert.} The car is being repaired.
+
+{den Wagen} (accusative) has become {der Wagen} (nominative).
 
 The person doing it disappears, or comes back with {von} (later in this lesson): {Das Brot wird vom Bäcker gebacken.}
 
@@ -201,8 +203,8 @@ items:
 
 ## The past: wurde … and ist … worden
 
-{Das Kaffeehaus wurde 1894 gegründet.} The coffee house was founded in 1894.
-{Es ist im letzten Jahr renoviert worden.} It was renovated last year.
+- {Das Kaffeehaus wurde 1894 gegründet.} The coffee house was founded in 1894.
+- {Es ist im letzten Jahr renoviert worden.} It was renovated last year.
 
 The passive has the same tenses as any other verb. Only {werden} changes; the participle stays at the end:
 
@@ -210,7 +212,7 @@ The passive has the same tenses as any other verb. Only {werden} changes; the pa
 | --- | --- | --- |
 | Präsens | {Das Haus wird gebaut.} | now, regularly |
 | Präteritum | {Das Haus wurde gebaut.} | written past, narration, news |
-| Perfekt | {Das Haus ist gebaut worden.} | spoken past, news headlines |
+| Perfekt | {Das Haus ist gebaut worden.} | spoken past; the opening line of news items |
 | Plusquamperfekt | {Das Haus war gebaut worden.} | before another past event |
 
 Two things to watch in the Perfekt:
@@ -501,7 +503,7 @@ setting: You rent a flat in Hamburg. The heating has not worked for three days, 
 partner: Frau Petersen, property management
 turns:
   - they: Hausverwaltung Petersen, guten Tag. Was kann ich für Sie tun?
-    theyEn: Petersen property management, good morning. What can I do for you?
+    theyEn: Petersen property management, hello. What can I do for you?
     options:
       - de: Guten Tag, ich wohne in der Schanzenstraße 12. Meine Heizung ist kaputt und muss dringend repariert werden.
         en: Hello, I live at Schanzenstraße 12. My heating is broken and urgently needs repairing.

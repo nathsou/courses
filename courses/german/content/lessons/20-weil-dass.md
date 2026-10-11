@@ -9,7 +9,7 @@ goals:
 
 So far your German sentences have mostly stood alone: one subject, one verb in second place, full stop. Real speech joins ideas together. *I'm late because the bus didn't come. I think that's a good idea. If it rains, we'll stay at home.*
 
-German has a famous rule for this: in a clause that starts with **weil**, **dass**, **wenn** or **ob**, the verb goes to the **end**. Mark Twain joked that a German sentence makes you wait for the verb like a diver waiting to surface. In practice it is a rule you can feel very quickly, and it is the single biggest step from sounding like a phrasebook to sounding like a person.
+German has a famous rule for this: in a clause that starts with **weil**, **dass**, **wenn** or **ob**, the verb goes to the **end**. Mark Twain joked that a German who dives into a sentence only comes up again on the far side of the Atlantic, with the verb in his mouth. In practice it is a rule you can feel very quickly, and it is the single biggest step from sounding like a phrasebook to sounding like a person.
 
 If you learnt German before 1996, you will also remember {daß} with an ß. It is now spelt **{dass}**. More on that below.
 
@@ -27,7 +27,7 @@ Aylin: Und warum bist du so spät aufgestanden? | And why did you get up so late
 Jonas: Weil mein Wecker nicht geklingelt hat. | Because my alarm didn't go off.
 Aylin: Und warum hat dein Wecker nicht geklingelt? | And why didn't your alarm go off?
 Jonas: Weil mein Wecker mein Handy ist. Und der Akku war leer. Es ist also nicht meine Schuld! | Because my alarm is my phone. And the battery was flat. So it's not my fault!
-Aylin: Ich glaube, du brauchst einfach einen richtigen Wecker. | I think you just need a proper alarm clock.
+Aylin: Gute Ausrede! Aber ich glaube, du brauchst einfach einen richtigen Wecker. | Nice excuse! But I think you just need a proper alarm clock.
 ```
 
 Look at where the verb goes after {weil}:
@@ -38,7 +38,7 @@ Look at where the verb goes after {weil}:
 | {Der Bus hat Verspätung.} | {…, weil der Bus Verspätung hat.} |
 | {Ich bin krank.} | {…, weil ich krank bin.} |
 
-{Weil} starts a **subordinate clause** (a {Nebensatz}): a clause that cannot stand on its own as a statement. In every subordinate clause, the **conjugated verb goes to the very end**. The subject usually comes straight after {weil}. And German always puts a **comma** before {weil}, {dass}, {wenn} and {ob}.
+{Weil} starts a **subordinate clause** (a {Nebensatz}): a clause that cannot stand on its own as a statement. In every subordinate clause, the **conjugated verb goes to the very end**. The subject usually comes straight after {weil}. And German always separates such a clause from the main clause with a **comma**.
 
 :::tip
 In conversation you can answer {Warum?} with a {weil}-clause on its own, exactly as Jonas does: {Warum? – Weil ich krank bin.} In writing, attach it to a main clause.
@@ -74,10 +74,10 @@ items:
 
 ## Weil oder denn?
 
-{Denn} also means "because", but it is a different kind of word. It simply links two main clauses, like {und} and {aber}, so the word order after it does **not** change:
+{Denn} also gives a reason (a {Grund}), but it is a different kind of word. It simply links two main clauses, like {und} and {aber}, so the word order after it does **not** change:
 
-- {Ich bleibe zu Hause, **weil** ich krank **bin**.} (verb at the end)
-- {Ich bleibe zu Hause, **denn** ich **bin** krank.} (verb second, as normal)
+- {Ich bleibe zu Hause, weil ich krank bin.} (after {weil}: verb at the end)
+- {Ich bleibe zu Hause, denn ich bin krank.} (after {denn}: verb second, as normal)
 
 The meaning is the same. {Denn} sounds a little more written, and it cannot answer a question on its own: {Warum? – Weil ich krank bin} works, "Denn ich bin krank" does not.
 
@@ -149,10 +149,10 @@ items:
   - de: Ich glaube, dass der Film um acht Uhr [anfängt](anfangen).
     en: I think the film starts at eight.
   - de: Aylin ist zu Hause geblieben, weil sie sich [erkältet](erkälten) [hat].
-    en: Aylin stayed at home because she's caught a cold.
+    en: Aylin stayed at home because she'd caught a cold.
   - de: Noah freut sich, weil er die Prüfung [bestanden](bestehen) [hat].
     en: Noah is happy because he passed the exam.
-  - de: Ich bin traurig, weil du nicht [mitkommen] [kannst](können).
+  - de: Ich bin traurig, weil du nicht mitkommen [kannst](können).
     en: I'm sad because you can't come along.
 ```
 
@@ -179,6 +179,9 @@ items:
 - {Ich hoffe, dass du bald wieder gesund bist.} I hope you'll be well again soon.
 - {Ich bin sicher, dass der Zug pünktlich kommt.} I'm sure the train will be on time.
 - {Es ist wichtig, dass wir pünktlich sind.} It's important that we're on time.
+- {Ich glaube, dass es morgen wahrscheinlich regnet.} I think it'll probably rain tomorrow.
+
+To ask for someone's opinion: {Was meinst du?} {Was ist deine Meinung?} {Was denkst du?}
 
 With verbs of thinking and saying you can leave out {dass}, as English drops "that". Then the second clause is an ordinary main clause, verb second: {Ich glaube, Ben hat recht.} Both are correct; without {dass} is more common in speech.
 
@@ -236,8 +239,8 @@ items:
 
 {Wenn} means "if" (a condition) or "whenever" (something that keeps happening). It works exactly like {weil}:
 
-- {Ich komme mit, **wenn** ich Zeit **habe**.} I'll come along if I have time.
-- {**Wenn** es regnet, **bleiben** wir zu Hause.} If it rains, we stay at home.
+- {Ich komme mit, wenn ich Zeit habe.} I'll come along if I have time.
+- {Wenn es regnet, bleiben wir zu Hause.} If it rains, we stay at home.
 
 Now look at the second sentence. When the subordinate clause comes **first**, the whole clause counts as the first element of the sentence, so the main verb comes straight after the comma, in second place, and the subject follows it. The result is the typical German pattern **verb, comma, verb**:
 
@@ -288,9 +291,9 @@ items:
 
 English "if" has two jobs, and German has two words for them. **{wenn}** is "if" as a condition. **{ob}** is "if" in the sense of "whether", for a yes/no question tucked inside a sentence:
 
-- {Ist der Zug pünktlich?} → {Weißt du, **ob** der Zug pünktlich ist?}
-- {Kann ich kommen?} → {Ich weiß noch nicht, **ob** ich kommen kann.}
-- {Hast du Hunger?} → {Mama fragt, **ob** du Hunger hast.}
+- {Ist der Zug pünktlich?} → {Weißt du, ob der Zug pünktlich ist?}
+- {Kann ich kommen?} → {Ich weiß noch nicht, ob ich kommen kann.}
+- {Hast du Hunger?} → {Mama fragt, ob du Hunger hast.}
 
 And do not confuse either with **{wann}**, the question word "when?": {Wann kommst du?} → {Ich weiß nicht, wann er kommt.}
 
@@ -388,8 +391,8 @@ turns:
         ok: true
       - de: Guten Tag! Ich rufe an, weil die Heizung funktioniert nicht in meiner Wohnung.
         en: Good morning! I'm calling because the heating isn't working in my flat.
-        reply: Ah, weil die Heizung nicht funktioniert. Das tut mir leid! Seit wann denn?
-        replyEn: Ah, because the heating isn't working. I'm sorry! Since when?
+        reply: Ah, weil die Heizung nicht funktioniert. Das tut mir leid!
+        replyEn: Ah, because the heating isn't working. I'm sorry!
   - they: Oje. Seit wann ist die Heizung denn kaputt?
     theyEn: Oh dear. How long has the heating been broken?
     options:

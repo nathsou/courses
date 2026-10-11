@@ -159,15 +159,6 @@ items:
     explain: "Stem in -d, so an extra -e- before the ihr ending: {ihr fandet}."
 ```
 
-```conjugate
-title: Strong verbs
-items:
-  - verb: laufen
-    tense: preterite
-  - verb: rufen
-    tense: preterite
-```
-
 ## Mixed verbs: a new vowel and -te
 
 {Ich dachte, du kanntest ihn!} {Niemand wusste, wo Hans war.}
@@ -518,7 +509,7 @@ paragraphs:
     en: >-
       Bertha Ringer was born in Pforzheim in 1849. Even as a girl she loved machines and technology. In 1872 she married the engineer Carl Benz. Even before they married, she had given him part of her money for his company.
   - de: >-
-      In Mannheim baute Carl einen Wagen mit Motor, und 1886 bekam er ein Patent für seine Erfindung. Aber kaum jemand wollte das Auto kaufen. Die meisten Leute hielten es für laut und gefährlich, und Carl war enttäuscht.
+      In Mannheim baute Carl einen Wagen mit Motor, und 1886 bekam er ein Patent für seine Erfindung. Aber kaum jemand wollte das Auto kaufen. Die meisten Leute fanden es laut und gefährlich, und Carl war enttäuscht.
     en: >-
       In Mannheim Carl built a carriage with an engine, and in 1886 he received a patent for his invention. But hardly anyone wanted to buy the car. Most people thought it was noisy and dangerous, and Carl was disappointed.
   - de: >-
@@ -526,9 +517,9 @@ paragraphs:
     en: >-
       Early one morning in August 1888 Bertha got up very early. While Carl was still asleep, she and her sons Eugen and Richard quietly pushed the car out of the workshop. As soon as they were far enough from the house, they started the engine. Their destination was Pforzheim, more than a hundred kilometres away.
   - de: >-
-      Unterwegs gab es viele Probleme. Als das Benzin zu Ende ging, kaufte Bertha in einer Apotheke in Wiesloch Ligroin, ein Reinigungsmittel. Diese Apotheke gilt heute als erste Tankstelle der Welt. Als eine Leitung verstopft war, reinigte Bertha sie mit ihrer Hutnadel, und ein Schuster half ihr, die Bremsen mit Leder zu reparieren.
+      Unterwegs gab es viele Probleme. Als das Benzin zu Ende ging, kaufte Bertha in einer Apotheke in Wiesloch Ligroin, ein Reinigungsmittel. Diese Apotheke gilt heute als erste Tankstelle der Welt. Als eine Leitung verstopft war, reinigte Bertha sie mit ihrer Hutnadel, und ein Schuster reparierte die Bremsen mit Leder.
     en: >-
-      On the way there were many problems. When the fuel ran out, Bertha bought ligroin, a cleaning fluid, at a pharmacy in Wiesloch. That pharmacy is now regarded as the first filling station in the world. When a pipe was blocked, Bertha cleaned it with her hatpin, and a shoemaker helped her repair the brakes with leather.
+      On the way there were many problems. When the fuel ran out, Bertha bought ligroin, a cleaning fluid, at a pharmacy in Wiesloch. That pharmacy is now regarded as the first filling station in the world. When a pipe was blocked, Bertha cleaned it with her hatpin, and a shoemaker repaired the brakes with leather.
   - de: >-
       Erst am Abend, nachdem sie den ganzen Tag unterwegs gewesen waren, kamen sie in Pforzheim an. Bertha schickte Carl sofort ein Telegramm. Nach der Fahrt verbesserte Carl den Wagen: Bertha hatte gemerkt, dass der Wagen an Steigungen einen weiteren Gang brauchte.
     en: >-
@@ -551,10 +542,6 @@ questions:
     options: ['She noticed it on the trip, before Carl improved the car.', 'She noticed it after Carl improved the car.', 'It is the passive.']
     answer: 0
 ```
-
-:::note
-Two constructions in the story come later in the course, but are easy to understand: {etwas für gefährlich halten} means "to consider something dangerous", and {ein Schuster half ihr, die Bremsen zu reparieren} has a zu-infinitive, the topic of lesson 28.
-:::
 
 ```order
 title: Build the sentence
@@ -637,10 +624,6 @@ turns:
         en: No. Before I left (wrong word order), I had to write an email.
         reply: Ach, bevor du losgegangen bist, musstest du noch eine E-Mail schreiben? Oje. Dann bestellen wir sofort.
         replyEn: Oh, before you left you still had to write an email? Oh dear. Then let's order straight away.
-      - de: Nein. Nachdem ich losgegangen bin, musste ich noch eine E-Mail schreiben.
-        en: No. After I left, I had to write an email.
-        reply: Nachdem du losgegangen bist? Ah, du meinst, bevor du losgegangen bist. Na, dann bestellen wir sofort.
-        replyEn: After you left? Ah, you mean before you left. Well, let's order straight away.
   - they: Ich hole uns zwei Brezn und zwei Radler. Und sobald ich zurück bin, erzählst du mir von deinem Urlaub!
     theyEn: I'll get us two pretzels and two shandies. And as soon as I'm back, you tell me about your holiday!
     options:
