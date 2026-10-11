@@ -20,6 +20,8 @@ export interface SepVerb {
   pp: string;
   aux: 'haben' | 'sein';
   gloss: string;
+  /** Why the perfect takes sein. */
+  why?: string;
   sentences: Record<Structure, SepSentence>;
 }
 
@@ -55,6 +57,7 @@ export const SEP_VERBS: SepVerb[] = [
   {
     id: 'aufstehen',
     verb: 'aufstehen',
+    why: 'getting up is a change of position',
     prefix: 'auf',
     base: ['stehe', 'stehst', 'steht', 'stehen', 'steh'],
     pp: 'aufgestanden',
@@ -109,6 +112,7 @@ export const SEP_VERBS: SepVerb[] = [
   {
     id: 'mitkommen',
     verb: 'mitkommen',
+    why: 'coming along is movement from one place to another',
     prefix: 'mit',
     base: ['komme', 'kommst', 'kommt', 'kommen', 'komm'],
     pp: 'mitgekommen',
@@ -127,6 +131,7 @@ export const SEP_VERBS: SepVerb[] = [
   {
     id: 'ankommen',
     verb: 'ankommen',
+    why: 'arriving is movement',
     prefix: 'an',
     base: ['komme', 'kommst', 'kommt', 'kommen', 'komm'],
     pp: 'angekommen',
@@ -145,6 +150,7 @@ export const SEP_VERBS: SepVerb[] = [
   {
     id: 'zurueckkommen',
     verb: 'zurückkommen',
+    why: 'coming back is movement',
     prefix: 'zurück',
     base: ['komme', 'kommst', 'kommt', 'kommen', 'komm'],
     pp: 'zurückgekommen',

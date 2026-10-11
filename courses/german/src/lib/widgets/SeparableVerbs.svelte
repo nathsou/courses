@@ -17,7 +17,7 @@
   const split = (v: string, p: string) => `${p}·${v.slice(p.length)}`;
   const ruleText = $derived(
     sid === 'perfect'
-      ? `${structure.rule} {${verb.pp}}${verb.aux === 'sein' ? ` takes {sein}: ${verb.gloss.replace(/^to /, '')} is movement or a change of state.` : '.'}`
+      ? `${structure.rule} {${verb.pp}} goes with {${verb.aux}}${verb.why ? `: ${verb.why}.` : ', like most verbs.'}`
       : sid === 'zu'
         ? `${structure.rule} {${verb.prefix}zu${verb.verb.slice(verb.prefix.length)}}`
         : structure.rule,
@@ -158,7 +158,7 @@
     box-shadow: inset 0 -2px 0 var(--accent);
   }
   .p-stem {
-    color: var(--g-m);
+    color: var(--jade);
     font-weight: 700;
   }
   .p-infix {
@@ -168,8 +168,10 @@
     text-underline-offset: 0.2em;
   }
   .p-aux {
-    color: var(--jade);
+    color: var(--ink-2);
     font-weight: 700;
+    text-decoration: underline dotted;
+    text-underline-offset: 0.2em;
   }
   .en {
     margin: 0.35rem 0 0;

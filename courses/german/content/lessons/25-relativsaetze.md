@@ -520,7 +520,7 @@ questions:
   - claim: Die meisten Leute holen ihre Regenschirme schnell ab.
     answer: false
   - prompt: "{etwas, was man einfach neu kauft}: why {was}?"
-    options: ['It follows {etwas}.', '{Schirm} is neuter.', It is a question.]
+    options: ['It follows {etwas}.', 'It refers to {der Schirm}.', 'It is a question.']
     answer: 0
   - prompt: "{in den Regalen, in denen sonst Mützen liegen}: what is {denen}?"
     options: ['dative plural after {in}', 'accusative plural', 'a genitive']
