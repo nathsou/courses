@@ -173,7 +173,7 @@ A small group of verbs does both things at once: they change the vowel like stro
 | {rennen} | {rannte} | {ist gerannt} |
 | {wissen} | {wusste} | {hat gewusst} |
 
-The modal verbs, which you met in the Präteritum in lesson 16, follow the same idea: they drop their umlaut and add -te: {können} → {konnte}, {müssen} → {musste}, {dürfen} → {durfte}, {mögen} → {mochte}, and {wollen}, {sollen} → {wollte}, {sollte}. So do {haben} → {hatte} and {werden} → {wurde}.
+The modal verbs, which you met in the Präteritum in lesson 16, follow the same idea: they drop their umlaut and add -te: {können} → {konnte}, {müssen} → {musste}, {dürfen} → {durfte}, {mögen} → {mochte}, and {wollen}, {sollen} → {wollte}, {sollte}. {haben} → {hatte} also adds -te (and loses its b); {werden} → {wurde} is one of a kind.
 
 :::mistake
 {ich denkte}, {er wisste}, {sie bringte}: three of the commonest slips among returners. The forms are {ich dachte}, {er wusste}, {sie brachte}. A reliable test: if the participle is mixed ({gedacht}, {gewusst}, {gebracht}), so is the Präteritum.
@@ -226,7 +226,7 @@ Many learners half remember a rule like "Perfekt for the recent past, Präteritu
 So a German says {Ich bin gestern ins Kino gegangen, aber der Film war langweilig}: the Perfekt for {gehen}, the Präteritum for {sein}, in one breath. And the same person writing a short story writes {Sie ging ins Kino. Der Film war langweilig.}
 
 :::culture
-The further south you go, the rarer the spoken Präteritum becomes. In Hamburg or Berlin you will hear {Ich dachte …} or {Gestern kam er nicht} in conversation. In Bavaria and Austria many people say {ich bin gewesen} even where a northerner says {ich war}, and the Swiss German dialects have no Präteritum at all: "I was" is *i bi gsi*. In written Standard German, though, the Präteritum is the norm everywhere, from Kiel to Graz to Bern.
+The further south you go, the rarer the spoken Präteritum becomes. In Hamburg or Berlin you will hear {Ich dachte …} or {Gestern kam er nicht} in conversation. In Bavaria and Austria many people say {ich bin gewesen} even where a northerner says {ich war}, and the Swiss German dialects have practically no Präteritum at all: "I was" is *i bi gsi*. In written Standard German, though, the Präteritum is the norm everywhere, from Kiel to Graz to Bern.
 :::
 
 ```dialogue
@@ -491,12 +491,12 @@ items:
   - de: ___ er in Wien wohnt, trinkt er jeden Tag eine Melange.
     options: [Seitdem, Nachdem, Danach]
     answer: 0
-    en: Since he has been living in Vienna, he has drunk a Melange every day.
+    en: Since he has been living in Vienna, he has had a Melange every day.
     explain: "{Seit er in Wien wohnt} is equally correct. Note the present tense: German uses it for something that started in the past and is still going on."
-  - de: ___ du in Zürich bist, ruf mich bitte an!
-    options: [Sobald, Während, Bevor]
+  - de: ___ du in Zürich angekommen bist, ruf mich bitte an!
+    options: [Sobald, Seitdem, Danach]
     answer: 0
-    en: Call me as soon as you're in Zürich!
+    en: Call me as soon as you've arrived in Zürich!
 ```
 
 Here is a short biography, the kind you might read in a museum or an encyclopaedia, and a story full of {nachdem}, {bevor}, {während} and {sobald}.

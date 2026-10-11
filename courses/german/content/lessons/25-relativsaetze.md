@@ -369,8 +369,8 @@ turns:
       - de: Ja, das ist genau der Rucksack, den ich suche! Das ist das Beste, was mir heute passiert ist.
         en: Yes, that's exactly the rucksack I'm looking for! That's the best thing that's happened to me today.
         ok: true
-      - de: Ja, das ist genau der Rucksack, den ich suche! Das ist das Beste, das mir heute passiert ist.
-        en: Yes, that's exactly the rucksack I'm looking for! That's the best thing (wrong pronoun) that's happened to me today.
+      - de: Ja, das ist genau der Rucksack, den ich suche! Das ist das Beste, was ist mir heute passiert.
+        en: Yes, that's exactly the rucksack I'm looking for! That's the best thing that's happened to me today (wrong word order).
         reply: Das Beste, was Ihnen heute passiert ist? Das freut mich aber!
         replyEn: The best thing that's happened to you today? Well, I'm glad!
   - they: Dann brauche ich nur noch Ihren Ausweis, bitte.
@@ -393,7 +393,7 @@ end: You leave with your rucksack, your glasses and the book with the red cover,
 After certain words the relative pronoun is not {das} but **{was}**:
 
 - after **alles, etwas, nichts, vieles, manches**: {Alles, was du brauchst, ist hier.} {Es gibt nichts, was ich lieber esse.}
-- after a **neuter superlative or number word used as a noun**: {das Beste, was …}, {das Schönste, was …}, {das Einzige, was …}, {das Erste, was …}
+- after a **neuter superlative used as a noun**, and after {das Einzige}, {das Erste}, {das Letzte}: {das Beste, was …}, {das Schönste, was …}, {das Einzige, was …}, {das Erste, was …}
 - after a **whole clause**: {Er hat pünktlich angerufen, was selten passiert.} The {was} refers to the fact that he rang on time, not to any one noun.
 
 :::note
@@ -406,7 +406,7 @@ After {etwas} you will also see {das}, especially when something quite specific 
 - {Wer rastet, der rostet.} Whoever rests, rusts.
 - {Was du heute kannst besorgen, das verschiebe nicht auf morgen.} Don't put off till tomorrow what you can do today. (The word order is old-fashioned, for the rhyme.)
 
-When the two halves need different cases, the second pronoun has to be there: {Wem nicht zu raten ist, dem ist nicht zu helfen.} If someone won't take advice, there's no helping them.
+When the two halves need different cases, the second pronoun has to be there: {Wen die Götter lieben, der stirbt jung.} Those whom the gods love die young. Proverbs often keep it even when the cases match: {Wem nicht zu raten ist, dem ist nicht zu helfen.} If someone won't take advice, there's no helping them.
 
 ```words
 das Sprichwort, ¨-er | proverb
@@ -433,7 +433,7 @@ items:
     answer: 0
     en: Everything you say is right.
   - de: Das ist das Schönste, ___ ich je gesehen habe.
-    options: [was, das, dass]
+    options: [was, wer, dass]
     answer: 0
     en: That's the most beautiful thing I've ever seen.
   - de: Das Auto, ___ ich gekauft habe, ist leider rot.
@@ -446,7 +446,7 @@ items:
     answer: 0
     en: Anyone who's late has to wait outside.
   - de: Es gibt nichts, ___ ich lieber esse als Kaiserschmarrn.
-    options: [was, das, wo]
+    options: [was, wer, wo]
     answer: 0
     en: There's nothing I'd rather eat than Kaiserschmarrn.
   - de: Er hat die Prüfung bestanden, ___ niemand erwartet hatte.
@@ -455,7 +455,7 @@ items:
     en: He passed the exam, which nobody had expected.
     explain: "{was} refers to the whole clause: that he passed."
   - de: Das Einzige, ___ mir fehlt, ist Zeit.
-    options: [was, das, der]
+    options: [was, wer, der]
     answer: 0
     en: The only thing I'm short of is time.
 ```
@@ -544,6 +544,7 @@ items:
       - die Leute, mit denen ich wohne
       - die Leute, mit denen ich zusammenwohne
       - die Leute, mit denen ich lebe
+      - die Leute, mit denen ich zusammenlebe
   - prompt: everything I need
     answer: alles, was ich brauche
   - prompt: the town where she grew up

@@ -66,7 +66,7 @@
   }
 </script>
 
-<Shell label="Nominal style" icon="exam" tabs={['Verbal ↔ nominal', 'Funktionsverben', 'Match']} bind:tab>
+<Shell label="Nominal style" icon="exam" tabs={['Two styles', 'Funktionsverben', 'Match']} bind:tab>
   {#if tab === 0}
     <div class="pairs" role="radiogroup" aria-label="Sentence">
       {#each NOM_PAIRS as p (p.id)}

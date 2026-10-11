@@ -65,8 +65,8 @@ pairs:
 title: At the ticket counter
 items:
   - en: I'd like a ticket to Vienna, please.
-    de: Ich möchte eine_Fahrkarte nach_Wien bitte.
-    also: [Ich möchte bitte eine_Fahrkarte nach_Wien.]
+    de: Ich möchte bitte eine_Fahrkarte nach_Wien.
+    also: [Ich möchte eine_Fahrkarte nach_Wien bitte.]
   - en: Do I have to change trains?
     de: Muss ich umsteigen?
   - en: Which platform does the train leave from?
@@ -379,7 +379,7 @@ setting: The weekend forecast on an Austrian news website in October.
 text: |
   Samstag: Im Westen und im Süden scheint den ganzen Tag die Sonne, bei Temperaturen bis 22 Grad. Im Norden ist es bewölkt, und am Nachmittag regnet es dort.
 
-  Sonntag: Von Westen kommt Regen. In Tirol und Vorarlberg regnet es schon am Vormittag, in Wien erst am Abend. Die Temperaturen liegen nur noch bei 12 bis 15 Grad. Auf den Bergen über 2000 Metern kann es schneien.
+  Sonntag: Von Westen kommt Regen. In Tirol und Vorarlberg regnet es schon am Vormittag, in Wien erst am Abend. Die Temperaturen liegen nur noch bei 12 bis 15 Grad. Auf den Bergen kann es ab 2000 Metern schneien.
 
   Montag: Kühl und windig, höchstens 10 Grad.
 en: |

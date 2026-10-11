@@ -21,18 +21,18 @@
 
   /** Where the cat ends up for each preposition: feet position, scale, and whether it is behind the box. */
   const SPOT: Record<Prep, { x: number; y: number; s: number; back?: boolean; flip?: boolean }> = {
-    in: { x: 357, y: 193, s: 0.9, back: true },
-    an: { x: 327, y: 166, s: 0.85, flip: true },
-    auf: { x: 262, y: 139, s: 0.95 },
-    über: { x: 196, y: 242, s: 1 },
-    unter: { x: 258, y: 205, s: 0.8 },
-    vor: { x: 108, y: 242, s: 1.1 },
-    hinter: { x: 380, y: 177, s: 0.72, back: true },
+    in: { x: 356, y: 184, s: 0.85, back: true },
+    an: { x: 319, y: 166, s: 0.85, flip: true },
+    auf: { x: 254, y: 139, s: 0.95 },
+    über: { x: 196, y: 230, s: 1 },
+    unter: { x: 250, y: 205, s: 0.8 },
+    vor: { x: 108, y: 230, s: 1.1 },
+    hinter: { x: 382, y: 176, s: 0.75, back: true },
     neben: { x: 27, y: 206, s: 0.9 },
     zwischen: { x: 187, y: 207, s: 0.9 },
   };
-  const START = { x: 196, y: 244, s: 1 };
-  const LAMP_TABLE = 262;
+  const START = { x: 196, y: 232, s: 1 };
+  const LAMP_TABLE = 254;
   const LAMP_SOFA = 108;
 
   let tab = $state(0);
@@ -164,9 +164,9 @@
 {/snippet}
 
 {#snippet scene()}
-  <svg class="scene" viewBox="0 0 400 260" role="img" aria-label={tab === 1 && qSent ? 'Picture for the question' : unmark(sentence.de)}>
+  <svg class="scene" viewBox="0 0 400 240" role="img" aria-label={tab === 1 && qSent ? 'Picture for the question' : unmark(sentence.de)}>
     <rect x="0" y="0" width="400" height="182" class="wall" />
-    <rect x="0" y="182" width="400" height="78" class="floor" />
+    <rect x="0" y="182" width="400" height="58" class="floor" />
     <line x1="0" y1="182" x2="400" y2="182" class="skirting" />
     <!-- picture on the wall -->
     <rect x="80" y="44" width="56" height="42" rx="2" class="frame" />
@@ -188,12 +188,12 @@
     </g>
     <!-- table and chair -->
     <g class:focus={focusPrep === 'auf' || focusPrep === 'unter' || focusPrep === 'an' || focusPrep === 'über' || focusPrep === 'zwischen'}>
-      <rect x="212" y="139" width="100" height="9" rx="2" class="wood" />
-      <rect x="220" y="148" width="7" height="57" class="wood" />
-      <rect x="297" y="148" width="7" height="57" class="wood" />
-      <rect x="312" y="164" width="34" height="6" rx="1" class="wood light" />
-      <rect x="340" y="124" width="6" height="81" class="wood light" />
-      <rect x="314" y="170" width="5" height="35" class="wood light" />
+      <rect x="204" y="139" width="100" height="9" rx="2" class="wood" />
+      <rect x="212" y="148" width="7" height="57" class="wood" />
+      <rect x="289" y="148" width="7" height="57" class="wood" />
+      <rect x="304" y="164" width="34" height="6" rx="1" class="wood light" />
+      <rect x="332" y="124" width="6" height="81" class="wood light" />
+      <rect x="306" y="170" width="5" height="35" class="wood light" />
     </g>
     {#if showArc}
       <path d={arcPath} class="arc" marker-end="url(#ps-arrow)" />
@@ -202,9 +202,9 @@
     <!-- the box -->
     <g class:focus={focusPrep === 'in' || focusPrep === 'hinter'}>
       {#if SPOT[focusPrep ?? 'auf'].back}{@render catSvg()}{/if}
-      <path d="M352 168 L388 168 L398 160 L362 160 Z" class="box lid" />
-      <rect x="350" y="168" width="40" height="37" class="box" />
-      <path d="M350 168 L360 176 M390 168 L380 176" class="box-line" />
+      <path d="M340 160 L332 148 L346 148 Z M386 160 L394 147 L380 147 Z" class="box lid" />
+      <rect x="340" y="160" width="46" height="45" class="box" />
+      <path d="M340 172 H386" class="box-line" />
     </g>
     <defs>
       <marker id="ps-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">

@@ -196,7 +196,7 @@ English puts things almost anywhere with one verb: "put". German wants to know *
 
 The action verbs are all **regular** ({hat gestellt, gelegt, gesetzt, gehängt}). The position verbs are **strong** ({hat gestanden, gelegen, gesessen, gehangen}), and in the south, Austria and Switzerland they take {sein}, as you saw in lesson 13. The two {hängen} look identical in the present; only the past shows which is which: {Ich habe das Bild an die Wand gehängt}, but {Das Bild hat zehn Jahre im Flur gehangen}.
 
-Upright or flat? Bottles, glasses, furniture and books on a shelf stand; phones, keys, papers, and anything flat or on its side, lie. That is why Germans rarely answer {Wo ist …?} with {ist}: {Wo ist mein Handy?} {Es liegt auf dem Sofa.} {Wo ist die Milch?} {Sie steht im Kühlschrank.}
+Upright or flat? Bottles, glasses, furniture and books on a shelf stand; phones, keys, papers, and anything flat or on its side, lie. That is why Germans so often answer {Wo ist …?} with {liegen} or {stehen} rather than {ist}: {Wo ist mein Handy?} {Es liegt auf dem Sofa.} {Wo ist die Milch?} {Sie steht im Kühlschrank.}
 
 ```words
 stellen | to put (upright), to stand
@@ -222,11 +222,11 @@ items: [Regal, Spiegel, Teppich, Pflanze, Bild, Karton, Kiste, Wand, Ecke, Kelle
 title: Action or position?
 items:
   - de: Ich ___ die Flasche in den Kühlschrank.
-    options: [stelle, stehe, lege]
+    options: [stelle, stehe, setze]
     answer: 0
     en: I'm putting the bottle in the fridge.
   - de: Die Flasche ___ im Kühlschrank.
-    options: [steht, stellt, liegt]
+    options: [steht, stellt, setzt]
     answer: 0
     en: The bottle is in the fridge.
   - de: Wo ist mein Handy? Es ___ auf dem Sofa.
@@ -269,7 +269,7 @@ items:
     extra: [unter_das_Bett]
   - en: Put the boxes in the cellar, please! (to several friends)
     de: Stellt die_Kisten bitte in_den_Keller!
-    also: [Stellt bitte die_Kisten in_den_Keller!]
+    also: [Stellt bitte die_Kisten in_den_Keller!, Bitte stellt die_Kisten in_den_Keller!]
   - en: Where did you put my keys? (to a friend)
     de: Wohin hast du meine_Schlüssel gelegt?
     extra: [Wo]
@@ -293,7 +293,7 @@ items:
 Three traps:
 
 - {nach} is only for places without an article. Most countries have none ({Deutschland}, {Österreich}, {Italien}), but some do, and then it's {in} + accusative: {Wir fahren in die Schweiz}, never {nach der Schweiz}.
-- **{zu Hause}** is "at home", **{nach Hause}** is "(going) home". {Ich bin zu Hause} but {Ich gehe nach Hause}. In Austria and Switzerland you will also see {zuhause} written as one word, and many southerners simply say {Ich gehe heim}.
+- **{zu Hause}** is "at home", **{nach Hause}** is "(going) home". {Ich bin zu Hause} but {Ich gehe nach Hause}. You will also see {zuhause} written as one word (allowed everywhere, and especially common in Austria and Switzerland), and many southerners simply say {Ich gehe heim}.
 - {zu} is the safe default for shops and places you go *to*; {in} stresses going *inside*: {Ich gehe zur Apotheke} or {Ich gehe in die Apotheke} are both fine.
 
 ```words

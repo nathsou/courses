@@ -106,9 +106,9 @@ Remember the cases: {wegen}, {trotz}, {während} and {aufgrund} take the genitiv
 title: Verbal to nominal
 items:
   - de: „Weil es stark regnete, wurde das Konzert abgesagt.“ → ___ wurde das Konzert abgesagt.
-    answer: [Wegen des starken Regens, Wegen starken Regens, Aufgrund des starken Regens]
+    answer: [Wegen des starken Regens, Wegen starken Regens, Aufgrund des starken Regens, Aufgrund starken Regens]
   - de: „Nachdem sie in Zürich angekommen war, rief sie ihre Eltern an.“ → ___ rief sie ihre Eltern an.
-    answer: Nach ihrer Ankunft in Zürich
+    answer: [Nach ihrer Ankunft in Zürich, Nach der Ankunft in Zürich]
   - de: „Obwohl es kalt war, gingen wir im See baden.“ → ___ gingen wir im See baden.
     answer: Trotz der Kälte
   - de: „Während er studierte, arbeitete er in einem Café.“ → ___ arbeitete er in einem Café.
@@ -226,7 +226,8 @@ Mehmet: Schön formuliert. Aber die Erledigung erfolgt sofort! | Nicely put. But
 title: Nominal to verbal
 items:
   - de: „Nach dem Beschluss des Gemeinderats beginnen die Arbeiten.“ → Nachdem der Gemeinderat es ___, beginnen die Arbeiten.
-    answer: [beschlossen hat, beschlossen hatte]
+    answer: beschlossen hat
+    explain: "The main clause is in the present, so the {nachdem} clause takes the perfect: {beschlossen hat}."
   - de: „Wegen der hohen Nachfrage sind die Tickets ausverkauft.“ → Die Tickets sind ausverkauft, weil die Nachfrage so hoch ___.
     answer: [ist, war]
   - prompt: "Rewrite in verbal style, starting with {Wenn}: {Bei Nebel ist die Straße gesperrt.}"
@@ -250,7 +251,7 @@ Formal German is full of fixed pairs in which a noun carries the meaning and a v
 
 Why use them? They sound more formal and weighty; some say things the simple verb cannot ({zur Verfügung stehen} has no one-word equivalent); and some have a passive or a "beginning" meaning ({zur Diskussion stehen} = is being discussed; {in Gang kommen} = get going).
 
-The catch: the verb is not predictable. It is {eine Entscheidung treffen}, never {machen}; {eine Frage stellen}, never {fragen}. Learn each pair as one unit.
+The catch: the verb is not predictable. It is {eine Entscheidung treffen}, never *{eine Entscheidung machen}; {eine Frage stellen}, never *{eine Frage fragen}. Learn each pair as one unit.
 
 | Funktionsverbgefüge | plain verb | meaning |
 | --- | --- | --- |
@@ -444,13 +445,13 @@ items:
   - prompt: "One word, with article: {der Markt für Wohnungen}"
     answer: der Wohnungsmarkt
   - prompt: "One word, with article: {die Suche nach Arbeit}"
-    answer: die Arbeitssuche
+    answer: [die Arbeitssuche, die Arbeitsuche]
   - prompt: "One word, with article: {eine Stadt mit einer Universität}"
-    answer: die Universitätsstadt
+    answer: [die Universitätsstadt, eine Universitätsstadt]
   - prompt: "One word, with article: {ein Kurs, in dem man eine Sprache lernt}"
-    answer: der Sprachkurs
+    answer: [der Sprachkurs, ein Sprachkurs]
   - prompt: "One word, with article: {ein Risiko für die Sicherheit}"
-    answer: das Sicherheitsrisiko
+    answer: [das Sicherheitsrisiko, ein Sicherheitsrisiko]
 ```
 
 ```sort

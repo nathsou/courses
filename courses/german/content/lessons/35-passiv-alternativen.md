@@ -139,7 +139,7 @@ items:
   - prompt: "Rewrite with {sich lassen}: {Der Text kann leicht übersetzt werden.}"
     answer: Der Text lässt sich leicht übersetzen.
   - prompt: "Rewrite with {sich lassen}: {Die Kosten konnten nicht berechnet werden.}"
-    answer: Die Kosten ließen sich nicht berechnen.
+    answer: [Die Kosten ließen sich nicht berechnen., Die Kosten haben sich nicht berechnen lassen.]
   - prompt: "Rewrite with {sich lassen}: {Kann man das Fenster öffnen?}"
     answer: Lässt sich das Fenster öffnen?
 ```
@@ -321,6 +321,7 @@ items:
     also:
       - Zum_Geburtstag hat sie ein Fahrrad geschenkt bekommen.
       - Ein Fahrrad hat sie zum_Geburtstag geschenkt bekommen.
+      - Sie hat ein Fahrrad zum_Geburtstag geschenkt bekommen.
   - en: The patients have everything explained to them.
     de: Die Patienten bekommen alles erklärt.
     also: [Alles bekommen die Patienten erklärt.]
@@ -373,7 +374,7 @@ items:
     options: [lebt, wird gelebt, ist zu leben]
     answer: 0
     en: Life is good in Graz. The city is beautiful and not too big.
-  - de: Mein Schlüssel? Der hat ___ zum Glück wieder gefunden.
+  - de: Mein Schlüssel? Der hat ___ zum Glück wiedergefunden.
     options: [sich, man, er]
     answer: 0
     en: My key? Luckily it has turned up again.
@@ -546,7 +547,7 @@ setting: It is January in Vienna, and the heating in your flat has stopped worki
 goal: Explain the problem, ask when it can be repaired, and ask whether the cost of an electric heater you bought will be refunded. Use at least two of sich lassen, sein + zu, a -bar adjective, the state passive or the bekommen-passive.
 partner: Frau Novak, who works at the property management company; polite, a little bureaucratic, Viennese
 opener: Hausverwaltung, Novak, grüß Gott. Was kann ich für Sie tun?
-openerEn: Property management, Novak speaking, good afternoon. What can I do for you?
+openerEn: Property management, Novak speaking, hello. What can I do for you?
 words: [lässt sich, reparieren, erreichbar, erstattet bekommen, ist kaputt, ist zu, die Rechnung]
 checks: [explained the problem clearly, asked when it can be repaired, asked about a refund, used at least two passive alternatives]
 ```

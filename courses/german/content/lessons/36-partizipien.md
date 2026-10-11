@@ -88,14 +88,16 @@ items:
     answer: 0
     en: The constantly rising prices worry many people.
     explain: "{ständig} (constantly): the rise is still going on, so Partizip I."
-  - de: Wegen der stark ___ Preise kaufen wir weniger Fleisch.
+  - de: Wegen der letztes Jahr stark ___ Preise kaufen wir jetzt weniger Fleisch.
     options: [gestiegenen, steigenden]
     answer: 0
-    en: Because prices have risen sharply, we buy less meat.
+    en: Because prices rose sharply last year, we now buy less meat.
+    explain: "{letztes Jahr}: the rise is over, so Partizip II."
   - de: Leise trug der Vater den ___ Jungen ins Bett.
-    options: [eingeschlafenen, einschlafenden, geschlafenen]
+    options: [eingeschlafenen, geschlafenen, eingeschlafene]
     answer: 0
     en: The father quietly carried the boy, who had fallen asleep, to bed.
+    explain: "{einschlafen} takes {sein}, so its Partizip II works before a noun; {schlafen} takes {haben} and does not. After {den} the ending is -en."
   - de: Pass auf die ___ Kinder auf!
     options: [spielenden, gespielten]
     answer: 0
@@ -185,7 +187,7 @@ items:
 
 ```read
 title: Windpark Hochried
-setting: A report from a regional newspaper in the Allgäu, in southern Bavaria.
+setting: A report from a regional newspaper in the Allgäu, in south-western Bavaria.
 text: |
   Windpark Hochried: Gemeinderat sagt Ja
 
@@ -201,7 +203,7 @@ en: |
 
   The 1,200 signatures against the project collected by a citizens' action group had initially unsettled the council. Many of the families living in the village fear noise and a loss in the value of their houses. The mayor, on the other hand, pointed to the income that can be expected: the municipality would receive around 200,000 euros a year.
 
-  The five planned wind turbines are to be built by 2028. However, a local referendum announced by the opponents could still delay construction.
+  The five planned wind turbines are to be built by 2028. However, a petition for a local referendum, announced by the opponents, could still delay construction.
 questions:
   - claim: Der Gemeinderat hat den Windpark abgelehnt.
     answer: false
@@ -353,7 +355,7 @@ Extended attributes are a feature of **written** German. In conversation, people
 
 ```dialogue
 title: Podcast „Sprachlabor“
-Hannah: Willkommen bei „Sprachlabor“, dem Podcast über die deutsche Sprache. Heute bei mir ist Luca Moser, Sprachwissenschaftler an der Universität Bern. Herr Moser, warum schreiben Zeitungen so lange Sätze? | Welcome to "Sprachlabor", the podcast about the German language. With me today is Luca Moser, a linguist at the University of Bern. Herr Moser, why do newspapers write such long sentences?
+Hannah: Willkommen bei „Sprachlabor“, dem Podcast über die deutsche Sprache. Heute zu Gast ist Luca Moser, Sprachwissenschaftler an der Universität Bern. Herr Moser, warum schreiben Zeitungen so lange Sätze? | Welcome to "Sprachlabor", the podcast about the German language. With me today is Luca Moser, a linguist at the University of Bern. Herr Moser, why do newspapers write such long sentences?
 Luca: Die Sätze sind gar nicht unbedingt lang. Sie sind dicht. Nehmen Sie „die von der Regierung geplante Reform“. Das sind sechs Wörter statt acht. | The sentences aren't necessarily long. They're dense. Take "the reform planned by the government". That's six words instead of eight.
 Hannah: Statt acht? | Instead of eight?
 Luca: „Die Reform, die von der Regierung geplant wird.“ Zählen Sie nach. | "The reform that is being planned by the government." Count them.
@@ -361,7 +363,7 @@ Hannah: Und für die Leser ist das kein Problem? | And that's no problem for rea
 Luca: Für geübte Leser nicht. Aber man muss beim Lesen ein bisschen springen: vom Artikel zum Nomen und wieder zurück. | Not for practised readers. But you have to jump about a little as you read, from the article to the noun and back again.
 Hannah: Und im Gespräch? Sagt man so etwas auch? | And in conversation? Do people say things like that too?
 Luca: Kaum. Stellen Sie sich vor, ich sage beim Abendessen: „Reich mir bitte die von dir gestern gekaufte Butter.“ Meine Frau würde mich ziemlich komisch ansehen. | Hardly. Imagine I said at dinner, "Please pass me the butter bought by you yesterday." My wife would give me a very odd look.
-Hannah: Verständlich. Was raten Sie unseren Lernenden? | Understandably. What do you advise our learners?
+Hannah: Verständlich. Was raten Sie unseren Lernenden? | Understandable. What do you advise our learners?
 Luca: Lesen Sie solche Ausdrücke von hinten nach vorne. Erst das Nomen, dann das Partizip, dann den Rest. Dann sind sie gar nicht so schlimm. | Read expressions like that from the back to the front. First the noun, then the participle, then the rest. Then they're not so bad at all.
 ```
 
@@ -422,7 +424,7 @@ turns:
         en: Unfortunately not. But there was a sticker with a laughed face on the back.
         reply: Mit einem lachenden Gesicht, meinen Sie. Na, wir werden sehen, wer zuletzt lacht. Vielen Dank für Ihre Hilfe!
         replyEn: With a laughing face, you mean. Well, we'll see who laughs last. Thank you very much for your help!
-end: Two days later the bike is found, still locked. In Switzerland a number plate is a {Kontrollschild}; in Germany and Austria it is a {Kennzeichen} or, colloquially, a {Nummernschild}.
+end: Two days later the bike is found, still locked. In Switzerland a number plate is a {Kontrollschild}; in Germany it is a {Kennzeichen} or, colloquially, a {Nummernschild}; in Austria a {Kennzeichen} or {Nummerntafel}.
 ```
 
 ```words

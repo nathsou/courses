@@ -375,7 +375,7 @@ Generations of English-speaking pupils have learnt these prepositions by singing
 "I have been learning German for three years" is {Ich lerne seit drei Jahren Deutsch}: **{seit}** with the **present tense**, because you are still learning. Not {für drei Jahre}, and not the perfect. Notice the dative plural: {seit drei Jahren}.
 :::
 
-{gegenüber} can stand after a pronoun ({Sie wohnt mir gegenüber}: she lives opposite me). With places, people often say {gegenüber vom Bahnhof} in conversation.
+With a pronoun, {gegenüber} comes after it ({Sie wohnt mir gegenüber}: she lives opposite me). With places, people often say {gegenüber vom Bahnhof} in conversation.
 
 ```words
 aus (+ D) | out of; from

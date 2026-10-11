@@ -201,7 +201,7 @@ explain: "Third person singular and {sein} are always distinct. {ich müsse} is 
 ```
 
 ```fill
-title: Konjunktiv I, II or würde?
+title: 'News style: Konjunktiv I, II or würde?'
 items:
   - de: Die Eltern sagten, sie ___ keine Zeit.
     options: [hätten, haben, hatten]
@@ -314,8 +314,8 @@ items:
     answer: [solle, sollte]
     explain: "An instruction becomes {sollen}. {ich solle} is distinct from {ich soll}, so Konjunktiv I works here."
   - de: „Bringen Sie bitte Ihren Ausweis mit.“ → Der Pförtner bat die Besucherin, sie ___ ihren Ausweis mitbringen.
-    answer: [möge, solle]
-    explain: "A polite request: {möge} (formal) or {solle}."
+    answer: [möge, solle, möchte, sollte]
+    explain: "A polite request: {möge} (formal) or {solle}; {möchte} and {sollte} are also used."
 ```
 
 ## In den Nachrichten
@@ -325,7 +325,7 @@ News German has its own little vocabulary for sources. Two prepositions are wort
 - **{laut}** + dative (or genitive), placed before the noun, often without an article: {laut Polizei}, {laut einer Umfrage}.
 - **{zufolge}** + dative, placed **after** the noun: {der Polizei zufolge}, {einem Bericht zufolge}.
 
-Both mean "according to", and both often come with Konjunktiv I: {Einem Bericht zufolge habe das Unternehmen Millionen verloren.} The adverb {angeblich} ("allegedly") does the same job in one word: {Der Minister wusste angeblich von nichts.}
+Both mean "according to". Since the source is already named, the indicative is enough ({Laut Polizei ist der Täter geflohen.}), but you will often see Konjunktiv I after them as well, especially inside a longer report: {Einem Bericht zufolge habe das Unternehmen Millionen verloren.} The adverb {angeblich} ("allegedly") does the same job in one word: {Der Minister wusste angeblich von nichts.}
 
 ```words
 zufolge (+ D) | according to (after the noun)
@@ -485,8 +485,8 @@ turns:
         replyEn: Very good, we'll use that as it is.
       - de: Die Stadträtin kündigte an, sie würde die Pläne prüfen lassen.
         en: The councillor announced she would have the plans checked (if…).
-        reply: '„Würde“ klingt hier nach einer Bedingung, als ob sie es nur unter Umständen täte. In der dritten Person Singular geht „werde“: Sie werde die Pläne prüfen lassen.'
-        replyEn: '"Würde" sounds like a condition here, as if she would only do it under certain circumstances. In the third person singular "werde" works, so she "werde" have the plans checked.'
+        reply: '„Würde“ sagt man im Gespräch, aber in der Meldung kann es nach einer Bedingung klingen, als ob sie es nur unter Umständen täte. In der dritten Person Singular ist „werde“ eindeutig: Sie werde die Pläne prüfen lassen.'
+        replyEn: '"Würde" is what people say in conversation, but in a news item it can sound like a condition, as if she would only do it under certain circumstances. In the third person singular "werde" is unambiguous, so she "werde" have the plans checked.'
       - de: Die Stadträtin kündigte an, sie wird die Pläne prüfen lassen.
         en: The councillor announced she will have the plans checked.
         reply: 'Fast. In der Meldung brauchen wir den Konjunktiv I: Sie werde die Pläne prüfen lassen.'

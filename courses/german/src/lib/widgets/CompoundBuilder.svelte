@@ -252,6 +252,7 @@
   .lw {
     margin: 0.3rem 0 0;
     overflow-wrap: anywhere;
+    hyphens: auto;
   }
   .lw :global(.hi) {
     overflow-wrap: anywhere;
@@ -274,6 +275,9 @@
     }
     .result {
       font-size: 1.5rem;
+    }
+    .lw :global(.hi) {
+      font-size: 1.15rem;
     }
   }
 </style>

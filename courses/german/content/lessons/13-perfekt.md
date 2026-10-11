@@ -157,7 +157,7 @@ With a separable verb, the **ge-** goes *between* the prefix and the rest, and t
 The base verb decides everything else. {rufen} is strong ({gerufen}), so {anrufen} gives {angerufen}; {kaufen} is weak ({gekauft}), so {einkaufen} gives {eingekauft}. Learn the base verb and its separable relatives come free.
 
 :::grammar[haben or sein can change]
-The prefix can change the auxiliary. {Ich habe lange gestanden} (I stood for a long time) takes {haben}, but {Ich bin früh aufgestanden} (I got up early) takes {sein}, because getting up is a change from lying to standing. More on this below.
+The prefix can change the auxiliary. {Ich habe lange gestanden} (I stood for a long time) takes {haben} (at least in the north: see the culture note below), but {Ich bin früh aufgestanden} (I got up early) takes {sein}, because getting up is a change from lying to standing. More on this below.
 :::
 
 ```words
@@ -191,7 +191,7 @@ items:
 
 Here is the rule that explains the exceptions: **a participle only gets ge- if the verb is stressed on its first syllable.** {machen} is stressed on *ma*, so {gemacht}; {anrufen} is stressed on *an*, so {angerufen} (the ge- comes straight after the stressed prefix). Verbs that begin with an unstressed syllable get no ge-. There are two groups.
 
-**1. Inseparable prefixes: be-, ver-, er-, ent-, zer-, ge-, emp-, miss-.** These prefixes are never stressed and never split off, and their verbs have no ge-:
+**1. Inseparable prefixes: be-, ver-, er-, ent-, zer-, ge-, emp-, miss-.** These prefixes never split off and are normally unstressed (miss- is the odd one out: it often carries the stress, yet its verbs still take no ge-), and their verbs have no ge-:
 
 | Prefix | Weak | Strong |
 | --- | --- | --- |
@@ -305,14 +305,14 @@ items:
   - prompt: Did you bring the cake? (to a friend)
     answer: [Hast du den Kuchen mitgebracht?, Hast du den Kuchen gebracht?]
   - prompt: I thought of you. (to a friend; denken an + accusative)
-    answer: [Ich habe an dich gedacht., An dich habe ich gedacht.]
+    answer: [Ich habe an dich gedacht., An dich habe ich gedacht., Ich dachte an dich.]
   - prompt: We didn't know him.
     answer: [Wir haben ihn nicht gekannt., Wir kannten ihn nicht.]
 ```
 
 ## haben oder sein?
 
-Most verbs make their perfect with {haben}, and every verb with an accusative object does. A smaller group takes {sein}: verbs with no object that describe something happening *to* the subject, so that afterwards it is somewhere else or something else.
+Most verbs make their perfect with {haben}, and practically every verb with an accusative object does. A smaller group takes {sein}: verbs with no object that describe something happening *to* the subject, so that afterwards it is somewhere else or something else.
 
 | sein for… | Examples |
 | --- | --- |
@@ -446,7 +446,7 @@ A story needs signposts. These words put events in order:
 | {zum Glück} / {leider} | luckily / unfortunately |
 | {zum Schluss} | in the end, finally |
 
-Each of them takes position 1, so the verb ({habe}, {bin}) comes straight after it and the subject moves behind the verb: {Dann habe ich gewartet}, never {Dann ich habe gewartet}. The one exception is {und}, which stands outside the sentence and does not count: {Und dann bin ich nach Hause gegangen.}
+Each of them takes position 1, so the verb ({habe}, {bin}) comes straight after it and the subject moves behind the verb: {Dann habe ich gewartet}, never {Dann ich habe gewartet}. Little joining words like {und} and {aber} are different: they stand outside the sentence and do not count: {Und dann bin ich nach Hause gegangen.}
 
 :::mistake
 {Zuerst ich bin aufgestanden} is the most common mistake in learners' stories. German keeps the verb in second place, whatever comes first: {Zuerst bin ich aufgestanden.}

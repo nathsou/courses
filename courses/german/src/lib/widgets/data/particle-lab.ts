@@ -50,7 +50,7 @@ export const PARTICLE_BASES: ParticleBase[] = [
     with: {
       doch: { de: 'Komm {doch} her!', en: 'Come on over! (Why don’t you come over?)', note: 'encouraging, a little insistent' },
       mal: { de: 'Komm {mal} her.', en: 'Come here a sec.', note: 'casual: softens the order', alt: 'Komm {doch mal} her!' },
-      ja: { de: 'Komm {ja} her!', en: 'You make sure you come here!', note: 'stressed {ja} in a command: a warning or threat' },
+      ja: { de: 'Komm {ja} sofort her!', en: 'You come here right now, do you hear me?', note: 'stressed {ja} in a command: a warning or threat' },
       eben: { de: 'Dann komm {halt} her.', en: 'Well, just come over, then.', note: 'shrugging: it’s the obvious solution', alt: 'Dann komm {eben} her.' },
       eigentlich: { none: true, note: '{eigentlich} goes in statements and questions, not in commands.' },
       schon: { de: 'Komm {schon} her!', en: 'Come on, get over here!', note: 'impatient urging' },
