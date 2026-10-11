@@ -5,7 +5,7 @@
    * Konjunktiv II from B1, Konjunktiv I at B2.
    */
   import { taught, type Level } from '$lib/de/lexicon';
-  import { conjugate, verbTable, PERSONS, TENSE_NAMES, type Tense } from '$lib/de/verbs';
+  import { conjugate, conjugateAll, verbTable, PERSONS, TENSE_NAMES, type Tense } from '$lib/de/verbs';
   import { mark, type Marked } from '$lib/de/check';
   import { settings } from '$lib/state/settings.svelte';
   import { progress } from '$lib/state/progress.svelte';
@@ -43,7 +43,7 @@
       const pool = tense === 'preterite' && level === 'A2' ? verbs.filter((v) => MODALS.has(v)) : verbs;
       const verb = pickOne(pool.length ? pool : verbs);
       const person = tense === 'konj1' ? pickOne([2, 5]) : Math.floor(Math.random() * 6);
-      const answer = conjugate(verb, tense, person);
+      const answer = conjugateAll(verb, tense, person)[0];
       if (answer && answer !== '?') return { verb, tense, person, answer };
     }
   }
@@ -60,7 +60,7 @@
     e.preventDefault();
     if (!q || result || !value.trim()) return;
     const typed = value.replace(new RegExp(`^${PERSONS[q.person]!.split('/')[0]}\\s+`, 'i'), '');
-    result = mark(typed, q.answer, { lenient: settings.data.lenientSpelling });
+    result = mark(typed, conjugateAll(q.verb, q.tense, q.person), { lenient: settings.data.lenientSpelling });
     const ok = result.verdict !== 'wrong';
     if (ok) score++;
     sfx(ok ? 'right' : 'wrong', settings.data.sounds);

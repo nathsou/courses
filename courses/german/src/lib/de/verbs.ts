@@ -75,3 +75,23 @@ export function conjugate(key: string, tense: Tense, person: number): string | u
     }
   }
 }
+
+/**
+ * Every accepted form: the table's, plus the variant German allows for verbs in -ern and -eln in
+ * the ich-form (ich wandere / wandre, ich sammle / sammele), with the commoner one first.
+ */
+export function conjugateAll(key: string, tense: Tense, person: number): string[] {
+  const form = conjugate(key, tense, person);
+  if (!form) return [];
+  const m = /(e[rl])n$/.exec(key);
+  if (!m || person !== 0 || (tense !== 'present' && tense !== 'konj1')) return [form];
+  const [word, ...rest] = form.split(' ');
+  const l = m[1]![1]!; // r or l
+  const full = new RegExp(`e${l}e$`);
+  const short = new RegExp(`${l}e$`);
+  const stem = full.test(word!) ? word!.replace(full, '') : short.test(word!) ? word!.replace(short, '') : null;
+  if (stem === null) return [form];
+  const forms = [`${stem}e${l}e`, `${stem}${l}e`];
+  if (l === 'l') forms.reverse();
+  return forms.map((w) => [w, ...rest].join(' '));
+}

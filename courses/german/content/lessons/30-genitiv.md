@@ -375,14 +375,15 @@ items:
     en: I can't remember the student's name.
 ```
 
-## Im Fundbüro
+## Im Treppenhaus und auf dem Amt
 
 ```words
-das Fundbüro, -s | lost property office
-der Rucksack, ¨-e | rucksack, backpack
 der Zettel, - | note, slip of paper
-der Ausweis, -e | identity card
-die Vollmacht, -en | written authorisation
+der Rucksack, ¨-e | rucksack, backpack
+sich an|melden | to register; to sign up
+die Unterschrift, -en | signature
+der Meldezettel, - | registration form (in Austria)
+das Formular, -e | form
 ```
 
 ```story
@@ -449,59 +450,61 @@ questions:
 ```
 
 ```scene
-title: At the lost property office
-setting: The city lost property office in Munich. Your friend Luca left his rucksack on a tram yesterday and asked you to go and look for it. You speak to the man at the counter, using Sie.
-partner: Herr Hofmann
+title: At the registration office
+setting: The registration office of the city of Graz. You moved into your brother's flat a week ago and have come to register your new address. You use Sie.
+partner: Frau Gruber
 turns:
   - they: Grüß Gott! Was kann ich für Sie tun?
-    theyEn: Good morning! What can I do for you?
+    theyEn: Hello! What can I do for you?
     options:
-      - de: Grüß Gott! Mein Freund hat gestern seinen Rucksack in der Tram verloren. Ich suche den Rucksack meines Freundes.
-        en: Good morning! My friend lost his rucksack on the tram yesterday. I'm looking for my friend's rucksack.
+      - de: Grüß Gott! Ich möchte mich anmelden. Ich wohne seit letztem Montag in der Wohnung meines Bruders.
+        en: Hello! I'd like to register. I've been living in my brother's flat since last Monday.
         ok: true
-      - de: Grüß Gott! Ich suche den Rucksack von meinem Freund. Er hat ihn gestern in der Tram verloren.
-        en: Good morning! I'm looking for my friend's rucksack. He lost it on the tram yesterday.
-        ok: true
-        reply: Den Rucksack Ihres Freundes, verstehe. Das schauen wir uns gleich an.
-        replyEn: Your friend's rucksack, I see. We'll look into that straight away.
-      - de: Grüß Gott! Ich suche den Rucksack meinem Freund.
-        en: Good morning! I'm looking for the rucksack my friend.
-        reply: Den Rucksack Ihres Freundes? Verstehe. Wo hat er ihn denn verloren?
-        replyEn: Your friend's rucksack? I see. Where did he lose it?
-  - they: Wie sieht der Rucksack denn aus?
-    theyEn: What does the rucksack look like?
+      - de: Grüß Gott! Ich möchte mich anmelden. Ich wohne seit letztem Montag in der Wohnung meinem Bruder.
+        en: Hello! I'd like to register. I've been living in the flat my brother since last Monday.
+        reply: In der Wohnung Ihres Bruders, verstehe. Haben Sie den Meldezettel dabei?
+        replyEn: In your brother's flat, I see. Have you got the registration form with you?
+  - they: Haben Sie den Meldezettel dabei? Der muss auch vom Wohnungsbesitzer unterschrieben sein.
+    theyEn: Have you got the registration form with you? It has to be signed by the owner of the flat as well.
     options:
-      - de: Er ist blau, mit einem kleinen Plüschlöwen an der Seite.
-        en: It's blue, with a little cuddly lion on the side.
+      - de: Ja, hier. Das ist die Unterschrift meines Bruders. Ihm gehört die Wohnung.
+        en: Yes, here it is. That's my brother's signature. The flat belongs to him.
         ok: true
-      - de: Er ist blau, mit einem kleinen Plüschlöwe an der Seite.
-        en: It's blue, with a little cuddly lion on the side.
-        reply: Mit einem kleinen Plüschlöwen? Moment, ich schaue mal nach.
-        replyEn: With a little cuddly lion? Just a moment, I'll have a look.
-  - they: Da haben wir ihn ja! Was ist denn drin?
-    theyEn: Here it is! What's in it?
+      - de: Ja, hier. Das ist die Unterschrift von meinen Bruder.
+        en: Yes, here it is. That's the signature of my (wrong case) brother.
+        reply: Die Unterschrift Ihres Bruders, gut. Dann passt das.
+        replyEn: Your brother's signature, good. Then that's fine.
+  - they: Sie wohnen aber schon seit einer Woche dort? Eigentlich muss man sich innerhalb von drei Tagen anmelden.
+    theyEn: But you've been living there for a week already? Strictly speaking you have to register within three days.
     options:
-      - de: Ein Laptop und die Brille meines Freundes.
-        en: A laptop and my friend's glasses.
+      - de: Das tut mir leid. Wegen des Umzugs hatte ich einfach keine Zeit.
+        en: I'm sorry. Because of the move I simply didn't have time.
         ok: true
-      - de: Ein Laptop und die Brille meinem Freund.
-        en: A laptop and the glasses my friend.
-        reply: Die Brille Ihres Freundes, ja, die ist hier. Und der Laptop auch.
-        replyEn: Your friend's glasses, yes, they're here. And the laptop too.
-  - they: Ich darf ihn Ihnen aber leider nicht einfach geben. Ihr Freund muss selbst kommen, oder Sie bringen eine Vollmacht und seinen Ausweis mit.
-    theyEn: But I'm afraid I can't just give it to you. Your friend has to come himself, or you bring a written authorisation and his ID.
+      - de: Tut mir leid, wegen dem Umzug hatte ich keine Zeit.
+        en: Sorry, because of the move I didn't have time.
+        ok: true
+        reply: Ja, so ein Umzug ist stressig. Diesmal ist es kein Problem.
+        replyEn: Yes, moving house is stressful. It's not a problem this time.
+      - de: Das tut mir leid. Wegen der Umzug hatte ich keine Zeit.
+        en: I'm sorry. Because of the (wrong gender) move I didn't have time.
+        reply: Wegen des Umzugs, ja, das verstehe ich. Diesmal ist es kein Problem.
+        replyEn: Because of the move, yes, I understand. It's not a problem this time.
+  - they: So, fertig. Hier ist Ihre Meldebestätigung. Brauchen Sie sonst noch etwas?
+    theyEn: Right, done. Here's your confirmation of registration. Do you need anything else?
     options:
-      - de: Verstehe. Kann er auch außerhalb der Öffnungszeiten kommen?
-        en: I see. Can he also come outside opening hours?
+      - de: Ja, kann ich gleich ein Formular für meinen Neffen mitnehmen? Er zieht nächsten Monat auch zu uns.
+        en: Yes, can I take a form for my nephew while I'm here? He's moving in with us next month too.
         ok: true
-        reply: Leider nicht. Wir haben Montag bis Freitag von acht bis zwölf Uhr geöffnet.
-        replyEn: I'm afraid not. We're open Monday to Friday from eight till twelve.
-      - de: Verstehe. Kann er auch außerhalb die Öffnungszeiten kommen?
-        en: I see. Can he also come outside the opening hours?
-        reply: Außerhalb der Öffnungszeiten? Leider nicht. Wir haben Montag bis Freitag von acht bis zwölf Uhr geöffnet.
-        replyEn: Outside opening hours? I'm afraid not. We're open Monday to Friday from eight till twelve.
-end: You text Luca the opening hours. He replies with a lion emoji.
+      - de: Ja, kann ich gleich ein Formular für meinen Neffe mitnehmen? Er zieht nächsten Monat auch zu uns.
+        en: Yes, can I take a form for my nephew while I'm here? He's moving in with us next month too.
+        reply: Für Ihren Neffen? Natürlich, hier, bitte. Unterschreiben muss er aber selbst.
+        replyEn: For your nephew? Of course, here you are. But he has to sign it himself.
+end: You leave with your confirmation of registration and a form for your nephew. Three people in a two-room flat, but at least you are all officially there.
 ```
+
+:::culture
+In all three countries you must register your address when you move. In Austria you have three days and fill in a {Meldezettel}; in Germany you have two weeks to go to the {Bürgeramt}; in Switzerland you register with your municipality, usually within fourteen days. Officials will forgive a few days' delay, especially if you apologise in a well-formed genitive.
+:::
 
 ## Check yourself
 

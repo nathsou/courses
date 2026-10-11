@@ -138,17 +138,18 @@ items:
 
 ## Was schenkst du deiner Mutter?
 
-Mia and her brother Ben are planning their grandmother's birthday.
+It is the beginning of December. Mia and her brother Ben have a problem.
 
 ```dialogue
-title: Was schenken wir Oma?
-Mia: Oma wird nächsten Monat achtzig. Was schenken wir ihr? | Grandma's turning eighty next month. What shall we give her?
-Ben: Keine Ahnung. Letztes Jahr haben wir ihr einen Schal geschenkt. | No idea. Last year we gave her a scarf.
-Mia: Und den trägt sie nie. Ich glaube, sie wünscht sich etwas anderes. | And she never wears it. I think she'd like something else.
-Ben: Was denn? Sie sagt immer: „Ich habe schon alles.“ | Like what? She always says, "I've got everything already."
+title: Was schenken wir?
+Mia: Weihnachten ist in drei Wochen, und wir haben noch kein einziges Geschenk! | Christmas is in three weeks, and we haven't got a single present yet!
+Ben: Keine Panik. Papa wünscht sich doch jedes Jahr Socken. | Don't panic. Dad always wants socks, every year.
+Mia: Ja, und er bekommt jedes Jahr Socken. Dieses Jahr schenken wir ihm etwas anderes. | Yes, and every year he gets socks. This year we're giving him something different.
+Ben: Okay. Und Oma? Sie sagt immer: „Ich habe schon alles.“ | OK. And Grandma? She always says, "I've got everything already."
 Mia: Aber sie sieht sich so gern alte Fotos an. Wir machen ihr ein Fotobuch! | But she loves looking at old photos. We'll make her a photo book!
 Ben: Super Idee! Mama gibt uns bestimmt die alten Fotos von Opa. | Great idea! Mum will definitely give us the old photos of Grandpa.
-Mia: Und ich backe Omas Lieblingskuchen: Schwarzwälder Kirschtorte! | And I'll bake Grandma's favourite cake: Black Forest gateau!
+Mia: Und du, Ben? Was wünschst du dir? | And you, Ben? What would you like?
+Ben: Ich? Ein Weihnachten ohne Stress! | Me? A Christmas without stress!
 ```
 
 With {schenken} (to give as a present), {geben}, {schicken}, {zeigen} and {bringen}, the person who receives is in the **dative**, the thing given in the **accusative**: {Wir schenken **ihr** (D) **ein Fotobuch** (A).} You met this in lesson 14. The order of the two objects follows a simple rule of thumb:
@@ -269,7 +270,7 @@ items:
 
 ## Fatmas Party: whose?
 
-To say whose something is, German adds **-s** to a name, **without an apostrophe**: {Fatmas Party}, {Peters Geburtstag}, {Omas Kuchen}, {Zeyneps Mutter}. The name comes first, just as in English.
+To say whose something is, German adds **-s** to a name, **without an apostrophe**: {Fatmas Party}, {Peters Geburtstag}, {Omas Kuchen}, {Valentinas Mutter}. The name comes first, just as in English.
 
 Names that already end in an s-sound (-s, -ß, -x, -z) take only an apostrophe: {Jonas' Party}, {Max' Auto}. Most people avoid that in speech and use **von** + dative instead, which works with any noun, not just names:
 
@@ -303,19 +304,19 @@ items:
 ```story
 title: Silvester in Wien
 paragraphs:
-  - de: 'Elias aus Hamburg feierte Silvester bei seiner Freundin Zeynep in Wien. Am Nachmittag gingen sie über den Silvesterpfad in der Innenstadt. Überall gab es Musik, Punsch und kleine Glücksbringer: Schweinchen aus Marzipan, Kleeblätter und Rauchfangkehrer aus Schokolade.'
-    en: 'Elias from Hamburg spent New Year''s Eve with his friend Zeynep in Vienna. In the afternoon they walked along the New Year''s Eve trail in the city centre. Everywhere there was music, punch and little lucky charms: marzipan pigs, clover leaves and chocolate chimney sweeps.'
-  - de: 'Am Abend kochte Zeyneps Mutter für alle. Danach machten sie Wachsgießen: Man macht ein bisschen Wachs auf einem Löffel heiß, gießt es in kaltes Wasser und sieht sich die Form an. Früher hieß das Bleigießen, aber Blei ist heute verboten.'
-    en: 'In the evening Zeynep''s mother cooked for everyone. After that they did wax pouring: you heat a little wax on a spoon, pour it into cold water and look at the shape. It used to be called lead pouring, but lead is banned now.'
-  - de: 'Elias'' Figur sah aus wie ein Schiff. „Ein Schiff bedeutet eine Reise“, sagte Zeynep. „Du wirst im neuen Jahr viel reisen!“'
-    en: 'Elias''s shape looked like a ship. "A ship means a journey," said Zeynep. "You''ll travel a lot in the new year!"'
-  - de: Um Punkt zwölf läutete im Fernsehen die Pummerin, die große Glocke vom Stephansdom. Dann kam der Donauwalzer, und alle tanzten im Wohnzimmer, auch Zeyneps Opa.
-    en: At twelve on the dot the Pummerin, the great bell of St Stephen's Cathedral, rang out on television. Then came the Blue Danube waltz, and everyone danced in the living room, even Zeynep's grandpa.
+  - de: 'Elias aus Hamburg feierte Silvester bei seiner Freundin Valentina in Wien. Am Nachmittag gingen sie über den Silvesterpfad in der Innenstadt. Überall gab es Musik, Punsch und kleine Glücksbringer: Schweinchen aus Marzipan, Kleeblätter und Rauchfangkehrer aus Schokolade.'
+    en: 'Elias from Hamburg spent New Year''s Eve with his friend Valentina in Vienna. In the afternoon they walked along the New Year''s Eve trail in the city centre. Everywhere there was music, punch and little lucky charms: marzipan pigs, clover leaves and chocolate chimney sweeps.'
+  - de: 'Am Abend kochte Valentinas Mutter für alle. Danach machten sie Wachsgießen: Man macht ein bisschen Wachs auf einem Löffel heiß, gießt es in kaltes Wasser und sieht sich die Form an. Früher hieß das Bleigießen, aber Blei ist heute verboten.'
+    en: 'In the evening Valentina''s mother cooked for everyone. After that they did wax pouring: you heat a little wax on a spoon, pour it into cold water and look at the shape. It used to be called lead pouring, but lead is banned now.'
+  - de: 'Elias'' Figur sah aus wie ein Schiff. „Ein Schiff bedeutet eine Reise“, sagte Valentina. „Du wirst im neuen Jahr viel reisen!“'
+    en: 'Elias''s shape looked like a ship. "A ship means a journey," said Valentina. "You''ll travel a lot in the new year!"'
+  - de: Um Punkt zwölf läutete im Fernsehen die Pummerin, die große Glocke vom Stephansdom. Dann kam der Donauwalzer, und alle tanzten im Wohnzimmer, auch Valentinas Opa.
+    en: At twelve on the dot the Pummerin, the great bell of St Stephen's Cathedral, rang out on television. Then came the Blue Danube waltz, and everyone danced in the living room, even Valentina's grandpa.
   - de: 'Draußen gab es Feuerwerk. Alle riefen „Prosit Neujahr!“ und tranken ein Glas Sekt. Elias sagte: „Nächstes Jahr feiern wir in Hamburg. Aber tanzen werde ich da nicht!“'
     en: 'Outside there were fireworks. Everyone shouted "Happy New Year!" and drank a glass of sparkling wine. Elias said, "Next year we''re celebrating in Hamburg. But I won''t be dancing there!"'
 questions:
   - prompt: Where did Elias celebrate New Year's Eve?
-    options: ['in Vienna, with Zeynep''s family', 'in Hamburg, with his parents', at a big party in Berlin]
+    options: ['in Vienna, with Valentina''s family', 'in Hamburg, with his parents', at a big party in Berlin]
     answer: 0
   - prompt: Why is it called {Wachsgießen} today and not {Bleigießen}?
     options: [Lead is banned., Wax is cheaper., Lead is too heavy.]
@@ -323,7 +324,7 @@ questions:
   - prompt: What happens at midnight in Vienna?
     options: [The Pummerin rings and then everyone dances to the Danube waltz., Everyone goes to church., Everyone eats marzipan pigs.]
     answer: 0
-  - prompt: "What does Zeynep predict from the ship? ({Du wirst … reisen})"
+  - prompt: "What does Valentina predict from the ship? ({Du wirst … reisen})"
     options: [Elias will travel a lot., Elias will buy a boat., Elias will move to Vienna.]
     answer: 0
 ```
@@ -509,9 +510,9 @@ items:
 
 ```roleplay
 title: Wie feiert ihr?
-setting: In December, your Austrian friend Zeynep asks how people celebrate where you come from.
+setting: In December, your Austrian friend Valentina asks how people celebrate where you come from.
 goal: Describe one festival you celebrate (when, with whom, what you eat or do, who gets presents), and say what you would like as a present this year with ich wünsche mir.
-partner: Zeynep, 27, from Vienna, curious about other countries' traditions
+partner: Valentina, 27, from Vienna, curious about other countries' traditions
 opener: Sag mal, wie feiert ihr eigentlich Weihnachten bei euch? Bei uns kommt ja das Christkind!
 openerEn: Tell me, how do you actually celebrate Christmas where you're from? Here the Christ Child comes, of course!
 words: [feiern, schenken, das Geschenk, sich wünschen, die Familie, essen, der Weihnachtsbaum]

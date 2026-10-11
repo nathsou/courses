@@ -6,7 +6,7 @@
   import { settings } from '$lib/state/settings.svelte';
   import { speech } from '$lib/audio/speech.svelte';
   import { sfx } from '$lib/audio/sfx';
-  import { conjugate, PERSONS, TENSE_NAMES } from '$lib/de/verbs';
+  import { conjugate, conjugateAll, PERSONS, TENSE_NAMES } from '$lib/de/verbs';
   import { lookup, headword } from '$lib/de/lexicon';
   import { mark, type Marked } from '$lib/de/check';
   import Steps from './Steps.svelte';
@@ -17,7 +17,7 @@
   const seq = new Sequence(untrack(() => data.items.length));
   const item = $derived(data.items[seq.index]!);
   const persons = $derived(item.persons ?? (item.tense === 'imperative' ? [1, 4] : [0, 1, 2, 3, 4, 5]));
-  const answers = $derived(persons.map((p) => conjugate(item.verb, item.tense, p) ?? '?'));
+  const answers = $derived(persons.map((p) => conjugateAll(item.verb, item.tense, p)[0] ?? '?'));
   const entry = $derived(lookup(item.verb));
   const label = (p: number) => (item.tense === 'imperative' ? (p === 1 ? '(du)' : '(ihr)') : PERSONS[p]);
   let values = $state<string[]>([]);
@@ -37,7 +37,7 @@
   function check(e?: Event) {
     e?.preventDefault();
     if (seq.settled) return;
-    results = answers.map((a, i) => mark(values[i] ?? '', a, { lenient: settings.data.lenientSpelling }));
+    results = persons.map((p, i) => mark(values[i] ?? '', conjugateAll(item.verb, item.tense, p), { lenient: settings.data.lenientSpelling }));
     tried = true;
     const ok = results.every((r) => r && r.verdict !== 'wrong');
     seq.attempt(ok);

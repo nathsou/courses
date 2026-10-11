@@ -15,19 +15,19 @@ If you learnt German before 1996, you will also remember {daß} with an ß. It i
 
 ## Warum? Weil …
 
-Fatma has been waiting outside a café in Cologne for twenty minutes.
+Aylin has been waiting outside a cinema in Cologne for twenty minutes.
 
 ```dialogue
 title: Warum kommst du so spät?
-Fatma: Da bist du ja endlich! Warum kommst du so spät? | There you are at last! Why are you so late?
-Mehmet: Tut mir leid! Ich habe den Bus verpasst. | Sorry! I missed the bus.
-Fatma: Und warum hast du den Bus verpasst? | And why did you miss the bus?
-Mehmet: Weil ich meinen Schlüssel nicht gefunden habe. | Because I couldn't find my key.
-Fatma: Aha. Und warum hast du deinen Schlüssel nicht gefunden? | I see. And why couldn't you find your key?
-Mehmet: Weil ich so spät aufgestanden bin. | Because I got up so late.
-Fatma: Und warum bist du so spät aufgestanden? | And why did you get up so late?
-Mehmet: Weil mein Wecker nicht geklingelt hat! Es ist also nicht meine Schuld. | Because my alarm clock didn't go off! So it's not my fault.
-Fatma: Ich glaube, du brauchst einfach einen neuen Wecker. | I think you just need a new alarm clock.
+Aylin: Da bist du ja endlich! Warum kommst du so spät? | There you are at last! Why are you so late?
+Jonas: Tut mir leid! Ich habe die U-Bahn verpasst. | Sorry! I missed the underground.
+Aylin: Und warum hast du die U-Bahn verpasst? | And why did you miss the underground?
+Jonas: Weil ich so spät aufgestanden bin. | Because I got up so late.
+Aylin: Und warum bist du so spät aufgestanden? | And why did you get up so late?
+Jonas: Weil mein Wecker nicht geklingelt hat. | Because my alarm didn't go off.
+Aylin: Und warum hat dein Wecker nicht geklingelt? | And why didn't your alarm go off?
+Jonas: Weil mein Wecker mein Handy ist. Und der Akku war leer. Es ist also nicht meine Schuld! | Because my alarm is my phone. And the battery was flat. So it's not my fault!
+Aylin: Ich glaube, du brauchst einfach einen richtigen Wecker. | I think you just need a proper alarm clock.
 ```
 
 Look at where the verb goes after {weil}:
@@ -41,7 +41,7 @@ Look at where the verb goes after {weil}:
 {Weil} starts a **subordinate clause** (a {Nebensatz}): a clause that cannot stand on its own as a statement. In every subordinate clause, the **conjugated verb goes to the very end**. The subject usually comes straight after {weil}. And German always puts a **comma** before {weil}, {dass}, {wenn} and {ob}.
 
 :::tip
-In conversation you can answer {Warum?} with a {weil}-clause on its own, exactly as Mehmet does: {Warum? – Weil ich krank bin.} In writing, attach it to a main clause.
+In conversation you can answer {Warum?} with a {weil}-clause on its own, exactly as Jonas does: {Warum? – Weil ich krank bin.} In writing, attach it to a main clause.
 :::
 
 ```words
