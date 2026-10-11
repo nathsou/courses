@@ -83,6 +83,8 @@ export function conjugate(key: string, tense: Tense, person: number): string | u
 export function conjugateAll(key: string, tense: Tense, person: number): string[] {
   const form = conjugate(key, tense, person);
   if (!form) return [];
+  // Konjunktiv I du-forms of sein come with and without the e: du seist / seiest.
+  if (tense === 'konj1' && person === 1 && /^seist\b/.test(form)) return [form, form.replace(/^seist/, 'seiest')];
   const m = /(e[rl])n$/.exec(key);
   if (!m || person !== 0 || (tense !== 'present' && tense !== 'konj1')) return [form];
   const [word, ...rest] = form.split(' ');

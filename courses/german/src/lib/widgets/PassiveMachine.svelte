@@ -124,6 +124,7 @@
 <style>
   .field {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.25rem;
     margin-bottom: 0.7rem;
   }
@@ -142,7 +143,9 @@
     border: 1.5px solid var(--line-strong);
     background: var(--panel);
     color: var(--fg);
-    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    text-overflow: ellipsis;
   }
   .targets {
     display: grid;

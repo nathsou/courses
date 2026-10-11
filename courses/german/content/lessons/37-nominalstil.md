@@ -182,7 +182,7 @@ en: |
 questions:
   - claim: Die Bauarbeiten beginnen im März.
     answer: false
-    explain: "Im März war der Beschluss; der Baubeginn ist am 7. Juli."
+    explain: The decision was taken in March; work starts on 7 July.
   - claim: Die Schule soll zusätzliche Klassenzimmer bekommen.
     answer: true
     explain: "{die Schaffung zusätzlicher Unterrichtsräume}"
@@ -259,12 +259,12 @@ The catch: the verb is not predictable. It is {eine Entscheidung treffen}, never
 | {zur Verfügung stehen} | {verfügbar sein} | to be available |
 | {infrage kommen} | {möglich sein} | to be an option |
 | {infrage stellen} | {bezweifeln} | to call into question |
-| {Kritik üben (an + D)} | {kritisieren} | to criticise |
+| {Kritik üben} (an + D) | {kritisieren} | to criticise |
 | {Bescheid geben / sagen} | {informieren} | to let someone know |
 | {zum Ausdruck bringen} | {ausdrücken} | to express |
 | {in Kraft treten} | {gültig werden} | to come into force |
 | {eine Rolle spielen} | {wichtig sein} | to matter |
-| {Rücksicht nehmen (auf + A)} | {berücksichtigen} | to show consideration (for) |
+| {Rücksicht nehmen} (auf + A) | {berücksichtigen} | to show consideration (for) |
 | {in Betracht ziehen} | {erwägen} | to consider |
 | {zur Sprache bringen} | {ansprechen} | to raise (a subject) |
 | {Maßnahmen ergreifen} | {handeln} | to take measures |

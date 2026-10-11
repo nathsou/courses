@@ -325,7 +325,7 @@ en: |
 questions:
   - claim: Lena hat ihren Schlüssel in der Uni vergessen.
     answer: false
-    explain: Er hängt zu Hause am Haken.
+    explain: "It was hanging on the hook at home all along: {Dein Schlüssel hängt hier am Haken.}"
   - prompt: "{Haste} stands for…"
     options: [Hast du, Hast es, Hattest du]
     answer: 0

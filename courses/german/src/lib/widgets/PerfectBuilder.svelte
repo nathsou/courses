@@ -238,6 +238,7 @@
               <span lang="de" class="de">ich {AUX_FORMS[q.aux][0]} … {q.pp}</span>
               {#if result.verdict === 'almost' && result.note}<span>({result.note})</span>{/if}
             </p>
+            {#if !auxOk}<p class="why ui"><Rich text={`{${q.verb}} takes {${q.aux}}: ${whyAux(q)}`} /></p>{/if}
             <p class="why ui">{@render ppPieces(q, false)}</p>
             <p class="why ui"><Rich text={participleRule(q.verb, q.pp)} /></p>
             <p class="sentence small" lang="de">{q.de} <PlayButton text={spoken(q)} small /></p>

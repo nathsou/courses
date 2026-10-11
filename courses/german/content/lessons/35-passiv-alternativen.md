@@ -27,7 +27,7 @@ The state passive describes what is left once the process is over: {Die Tür wir
 | {Die Arbeit wird erledigt.} it is being done | {Die Arbeit ist erledigt.} it is done |
 
 :::grammar[Which verbs have a state passive?]
-Only verbs whose action leaves a lasting result: {öffnen}, {schließen}, {reservieren}, {verletzen}, {renovieren}, {verkaufen}, {erledigen}. You cannot say {der Hund ist gestreichelt}: stroking a dog leaves no visible state. And beware of look-alikes: {Er ist gegangen} is the perfect tense of a verb that takes {sein}, not a passive at all.
+Only verbs whose action leaves a lasting result: {öffnen}, {schließen}, {reservieren}, {verletzen}, {renovieren}, {verkaufen}, {erledigen}. You cannot say *{der Hund ist gestreichelt}: stroking a dog leaves no visible state. And beware of look-alikes: {Er ist gegangen} is the perfect tense of a verb that takes {sein}, not a passive at all.
 :::
 
 :::tip
@@ -58,7 +58,7 @@ items:
     answer: 0
     en: The windows are closed every evening at 10 pm.
     explain: "{jeden Abend um 22 Uhr} describes an action that happens regularly: process passive."
-  - de: Keine Sorge, die Haustür ___ abgeschlossen. Ich habe es kontrolliert.
+  - de: Keine Sorge, die Haustür ___ abgeschlossen. Ich habe nachgesehen.
     options: [ist, wird]
     answer: 0
     en: Don't worry, the front door is locked. I checked.
@@ -295,7 +295,7 @@ items:
 
 ## Ich bekomme die Kosten erstattet
 
-English can make the receiver the subject of a passive: "I was given a book". German {werden} cannot do this ({Ich wurde ein Buch gegeben} is wrong). Instead it uses **bekommen + participle**, the so-called bekommen-passive:
+English can make the receiver the subject of a passive: "I was given a book". German {werden} cannot do this (*{Ich wurde ein Buch gegeben} is wrong). Instead it uses **bekommen + participle**, the so-called bekommen-passive:
 
 - {Man schenkt ihm ein Fahrrad.} → {Ihm wird ein Fahrrad geschenkt.} → {Er bekommt ein Fahrrad geschenkt.}
 - {Man erstattet mir die Kosten.} → {Ich bekomme die Kosten erstattet.}

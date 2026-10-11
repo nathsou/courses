@@ -57,7 +57,7 @@ export const REL_ROLES: RelRole[] = [
     id: 'pmit',
     kind: 'dat',
     label: 'after mit (+ dative)',
-    explain: 'The preposition comes first and decides the case: {mit} always takes the dative. English can leave the preposition at the end ("the man I play chess with"); German never can.',
+    explain: 'The preposition comes first and decides the case: {mit} always takes the dative. English can leave the preposition at the end (“the man I play chess with”); German never can.',
   },
   {
     id: 'pfuer',
@@ -69,7 +69,7 @@ export const REL_ROLES: RelRole[] = [
     id: 'pvon',
     kind: 'dat',
     label: 'after von (+ dative)',
-    explain: '{von} takes the dative: {von dem}, {von der}, {von denen}. "The man I told you about" = {der Mann, von dem ich dir erzählt habe}.',
+    explain: '{von} takes the dative: {von dem}, {von der}, {von denen}. “The man I told you about” = {der Mann, von dem ich dir erzählt habe}.',
   },
 ];
 

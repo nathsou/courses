@@ -96,7 +96,7 @@ Only one verb is irregular, and it is the most important: **sein**.
 | ihr | {seiet} | {habet} | werdet* | {könnet} | {kommet} |
 | sie/Sie | {seien} | haben* | werden* | können* | kommen* |
 
-The forms marked * are identical to the ordinary present tense, so nobody can tell they are Konjunktiv I. The {du} and {ihr} forms exist but sound like a nineteenth-century sermon. That leaves the column in bold, plus every form of {sein}.
+The forms marked * are identical to the ordinary present tense, so nobody can tell they are Konjunktiv I. The {du} and {ihr} forms exist but sound like a nineteenth-century sermon. That leaves the row in bold, plus every form of {sein}.
 
 :::key
 Almost all the Konjunktiv I you will ever read is **third person singular** ({er}, {sie}, {es}, {man}, or a noun) or a form of **sein**. Learn {sei, habe, werde, könne, müsse, wisse, gebe} by heart and you can read any German newspaper.
@@ -293,7 +293,7 @@ items:
 **Commands and requests** have no imperative in reported speech. Use {sollen} for an instruction and {mögen} for a polite request; the {mögen} version is formal and slightly old-fashioned, typical of letters and official reports:
 
 - {„Warte hier!“} → {Er sagte, sie solle hier warten.}
-- {„Rufen Sie bitte zurück.“} → {Sie bat, er möge zurückrufen.}
+- {„Rufen Sie bitte zurück.“} → {Sie bat ihn, er möge zurückrufen.}
 
 Often the simplest solution is a zu-infinitive after a verb like {bitten} or {auffordern}: {Sie bat ihn zurückzurufen.}
 

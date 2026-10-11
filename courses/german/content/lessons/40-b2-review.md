@@ -61,6 +61,20 @@ questions:
     answer: 0
 ```
 
+The next morning, the mayor is interviewed on regional radio. Listen for the particles, the hearsay {sollen} and the concessions:
+
+```dialogue
+title: Nachgefragt
+Moderatorin: Herr Rainer, Kritiker sagen, Ihre Gebühr sei reine Abzocke. Was sagen Sie dazu? | Herr Rainer, critics say your fee is a pure rip-off. What do you say to that?
+Rainer: Das ist doch Unsinn. Die Einnahmen fließen vollständig in die Pflege des Ortsbildes. | That's nonsense. The income goes entirely into looking after the village.
+Moderatorin: Aber die Reisebusse fahren jetzt einfach ins Nachbardorf. | But the coaches are now simply going to the next village.
+Rainer: Das mag sein. Zwar haben wir das Problem damit nicht gelöst, aber es ist spürbar ruhiger geworden. | That may be. We haven't solved the problem with it, admittedly, but it has become noticeably quieter.
+Moderatorin: Viele Einheimische sollen trotzdem unzufrieden sein. | Many locals are said to be unhappy all the same.
+Rainer: Einige schon, das lässt sich nicht bestreiten. Aber je nachdem, wen man fragt, hört man ganz unterschiedliche Meinungen. | Some are, there's no denying it. But depending on whom you ask, you hear very different opinions.
+Moderatorin: Und wenn es nächsten Sommer wieder voll wird? | And if it gets crowded again next summer?
+Rainer: Dann müssen wir halt nachbessern. Eine perfekte Lösung gibt es nicht, zumal wir ja niemandem verbieten können, uns zu besuchen. | Then we'll just have to make improvements. There's no perfect solution, especially as we can't forbid anyone to visit us.
+```
+
 ```choose
 title: Spot the construction
 items:
@@ -397,7 +411,7 @@ checks: [reported someone's words in Konjunktiv I or II, proposed a solution wit
 ```
 
 ```compose
-task: "Write an opinion piece (Kommentar, six to eight sentences) for a local newspaper on this question: Sollten beliebte Orte die Zahl der Touristen begrenzen? Use the three-part structure, the formal register, at least one concession, one report of what someone else says (Konjunktiv I), and at least two of the B2 constructions: sich lassen, sein + zu, a participle attribute, the nominal style."
+task: "Write an opinion piece (Kommentar, six to eight sentences) for a local newspaper on this question: {Sollten beliebte Orte die Zahl der Touristen begrenzen?} Use the three-part structure, the formal register, at least one concession, one report of what someone else says (Konjunktiv I), and at least two of the B2 constructions: sich lassen, sein + zu, a participle attribute, the nominal style."
 target: argument structure, Konjunktiv I, passive alternatives, participle attributes, nominal style, advanced connectors
 hints: ['{In letzter Zeit wird viel darüber diskutiert, ob …}', '{Befürworter einer Obergrenze argumentieren, …}', '{Zwar …, doch …}', '{zumal …}', '{lässt sich …}', '{Alles in allem …}']
 examples:
