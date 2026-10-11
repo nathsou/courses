@@ -20,7 +20,7 @@ Mitarbeiterin: Guten Tag! Was kann ich für Sie tun? | Hello! What can I do for 
 Luca: Guten Tag. Ich möchte eine Fahrkarte nach München, bitte. | Hello. I'd like a ticket to Munich, please.
 Mitarbeiterin: Einfach oder hin und zurück? | Single or return?
 Luca: Hin und zurück. Hin am Freitag, zurück am Sonntag. | Return. Out on Friday, back on Sunday.
-Mitarbeiterin: Am Freitag fährt um 9:01 Uhr ein ICE direkt nach München. Um 10:05 Uhr müssen Sie in Frankfurt umsteigen. | On Friday there's an ICE direct to Munich at 9:01. At 10:05 you have to change in Frankfurt.
+Mitarbeiterin: Am Freitag fährt um 9:01 Uhr ein ICE direkt nach München. Mit dem Zug um 10:05 Uhr müssen Sie in Frankfurt umsteigen. | On Friday there's an ICE direct to Munich at 9:01. With the 10:05 train you have to change in Frankfurt.
 Luca: Den um 9:01 Uhr, bitte. Kann ich einen Platz reservieren? | The 9:01, please. Can I reserve a seat?
 Mitarbeiterin: Natürlich. Am Fenster oder am Gang? | Of course. Window or aisle?
 Luca: Am Fenster, bitte. | Window, please.

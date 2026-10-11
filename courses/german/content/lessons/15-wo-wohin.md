@@ -327,8 +327,9 @@ items:
     answer: nach
     en: Are you flying to Spain in the summer?
   - de: Heute Abend gehen wir ___ eine Party.
-    answer: [auf, zu]
+    answer: auf
     en: We're going to a party tonight.
+    explain: "{auf eine Party} (or, with the dative, {zu einer Party})."
 ```
 
 ## Die neue Wohnung

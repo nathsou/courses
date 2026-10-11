@@ -79,8 +79,8 @@ items:
     options: [fährt, geht, spielt]
     answer: 0
     en: Hannah cycles to work every day.
-  - de: Spielst du ___ Gitarre?
-    options: [–, die, eine]
+  - de: Spielst du ___?
+    options: [Gitarre, die Gitarre, eine Gitarre]
     answer: 0
     en: Do you play the guitar?
     explain: Instruments and sports take no article after {spielen}.
