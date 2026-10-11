@@ -57,7 +57,7 @@ export const NOM_PAIRS: NomPair[] = [
       { label: '{wenn} → {bei}', explain: '{wenn} (whenever) becomes {bei} + dative.' },
       { label: '{man} → gone', explain: 'The vague subject {man} simply disappears.' },
       { label: '{das Gerät} → {des Geräts}', explain: 'The object becomes a genitive after the new noun: using the device → the use of the device.' },
-      { label: '{benutzt} → {der Benutzung}', explain: '{benutzen} → {die Benutzung}. Nouns in {-ung} are always feminine; here dative after {bei}.' },
+      { label: '{benutzt} → {der Benutzung}', explain: '{benutzen} → {die Benutzung}. Nouns in -ung are always feminine; here dative after {bei}.' },
     ],
     en: 'When you use the device → When using the device, you must wear safety goggles.',
   },
@@ -71,7 +71,7 @@ export const NOM_PAIRS: NomPair[] = [
     steps: [
       { label: '{obwohl} → {trotz}', explain: 'The conjunction becomes the preposition {trotz} + genitive.' },
       { label: '{sie} → {ihrer}', explain: 'The subject becomes a possessive, in the genitive after {trotz}: {ihrer Krankheit}.' },
-      { label: '{krank war} → {Krankheit}', explain: '{krank sein} → {die Krankheit}. Nouns in {-heit} and {-keit} are always feminine.' },
+      { label: '{krank war} → {Krankheit}', explain: '{krank sein} → {die Krankheit}. Nouns in -heit and -keit are always feminine.' },
     ],
     en: 'Although she was ill → Despite her illness, she went to work.',
   },

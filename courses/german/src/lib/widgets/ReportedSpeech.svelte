@@ -76,7 +76,7 @@
     <div class="scroll">
       <table class="tbl">
         <thead>
-          <tr><th scope="col" class="ui">Konjunktiv I</th><th scope="col" class="ui">indicative</th><th scope="col" class="ui">indirect speech uses</th></tr>
+          <tr><th scope="col" class="ui">Konj. I</th><th scope="col" class="ui">indicative</th><th scope="col" class="ui">reported speech uses</th></tr>
         </thead>
         <tbody lang="de">
           {#each verb.rows as row, i (i)}
@@ -236,6 +236,7 @@
   }
   .scroll {
     overflow-x: auto;
+    container-type: inline-size;
   }
   .tbl {
     border-collapse: collapse;
@@ -269,6 +270,16 @@
   }
   .use.sub {
     color: var(--accent-ink);
+  }
+  @container (max-width: 24rem) {
+    td {
+      font-size: 0.86rem;
+      padding: 0.3rem 0.25rem;
+      white-space: normal;
+    }
+    th {
+      padding: 0.3rem 0.25rem;
+    }
   }
   .vnote {
     margin: 0.6rem 0 0;

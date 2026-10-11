@@ -54,7 +54,7 @@ export const REPORTS: Report[] = [
     en: 'The minister said he would come the next day.',
     changes: [
       { kind: 'pron', label: '{ich} → {er}', note: 'The speaker is now talked about in the 3rd person.' },
-      { kind: 'k1', label: '{er kommt} → {er komme}', note: 'Konjunktiv I is the stem + {-e}. In the 3rd person singular it differs from the indicative {kommt}, so it is used. The tense of {sagte} changes nothing: German does not “backshift” like English.' },
+      { kind: 'k1', label: '{er kommt} → {er komme}', note: 'Konjunktiv I is the stem + -e. In the 3rd person singular it differs from the indicative {kommt}, so it is used. The tense of {sagte} changes nothing: German does not “backshift” like English.' },
       { kind: 'time', label: '{morgen} → {am nächsten Tag}', note: 'Reported later, “tomorrow” no longer means tomorrow: {am nächsten Tag} or {am folgenden Tag}. Likewise {heute} → {an diesem Tag}, {hier} → {dort}.' },
     ],
   },
@@ -91,7 +91,7 @@ export const REPORTS: Report[] = [
     en: 'The journalist asks when the reform will begin.',
     changes: [
       { kind: 'conn', label: '{wann}', note: 'A W-question keeps its question word, which now introduces a subordinate clause: the verb goes to the end.' },
-      { kind: 'k1', label: '{beginnt} → {beginne}', note: 'Konjunktiv I, 3rd person singular: stem + {-e}.' },
+      { kind: 'k1', label: '{beginnt} → {beginne}', note: 'Konjunktiv I, 3rd person singular: stem + -e.' },
     ],
   },
   {

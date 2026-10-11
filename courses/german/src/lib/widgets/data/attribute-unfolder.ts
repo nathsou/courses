@@ -134,7 +134,7 @@ export const ATTR_QUIZ: AttrQuizItem[] = [
     de: 'die Kinder, die im Garten spielen',
     options: ['die im Garten spielenden Kinder', 'die im Garten gespielten Kinder', 'die im Garten spielende Kinder'],
     answer: 'die im Garten spielenden Kinder',
-    explain: 'Active, happening now: Partizip I {spielend}. After {die} in the plural the ending is {-en}.',
+    explain: 'Active, happening now: Partizip I {spielend}. After {die} in the plural the ending is -en.',
   },
   {
     de: 'der Zug, der gerade angekommen ist',
@@ -158,18 +158,18 @@ export const ATTR_QUIZ: AttrQuizItem[] = [
     de: 'die Preise, die ständig steigen',
     options: ['die ständig steigenden Preise', 'die ständig gestiegenen Preise', 'die ständig steigende Preise'],
     answer: 'die ständig steigenden Preise',
-    explain: 'Rising now: Partizip I {steigend}, plural ending {-en}. {gestiegen} would mean they have already risen.',
+    explain: 'Rising now: Partizip I {steigend}, plural ending -en. {gestiegen} would mean they have already risen.',
   },
   {
     de: 'das Kind, das laut weint',
     options: ['das laut weinende Kind', 'das laut geweinte Kind', 'das laut weinend Kind'],
     answer: 'das laut weinende Kind',
-    explain: 'Active and now: Partizip I {weinend} + {-e} after {das}.',
+    explain: 'Active and now: Partizip I {weinend} + -e after {das}.',
   },
   {
     de: 'die Stadt, die im Krieg zerstört wurde',
     options: ['die im Krieg zerstörte Stadt', 'die im Krieg zerstörende Stadt', 'die im Krieg zerstört Stadt'],
     answer: 'die im Krieg zerstörte Stadt',
-    explain: 'Passive and past: Partizip II {zerstört} + {-e}.',
+    explain: 'Passive and past: Partizip II {zerstört} + -e.',
   },
 ];

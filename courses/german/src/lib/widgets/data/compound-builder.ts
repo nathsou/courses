@@ -66,7 +66,7 @@ export const COMPOUNDS: Compound[] = [
   { first: 'Kind', link: 'er', last: 'Arbeit', de: 'die Kinderarbeit', en: 'child labour' },
   { first: 'Arbeit', link: 's', last: 'Platz', de: 'der Arbeitsplatz', en: 'workplace; job' },
   { first: 'Arbeit', link: 's', last: 'Tag', de: 'der Arbeitstag', en: 'working day' },
-  { first: 'Geburt', link: 's', last: 'Tag', de: 'der Geburtstag', en: 'birthday', note: 'Words in {-t} like {Geburt} and {Arbeit} usually take the linking {-s-}.' },
+  { first: 'Geburt', link: 's', last: 'Tag', de: 'der Geburtstag', en: 'birthday', note: 'Words in -t like {Geburt} and {Arbeit} usually take the linking -s-.' },
   { first: 'Geburt', link: 's', last: 'Haus', de: 'das Geburtshaus', en: 'house where someone was born' },
   { first: 'Hand', link: '', last: 'Schuh', de: 'der Handschuh', en: 'glove', note: 'Literally a “hand shoe”.' },
   { first: 'Hand', link: '', last: 'Arbeit', de: 'die Handarbeit', en: 'handicraft; made by hand' },
@@ -80,7 +80,7 @@ export const COMPOUNDS: Compound[] = [
   { first: 'Garten', link: '', last: 'Arbeit', de: 'die Gartenarbeit', en: 'gardening' },
   { first: 'Straße', link: 'n', last: 'Bahn', de: 'die Straßenbahn', en: 'tram' },
   { first: 'Straße', link: 'n', last: 'Lampe', de: 'die Straßenlampe', en: 'street lamp' },
-  { first: 'Tasche', link: 'n', last: 'Lampe', de: 'die Taschenlampe', en: 'torch, flashlight', note: 'Literally a “pocket lamp”. Feminine nouns in {-e} usually link with {-n-}.' },
+  { first: 'Tasche', link: 'n', last: 'Lampe', de: 'die Taschenlampe', en: 'torch, flashlight', note: 'Literally a “pocket lamp”. Feminine nouns in -e usually link with -n-.' },
 ];
 
 export interface LongStep {
@@ -135,5 +135,5 @@ export const C_QUIZ: CQuizItem[] = [
 ];
 
 export const LONG_NOTE = {
-  note: 'Watch the article: it was {die} at every step until {der Kapitän} took the last place. The linking -s- after {Schifffahrt} works as in {Geburtstag}, and after {-schaft} as in {Gesellschaftsspiel}. The triple fff has been the correct spelling since the 1996 reform (before it: {Schiffahrt}).',
+  note: 'Watch the article: it was {die} at every step until {der Kapitän} took the last place. The linking -s- after {Schifffahrt} works as in {Geburtstag}, and after -schaft as in {Gesellschaftsspiel}. The triple fff has been the correct spelling since the 1996 reform (before it: {Schiffahrt}).',
 };

@@ -171,7 +171,7 @@ export const DAWO_VERBS: DaWoVerb[] = [
 export const DAWO_EXPLAIN: Record<'thing' | 'person' | 'clause', { title: string; explain: string }> = {
   thing: {
     title: 'For a thing',
-    explain: 'For things and ideas, German fuses the preposition with {wo-} (asking) or {da-} (answering): {auf den Bus} → {Worauf?} → {darauf}. Never {auf es} or {auf was} in careful German ({auf was} is colloquial).',
+    explain: 'For things and ideas, German fuses the preposition with wo- (asking) or da- (answering): {auf den Bus} → {Worauf?} → {darauf}. Never {auf es} or {auf was} in careful German ({auf was} is colloquial).',
   },
   person: {
     title: 'For a person',
@@ -210,15 +210,15 @@ export interface DaWoQuizItem {
 }
 
 export const DAWO_QUIZ: DaWoQuizItem[] = [
-  { de: '___ wartest du? – Auf den Bus.', answer: ['Worauf'], explain: 'A thing: {wo} + {r} + {auf}.' },
+  { de: '___ wartest du? – Auf den Bus.', answer: ['Worauf'], explain: 'A thing: {wo} + r + {auf}.' },
   { de: '___ wartest du? – Auf meine Schwester.', answer: ['Auf wen'], explain: 'A person: preposition + {wen} (accusative).' },
   { de: 'Freust du dich auf die Ferien? – Ja, ich freue mich sehr ___.', answer: ['darauf'], explain: '{die Ferien} are a thing: {darauf}.' },
   { de: 'Erinnerst du dich an Herrn Berger? – Ja, ich erinnere mich gut ___.', answer: ['an ihn'], explain: 'A person: {an} + {ihn}.' },
-  { de: '___ interessierst du dich? – Für Politik.', answer: ['Wofür'], explain: '{für} starts with a consonant: no {r}, so {wofür}.' },
+  { de: '___ interessierst du dich? – Für Politik.', answer: ['Wofür'], explain: '{für} starts with a consonant: no r, so {wofür}.' },
   { de: 'Hast du Angst vor der Prüfung? – Nein, ich habe keine Angst ___.', answer: ['davor'], explain: '{vor} starts with a consonant: {davor}.' },
   { de: '___ habt ihr gesprochen? – Über unseren neuen Chef.', answer: ['Über wen'], explain: 'A person: {über} + {wen}.' },
-  { de: 'Wer kümmert sich um die Getränke? – Ich kümmere mich ___.', answer: ['darum'], explain: '{um} starts with a vowel: {dar} + {um}.' },
-  { de: '___ träumst du? – Von einer Reise nach Japan.', answer: ['Wovon'], explain: 'A thing, and {von} takes no {r}: {wovon}.' },
+  { de: 'Wer kümmert sich um die Getränke? – Ich kümmere mich ___.', answer: ['darum'], explain: '{um} starts with a vowel: dar + {um}.' },
+  { de: '___ träumst du? – Von einer Reise nach Japan.', answer: ['Wovon'], explain: 'A thing, and {von} takes no r: {wovon}.' },
   { de: 'Nimmst du am Ausflug teil? – Ja, ich nehme ___ teil.', answer: ['daran'], explain: '{an} starts with a vowel: {daran}.' },
   { de: 'Denkst du noch an Jonas? – Ja, ich denke oft ___.', answer: ['an ihn'], explain: 'Jonas is a person: {an ihn}, not {daran}.' },
   { de: 'Ich freue mich ___, dass du kommst.', answer: ['darüber', 'darauf'], explain: '{darüber} (pleased that you are coming) or {darauf} (looking forward to it): the da-compound points ahead to the dass-clause.' },

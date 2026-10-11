@@ -43,7 +43,7 @@ export const PASSIVE_TARGETS: PassiveTargetInfo[] = [
   { id: 'man', label: 'man', kind: 'alt', explain: 'An active sentence with {man}: the everyday alternative.' },
   { id: 'lassen', label: 'sich lassen', kind: 'alt', explain: '{sich lassen} + infinitive: it can be done.' },
   { id: 'zu', label: 'sein + zu', kind: 'alt', explain: '{sein} + {zu} + infinitive: it can or must be done.' },
-  { id: 'bar', label: '-bar', kind: 'alt', explain: 'An adjective in {-bar}: it can be done.' },
+  { id: 'bar', label: '-bar', kind: 'alt', explain: 'An adjective in -bar: it can be done.' },
 ];
 
 /** What each kind of change means (with overrides by target). */
@@ -60,7 +60,7 @@ export const STEP_NOTES: Record<PassiveKind, { label: string; explain: string }>
   part: { label: 'Partizip II', explain: 'The main verb becomes its Partizip II and goes to the end of the clause.' },
   inf: { label: 'infinitive', explain: 'The main verb stays an infinitive, at the end.' },
   zu: { label: 'zu + infinitive', explain: '{zu} + infinitive at the end. It means can be done or must be done; context decides.' },
-  bar: { label: '-bar adjective', explain: 'Verb stem + {-bar} makes an adjective meaning “can be …ed”: {reparierbar}, {machbar}, {lesbar}.' },
+  bar: { label: '-bar adjective', explain: 'Verb stem + -bar makes an adjective meaning “can be …ed”: {reparierbar}, {machbar}, {lesbar}.' },
   werden: { label: 'werden at the end', explain: 'With a modal verb, {werden} stands at the end as an infinitive: Partizip II + {werden} is the passive infinitive.' },
   worden: { label: 'worden', explain: 'In the perfect tenses the participle of {werden} is {worden}, not {geworden}, and it comes last.' },
   agent: { label: 'von + dative', explain: 'The doer, if you want to mention it: {von} + dative ({vom} = {von dem}). Most German passives leave it out.' },
@@ -166,7 +166,7 @@ export const PASSIVE_PRESETS: PassivePreset[] = [
         de: '{Das Auto} {ist} {reparierbar}.',
         kind: ['subj', 'sein', 'bar'],
         en: 'The car is repairable.',
-        note: '{reparieren} → {reparierbar}: the {-ieren} verb keeps its stem.',
+        note: '{reparieren} → {reparierbar}: the -ieren verb keeps its stem.',
       },
     },
   },
@@ -218,7 +218,7 @@ export const PASSIVE_PRESETS: PassivePreset[] = [
         en: 'A new stadium can be built here (there is room for one).',
       },
       zu: { none: true, note: 'Grammatical, but {Hier ist ein neues Stadion zu bauen} sounds like an official order. {sein + zu} belongs in rules and instructions.' },
-      bar: { none: true, note: 'No everyday adjective here. {-bar} needs a verb whose object can have that quality: {reparierbar}, {lesbar}, {machbar}.' },
+      bar: { none: true, note: 'No everyday adjective here. -bar needs a verb whose object can have that quality: {reparierbar}, {lesbar}, {machbar}.' },
     },
   },
   {
@@ -271,7 +271,7 @@ export const PASSIVE_PRESETS: PassivePreset[] = [
         de: '{Die Rechnung} {ist} {bezahlbar}.',
         kind: ['subj', 'sein', 'bar'],
         en: 'The bill is affordable.',
-        note: 'Grammatical, but it means affordable (it can be paid), not must be paid: {-bar} only ever expresses possibility.',
+        note: 'Grammatical, but it means affordable (it can be paid), not must be paid: -bar only ever expresses possibility.',
       },
     },
   },
@@ -365,7 +365,7 @@ export const PASSIVE_PRESETS: PassivePreset[] = [
       },
       lassen: { none: true, note: '{sich lassen} needs an accusative object to become the subject; {helfen} only has a dative.' },
       zu: { none: true, note: '{sein + zu} needs an accusative object to become the subject; {helfen} only has a dative.' },
-      bar: { none: true, note: 'There is no {-bar} adjective from {helfen}: {-bar} is formed from verbs with an accusative object.' },
+      bar: { none: true, note: 'There is no -bar adjective from {helfen}: -bar is formed from verbs with an accusative object.' },
     },
   },
 ];
