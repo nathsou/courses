@@ -196,11 +196,18 @@ items:
   - prompt: "Join with {auch wenn}, starting with it: {Das Auto ist praktisch. Ich fahre lieber Rad.}"
     answer: Auch wenn das Auto praktisch ist, fahre ich lieber Rad.
   - prompt: "Join with {selbst wenn} + Konjunktiv II, starting with it: {Ich habe kein Geld. Ich würde dieses Haus nicht kaufen.}"
-    answer: [Selbst wenn ich Geld hätte, würde ich dieses Haus nicht kaufen., Selbst wenn ich das Geld hätte, würde ich dieses Haus nicht kaufen.]
+    answer:
+      - Selbst wenn ich Geld hätte, würde ich dieses Haus nicht kaufen.
+      - Selbst wenn ich das Geld hätte, würde ich dieses Haus nicht kaufen.
   - prompt: "Use {zwar … aber}: {Homeoffice spart Zeit. Es macht einsam.}"
-    answer: [Homeoffice spart zwar Zeit, aber es macht einsam., Zwar spart Homeoffice Zeit, aber es macht einsam.]
+    answer:
+      - Homeoffice spart zwar Zeit, aber es macht einsam.
+      - Zwar spart Homeoffice Zeit, aber es macht einsam.
+      - Homeoffice spart zwar Zeit, aber macht einsam.
   - prompt: "Start with {Es stimmt zwar, dass}: {Die Mieten sind gestiegen. Die Löhne sind auch gestiegen.}"
-    answer: [Es stimmt zwar, dass die Mieten gestiegen sind, aber die Löhne sind auch gestiegen., Es stimmt zwar, dass die Mieten gestiegen sind, aber auch die Löhne sind gestiegen.]
+    answer:
+      - Es stimmt zwar, dass die Mieten gestiegen sind, aber die Löhne sind auch gestiegen.
+      - Es stimmt zwar, dass die Mieten gestiegen sind, aber auch die Löhne sind gestiegen.
 ```
 
 ## Register: Leserbrief and Forumsbeitrag
