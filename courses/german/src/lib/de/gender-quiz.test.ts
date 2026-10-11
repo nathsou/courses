@@ -31,11 +31,19 @@ describe('gender quiz', () => {
       ['der Baum', n('m')],
       ['die Eltern', { p: 'n', g: '', a: 'pl', l: 'A1' }],
       ['der Tisch', n('m')],
+      ['der Kuchen', n('m')],
+      ['das Mädchen', n('n')],
+      ['der Ingenieur', n('m')],
+      ['die Geldbörse', n('f')],
+      ['das Gerät', n('n')],
+      ['das Datum', n('n')],
     ]);
     const nouns = pool.map((x) => x.noun);
     expect(nouns).toContain('Wohnung');
     expect(pool.find((x) => x.noun === 'Tochter')).toMatchObject({ exception: true, gender: 'f' });
-    for (const no of ['Tee', 'Bier', 'Wein', 'Baum', 'Eltern', 'Tisch']) expect(nouns).not.toContain(no);
+    for (const no of ['Tee', 'Bier', 'Wein', 'Baum', 'Eltern', 'Tisch', 'Kuchen', 'Ingenieur', 'Geldbörse']) expect(nouns).not.toContain(no);
+    expect(pool.find((x) => x.noun === 'Gerät')).toMatchObject({ exception: false });
+    expect(pool.find((x) => x.noun === 'Datum')?.rule.ending).toBe('-um');
   });
 
   it('gives every taught noun in the pool a gender its rule can explain', () => {

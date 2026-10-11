@@ -170,7 +170,7 @@ export interface SubPreset {
 export const SUB_PRESETS: SubPreset[] = [
   {
     id: 'ill',
-    label: 'Ill',
+    label: 'Feeling ill',
     en: 'I’m ill.',
     subject: 'ich',
     verb: 'bin',

@@ -52,14 +52,15 @@
   const shown = $derived(result && result.verdict !== 'wrong' ? result.answer : answers[0]!);
   const gapped = $derived(!!item.de?.includes('___'));
   const parts = $derived(item.de?.split(/_{3,}/) ?? []);
-  const full = $derived(item.de ? (gapped ? item.de.replace(/_{3,}/, shown) : item.de) : shown);
+  const full = $derived(gapped ? item.de!.replace(/_{3,}/, shown) : shown);
 
   function settle(m: Marked) {
     result = m;
     const good = m.verdict !== 'wrong';
     if (good) score++;
     sfx(good ? 'right' : 'wrong', settings.data.sounds);
-    void speech.say(item.de ? (gapped ? item.de.replace(/_{3,}/, m.verdict !== 'wrong' ? m.answer : answers[0]!) : item.de) : answers[0]!);
+    const said = m.verdict !== 'wrong' ? m.answer : answers[0]!;
+    void speech.say(gapped ? item.de!.replace(/_{3,}/, said) : said);
     queueMicrotask(() => nextBtn?.focus());
   }
 
@@ -111,7 +112,7 @@
       <p class="sentence">
         {#if settled}
           {#if gapped}<HiText text={item.de.replace(/_{3,}/, `{${shown}}`)} tone={ok ? 'jade' : 'accent'} size="md" />{:else}<De text={item.de} size="md" play={false} />{/if}
-          <PlayButton text={full} small />
+          <PlayButton text={gapped ? full : item.de} small />
         {:else if gapped}
           <span class="md"><De text={parts[0] ?? ''} play={false} genders="hide" /><span class="gap" aria-label="gap">＿＿＿</span><De text={parts[1] ?? ''} play={false} genders="hide" /></span>
         {:else}

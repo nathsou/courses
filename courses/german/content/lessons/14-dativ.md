@@ -90,7 +90,7 @@ Four things to notice:
 
 - **Masculine and neuter are the same** in the dative: **-m** ({dem}, {einem}, {meinem}, {keinem}).
 - **Feminine is -r**: {der}, {einer}, {meiner}. Yes, {der} again. In {Ich helfe der Frau}, {der} cannot be the masculine nominative, because {Frau} is feminine: it is the dative.
-- **Plural is {den}**, and the noun itself adds **-n**: {den Kindern}, {meinen Freunden}. Nouns that already end in -n, or make their plural with -s, add nothing: {meinen Eltern}, {den Omas}.
+- **Plural is {den}**, and the noun itself adds **-n**: {den Kindern}, {meinen Freunden}. Plurals that already end in -n or -s add nothing: {meinen Eltern}, {den Omas}.
 - The endings read **-m, -r, -m, -n**, and the masculine -m is everywhere: {dem}, {wem}, and as you will see, {ihm}.
 
 ::article-table{kind=definite cases=nom,acc,dat}
@@ -162,7 +162,7 @@ items:
   - prompt: "{Ich schenke meiner Mutter Blumen.} → her"
     de: Ich schenke ___ Blumen.
     answer: ihr
-  - prompt: "{Wir zeigen dem Kind die Stadt.} → it (the child)"
+  - prompt: "{Wir zeigen dem Kind die Stadt.} → the pronoun for {das Kind}"
     de: Wir zeigen ___ die Stadt.
     answer: ihm
   - prompt: "{Gib Paul den Schlüssel!} → him"
@@ -236,7 +236,7 @@ Why the dative? In each case the person is not acted upon but is the one who ben
 With {gefallen}, {schmecken}, {passen} and {gehören}, the thing is the subject and the verb agrees with it: {Die Schuhe gefallen mir} (the shoes please me), with a plural verb because of {Schuhe}.
 
 :::mistake
-{Ich helfe dich} is one of the commonest mistakes there is: {helfen} always takes the dative, {Ich helfe dir}. The reverse trap: {besuchen}, {fragen} and {anrufen} take the accusative, even though "ring to someone" feels natural to some: {Ich rufe dich an}, {Ich frage dich}. (In Switzerland you will also hear {Ich rufe dir an}.)
+{Ich helfe dich} is one of the commonest mistakes there is: {helfen} always takes the dative, {Ich helfe dir}. The reverse trap: {besuchen}, {fragen} and {anrufen} take the accusative: {Ich besuche dich}, {Ich frage dich}, {Ich rufe dich an}. (In Switzerland you will also hear {Ich rufe dir an}.)
 :::
 
 ```words
@@ -262,10 +262,10 @@ items:
     options: [Ihnen, Sie]
     answer: 0
     en: Can I help you, Mrs Novak?
-  - de: Danke! Ich danke ___ für die Blumen!
+  - de: Ich danke ___ für deine Hilfe!
     options: [dir, dich]
     answer: 0
-    en: Thanks! Thank you for the flowers!
+    en: Thank you for your help!
   - de: Wem gehört der Schlüssel? Gehört er ___?
     options: [dir, dich]
     answer: 0
@@ -347,7 +347,7 @@ end: You leave with a hand-painted cup from Gmunden, beautifully wrapped.
 ```
 
 :::culture
-{Grüß Gott} is the everyday greeting in Austrian and Bavarian shops. The green-and-white pottery from Gmunden in Upper Austria is in half the kitchens of the country, and a classic present.
+{Grüß Gott} is the everyday greeting in Austrian and Bavarian shops. The green-and-white pottery from Gmunden in Upper Austria is in countless Austrian kitchens, and a classic present.
 :::
 
 ## aus, bei, mit, nach, seit, von, zu
@@ -368,7 +368,7 @@ Eight prepositions **always** take the dative, whatever the sentence is doing:
 Four of them usually merge with {dem} or {der}: **{zum}** (zu dem), **{zur}** (zu der), **{beim}** (bei dem), **{vom}** (von dem). Only {zur} is feminine: {zur Party}, {zur Arbeit}, but {zum Arzt}, {zum Bahnhof}.
 
 :::fun
-Generations of English-speaking pupils have learnt these prepositions by singing **aus, bei, mit, nach, seit, von, zu** to the opening of Strauss's *Blue Danube* waltz. Try it: it scans perfectly, and you will never forget them.
+Generations of English-speaking pupils have learnt these prepositions by singing **aus, bei, mit, nach, seit, von, zu** to the opening of Strauss's *Blue Danube* waltz. Try it, and you may never forget them.
 :::
 
 :::mistake
@@ -456,9 +456,9 @@ items:
   - prompt: Can I help you? (formal)
     answer: Kann ich Ihnen helfen?
   - prompt: That belongs to me.
-    answer: [Das gehört mir., Das gehört mir]
+    answer: Das gehört mir.
   - prompt: I've been living in Vienna for two years.
-    answer: [Ich wohne seit zwei Jahren in Wien., Seit zwei Jahren wohne ich in Wien., Ich lebe seit zwei Jahren in Wien., Seit zwei Jahren lebe ich in Wien.]
+    answer: [Ich wohne seit zwei Jahren in Wien., Seit zwei Jahren wohne ich in Wien., Ich lebe seit zwei Jahren in Wien., Seit zwei Jahren lebe ich in Wien., Ich wohne schon seit zwei Jahren in Wien., Ich lebe schon seit zwei Jahren in Wien.]
   - prompt: Did you like the film? (to a friend)
     answer: [Hat dir der Film gefallen?, Hat der Film dir gefallen?]
   - prompt: after work

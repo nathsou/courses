@@ -30,16 +30,31 @@ export function splitEnding(noun: string, rule: GenderRule): { before: string; e
 
 const syllables = (s: string) => (s.toLowerCase().match(/[aeiouyäöü]+/g) ?? []).length;
 
+const VOWEL_BEFORE = (noun: string, n: number) => /[aeiouyäöü]$/i.test(noun.slice(0, -n));
+
+/** The rule for a dictionary noun: -tum after a vowel is really -um (das Datum). */
+function ruleOf(noun: string): GenderRule | undefined {
+  const r = ruleFor(noun);
+  if (r?.ending === '-tum' && VOWEL_BEFORE(noun, 3)) return GENDER_RULES.find((x) => x.ending === '-um');
+  return r;
+}
+
 /**
  * Whether a dictionary noun really has the rule's ending, rather than just ending in the same
- * letters: one-syllable words (der Baum, der Wein, der Sprung) and -er, -in after a vowel (das
- * Bier, der Wein) are not suffixes; -ee is not the unstressed -e (der Tee, der Kaffee).
+ * letters: one-syllable words (der Baum, der Wein, der Sprung) are not suffixed; -er, -in and
+ * -chen after a vowel are not the suffixes (das Bier, der Kuchen, das Zeichen); -ee is not the
+ * unstressed -e (der Tee); -eur is its own (masculine) ending (der Ingenieur). Ge- counts only
+ * for neuter nouns, since in compounds like die Geldbörse it is not a prefix at all.
  */
-function fits(noun: string, rule: GenderRule): boolean {
+function fits(noun: string, rule: GenderRule, gender: G): boolean {
   if (syllables(noun) < 2) return false;
-  if (rule.ending === '-e' && /ee$/.test(noun)) return false;
-  if ((rule.ending === '-er' || rule.ending === '-in') && /[aeiouäöü]$/i.test(noun.slice(0, -2))) return false;
-  if (rule.ending === '-um' && /aum$/.test(noun)) return false;
+  const e = rule.ending;
+  if (e === '-e' && /ee$/.test(noun)) return false;
+  if ((e === '-er' || e === '-in') && VOWEL_BEFORE(noun, 2)) return false;
+  if (e === '-chen' && VOWEL_BEFORE(noun, 4)) return false;
+  if (e === '-ur' && /eur$/.test(noun)) return false;
+  if (e === '-um' && /aum$/.test(noun)) return false;
+  if (e === 'Ge-' && gender !== 'n') return false;
   return true;
 }
 
@@ -58,8 +73,8 @@ export function genderPool(entries: [string, Entry][] = []): GenderItem[] {
     if (e.p !== 'n' || !e.a || e.a === 'pl') continue;
     const noun = key.replace(/^(der|die|das) /, '');
     if (out.has(noun) || /\s/.test(noun)) continue;
-    const rule = ruleFor(noun);
-    if (!rule || !fits(noun, rule)) continue;
+    const rule = ruleOf(noun);
+    if (!rule || !fits(noun, rule, e.a)) continue;
     out.set(noun, { noun, gender: e.a, rule, exception: e.a !== rule.gender });
   }
   return [...out.values()];

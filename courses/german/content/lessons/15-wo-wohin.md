@@ -63,7 +63,7 @@ explain: "Look at the articles: {dem}, {der}, {im} for positions; {das}, {die}, 
 
 ## Neun Präpositionen
 
-Nine prepositions work both ways: dative for wo?, accusative for wohin? They are called **Wechselpräpositionen** ("changing prepositions"), and they are all about space.
+Nine prepositions work both ways: dative for wo?, accusative for wohin? They are called **{Wechselpräpositionen}** ("changing prepositions"), and they are all about space.
 
 | Preposition | Meaning | wo? (dative) |
 | --- | --- | --- |
@@ -196,7 +196,7 @@ English puts things almost anywhere with one verb: "put". German wants to know *
 
 The action verbs are all **regular** ({hat gestellt, gelegt, gesetzt, gehängt}). The position verbs are **strong** ({hat gestanden, gelegen, gesessen, gehangen}), and in the south, Austria and Switzerland they take {sein}, as you saw in lesson 13. The two {hängen} look identical in the present; only the past shows which is which: {Ich habe das Bild an die Wand gehängt}, but {Das Bild hat zehn Jahre im Flur gehangen}.
 
-Upright or flat? Bottles, glasses, furniture and books on a shelf stand; phones, keys, papers and anything lying on its side lie. That is why Germans rarely answer {Wo ist …?} with {ist}: {Wo ist mein Handy?} {Es liegt auf dem Sofa.} {Wo ist die Milch?} {Sie steht im Kühlschrank.}
+Upright or flat? Bottles, glasses, furniture and books on a shelf stand; phones, keys, papers, and anything flat or on its side, lie. That is why Germans rarely answer {Wo ist …?} with {ist}: {Wo ist mein Handy?} {Es liegt auf dem Sofa.} {Wo ist die Milch?} {Sie steht im Kühlschrank.}
 
 ```words
 stellen | to put (upright), to stand
@@ -233,10 +233,10 @@ items:
     options: [liegt, legt, steht]
     answer: 0
     en: Where's my phone? It's on the sofa.
-  - de: ___ die Teller bitte auf den Tisch!
+  - de: ___ die Gläser bitte auf den Tisch!
     options: [Stell, Steh, Sitz]
     answer: 0
-    en: Put the plates on the table, please!
+    en: Put the glasses on the table, please!
   - de: Die Kinder ___ schon am Tisch.
     options: [sitzen, setzen]
     answer: 0
@@ -285,7 +285,7 @@ items:
 | buildings, rooms, enclosed spaces | {ins Kino}, {in die Schule} | {im Kino}, {in der Schule} |
 | towns and most countries (no article) | {nach Wien}, {nach Italien} | {in Wien}, {in Italien} |
 | countries with an article | {in die Schweiz}, {in die Türkei}, {in die USA} | {in der Schweiz}, {in der Türkei}, {in den USA} |
-| people, and shops named after people | {zu Lena}, {zum Arzt}, {zum Bäcker} | {bei Lena}, {beim Arzt}, {beim Bäcker} |
+| people, and places named after a person | {zu Lena}, {zum Arzt}, {zum Bäcker} | {bei Lena}, {beim Arzt}, {beim Bäcker} |
 | home | {nach Hause} | {zu Hause} |
 | the sea, lakes, rivers | {ans Meer}, {an den See} | {am Meer}, {am See} |
 | open spaces and events | {auf den Markt}, {auf eine Party} | {auf dem Markt}, {auf einer Party} |
@@ -343,7 +343,7 @@ text: |
   Das Wohnzimmer ist groß und hell. Das Sofa steht an der Wand, und über dem Sofa hängt jetzt das Bild von Oma.
   Neben dem Fenster steht eine Pflanze, ein Geschenk von Ben.
   Die Küche ist leider klein, aber zwischen dem Herd und dem Kühlschrank ist noch Platz für einen Tisch.
-  Unser Schlafzimmer ist noch ein Chaos: Die Kleider liegen auf dem Boden, und die Bücher sind noch in den Kisten.
+  Unser Schlafzimmer ist noch ein Chaos: Die Kleidung liegt auf dem Boden, und die Bücher sind noch in den Kisten.
   Das Fahrrad von Dragan steht im Flur. Es muss in den Keller!
 
   Am Samstag machen wir eine Party. Kommst du? Wir wohnen jetzt in der Lindenstraße 12, gegenüber vom Park.
@@ -429,6 +429,17 @@ turns:
         reply: Neben der Küche? Danke!
         replyEn: Next to the kitchen? Thanks!
 end: The wardrobe stands by the bedroom window, the mirror hangs in the hall, and the removal men are on their way back to Winterthur.
+```
+
+```type
+title: Dictation
+items:
+  - listen: true
+    answer: Die Kaffeemaschine steht in der Küche.
+  - listen: true
+    answer: Stell die Kisten bitte in den Keller!
+  - listen: true
+    answer: Wir fahren im Sommer in die Schweiz.
 ```
 
 ```speak

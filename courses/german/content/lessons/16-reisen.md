@@ -206,6 +206,12 @@ die Heizung, -en | heating
 
 {die Halbpension} is breakfast and dinner; {die Vollpension} adds lunch. In Austria and Switzerland the lift is usually {der Lift}.
 
+```gender
+title: Article and plural
+plural: true
+items: [Fahrkarte, Gleis, Abfahrt, Ankunft, Anschluss, Koffer, Verspätung, Einzelzimmer, Aufzug, Heizung]
+```
+
 ```read
 title: Ihre Buchung
 setting: A booking confirmation from a hotel in Innsbruck, in Aylin Yilmaz's inbox.
@@ -281,7 +287,7 @@ The forms are pleasingly regular: **drop the umlaut, add -te**.
 As in the present ({ich kann}, {er kann}), the ich and er forms are the same, with no -t. {mögen} also changes g to ch: {mochte}. And {möchten} has no past of its own: "I wanted to" is {ich wollte}. {Ich möchte nach Wien} becomes {Ich wollte nach Wien}.
 
 :::mistake
-Watch the umlaut: it changes the meaning. {Ich konnte nicht schlafen} is "I couldn't sleep" (past). {Ich könnte heute kommen} is "I could come today" (a possibility, the Konjunktiv II you will meet at B1). The same goes for {musste} (had to) and {müsste} (ought to), {durfte} (was allowed to) and {dürfte}. Many returners mix them up; your listeners will notice.
+Watch the umlaut: it changes the meaning. {Ich konnte nicht schlafen} is "I couldn't sleep" (past). {Ich könnte heute kommen} is "I could come today" (a possibility, the Konjunktiv II you will meet at B1). The same goes for {musste} (had to) and {müsste} (ought to), {durfte} (was allowed to) and {dürfte} (would be allowed to; probably is). Many returners mix them up; your listeners will notice.
 :::
 
 ```conjugate
@@ -321,6 +327,7 @@ title: What happened on the trip
 items:
   - en: I couldn't sleep.
     de: Ich konnte nicht schlafen.
+    also: [Schlafen konnte ich nicht.]
     extra: [könnte]
   - en: We wanted to go to Salzburg.
     de: Wir wollten nach_Salzburg fahren.
@@ -370,13 +377,13 @@ der Grad, -e | degree
 title: Das Wetter am Wochenende
 setting: The weekend forecast on an Austrian news website in October.
 text: |
-  Samstag: Im Westen und im Süden scheint den ganzen Tag die Sonne, bei Temperaturen bis 22 Grad. Im Norden ist es bewölkt, und am Nachmittag gibt es dort Gewitter.
+  Samstag: Im Westen und im Süden scheint den ganzen Tag die Sonne, bei Temperaturen bis 22 Grad. Im Norden ist es bewölkt, und am Nachmittag regnet es dort.
 
   Sonntag: Von Westen kommt Regen. In Tirol und Vorarlberg regnet es schon am Vormittag, in Wien erst am Abend. Die Temperaturen liegen nur noch bei 12 bis 15 Grad. Auf den Bergen über 2000 Metern kann es schneien.
 
   Montag: Kühl und windig, höchstens 10 Grad.
 en: |
-  Saturday: In the west and south the sun shines all day, with temperatures up to 22 degrees. In the north it is cloudy, and there will be thunderstorms there in the afternoon.
+  Saturday: In the west and south the sun shines all day, with temperatures up to 22 degrees. In the north it is cloudy, and it will rain there in the afternoon.
 
   Sunday: Rain arrives from the west. In Tyrol and Vorarlberg it is already raining in the morning, in Vienna not until the evening. Temperatures will only be 12 to 15 degrees. In the mountains above 2,000 metres it may snow.
 

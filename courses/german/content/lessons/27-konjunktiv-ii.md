@@ -28,7 +28,7 @@ Returners often remember the Konjunktiv II as a forest of strange forms ({gewön
 {würde} is itself the Konjunktiv II of {werden}: the Präteritum {wurde} plus an umlaut. That umlaut does a lot of work, so watch it:
 
 :::mistake
-{wird} (will), {wurde} (became, was … -ed) and {würde} (would) are three different words. {Er wurde Lehrer} means "he became a teacher"; {Er würde Lehrer werden} means "he would become a teacher". If you are typing without umlauts, write {wuerde}, never {wurde}.
+{wird} (will), {wurde} (became, was … -ed) and {würde} (would) are three different words. {Er wurde Lehrer} means "he became a teacher"; {Er würde Lehrer werden} means "he would become a teacher". If you are typing without umlauts, write wuerde, never wurde.
 :::
 
 ```words
@@ -209,8 +209,8 @@ turns:
         ok: true
       - de: Das würde wunderbar sein. Könnte ich das Zimmer vorher sehen?
         en: That would be wonderful (clumsy form). Could I see the room first?
-        reply: Ja, das wäre es bestimmt. Und natürlich können Sie es vorher sehen.
-        replyEn: Yes, I'm sure it would be. And of course you can see it first.
+        reply: Wunderbar wäre es bestimmt! Und natürlich können Sie es vorher sehen.
+        replyEn: It certainly would be wonderful! And of course you can see it first.
       - de: Das wäre wunderbar. Könnten ich das Zimmer vorher sehen?
         en: That would be wonderful. Could (wrong ending) I see the room first?
         reply: Ob Sie es vorher sehen könnten? Selbstverständlich!
@@ -378,7 +378,7 @@ The first is a real condition and uses the indicative. The second is unreal, con
 In writing you will also meet conditions without {wenn}, with the verb first: {Hätte ich Zeit, würde ich mitkommen.}
 
 :::note
-English never puts "would" in the if-clause ("if I would have time" is wrong). German is more relaxed: {wenn du mich fragen würdest} is perfectly normal in speech. With sein, haben, the modals and wissen, though, always use the one-word form: {wenn ich Zeit hätte}, never {wenn ich Zeit haben würde}.
+In standard English, "would" doesn't normally go in the if-clause (not "if I would have time"). German is more relaxed: {wenn du mich fragen würdest} is perfectly normal in speech. With sein, haben, the modals and wissen, though, always use the one-word form: {wenn ich Zeit hätte}, never {wenn ich Zeit haben würde}.
 :::
 
 ::konjunktiv-lab
@@ -439,18 +439,30 @@ die Gelegenheit, -en | opportunity
 ```story
 title: Der verpasste Zug
 paragraphs:
-  - de: An einem Montag im November kam Luca zwei Minuten zu spät zum Zürcher Hauptbahnhof. Der Zug nach Bern fuhr gerade ab. Luca war wütend, denn um zehn Uhr hatte er in Bern ein wichtiges Vorstellungsgespräch. „Wäre ich doch nur früher aufgestanden!“, dachte er.
-    en: One Monday in November Luca arrived at Zürich main station two minutes late. The train to Bern was just pulling out. Luca was furious, because at ten o'clock he had an important job interview in Bern. "If only I'd got up earlier!" he thought.
-  - de: Der nächste Zug fuhr erst in einer halben Stunde. Luca rief in Bern an und entschuldigte sich, dann ging er in ein Café im Bahnhof. Alle Tische waren besetzt, nur an einem saß eine junge Frau allein. „Dürfte ich mich zu Ihnen setzen?“, fragte er.
-    en: The next train wasn't for half an hour. Luca rang Bern and apologised, then went into a café in the station. All the tables were taken; only at one sat a young woman on her own. "May I join you?" he asked.
-  - de: Die Frau hieß Noemi und wartete auch auf den Zug nach Bern. Sie kamen ins Gespräch, und die halbe Stunde verging wie im Flug. Im Zug saßen sie nebeneinander und redeten weiter, bis Bern.
-    en: The woman was called Noemi and was also waiting for the train to Bern. They got talking, and the half-hour flew by. On the train they sat side by side and kept talking, all the way to Bern.
-  - de: Das Vorstellungsgespräch lief schlecht, und Luca bekam die Stelle nicht. Aber am Abend schrieb Noemi ihm eine Nachricht. „Hättest du am Samstag Zeit für ein Abendessen?“
-    en: The interview went badly, and Luca didn't get the job. But that evening Noemi sent him a message. "Would you have time for dinner on Saturday?"
-  - de: Heute, drei Jahre später, sind Luca und Noemi verheiratet. Manchmal sagt Luca zu ihr, halb im Spaß: „Wenn ich den Zug nicht verpasst hätte, hätte ich dich nie kennengelernt.“ Und Noemi antwortet dann: „Und wenn du die Stelle bekommen hättest, wärst du jetzt in Bern und nicht hier bei mir in Zürich.“
-    en: Today, three years later, Luca and Noemi are married. Sometimes Luca says to her, half joking: "If I hadn't missed the train, I'd never have met you." And Noemi replies: "And if you'd got the job, you'd be in Bern now, not here with me in Zürich."
-  - de: Dann lacht Luca immer. „Siehst du“, sagt er. „Manchmal ist ein verpasster Zug das Beste, was einem passieren kann.“
-    en: Then Luca always laughs. "You see," he says. "Sometimes a missed train is the best thing that can happen to you."
+  - de: >-
+      An einem Montag im November kam Luca zwei Minuten zu spät zum Zürcher Hauptbahnhof. Der Zug nach Bern fuhr gerade ab. Luca war wütend, denn um zehn Uhr hatte er in Bern ein wichtiges Vorstellungsgespräch. „Wäre ich doch nur früher aufgestanden!“, dachte er.
+    en: >-
+      One Monday in November Luca arrived at Zürich main station two minutes late. The train to Bern was just pulling out. Luca was furious, because at ten o'clock he had an important job interview in Bern. "If only I'd got up earlier!" he thought.
+  - de: >-
+      Der nächste Zug fuhr erst in einer halben Stunde. Luca rief in Bern an und entschuldigte sich, dann ging er in ein Café im Bahnhof. Alle Tische waren besetzt, nur an einem saß eine junge Frau allein. „Dürfte ich mich zu Ihnen setzen?“, fragte er.
+    en: >-
+      The next train wasn't for half an hour. Luca rang Bern and apologised, then went into a café in the station. All the tables were taken; only at one sat a young woman on her own. "May I join you?" he asked.
+  - de: >-
+      Die Frau hieß Noemi und wartete auch auf den Zug nach Bern. Sie kamen ins Gespräch, und die halbe Stunde verging wie im Flug. Im Zug saßen sie nebeneinander und redeten bis Bern weiter.
+    en: >-
+      The woman was called Noemi and was also waiting for the train to Bern. They got talking, and the half-hour flew by. On the train they sat side by side and talked all the way to Bern.
+  - de: >-
+      Das Vorstellungsgespräch lief schlecht, und Luca bekam die Stelle nicht. Aber am Abend schrieb Noemi ihm eine Nachricht. „Hättest du am Samstag Zeit für ein Abendessen?“
+    en: >-
+      The interview went badly, and Luca didn't get the job. But that evening Noemi sent him a message. "Would you have time for dinner on Saturday?"
+  - de: >-
+      Heute, drei Jahre später, sind Luca und Noemi verheiratet. Manchmal sagt Luca zu ihr, halb im Spaß: „Wenn ich den Zug nicht verpasst hätte, hätte ich dich nie kennengelernt.“ Und Noemi antwortet dann: „Und wenn du die Stelle bekommen hättest, wärst du jetzt in Bern und nicht hier bei mir in Zürich.“
+    en: >-
+      Today, three years later, Luca and Noemi are married. Sometimes Luca says to her, half joking: "If I hadn't missed the train, I'd never have met you." And Noemi replies: "And if you'd got the job, you'd be in Bern now, not here with me in Zürich."
+  - de: >-
+      Dann lacht Luca immer. „Siehst du“, sagt er. „Manchmal ist ein verpasster Zug das Beste, was einem passieren kann.“
+    en: >-
+      Then Luca always laughs. "You see," he says. "Sometimes a missed train is the best thing that can happen to you."
 questions:
   - prompt: Why was Luca angry at the station?
     options: [He had missed the train to his job interview., The café was full., Noemi was late.]
@@ -462,7 +474,7 @@ questions:
     options: [No., Yes., The story doesn't say.]
     answer: 0
   - prompt: "{Wenn ich den Zug nicht verpasst hätte, hätte ich dich nie kennengelernt.} So did Luca miss the train?"
-    options: [Yes, and that's how he met Noemi., No, he caught it.]
+    options: ["Yes, and that's how he met Noemi.", 'No, he caught it.']
     answer: 0
     explain: The Konjunktiv II describes what did not happen. In reality he missed the train, and he did meet her.
 ```
@@ -536,9 +548,14 @@ items:
   - prompt: We should have left earlier.
     answer: [Wir hätten früher losfahren sollen., Wir hätten früher gehen sollen., Wir hätten früher losgehen sollen.]
   - prompt: He acts as if he knew everything.
-    answer: [Er tut so, als ob er alles wüsste., Er tut so, als wüsste er alles.]
+    answer:
+      - Er tut so, als ob er alles wüsste.
+      - Er tut so, als wüsste er alles.
   - prompt: If I had known that, I would have come.
-    answer: [Wenn ich das gewusst hätte, wäre ich gekommen., Hätte ich das gewusst, wäre ich gekommen., Ich wäre gekommen, wenn ich das gewusst hätte.]
+    answer:
+      - Wenn ich das gewusst hätte, wäre ich gekommen.
+      - Hätte ich das gewusst, wäre ich gekommen.
+      - Ich wäre gekommen, wenn ich das gewusst hätte.
 ```
 
 ```speak

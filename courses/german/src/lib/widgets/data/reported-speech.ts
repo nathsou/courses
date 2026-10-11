@@ -180,6 +180,7 @@ export interface K1Verb {
   id: string;
   de: string;
   rows: K1Row[];
+  note?: string;
 }
 
 /** Konjunktiv I next to the indicative; where they coincide, Konjunktiv II (or würde) steps in. */
@@ -247,6 +248,7 @@ export const K1_VERBS: K1Verb[] = [
   {
     id: 'steigen',
     de: 'steigen',
+    note: 'Konjunktiv II {sie stiegen} looks exactly like the past tense, so {würde} + infinitive takes over. ({ich stiege} exists but sounds dated.)',
     rows: [
       { k1: 'ich steige', ind: 'ich steige', use: 'ich würde steigen' },
       { k1: 'du steigest', ind: 'du steigst', use: 'du steigest' },

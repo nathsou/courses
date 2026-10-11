@@ -69,13 +69,14 @@
 
     <div class="r">
       <p class="kind ui">The linking r</p>
-      <p class="build" lang="de">
-        <span class="part">wo</span>{#if vowel(verb.prep)}<span class="link">r</span>{/if}<span class="part p">{verb.prep}</span>
-        <span class="eq">→</span> <strong>{verb.wo}</strong>
-        <span class="sep" aria-hidden="true"></span>
-        <span class="part">da</span>{#if vowel(verb.prep)}<span class="link">r</span>{/if}<span class="part p">{verb.prep}</span>
-        <span class="eq">→</span> <strong>{verb.da}</strong>
-      </p>
+      <div class="builds" lang="de">
+        {#each [['wo', verb.wo], ['da', verb.da]] as [head, whole] (head)}
+          <p class="build">
+            <span class="part">{head}</span>{#if vowel(verb.prep)}<span class="link">r</span>{/if}<span class="part p">{verb.prep}</span>
+            <span class="eq">→</span> <strong>{whole}</strong>
+          </p>
+        {/each}
+      </div>
       <p class="rule ui">Before a vowel, an <span class="lk">r</span> keeps the two vowels apart: <em lang="de">dar·auf, wor·an</em>, but <em lang="de">da·mit, wo·für</em>.</p>
       <ul class="grid" lang="de">
         {#each DAWO_PREPS as p (p.prep)}
@@ -217,8 +218,14 @@
   .r {
     margin-top: 0.9rem;
   }
-  .build {
+  .builds {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 2rem;
     margin: 0.3rem 0 0.2rem;
+  }
+  .build {
+    margin: 0;
     font-size: 1.2rem;
     display: flex;
     flex-wrap: wrap;
@@ -245,9 +252,6 @@
     color: var(--mute);
     margin: 0 0.25rem;
   }
-  .sep {
-    width: 1.2rem;
-  }
   .rule {
     margin: 0 0 0.5rem;
     font-size: 0.84rem;
@@ -258,12 +262,13 @@
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
     gap: 0.25rem;
     font-size: 0.92rem;
   }
   .grid li {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: 0.4rem;
     padding: 0.15rem 0.5rem;

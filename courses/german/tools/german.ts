@@ -136,7 +136,14 @@ export async function dataTexts(root: string, out: FoundText[] = []): Promise<Fo
       continue;
     }
     for (const f of files) {
-      const mod = (await import(join(root, d, f))) as Record<string, unknown>;
+      let mod: Record<string, unknown>;
+      try {
+        mod = (await import(join(root, d, f))) as Record<string, unknown>;
+      } catch {
+        // A data module importing through a Vite alias ($lib) cannot load in plain Node: fall back
+        // to its quoted strings under German-looking keys.
+        mod = { strings: [...readFileSync(join(root, d, f), 'utf8').matchAll(/\b(?:de|word|example|sentence|text|claim)\s*:\s*(['"`])((?:(?!\1).)+)\1/g)].map((m) => ({ de: m[2] })) };
+      }
       for (const [name, value] of Object.entries(mod)) walkData(value, `${d}/${f}#${name}`, 'extras', out);
     }
   }

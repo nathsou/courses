@@ -213,7 +213,13 @@ for (const w of words) {
     // A homograph taught as another part of speech (sein "to be" and sein "his") gets its own
     // entry under "sein#2"; the same word taught twice is simply the first lesson's.
     const kindOf = (p: Entry['p']) => (p === 'n' ? 'noun' : p === 'v' ? 'verb' : 'other');
-    if (kindOf(prev.p) === head.kind || lexicon[`${head.key}#2`]) continue;
+    if (kindOf(prev.p) === head.kind) {
+      // Taught again with another meaning (stehen "to suit", later "to stand"): keep both senses.
+      const senses = (g: string) => g.split(/[;,]\s*/).map((x) => x.trim().toLowerCase());
+      if (w.gloss && !senses(w.gloss).some((x) => senses(prev.g).includes(x))) prev.g = `${prev.g}; ${w.gloss}`;
+      continue;
+    }
+    if (lexicon[`${head.key}#2`]) continue;
     head.key = `${head.key}#2`;
   }
   const cands = byWord.get(head.lemma) ?? [];

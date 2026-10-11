@@ -199,7 +199,7 @@ Here is the rule that explains the exceptions: **a participle only gets ge- if t
 | ver- | {verpassen} → {verpasst} | {verstehen} → {verstanden}, {vergessen} → {vergessen}, {verlieren} → {verloren} |
 | er- | {erzählen} → {erzählt}, {erklären} → {erklärt} | |
 | ent-, zer- | {zerstören} → {zerstört} | {entscheiden} → {entschieden} |
-| ge-, emp-, miss- | | {gefallen} → {gefallen}, {empfehlen} → {empfohlen}, {missverstehen} → {missverstanden} |
+| ge-, emp-, miss- | {gehören} → {gehört} | {gefallen} → {gefallen}, {empfehlen} → {empfohlen}, {missverstehen} → {missverstanden} |
 
 **2. Verbs in -ieren.** They are stressed on the -ie-, so they have no ge-, and they are always weak: {studieren} → {studiert}, {telefonieren} → {telefoniert}, {passieren} → {passiert}, {reparieren} → {repariert}, {probieren} → {probiert}.
 
@@ -226,8 +226,8 @@ reparieren | to repair
 
 ```sort
 title: Where does ge- go?
-prompt: Sort the verbs by the shape of their participle.
-buckets: ['ge- vorne (gekauft)', 'ge- in der Mitte (angerufen)', 'kein ge- (besucht)']
+prompt: "Sort the verbs by the shape of their participle: ge- at the front ({gekauft}), ge- in the middle ({angerufen}) or no ge- at all ({besucht})."
+buckets: ['wie gekauft', 'wie angerufen', 'wie besucht']
 items:
   - [besuchen, 2]
   - [kaufen, 0]
@@ -466,10 +466,10 @@ title: Verb second
 items:
   - en: First we visited a museum.
     de: Zuerst haben wir ein Museum besucht.
-    also: [Wir haben zuerst ein Museum besucht.]
+    also: [Wir haben zuerst ein Museum besucht., Ein Museum haben wir zuerst besucht.]
   - en: Then I went home.
     de: Dann bin ich nach_Hause gegangen.
-    also: [Ich bin dann nach_Hause gegangen.]
+    also: [Ich bin dann nach_Hause gegangen., Nach_Hause bin ich dann gegangen.]
     extra: [habe]
   - en: Suddenly my phone was gone.
     de: Plötzlich war mein Handy weg.
@@ -484,12 +484,12 @@ title: Elias in Wien
 paragraphs:
   - de: Im Sommer ist Elias für ein Wochenende nach Wien gefahren. Er hat seine Schulfreundin Zeynep besucht. Zeynep studiert dort Musik.
     en: In the summer Elias went to Vienna for a weekend. He visited his school friend Zeynep. Zeynep studies music there.
-  - de: Am Samstag sind die beiden zuerst ins Museum gegangen. Danach haben sie in einem Café Sachertorte probiert. Elias hat viel fotografiert, die Oper, den Stephansdom und das Riesenrad.
-    en: On Saturday the two of them first went to a museum. After that they tried Sachertorte in a café. Elias took lots of photos, of the opera house, St Stephen's Cathedral and the big wheel.
+  - de: 'Am Samstag sind die beiden zuerst ins Museum gegangen. Danach haben sie in einem Café Sachertorte probiert. Elias hat viel fotografiert: die Oper, den Stephansdom und das Riesenrad.'
+    en: "On Saturday the two of them first went to a museum. After that they tried Sachertorte in a café. Elias took lots of photos: the opera house, St Stephen's Cathedral and the big wheel."
   - de: 'Am Abend sind sie mit der Straßenbahn nach Hause gefahren. Plötzlich hat Elias gemerkt: Sein Handy war weg! Er hat überall gesucht, aber er hat es nicht gefunden.'
     en: In the evening they took the tram home. Suddenly Elias noticed his phone was gone! He looked everywhere, but he didn't find it.
-  - de: Zeynep hat sofort seine Nummer angerufen. Zum Glück hat ein Mann abgenommen. „Ich habe das Handy in der Straßenbahn gefunden“, hat er gesagt. „Ich bin jetzt am Westbahnhof.“
-    en: Zeynep rang his number straight away. Luckily a man answered. "I found the phone on the tram," he said. "I'm at the Westbahnhof now."
+  - de: Zeynep hat sofort sein Handy angerufen. Zum Glück hat ein Mann abgenommen. „Ich habe das Handy in der Straßenbahn gefunden“, hat er gesagt. „Ich bin jetzt am Westbahnhof.“
+    en: Zeynep rang his phone straight away. Luckily a man answered. "I found the phone on the tram," he said. "I'm at the Westbahnhof now."
   - de: Elias und Zeynep sind schnell zum Westbahnhof gefahren und haben das Handy abgeholt. Zum Schluss hat Elias den Mann auf einen Kaffee eingeladen. Was für ein Tag!
     en: Elias and Zeynep quickly went to the Westbahnhof and collected the phone. In the end Elias invited the man for a coffee. What a day!
 questions:
