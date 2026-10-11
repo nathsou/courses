@@ -229,7 +229,7 @@ export const A2: Paper = {
           de: 'Wann ___ der Film gestern angefangen?',
           options: ['ist', 'hat', 'war'],
           answer: 1,
-          explain: '{anfangen} is not a verb of movement or change of state, so its perfect uses {haben}: {Der Film hat angefangen.}',
+          explain: '{anfangen} forms its perfect with {haben}: {Der Film hat angefangen.} ({sein} is for verbs of movement and change of state such as {gehen} or {aufstehen}.)',
         },
         {
           type: 'fill',

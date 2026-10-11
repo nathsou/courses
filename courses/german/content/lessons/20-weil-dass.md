@@ -450,7 +450,10 @@ items:
   - prompt: I think he's right. (with dass)
     answer: ['Ich glaube, dass er recht hat.', 'Ich denke, dass er recht hat.', 'Ich finde, dass er recht hat.', 'Ich glaube, dass er Recht hat.', 'Ich denke, dass er Recht hat.']
   - prompt: If I have time, I'll come. (start with if)
-    answer: Wenn ich Zeit habe, komme ich.
+    answer:
+      - Wenn ich Zeit habe, komme ich.
+      - Wenn ich Zeit habe, komme ich mit.
+      - Wenn ich Zeit habe, komme ich gern.
   - prompt: I don't know whether she's at home.
     answer: ['Ich weiß nicht, ob sie zu Hause ist.', 'Ich weiß nicht, ob sie daheim ist.']
   - prompt: He says that he can't come. (with dass)

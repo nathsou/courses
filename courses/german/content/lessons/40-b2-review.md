@@ -30,7 +30,7 @@ paragraphs:
     en: At seven in the morning, St. Anna am See is still quiet. The shutters of the brightly painted houses are closed, and mist lies over the water. Two hours later there is no trace of it. The first coaches have arrived, and hundreds of visitors are crowding through the main lane, which is only three metres wide.
   - de: Rund eine Million Gäste kommen jedes Jahr in den Ort mit seinen 800 Einwohnern. Der Tourismus sei Segen und Fluch zugleich, sagt Bürgermeister Thomas Rainer. Ohne die Einnahmen könne sich die Gemeinde weder die Schule noch das Hallenbad leisten. Doch viele Einheimische hätten inzwischen die Nase voll.
     en: Around a million guests come every year to the village and its 800 inhabitants. Tourism is a blessing and a curse at the same time, says the mayor, Thomas Rainer. Without the income, the municipality could afford neither the school nor the indoor pool. But many locals are now fed up.
-  - de: Eine von ihnen ist Maria Gruber, die seit 40 Jahren hier lebt. „Man kann ja verstehen, dass die Leute das sehen wollen“, sagt sie. „Aber wenn mir jemand durchs Küchenfenster fotografiert, ist halt Schluss.“ Ihr Garten sei schon dreimal als Picknickplatz benutzt worden.
+  - de: Eine von ihnen ist Maria Gruber, die seit 40 Jahren hier lebt. „Man kann ja verstehen, dass die Leute das sehen wollen“, sagt sie. „Aber wenn jemand durch mein Küchenfenster fotografiert, ist halt Schluss.“ Ihr Garten sei schon dreimal als Picknickplatz benutzt worden.
     en: 'One of them is Maria Gruber, who has lived here for 40 years. "You can understand that people want to see it," she says. "But when someone takes photos through my kitchen window, enough is enough." Her garden has already been used as a picnic spot three times.'
   - de: Die Gemeinde hat reagiert. Seit dem Frühjahr dürfen Reisebusse nur noch mit einem vorab gebuchten Zeitfenster in den Ort fahren. Wer ohne Anmeldung kommt, wird an der Ortseinfahrt abgewiesen. Durch die Einführung einer Gebühr von zehn Euro pro Person sollen außerdem Einnahmen für die Pflege des Ortsbildes erzielt werden.
     en: The municipality has reacted. Since the spring, coaches may only drive into the village with a time slot booked in advance. Anyone who comes without registering is turned away at the entrance to the village. A fee of ten euros per person is also intended to raise money for the upkeep of the village's appearance.
@@ -90,7 +90,7 @@ items:
   - de: Durch die Einführung einer Gebühr sollen Einnahmen erzielt werden.
     options: [nominal style for "by introducing a fee", Konjunktiv I, a modal particle]
     answer: 0
-  - de: Aber wenn mir jemand durchs Küchenfenster fotografiert, ist halt Schluss.
+  - de: Aber wenn jemand durch mein Küchenfenster fotografiert, ist halt Schluss.
     options: ["a modal particle: that's just how it is", "a time adverb: stop", "a connector: however"]
     answer: 0
 ```
