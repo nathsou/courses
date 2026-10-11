@@ -36,19 +36,19 @@ die Nacht, ¨-e | night
 | during the day | {Guten Tag!} | {Hallo!} or {Tag!} |
 | from about 6 p.m. | {Guten Abend!} | {Hallo!} |
 | going to bed | {Gute Nacht!} | {Gute Nacht!} or {Nacht!} |
-| saying goodbye | {Auf Wiedersehen!} | {Tschüss!} {Bis morgen!} |
+| saying goodbye | {Auf Wiedersehen!} | {Tschüss!} or {Bis morgen!} |
 
 {Guten Morgen}, {Guten Tag} and {Guten Abend} are short for "I wish you a good morning, day, evening", which is why {gut} has the ending -en. {Nacht} belongs to a different gender, so it is {Gute Nacht}. You will see why in lesson 5; for now, learn them as they are.
 
 :::key
-Look at {Tag}, {Morgen}, {Abend} and {Nacht}: every German noun starts with a capital letter, wherever it stands in the sentence. It is the easiest rule in the language, and it helps you read: a capital in mid-sentence means "this is a thing".
+Look at {Tag}, {Morgen}, {Abend} and {Nacht}: every German noun starts with a capital letter, wherever it stands in the sentence. It is the easiest rule in the language, and it helps you read: a capital in mid-sentence usually means "this is a noun".
 :::
 
 :::mistake
 {Gute Nacht} is only for parting late in the evening, or going to bed. When you arrive at a dinner party at nine, you say {Guten Abend!}. Likewise, {Guten Tag} is only a greeting: when you leave, it is {Auf Wiedersehen} or {Tschüss}.
 :::
 
-German is spoken in three countries (and parts of three more), and every region has its favourite greeting:
+Every German-speaking region has its favourite greeting:
 
 ```words
 Servus | hi; bye (Bavaria and Austria, informal)
@@ -71,12 +71,8 @@ In Austria the formal goodbye is usually {Auf Wiederschauen!}, often just {Wiede
 ```choose
 title: Which greeting?
 items:
-  - prompt: 7.30 a.m. You walk into a bakery in Cologne.
-    options: [Guten Morgen!, Gute Nacht!, Guten Abend!]
-    answer: 0
-  - prompt: 3 p.m. You meet your new boss in Frankfurt.
-    options: [Guten Tag!, Tschüss!, Gute Nacht!]
-    answer: 0
+  - {prompt: 7.30 a.m. You walk into a bakery in Cologne., options: [Guten Morgen!, Gute Nacht!, Guten Abend!], answer: 0}
+  - {prompt: 3 p.m. You meet your new boss in Frankfurt., options: [Guten Tag!, Tschüss!, Gute Nacht!], answer: 0}
   - prompt: 8 p.m. You arrive at a dinner party in Berlin.
     options: [Guten Abend!, Gute Nacht!, Guten Tag!]
     answer: 0
@@ -85,12 +81,8 @@ items:
     options: [Auf Wiederschauen!, Grüezi!, Guten Abend!]
     answer: 0
     explain: "In Austria {Auf Wiederschauen} is the usual formal goodbye; {Auf Wiedersehen} works everywhere."
-  - prompt: You say goodbye to a friend you will see tomorrow.
-    options: [Bis morgen!, Guten Tag!, Grüß Gott!]
-    answer: 0
-  - prompt: You walk into a shop in Zurich.
-    options: [Grüezi!, Moin!, Gute Nacht!]
-    answer: 0
+  - {prompt: You say goodbye to a friend you will see tomorrow., options: [Bis morgen!, Guten Tag!, Grüß Gott!], answer: 0}
+  - {prompt: You walk into a shop in Zurich., options: [Grüezi!, Moin!, Gute Nacht!], answer: 0}
 ```
 
 ```match
@@ -129,7 +121,7 @@ Wie bitte? | Pardon? Sorry?
 {Wie geht's?} is a real question, not a greeting. Germans ask it of people they know, and may answer honestly: {Nicht so gut} is a perfectly normal reply. A shop assistant will not ask how you are, and nobody expects a stranger to.
 :::
 
-**{Bitte}** is the most useful word in German. It means *please* ({Ein Kaffee, bitte}), *you're welcome* ({Danke! – Bitte!}), *here you are* ({Bitte schön}), and, said as a question, *sorry?* For *you're welcome* you will also hear {Gern geschehen} or simply {Gerne!}
+**{Bitte}** is the most useful word in German. It means *please* ({Ein Wasser, bitte}), *you're welcome* ({Danke! – Bitte!}), *here you are* ({Bitte schön}), and, said as a question, *sorry?* For *you're welcome* you will also hear {Gern geschehen} or simply {Gerne!}
 
 **{Entschuldigung}** is "excuse me" to get someone's attention and "sorry" when you bump into them. Its stress is on the second syllable: ent-SCHUL-di-gung. And when you did not catch something, say {Wie bitte?} rather than {Was?}, which sounds as blunt as "What?" does in English.
 
@@ -181,10 +173,10 @@ German does not so much say "my name is" as "I am called": {Ich heiße Lena.} {M
 To ask, you choose between two questions. {Wie heißt du?} is for children, friends, fellow students and anyone your age at a party; {Wie heißen Sie?} is for adults you do not know, in a shop, an office or a hotel. Why German has two words for "you" is the first thing lesson 2 explains. For now, learn both questions as they are.
 
 :::mistake
-"What is your name?" is not {Was ist dein Name?}: Germans ask *how* you are called, {Wie heißt du?}, or more formally {Wie ist Ihr Name?}
+"What is your name?" is not usually {Was ist dein Name?}: Germans ask *how* you are called, {Wie heißt du?}, or more formally {Wie ist Ihr Name?}
 :::
 
-**{Herr}** and **{Frau}** go before surnames: {Herr Yilmaz}, {Frau Becker}. {Frau} is for every adult woman, married or not: the old {Fräulein} ("Miss") is dated and can offend. At work and on the phone, Germans often give only their surname: they pick up with {Becker, guten Tag!}, and you may hear simply {Becker.}
+**{Herr}** and **{Frau}** go before surnames: {Herr Yilmaz}, {Frau Becker}. {Frau} is for every adult woman, married or not: the old {Fräulein} ("Miss") is dated and can offend. At work and on the phone, Germans often give only their surname: many answer the phone with {Becker, guten Tag!}, or simply {Becker?}
 
 ```dialogue
 title: Wie heißt du? (the first evening of a language course in Zurich)
@@ -255,11 +247,11 @@ The German alphabet has the same 26 letters as English, plus {ä}, {ö}, {ü} an
 | Z | Zett | "tset" |
 | ß | Eszett | "ess-TSET" |
 
-The classic confusion: the German A sounds like an English R, the German E like an English A, and the German I like an English E. Spelling your name aloud is where this bites, so practise it now.
+The classic confusion: the German A sounds like a British English R, the German E like an English A, and the German I like an English E. Spelling your name aloud is where this bites, so practise it now.
 
 ::alphabet
 
-To spell a word, people say double letters as {Doppel-} ({Anna}: A, Doppel-N, A) and name the umlauts: {Müller mit Ü}. To ask, say {Wie schreibt man das?}
+To spell a word, people say double letters with Doppel- ({Anna}: A, Doppel-N, A) and name the umlauts: {Müller mit Ü}. To ask, say {Wie schreibt man das?}
 
 :::culture
 On the phone Germans make letters clear with a word: {B wie Berlin}, {M wie München}. Since 2022 Germany's official spelling alphabet uses towns, from {Aachen} to {Zwickau}, but you will still hear the older names ({A wie Anton}, {B wie Berta}). Austria and Switzerland have their own lists.
@@ -268,39 +260,12 @@ On the phone Germans make letters clear with a word: {B wie Berlin}, {M wie Mün
 ```choose
 title: Which letter do you hear?
 items:
-  - prompt: Which letter is it?
-    audio: We
-    listen: true
-    options: [W, V, F]
-    answer: 0
-    explain: W is called "We", like English "vay".
-  - prompt: Which letter is it?
-    audio: Vau
-    listen: true
-    options: [V, W, F]
-    answer: 0
-    explain: V is called "Vau", rhyming with "cow".
-  - prompt: Which letter is it?
-    audio: Jot
-    listen: true
-    options: [Y, J, G]
-    answer: 1
-  - prompt: Which letter is it?
-    audio: Zett
-    listen: true
-    options: [C, S, Z]
-    answer: 2
-  - prompt: Which letter is it?
-    audio: Er
-    listen: true
-    options: [A, R, E]
-    answer: 1
-    explain: R is "Er", like English "air". The German A ("ah") sounds like a British R.
-  - prompt: Which letter is it?
-    audio: Ge
-    listen: true
-    options: [J, G, H]
-    answer: 1
+  - {prompt: Which letter is it?, audio: We, listen: true, options: [W, V, F], answer: 0, explain: 'W is called "We", like English "vay".'}
+  - {prompt: Which letter is it?, audio: Vau, listen: true, options: [V, W, F], answer: 0, explain: 'V is called "Vau", rhyming with "cow".'}
+  - {prompt: Which letter is it?, audio: Jot, listen: true, options: [Y, J, G], answer: 1}
+  - {prompt: Which letter is it?, audio: Zett, listen: true, options: [C, S, Z], answer: 2}
+  - {prompt: Which letter is it?, audio: Er, listen: true, options: [A, R, E], answer: 1, explain: 'R is "Er", like English "air". The German A ("ah") sounds like a British R.'}
+  - {prompt: Which letter is it?, audio: Ge, listen: true, options: [J, G, H], answer: 1}
 ```
 
 ## Vowels: long, short and with dots
@@ -322,7 +287,7 @@ The **umlauts** are not exotic:
 - **{ö}**: say the long e of {Tee}, hold it, and round your lips as if to say "o": {schön}, {hören}. Short in {zwölf} and {Köln}.
 - **{ü}**: say the ee of {Sie}, keep your tongue exactly there, and round your lips tightly as if to whistle: {für}, {müde}. Short in {fünf}. It is the French u of "tu".
 
-The dots matter: {schon} is "already", {schön} "beautiful"; {Mutter} is "mother", {Mütter} "mothers"; {zahlen} is "to pay", {zählen} "to count". With no umlauts on your keyboard, write ae, oe, ue (Mueller for {Müller}, as in {Goethe}), but never just drop the dots.
+The dots matter: {schon} is "already", {schön} "beautiful"; {Mutter} is "mother", {Mütter} "mothers"; {zahlen} is "to pay", {zählen} "to count". With no umlauts on your keyboard, write ae, oe, ue (Mueller for {Müller}; the oe in {Goethe} is an old way of writing ö), but never just drop the dots.
 
 :::grammar[ß or ss?]
 {ß}, called {Eszett} or "sharp s", sounds exactly like ss. It is written after a long vowel or after ei, au, eu: {Straße}, {groß}, {heißen}, {Fuß}. After a short vowel you write ss: {dass}, {muss}, {Wasser}, {Tschüss}. This has been the rule since the 1996 spelling reform, so if you learnt "daß" and "muß" at school, those spellings are now out of date. Switzerland does without ß altogether and writes {Strasse}.
@@ -353,42 +318,12 @@ explain: "Doubled vowels, vowel + h and ie are long; so is a vowel before a sing
 ```choose
 title: Which word do you hear?
 items:
-  - de: schön
-    audio: true
-    listen: true
-    options: [schon, schön]
-    answer: 1
-    en: beautiful ({schon} means "already")
-  - de: Mütter
-    audio: true
-    listen: true
-    options: [Mutter, Mütter]
-    answer: 1
-    en: mothers
-  - de: für
-    audio: true
-    listen: true
-    options: [vier, für]
-    answer: 1
-    en: for ({vier}, with no lip-rounding, is "four")
-  - de: zahlen
-    audio: true
-    listen: true
-    options: [zahlen, zählen]
-    answer: 0
-    en: to pay ({zählen} is "to count")
-  - de: Stadt
-    audio: true
-    listen: true
-    options: [Staat, Stadt]
-    answer: 1
-    en: town ({Staat}, with a long a, is "state")
-  - de: Miete
-    audio: true
-    listen: true
-    options: [Miete, Mitte]
-    answer: 0
-    en: rent ({Mitte}, with a short i, is "middle")
+  - {de: schön, audio: true, listen: true, options: [schon, schön], answer: 1, en: 'beautiful ({schon} means "already")'}
+  - {de: Mütter, audio: true, listen: true, options: [Mutter, Mütter], answer: 1, en: mothers}
+  - {de: für, audio: true, listen: true, options: [vier, für], answer: 1, en: 'for ({vier}, with no lip-rounding, is "four")'}
+  - {de: zahlen, audio: true, listen: true, options: [zahlen, zählen], answer: 0, en: 'to pay ({zählen} is "to count")'}
+  - {de: Stadt, audio: true, listen: true, options: [Staat, Stadt], answer: 1, en: 'town ({Staat}, with a long a, is "state")'}
+  - {de: Miete, audio: true, listen: true, options: [Miete, Mitte], answer: 0, en: 'rent ({Mitte}, with a short i, is "middle")'}
 ```
 
 ## ei or ie?
@@ -413,36 +348,10 @@ A few borrowed words end in -ie with two separate sounds: {Familie} is fa-MEE-le
 ```choose
 title: ei or ie?
 items:
-  - de: Wein
-    audio: true
-    listen: true
-    options: [Wien, Wein]
-    answer: 1
-    en: wine ({Wien} is Vienna)
-  - de: Wien
-    audio: true
-    listen: true
-    options: [Wien, Wein]
-    answer: 0
-    en: Vienna
-  - de: Lied
-    audio: true
-    listen: true
-    options: [Lied, Leid]
-    answer: 0
-    en: song ({Leid} is "sorrow")
-  - de: Beine
-    audio: true
-    listen: true
-    options: [Biene, Beine]
-    answer: 1
-    en: legs ({Biene} is "bee")
-  - de: neun
-    audio: true
-    listen: true
-    options: [neun, nein]
-    answer: 0
-    en: nine ({nein} is "no")
+  - {de: Wein, audio: true, listen: true, options: [Wien, Wein], answer: 1, en: 'wine ({Wien} is Vienna)'}
+  - {de: Lied, audio: true, listen: true, options: [Lied, Leid], answer: 0, en: 'song ({Leid} is "sorrow")'}
+  - {de: Beine, audio: true, listen: true, options: [Biene, Beine], answer: 1, en: 'legs ({Biene} is "bee")'}
+  - {de: neun, audio: true, listen: true, options: [neun, nein], answer: 0, en: 'nine ({nein} is "no")'}
   - prompt: Which word has the "oy" sound?
     options: [heute, Haus, hier]
     answer: 0
@@ -461,7 +370,7 @@ Most consonants are as in English. These are the ones to watch:
 | z, tz | ts, as in "cats" | {zwei}, {Zürich}, {Katze} |
 | s before a vowel | English z in the north; s in the south, Austria and Switzerland | {Sie}, {sehr}, {so} |
 | sch | sh | {schön}, {Tschüss} |
-| sp, st at the start of a word | shp, sht | {Sport}, {Stadt}, {Straße} |
+| sp, st at the start of a word or word part | shp, sht | {Sport}, {Stadt}, {Straße}, {verstehen} |
 | ch after a, o, u, au | rough, as in Scottish "loch" | {acht}, {Nacht}, {Buch}, {auch} |
 | ch anywhere else | soft, like a strongly breathed h in "huge" | {ich}, {nicht}, {Milch}, {Mädchen} |
 | chs | ks | {sechs} |
@@ -472,7 +381,7 @@ Most consonants are as in English. These are the ones to watch:
 
 Three of these deserve a word more:
 
-- **Endings harden.** A b, d or g at the end of a word is said as p, t, k: {Tag} sounds like "tahk", {Hund} like "hoont". Add an ending and the soft sound comes back: {Tage}, {Hunde}.
+- **Endings harden.** A b, d or g at the end of a word is said as p, t, k: {Tag} sounds like "tahk", and {Hund} ends in a t. Add an ending and the soft sound comes back: {Tage}, {Hunde}.
 - **The r.** At the start of a syllable, most Germans say r at the back of the throat, close to a gargle; in Austria, Switzerland and Bavaria many roll it with the tip of the tongue. Both are standard. After a vowel at the end of a syllable, r turns into a short "uh": {Vater} sounds close to "FAH-tuh", {hier} to "hee-uh".
 - **-ig at the end** is said like -ich in the standard language: {zwanzig} is "TSVAN-tsich". In southern Germany, Austria and Switzerland you will hear "-ik", and that is correct too.
 
@@ -483,15 +392,9 @@ Three of these deserve a word more:
 ```choose
 title: How do you say it?
 items:
-  - prompt: The W in {Wien} sounds like English …
-    options: [v, w, f]
-    answer: 0
-  - prompt: The V in {Vater} sounds like English …
-    options: [f, v, w]
-    answer: 0
-  - prompt: The Z in {zwei} sounds like …
-    options: [ts in "cats", z in "zoo", s in "see"]
-    answer: 0
+  - {prompt: 'The W in {Wien} sounds like English …', options: [v, w, f], answer: 0}
+  - {prompt: 'The V in {Vater} sounds like English …', options: [f, v, w], answer: 0}
+  - {prompt: 'The Z in {zwei} sounds like …', options: [ts in "cats", z in "zoo", s in "see"], answer: 0}
   - prompt: The St in {Stadt} sounds like …
     options: [sht, st]
     answer: 0
@@ -500,12 +403,8 @@ items:
     options: [t, d]
     answer: 0
     explain: "b, d, g at the end of a word harden to p, t, k. In the plural {Hunde}, the d is soft again."
-  - prompt: The J in {ja} sounds like English …
-    options: [y, j in "jam", h]
-    answer: 0
-  - prompt: Where is the stress in {Entschuldigung}?
-    options: [on SCHUL, on ENT, on GUNG]
-    answer: 0
+  - {prompt: 'The J in {ja} sounds like English …', options: [y, j in "jam", h], answer: 0}
+  - {prompt: 'Where is the stress in {Entschuldigung}?', options: [on SCHUL, on ENT, on GUNG], answer: 0}
 ```
 
 ```sort
@@ -649,11 +548,7 @@ items:
   - prompt: Goodbye! (formal)
     answer: [Auf Wiedersehen!, Auf Wiederschauen!]
   - prompt: Bye, see you tomorrow! (to a friend)
-    answer:
-      - Tschüss, bis morgen!
-      - Tschüs, bis morgen!
-      - Ciao, bis morgen!
-      - Bis morgen!
+    answer: ['Tschüss, bis morgen!', 'Tschüs, bis morgen!', 'Ciao, bis morgen!', Bis morgen!]
 ```
 
 ```type

@@ -42,7 +42,7 @@ vermissen | to miss (someone or something)
 ```
 
 :::culture
-The Allgäu is the green, hilly south-western corner of Bavaria, between Lake Constance and the Alps: cows, cheese, lakes and King Ludwig's castle Neuschwanstein. With rents in Munich among the highest in Germany, and home working now common, many families have made exactly Hannah's move.
+The Allgäu, most of it in the south-western corner of Bavaria, is a green, hilly region between Lake Constance and the Alps: cows, cheese, lakes and King Ludwig's castle Neuschwanstein. With rents in Munich among the highest in Germany, and home working now common, many families have made exactly Hannah's move.
 :::
 
 ## Three families of linking words
@@ -270,7 +270,6 @@ title: Je …, desto …
 items:
   - en: The more you practise, the easier it gets.
     de: Je mehr du übst, desto leichter wird es.
-    extra: [ist]
   - en: The longer I live here, the better I like it.
     de: Je länger ich hier wohne, desto besser gefällt es mir.
   - en: The older you get, the faster time goes by.

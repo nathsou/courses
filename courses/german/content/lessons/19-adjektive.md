@@ -256,18 +256,18 @@ items:
 ```story
 title: Der nette Nachbar
 paragraphs:
-  - de: 'Frau Berger wohnt seit dreißig Jahren in einem alten Haus in Wien. Sie kennt alle Nachbarn: die freundliche Familie im ersten Stock, den lustigen Studenten im zweiten Stock und die neugierige Frau Huber im Erdgeschoss.'
-    en: 'Mrs Berger has lived in an old house in Vienna for thirty years. She knows all the neighbours: the friendly family on the first floor, the funny student on the second floor and nosy Mrs Huber on the ground floor.'
-  - de: Im Mai kommt ein neuer Nachbar. Er ist groß und hat einen langen, dunklen Bart. Er trägt immer eine schwarze Jacke und eine alte Mütze. Er grüßt nicht, und er lächelt nie. „Ein komischer Mann“, sagt Frau Huber. „Ein unfreundlicher Mann“, denkt Frau Berger.
-    en: In May a new neighbour arrives. He's tall and has a long, dark beard. He always wears a black jacket and an old cap. He doesn't say hello, and he never smiles. "An odd man," says Mrs Huber. "An unfriendly man," thinks Mrs Berger.
+  - de: 'Frau Berger wohnt seit dreißig Jahren in einem alten Haus in Wien. Sie kennt alle Nachbarn: die freundliche Familie im ersten Stock, den lustigen Studenten im zweiten Stock und die neugierige Frau Pichler im Erdgeschoss.'
+    en: 'Mrs Berger has lived in an old house in Vienna for thirty years. She knows all the neighbours: the friendly family on the first floor, the funny student on the second floor and nosy Mrs Pichler on the ground floor.'
+  - de: Im Mai kommt ein neuer Nachbar. Er ist groß und hat einen langen, dunklen Bart. Er trägt immer eine schwarze Jacke und eine alte Mütze. Er grüßt nicht, und er lächelt nie. „Ein komischer Mann“, sagt Frau Pichler. „Ein unfreundlicher Mann“, denkt Frau Berger.
+    en: In May a new neighbour arrives. He's tall and has a long, dark beard. He always wears a black jacket and an old cap. He doesn't say hello, and he never smiles. "An odd man," says Mrs Pichler. "An unfriendly man," thinks Mrs Berger.
   - de: An einem Morgen im Dezember liegt viel Schnee vor dem Haus. Frau Berger möchte einkaufen gehen, aber der Weg ist glatt und gefährlich. Sie hat Angst.
     en: One morning in December there is a lot of snow in front of the house. Mrs Berger wants to go shopping, but the path is slippery and dangerous. She is afraid.
   - de: 'Da kommt der neue Nachbar mit einer großen Schaufel. Er räumt den ganzen Weg frei. Dann fragt er leise: „Kann ich Ihnen helfen? Ich gehe sowieso zum Supermarkt.“'
     en: Then the new neighbour comes along with a big shovel. He clears the whole path. Then he asks quietly, "Can I help you? I'm going to the supermarket anyway."
   - de: Eine Stunde später bringt er zwei schwere Taschen. Darin sind frisches Brot, guter Käse, rote Äpfel und ein kleines Stück Kuchen. „Der Kuchen ist ein Geschenk“, sagt er und wird ein bisschen rot.
     en: An hour later he brings two heavy bags. In them are fresh bread, good cheese, red apples and a small piece of cake. "The cake is a present," he says, and goes a little red.
-  - de: 'Jetzt weiß Frau Berger: Der neue Nachbar ist nicht unfreundlich. Er ist nur schüchtern. Er heißt Dragan, er kommt aus Belgrad, und er ist der netteste Nachbar im ganzen Haus. Nur Frau Huber findet ihn immer noch komisch.'
-    en: Now Mrs Berger knows that the new neighbour isn't unfriendly. He's just shy. His name is Dragan, he comes from Belgrade, and he's the nicest neighbour in the whole building. Only Mrs Huber still thinks he's odd.
+  - de: 'Jetzt weiß Frau Berger: Der neue Nachbar ist nicht unfreundlich. Er ist nur schüchtern. Er heißt Dragan, er kommt aus Belgrad, und er ist der netteste Nachbar im ganzen Haus. Nur Frau Pichler findet ihn immer noch komisch.'
+    en: Now Mrs Berger knows that the new neighbour isn't unfriendly. He's just shy. His name is Dragan, he comes from Belgrade, and he's the nicest neighbour in the whole building. Only Mrs Pichler still thinks he's odd.
 questions:
   - prompt: What does the new neighbour look like?
     options: ['tall, with a long dark beard', 'small, with short blond hair', 'tall, with round glasses']

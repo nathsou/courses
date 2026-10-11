@@ -45,10 +45,8 @@ zeigen | to show
 schicken | to send
 leihen (leiht, lieh, hat geliehen) | to lend
 das Geschenk, -e | present, gift
-der Geburtstag, -e | birthday
 der Gutschein, -e | voucher
 die Blume, -n | flower
-der Ausflug, ¨-e | trip, outing
 wem? | to whom? for whom?
 ```
 

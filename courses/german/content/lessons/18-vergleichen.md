@@ -349,7 +349,7 @@ Aylin: Ja … aber in Zürich verdiene ich so viel mehr! | Yes … but in Zurich
 title: Wien oder Zürich?
 items:
   - prompt: Where would Aylin earn more?
-    options: [in Zürich, in Wien, the same in both]
+    options: [in Zurich, in Vienna, the same in both]
     answer: 0
   - prompt: What is most important to Aylin?
     options: [the work, the money, the mountains]

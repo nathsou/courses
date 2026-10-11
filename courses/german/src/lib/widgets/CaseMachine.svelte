@@ -4,6 +4,7 @@
    * accusative, indirect object = dative, owner = genitive). The articles follow the roles, and
    * any role can move to the front without changing who does what.
    */
+  import { untrack } from 'svelte';
   import { flip } from 'svelte/animate';
   import { parseCases, determiner, joined, type Case } from '$lib/de/declension';
   import { CASE_NOUNS, CASE_PRESETS } from './data/case-machine';
@@ -19,7 +20,10 @@
   const verbs = $derived(verbsFor(caseList));
   const genitive = $derived(caseList.includes('gen'));
 
-  let setup = $state<Setup>({ verb: '', nouns: {}, article: 'def', front: 'nom', owner: null });
+  const START: Setup = untrack(() => caseList).includes('dat')
+    ? { verb: 'give', nouns: { nom: 'man', dat: 'child', acc: 'ball' }, article: 'def', front: 'nom', owner: null }
+    : { verb: 'bite', nouns: { nom: 'dog', acc: 'man' }, article: 'def', front: 'nom', owner: null };
+  let setup = $state<Setup>(START);
   const s = $derived(complete({ ...setup, verb: verbs.some((v) => v.id === setup.verb) ? setup.verb : (verbs.find((v) => v.id === 'give') ?? verbs[0]!).id }));
   const verb = $derived(verbById(s.verb));
   const roles = $derived(rolesOf(verb));

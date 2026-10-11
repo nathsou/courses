@@ -193,7 +193,9 @@ const addForm = (surface: string, key: string) => {
 /** Register every form of a Wiktionary entry (and its separable verb's split forms) for a key. */
 function registerForms(key: string, e: Wiki, word: string) {
   addForm(word, key);
-  for (const f of formWords(e)) addForm(f, key);
+  // A form that is itself a taught word belongs to that word: Wiktionary's "ich" lists du, er, sie…
+  // Pronoun entries carry the whole pronoun table: keep only forms Wiktionary says are this one's.
+  for (const f of formWords(e)) if (f === word || (!lemmas.has(f) && (e.p !== 'pron' || formOf.get(f)?.has(word)))) addForm(f, key);
 }
 
 function pickNoun(cands: Wiki[], g?: Gender): Wiki | undefined {
@@ -204,8 +206,16 @@ function pickNoun(cands: Wiki[], g?: Gender): Wiki | undefined {
 const where = (w: FoundWord) => `${w.lesson}.md:${w.line} "${w.raw}"`;
 for (const w of words) {
   const head = { ...w.head };
-  if (head.maybeVerb && (byWord.get(head.lemma) ?? []).some((e) => e.p === 'verb')) head.kind = 'verb';
-  if (lexicon[head.key]?.l) continue;
+  // A bare word in -n is a verb if Wiktionary says so, unless its gloss says otherwise (sein "his").
+  if (head.maybeVerb && (!w.gloss || /^to /.test(w.gloss)) && (byWord.get(head.lemma) ?? []).some((e) => e.p === 'verb')) head.kind = 'verb';
+  const prev = lexicon[head.key];
+  if (prev?.l) {
+    // A homograph taught as another part of speech (sein "to be" and sein "his") gets its own
+    // entry under "sein#2"; the same word taught twice is simply the first lesson's.
+    const kindOf = (p: Entry['p']) => (p === 'n' ? 'noun' : p === 'v' ? 'verb' : 'other');
+    if (kindOf(prev.p) === head.kind || lexicon[`${head.key}#2`]) continue;
+    head.key = `${head.key}#2`;
+  }
   const cands = byWord.get(head.lemma) ?? [];
   const level = levelOf.get(w.lesson);
   const base = { l: level, s: w.lesson } as Pick<Entry, 'l' | 's'>;
@@ -223,7 +233,8 @@ for (const w of words) {
       else if (head.plural) {
         const pl = applyPlural(head.lemma, head.plural);
         entry.pl = pl ?? null;
-        if (e && pl && wikiPl && pl !== wikiPl && !e.f.some((f) => has(f, 'plural') && f.f === pl)) issues.push(`${where(w)}: plural ${pl}, Wiktionary has ${wikiPl}`);
+        const plurals = cands.filter((x) => x.p === 'noun' && headGenders(x).includes(g)).flatMap((x) => x.f.filter((f) => has(f, 'plural')).map((f) => f.f));
+        if (e && pl && wikiPl && pl !== wikiPl && !plurals.includes(pl)) issues.push(`${where(w)}: plural ${pl}, Wiktionary has ${wikiPl}`);
       } else if (wikiPl) entry.pl = wikiPl;
       else if (e && noPlural(e)) entry.pl = null;
       const gs = e ? genitive(e) : undefined;
@@ -269,7 +280,9 @@ for (const w of words) {
     } else addForm(head.lemma, head.key);
   } else {
     // Adjectives, adverbs, phrases and function words.
-    const e = cands.find((x) => x.p === 'adj') ?? cands.find((x) => x.p !== 'noun' && x.p !== 'verb') ?? cands[0];
+    // Function words first ("in" is a preposition before it is an adjective), then adjectives.
+    const FUNCTION = ['prep', 'conj', 'pron', 'det', 'article', 'particle', 'intj'];
+    const e = cands.find((x) => FUNCTION.includes(x.p)) ?? cands.find((x) => x.p === 'adj') ?? cands.find((x) => x.p !== 'noun' && x.p !== 'verb') ?? cands[0];
     const isAdj = e?.p === 'adj';
     const entry: Entry = { p: isAdj ? 'a' : 'x', g: w.gloss ?? (e ? gloss([e]) : ''), ...base };
     if (isAdj && e) {
@@ -280,8 +293,8 @@ for (const w of words) {
     if (head.extra) entry.x = head.extra;
     if (!entry.g) issues.push(`${where(w)}: needs a gloss (not in Wiktionary)`);
     lexicon[head.key] = entry;
-    if (e && head.key === e.w) registerForms(head.key, e, head.lemma);
-    else addForm(head.key, head.key);
+    if (e && head.key.replace(/#\d+$/, '') === e.w) registerForms(head.key, e, head.lemma);
+    else addForm(head.key.replace(/#\d+$/, ''), head.key);
     // Phrases are also found word by word in text.
   }
 }
@@ -340,6 +353,12 @@ for (const s of surfaces) {
   // Lower-cased sentence starts only count as themselves, never as some other word's form.
   if (!keys.length && !lowered.has(s)) for (const e of formIndex.get(s) ?? []) add(taughtByLemma.get(e.w)?.[0] ?? background(e));
   if (keys.length) forms.set(s, keys.slice(0, 4));
+}
+
+// A word that is itself a dictionary key opens that entry first ("sein" → sein, then sein#2).
+for (const [surface, keys] of forms) {
+  const own = keys.filter((k) => k.replace(/#\d+$/, '') === surface);
+  if (own.length) forms.set(surface, [...own, ...keys.filter((k) => !own.includes(k))]);
 }
 
 // 6. Write, sorted for stable diffs.

@@ -40,7 +40,7 @@ On the phone and over loudspeakers, Germans often say {zwo} instead of {zwei}, s
 :::
 
 :::culture
-Germans count on their fingers starting with the **thumb**: thumb up is one, thumb and index finger two. Hold up your index and middle finger to order two beers and the waiter may well bring three.
+Germans count on their fingers starting with the **thumb**: thumb up is one, thumb and index finger two, add the middle finger for three. Order three beers with your index, middle and ring fingers and you will get them, but you will also have given yourself away as a foreigner.
 :::
 
 ```match
@@ -90,7 +90,7 @@ From 21 to 99 you say the units first, then {und}, then the tens, all as **one w
 Remember from lesson 1 that the final -ig is said like -ich in standard German ({zwanzig} "TSVAN-tsich") and like -ik in the south, Austria and Switzerland.
 
 :::tip
-When someone dictates a number, write the **units digit first**, leaving a space in front of it, then fill in the tens: you hear {sieben…}, write _7, hear {…undvierzig}, and complete 47. Native speakers do exactly this.
+When someone dictates a number, write the **units digit first**, leaving a space in front of it, then fill in the tens: you hear *sieben…*, write _7, hear *…undvierzig*, and complete 47. Many native speakers do exactly this.
 :::
 
 ::number-explorer{max=100}
@@ -120,36 +120,12 @@ items:
 ```choose
 title: Which number do you hear?
 items:
-  - de: sechsundvierzig
-    audio: true
-    listen: true
-    options: ['46', '64', '56']
-    answer: 0
-  - de: vierundsechzig
-    audio: true
-    listen: true
-    options: ['46', '64', '54']
-    answer: 1
-  - de: siebzehn
-    audio: true
-    listen: true
-    options: ['70', '17', '7']
-    answer: 1
-  - de: siebzig
-    audio: true
-    listen: true
-    options: ['17', '70', '77']
-    answer: 1
-  - de: dreiunddreißig
-    audio: true
-    listen: true
-    options: ['33', '23', '30']
-    answer: 0
-  - de: achtundfünfzig
-    audio: true
-    listen: true
-    options: ['85', '58', '48']
-    answer: 1
+  - {de: sechsundvierzig, audio: true, listen: true, options: ['46', '64', '56'], answer: 0}
+  - {de: vierundsechzig, audio: true, listen: true, options: ['46', '64', '54'], answer: 1}
+  - {de: siebzehn, audio: true, listen: true, options: ['70', '17', '7'], answer: 1}
+  - {de: siebzig, audio: true, listen: true, options: ['17', '70', '77'], answer: 1}
+  - {de: dreiunddreißig, audio: true, listen: true, options: ['33', '23', '30'], answer: 0}
+  - {de: achtundfünfzig, audio: true, listen: true, options: ['85', '58', '48'], answer: 1}
 ```
 
 ## Wie alt bist du?
@@ -250,7 +226,7 @@ items:
   - prompt: '1.000'
     answer: [tausend, eintausend]
   - prompt: '2.500'
-    answer: [zweitausendfünfhundert]
+    answer: [zweitausendfünfhundert, zweieinhalbtausend]
   - prompt: '80.000'
     answer: achtzigtausend
   - prompt: '1.000.000'
@@ -288,7 +264,7 @@ German says years before 2000 in hundreds, and always says the hundreds: 1989 is
 | 2026 | {zweitausendsechsundzwanzig} |
 
 :::mistake
-Never "in 2026", which is an anglicism. Say just the year, {2026}, or {im Jahr 2026}: {Ich bin 1995 geboren} (I was born in 1995). Learn {Ich bin … geboren} as a fixed phrase for now.
+Never "in 2026", which is an anglicism. Say just the year, 2026, or {im Jahr 2026}: {Ich bin 1995 geboren} (I was born in 1995). Learn {Ich bin … geboren} as a fixed phrase for now.
 :::
 
 ```match
@@ -342,21 +318,9 @@ Ben: Zweihundertneunzig. Okay, danke! | Two hundred and ninety. OK, thank you!
 ```choose
 title: Which phone number?
 items:
-  - de: null eins sieben zwo, vierunddreißig, sechsundfünfzig, achtundsiebzig
-    audio: true
-    listen: true
-    options: [0172 34 56 78, 0172 43 65 87, 0173 34 56 78]
-    answer: 0
-  - de: null drei null, zwölf, neunundachtzig, dreiundsechzig
-    audio: true
-    listen: true
-    options: [030 12 98 36, 030 12 89 63, 030 20 89 63]
-    answer: 1
-  - de: null vier vier, sechs null eins, siebenundvierzig, elf
-    audio: true
-    listen: true
-    options: [044 601 74 11, 041 601 47 11, 044 601 47 11]
-    answer: 2
+  - {de: 'null eins sieben zwo, vierunddreißig, sechsundfünfzig, achtundsiebzig', audio: true, listen: true, options: [0172 34 56 78, 0172 43 65 87, 0173 34 56 78], answer: 0}
+  - {de: 'null drei null, zwölf, neunundachtzig, dreiundsechzig', audio: true, listen: true, options: [030 12 98 36, 030 12 89 63, 030 20 89 63], answer: 1}
+  - {de: 'null vier vier, sechs null eins, siebenundvierzig, elf', audio: true, listen: true, options: [044 601 74 11, 041 601 47 11, 044 601 47 11], answer: 2}
 ```
 
 ```type
@@ -397,7 +361,7 @@ German writes prices with a comma, and the currency usually after the number: 3,
 | 0,99 € | {neunundneunzig Cent} |
 | 249,– € | {zweihundertneunundvierzig Euro} |
 
-After a number, {Euro} and {Cent} do not take a plural: {zwei Euro}, {fünfzig Cent}. To ask the price: {Wie viel kostet das?} or {Was kostet das?}; for one thing, {Was kostet der Kaffee?}; at the till you hear {Das macht sieben Euro vierzig.}
+After a number, {Euro} and {Cent} do not take a plural: {zwei Euro}, {fünfzig Cent}. To ask the price: {Wie viel kostet das?} or {Was kostet das?}; about something in particular, {Was kostet der Kaffee?}; at the till you hear {Das macht sieben Euro vierzig.}
 
 :::culture
 Austria uses the euro too, and often puts the sign first: € 3,50. Switzerland has the franc ({der Franken}), with 100 {Rappen}, and writes prices with a point: CHF 3.50 or Fr. 3.50, said {drei Franken fünfzig}. The Swiss even write thousands with an apostrophe: 1'000. In casual Swiss speech a franc is a {Stutz}.
@@ -406,31 +370,11 @@ Austria uses the euro too, and often puts the sign first: € 3,50. Switzerland 
 ```choose
 title: How much?
 items:
-  - de: drei Euro fünfzig
-    audio: true
-    listen: true
-    options: ['3,50 €', '5,30 €', '3,15 €']
-    answer: 0
-  - de: neunzehn Euro neunzig
-    audio: true
-    listen: true
-    options: ['9,90 €', '19,90 €', '90,19 €']
-    answer: 1
-  - de: achtzig Cent
-    audio: true
-    listen: true
-    options: ['0,18 €', '8,00 €', '0,80 €']
-    answer: 2
-  - de: zweihundertfünfundvierzig Euro
-    audio: true
-    listen: true
-    options: ['245 €', '254 €', '2,45 €']
-    answer: 0
-  - de: vier Franken zwanzig
-    audio: true
-    listen: true
-    options: [CHF 4.02, CHF 4.20, CHF 2.40]
-    answer: 1
+  - {de: drei Euro fünfzig, audio: true, listen: true, options: ['3,50 €', '5,30 €', '3,15 €'], answer: 0}
+  - {de: neunzehn Euro neunzig, audio: true, listen: true, options: ['9,90 €', '19,90 €', '90,19 €'], answer: 1}
+  - {de: achtzig Cent, audio: true, listen: true, options: ['0,18 €', '8,00 €', '0,80 €'], answer: 2}
+  - {de: zweihundertfünfundvierzig Euro, audio: true, listen: true, options: ['245 €', '254 €', '2,45 €'], answer: 0}
+  - {de: vier Franken zwanzig, audio: true, listen: true, options: [CHF 4.02, CHF 4.20, CHF 2.40], answer: 1}
 ```
 
 ```read
@@ -490,7 +434,7 @@ questions:
 ```
 
 :::culture
-A {Semmel} is a bread roll in Austria and Bavaria; in most of Germany it is a {Brötchen}, in Switzerland a {Weggli} or {Brötli}. Same with the pretzel: a {Brezel} in most of Germany, a {Breze} or {Brezn} in Bavaria.
+A {Semmel} is a bread roll in Austria and Bavaria; in most of Germany it is a {Brötchen}, in Switzerland a {Brötli}. Same with the pretzel: a {Brezel} in most of Germany, a {Breze} or {Brezn} in Bavaria.
 :::
 
 ```scene
@@ -574,7 +518,7 @@ items:
   - prompt: That's expensive!
     answer: Das ist teuer!
   - prompt: 'Write the price in words: 3,50 €'
-    answer: [drei Euro fünfzig, drei Euro und fünfzig Cent]
+    answer: [drei Euro fünfzig, drei Euro und fünfzig Cent, drei fünfzig]
   - prompt: 'Write the price in words: 0,99 €'
     answer: neunundneunzig Cent
   - prompt: 'Write the year in words: 1989'

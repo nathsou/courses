@@ -37,7 +37,7 @@ pairs:
   - [das Schlafzimmer, Hier schlafe ich.]
   - [das Bad, Hier dusche ich.]
   - [das Wohnzimmer, Hier sehe ich fern.]
-  - [der Flur, Hier ist die Tür.]
+  - [der Flur, Hier sind meine Schuhe.]
   - [der Balkon, Hier trinke ich Kaffee in der Sonne.]
 ```
 

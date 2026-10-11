@@ -147,6 +147,8 @@ Three things to notice:
 - **Stems ending in -t or -d add an e** before -st and -t, or you could not pronounce them: {du arbeitest}, {er arbeitet}, {ihr arbeitet}.
 - **Stems ending in s, ß or z add only -t for du**: {du heißt}, not "heißst".
 
+The word list gives extra forms for {heißen} and {kommen} because they are irregular in the past tense. In the present, which is all you need for now, they follow the pattern exactly.
+
 :::grammar[One present tense, three English ones]
 German has no "do" and no "-ing" form. {Ich wohne in Wien} is "I live in Vienna" and also "I am living in Vienna"; with a time word it can even mean the future: {Ich komme morgen} is "I'm coming tomorrow". And the questions need no "do": {Wohnst du hier?} is simply "Do you live here?"
 :::
@@ -223,7 +225,7 @@ Most countries are used without an article, as in English. A few always have one
 | {die Türkei} | {Türke} | {Türkin} | {Türkisch} |
 | {Polen} | {Pole} | {Polin} | {Polnisch} |
 
-Languages are nouns, so they take a capital: {Ich spreche Deutsch und Englisch.} Nationalities for women add **-in**: {Österreicherin}, {Britin}. The odd one out is {Deutsch-}: a German man is {Deutscher} and a German woman {Deutsche}, because the word is really an adjective and changes its ending like one. You will see the pattern when you meet adjective endings at A2; for now, just learn the two.
+Languages are nouns, so they take a capital: {Ich spreche Deutsch und Englisch.} Nationalities for women add **-in**: {Österreicherin}, {Britin}. The odd one out is German itself: a German man is {Deutscher} and a German woman {Deutsche}, because the word is really an adjective and changes its ending like one. You will see the pattern when you meet adjective endings at A2; for now, just learn the two.
 
 :::culture
 "High German" ({Hochdeutsch}) means standard German, the language of this course, not a posh variety: the "high" is geographical, from the southern highlands. Most German-speaking Swiss speak Swiss German dialect at home and write standard German, and Switzerland has four national languages. Austria has its own standard words, such as {Jänner} for January.
@@ -237,7 +239,7 @@ Languages are nouns, so they take a capital: {Ich spreche Deutsch und Englisch.}
 | {du sprichst} | you speak | {ihr sprecht} | you (all) speak |
 | {er/sie/es spricht} | he/she/it speaks | {sie/Sie sprechen} | they speak / you speak |
 
-You will meet a few dozen verbs like this. The change never touches {ich}, {wir}, {ihr} or {sie}: "ich spriche" and "ihr sprischt" are classic slips.
+You will meet a few dozen verbs like this. The change never touches {ich}, {wir}, {ihr} or {sie}: "ich spriche" and "ihr spricht" are classic slips.
 
 ```conjugate
 title: sprechen
@@ -304,7 +306,7 @@ Not {Ich bin eine Lehrerin}. With jobs, nationalities and religions, German leav
 
 As with nationalities, the word for a woman adds **-in**, sometimes with an umlaut: {Arzt} → {Ärztin}. Other jobs work the same way: {Kellner} / {Kellnerin} (waiter, waitress), {Verkäufer} / {Verkäuferin} (shop assistant), {Informatiker} / {Informatikerin} (IT specialist). In writing you will also see forms like {Studierende} (students) and Lehrer*innen, used to include everyone.
 
-**{studieren}** is what you do at university: {Ich studiere Medizin.} **{lernen}** is learning anything else, including a language, and revising for a test: {Ich lerne Deutsch.} "I study German at school" is {Ich lerne Deutsch}; "I study German at university" is {Ich studiere Germanistik}.
+**{studieren}** is what you do at university: {Ich studiere Medizin.} **{lernen}** is learning anything else, including a language, and revising for a test: {Ich lerne Deutsch.} {Ich lerne für den Test.} "I study German at school" is {Ich lerne Deutsch}; "I study German at university" is {Ich studiere Germanistik}.
 
 ```type
 title: Who does what?
@@ -388,7 +390,7 @@ items:
     extra: [sprechst]
   - en: Is Jonas a teacher?
     de: Ist Jonas Lehrer?
-    extra: [ein]
+    extra: [bist]
   - en: What are you (two) doing?
     de: Was macht ihr?
     extra: [machst]
@@ -466,10 +468,10 @@ turns:
         en: Yes, my name is Alex Morgan.
         reply: Ah, Sie heißen Alex Morgan! Freut mich. Ich heiße Martin Brunner.
         replyEn: Ah, your name is Alex Morgan! Nice to meet you. My name is Martin Brunner.
-      - de: Ja, du bist neu.
-        en: Yes, you're new.
-        reply: Nein, nein, Sie sind neu! Ich arbeite schon lange hier.
-        replyEn: No, no, you're new! I've worked here for a long time.
+      - de: Ja, ich bin neu. Und du?
+        en: Yes, I'm new. And you?
+        reply: Ich? Ich bin nicht neu, ich arbeite schon lange hier. Und wie heißen Sie?
+        replyEn: Me? I'm not new, I've worked here for a long time. And what's your name?
   - they: Woher kommen Sie?
     theyEn: Where are you from?
     options:

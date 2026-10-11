@@ -107,7 +107,7 @@ text: |
   – ein Zimmer für die ersten drei Monate, wenn Sie nicht aus Salzburg kommen
 
   Bitte schicken Sie Ihre Bewerbung (Lebenslauf und Anschreiben)
-  bis zum 30. April an Frau Leitner: jobs@mozartblick.at
+  bis zum 30. April an Frau Hofer: jobs@mozartblick.at
 en: |
   Hotel Mozartblick ★★★★ Salzburg
   We are looking, starting immediately, for a
@@ -129,7 +129,7 @@ en: |
   – a room for the first three months if you are not from Salzburg
 
   Please send your application (CV and cover letter)
-  by 30 April to Ms Leitner: jobs@mozartblick.at
+  by 30 April to Ms Hofer: jobs@mozartblick.at
 questions:
   - claim: Die Stelle gibt es nur in Vollzeit.
     answer: false
@@ -160,7 +160,7 @@ title: Eine kurze Bewerbung
 prompt: Complete the application email with words from the bank.
 bank: true
 items:
-  - de: Sehr [geehrte] Frau Leitner,
+  - de: Sehr [geehrte] Frau Hofer,
   - de: mit großem Interesse habe ich Ihre [Stellenanzeige] gelesen.
     en: I read your job advert with great interest.
   - de: Ich möchte mich um die [Stelle] als Rezeptionistin bewerben.
@@ -176,7 +176,7 @@ items:
 ```
 
 :::tip
-After {Sehr geehrte Frau Leitner,} or {Liebe Hannah,} the next line starts with a **small letter** (unless it begins with a noun), because the greeting and the letter form one sentence: {Sehr geehrte Frau Leitner, mit großem Interesse habe ich …}
+After {Sehr geehrte Frau Hofer,} or {Liebe Hannah,} the next line starts with a **small letter** (unless it begins with a noun), because the greeting and the letter form one sentence: {Sehr geehrte Frau Hofer, mit großem Interesse habe ich …}
 :::
 
 ## Am Telefon
@@ -185,9 +185,9 @@ Business calls follow a script, and knowing it takes most of the fear out of the
 
 | the caller says | the company says |
 | --- | --- |
-| {Guten Tag, mein Name ist …} | {Hotel Mozartblick, Gruber am Apparat.} (… speaking) |
-| {Kann ich bitte Frau Leitner sprechen?} | {Einen Moment, bitte. Ich verbinde.} (I'll put you through.) |
-| {Ich rufe wegen der Stellenanzeige an.} | {Frau Leitner ist gerade in einer Besprechung.} |
+| {Guten Tag, mein Name ist …} | {Hotel Mozartblick, Moser am Apparat.} (… speaking) |
+| {Kann ich bitte Frau Hofer sprechen?} | {Einen Moment, bitte. Ich verbinde.} (I'll put you through.) |
+| {Ich rufe wegen der Stellenanzeige an.} | {Frau Hofer ist gerade in einer Besprechung.} |
 | {Kann sie mich zurückrufen?} | {Kann ich etwas ausrichten?} (Can I take a message?) |
 | {Vielen Dank, auf Wiederhören!} | {Gern geschehen. Auf Wiederhören!} |
 
@@ -207,20 +207,20 @@ am Apparat | speaking (on the phone)
 ```scene
 title: Ein Anruf im Hotel
 setting: You saw the job advert of the Hotel Mozartblick in Salzburg and phone to ask about it.
-partner: Frau Gruber, at the hotel reception
+partner: Frau Moser, at the hotel reception
 turns:
-  - they: Hotel Mozartblick, Gruber am Apparat. Was kann ich für Sie tun?
-    theyEn: Hotel Mozartblick, Gruber speaking. What can I do for you?
+  - they: Hotel Mozartblick, Moser am Apparat. Was kann ich für Sie tun?
+    theyEn: Hotel Mozartblick, Moser speaking. What can I do for you?
     options:
-      - de: Guten Tag, mein Name ist Alex Brown. Kann ich bitte Frau Leitner sprechen?
-        en: Good afternoon, my name is Alex Brown. Could I speak to Ms Leitner, please?
+      - de: Guten Tag, mein Name ist Alex Brown. Kann ich bitte Frau Hofer sprechen?
+        en: Good afternoon, my name is Alex Brown. Could I speak to Ms Hofer, please?
         ok: true
-      - de: Guten Tag! Kannst du mich bitte mit Frau Leitner verbinden?
-        en: Good afternoon! Can you (du) put me through to Ms Leitner, please?
-        reply: Ich verbinde Sie gern mit Frau Leitner. Einen Moment, bitte.
-        replyEn: I'll gladly put you through to Ms Leitner. One moment, please.
-  - they: Oh, das tut mir leid, Frau Leitner ist gerade in einer Besprechung. Kann ich etwas ausrichten?
-    theyEn: Oh, I'm sorry, Ms Leitner is in a meeting at the moment. Can I take a message?
+      - de: Guten Tag! Kannst du mich bitte mit Frau Hofer verbinden?
+        en: Good afternoon! Can you (du) put me through to Ms Hofer, please?
+        reply: Ich verbinde Sie gern mit Frau Hofer. Einen Moment, bitte.
+        replyEn: I'll gladly put you through to Ms Hofer. One moment, please.
+  - they: Oh, das tut mir leid, Frau Hofer ist gerade in einer Besprechung. Kann ich etwas ausrichten?
+    theyEn: Oh, I'm sorry, Ms Hofer is in a meeting at the moment. Can I take a message?
     options:
       - de: Ja, bitte. Ich rufe wegen der Stellenanzeige an. Kann sie mich zurückrufen?
         en: Yes, please. I'm calling about the job advert. Can she call me back?
@@ -229,8 +229,8 @@ turns:
         en: Yes, please. I'm calling about the job advert. Can she call me back?
         reply: Ob sie Sie zurückrufen kann? Natürlich, gern.
         replyEn: Whether she can call you back? Of course.
-  - they: Frau Leitner wird Sie heute Nachmittag zurückrufen. Wann kann sie Sie am besten erreichen?
-    theyEn: Ms Leitner will call you back this afternoon. When is the best time to reach you?
+  - they: Frau Hofer wird Sie heute Nachmittag zurückrufen. Wann kann sie Sie am besten erreichen?
+    theyEn: Ms Hofer will call you back this afternoon. When is the best time to reach you?
     options:
       - de: Am besten nach drei Uhr, wenn ich zu Hause bin.
         en: Best after three o'clock, when I'm at home.
@@ -249,7 +249,7 @@ turns:
         en: Oh, I'll call again later.
         reply: Sie werden später noch einmal anrufen? Gut, gern. Auf Wiederhören!
         replyEn: You'll call again later? Fine. Goodbye!
-end: At a quarter past three your phone rings. Frau Leitner would like to meet you on Thursday.
+end: At a quarter past three your phone rings. Frau Hofer would like to meet you on Thursday.
 ```
 
 ## Als oder wenn?
@@ -492,8 +492,8 @@ items:
     answer: [Ich arbeite als Ingenieurin., Ich bin Ingenieurin.]
   - prompt: When I was a child, I wanted to be a pilot. (a man speaking)
     answer: ['Als ich ein Kind war, wollte ich Pilot werden.', 'Als ich klein war, wollte ich Pilot werden.']
-  - prompt: Can I speak to Ms Leitner, please?
-    answer: [Kann ich bitte Frau Leitner sprechen?, Kann ich Frau Leitner sprechen?, Könnte ich bitte Frau Leitner sprechen?]
+  - prompt: Can I speak to Ms Hofer, please?
+    answer: [Kann ich bitte Frau Hofer sprechen?, Kann ich Frau Hofer sprechen?, Könnte ich bitte Frau Hofer sprechen?]
   - prompt: There was a problem.
     answer: Es gab ein Problem.
   - prompt: I will be on time.
@@ -508,23 +508,23 @@ items:
   - listen: true
     answer: Als ich jung war, hatte ich wenig Geld.
   - listen: true
-    answer: Frau Leitner wird Sie morgen zurückrufen.
+    answer: Frau Hofer wird Sie morgen zurückrufen.
 ```
 
 ```speak
 title: Say it aloud
 items:
   - Was machen Sie beruflich?
-  - Kann ich bitte Frau Leitner sprechen?
+  - Kann ich bitte Frau Hofer sprechen?
   - Als ich achtzehn war, ging ich nach Berlin.
   - Ich werde Sie morgen zurückrufen.
 ```
 
 ```roleplay
 title: Das Vorstellungsgespräch
-setting: Your interview for the receptionist job at the Hotel Mozartblick in Salzburg. Frau Leitner, the hotel manager, is interviewing you.
-goal: Tell Frau Leitner what you have done so far (school, training or studies, jobs), say why you want the job (weil), and say what you will do if you get it (werden).
-partner: Frau Leitner, 50, hotel manager, friendly but thorough; she uses Sie
+setting: Your interview for the receptionist job at the Hotel Mozartblick in Salzburg. Frau Hofer, the hotel manager, is interviewing you.
+goal: Tell Frau Hofer what you have done so far (school, training or studies, jobs), say why you want the job (weil), and say what you will do if you get it (werden).
+partner: Frau Hofer, 50, hotel manager, friendly but thorough; she uses Sie
 opener: Guten Tag, schön, dass Sie da sind! Erzählen Sie doch mal, was haben Sie bisher beruflich gemacht?
 openerEn: Hello, good to have you here! Tell me, what have you done so far in your working life?
 words: [die Ausbildung, die Erfahrung, als, weil, werden, die Stelle, das Team]
@@ -536,5 +536,5 @@ task: Write a short application email (four or five sentences) for a job you wou
 target: formal letter conventions (Sehr geehrte …, Mit freundlichen Grüßen), job vocabulary, als, werden
 hints: ['{Sehr geehrte Frau …,}', '{mit großem Interesse habe ich Ihre Stellenanzeige gelesen.}', '{Ich habe … Jahre Erfahrung als …}', '{Mit freundlichen Grüßen}']
 examples:
-  - Sehr geehrte Frau Leitner, mit großem Interesse habe ich Ihre Stellenanzeige gelesen. Ich arbeite seit drei Jahren als Rezeptionist in einem Hotel in Dublin. Ich spreche Englisch, Spanisch und ein bisschen Deutsch. Im Anhang finden Sie meinen Lebenslauf. Mit freundlichen Grüßen, Alex Brown
+  - Sehr geehrte Frau Hofer, mit großem Interesse habe ich Ihre Stellenanzeige gelesen. Ich arbeite seit drei Jahren als Rezeptionist in einem Hotel in Dublin. Ich spreche Englisch, Spanisch und ein bisschen Deutsch. Im Anhang finden Sie meinen Lebenslauf. Mit freundlichen Grüßen, Alex Brown
 ```

@@ -58,6 +58,19 @@ To ask the time, say {Wie spät ist es?} or {Wie viel Uhr ist es?} To ask when s
 
 ::clock-time{mode=both}
 
+```dialogue
+title: An der Bushaltestelle in Hamburg
+Sophie: Entschuldigung, wie spät ist es? | Excuse me, what time is it?
+Frau Jansen: Es ist Viertel nach acht. | It's quarter past eight.
+Sophie: Oh nein! Mein Kurs fängt um halb neun an. | Oh no! My course starts at half past eight.
+Frau Jansen: Keine Sorge, der Bus kommt um acht Uhr zweiundzwanzig. | Don't worry, the bus comes at 8:22.
+Sophie: Und wie lange fährt er? | And how long does it take?
+Frau Jansen: Nur fünf Minuten. | Only five minutes.
+Sophie: Super, danke! | Great, thanks!
+```
+
+Notice how Frau Jansen switches system: the time now is {Viertel nach acht}, but the bus, like everything on a timetable, comes at {acht Uhr zweiundzwanzig}.
+
 ```choose
 title: What time is it?
 items:
@@ -280,7 +293,7 @@ English happily says "At seven I get up", with the subject before the verb. Germ
 ```order
 title: Verb second
 items:
-  - en: On Sunday I sleep late.
+  - en: On Sunday I have a lie-in.
     de: Am_Sonntag schlafe ich lange.
     also: [Ich schlafe am_Sonntag lange.]
   - en: Then I have a shower.
@@ -353,7 +366,7 @@ items:
   - de: Am Wochenende schlafe ich ___ lange, aber nicht immer.
     options: [meistens, nie, selten]
     answer: 0
-    en: At the weekend I usually sleep late, but not always.
+    en: At the weekend I usually have a lie-in, but not always.
   - de: ___ sehe ich abends fern, aber nicht oft.
     options: [Manchmal, Immer, Meistens]
     answer: 0
@@ -450,7 +463,7 @@ turns:
         replyEn: You get up at seven? Me too!
       - de: Meistens um sieben ich stehe auf.
         en: Usually at seven I get up.
-        reply: Meistens um sieben stehst du auf? Ich auch!
+        reply: Du stehst meistens um sieben auf? Ich auch!
         replyEn: You usually get up at seven? Me too!
   - they: Hm. Wir haben nur ein Bad. Wann duschst du?
     theyEn: Hmm. We have only one bathroom. When do you shower?

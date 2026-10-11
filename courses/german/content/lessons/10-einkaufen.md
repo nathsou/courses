@@ -61,18 +61,14 @@ items: [Hemd, Hose, Rock, Kleid, Jacke, Mantel, Schuh, Pullover]
 
 ```words
 die Größe, -n | size
-die Nummer, -n | number; size
 die Kabine, -n | changing room
 das Angebot, -e | special offer
 die Kasse, -n | till, checkout
 an|probieren | to try on
-suchen | to look for
 zahlen | to pay
 bar | (in) cash
 eng | tight
-billig | cheap
-teuer | expensive
-zu | too (zu groß: too big)
+zu groß | too big
 ```
 
 | You hear | You say |
@@ -102,7 +98,7 @@ Verkäuferin: Moment … Ja, hier ist L. | One moment … Yes, here's an L.
 Luca: Perfekt, der passt. Ich nehme ihn. | Perfect, that one fits. I'll take it.
 ```
 
-The pullover is {der Pullover}, so it is {er} and {ihn} all the way through: {Passt er?}, {Ich nehme ihn}. And the shop assistant says {der} and {den} where English says "it" or "that one": {Der ist gerade im Angebot.} {Haben Sie den auch in Blau?} In speech, {der}, {die}, {das} are very often used like this, as a stronger "it".
+The jumper is {der Pullover}, so it is {er} and {ihn} all the way through: {Passt er?}, {Ich nehme ihn}. And the shop assistant says {der} and {den} where English says "it" or "that one": {Der ist gerade im Angebot.} {Haben Sie den auch in Blau?} In speech, {der}, {die}, {das} are very often used like this, as a stronger "it".
 
 :::mistake
 **"Too" has two translations.** "Too" meaning *excessively* is {zu}: {Der Mantel ist zu teuer.} "Too" meaning *also* is {auch}: {Die Jacke ist auch schön.} And {sehr} (very) is not a complaint: {Der Mantel ist sehr teuer} just states a fact; {zu teuer} means you are not buying it.
@@ -148,7 +144,7 @@ Clothes sizes are European: women's sizes run 34, 36, 38, 40 and so on (a UK 10 
 | accusative | {den} → {diesen} | {die} → {diese} | {das} → {dieses} | {die} → {diese} |
 | which? | {welcher} / {welchen} | {welche} | {welches} | {welche} |
 
-The rule: **look at the last letter of the article** and put it on {dies-} or {welch-}. {der} gives -er, {den} gives -en, {die} gives -e, {das} gives -es. As always, only the masculine changes in the accusative.
+The rule: **look at the end of the article** and put it on {dies-} or {welch-}. {der} gives -er, {den} gives -en, {die} gives -e, {das} gives -es. As always, only the masculine changes in the accusative.
 
 - {Dieser Pullover ist schön.} {Ich nehme diesen Pullover.}
 - {Welcher Rock gefällt dir?} {Welchen Rock nimmst du?}
@@ -571,7 +567,7 @@ goal: Buy one item of clothing. Say what you are looking for, give your size, as
 partner: Frau Hofer, an experienced and very honest shop assistant
 opener: Grüß Gott! Kann ich Ihnen helfen?
 openerEn: Hello! Can I help you?
-words: [suchen, die Größe, anprobieren, gefallen, passen, zu, dieser, welcher]
+words: [suchen, die Größe, anprobieren, gefallen, passen, zu groß, dieser, welcher]
 checks: [gave a size, asked for a different colour or size, used gefallen or passen with mir or Ihnen, paid or politely said no]
 ```
 
@@ -579,5 +575,5 @@ checks: [gave a size, asked for a different colour or size, used gefallen or pas
 task: You are in a shop and send a friend a photo with a message. Say what you have found, ask if they like it, and say whether it fits.
 target: dieser/welcher; gefallen, passen, stehen with mir/dir; zu
 hints: ['{Schau mal, dieser …}', '{Gefällt dir …?}', '{Er/Sie/Es ist ein bisschen zu …}']
-examples: [Schau mal, diese Jacke! Gefällt sie dir? Sie kostet 89 Euro., Dieses Kleid steht mir gut, aber es ist ein bisschen zu lang. Welche Farbe findest du besser?]
+examples: ['Schau mal, diese Jacke! Gefällt sie dir? Sie kostet 89 Euro.', 'Dieses Kleid steht mir gut, aber es ist ein bisschen zu lang. Welche Farbe findest du besser?']
 ```

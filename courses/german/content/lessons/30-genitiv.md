@@ -10,7 +10,7 @@ goals:
 
 In 2004 a book about German grammar became a bestseller. Its title was {Der Dativ ist dem Genitiv sein Tod}, "The dative is the death of the genitive", and the joke is that the title itself uses the colloquial dative construction that is crowding out the genitive. Germans love to complain that their fourth case is dying. In relaxed speech it is indeed retreating. But open a newspaper, read an official letter, listen to the news or sit a B1 exam, and the genitive is everywhere.
 
-The good news for returners: the genitive is the most regular of the four cases. There are only two article forms to learn, one noun ending, and one adjective ending that is almost always the same. This lesson also tidies up a small group of masculine nouns, {der Kollege}, {der Student}, {der Herr}, that you have probably been getting slightly wrong for years.
+The good news for returners: the genitive is the most regular of the four cases. There are only two article endings to learn (-es and -er), one noun ending, and one adjective ending that is almost always the same. This lesson also tidies up a small group of masculine nouns, {der Kollege}, {der Student}, {der Herr}, that you have probably been getting slightly wrong for years.
 
 ## Das Fahrrad meines Bruders
 
@@ -19,7 +19,7 @@ The good news for returners: the genitive is the most regular of the four cases.
 - {Das Ende des Films war traurig.} The end of the film was sad.
 - {Die Meinung der Kinder ist uns wichtig.} The children's opinion matters to us.
 
-The genitive answers the question {wessen?}, "whose?", and links one noun to another, like English "of" or "'s". Notice the order: the genitive comes **after** the noun it belongs to, as with English "of": {das Ende des Films}, the end of the film.
+The genitive answers the question {wessen?}, "whose?", and links one noun to another, like English "'s" or "of". Notice the order: unlike "'s", the genitive comes **after** the noun it belongs to: {das Ende des Films}, the end of the film; {das Fahrrad meines Bruders}, my brother's bike.
 
 | | masculine | feminine | neuter | plural |
 | --- | --- | --- | --- | --- |
@@ -266,7 +266,7 @@ questions:
 ```
 
 :::culture
-The ÖBB (Österreichische Bundesbahnen) are Austria's railways, the SBB Switzerland's and the DB Germany's. Notice {Die ÖBB bitten}: the name hides a plural, "the railways", so the verb is plural. And {Die ÖBB bitten um Verständnis} ("ask for your understanding") is the standard apology in every German-speaking station.
+The ÖBB (Österreichische Bundesbahnen) are Austria's railways, the SBB Switzerland's and the DB Germany's. Notice {Die ÖBB bitten}: the name hides a plural, "the railways", so the verb is plural. And {Die ÖBB bitten um Verständnis} ("ask for your understanding") is the standard apology at railway stations across the German-speaking world.
 :::
 
 ## What people really say
@@ -327,7 +327,7 @@ Which nouns? Almost all of them are masculine nouns for **people and animals**, 
 2. masculine nouns from Latin or Greek in **-ent, -ant, -ist, -at, -oge, -graf**: {der Student}, {der Präsident}, {der Journalist}, {der Polizist}, {der Kandidat}, {der Biologe}, {der Fotograf}
 3. a handful of others to learn by heart: {der Mensch}, {der Herr}, {der Nachbar}, {der Held}, {der Bär}
 
-A few abstract nouns add **-ns** in the genitive: {der Name} → {des Namens}, {der Gedanke} → {des Gedankens}, and the one neuter: {das Herz} → {des Herzens}, {dem Herzen}.
+A few nouns, mostly abstract ones, add **-ns** in the genitive: {der Name} → {des Namens}, {der Gedanke} → {des Gedankens}, and the one neuter: {das Herz} → {des Herzens}, {dem Herzen}.
 
 :::mistake
 {Ich habe einen neuen Kollege} sounds like a learner at once: it must be {einen neuen Kollegen}. Watch out for {Herr} in letters, too. You write {Sehr geehrter Herr Wagner}, but {an Herrn Wagner}, {mit Herrn Wagner}, {Kennen Sie Herrn Wagner?}: {Herr} takes **-n** in the singular and **-en** in the plural ({meine Damen und Herren}). In casual speech you will hear {dem Präsident} or {den Bär}; in writing, keep the -en.
@@ -414,13 +414,15 @@ paragraphs:
       floor. They were all looking for a key, but none of them recognised this one.
   - de: >-
       Am nächsten Morgen wollte Noah mit dem Fahrrad zur Arbeit fahren. Er suchte seinen
-      Fahrradschlüssel: in der Jacke, im Rucksack, auf dem Tisch. Nichts. Dann sah er den Schlüssel
-      auf seinem Schreibtisch, neben dem Stift, mit dem er den Zettel geschrieben hatte. Er war die
-      ganze Zeit sein eigener gewesen.
+      Fahrradschlüssel: in der Jacke, im Rucksack, auf dem Tisch. Nichts. Dann fiel sein Blick auf
+      den Schreibtisch. Dort lag der Schlüssel von gestern Abend, neben dem Stift, mit dem er den
+      Zettel geschrieben hatte. Es war sein Fahrradschlüssel. Er hatte ihn am Abend selbst vor der
+      Tür verloren.
     en: >-
       The next morning Noah wanted to cycle to work. He looked for his bike key: in his jacket, in
-      his rucksack, on the table. Nothing. Then he saw the key on his desk, next to the pen he had
-      written the note with. It had been his own all along.
+      his rucksack, on the table. Nothing. Then his eye fell on the desk. There lay the key from
+      the evening before, next to the pen he had written the note with. It was his bike key. He had
+      dropped it outside the door himself.
   - de: >-
       Seit diesem Tag nennen ihn die Nachbarn nur noch „den Detektiv“.
     en: >-

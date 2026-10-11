@@ -140,8 +140,6 @@ items:
 
 ## The accusative: den Kaffee, einen Tee
 
-Look at two sentences:
-
 - {Der Kaffee ist heiß.} The coffee is hot.
 - {Ich trinke den Kaffee.} I drink the coffee.
 
@@ -161,7 +159,7 @@ Only the masculine column changes. Feminine, neuter and plural look exactly as t
 In the accusative, a masculine article ends in **-n**: {den}, {einen}, {keinen}, and the possessives too: {meinen}, {deinen}, {Ihren}. Nothing else changes.
 :::
 
-Which nouns are accusative? The direct object of almost every verb that takes one: {haben}, {nehmen}, {essen}, {trinken}, {möchten}, {mögen}, {bestellen}… That is why lesson 4 had {Ich habe einen Bruder}: the brother is what I have. And it is why you order {einen Kaffee} but {eine Melange}.
+Which nouns are accusative? The direct object of most verbs: {haben}, {nehmen}, {essen}, {trinken}, {möchten}, {mögen}, {bestellen}… That is why lesson 4 had {Ich habe einen Bruder}: the brother is what I have. And it is why you order {einen Kaffee} but {eine Melange}.
 
 :::mistake
 {sein} never takes an accusative. In {Das ist ein Apfel} or {Das ist der Kellner}, both sides are the same thing, so both are nominative. {Das ist einen Kaffee} is a very common slip.
@@ -223,11 +221,11 @@ items:
     de: Ich nehme den Fisch.
     also: [Den Fisch nehme ich.]
     extra: [der]
-  - en: The waiter has the bill.
-    de: Der Kellner hat die Rechnung.
-    also: [Die Rechnung hat der Kellner.]
+  - en: The waiter has the menu.
+    de: Der Kellner hat die Speisekarte.
+    also: [Die Speisekarte hat der Kellner.]
     extra: [den]
-    explain: "Even with {die Rechnung} first, {der Kellner} can only be the subject."
+    explain: "Even with {die Speisekarte} first, {der Kellner} can only be the subject."
   - en: Do you have a menu? (formal)
     de: Haben Sie eine Speisekarte?
     extra: [einen]
@@ -327,7 +325,6 @@ items:
   - prompt: You enjoy cooking.
     options: [Ich koche gern., Ich mag gern kochen., Ich möchte kochen.]
     answer: 0
-    explain: For activities, verb + {gern}.
   - prompt: You don't like eating fish.
     options: [Ich esse nicht gern Fisch., Ich esse gern nicht Fisch., Ich möchte nicht Fisch.]
     answer: 0
@@ -394,11 +391,6 @@ items:
     answer: 0
     en: That's not my coffee.
     explain: With a possessive, {nicht}.
-  - de: Wir trinken ___ Alkohol.
-    options: [keinen, nicht, kein]
-    answer: 0
-    en: We don't drink alcohol.
-    explain: "{der Alkohol} is masculine, and it is an object: {keinen}."
 ```
 
 ```type
@@ -461,7 +453,6 @@ en: |
 questions:
   - claim: Das Frühstück gibt es bis zwölf Uhr.
     answer: false
-    explain: Breakfast is served until 11.30.
   - prompt: Which breakfast comes with an egg?
     options: [the large breakfast, the small breakfast, the muesli]
     answer: 0
@@ -476,7 +467,7 @@ questions:
 ```scene
 title: Lunch in Zurich
 setting: You and your friend Noah are having lunch in a restaurant in Zurich's old town. Lunch is your treat, and you do the talking. The waitress uses Sie, as staff always do.
-partner: die Kellnerin
+partner: the waitress
 turns:
   - they: Grüezi! Was möchten Sie trinken?
     theyEn: Hello! What would you like to drink?
@@ -514,8 +505,8 @@ turns:
         ok: true
       - de: Ja, ich schmecke sehr gut.
         en: Yes, I taste very good.
-        reply: Sie schmecken gut? Ah, das Essen schmeckt gut! Das freut mich.
-        replyEn: You taste good? Ah, the food tastes good! I'm glad.
+        reply: Sie schmecken gut? Ah, Sie meinen, das Essen schmeckt gut! Das freut mich.
+        replyEn: You taste good? Ah, you mean the food tastes good! I'm glad.
   - they: Möchten Sie noch etwas?
     theyEn: Would you like anything else?
     options:
@@ -554,8 +545,6 @@ title: Say it in German
 items:
   - prompt: I'd like a tea, please.
     answer: ['Ich hätte gern einen Tee, bitte.', 'Ich hätte gerne einen Tee, bitte.', 'Ich möchte einen Tee, bitte.', Ich möchte bitte einen Tee., 'Einen Tee, bitte.', Ich hätte gern einen Tee., Ich möchte einen Tee.]
-  - prompt: I'm not hungry.
-    answer: Ich habe keinen Hunger.
   - prompt: Do you like fish? (to a friend)
     answer: [Magst du Fisch?, Isst du gern Fisch?, Isst du gerne Fisch?]
   - prompt: I'll have the soup.
@@ -583,7 +572,6 @@ items:
   - Ich hätte gern einen Kaffee, bitte.
   - Ich esse gern Gemüse, aber ich mag keinen Fisch.
   - Die Rechnung, bitte!
-  - Fünfzig, bitte. Stimmt so.
 ```
 
 ```roleplay

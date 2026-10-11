@@ -196,7 +196,7 @@ items:
     en: I'm very interested in the position.
   - de: Aylin ist seit Monaten verliebt [in] [ihren](ihr) Mitbewohner.
     en: Aylin has been in love with her flatmate for months.
-  - de: Die Kinder waren total begeistert [von] [dem/vom] Zirkus.
+  - de: Die Kinder waren total begeistert [vom/von dem] Zirkus.
     en: The children were absolutely thrilled with the circus.
 ```
 
@@ -400,7 +400,7 @@ items:
     also: [Vom Wetter hängt es ab.]
   - en: What are you looking forward to most?
     de: Worauf freust du dich am meisten?
-    extra: [Auf_was]
+    extra: [Wofür]
   - en: Nobody is thinking about the environment.
     de: Niemand denkt an die Umwelt.
     also: [An die Umwelt denkt niemand.]

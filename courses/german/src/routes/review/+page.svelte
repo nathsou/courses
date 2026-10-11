@@ -11,7 +11,7 @@
   import { settings } from '$lib/state/settings.svelte';
   import { progress } from '$lib/state/progress.svelte';
   import { lessonBySlug } from '$content/outline';
-  import { lookup, headword, bare } from '$lib/de/lexicon';
+  import { lookup, headword, bare, plainKey } from '$lib/de/lexicon';
   import { mark, type Marked } from '$lib/de/check';
   import { speech } from '$lib/audio/speech.svelte';
   import { sfx } from '$lib/audio/sfx';
@@ -62,6 +62,7 @@
   }
   /** Nouns must come with their article; the bare noun is "almost". */
   function markTyped(text: string, key: string): Marked {
+    key = plainKey(key);
     const m = mark(text, key, { lenient: settings.data.lenientSpelling });
     if (m.verdict !== 'wrong' || !/^(der|die|das) /.test(key)) return m;
     const b = mark(text, bare(key), { lenient: settings.data.lenientSpelling });
@@ -144,7 +145,7 @@
       </div>
       <div class="front">
         {#if card.kind === 'read'}
-          <span class="word" lang="de">{card.word}</span>
+          <span class="word" lang="de">{plainKey(card.word)}</span>
         {:else if card.kind === 'hear'}
           <div class="audio"><PlayButton text={card.word} /><PlayButton text={card.word} slow /></div>
         {:else}

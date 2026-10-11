@@ -18,6 +18,7 @@
     play = false,
     genders = 'hide',
     strike = false,
+    plain = false,
   }: {
     text: string;
     /** Colour for each span, by index; spans beyond the list use `tone`. */
@@ -31,6 +32,8 @@
     genders?: 'auto' | 'hide';
     /** Show lit spans struck through (for words that disappear). */
     strike?: boolean;
+    /** No word cards (for text inside buttons). */
+    plain?: boolean;
   } = $props();
 
   const segs = $derived(segments(text));
@@ -39,8 +42,8 @@
 
 <span class="hi {size}" lang="de"
   >{#each segs as s, k (k)}{#if lit(s.i)}<mark class="hl t-{tones[s.i] ?? tone}" class:focus={focus === s.i} class:dim={focus >= 0 && focus !== s.i} class:strike
-        ><De text={s.t} {genders} play={false} /></mark
-      >{:else}<De text={s.t} {genders} play={false} />{/if}{/each}{#if play}<PlayButton text={unmark(text)} small />{/if}</span
+        ><De text={s.t} {genders} {plain} play={false} /></mark
+      >{:else}<De text={s.t} {genders} {plain} play={false} />{/if}{/each}{#if play}<PlayButton text={unmark(text)} small />{/if}</span
 >
 
 <style>

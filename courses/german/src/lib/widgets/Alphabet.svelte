@@ -153,7 +153,7 @@
       {#if verdict}
         <p class:ok={verdict === 'right'} class:almost={verdict === 'almost'}>
           <strong>{verdict === 'right' ? 'Richtig!' : verdict === 'almost' ? 'Fast!' : 'Nicht ganz.'}</strong>
-          {#if verdict === 'almost'}Spelt with {/[ß]/.test(word) ? 'ß (Eszett)' : 'an umlaut'}:{:else if verdict === 'wrong'}It was{/if}
+          {#if verdict === 'almost'}Spelt with {word.includes('ß') ? 'ß (Eszett)' : 'an umlaut'}:{:else if verdict === 'wrong'}It was{/if}
           <b lang="de">{word}</b><PlayButton text={word} small />
         </p>
         <ol class="spelt" aria-label="The letters">

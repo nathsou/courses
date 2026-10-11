@@ -73,11 +73,15 @@ export function entryFor(t: Token): [string, Entry] | undefined {
 }
 
 /** The bare noun of a key: "der Tisch" → "Tisch". */
-export const bare = (key: string) => key.replace(/^(der|die|das|sich) /, '');
+export const bare = (key: string) => key.replace(/#\d+$/, '').replace(/^(der|die|das|sich) /, '');
+
+/** A key as written: homographs are stored as "sein#2". */
+export const plainKey = (key: string) => key.replace(/#\d+$/, '');
 
 /** How a dictionary entry is written in a word list: "die Stadt, ¨-e", "an|rufen", "fahren (fährt, fuhr, ist gefahren)". */
 export function headword(key: string, e: Entry | undefined = LEX[key]): { head: string; extra: string } {
-  if (!e) return { head: key, extra: '' };
+  if (!e) return { head: plainKey(key), extra: '' };
+  if (key !== plainKey(key)) return headword(plainKey(key), e);
   if (e.p === 'n') {
     if (e.a === 'pl') return { head: key, extra: ' (Pl.)' };
     const noun = bare(key);

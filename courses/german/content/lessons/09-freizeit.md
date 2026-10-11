@@ -199,13 +199,6 @@ Separable verbs from lesson 6 join up again at the end: {Ich stehe um sechs auf}
 Two classic slips. First, only the modal verb is conjugated: {Ich kann spielen}, not "Ich kann spiele". Second, there is **no {zu}** after a modal verb, even though English says "have *to*": {Ich muss arbeiten}, not "Ich muss zu arbeiten".
 :::
 
-```conjugate
-title: können
-items:
-  - verb: können
-    tense: present
-```
-
 ```order
 title: Put the second verb at the end
 items:
@@ -358,8 +351,11 @@ items:
 ```
 
 ```conjugate
-title: müssen, dürfen, sollen
+title: The modal verbs
 items:
+  - verb: können
+    tense: present
+    persons: [0, 1, 4]
   - verb: müssen
     tense: present
   - verb: dürfen
