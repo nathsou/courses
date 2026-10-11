@@ -42,6 +42,7 @@ jobs:
             courses/digital-circuits/package-lock.json
             courses/particle-physics/package-lock.json
             courses/mandarin/package-lock.json
+            courses/german/package-lock.json
             courses/human-evolution/package-lock.json
             courses/formal-verification/package-lock.json
             courses/memory-management/package-lock.json
@@ -59,6 +60,7 @@ jobs:
           npm ci --prefix courses/digital-circuits
           npm ci --prefix courses/particle-physics
           npm ci --prefix courses/mandarin
+          npm ci --prefix courses/german
           npm ci --prefix courses/human-evolution
           npm ci --prefix courses/formal-verification
           npm ci --prefix courses/memory-management
@@ -68,6 +70,10 @@ jobs:
       - name: Fetch the Mandarin course audio
         # The clips live in a release asset (courses/mandarin/audio-release.json), not in git.
         run: npm run audio:fetch --prefix courses/mandarin -- --optional
+
+      - name: Fetch the German course audio
+        # Optional: without a release named in courses/german/audio-release.json the course uses the browser's German voice.
+        run: npm run audio:fetch --prefix courses/german -- --optional
 
       - name: Build
         run: npm run build

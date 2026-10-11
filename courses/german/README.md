@@ -1,134 +1,98 @@
-# Mandarin, Out Loud
+# Auf Deutsch
 
-An interactive Mandarin course from your first tone to HSK 2: 23 lessons in four parts, from
-sounds and characters through to the HSK 2 grammar. Around them sit a spaced-repetition review
-deck, a practice arcade, a word list, mock exams and a placement check.
-
-![Lesson 1](docs/screenshots/lesson-01.png)
+An interactive German course from your first *Hallo* to B2, built for beginners and for
+**returners**: people who learnt German once and forgot much of it. 40 lessons in four levels
+(A1, A2, B1, B2), with a placement check that finds your level and the exact lessons to brush up,
+a spaced-repetition review deck, a practice arcade, level checks in the spirit of the Goethe
+exams, and an optional AI conversation partner.
 
 ## What's in it
 
-- **Lessons** (`content/lessons/*.md`): Markdown. Any Chinese gets pinyin (shown according to the
-  learner's *scaffolding dial*: always, on tap, or off), tone colours, audio and a word card.
-  Activities include dialogues with a shadowing mode, scripted scenes, graded stories, sentence
-  builders, tone and pinyin drills, writing with stroke order, and the tone mirror.
-- **Tone mirror**: records the learner, tracks pitch in the browser (YIN), draws the contour over
-  the target tone shapes and names the tone it heard, by comparing the contour with 300 recorded
-  syllables in four voices plus textbook shapes. It only gives a verdict when it is confident
-  (right about 93% of the time on unseen voices) and says so when it is not. Recordings never
-  leave the device.
-- **Review deck**: FSRS spaced repetition (ts-fsrs) with reading, listening and speaking cards.
-  Finishing a lesson adds its words.
-- **Practice**: word blitz, tone detective, tone pairs, number drills (numbers, prices, times,
-  dates, phone numbers), measure words, writing, the town map, the family tree, the character
-  builder and the pinyin chart.
-- **Mock exams** in HSK 1 and 2 formats, a **placement check**, and a **word list** of every
-  HSK 1–3 word in three syllabuses (2025, 2021 "HSK 3.0" and HSK 2.0).
-- **Optional AI partner**: a teacher chat is available on every page for course questions or
-  Mandarin conversation, alongside role-plays and sentence feedback. Choose Anthropic, OpenAI
-  or OpenRouter with your own API key, stored in your browser. Pinyin tone keys and a
-  dictionary-assisted character keyboard help with typing. The course is complete without AI.
-
-Every word of the 2025 HSK 1 and 2 syllabus is taught in some lesson; `content/coverage.test.ts`
-enforces this.
+- **Lessons** (`content/lessons/*.md`): Markdown with German in `{braces}`. Every German word is
+  tappable for its word card: meaning, gender, plural, principal parts, the present tense of
+  verbs, audio, and "add to review". Nouns are coloured by gender (der blue, die red, das
+  green, plural purple), which the learner can switch off from the top bar. Word lists use
+  textbook dictionary notation (`die Stadt, ¨-e`, `fahren (fährt, fuhr, ist gefahren)`).
+- **Activities**: multiple choice, gap fills, typed answers (with ä ö ü ß keys; capitals and
+  umlauts count as "almost"), gapped texts for endings and articles, sentence builders that
+  accept every correct word order, der/die/das with the ending rule that predicts it,
+  conjugation tables, scenes where wrong choices get an in-character reaction, graded stories,
+  real-world reading texts, dialogues with a shadowing mode, speaking with recording and
+  (where the browser has it) speech recognition, and optional AI role-plays and sentence feedback.
+- **Widgets** (`src/lib/widgets/`): sound board, alphabet, numbers, the clock, gender rules,
+  declension tables, a case machine, sentence fields and word order, separable verbs, a family
+  tree, a town map, two-way prepositions, the perfect builder, adjective endings, a conjugator,
+  connectors, relative pronouns, the passive, Konjunktiv II and I, da-/wo-compounds, modal
+  particles, extended attributes, the nominal style and compound nouns.
+- **Placement check** (`content/data/placement.ts`): eight questions per level, each tied to the
+  lesson that teaches its point. It recommends a starting lesson, marks "brush up" lessons on the
+  course map, and can put the vocabulary of the levels below into the review deck.
+- **Review deck**: FSRS spaced repetition (ts-fsrs). Each word becomes up to three cards: read
+  it, hear it, and write it (type the German, nouns with their article, marked automatically).
+- **Practice**: der-die-das blitz, verb drill (tenses follow your level), word blitz, dictation
+  from the lessons' dialogues, and the grammar widgets.
+- **Level checks** (`content/exams/`): listening, reading and language-in-use papers for A1–B2.
+- **Optional AI teacher**: a chat on every page for course questions or conversation in German,
+  plus role-plays and sentence feedback, with your own Anthropic, OpenAI or OpenRouter key kept
+  in your browser. Everything else works without it.
 
 ## Develop
 
 ```sh
 npm ci
-npm run dev        # http://localhost:5173
-npm test           # library, content, coverage and exam tests
-npm run check      # svelte-check
-npm run build      # static site in dist/
+npm run dev          # http://localhost:5173 (widget gallery at /dev/widgets/)
+npm test             # library, content, dictionary, exams
+npm run check        # svelte-check
+npm run build        # static site in dist/
 npx playwright install chromium
-npm run test:browser # every lesson, practice tool and teacher workflow in four layouts
+npm run test:browser # pages, practice tools and the teacher in four layouts
 ```
 
 Progress, settings and the review deck live in the learner's browser (`localStorage`), with
 export and import in Settings.
 
-## AI teacher
+## The dictionary
 
-Open **Teacher** from any page. **Course questions** uses the current lesson, section and
-course outline; **Converse in Mandarin** gives short Chinese replies, translations and useful
-corrections. The teacher also sees your starting level, self-reviewed lessons and words in
-your review deck, without treating them as mastered. Conversations stay in memory across
-course navigation and are cleared on reload; the two modes keep separate conversations.
+`content/data/lexicon.json`, `forms.json` and `verbs.json` are generated by `npm run lexicon`
+from the lessons' word lists and the English Wiktionary's German entries (via
+[kaikki.org](https://kaikki.org/dictionary/German/)): every taught word with its gender, plural,
+principal parts and full conjugation; every other word that appears in the course's German, so
+it can be tapped; and every inflected form, so that tapping "fährt" opens "fahren". The build
+also checks each taught noun's gender and plural and each verb's principal parts against
+Wiktionary, and writes any disagreement to `content/data/issues.json`, which `npm test` fails on
+unless the issue is listed, with a reason, in `content/data/accepted-issues.json`.
 
-Use **Keyboard** to insert tone-marked vowels or find dictionary words from plain, marked or
-numbered pinyin (`ni hao`, `nǐ hǎo`, `ni3 hao3`). This is a dictionary-assisted keyboard; your
-device’s Chinese IME remains available for other words. Shift+Enter inserts a new line.
+The Wiktionary extract is not committed. To rebuild it:
 
-Select a provider in **Settings → AI conversation partner** and save its API key. Each provider
-keeps its own key and model ID; existing Anthropic settings are migrated. Keys are kept in
-localStorage, and messages plus lesson context go directly to the selected provider:
-`api.anthropic.com`, `api.openai.com` or `openrouter.ai`. Usage is billed to that account.
-Backups omit every API key, and importing a backup preserves the keys already on the device.
-Text-chat models use the provider’s standard text endpoint; the teacher can be mistaken.
-
-See [the course audit](docs/AUDIT.md) for fixes and validation scope.
+```sh
+mkdir -p build
+curl -sS https://kaikki.org/dictionary/German/kaikki.org-dictionary-German.jsonl \
+  | python3 scripts/slim-wiktionary.py | gzip > build/wiktionary-de.jsonl.gz
+npm run lexicon
+```
 
 ## Audio
 
-Clips are recorded with OpenAI text-to-speech and kept out of git: they are published as one
-zip on a GitHub release, named with its checksum in `audio-release.json`. The deploy workflow
-runs `npm run audio:fetch` to unpack it into `static/audio/` before building, so the site serves
-every clip itself. Without the clips, the course uses the browser's own Chinese voice.
+Without recorded clips the course speaks with the browser's own German voice (most systems
+have one: Chrome's Google Deutsch, Apple's Anna, Microsoft's Katja). Recorded clips can be made
+with OpenAI text-to-speech and published as a GitHub release, exactly as for the Mandarin course:
 
 ```sh
-npm run audio:fetch                      # download the published clips for local development
-```
-
-To record new audio after changing content:
-
-```sh
-npm run audio:texts                      # list every text the course speaks -> static/audio/texts.json
+npm run audio:texts                      # every text the course speaks -> static/audio/texts.json
 npm run audio -- --env path/to/.env      # record what is missing -> static/audio/*.mp3, manifest.json
-npm run audio:pack -- --tag mandarin-audio-v2
-gh release create mandarin-audio-v2 build/mandarin-audio.zip --title "Mandarin course audio"
-git commit audio-release.json            # the deploy picks up the new release
+npm run audio:pack -- --tag german-audio-v1
+gh release create german-audio-v1 build/german-audio.zip --title "German course audio"
+git commit audio-release.json            # the deploy fetches the release before building
 ```
 
-The recorder reads `OPENAI_API_KEY` from the environment or a `.env` file (`--env`, else `./.env`,
-the repository's `.env`, or a `.env` in the folder containing the repository); behind a proxy
-that adds the credential itself, run it with `NODE_USE_ENV_PROXY=1`. Without `--model` it picks
-the newest steerable speech model the API lists (`gpt-*-tts`). Options: `--voice coral`,
-`--tiers words,lessons,extras`, `--limit N`, `--concurrency N`, `--no-verify`, `--dry-run`. It
-only records clips that are missing, so it can be stopped and resumed (run `npm run audio:fetch`
-first to start from the published set).
-
-Every clip is trimmed of silence and re-encoded as mono 40 kbps MP3 (with ffmpeg), then checked:
-it is transcribed and compared with the expected reading, and single syllables go through the
-course's tone classifier. Failures are retried; short clips with the wrong words are left to the
-browser voice, and anything doubtful is listed in `static/audio/qa.json` for a human to check.
-About 2,750 clips cover every word card, review card, lesson, exam and widget; text generated on
-the fly (number drills, the town map) uses the browser voice.
-
-## Regenerating derived data
-
-After adding lessons with new characters or words:
-
-```sh
-sh scripts/refresh.sh path/to/complete.json path/to/LXGWWenKai-Regular.ttf
-```
-
-This rebuilds the dictionary (`content/data/lexicon.json`, `chars.json`) from the
-[Complete HSK Vocabulary](https://github.com/drkameleon/complete-hsk-vocabulary) dataset, copies
-stroke data for every character, rebuilds how each character is put together
-(`content/data/components.json`, from [Make Me a Hanzi](https://github.com/skishore/makemeahanzi)),
-and subsets the LXGW WenKai font to the characters in use.
-`npm test` reports any character that lacks a reading, a glyph or stroke data.
+The recorder trims and compresses each clip, transcribes it, and compares the words with the
+text; doubtful clips are listed in `static/audio/qa.json`. Single words tapped in running text
+(inflected forms) always use the browser voice.
 
 ## Credits and licences
 
-- Vocabulary: Complete HSK Vocabulary (MIT), with definitions from CC-CEDICT (CC BY-SA 4.0);
-  learner glosses in `content/data/extra.ts`.
-- Character components (meaning and sound parts, origins): Make Me a Hanzi `dictionary.txt`
-  (LGPL-3.0-or-later, `content/data/components.LICENSE.md`), with part names in
-  `content/data/characters.ts`.
-- Stroke data: hanzi-writer-data, derived from Make Me a Hanzi (Arphic Public License,
-  `static/strokes/LICENSE`); animation and quizzes by hanzi-writer (MIT).
-- Font: LXGW WenKai (SIL Open Font License 1.1, `src/lib/assets/fonts/OFL.txt`), subset.
-- Pinyin for characters outside the word lists: pinyin-pro (MIT), at build time.
+- Dictionary data: English Wiktionary (CC BY-SA 4.0 and GFDL), extracted by
+  [Wiktextract / kaikki.org](https://kaikki.org/); learner glosses from the lesson word lists.
+- Spaced repetition: ts-fsrs (MIT).
 
-See `docs/AUTHORING.md` for the lesson format.
+See `docs/AUTHORING.md` for the lesson format and `docs/SYLLABUS.md` for what each lesson teaches.

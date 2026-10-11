@@ -17,7 +17,7 @@
   import PlayButton from '../de/PlayButton.svelte';
   import UmlautKeys from '../de/UmlautKeys.svelte';
 
-  let { data, id, report }: { data: Type; id: string; report: (ok: boolean) => void } = $props();
+  let { data, report }: { data: Type; id: string; report: (ok: boolean) => void } = $props();
   const seq = new Sequence(untrack(() => data.items.length));
   const item = $derived(data.items[seq.index]!);
   const answers = $derived(Array.isArray(item.answer) ? item.answer : [item.answer]);
@@ -27,7 +27,7 @@
   let input: HTMLInputElement | undefined = $state();
   let result = $state<Marked | null>(null);
   let tries = $state(0);
-  void id;
+
 
   $effect(() => {
     void seq.index;

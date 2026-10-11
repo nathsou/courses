@@ -948,6 +948,71 @@ h1 {
   line-height: 1.5;
 }
 
+/* 11 · Auf Deutsch: the three genders */
+.german {
+  --cbg: #f6f3ec;
+  --cfg: #1f1b18;
+  --cmute: #625a52;
+  --cac: #c23b22;
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+:root[data-theme='dark'] .german {
+  --cbg: #171512;
+  --cfg: #f1ece4;
+  --cmute: #b0a79c;
+  --cac: #ef6a4f;
+}
+.german .articles {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 12px;
+}
+.german .seal {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: #c23b22;
+  color: #fff;
+  font-size: 34px;
+  font-weight: 650;
+  font-family: Georgia, serif;
+  transform: rotate(-4deg);
+}
+.german .arts {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: 650;
+}
+.german .m { color: #1f5fbf; }
+.german .f { color: #c0352b; }
+.german .n { color: #23824a; }
+:root[data-theme='dark'] .german .m { color: #78a9ff; }
+:root[data-theme='dark'] .german .f { color: #ff7a6e; }
+:root[data-theme='dark'] .german .n { color: #5fcf8a; }
+.german .line {
+  margin: 0 0 10px;
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: var(--cmute);
+}
+.german h2 {
+  margin: 6px 0 10px;
+  font-size: 32px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.german .desc {
+  color: var(--cmute);
+  line-height: 1.5;
+}
+
 @media (max-width: 560px) {
   .wordmark {
     white-space: nowrap;

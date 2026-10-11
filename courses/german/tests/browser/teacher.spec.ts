@@ -1,13 +1,13 @@
 import { test, expect, type Page } from '@playwright/test';
 
 async function configure(page: Page) {
-  await page.addInitScript(() => localStorage.setItem('mandarin:settings', JSON.stringify({ provider: 'openai', tutors: { openai: { apiKey: 'browser-test-key', model: 'test-model' } } })));
+  await page.addInitScript(() => localStorage.setItem('german:settings', JSON.stringify({ provider: 'openai', tutors: { openai: { apiKey: 'browser-test-key', model: 'test-model' } } })));
 }
 
 test('teacher is available without a key and sends users to provider settings', async ({ page }) => {
   await page.goto('/practice/');
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
-  const chat = page.getByRole('dialog', { name: 'Mandarin teacher' });
+  const chat = page.getByRole('dialog', { name: 'German teacher' });
   await expect(chat.getByRole('link', { name: 'Settings' })).toHaveAttribute('href', '/settings/#tutor');
   await page.keyboard.press('Escape');
   await expect(chat).toHaveCount(0);
@@ -19,40 +19,36 @@ test('teacher gets lesson context, renders advice and keeps the chat across navi
   let request: any;
   await page.route('https://api.openai.com/**', async route => {
     request = route.request().postDataJSON();
-    await route.fulfill({ json: { choices: [{ message: { content: '<reply>Use 二 for the number and 两 when counting objects.</reply><translation></translation><advice>Try 两个人。</advice>' } }] } });
+    await route.fulfill({ json: { choices: [{ message: { content: '<reply>Use einen with masculine nouns after haben.</reply><translation></translation><advice>Try: Ich habe einen Bruder.</advice>' } }] } });
   });
-  await page.goto('/learn/07-numbers/');
+  await page.goto('/learn/04-familie/');
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
-  const chat = page.getByRole('dialog', { name: 'Mandarin teacher' });
-  await chat.getByRole('textbox', { name: 'Message to your Mandarin teacher' }).fill('When should I use liang?');
+  const chat = page.getByRole('dialog', { name: 'German teacher' });
+  await chat.getByRole('textbox', { name: 'Message to your German teacher' }).fill('Why einen Bruder?');
   await chat.getByRole('button', { name: 'Send', exact: true }).click();
-  await expect(chat.getByRole('log')).toContainText('Use 二');
+  await expect(chat.getByRole('log')).toContainText('Use einen');
   await expect(chat.locator('.advice')).toContainText('Try this');
   expect(request.model).toBe('test-model');
-  expect(request.messages[0].content).toContain('Numbers you can say');
-  expect(request.messages[0].content).toContain('Zero to ten');
+  expect(request.messages[0].content).toContain('Family: der, die, das');
+  expect(request.messages[0].content).toContain('Three genders');
   await chat.getByRole('button', { name: 'Close teacher chat' }).click();
   await page.locator('.pager a.next').click();
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
-  await expect(chat.getByRole('log')).toContainText('Use 二');
-  await expect(chat.locator('.context')).toContainText('Family and having');
+  await expect(chat.getByRole('log')).toContainText('Use einen');
+  await expect(chat.locator('.context')).toContainText('Eating and drinking');
 });
 
-test('pinyin tones and character candidates insert into the draft; IME Enter does not submit', async ({ page }) => {
+test('umlaut keys insert at the cursor; IME Enter does not submit', async ({ page }) => {
   await configure(page);
   await page.goto('/');
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
-  const chat = page.getByRole('dialog', { name: 'Mandarin teacher' });
-  const input = chat.getByRole('textbox', { name: 'Message to your Mandarin teacher' });
-  await input.fill('ni hao');
-  await input.evaluate((el: HTMLTextAreaElement) => el.setSelectionRange(1, 2));
-  await chat.getByRole('button', { name: '拼 · Keyboard' }).click();
-  await chat.getByRole('button', { name: 'Insert ǐ', exact: true }).click();
-  await expect(input).toHaveValue('nǐ hao');
-  await chat.getByRole('button', { name: 'Characters', exact: true }).click();
-  await chat.getByRole('searchbox').fill('ni3 hao3');
-  await chat.getByRole('button', { name: /^Insert 你好,/ }).click();
-  await expect(input).toHaveValue('nǐ你好 hao');
+  const chat = page.getByRole('dialog', { name: 'German teacher' });
+  const input = chat.getByRole('textbox', { name: 'Message to your German teacher' });
+  await input.fill('Gre');
+  await input.evaluate((el: HTMLTextAreaElement) => el.setSelectionRange(2, 2));
+  await chat.getByRole('button', { name: 'ü', exact: true }).click();
+  await chat.getByRole('button', { name: 'ß', exact: true }).click();
+  await expect(input).toHaveValue('Grüße');
   await input.dispatchEvent('keydown', { key: 'Enter', isComposing: true });
   await expect(chat.getByRole('log').locator('article')).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
@@ -64,33 +60,34 @@ test('cancellation restores the draft and a retry can succeed', async ({ page })
   await page.route('https://api.openai.com/**', async route => {
     requests++;
     if (requests === 1) return;
-    await route.fulfill({ json: { choices: [{ message: { content: '<reply>你好！</reply><translation>Hello!</translation><advice></advice>' } }] } });
+    await route.fulfill({ json: { choices: [{ message: { content: '<reply>Hallo! Wie geht es dir?</reply><translation>Hello! How are you?</translation><advice></advice>' } }] } });
   });
   await page.goto('/');
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
-  const chat = page.getByRole('dialog', { name: 'Mandarin teacher' });
-  await chat.getByRole('button', { name: 'Converse in Mandarin' }).click();
-  const input = chat.getByRole('textbox', { name: 'Message to your Mandarin teacher' });
-  await input.fill('ni hao');
+  const chat = page.getByRole('dialog', { name: 'German teacher' });
+  await chat.getByRole('button', { name: 'Converse in German' }).click();
+  const input = chat.getByRole('textbox', { name: 'Message to your German teacher' });
+  await input.fill('Hallo');
   await chat.getByRole('button', { name: 'Send', exact: true }).click();
   await expect(chat.getByRole('status')).toBeVisible();
   await chat.getByRole('button', { name: 'Stop', exact: true }).click();
-  await expect(input).toHaveValue('ni hao');
+  await expect(input).toHaveValue('Hallo');
   await expect(chat.getByRole('alert')).toHaveText('Stopped.');
   await chat.getByRole('button', { name: 'Send', exact: true }).click();
-  await expect(chat.locator('.translation')).toHaveText('Hello!');
+  await expect(chat.locator('.translation')).toHaveText('Hello! How are you?');
   await expect(chat.getByRole('button', { name: 'Listen to the teacher' })).toHaveCount(1);
 });
 
-test('typing numbered pinyin in chat does not answer a running tone game', async ({ page }) => {
+test('typing in the chat does not answer a running der/die/das game', async ({ page }) => {
   await configure(page);
-  await page.goto('/practice/#tones');
-  await page.locator('.trainer').getByRole('button', { name: 'Start', exact: true }).click();
+  await page.goto('/practice/#gender');
+  await page.locator('.stage').getByRole('button', { name: 'Start', exact: true }).click();
+  const before = await page.locator('.stage .score').textContent();
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
-  const chat = page.getByRole('dialog', { name: 'Mandarin teacher' });
-  await chat.getByRole('textbox', { name: 'Message to your Mandarin teacher' }).pressSequentially('ni3 hao3 r');
-  await expect(page.locator('.trainer').getByRole('button', { name: /^Tone \d/ }).first()).toBeEnabled();
-  await expect(page.locator('.trainer').getByRole('button', { name: 'Next', exact: false })).toHaveCount(0);
+  const chat = page.getByRole('dialog', { name: 'German teacher' });
+  await chat.getByRole('textbox', { name: 'Message to your German teacher' }).pressSequentially('123');
+  await expect(page.locator('.stage .score')).toHaveText(before!);
+  await expect(page.locator('.stage .flash span')).toHaveCount(0);
 });
 
 test('provider changes keep keys separate and backups contain no credentials', async ({ page }) => {
@@ -117,19 +114,19 @@ test('editing a sentence clears feedback and restarting a roleplay cancels pendi
   await page.route('https://api.openai.com/**', async route => {
     const system = route.request().postDataJSON().messages[0].content;
     if (system.includes('reviewing a short practice conversation')) return;
-    const content = system.includes('check single sentences')
-      ? '<verdict>correct</verdict><better>我有一个妹妹。</better><explain>Good use of 有.</explain>'
-      : '<reply>很好！</reply><en>Very good!</en><fix></fix><done>yes</done>';
+    const content = system.includes('You check sentences')
+      ? '<verdict>correct</verdict><better>Ich habe eine Schwester.</better><explain>Good use of eine.</explain>'
+      : '<reply>Sehr gut!</reply><en>Very good!</en><fix></fix><done>yes</done>';
     await route.fulfill({ json: { choices: [{ message: { content } }] } });
   });
-  await page.goto('/learn/08-family/');
+  await page.goto('/learn/04-familie/');
   const sentence = page.getByRole('textbox', { name: 'Your sentence' });
-  await sentence.fill('我有一个妹妹。');
+  await sentence.fill('Ich habe eine Schwester.');
   await page.getByRole('button', { name: 'Check my sentence' }).click();
   await expect(page.locator('.result.correct')).toBeVisible();
-  await sentence.fill('我有妹妹');
+  await sentence.fill('Ich habe Schwester');
   await expect(page.locator('.result.correct')).toHaveCount(0);
-  await page.getByRole('textbox', { name: 'Your reply' }).fill('你好');
+  await page.getByRole('textbox', { name: 'Your reply' }).fill('Hallo Paul');
   await page.locator('.rp').getByRole('button', { name: 'Send', exact: true }).click();
   await expect(page.locator('.rp .review')).toContainText('Reading your conversation');
   await page.getByRole('button', { name: 'Start over' }).click();

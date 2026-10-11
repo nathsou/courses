@@ -9,6 +9,7 @@
   import { settings } from '$lib/state/settings.svelte';
   import { progress } from '$lib/state/progress.svelte';
   import { deck } from '$lib/srs/deck.svelte';
+  import { placement } from '$lib/state/placement.svelte';
   import { speech } from '$lib/audio/speech.svelte';
   import { COURSE_SUBTITLE, COURSE_TITLE } from '$content/outline';
   import TopBar from '$lib/components/layout/TopBar.svelte';
@@ -24,6 +25,7 @@
     settings.load();
     progress.load();
     deck.load();
+    placement.load();
     speech.prepare();
     return mountSidebar('german', (state) => (nav.sidebarOpen = state.open));
   });

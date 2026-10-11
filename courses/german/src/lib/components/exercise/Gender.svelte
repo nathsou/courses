@@ -16,6 +16,7 @@
   import Steps from './Steps.svelte';
   import Feedback from './Feedback.svelte';
   import UmlautKeys from '../de/UmlautKeys.svelte';
+  import { typing } from '$lib/exercises/keys';
 
   let { data, report }: { data: Gender; id: string; report: (ok: boolean) => void } = $props();
   const seq = new Sequence(untrack(() => data.items.length));
@@ -70,14 +71,14 @@
     if (ok) void speech.say(`die ${entry.pl}`);
   }
   function onKey(e: KeyboardEvent) {
-    if (e.target instanceof HTMLInputElement) return;
+    if (typing(e)) return;
     const map: Record<string, string> = { '1': 'der', '2': 'die', '3': 'das' };
     if (map[e.key]) pick(map[e.key]!);
   }
 </script>
 
-<svelte:window onkeydown={onKey} />
-
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="gender" onkeydown={onKey}>
 <Steps {seq} {report} canReveal={wrong.size > 0 || pluralResult === 'wrong'} onreveal={() => ((picked = right ?? null), (plural = entry?.pl ?? ''), (pluralResult = 'right'))}>
   <div class="noun" lang="de">
     {#if picked}<span class="art g-{entry?.a}">{picked}</span>{:else}<span class="blank">___</span>{/if}
@@ -113,6 +114,7 @@
     {/if}
   {/snippet}
 </Steps>
+</div>
 
 <style>
   .noun {

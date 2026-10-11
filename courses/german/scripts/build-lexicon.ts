@@ -255,7 +255,8 @@ for (const w of words) {
       if (!p) issues.push(`${where(w)}: principal parts should read "fährt, fuhr, ist gefahren"`);
       else {
         if (p.present !== v[0] || p.past !== v[1] || p.participle !== v[2]) issues.push(`${where(w)}: parts "${head.parts}", Wiktionary has ${v[0]}, ${v[1]}, ${v[2]}`);
-        if ((p.aux === 'ist') !== wikiAux.includes('s')) issues.push(`${where(w)}: auxiliary "${p.aux}", Wiktionary has ${wikiAux === 's' ? 'sein' : wikiAux === 'hs' ? 'haben or sein' : 'haben'}`);
+        // haben-or-sein verbs (stehen: hat gestanden, southern ist gestanden) accept either.
+        if (wikiAux !== 'hs' && (p.aux === 'ist') !== wikiAux.includes('s')) issues.push(`${where(w)}: auxiliary "${p.aux}", Wiktionary has ${wikiAux === 's' ? 'sein' : wikiAux === 'hs' ? 'haben or sein' : 'haben'}`);
         if (p.aux === 'ist' && wikiAux === 'hs') entry.v = [v[0], v[1], v[2], 's'];
         if (p.aux === 'hat' && wikiAux === 'hs') entry.v = [v[0], v[1], v[2], 'h'];
       }
@@ -353,4 +354,14 @@ const known = (s: string) => forms.has(s) || !!lexicon[s];
 const unknown = [...surfaces].filter((s) => !lowered.has(s) && !known(s) && !known(s.charAt(0).toLowerCase() + s.slice(1)));
 console.log(`${taughtCount} taught words, ${Object.keys(lexicon).length - taughtCount} background entries, ${forms.size} forms, ${Object.keys(verbs).length} verb tables.`);
 console.log(`${unknown.length} word forms in the course text have no entry${unknown.length ? `: ${unknown.slice(0, 40).join(', ')}${unknown.length > 40 ? '…' : ''}` : ''}.`);
+// Unknown word forms with where they occur: mostly names and English, but typos show up here too.
+const firstSeen = new Map<string, string>();
+for (const t of texts) for (const tok of split(t.text)) if (tok.w && !firstSeen.has(tok.t)) firstSeen.set(tok.t, t.where);
+writeFileSync(
+  join(root, 'build/unknown-words.txt'),
+  unknown
+    .map((u) => `${firstSeen.get(u) ?? '?'}\t${u}`)
+    .sort()
+    .join('\n') + '\n',
+);
 if (issues.length) console.log(`\n${issues.length} issue(s) in word lists (content/data/issues.json):\n  ${issues.join('\n  ')}`);

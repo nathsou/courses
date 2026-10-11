@@ -10,13 +10,12 @@
  * Without --model it picks the newest steerable speech model the API lists (gpt-*-tts).
  *
  * Each clip is:
- *   1. synthesised, with instructions for clear standard Mandarin at a learner's pace;
+ *   1. synthesised, with instructions for clear standard German at a learner's pace;
  *   2. trimmed of leading and trailing silence and re-encoded as mono 40 kbps MP3 (needs ffmpeg);
- *   3. checked: transcribed (gpt-4o-transcribe) and compared with the expected reading, syllable
- *      by syllable without tones; single syllables are also run through the course's own tone
- *      classifier. Failures are retried twice. Short items whose words are still wrong are left
- *      out of the manifest (the course falls back to the browser's voice); doubtful tones are
- *      kept. Every remaining problem is listed in static/audio/qa.json for a human to check.
+ *   3. checked: transcribed (gpt-4o-transcribe) and compared with the text word by word.
+ *      Failures are retried twice. Short items whose words are still wrong are left out of the
+ *      manifest (the course falls back to the browser's voice). Every remaining problem is listed
+ *      in static/audio/qa.json for a human to check.
  *
  * The list of texts is static/audio/texts.json (npm run audio:texts). Clips go to
  * static/audio/<hash>.mp3, listed in static/audio/manifest.json, which the player reads.
@@ -27,10 +26,6 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { pinyin } from 'pinyin-pro';
-import { track } from '../src/lib/audio/pitch.ts';
-import { analyse, CONFIDENT } from '../src/lib/audio/tones.ts';
-import FIXTURE from '../src/lib/audio/fixtures/tts-tones.json' with { type: 'json' };
 
 const root = new URL('..', import.meta.url).pathname;
 const audioDir = join(root, 'static/audio');
@@ -77,9 +72,9 @@ async function pickModel(): Promise<string> {
 
 const INSTRUCTIONS = {
   short:
-    'You are recording audio for a Mandarin course for beginners. Say this Chinese word or syllable on its own in clear Standard Mandarin (Putonghua) with a neutral Beijing accent. Give every syllable its full dictionary tone, as said in isolation, at a calm, slightly slow pace. Say only the text, with no added words.',
+    'You are recording audio for a German course for English speakers. Say this German word or phrase on its own in clear, standard German (Hochdeutsch) with a neutral accent, as in a dictionary recording, at a calm pace. Pronounce the article with the noun. Say only the text, with no added words.',
   sentence:
-    'You are recording audio for a Mandarin course for beginners. Read this Chinese text in clear, natural Standard Mandarin (Putonghua) with a neutral Beijing accent, at a relaxed, slightly slow pace, with warm, friendly intonation and every tone clearly audible. Say only the text, with no added words or translations.',
+    'You are recording audio for a German course for English speakers. Read this German text in clear, natural standard German (Hochdeutsch) with a neutral accent, at a relaxed, slightly slow pace, with warm, friendly intonation, as a native speaker would say it in conversation. Say only the text, with no added words or translations.',
 };
 
 const voice = opt('voice', process.env.OPENAI_TTS_VOICE ?? 'coral')!;
@@ -95,7 +90,7 @@ try {
   console.warn('ffmpeg not found: clips are saved as returned (larger, untrimmed) and tones are not checked.');
 }
 
-type Item = { text: string; tier: string; py: string };
+type Item = { text: string; tier: string };
 const texts = (JSON.parse(readFileSync(join(audioDir, 'texts.json'), 'utf8')) as Item[]).filter((t) => tiers.has(t.tier));
 const manifestPath = join(audioDir, 'manifest.json');
 const qaPath = join(audioDir, 'qa.json');
@@ -109,9 +104,6 @@ if (flag('dry-run') || !batch.length) process.exit(0);
 const model = await pickModel();
 console.log(`Model ${model}, voice ${voice}${verify ? ', checking every clip' : ''}.`);
 const steerable = model.startsWith('gpt-');
-/** The voice's typical pitch, from the recorded tone fixtures, so tone checks can use level. */
-const voiceHz = (FIXTURE as { voice: string; hz: number[] }[]).filter((r) => r.voice === voice).flatMap((r) => r.hz.filter((h) => h > 0)).sort((a, b) => a - b);
-const voiceMid = voiceHz.length ? voiceHz[Math.floor(voiceHz.length / 2)] : undefined;
 
 function save(): void {
   const sort = <T>(o: Record<string, T>) => Object.fromEntries(Object.entries(o).sort(([a], [b]) => (a < b ? -1 : 1)));
@@ -132,7 +124,7 @@ async function request(url: string, init: RequestInit): Promise<Response> {
 }
 
 async function speak(text: string): Promise<Buffer> {
-  const isShort = [...text].length <= 3 && !/[，。！？]/.test(text);
+  const isShort = text.split(/\s+/).length <= 3 && !/[.!?]/.test(text);
   const body: Record<string, unknown> = { model, voice, input: text, response_format: 'mp3' };
   if (steerable) body.instructions = isShort ? INSTRUCTIONS.short : INSTRUCTIONS.sentence;
   const r = await request(`${API}/audio/speech`, { method: 'POST', headers: { ...auth, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
@@ -142,37 +134,34 @@ async function speak(text: string): Promise<Buffer> {
 async function transcribe(mp3: Buffer): Promise<string> {
   const form = new FormData();
   form.append('model', 'gpt-4o-transcribe');
-  form.append('language', 'zh');
-  form.append('prompt', '这是一段标准普通话的录音，可能是一个汉字、一个词语或一个句子。');
+  form.append('language', 'de');
+  form.append('prompt', 'Eine Aufnahme auf Hochdeutsch: ein Wort, ein Ausdruck oder ein Satz.');
   form.append('file', new Blob([new Uint8Array(mp3)], { type: 'audio/mpeg' }), 'clip.mp3');
   const r = await request(`${API}/audio/transcriptions`, { method: 'POST', headers: auth, body: form });
   return ((await r.json()) as { text: string }).text;
 }
 
-/** Trim silence and shrink: mono, 24 kHz, 40 kbps. Also returns 16 kHz samples for pitch. */
-function encode(raw: Buffer, id: string): { mp3: Buffer; samples: Float32Array | null } {
-  if (!ffmpeg) return { mp3: raw, samples: null };
+/** Trim silence and shrink: mono, 24 kHz, 40 kbps. */
+function encode(raw: Buffer, id: string): Buffer {
+  if (!ffmpeg) return raw;
   const src = join(tmpdir(), `${id}-in.mp3`);
   const out = join(tmpdir(), `${id}-out.mp3`);
   writeFileSync(src, raw);
   const trim = 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.05,areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.12,areverse';
   execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', src, '-af', trim, '-ac', '1', '-ar', '24000', '-b:a', '40k', out]);
-  const pcm = execFileSync('ffmpeg', ['-v', 'error', '-i', out, '-ac', '1', '-ar', '16000', '-f', 'f32le', '-'], { maxBuffer: 64 << 20 });
   const mp3 = readFileSync(out);
   unlinkSync(src);
   unlinkSync(out);
-  return { mp3, samples: new Float32Array(pcm.buffer, pcm.byteOffset, pcm.byteLength / 4) };
+  return mp3;
 }
 
-/** Syllables without tones, Chinese only (digits and punctuation dropped; erhua merged). */
-const toneless = (py: string) =>
-  py
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/ü/g, 'v')
+/** Words for comparison: lower case, umlauts kept, punctuation and numbers dropped. */
+const words = (s: string) =>
+  s
     .toLowerCase()
+    .replace(/[^\p{L}\s'-]/gu, ' ')
     .split(/\s+/)
-    .filter((s) => /^[a-z]+$/.test(s) && s !== 'r' && s !== 'er');
+    .filter(Boolean);
 
 function distance(a: string[], b: string[]): number {
   const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
@@ -182,37 +171,18 @@ function distance(a: string[], b: string[]): number {
   return d[a.length]![b.length]!;
 }
 
-const TONE_OF: Record<string, number> = {};
-for (const [i, marks] of ['āēīōūǖ', 'áéíóúǘ', 'ǎěǐǒǔǚ', 'àèìòùǜ'].entries()) for (const m of marks) TONE_OF[m] = i + 1;
-const toneOfSyllable = (s: string) => [...s].map((c) => TONE_OF[c]).find(Boolean) ?? 5;
-
-type Problem = { problem: string; heard?: string; kind: 'text' | 'tone' };
+type Problem = { problem: string; heard?: string };
 
 /** Returns a problem description, or null when the clip sounds right. */
-async function check(item: Item, mp3: Buffer, samples: Float32Array | null): Promise<Problem | null> {
-  const want = toneless(item.py);
-  if (!want.length) return null;
-  const heard = (await transcribe(mp3)).replace(/[^\p{Script=Han}]/gu, '');
-  const got = toneless(pinyin(heard, { toneType: 'symbol' }));
-  if (/\d/.test(item.text)) {
-    // Digits are spoken as several syllables each; only check nothing extra was added.
-    if (got.length > want.length + item.text.replace(/\D/g, '').length + 2) return { problem: `heard “${heard}”: too long`, heard, kind: 'text' };
-  } else if (want.length <= 2) {
-    // Recognisers often mishear a syllable said on its own (个 as 课), so for single words
-    // only reject recordings that clearly say more than the word.
-    if (got.length > want.length + 1) return { problem: `heard “${heard}” (${got.join(' ')}), expected ${want.join(' ')}`, heard, kind: 'text' };
-  } else {
-    const allowed = Math.max(1, Math.floor(want.length * 0.15));
-    if (distance(want, got) > allowed) return { problem: `heard “${heard}” (${got.join(' ')}), expected ${want.join(' ')}`, heard, kind: 'text' };
-  }
-  const syl = item.py.split(/\s+/);
-  if (samples && syl.length === 1) {
-    const tone = toneOfSyllable(syl[0]!);
-    const res = analyse(track(samples, { sampleRate: 16000, hop: 160 }), 0.01, voiceMid ? { mid: voiceMid } : undefined);
-    if (tone >= 1 && tone <= 4 && res.tone && res.confidence >= CONFIDENT && res.tone !== tone)
-      return { problem: `tone ${res.tone} heard (confidence ${res.confidence.toFixed(2)}), expected ${tone}`, heard, kind: 'tone' };
-  }
-  return null;
+async function check(item: Item, mp3: Buffer): Promise<Problem | null> {
+  const want = words(item.text);
+  if (!want.length || /\d/.test(item.text)) return null;
+  const heard = await transcribe(mp3);
+  const got = words(heard);
+  // Recognisers often mishear a word said on its own, so short items only fail if clearly longer.
+  if (want.length <= 2) return got.length > want.length + 2 ? { problem: `heard “${heard}”`, heard } : null;
+  const allowed = Math.max(1, Math.floor(want.length * 0.15));
+  return distance(want, got) > allowed ? { problem: `heard “${heard}”`, heard } : null;
 }
 
 let done = 0;
@@ -225,15 +195,14 @@ async function worker(n: number): Promise<void> {
       let problem: Problem | null = null;
       let best: Buffer | null = null;
       for (let attempt = 0; attempt < 3; attempt++) {
-        const { mp3, samples } = encode(await speak(t.text), `w${n}`);
+        const mp3 = encode(await speak(t.text), `w${n}`);
         best = mp3;
-        problem = verify ? await check(t, mp3, samples) : null;
+        problem = verify ? await check(t, mp3) : null;
         if (!problem) break;
       }
-      const syllables = t.py.split(/\s+/).filter(Boolean).length;
-      // Wrong words in a short clip: drop it. A doubtful tone: keep it, but list it for a human ear
-      // (the tone classifier is right about 93% of the time when confident, not always).
-      const keep = !problem || problem.kind === 'tone' || syllables > 4;
+      // Wrong words in a short clip: drop it. In a long one, keep it but list it for a human ear
+      // (transcription is not perfect either).
+      const keep = !problem || t.text.split(/\s+/).length > 4;
       if (problem) {
         qa[t.text] = { problem: problem.problem, heard: problem.heard, kept: keep };
         console.warn(`${keep ? 'kept, check' : 'dropped'}: ${t.text}: ${problem.problem}`);

@@ -1,10 +1,10 @@
 /**
  * The course audio lives in a GitHub release asset, not in git.
  *
- *   npm run audio:pack -- --tag mandarin-audio-v2
- *       zips static/audio (clips, manifest, QA report) into build/mandarin-audio.zip and records
+ *   npm run audio:pack -- --tag german-audio-v2
+ *       zips static/audio (clips, manifest, QA report) into build/german-audio.zip and records
  *       the tag and checksum in audio-release.json. Then upload it:
- *       gh release create mandarin-audio-v2 build/mandarin-audio.zip --title "Mandarin course audio"
+ *       gh release create german-audio-v2 build/german-audio.zip --title "German course audio"
  *       and commit audio-release.json.
  *
  *   npm run audio:fetch [-- --optional]
@@ -39,20 +39,20 @@ const readInfo = (): ReleaseInfo => JSON.parse(readFileSync(infoPath, 'utf8'));
 
 function pack(): void {
   const tag = opt('tag');
-  if (!tag) throw new Error('Pass --tag, e.g. --tag mandarin-audio-v1');
+  if (!tag) throw new Error('Pass --tag, e.g. --tag german-audio-v1');
   const clips = readdirSync(audioDir).filter((f) => f.endsWith('.mp3'));
   if (!clips.length || !existsSync(join(audioDir, 'manifest.json'))) throw new Error('No clips: run npm run audio first.');
   const out = join(root, 'build');
   mkdirSync(out, { recursive: true });
-  const zip = join(out, 'mandarin-audio.zip');
+  const zip = join(out, 'german-audio.zip');
   rmSync(zip, { force: true });
   const files = ['manifest.json', ...(existsSync(join(audioDir, 'qa.json')) ? ['qa.json'] : []), ...clips.sort()];
   // -X: no extra file attributes, so the same clips always give the same archive.
   execFileSync('zip', ['-q', '-X', '-0', zip, ...files], { cwd: audioDir });
-  const info: ReleaseInfo = { ...(existsSync(infoPath) ? readInfo() : { repo: 'nathsou/courses', asset: 'mandarin-audio.zip' }), tag, sha256: sha256(readFileSync(zip)), clips: clips.length };
+  const info: ReleaseInfo = { ...(existsSync(infoPath) ? readInfo() : { repo: 'nathsou/courses', asset: 'german-audio.zip' }), tag, sha256: sha256(readFileSync(zip)), clips: clips.length };
   writeFileSync(infoPath, JSON.stringify(info, null, 2) + '\n');
-  console.log(`Packed ${clips.length} clips into build/mandarin-audio.zip (sha256 ${info.sha256.slice(0, 12)}…).`);
-  console.log(`Upload it:  gh release create ${tag} build/mandarin-audio.zip --repo ${info.repo} --title "Mandarin course audio" --notes "Audio for courses/mandarin (${clips.length} clips)."`);
+  console.log(`Packed ${clips.length} clips into build/german-audio.zip (sha256 ${info.sha256.slice(0, 12)}…).`);
+  console.log(`Upload it:  gh release create ${tag} build/german-audio.zip --repo ${info.repo} --title "German course audio" --notes "Audio for courses/german (${clips.length} clips)."`);
   console.log('Then commit audio-release.json.');
 }
 
@@ -70,7 +70,7 @@ async function fetchAudio(): Promise<void> {
     console.log(`Audio ${info.tag} already in place.`);
     return;
   }
-  const url = process.env.MANDARIN_AUDIO_URL ?? `https://github.com/${info.repo}/releases/download/${info.tag}/${info.asset}`;
+  const url = process.env.GERMAN_AUDIO_URL ?? `https://github.com/${info.repo}/releases/download/${info.tag}/${info.asset}`;
   const r = await fetch(url);
   if (!r.ok) return fail(`Could not download ${url} (${r.status}).`);
   const buf = Buffer.from(await r.arrayBuffer());

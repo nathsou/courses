@@ -11,6 +11,7 @@
   import Rich from './Rich.svelte';
   import De from '../de/De.svelte';
   import PlayButton from '../de/PlayButton.svelte';
+  import { typing } from '$lib/exercises/keys';
   import { isGerman } from '$lib/de/lexicon';
 
   type Item = ChooseItem & { sentence?: string; en?: string };
@@ -44,7 +45,7 @@
 
   function onKey(e: KeyboardEvent) {
     const n = Number(e.key);
-    if (n >= 1 && n <= order.length && !(e.target instanceof HTMLInputElement)) pick(order[n - 1]!);
+    if (n >= 1 && n <= order.length && !typing(e)) pick(order[n - 1]!);
   }
   const filled = $derived(item.sentence && seq.settled ? item.sentence.replace(/_{3,}/, item.options[item.answer]!) : item.sentence);
 </script>

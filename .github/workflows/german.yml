@@ -1,0 +1,41 @@
+name: Auf Deutsch (German) — checks
+
+# Tests (library, content, dictionary and level checks), type checks and a build for courses/german. (Deployment is in deploy.yml.)
+on:
+  push:
+    branches: [main]
+    paths: ['courses/german/**', '.github/workflows/german.yml']
+  pull_request:
+    paths: ['courses/german/**', '.github/workflows/german.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: courses/german
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --experimental-strip-types
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: courses/german/package-lock.json
+      - run: npm ci
+      - name: Library, widget and content tests
+        run: npm test
+      - name: Type-check (svelte-check)
+        run: npm run check
+      - name: Build
+        run: npm run build
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+      - name: Course and teacher browser checks
+        run: npm run test:browser

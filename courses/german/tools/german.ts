@@ -18,6 +18,7 @@ import type { Code, Text, InlineCode } from 'mdast';
 import { EXERCISE_KINDS } from '../src/lib/exercises/kinds.ts';
 import { parseWordLine, type Headword } from '../src/lib/de/notation.ts';
 import { braced, unbrace } from '../src/lib/de/text.ts';
+import { fillCloze } from '../src/lib/de/check.ts';
 
 /** Keys whose strings are English (German only in {braces}). */
 export const ENGLISH_KEYS = new Set([
@@ -57,7 +58,8 @@ export function lessonFiles(root: string): string[] {
 export function walkData(v: unknown, where: string, tier: FoundText['tier'], out: FoundText[], key = ''): void {
   if (typeof v === 'string') {
     if (ENGLISH_KEYS.has(key)) for (const b of braced(v)) out.push({ text: b, where, whole: false, tier });
-    else if (/\p{L}/u.test(v)) out.push({ text: unbrace(v), where, whole: true, tier });
+    // Cloze gaps ("Ich [fahre](fahren) mit [dem] Bus") are read with their first answer filled in.
+    else if (/\p{L}/u.test(v)) out.push({ text: unbrace(/\[[^\]]+\]/.test(v) ? fillCloze(v) : v), where, whole: true, tier });
   } else if (Array.isArray(v)) v.forEach((x) => walkData(x, where, tier, out, key));
   else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) walkData(x, where, tier, out, k);
 }
