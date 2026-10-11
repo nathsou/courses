@@ -37,7 +37,7 @@ export function analyse(inf: string, pp: string, sep?: string): Participle {
     '';
   const base = inf.slice(prefix.length);
   const rest = pp.slice(prefix.length);
-  const ge = rest.startsWith('ge') && !(base.startsWith('ge') && !rest.startsWith('gege'));
+  const ge = rest.startsWith('ge') && !(base.startsWith('ge') && !rest.startsWith('geg'));
   const core = ge ? rest.slice(2) : rest;
   const infStem = infinitiveStem(base);
   let ending: string;

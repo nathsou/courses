@@ -4,7 +4,7 @@
    * elements (-s-, -n-, -er-) are shown. The famous Danube-steamship word built up step by step,
    * and a quiz: guess the gender of a compound.
    */
-  import { C_FIRST, C_LAST, COMPOUNDS, LONG_STEPS, C_QUIZ, type CGender } from './data/compound-builder';
+  import { C_FIRST, C_LAST, COMPOUNDS, LONG_STEPS, LONG_NOTE, C_QUIZ, type CGender } from './data/compound-builder';
   import Shell from './kit/Shell.svelte';
   import HiText from './kit/HiText.svelte';
   import Quiz from './kit/Quiz.svelte';
@@ -42,14 +42,12 @@
   }
 
   const long = $derived(LONG_STEPS[longStep]!);
-  const LONG_NOTE =
-    'Watch the article: it was {die} at every step until {der Kapitän} took the last place. The linking -s- after {Schifffahrt} works as in {Geburtstag}, and after {-schaft} as in {Gesellschaftsspiel}. The triple fff has been the correct spelling since the 1996 reform (before it: {Schiffahrt}).';
   const quizItems = C_QUIZ.map((q) => ({
     de: `___ ${q.word}`,
     options: ['der', 'die', 'das'],
     answer: q.answer,
     en: q.en,
-    explain: `{${q.parts.join('·')}}: the last part decides, {${q.head}} → {${q.answer} ${q.word}}.${q.note ? ` ${q.note}` : ''}`,
+    explain: `{${q.parts.join('·')}}: the last part decides, {${q.head}} → {${q.de}}.${q.note ? ` ${q.note}` : ''}`,
   }));
 </script>
 
@@ -117,7 +115,7 @@
       <span class="count ui">{longStep + 1} / {LONG_STEPS.length}</span>
     </div>
     {#if longStep === LONG_STEPS.length - 1}
-      <p class="note"><Rich text={LONG_NOTE} /></p>
+      <p class="note"><Rich text={LONG_NOTE.note} /></p>
     {/if}
   {:else}
     <p class="ui lead">Der, die or das? Look at the last part.</p>

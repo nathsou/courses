@@ -223,3 +223,6 @@ export const DAWO_QUIZ: DaWoQuizItem[] = [
   { de: 'Denkst du noch an Jonas? – Ja, ich denke oft ___.', answer: ['an ihn'], explain: 'Jonas is a person: {an ihn}, not {daran}.' },
   { de: 'Ich freue mich ___, dass du kommst.', answer: ['darüber', 'darauf'], explain: '{darüber} (pleased that you are coming) or {darauf} (looking forward to it): the da-compound points ahead to the dass-clause.' },
 ];
+
+/** The quiz sentences with the gap filled, as spoken after an answer (for the audio collector). */
+export const DAWO_QUIZ_SPOKEN = DAWO_QUIZ.map((q) => q.de.replace('___', q.answer[0]!));

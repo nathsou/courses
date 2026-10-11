@@ -263,11 +263,36 @@ export interface LessonFront {
   goals?: string[];
 }
 
+/**
+ * Emphasis inside a German run, "{Ich weiß nicht, **ob** er kommt}", would split the run across
+ * Markdown nodes; rewrite it as "{Ich weiß nicht,} **{ob}** {er kommt}" (outside code fences).
+ */
+export function splitEmphasis(md: string): string {
+  let fence = false;
+  return md
+    .split('\n')
+    .map((line) => {
+      if (/^\s*```/.test(line)) fence = !fence;
+      if (fence) return line;
+      return line.replace(/\{([^{}\n]*\*\*[^{}\n]*)\}/g, (_, inner: string) =>
+        inner
+          .split(/(\*\*[^*]+\*\*)/)
+          .map((part) => {
+            if (part.startsWith('**')) return `**{${part.slice(2, -2)}}**`;
+            const core = part.trim();
+            return core ? `${part.match(/^\s*/)![0]}{${core}}${part.match(/\s*$/)![0]}` : part;
+          })
+          .join(''),
+      );
+    })
+    .join('\n');
+}
+
 export function compileLesson(source: string, file: string): string {
   const fm = /^---\n([\s\S]*?)\n---\n/.exec(source);
   const front = (fm ? YAML.parse(fm[1]!) : {}) as LessonFront;
   if (!front?.title) throw new LessonError(`${file}: front matter needs a title`);
-  const body = fm ? source.slice(fm[0].length) : source;
+  const body = splitEmphasis(fm ? source.slice(fm[0].length) : source);
   const slug = path.basename(file, '.md');
   const ctx: Ctx = { file, slug, data: [], parts: [], imports: new Map(), exercises: 0, words: [], toc: [], ids: new Set() };
 

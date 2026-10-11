@@ -115,7 +115,7 @@
     {:else}
       <div class="line out none">
         <span class="tag ui">Does not work here</span>
-        <p class="nope"><Rich text={'note' in res ? res.note : ''} /></p>
+        <p class="nope"><Rich text={'none' in res ? res.note : ''} /></p>
       </div>
     {/if}
   </div>

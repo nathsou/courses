@@ -104,6 +104,8 @@ export const LONG_STEPS: LongStep[] = [
 export interface CQuizItem {
   /** The compound without its article. */
   word: string;
+  /** With its article. */
+  de: string;
   /** Its parts, linking elements as separate items. */
   parts: string[];
   /** The last part with its article: it decides. */
@@ -114,20 +116,24 @@ export interface CQuizItem {
 }
 
 export const C_QUIZ: CQuizItem[] = [
-  { word: 'Schreibtisch', parts: ['Schreib', 'tisch'], head: 'der Tisch', answer: 'der', en: 'desk' },
-  { word: 'Handtasche', parts: ['Hand', 'tasche'], head: 'die Tasche', answer: 'die', en: 'handbag' },
-  { word: 'Hausaufgabe', parts: ['Haus', 'aufgabe'], head: 'die Aufgabe', answer: 'die', en: 'homework' },
-  { word: 'Zahnbürste', parts: ['Zahn', 'bürste'], head: 'die Bürste', answer: 'die', en: 'toothbrush' },
-  { word: 'Weihnachtsbaum', parts: ['Weihnacht', 's', 'baum'], head: 'der Baum', answer: 'der', en: 'Christmas tree' },
-  { word: 'Kinderzimmer', parts: ['Kind', 'er', 'zimmer'], head: 'das Zimmer', answer: 'das', en: 'children’s room' },
-  { word: 'Sonnenbrille', parts: ['Sonne', 'n', 'brille'], head: 'die Brille', answer: 'die', en: 'sunglasses' },
-  { word: 'Wörterbuch', parts: ['Wörter', 'buch'], head: 'das Buch', answer: 'das', en: 'dictionary', note: 'The first part is a plural: {Wörter}.' },
-  { word: 'Fußball', parts: ['Fuß', 'ball'], head: 'der Ball', answer: 'der', en: 'football' },
-  { word: 'Bushaltestelle', parts: ['Bus', 'haltestelle'], head: 'die Haltestelle', answer: 'die', en: 'bus stop', note: '{Haltestelle} is itself a compound: {halten} + {die Stelle}.' },
-  { word: 'Krankenhaus', parts: ['Kranken', 'haus'], head: 'das Haus', answer: 'das', en: 'hospital', note: 'A house for {die Kranken}, the sick.' },
-  { word: 'Tageszeitung', parts: ['Tag', 'es', 'zeitung'], head: 'die Zeitung', answer: 'die', en: 'daily newspaper' },
-  { word: 'Apfelsaft', parts: ['Apfel', 'saft'], head: 'der Saft', answer: 'der', en: 'apple juice' },
-  { word: 'Stadtplan', parts: ['Stadt', 'plan'], head: 'der Plan', answer: 'der', en: 'street map' },
-  { word: 'Fahrkarte', parts: ['Fahr', 'karte'], head: 'die Karte', answer: 'die', en: 'ticket' },
-  { word: 'Badezimmer', parts: ['Bade', 'zimmer'], head: 'das Zimmer', answer: 'das', en: 'bathroom' },
+  { word: 'Schreibtisch', de: 'der Schreibtisch', parts: ['Schreib', 'tisch'], head: 'der Tisch', answer: 'der', en: 'desk' },
+  { word: 'Handtasche', de: 'die Handtasche', parts: ['Hand', 'tasche'], head: 'die Tasche', answer: 'die', en: 'handbag' },
+  { word: 'Hausaufgabe', de: 'die Hausaufgabe', parts: ['Haus', 'aufgabe'], head: 'die Aufgabe', answer: 'die', en: 'homework' },
+  { word: 'Zahnbürste', de: 'die Zahnbürste', parts: ['Zahn', 'bürste'], head: 'die Bürste', answer: 'die', en: 'toothbrush' },
+  { word: 'Weihnachtsbaum', de: 'der Weihnachtsbaum', parts: ['Weihnacht', 's', 'baum'], head: 'der Baum', answer: 'der', en: 'Christmas tree' },
+  { word: 'Kinderzimmer', de: 'das Kinderzimmer', parts: ['Kind', 'er', 'zimmer'], head: 'das Zimmer', answer: 'das', en: 'children’s room' },
+  { word: 'Sonnenbrille', de: 'die Sonnenbrille', parts: ['Sonne', 'n', 'brille'], head: 'die Brille', answer: 'die', en: 'sunglasses' },
+  { word: 'Wörterbuch', de: 'das Wörterbuch', parts: ['Wörter', 'buch'], head: 'das Buch', answer: 'das', en: 'dictionary', note: 'The first part is a plural: {Wörter}.' },
+  { word: 'Fußball', de: 'der Fußball', parts: ['Fuß', 'ball'], head: 'der Ball', answer: 'der', en: 'football' },
+  { word: 'Bushaltestelle', de: 'die Bushaltestelle', parts: ['Bus', 'haltestelle'], head: 'die Haltestelle', answer: 'die', en: 'bus stop', note: '{Haltestelle} is itself a compound: {halten} + {die Stelle}.' },
+  { word: 'Krankenhaus', de: 'das Krankenhaus', parts: ['Kranken', 'haus'], head: 'das Haus', answer: 'das', en: 'hospital', note: 'A house for {die Kranken}, the sick.' },
+  { word: 'Tageszeitung', de: 'die Tageszeitung', parts: ['Tag', 'es', 'zeitung'], head: 'die Zeitung', answer: 'die', en: 'daily newspaper' },
+  { word: 'Apfelsaft', de: 'der Apfelsaft', parts: ['Apfel', 'saft'], head: 'der Saft', answer: 'der', en: 'apple juice' },
+  { word: 'Stadtplan', de: 'der Stadtplan', parts: ['Stadt', 'plan'], head: 'der Plan', answer: 'der', en: 'street map' },
+  { word: 'Fahrkarte', de: 'die Fahrkarte', parts: ['Fahr', 'karte'], head: 'die Karte', answer: 'die', en: 'ticket' },
+  { word: 'Badezimmer', de: 'das Badezimmer', parts: ['Bade', 'zimmer'], head: 'das Zimmer', answer: 'das', en: 'bathroom' },
 ];
+
+export const LONG_NOTE = {
+  note: 'Watch the article: it was {die} at every step until {der Kapitän} took the last place. The linking -s- after {Schifffahrt} works as in {Geburtstag}, and after {-schaft} as in {Gesellschaftsspiel}. The triple fff has been the correct spelling since the 1996 reform (before it: {Schiffahrt}).',
+};

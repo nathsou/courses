@@ -187,7 +187,7 @@ A strong argument admits what is true on the other side, and then goes on. Germa
 - Whole phrases: {Es stimmt zwar, dass …, aber …} / {Man kann nicht leugnen, dass …} / {Das mag sein, aber …} (the {mögen} of concession from lesson 38).
 
 :::grammar[After the clause, the verb comes first]
-A clause with {auch wenn}, {selbst wenn} or {obwohl} at the front fills first position, so the main clause starts with its verb: {Auch wenn es teuer ist, **lohnt** sich das Projekt.} But {zwar} is just an adverb: {Das Projekt ist zwar teuer, aber es lohnt sich}.
+A clause with {auch wenn}, {selbst wenn} or {obwohl} at the front fills first position, so the main clause starts with its verb ({lohnt}): {Auch wenn es teuer ist, lohnt sich das Projekt.} But {zwar} is just an adverb: {Das Projekt ist zwar teuer, aber es lohnt sich}.
 :::
 
 ```type

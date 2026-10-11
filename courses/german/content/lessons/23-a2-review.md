@@ -623,7 +623,7 @@ Everything A2 taught, in one place. The number after each topic is the lesson to
 - **Two objects:** noun dative before noun accusative; a pronoun before a noun; two pronouns: accusative before dative ({Ich schenke es ihr}) (14, 22).
 - **Reflexive pronouns:** {mich}/{dich} normally ({Ich freue mich}); {mir}/{dir} when there is another accusative object ({Ich wünsche mir ein Rad}) (17, 22).
 
-**Adjective endings (19).** If the article shows gender and case, the adjective ends in -e or -en (-e in the five "dictionary" places: {der alte Mann}, {die/die nette Frau}, {das/das kleine Kind}; -en everywhere else). If it does not ({ein Mann}, {ein Kind}) or there is no article, the adjective takes the ending of {der}, {die}, {das}: {ein alter Mann}, {ein kleines Kind}, {mit kaltem Wasser}. After {sein}: no ending.
+**Adjective endings (19).** If the article shows gender and case, the adjective ends in -e or -en: -e where the article is the "dictionary" form {der}, {die} or {das} (nominative and accusative singular: {der alte Mann}, {die nette Frau}, {das kleine Kind}), -en everywhere else. If it does not ({ein Mann}, {ein Kind}) or there is no article, the adjective takes the ending of {der}, {die}, {das}: {ein alter Mann}, {ein kleines Kind}, {mit kaltem Wasser}. After {sein}: no ending.
 
 **Comparing (18).** {schneller als}, {so schnell wie}, {am schnellsten}, {der schnellste Zug}. Umlaut in short words: {älter}, {größer}, {jünger}. Irregular: {gut, besser, am besten}; {viel, mehr, am meisten}; {gern, lieber, am liebsten}; {hoch, höher, am höchsten}; {nah, näher, am nächsten}.
 

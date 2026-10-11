@@ -10,7 +10,7 @@ goals:
 
 The German-speaking year is full of festivals, and each comes with its own phrase you are expected to know: {Frohe Weihnachten}, {Frohe Ostern}, {Guten Rutsch}, and, in Cologne in February, {Alaaf!} This lesson takes you round the year from Silvester to Nikolaus, and on the way covers the grammar of giving presents (who gets what), of wishing for things ({Ich wünsche mir …}) and of whose party it is ({Fatmas Party}).
 
-There is one cultural rule to learn before anything else: **never wish a German happy birthday before the day.** It is thought to bring bad luck. Wait until midnight, or until the next morning.
+There is one cultural rule to learn before anything else: **never wish a German happy birthday before the day.** It is thought to bring bad luck. Wait until the day itself.
 
 ## Das Jahr: Feste und Jahreszeiten
 
@@ -266,6 +266,10 @@ items:
     options: [dir, dich]
     answer: 0
     en: The date is 14 March. Make a note of it!
+  - de: Ein Geschenk für Papa? Ich überlege ___ das noch.
+    options: [mir, mich]
+    answer: 0
+    en: A present for Dad? I'm still thinking about it.
 ```
 
 ## Fatmas Party: whose?

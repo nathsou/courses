@@ -47,6 +47,11 @@ describe('lessons', () => {
         const out = compileLesson(src, join(dir, f));
         expect(() => compile(out, { filename: f.replace('.md', '.svelte'), generate: 'server' })).not.toThrow();
       });
+      it('leaves no stray braces in the prose (German runs are {plain text}, no **bold** inside)', () => {
+        const out = compileLesson(src, join(dir, f));
+        const stray = [...out.matchAll(/.{0,30}&#12[35];.{0,30}/g)].map((m) => m[0]);
+        expect(stray).toEqual([]);
+      });
       it('has well-formed exercises', () => {
         const errors: string[] = [];
         for (const c of blocks(src)) {

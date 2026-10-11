@@ -154,3 +154,6 @@ export const REL_QUIZ: RelQuizItem[] = [
   { de: 'Das Kind, ___ Eltern im Ausland arbeiten, wohnt bei seiner Oma.', answer: 'dessen', en: 'The child whose parents work abroad lives with their grandmother.', explain: 'Whose parents? Neuter antecedent: {dessen}, whatever comes after it.' },
   { de: 'Die Leute, ___ wir im Urlaub getroffen haben, besuchen uns im Sommer.', answer: 'die', en: 'The people we met on holiday are visiting us in the summer.', explain: 'Plural, object of {treffen}: accusative {die}.' },
 ];
+
+/** The quiz sentences with the gap filled, as spoken after an answer (for the audio collector). */
+export const REL_QUIZ_SPOKEN = REL_QUIZ.map((q) => q.de.replace('___', q.answer));

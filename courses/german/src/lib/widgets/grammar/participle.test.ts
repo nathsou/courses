@@ -84,3 +84,13 @@ describe('curated perfect verbs', () => {
     }
   });
 });
+
+describe('ge- verbs', () => {
+  it('tell a ge- prefix from a stem that starts with ge', () => {
+    expect(analyse('gewinnen', 'gewonnen').ge).toBe(false);
+    expect(analyse('gelingen', 'gelungen').ge).toBe(false);
+    expect(analyse('gefallen', 'gefallen').ge).toBe(false);
+    expect(analyse('gehen', 'gegangen').ge).toBe(true);
+    expect(analyse('gelten', 'gegolten').ge).toBe(true);
+  });
+});

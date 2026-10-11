@@ -161,3 +161,6 @@ export const K_QUIZ: KQuizItem[] = [
   { de: 'Wenn sie schneller gelaufen ___, hätte sie den Bus noch erreicht.', answer: ['wäre'], hint: 'sein', en: 'If she had run faster, she would still have caught the bus.', explain: '{laufen} takes {sein}: {sie wäre gelaufen}.' },
   { de: 'Wenn ich doch nur mehr Zeit ___!', answer: ['hätte'], hint: 'haben', en: 'If only I had more time!', explain: 'A wish: the wenn-clause alone, with {doch nur}.' },
 ];
+
+/** The quiz sentences with the gap filled, as spoken after an answer (for the audio collector). */
+export const K_QUIZ_SPOKEN = K_QUIZ.map((q) => q.de.replace('___', q.answer[0]!));
