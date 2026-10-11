@@ -15,6 +15,7 @@ A collection of interactive textbooks. The [course index](site/index.html) links
 | Digital Circuits | `courses/digital-circuits/` | `/digital-circuits/` |
 | Particle Physics *(in progress)* | `courses/particle-physics/` | `/particle-physics/` |
 | Mandarin, Out Loud | `courses/mandarin/` | `/mandarin/` |
+| Auf Deutsch: German from A1 to B2 | `courses/german/` | `/german/` |
 | Human Evolution | `courses/human-evolution/` | `/human-evolution/` |
 | For All Inputs: formal verification from SAT solvers to verified systems | `courses/formal-verification/` | `/formal-verification/` |
 | Memory Management | `courses/memory-management/` | `/memory-management/` |
@@ -37,6 +38,7 @@ npm ci --prefix courses/proofs
 npm ci --prefix courses/digital-circuits
 npm ci --prefix courses/particle-physics
 npm ci --prefix courses/mandarin
+npm ci --prefix courses/german
 npm ci --prefix courses/human-evolution
 npm ci --prefix courses/formal-verification
 npm ci --prefix courses/memory-management
@@ -45,11 +47,11 @@ pnpm --dir courses/language-models install --frozen-lockfile
 npm run build
 ```
 
-The build creates `dist/index.html` and the fourteen course directories in `dist/`. The CIC course and Proofs Are Programs share their language implementation, `packages/kernel/`. For a local preview, serve `dist/` as the web root, for example with `python3 -m http.server 8000 -d dist`.
+The build creates `dist/index.html` and the sixteen course directories in `dist/`. The CIC course and Proofs Are Programs share their language implementation, `packages/kernel/`. For a local preview, serve `dist/` as the web root, for example with `python3 -m http.server 8000 -d dist`.
 
 On GitHub Actions, the build derives the Pages project path from `GITHUB_REPOSITORY`. If hosting under a different path, set `COURSES_BASE_PATH` to that path (or to an empty string for a domain root). Relative links on the index and the two Vite courses adapt automatically; Astro uses this value for astrophysics links and assets, and the build passes `<base>/<course>` to each SvelteKit course as `BASE_PATH`.
 
-Pushes that touch `courses/language-models/` also run its tests, type checks and Python lab checks (`.github/workflows/language-models.yml`); pushes that touch `courses/incompleteness/` run its conversion check, type check and tests (`.github/workflows/incompleteness.yml`); pushes that touch `courses/proofs/` run its tests, type checks and build (`.github/workflows/proofs.yml`); pushes that touch `courses/elements/` run its conversion check, type check and tests (`.github/workflows/elements.yml`); pushes that touch `courses/digital-circuits/` run its tests, type check and build (`.github/workflows/digital-circuits.yml`); pushes that touch `courses/particle-physics/` do the same (`.github/workflows/particle-physics.yml`), so do pushes that touch `courses/mandarin/` (`.github/workflows/mandarin.yml`), so do pushes that touch `courses/formal-verification/` (`.github/workflows/formal-verification.yml`), so do pushes that touch `courses/memory-management/` (`.github/workflows/memory-management.yml`), and so do pushes that touch `courses/static-analysis/`, which also check every SonarJS reference against the pinned commit (`.github/workflows/static-analysis.yml`).
+Pushes that touch `courses/language-models/` also run its tests, type checks and Python lab checks (`.github/workflows/language-models.yml`); pushes that touch `courses/incompleteness/` run its conversion check, type check and tests (`.github/workflows/incompleteness.yml`); pushes that touch `courses/proofs/` run its tests, type checks and build (`.github/workflows/proofs.yml`); pushes that touch `courses/elements/` run its conversion check, type check and tests (`.github/workflows/elements.yml`); pushes that touch `courses/digital-circuits/` run its tests, type check and build (`.github/workflows/digital-circuits.yml`); pushes that touch `courses/particle-physics/` do the same (`.github/workflows/particle-physics.yml`), so do pushes that touch `courses/mandarin/` (`.github/workflows/mandarin.yml`) and `courses/german/` (`.github/workflows/german.yml`), so do pushes that touch `courses/formal-verification/` (`.github/workflows/formal-verification.yml`), so do pushes that touch `courses/memory-management/` (`.github/workflows/memory-management.yml`), and so do pushes that touch `courses/static-analysis/`, which also check every SonarJS reference against the pinned commit (`.github/workflows/static-analysis.yml`).
 Human Evolution runs its model/content tests, type check, prefixed build and browser learning/navigation checks (`.github/workflows/human-evolution.yml`).
 Pushes that touch `packages/kernel/` (the language shared by the CIC course and Proofs Are Programs) run the checks of both courses (`.github/workflows/cic.yml` and `.github/workflows/proofs-are-programs.yml`).
 

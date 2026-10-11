@@ -1,0 +1,5 @@
+[
+  { "issue": "\"bekommen (bekommt, bekam, hat bekommen)\": auxiliary \"hat\", Wiktionary has haben or sein", "why": "bekommen in its usual sense (to get, to receive) always takes haben; sein is only for the rare sense 'to agree with' (Das Essen ist mir gut bekommen)." },
+  { "issue":"\"stehen (steht, stand, hat gestanden) (+ D)\": auxiliary \"hat\", Wiktionary has haben or sein", "why": "Standard German (Duden) uses haben; ist gestanden is southern German, Austrian and Swiss. The course teaches the standard form." },
+  { "issue": "\"die Bank, -en\": plural Banken, Wiktionary has Bänke", "why": "Homograph: die Bank (financial institution) has the plural Banken; Bänke is the plural of die Bank meaning bench, which is the entry the lexicon picks first." }
+]

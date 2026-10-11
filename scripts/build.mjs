@@ -69,6 +69,14 @@ const courses = [
     }),
   },
   {
+    // Auf Deutsch (German): the same single-package SvelteKit setup as Mandarin.
+    name: 'german',
+    env: (base) => ({
+      BASE_PATH: `${base}/german`,
+      NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
+    }),
+  },
+  {
     name: 'human-evolution',
     env: (base) => ({ BASE_PATH: `${base}/human-evolution` }),
   },

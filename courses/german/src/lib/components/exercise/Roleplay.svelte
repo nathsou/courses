@@ -1,0 +1,277 @@
+<script lang="ts">
+  import { untrack, onDestroy } from 'svelte';
+  /**
+   * Free conversation with the AI teacher playing a character, with a goal to reach. The AI keeps to
+   * the learner's level; the course double-checks and flags words it has not taught yet.
+   */
+  import type { Roleplay } from '$lib/exercises/types';
+  import { settings } from '$lib/state/settings.svelte';
+  import { deck } from '$lib/srs/deck.svelte';
+  import { speech } from '$lib/audio/speech.svelte';
+  import { askTutor, tag, TutorError, type TutorMessage } from '$lib/tutor/tutor';
+  import { roleplaySystem, roleplayVerdictSystem } from '$lib/tutor/prompts';
+  import { levelLabel, unfamiliar } from '$lib/tutor/known';
+  import De from '../de/De.svelte';
+  import PlayButton from '../de/PlayButton.svelte';
+  import UmlautKeys from '../de/UmlautKeys.svelte';
+  import Rich from './Rich.svelte';
+  import TutorGate from './TutorGate.svelte';
+  import Icon from '../ui/Icon.svelte';
+
+  let { data, report }: { data: Roleplay; id: string; report: (ok: boolean) => void } = $props();
+
+  type Turn = { from: 'they' | 'you'; de: string; en?: string; fix?: string; fresh?: string[] };
+  let log = $state<Turn[]>([]);
+  let input = $state('');
+  let busy = $state(false);
+  let error = $state('');
+  let done = $state(false);
+  let review = $state('');
+  let showEn = $state(false);
+  let controller: AbortController | null = null;
+  let generation = 0;
+  onDestroy(() => { generation++; controller?.abort(); });
+
+  const known = $derived(new Set([...Object.values(deck.data.cards).map((c) => c.word), ...(data.words ?? [])]));
+  const setup = $derived({
+    setting: data.setting,
+    goal: data.goal,
+    partner: data.partner,
+    level: levelLabel(settings.data.start),
+    known: [...known],
+    checks: data.checks,
+  });
+
+  log = [{ from: 'they', de: untrack(() => data.opener), en: untrack(() => data.openerEn) }];
+  let field: HTMLInputElement | undefined = $state();
+
+  function history(): TutorMessage[] {
+    // The opener is the AI teacher's first line; the API needs the conversation to start with the user.
+    const msgs: TutorMessage[] = [{ role: 'user', content: '(The scene begins. Say your opening line.)' }];
+    for (const t of log) {
+      if (t.from === 'they') msgs.push({ role: 'assistant', content: `<reply>${t.de}</reply>\n<en>${t.en ?? ''}</en>\n<fix></fix>\n<done>no</done>` });
+      else msgs.push({ role: 'user', content: t.de });
+    }
+    return msgs;
+  }
+
+  async function send(e?: Event) {
+    e?.preventDefault();
+    const text = input.trim();
+    if (!text || busy) return;
+    error = '';
+    log = [...log, { from: 'you', de: text }];
+    input = '';
+    busy = true;
+    controller = new AbortController();
+    const id = ++generation;
+    try {
+      const out = await askTutor({ system: roleplaySystem(setup), messages: history(), effort: 'low', signal: controller.signal });
+      if (id !== generation) return;
+      const de = tag(out, 'reply') || out.trim();
+      const fix = tag(out, 'fix');
+      if (fix) log[log.length - 1]!.fix = fix;
+      log = [...log, { from: 'they', de, en: tag(out, 'en'), fresh: unfamiliar(de, known, settings.data.start) }];
+      void speech.say(de);
+      if (/^yes/i.test(tag(out, 'done'))) await finish(true);
+    } catch (err) {
+      if (id !== generation) return;
+      error = err instanceof TutorError ? err.message : String(err);
+      log = log.slice(0, -1);
+      input = text;
+    } finally {
+      if (id === generation) busy = false;
+    }
+  }
+
+  async function finish(reached: boolean) {
+    const id = ++generation;
+    controller?.abort();
+    controller = new AbortController();
+    done = true;
+    busy = true;
+    try {
+      const transcript = log.map((t) => `${t.from === 'you' ? 'Learner' : data.partner}: ${t.de}`).join('\n');
+      const feedback = await askTutor({ system: roleplayVerdictSystem(setup), messages: [{ role: 'user', content: transcript }], effort: 'medium', signal: controller.signal });
+      if (id !== generation) return;
+      review = feedback;
+      report(reached);
+    } catch (err) {
+      if (id !== generation) return;
+      review = err instanceof TutorError ? err.message : String(err);
+    } finally {
+      if (id === generation) busy = false;
+    }
+  }
+
+  function restart() {
+    generation++;
+    controller?.abort();
+    busy = false;
+    log = [{ from: 'they', de: data.opener, en: data.openerEn }];
+    done = false;
+    review = '';
+    error = '';
+  }
+</script>
+
+{#if !settings.tutorEnabled}
+  <TutorGate what="This conversation" />
+{:else}
+  <div class="rp">
+    <p class="brief"><Icon name="map" size={15} /> <span><Rich text={data.setting} /> <strong>Your goal:</strong> <Rich text={data.goal} /></span></p>
+    {#if data.words?.length}<p class="words ui">Try to use: {#each data.words as w (w)}<span class="chip"><De text={w} play={false} /></span>{/each}</p>{/if}
+    <div class="log" aria-live="polite">
+      {#each log as t, i (i)}
+        <div class="msg {t.from}">
+          <div class="bubble">
+            <span class="line"><De text={t.de} size="md" play={false} />{#if t.from === 'they'}<PlayButton text={t.de} small />{/if}</span>
+            {#if t.en && showEn}<span class="en">{t.en}</span>{/if}
+            {#if t.fresh?.length}<span class="fresh ui">New to you: {#each t.fresh as w (w)}<De text={w} play={false} /> {/each}</span>{/if}
+          </div>
+          {#if t.fix}<p class="fix ui"><Icon name="lightbulb" size={14} /> <Rich text={t.fix} /></p>{/if}
+        </div>
+      {/each}
+      {#if busy && !done}<div class="msg they"><div class="bubble typing">…</div></div>{/if}
+    </div>
+    {#if error}<p class="err ui">{error}</p>{/if}
+    {#if !done}
+      <form class="say ui" onsubmit={send}>
+        <input bind:this={field} bind:value={input} lang="de" placeholder="Auf Deutsch…" aria-label="Your reply" autocomplete="off" disabled={busy} />
+        <button class="btn primary" disabled={busy || !input.trim()}>Send</button>
+      </form>
+      <div class="row ui">
+        <UmlautKeys target={field} oninput={(v) => (input = v)} />
+        <label><input type="checkbox" bind:checked={showEn} /> Show English</label>
+        {#if log.length > 2}<button class="btn small ghost" onclick={() => finish(false)} disabled={busy}>End and get feedback</button>{/if}
+      </div>
+    {:else}
+      <div class="review">
+        <p class="ui rh"><Icon name="sparkle" size={14} /> Feedback</p>
+        {#if busy}<p>Reading your conversation…</p>{:else}<p><Rich text={review} /></p>{/if}
+        <button class="btn small" onclick={restart}><Icon name="refresh" size={14} />Start over</button>
+      </div>
+    {/if}
+  </div>
+{/if}
+
+<style>
+  .brief {
+    display: flex;
+    gap: 0.45rem;
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+    color: var(--ink-2);
+  }
+  .words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: center;
+    margin: 0 0 0.8rem;
+    font-size: 0.8rem;
+    color: var(--mute);
+  }
+  .chip {
+    background: var(--pn);
+    border-radius: 8px;
+    padding: 0 0.4rem;
+  }
+  .log {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+  .msg {
+    display: grid;
+    justify-items: start;
+  }
+  .msg.you {
+    justify-items: end;
+  }
+  .bubble {
+    max-width: 90%;
+    background: var(--pn);
+    padding: 0.35rem 0.8rem 0.45rem;
+    border-radius: 16px 16px 16px 4px;
+  }
+  .you .bubble {
+    background: var(--accent-soft);
+    border-radius: 16px 16px 4px 16px;
+  }
+  .typing {
+    color: var(--mute);
+    animation: blink 1s infinite alternate;
+  }
+  .line {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .en {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--ink-2);
+    font-style: italic;
+  }
+  .fresh {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gold);
+  }
+  .fix {
+    display: flex;
+    gap: 0.3rem;
+    align-items: baseline;
+    max-width: 90%;
+    margin: 0.2rem 0 0;
+    font-size: 0.85rem;
+    color: var(--jade);
+  }
+  .say {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .say input {
+    flex: 1;
+    min-width: 0;
+    font-size: 1rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: 10px;
+    border: 1.5px solid var(--line-strong);
+    background: var(--panel);
+    color: var(--fg);
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--mute);
+  }
+  .err {
+    color: var(--bad);
+    font-size: 0.88rem;
+  }
+  .review {
+    border-top: 1px dashed var(--line-strong);
+    padding-top: 0.7rem;
+  }
+  .rh {
+    margin: 0;
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-ink);
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+  }
+  @keyframes blink {
+    from {
+      opacity: 0.3;
+    }
+  }
+</style>
