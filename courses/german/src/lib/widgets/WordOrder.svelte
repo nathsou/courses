@@ -58,7 +58,8 @@
     const row = mainRow(preset, front);
     const q = m === 'questions' && front.kind !== 'chunk';
     const punct = q ? '?' : '.';
-    const asked = front.kind === 'wh' ? chunksOf(preset).find((c) => c.key === front.id)?.question : undefined;
+    const f = front;
+    const asked = f.kind === 'wh' ? chunksOf(preset).find((c) => c.key === f.id)?.question : undefined;
     const en = front.kind === 'yesno' ? (preset.question ?? preset.en) : (asked ?? preset.en);
     return { rows: [{ label: '', row }], text: rowText(row, punct), en, line: FIELDS.flatMap((f) => row[f]), punct };
   });

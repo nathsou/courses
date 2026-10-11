@@ -35,7 +35,7 @@ To turn an active sentence into a passive one, the **accusative object becomes t
 The person doing it disappears, or comes back with {von} (later in this lesson): {Das Brot wird vom Bäcker gebacken.}
 
 :::mistake
-English "is done" is **not** German {ist gemacht}. {Die Fenster werden jede Woche geputzt} means "the windows are cleaned every week". {Die Fenster sind geputzt} means "the windows are clean", a finished state (that is the state passive, a B2 topic). If an action is happening or happens regularly, you need {werden}.
+English "is done" is **not** German {ist gemacht}. {Die Fenster werden jede Woche geputzt} means "the windows are cleaned every week". {Die Fenster sind geputzt} means "the windows have been cleaned" (they are clean now), a finished state (that is the state passive, a B2 topic). If an action is happening or happens regularly, you need {werden}.
 :::
 
 {werden} now has three jobs, and you can always tell them apart by what comes with it:
@@ -246,7 +246,7 @@ text: |
   GRAZ. Nach zwei Jahren Umbau ist das Café Lindner in der Grazer Innenstadt
   am Samstag wiedereröffnet worden.
 
-  Das Kaffeehaus wurde 1894 von dem Konditor Franz Lindner gegründet und war über
+  Das Kaffeehaus wurde 1894 vom Konditor Franz Lindner gegründet und war über
   hundert Jahre lang ein beliebter Treffpunkt für Studierende, Künstler und Politiker.
   2022 wurde es geschlossen, weil das alte Gebäude in einem sehr schlechten Zustand war.
 
@@ -388,7 +388,7 @@ Ben: Okay. Und das Altpapier? | OK. And the waste paper?
 Aylin: Das kommt in die blaue Tonne, und die Essensreste kommen in die Biotonne, die braune. | That goes in the blue bin, and food scraps go in the organic bin, the brown one.
 Ben: Und die leeren Bierflaschen? | And the empty beer bottles?
 Aylin: Die werden auf keinen Fall weggeworfen! Auf die gibt es Pfand. Die bringst du in den Supermarkt zurück. | Those definitely don't get thrown away! There's a deposit on them. You take them back to the supermarket.
-Ben: Bei uns in Manchester gibt es nur zwei Tonnen. | At home in Manchester we only have two bins.
+Ben: Bei mir zu Hause hatten wir nur zwei Tonnen. | Back home we only had two bins.
 Aylin: Tja, willkommen in Köln. Hier wird getrennt! | Well, welcome to Cologne. Here we sort our rubbish!
 ```
 
@@ -470,7 +470,7 @@ items:
   - prompt: "{Ich wurde sofort geholfen.}"
     answer: Mir wurde sofort geholfen.
   - prompt: "{Am Samstag es wird getanzt.}"
-    answer: Am Samstag wird getanzt.
+    answer: [Am Samstag wird getanzt., Es wird am Samstag getanzt.]
   - prompt: "{Das Haus ist 1890 gebaut geworden.}"
     answer: Das Haus ist 1890 gebaut worden.
   - prompt: "{Die Fenster sind jede Woche geputzt.} (they are cleaned every week)"

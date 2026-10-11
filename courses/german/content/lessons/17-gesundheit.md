@@ -132,7 +132,7 @@ Frau Krause: Bringen Sie bitte Ihre Versichertenkarte mit. Bis später! | Please
 **{die Beschwerden}** (plural) are your symptoms; in lesson 16, {eine Beschwerde} was a complaint at a hotel. Both are about something that is bothering you. And notice {seit drei Tagen} with the present tense: the fever started three days ago and is still there.
 
 :::culture
-In Germany most people have a family doctor, the {Hausarzt} or {Hausärztin}, and bring their health insurance card ({die Versichertenkarte}) to every appointment; in Austria it is called {die e-card}. If you are ill for more than three days, your employer needs a sick note: the doctor signs you off sick ({Sie werden krankgeschrieben}), and these days the note goes to your health insurer electronically. And in Germany and Austria even a packet of painkillers comes from an {Apotheke}: a {Drogerie} sells shampoo and vitamins, not medicine. One pharmacy in every area is always open at night: look for the {Notdienst} sign.
+In Germany most people have a family doctor, the {Hausarzt} or {Hausärztin}, and bring their health insurance card ({die Versichertenkarte}) to every appointment; in Austria it is called {die e-card}. If you are ill for more than three days, your employer needs a sick note: the doctor signs you off sick ({Sie werden krankgeschrieben}), and these days the note goes to your health insurer electronically. And in Germany and Austria even a packet of painkillers comes from an {Apotheke}: a {Drogerie} sells shampoo and vitamins, not medicine. At night and on Sundays the pharmacies of each area take turns to stay open: look for the {Notdienst} sign.
 :::
 
 ```words
@@ -171,7 +171,7 @@ In Switzerland you go to {das Spital} rather than {das Krankenhaus}; Austrians u
 
 ## Ich fühle mich nicht gut: reflexive verbs
 
-In {Ich wasche das Auto} the washing is done to the car. In **{Ich wasche mich}** it is done to the person doing it: the object is the subject again. That is a **reflexive** verb. English mostly drops the "myself" ("I wash", "I feel", "I hurry"), but German keeps it, so many everyday verbs come with a reflexive pronoun:
+In {Ich wasche das Auto} the washing is done to the car. In **{Ich wasche mich}** it is done to the person doing it: subject and object are the same person. That is a **reflexive** verb. English mostly drops the "myself" ("I wash", "I feel", "I hurry"), but German keeps it, so many everyday verbs come with a reflexive pronoun:
 
 | sich fühlen: singular | plural |
 | --- | --- |
@@ -245,7 +245,7 @@ The friendliest way to give advice is **{sollte}**: {Du solltest zum Arzt gehen}
 | {du solltest} | {ihr solltet} |
 | {er/sie/es sollte} | {sie/Sie sollten} |
 
-The context tells you which: {Du solltest im Bett bleiben} is advice; {Ich sollte Mia abholen, aber ich habe es vergessen} is the past. For polite advice to a stranger: {Sie sollten …}. To soften it further, add {vielleicht} or {lieber}: {Du solltest lieber zu Hause bleiben} (you'd better stay at home).
+The context tells you which: {Du solltest im Bett bleiben} is advice; {Ich sollte Mia abholen, aber ich habe es vergessen} is the past. For polite advice to a stranger: {Sie sollten …}. To soften it further, add {vielleicht}: {Du solltest vielleicht zum Arzt gehen}. With {lieber} (rather) it suggests the better choice: {Du solltest lieber zu Hause bleiben} (you'd better stay at home).
 
 Three neighbours of {solltest}, each with its own job:
 
@@ -278,13 +278,13 @@ items:
 title: should, must, mustn't?
 items:
   - de: Du siehst müde aus. Du ___ früher ins Bett gehen.
-    options: [solltest, musst nicht, darfst]
+    options: [solltest, musst nicht, darfst nicht]
     answer: 0
     en: You look tired. You should go to bed earlier.
-  - de: Heute ist Sonntag. Du ___ nicht arbeiten.
+  - de: Morgen ist Samstag. Du ___ nicht früh aufstehen.
     options: [musst, darfst]
     answer: 0
-    en: It's Sunday today. You don't have to work.
+    en: Tomorrow is Saturday. You don't have to get up early.
   - de: Mit Fieber ___ du nicht zum Sport gehen.
     options: [darfst, musst]
     answer: 0
@@ -331,7 +331,7 @@ items:
 
 ```read
 title: Krankmeldung
-setting: An email Elias sends to his boss early on a Monday morning.
+setting: An email Elias sends to his boss on a Monday morning.
 text: |
   Betreff: Krankmeldung
 
