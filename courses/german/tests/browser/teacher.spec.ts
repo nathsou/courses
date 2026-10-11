@@ -1,11 +1,17 @@
 import { test, expect, type Page } from '@playwright/test';
 
+/** Open a page and wait until it has hydrated, so clicks reach their handlers. */
+async function open(page: Page, url: string) {
+  await page.goto(url);
+  await page.locator('html[data-ready]').waitFor({ state: 'attached' });
+}
+
 async function configure(page: Page) {
   await page.addInitScript(() => localStorage.setItem('german:settings', JSON.stringify({ provider: 'openai', tutors: { openai: { apiKey: 'browser-test-key', model: 'test-model' } } })));
 }
 
 test('teacher is available without a key and sends users to provider settings', async ({ page }) => {
-  await page.goto('/practice/');
+  await open(page, '/practice/');
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
   const chat = page.getByRole('dialog', { name: 'German teacher' });
   await expect(chat.getByRole('link', { name: 'Settings' })).toHaveAttribute('href', '/settings/#tutor');
@@ -21,7 +27,7 @@ test('teacher gets lesson context, renders advice and keeps the chat across navi
     request = route.request().postDataJSON();
     await route.fulfill({ json: { choices: [{ message: { content: '<reply>Use einen with masculine nouns after haben.</reply><translation></translation><advice>Try: Ich habe einen Bruder.</advice>' } }] } });
   });
-  await page.goto('/learn/04-familie/');
+  await open(page, '/learn/04-familie/');
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
   const chat = page.getByRole('dialog', { name: 'German teacher' });
   await chat.getByRole('textbox', { name: 'Message to your German teacher' }).fill('Why einen Bruder?');
@@ -40,7 +46,7 @@ test('teacher gets lesson context, renders advice and keeps the chat across navi
 
 test('umlaut keys insert at the cursor; IME Enter does not submit', async ({ page }) => {
   await configure(page);
-  await page.goto('/');
+  await open(page, '/');
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
   const chat = page.getByRole('dialog', { name: 'German teacher' });
   const input = chat.getByRole('textbox', { name: 'Message to your German teacher' });
@@ -62,7 +68,7 @@ test('cancellation restores the draft and a retry can succeed', async ({ page })
     if (requests === 1) return;
     await route.fulfill({ json: { choices: [{ message: { content: '<reply>Hallo! Wie geht es dir?</reply><translation>Hello! How are you?</translation><advice></advice>' } }] } });
   });
-  await page.goto('/');
+  await open(page, '/');
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
   const chat = page.getByRole('dialog', { name: 'German teacher' });
   await chat.getByRole('button', { name: 'Converse in German' }).click();
@@ -80,7 +86,7 @@ test('cancellation restores the draft and a retry can succeed', async ({ page })
 
 test('typing in the chat does not answer a running der/die/das game', async ({ page }) => {
   await configure(page);
-  await page.goto('/practice/#gender');
+  await open(page, '/practice/#gender');
   await page.locator('section.stage').getByRole('button', { name: 'Start', exact: true }).click();
   const before = await page.locator('section.stage .score').textContent();
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
@@ -92,7 +98,7 @@ test('typing in the chat does not answer a running der/die/das game', async ({ p
 
 test('provider changes keep keys separate and backups contain no credentials', async ({ page }) => {
   await configure(page);
-  await page.goto('/settings/');
+  await open(page, '/settings/');
   await page.getByLabel('Provider', { exact: true }).selectOption('openrouter');
   await expect(page.getByLabel('OpenRouter API key')).toHaveValue('');
   await page.getByLabel('OpenRouter API key').fill('router-browser-test-key');
@@ -119,7 +125,7 @@ test('editing a sentence clears feedback and restarting a roleplay cancels pendi
       : '<reply>Sehr gut!</reply><en>Very good!</en><fix></fix><done>yes</done>';
     await route.fulfill({ json: { choices: [{ message: { content } }] } });
   });
-  await page.goto('/learn/04-familie/');
+  await open(page, '/learn/04-familie/');
   const sentence = page.getByRole('textbox', { name: 'Your sentence' });
   await sentence.fill('Ich habe eine Schwester.');
   await page.getByRole('button', { name: 'Check my sentence' }).click();

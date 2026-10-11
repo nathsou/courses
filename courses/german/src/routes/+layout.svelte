@@ -27,6 +27,8 @@
     deck.load();
     placement.load();
     speech.prepare();
+    // Hydrated: buttons work from here on (browser tests wait for this).
+    document.documentElement.dataset.ready = '';
     return mountSidebar('german', (state) => (nav.sidebarOpen = state.open));
   });
   afterNavigate(() => {

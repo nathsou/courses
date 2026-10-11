@@ -33,10 +33,21 @@
     { id: 'map', title: 'Town map', de: 'links, rechts', icon: 'map', text: 'Follow directions through a small German town.', C: widget('TownMap') },
   ];
   const available = GAMES.filter((g) => g.C);
-  const current = $derived(page.url.hash.slice(1) || null);
+  // The router's URL, but also the browser's own hash: a card tapped before hydration (or a hash
+  // set from outside) changes location.hash without the router seeing it.
+  let hash = $state('');
+  $effect(() => {
+    hash = page.url.hash;
+  });
+  $effect(() => {
+    hash = location.hash;
+  });
+  const current = $derived(hash.slice(1) || null);
   const game = $derived(available.find((g) => g.id === current));
   const bestOf = (prefix?: string) => (prefix ? Math.max(-1, ...Object.entries(progress.data.best).filter(([k]) => k.startsWith(prefix)).map(([, v]) => v)) : -1);
 </script>
+
+<svelte:window onhashchange={() => (hash = location.hash)} />
 
 <svelte:head><title>Practice · Auf Deutsch</title></svelte:head>
 
