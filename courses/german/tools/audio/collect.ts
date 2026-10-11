@@ -16,7 +16,7 @@ export async function collect(root: string): Promise<Map<string, Tier>> {
   const out = new Map<string, Tier>();
   const add = (text: string, tier: Tier) => {
     const k = clipKey(text);
-    if (!k || !/\p{L}/u.test(k) || k.length > 600 || k.includes('___')) return;
+    if (!k || !/\p{L}/u.test(k) || k.length > 2000 || k.includes('___')) return;
     const prev = out.get(k);
     if (!prev || ORDER.indexOf(tier) < ORDER.indexOf(prev)) out.set(k, tier);
   };

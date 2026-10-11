@@ -613,7 +613,7 @@ checks: [spelt their name with German letter names, gave a phone number in Germa
 ```
 
 ```compose
-task: Write three sentences about yourself with numbers in words: your age, your phone number (make one up) and the year you were born.
+task: Write three sentences about yourself, with the numbers in words. Give your age, your phone number (make one up) and the year you were born.
 target: numbers (units before tens), Ich bin … Jahre alt, years
 hints: ['{Ich bin … Jahre alt.}', '{Meine Nummer ist …}', '{Ich bin … geboren.}']
 examples: [Ich bin vierunddreißig Jahre alt., Meine Nummer ist null eins sieben sechs – zwölf – vierundachtzig – dreißig., Ich bin neunzehnhunderteinundneunzig geboren.]
