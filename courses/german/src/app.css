@@ -238,6 +238,9 @@ h3 {
 :where(.prose) p,
 :where(.prose) li {
   text-wrap: pretty;
+  /* German compounds can be longer than a phone is wide: hyphenate, and break if all else fails. */
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 :where(.prose) ul.prose-list,
 :where(.prose) ol.prose-list {

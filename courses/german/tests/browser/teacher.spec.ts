@@ -81,13 +81,13 @@ test('cancellation restores the draft and a retry can succeed', async ({ page })
 test('typing in the chat does not answer a running der/die/das game', async ({ page }) => {
   await configure(page);
   await page.goto('/practice/#gender');
-  await page.locator('.stage').getByRole('button', { name: 'Start', exact: true }).click();
-  const before = await page.locator('.stage .score').textContent();
+  await page.locator('section.stage').getByRole('button', { name: 'Start', exact: true }).click();
+  const before = await page.locator('section.stage .score').textContent();
   await page.getByRole('button', { name: 'Teacher', exact: true }).click();
   const chat = page.getByRole('dialog', { name: 'German teacher' });
   await chat.getByRole('textbox', { name: 'Message to your German teacher' }).pressSequentially('123');
-  await expect(page.locator('.stage .score')).toHaveText(before!);
-  await expect(page.locator('.stage .flash span')).toHaveCount(0);
+  await expect(page.locator('section.stage .score')).toHaveText(before!);
+  await expect(page.locator('section.stage .flash span')).toHaveCount(0);
 });
 
 test('provider changes keep keys separate and backups contain no credentials', async ({ page }) => {

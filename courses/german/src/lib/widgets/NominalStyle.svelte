@@ -321,7 +321,7 @@
   }
   .match {
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
     gap: 0.5rem;
   }
   .col {
@@ -341,6 +341,9 @@
     font-size: 0.95rem;
     line-height: 1.3;
     min-height: 2.6rem;
+    min-width: 0;
+    overflow-wrap: break-word;
+    hyphens: auto;
     transition: border-color 120ms, background-color 120ms;
   }
   .m:hover:not(:disabled) {

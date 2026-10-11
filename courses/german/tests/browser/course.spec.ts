@@ -45,7 +45,7 @@ test('every practice tool opens, fits the viewport and loads without errors', as
   expect(ids.length).toBeGreaterThanOrEqual(4);
   for (const id of ids) {
     await page.goto(`/practice/#${id}`);
-    await expect(page.locator('.stage')).toBeVisible();
+    await expect(page.locator('section.stage')).toBeVisible();
     expect(await fits(page), id).toBeLessThanOrEqual(1);
     await expect(page.locator('button [role="button"], button button')).toHaveCount(0);
   }
