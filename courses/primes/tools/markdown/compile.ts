@@ -113,6 +113,22 @@ const RAW_FIELDS: Record<string, string[]> = {
 /** YAML fields of exercise blocks that hold Markdown (rendered at build time). */
 const MARKDOWN_FIELDS = new Set(['prompt', 'text', 'solution', 'why', 'explain', 'hint', 'hints', 'lines', 'distractors', 'rubric', 'feedback', 'note', 'success', 'options', 'label']);
 
+/**
+ * A deterministic shuffle of quiz options, seeded by the question text, so that authors can list the correct
+ * answer first without readers learning that it always comes first. Same order on every build.
+ */
+function shuffled<T>(items: T[], seed: string): T[] {
+  let h = 2166136261;
+  for (const ch of seed) h = Math.imul(h ^ ch.charCodeAt(0), 16777619) >>> 0;
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    h = Math.imul(h ^ (h >>> 13), 0x5bd1e995) >>> 0;
+    const j = h % (i + 1);
+    [out[i], out[j]] = [out[j]!, out[i]!];
+  }
+  return out;
+}
+
 const pascal = (s: string) => s.replace(/(^|[-_])(\w)/g, (_, __, c: string) => c.toUpperCase());
 const camel = (s: string) => s.replace(/[-_](\w)/g, (_, c: string) => c.toUpperCase());
 
@@ -387,7 +403,7 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
               const rendered = {
                 question: await renderInline(data.q),
                 options: await Promise.all(
-                  data.options.map(async (o) => ({ text: await renderInline(o.text), correct: !!o.correct, why: await renderInline(o.why) })),
+                  shuffled(data.options, data.q).map(async (o) => ({ text: await renderInline(o.text), correct: !!o.correct, why: await renderInline(o.why) })),
                 ),
               };
               ctx.components[i]!.props = `data={withBase(${JSON.stringify(rendered)})}`;

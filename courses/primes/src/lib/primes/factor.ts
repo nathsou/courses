@@ -146,3 +146,36 @@ export function isSmooth(n: number, B: number): boolean {
   }
   return n === 1;
 }
+
+/**
+ * Like `factor`, but gives up (returning null) when the work exceeds `ms` milliseconds. Used by widgets that
+ * must stay responsive on numbers that happen to be hard to factor.
+ */
+export function factorWithin(n: bigint, ms = 1500): [bigint, number][] | null {
+  const deadline = performance.now() + ms;
+  const counts = new Map<bigint, number>();
+  const add = (p: bigint) => counts.set(p, (counts.get(p) ?? 0) + 1);
+  for (const p of primesUpTo(10_000)) {
+    const P = BigInt(p);
+    while (n % P === 0n) {
+      add(P);
+      n /= P;
+    }
+  }
+  const stack = n > 1n ? [n] : [];
+  while (stack.length) {
+    const m = stack.pop()!;
+    if (isPrime(m)) {
+      add(m);
+      continue;
+    }
+    let found: bigint | undefined;
+    for (let c = 1n; !found; c++) {
+      if (performance.now() > deadline) return null;
+      found = pollardRho(m, 2n, c, 20_000)?.factor;
+      if (!found && performance.now() > deadline) return null;
+    }
+    stack.push(found, m / found);
+  }
+  return [...counts.entries()].sort((a, b) => (a[0] < b[0] ? -1 : 1));
+}

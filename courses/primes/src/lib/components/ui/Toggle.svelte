@@ -27,7 +27,7 @@
   .track {
     width: 32px;
     height: 18px;
-    border-radius: 0;
+    border-radius: 9px;
     background: var(--surface);
     border: 1px solid var(--line-strong);
     position: relative;
@@ -38,18 +38,19 @@
     position: absolute;
     top: 1px;
     left: 1px;
-    width: 10px;
-    height: 10px;
-    border-radius: 0;
-    background: var(--fg);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--ink-3);
     transition: transform 150ms;
   }
   input:checked + .track {
-    background: var(--fx-yellow);
+    background: var(--ac);
+    border-color: var(--ac);
   }
   input:checked + .track .thumb {
     transform: translateX(14px);
-    background: var(--fx-ink);
+    background: var(--on-accent);
   }
   input:focus-visible + .track {
     outline: 3px solid var(--focus);

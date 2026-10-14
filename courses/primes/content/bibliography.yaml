@@ -40,3 +40,89 @@ clay:
   year: 2000
   title: The Millennium Prize Problems — the Riemann Hypothesis
   url: https://www.claymath.org/millennium/riemann-hypothesis/
+euclid:
+  authors: Euclid (tr. T. L. Heath)
+  year: c. 300 BC
+  title: The Elements
+  venue: Heath’s translation, Cambridge University Press (1908); online edition by David Joyce
+  url: https://mathcs.clarku.edu/~djoyce/elements/elements.html
+bezout1779:
+  authors: Étienne Bézout
+  year: 1779
+  title: Théorie générale des équations algébriques
+  venue: Ph.-D. Pierres, Paris
+  note: Bézout’s identity for polynomials. The integer version appears earlier, in Bachet’s Problèmes plaisants et délectables (2nd edition, 1624).
+lame1844:
+  authors: Gabriel Lamé
+  year: 1844
+  title: Note sur la limite du nombre des divisions dans la recherche du plus grand commun diviseur entre deux nombres entiers
+  venue: Comptes rendus de l’Académie des sciences 19, 867–870
+knuth-taocp2:
+  authors: Donald E. Knuth
+  year: 1997
+  title: 'The Art of Computer Programming, Volume 2: Seminumerical Algorithms'
+  venue: 3rd edition, Addison-Wesley
+  note: Section 4.5.2 (the greatest common divisor, including the binary algorithm) and 4.5.3 (analysis of Euclid’s algorithm, including Lamé’s theorem and the Heilbronn–Dixon average).
+gauss1801:
+  authors: Carl Friedrich Gauss
+  year: 1801
+  title: Disquisitiones Arithmeticae
+  venue: Leipzig. English translation by A. A. Clarke, Yale University Press (1966); Springer reprint (1986)
+  note: Article 16 states and proves unique factorisation. Sections II–IV develop congruences, primitive roots and quadratic reciprocity.
+edwards-flt:
+  authors: Harold M. Edwards
+  year: 1977
+  title: 'Fermat’s Last Theorem: A Genetic Introduction to Algebraic Number Theory'
+  venue: Springer (Graduate Texts in Mathematics 50)
+  note: Chapter 4 tells the story of Lamé’s 1847 announcement and Kummer’s ideal numbers.
+hardy-woodgold:
+  authors: Michael Hardy and Catherine Woodgold
+  year: 2009
+  title: Prime simplicity
+  venue: The Mathematical Intelligencer 31(4), 44–52
+  note: On how Euclid’s proof came to be retold as a proof by contradiction.
+oeis-a000945:
+  authors: The OEIS Foundation
+  year: 2024
+  title: 'A000945: Euclid–Mullin sequence'
+  venue: The On-Line Encyclopedia of Integer Sequences
+  url: https://oeis.org/A000945
+aigner-ziegler:
+  authors: Martin Aigner and Günter M. Ziegler
+  year: 2018
+  title: Proofs from THE BOOK
+  venue: 6th edition, Springer
+  note: Chapter 1 collects six proofs of the infinity of primes, including Goldbach’s, Euler’s, Furstenberg’s and Erdős’s.
+euler1737:
+  authors: Leonhard Euler
+  year: 1737
+  title: Variae observationes circa series infinitas
+  venue: Commentarii academiae scientiarum Petropolitanae 9 (1744), 160–188 (E72)
+  note: Theorem 7 is the Euler product; Theorem 19 states that the sum of the reciprocals of the primes is infinite.
+furstenberg1955:
+  authors: Harry Furstenberg
+  year: 1955
+  title: On the infinitude of primes
+  venue: American Mathematical Monthly 62(5), 353
+katz-history:
+  authors: Victor J. Katz
+  year: 2009
+  title: 'A History of Mathematics: An Introduction'
+  venue: 3rd edition, Addison-Wesley
+  note: Discusses the remainder problem of the Sunzi Suanjing and its general solution by Qin Jiushao (1247).
+weil-number-theory:
+  authors: André Weil
+  year: 1984
+  title: 'Number Theory: An Approach Through History from Hammurapi to Legendre'
+  venue: Birkhäuser
+hardy-wright:
+  authors: G. H. Hardy and E. M. Wright
+  year: 2008
+  title: An Introduction to the Theory of Numbers
+  venue: 6th edition, revised by D. R. Heath-Brown and J. H. Silverman, Oxford University Press
+moree-artin:
+  authors: Pieter Moree
+  year: 2012
+  title: Artin’s primitive root conjecture — a survey
+  venue: Integers 12A, paper A13
+  url: https://arxiv.org/abs/math/0412262
