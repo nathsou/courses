@@ -1,0 +1,42 @@
+# Bibliography: key → { authors, year, title, venue, url, note }
+landau1909:
+  authors: Edmund Landau
+  year: 1909
+  title: Handbuch der Lehre von der Verteilung der Primzahlen
+  venue: Teubner, Leipzig (2 volumes)
+  note: The handbook that fixed much of the field’s notation, including π(x).
+gauss1849:
+  authors: Carl Friedrich Gauss
+  year: 1849
+  title: Letter to Johann Franz Encke, 24 December 1849
+  venue: Werke, vol. 2, pp. 444–447 (Göttingen, 1863)
+  note: Gauss recalls noticing, in 1792 or 1793, that the density of primes near x is about 1/log x.
+goldstein1973:
+  authors: Larry J. Goldstein
+  year: 1973
+  title: A history of the prime number theorem
+  venue: American Mathematical Monthly 80(6), 599–615
+  url: https://doi.org/10.2307/2319162
+oeis-a006880:
+  authors: The OEIS Foundation
+  year: 2024
+  title: 'A006880: Number of primes < 10^n'
+  venue: The On-Line Encyclopedia of Integer Sequences
+  url: https://oeis.org/A006880
+riemann1859:
+  authors: Bernhard Riemann
+  year: 1859
+  title: Ueber die Anzahl der Primzahlen unter einer gegebenen Grösse
+  venue: Monatsberichte der Berliner Akademie, November 1859, 671–680
+  note: English translation by D. R. Wilkins (1998), available from Trinity College Dublin.
+platt-trudgian2021:
+  authors: Dave Platt and Tim Trudgian
+  year: 2021
+  title: The Riemann hypothesis is true up to 3·10¹²
+  venue: Bulletin of the London Mathematical Society 53(3), 792–797
+  url: https://doi.org/10.1112/blms.12460
+clay:
+  authors: Clay Mathematics Institute
+  year: 2000
+  title: The Millennium Prize Problems — the Riemann Hypothesis
+  url: https://www.claymath.org/millennium/riemann-hypothesis/
