@@ -1,7 +1,12 @@
 <!--
   A CodeMirror 6 editor themed with the course tokens, for TypeScript (exercises) and plain text (templates).
-  Mod-Enter runs. Loads CodeMirror lazily so pages with many editors stay light.
+  Mod-Enter runs. Loads CodeMirror lazily so pages with many editors stay light. Editable TypeScript editors also get
+  the real compiler's language service (types, hover, completion) from a shared worker, started when one scrolls into view.
 -->
+<script lang="ts" module>
+  let editorCount = 0;
+</script>
+
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { EditorView } from '@codemirror/view';
@@ -16,6 +21,7 @@
     maxHeight = '32rem',
     label = 'Code editor',
     highlightLine,
+    typecheck = true,
   }: {
     value: string;
     lang?: 'ts' | 'text';
@@ -27,6 +33,8 @@
     label?: string;
     /** 1-based line to highlight (the current statement while stepping). */
     highlightLine?: number;
+    /** Attach the TypeScript language service (editable `ts` editors only). */
+    typecheck?: boolean;
   } = $props();
 
   let host: HTMLDivElement;
@@ -43,11 +51,13 @@
     setLine?.(line);
   });
 
+  /** Each editor is its own file in the language service, so several can share the worker. */
+  const path = `/exercise-${++editorCount}.ts`;
   let observer: IntersectionObserver | undefined;
   onMount(() => {
     let destroyed = false;
     (async () => {
-      const [{ EditorView, Decoration, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter, drawSelection }, { EditorState, StateField, StateEffect }, cmds, language, { javascript }, auto, { highlightStyle }] = await Promise.all([
+      const [{ EditorView, Decoration, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter, drawSelection }, { EditorState, StateField, StateEffect, Compartment }, cmds, language, { javascript }, auto, { highlightStyle }] = await Promise.all([
         import('@codemirror/view'),
         import('@codemirror/state'),
         import('@codemirror/commands'),
@@ -89,8 +99,26 @@
         '.cm-tooltip': { backgroundColor: 'var(--panel)', border: '1px solid var(--line-strong)', borderRadius: '8px', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' },
         '.cm-tooltip-autocomplete ul li[aria-selected]': { backgroundColor: 'var(--copper-soft)', color: 'var(--fg)' },
         '.cm-matchingBracket': { backgroundColor: 'var(--surface-3)', outline: 'none' },
+        '.cm-diagnostic': { fontFamily: 'var(--font-mono)', fontSize: '0.8rem', padding: '0.3rem 0.6rem' },
+        '.cm-diagnostic-error': { borderLeft: '3px solid var(--bad, #c0392b)' },
+        '.cm-diagnostic-warning': { borderLeft: '3px solid var(--amber)' },
+        '.cm-tooltip.cm-tooltip-hover': { padding: '0.3rem 0.6rem', maxWidth: 'min(36rem, 90vw)', whiteSpace: 'pre-wrap' },
       });
 
+      // The language service joins once its worker is up; until then (and without a network) the editor still works.
+      const types = new Compartment();
+      const plain = () => auto.autocompletion();
+      const withTypes = async () => {
+        const [{ typeServer }, ts] = await Promise.all([import('./typeServer'), import('@valtown/codemirror-ts')]);
+        const worker = await typeServer();
+        return [
+          ts.tsFacetWorker.of({ worker, path }),
+          ts.tsSyncWorker(),
+          ts.tsLinterWorker(),
+          auto.autocompletion({ override: [ts.tsAutocompleteWorker()] }),
+          ts.tsHoverWorker(),
+        ];
+      };
       view = new EditorView({
         parent: host,
         state: EditorState.create({
@@ -104,7 +132,7 @@
             language.indentOnInput(),
             language.bracketMatching(),
             auto.closeBrackets(),
-            auto.autocompletion(),
+            types.of(plain()),
             language.syntaxHighlighting(highlightStyle),
             ...(lang === 'ts' ? [javascript({ typescript: true })] : []),
             lineField,
@@ -125,8 +153,16 @@
       // Line heights measured before the web fonts arrive, or while the editor is off screen, can leave the
       // gutter out of step with the text: measure again once the fonts are ready and whenever it comes into view.
       document.fonts?.ready.then(() => view?.requestMeasure());
+      let typed = false;
       observer = new IntersectionObserver((entries) => {
-        if (entries.some((e) => e.isIntersecting)) view?.requestMeasure();
+        if (!entries.some((e) => e.isIntersecting)) return;
+        view?.requestMeasure();
+        if (typed || !typecheck || readonly || lang !== 'ts') return;
+        typed = true;
+        withTypes().then(
+          (extension) => !destroyed && view?.dispatch({ effects: types.reconfigure(extension) }),
+          () => (typed = false), // offline or worker failure: stay a plain editor, try again when it next scrolls into view
+        );
       });
       observer.observe(host);
     })();
