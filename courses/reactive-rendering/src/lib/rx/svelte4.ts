@@ -65,6 +65,9 @@ interface Internal {
   ready: boolean;
 }
 
+/** What a compiled component class looks like from outside: `new Counter({ target })`. */
+export type ComponentConstructor = new (options: { target?: MElement }) => SvelteComponent;
+
 export class SvelteComponent {
   $$!: Internal;
   /** The runtime that made it. */
@@ -216,7 +219,7 @@ export function createSvelte4(doc: MiniDocument, opts: { manual?: boolean } = {}
  *     <button on:click={() => count += 1}>+1</button>
  *   </div>
  */
-export function counterComponent(rt: Internals): typeof SvelteComponent {
+export function counterComponent(rt: Internals): ComponentConstructor {
   const { element, text, space, append, insert, detach, listen, attr, set_data, toggle_class, safe_not_equal, init } = rt;
 
   function create_fragment(ctx: any[]): Fragment {
@@ -306,7 +309,7 @@ export function counterComponent(rt: Internals): typeof SvelteComponent {
  * An (unkeyed) `{#each}` block: one small fragment per item, updated by position. (The compiler's output for the
  * first button is the real thing; the other two buttons follow the same pattern.)
  */
-export function listComponent(rt: Internals, initial: string[] = ['a', 'b', 'c']): typeof SvelteComponent {
+export function listComponent(rt: Internals, initial: string[] = ['a', 'b', 'c']): ComponentConstructor {
   const { element, text, space, append, insert, detach, listen, set_data, destroy_each, ensure_array_like, safe_not_equal, init } = rt;
 
   function get_each_context(ctx: any[], list: string[], i: number) {

@@ -46,6 +46,7 @@
     apply(n);
     return { update: apply };
   }
+  const inputState = (n: Snap): Record<string, unknown> => (n.tag === 'input' ? { value: n.value, checked: n.checked } : {});
   const attrs = (n: Snap) => Object.fromEntries(n.attrs.filter(([k]) => !k.includes(':') && !k.startsWith('on')));
 </script>
 
@@ -53,7 +54,7 @@
   {#if n.kind === 'text'}{n.text}
   {:else if n.kind === 'el'}
     {#if VOID.has(n.tag)}
-      <svelte:element this={n.tag} {...attrs(n)} value={n.tag === 'input' ? n.value : undefined} checked={n.tag === 'input' ? n.checked : undefined} onclick={(e: MouseEvent) => onclick(e, n)} oninput={(e: Event) => oninput(e, n)} onfocus={(e: FocusEvent) => onfocus(e, n)} onblur={(e: FocusEvent) => onblur(e, n)} use:sync={n} />
+      <svelte:element this={n.tag} {...attrs(n)} {...inputState(n)} onclick={(e: MouseEvent) => onclick(e, n)} oninput={(e: Event) => oninput(e, n)} onfocus={(e: FocusEvent) => onfocus(e, n)} onblur={(e: FocusEvent) => onblur(e, n)} use:sync={n} />
     {:else}
       <svelte:element this={n.tag} {...attrs(n)} onclick={(e: MouseEvent) => onclick(e, n)}>
         {#each n.children as c (c.id)}{@render view(c)}{/each}

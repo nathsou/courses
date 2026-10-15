@@ -12,7 +12,7 @@
  */
 
 type Key = PropertyKey;
-type Dep = Set<ReactiveEffect>;
+type Dep = Set<ReactiveEffect<any>>;
 const ITERATE = Symbol('iterate');
 
 export class ReactiveEffect<T = unknown> {
@@ -59,13 +59,13 @@ export interface DepEntry {
 }
 
 export class Reactivity {
-  activeEffect: ReactiveEffect | undefined;
+  activeEffect: ReactiveEffect<any> | undefined;
   private shouldTrack = true;
   private targetMap = new WeakMap<object, Map<Key, Dep>>();
   private proxyMap = new WeakMap<object, object>();
   private rawMap = new WeakMap<object, object>();
   private labels = new Map<object, string>();
-  private queue = new Set<ReactiveEffect>();
+  private queue = new Set<ReactiveEffect<any>>();
   private flushQueued = false;
   /** When true, `watchEffect` re-runs are queued until `flush()` is called (tests and stepping figures). */
   manual: boolean;
@@ -237,7 +237,7 @@ export class Reactivity {
     return () => e.stop();
   }
 
-  private queueJob(e: ReactiveEffect): void {
+  private queueJob(e: ReactiveEffect<any>): void {
     this.queue.add(e);
     if (!this.manual && !this.flushQueued) {
       this.flushQueued = true;

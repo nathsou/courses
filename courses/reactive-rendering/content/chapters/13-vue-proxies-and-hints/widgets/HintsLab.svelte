@@ -11,14 +11,14 @@
   let { n, title = 'What the compiler tells the diff', caption }: { n?: string | number; title?: string; caption?: string } = $props();
 
   let rows = $state(40);
-  let state = $state<CardState>({ title: 'Release notes', count: 0, hot: false });
+  let card = $state<CardState>({ title: 'Release notes', count: 0, hot: false });
   let updates = $state(0);
 
   const render = $derived(makeCard(rows));
 
   function measure(hints: boolean): PatchStats {
-    const prev = render(state, hints);
-    const next = render({ ...state, count: state.count + 1, hot: state.count + 1 > 5 }, hints);
+    const prev = render(card, hints);
+    const next = render({ ...card, count: card.count + 1, hot: card.count + 1 > 5 }, hints);
     const stats = newStats();
     patch(prev, next, stats, { hints });
     return stats;
@@ -27,7 +27,7 @@
   const hinted = $derived(measure(true));
   const total = $derived(rows + 4);
   function bump() {
-    state = { ...state, count: state.count + 1, hot: state.count + 1 > 5 };
+    card = { ...card, count: card.count + 1, hot: card.count + 1 > 5 };
     updates++;
   }
   const dynamicNodes = 3;
@@ -39,7 +39,7 @@
   {/snippet}
 
   <div class="top ui">
-    <Button variant="primary" onclick={bump}>count++ ({state.count})</Button>
+    <Button variant="primary" onclick={bump}>count++ ({card.count})</Button>
     <span class="tmpl"><code>&lt;p :class="{'{ hot }'}"&gt;Count: &#123;&#123; count &#125;&#125;&lt;/p&gt;</code> is the only paragraph that changes.</span>
   </div>
 

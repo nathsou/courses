@@ -48,7 +48,7 @@ export function h(type: string | Component, props?: Props | null, ...children: C
   const { key = null, ...rest } = props ?? {};
   const flat: VNode[] = [];
   for (const c of children) normalise(c, flat);
-  if (typeof type === 'function') return { type, props: { ...rest, children: flat }, key };
+  if (typeof type === 'function') return { type, props: { ...rest, children: flat }, key, children: [] };
   return { type, props: rest, key, children: flat };
 }
 

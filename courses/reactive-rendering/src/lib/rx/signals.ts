@@ -105,7 +105,7 @@ abstract class Base implements Engine {
   createRoot<T>(fn: (dispose: () => void) => T): T {
     return fn(() => {});
   }
-  onCleanup(): void {}
+  onCleanup(_fn: () => void): void {}
 
   protected note(type: TraceEvent['type'], node: BaseNode, detail?: string): void {
     if (this.tracing) this.trace.push({ type, node: node.id, detail });

@@ -55,9 +55,13 @@
     return v === null ? null : Math.max(v, 1) / best(s);
   };
   const geo = (a: string) => {
-    const rs = SCENARIOS.map((s) => ratio(s.id, a));
-    if (rs.some((r) => r === null)) return null;
-    return Math.exp(rs.reduce((acc, r) => acc + Math.log(r!), 0) / rs.length);
+    const rs: number[] = [];
+    for (const s of SCENARIOS) {
+      const r = ratio(s.id, a);
+      if (r === null) return null;
+      rs.push(r);
+    }
+    return Math.exp(rs.reduce((acc, r) => acc + Math.log(r), 0) / rs.length);
   };
   const fmt = (v: number | null) => (v === null ? '' : v >= 10000 ? `${(v / 1000).toFixed(0)}k` : v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v < 10 && metric === 'ms' ? v.toFixed(1) : String(Math.round(v)));
   /** 1 (best) → green, 10 and beyond → red, on a log scale. */

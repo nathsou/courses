@@ -293,7 +293,7 @@ export class MElement extends MNode {
   // ───────── text and HTML ─────────
 
   get textContent(): string {
-    return this.children.map((c) => c.textContent).join('');
+    return this.children.map((c) => (c as MText | MComment | MElement).textContent).join('');
   }
   /** Setting `textContent` replaces all children with one text node (one write when there was only a text child). */
   set textContent(v: string) {

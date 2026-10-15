@@ -17,7 +17,7 @@
 
   let r: Reactivity;
   let rs: State;
-  let effects: ReactiveEffect[] = [];
+  let effects: ReactiveEffect<any>[] = [];
   let table = $state.raw<DepEntry[]>([]);
   let ran = $state.raw<string[]>([]);
   let last = $state('');
