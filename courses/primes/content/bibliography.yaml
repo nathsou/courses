@@ -478,3 +478,18 @@ turing1953:
   year: 1953
   title: Some calculations of the Riemann zeta-function
   venue: Proceedings of the London Mathematical Society (3) 3, 99–117
+vonmangoldt1895:
+  authors: Hans von Mangoldt
+  year: 1895
+  title: Zu Riemanns Abhandlung „Ueber die Anzahl der Primzahlen unter einer gegebenen Grösse“
+  venue: Journal für die reine und angewandte Mathematik 114, 255–305
+davenport:
+  authors: Harold Davenport
+  year: 2000
+  title: Multiplicative Number Theory
+  venue: 3rd edition, revised by Hugh L. Montgomery, Graduate Texts in Mathematics 74, Springer
+stein-shakarchi:
+  authors: Elias M. Stein and Rami Shakarchi
+  year: 2003
+  title: Complex Analysis
+  venue: Princeton Lectures in Analysis II, Princeton University Press

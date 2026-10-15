@@ -30,7 +30,7 @@
 
   const id = $props.id();
   // Log sliders move linearly in log-space.
-  const toPos = (v: number) => (log ? Math.log(v) : v);
+  const toPos = (v: number) => (log ? Math.log(Math.max(v, min)) : v);
   const fromPos = (p: number) => {
     const v = log ? Math.exp(p) : p;
     return log ? v : Math.round(v / step) * step;

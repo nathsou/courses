@@ -11,11 +11,11 @@
   import Toggle from '$lib/components/ui/Toggle.svelte';
   import { c, sub, scale, powReal, format, type Complex } from '$lib/primes/complex';
   import { zeta, xi } from '$lib/primes/zeta';
-  import { gamma } from '$lib/primes/gamma';
+  import { gamma, gammaReal } from '$lib/primes/gamma';
   import { theme } from '$lib/state/theme.svelte';
   import { cssVar, setupCanvas } from '$lib/charts/colors';
 
-  let { fns = 'zeta', view: initialView = 'strip' }: { fns?: string; view?: string } = $props();
+  let { fns = 'zeta', view: initialView = 'strip', views = 'pole,trivial,strip,high', lines = true }: { fns?: string; view?: string; views?: string; lines?: boolean } = $props();
 
   interface Fn {
     id: string;
@@ -28,7 +28,7 @@
   const ALL: Fn[] = [
     { id: 'zeta', label: 'ζ(s)', tex: 'ζ(s)', f: (s) => zeta(s) },
     { id: 'xi', label: 'ξ(s)', tex: 'ξ(s)', f: (s) => (s.re >= 0.5 ? xi(s) : xi(sub(c(1), s))), norm: (s) => Math.exp((Math.PI * Math.abs(s.im)) / 4) / (1 + Math.abs(s.im)) ** 1.75 },
-    { id: 'gamma', label: 'Γ(s)', tex: 'Γ(s)', f: (s) => gamma(s) },
+    { id: 'gamma', label: 'Γ(s)', tex: 'Γ(s)', f: (s) => gamma(s), norm: (s) => Math.exp((Math.PI * Math.abs(s.im)) / 2) * (s.re < 0 ? gammaReal(1 - s.re) : 1 / gammaReal(Math.max(1, s.re))) },
     { id: 'eta-factor', label: '1 − 2¹⁻ˢ', tex: '1 − 2¹⁻ˢ', f: (s) => sub(c(1), scale(powReal(2, s), 2)) },
   ];
   // svelte-ignore state_referenced_locally
@@ -50,9 +50,12 @@
     { id: 'high', label: 'up to 100', x: [-2.5, 3.5], y: [0, 100] },
   ];
   // svelte-ignore state_referenced_locally
-  let viewId = $state(VIEWS.some((v) => v.id === initialView) ? initialView : 'strip');
+  const shownViews = VIEWS.filter((x) => views.split(',').map((y) => y.trim()).includes(x.id));
+  // svelte-ignore state_referenced_locally
+  let viewId = $state(shownViews.some((v) => v.id === initialView) ? initialView : (shownViews[0]?.id ?? 'strip'));
   const v = $derived(VIEWS.find((x) => x.id === viewId)!);
-  let showLine = $state(true);
+  // svelte-ignore state_referenced_locally
+  let showLine = $state(lines);
   let canvas: HTMLCanvasElement;
   let width = $state(560);
   let hover = $state<{ s: Complex; f: Complex } | null>(null);
@@ -195,13 +198,13 @@
   }
 </script>
 
-<Widget title="The complex plane, coloured by {fn.label}" subtitle="Each point s is coloured by the value {fn.tex}: the hue is its direction (red = positive real, cyan = negative real), the brightness its size (dark = near 0, pale = large). Zeros are where all the colours meet around a dark spot." onreset={() => ((viewId = initialView), (showLine = true))}>
+<Widget title="The complex plane, coloured by {fn.label}" subtitle="Each point s is coloured by the value {fn.tex}: the hue is its direction (red = positive real, cyan = negative real), the brightness its size (dark = near 0, pale = large). Zeros are where all the colours meet around a dark spot." onreset={() => ((viewId = shownViews.some((x) => x.id === initialView) ? initialView : (shownViews[0]?.id ?? 'strip')), (showLine = lines))}>
   {#snippet controls()}
     {#if available.length > 1}
       <Segmented label="Function" bind:value={fnId} options={available.map((f) => ({ value: f.id, label: f.label }))} size="sm" />
     {/if}
-    <Segmented label="View" bind:value={viewId} options={VIEWS.map((x) => ({ value: x.id, label: x.label }))} size="sm" />
-    <Toggle bind:checked={showLine} label="lines Re s = ½ and 1" />
+    {#if shownViews.length > 1}<Segmented label="View" bind:value={viewId} options={shownViews.map((x) => ({ value: x.id, label: x.label }))} size="sm" />{/if}
+    {#if lines}<Toggle bind:checked={showLine} label="lines Re s = ½ and 1" />{/if}
   {/snippet}
   <div class="wrap" bind:clientWidth={width}>
     <canvas bind:this={canvas} onpointermove={onmove} onpointerleave={() => (hover = null)} aria-label="Domain colouring of {fn.label} for Re s from {v.x[0]} to {v.x[1]} and Im s from {v.y[0]} to {v.y[1]}."></canvas>
@@ -211,7 +214,7 @@
     <span class="wheel" aria-hidden="true"></span>
     <span>arg {fn.tex}: red 0, yellow π/3, green 2π/3, cyan π, blue −2π/3, magenta −π/3.</span>
     {#if sy / sx > 1.5}<span class="note">Vertical scale compressed {(sy / sx).toFixed(1)}×.</span>{/if}
-    {#if fn.norm}<span class="note">|ξ| shrinks like e^(−π|t|/4), so brightness is rescaled by a positive factor; hues and zeros are unchanged.</span>{/if}
+    {#if fn.norm}<span class="note">{fn.id === 'xi' ? '|ξ| shrinks like e^(−π|t|/4) vertically' : '|Γ| shrinks like e^(−π|t|/2) vertically and like 1/|σ|! to the left'}, so brightness is rescaled by a positive factor; hues, zeros and poles are unchanged.</span>{/if}
   </div>
   <p class="out" aria-live="polite">
     {#if hover}

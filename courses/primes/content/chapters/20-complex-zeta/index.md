@@ -8,7 +8,7 @@ theorems: [ζ is holomorphic for Re s > 1, Analytic continuation of ζ to the wh
 techniques: [complex powers, analytic continuation, Euler–Maclaurin summation, domain colouring]
 ---
 
-So far $s$ has been a real number greater than $1$. Riemann's insight, in his 1859 paper on the primes,:cite[riemann1859] was to let $s$ be complex. Then $\zeta$ becomes a function on the plane, smooth in the strongest possible sense, and the tools of complex analysis apply to it. This chapter builds that function. Appendix A reviews the complex analysis it needs: if "holomorphic", "identity theorem" or "pole" are rusty, read its first three sections now.
+So far $s$ has been a real number greater than $1$. Riemann's insight, in his 1859 paper on the primes,:cite[riemann1859] was to let $s$ be complex. Then $\zeta$ becomes a function on the plane, smooth in the strongest possible sense, and the tools of complex analysis apply to it. This chapter builds that function. Appendix A reviews the complex analysis it needs: if "holomorphic", "identity theorem" or "pole" are rusty, read its sections on holomorphic functions, on zeros and analytic continuation, and on poles and residues now.
 
 Following Riemann, we write
 $$s = \sigma + it, \qquad \sigma = \operatorname{Re} s,\quad t = \operatorname{Im} s.$$
