@@ -10,7 +10,7 @@
  * cached by identity; every update only compares each hole's new value with its old one. There is no tree to diff:
  * the template's shape cannot change, only its holes.
  */
-import { MiniDocument, MElement, MNode, MComment, MText } from './dom';
+import { MiniDocument, MElement, MNode, MComment, MText, createDocument } from './dom';
 import { reconcile, type Anchor } from './keyed';
 
 export interface TemplateResult {
@@ -326,4 +326,11 @@ export function render(result: TemplateResult, container: MElement): void {
     roots.set(container, part);
   }
   part.setValue(result);
+}
+
+/** What the library finds when it prepares a template: its HTML (markers blanked) and the parts, for figures. */
+export function describeTemplate(strings: readonly string[]): { html: string; parts: { index: number; kind: string; name?: string; path: number[] }[] } {
+  const prepared = prepare(createDocument(), strings);
+  const parts = prepared.parts.map((p) => ({ index: p.index, kind: p.kind, name: 'name' in p ? p.name : undefined, path: p.path })).sort((a, b) => a.index - b.index);
+  return { html: prepared.proto.innerHTML, parts };
 }

@@ -65,3 +65,8 @@ tc39-signals:
   year: 2024
   title: Signals, a TC39 proposal (stage 1), with the signal-polyfill package
   url: https://github.com/tc39/proposal-signals
+lit-docs:
+  authors: Lit team
+  year: 2024
+  title: Lit documentation, Templates and Reactive properties
+  url: https://lit.dev/docs/

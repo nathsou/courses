@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { createDocument, toHTML, type MElement } from './dom';
-import { html, render, repeat } from './lit';
+import { describeTemplate, html, render, repeat } from './lit';
 
 const setup = () => {
   const doc = createDocument();
@@ -119,5 +119,20 @@ describe('lit-style templates', () => {
     render(html`<p>${'x'}</p>`, root);
     expect(toHTML(root.firstChild!)).toBe('<!---->');
     expect(root.innerHTML).toBe('<!----><p><!---->x</p>');
+  });
+});
+
+describe('describeTemplate', () => {
+  test('lists the parts in value order with their kind and name', () => {
+    const t = (n: number, f: () => void) => html`<p class=${'a'} ?hidden=${false}>Count: ${n}</p><button @click=${f}>+1</button>`;
+    const strings = t(0, () => {}).strings as readonly string[];
+    const d = describeTemplate(strings);
+    expect(d.parts.map((p) => [p.index, p.kind, p.name])).toEqual([
+      [0, 'attr', 'class'],
+      [1, 'bool', 'hidden'],
+      [2, 'child', undefined],
+      [3, 'event', 'click'],
+    ]);
+    expect(d.html).toContain('<p>Count: <!----></p>');
   });
 });
