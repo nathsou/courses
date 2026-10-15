@@ -1,0 +1,12 @@
+irish-forces-layout:
+  authors: Irish, P.
+  year: 2015
+  title: What forces layout/reflow. The comprehensive list
+  venue: GitHub gist, paulirish/dotfiles
+  url: https://gist.github.com/paulirish/5d52fb081b3570c81e3a
+kosaka-browser:
+  authors: Kosaka, M.
+  year: 2018
+  title: Inside look at modern web browser (parts 1–4)
+  venue: Chrome for Developers
+  url: https://developer.chrome.com/blog/inside-browser-part1
