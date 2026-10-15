@@ -97,3 +97,20 @@ react-hydration:
   year: 2024
   title: React documentation, hydrateRoot and Suspense for streaming server rendering
   url: https://react.dev/reference/react-dom/client/hydrateRoot
+miller-islands:
+  authors: Miller, J.
+  year: 2020
+  title: Islands Architecture
+  venue: jasonformat.com
+  url: https://jasonformat.com/islands-architecture/
+astro-islands:
+  authors: Astro contributors
+  year: 2024
+  title: Astro documentation, Islands and client directives
+  url: https://docs.astro.build/en/concepts/islands/
+rsc-rfc:
+  authors: Abramov, D., Tan, L., Savona, J. and Markbåge, S.
+  year: 2020
+  title: Introducing Zero-Bundle-Size React Server Components
+  venue: React blog, 21 December 2020
+  url: https://react.dev/blog/2020/12/21/data-fetching-with-react-server-components
