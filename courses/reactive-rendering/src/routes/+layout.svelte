@@ -29,7 +29,7 @@
 </div>
 <footer class="foot ui">
   <svg class="trace" viewBox="0 0 120 12" aria-hidden="true">
-    <path d="M0 6h120" /><ellipse cx="20" cy="6" rx="6" ry="3" /><ellipse cx="60" cy="6" rx="6" ry="3" /><ellipse cx="100" cy="6" rx="6" ry="3" />
+    <rect x="1" y="1" width="24" height="10" rx="3" /><rect x="48" y="1" width="24" height="10" rx="3" class="on" /><rect x="95" y="1" width="24" height="10" rx="3" />
   </svg>
   <p class="t">{COURSE_TITLE}</p>
   <p class="s">{COURSE_SUBTITLE}</p>
@@ -78,11 +78,14 @@
     height: 0.8rem;
     flex: none;
   }
-  .trace path {
+  .trace rect {
     fill: none;
-    stroke: var(--accent);
-    stroke-width: 1.6;
-    stroke-linejoin: round;
+    stroke: var(--node-line);
+    stroke-width: 1.4;
+  }
+  .trace rect.on {
+    stroke: var(--flash);
+    fill: var(--flash-soft);
   }
   .foot p {
     margin: 0;

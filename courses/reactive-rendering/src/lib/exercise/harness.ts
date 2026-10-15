@@ -1,5 +1,5 @@
 /**
- * `@mm/test` — a tiny Vitest-compatible test harness used by in-browser exercises.
+ * `@rx/test` — a tiny Vitest-compatible test harness used by in-browser exercises.
  *
  * Exercise tests are written against this subset so they run both here (in a worker, against the
  * learner's code) and under Vitest (against the reference solution, via an alias to `vitest`).

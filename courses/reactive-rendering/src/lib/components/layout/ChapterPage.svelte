@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
-  import { PARTS, COURSE_TITLE, LAYERS } from '$content/outline';
+  import { PARTS, COURSE_TITLE, ANSWERS } from '$content/outline';
   import type { ContentModule } from '$lib/content/types';
   import { findEntry, neighbours, type NavEntry } from '$lib/content/registry';
   import { nav } from '$lib/state/nav.svelte';
@@ -21,11 +21,11 @@
         ? 'How we got here'
         : `Chapter ${entry.number}${part ? (part.id === '0' || part.id === 'E' ? ` · ${part.title}` : ` · Part ${part.id} — ${part.title}`) : ''}${entry.optional ? ' · ◇ optional' : ''}`,
   );
-  // The header's emblem: a 4 × 4 core plane whose magnetised rings spell the chapter number in binary.
+  // The header's emblem: a 4 × 4 grid of cells whose flashing cells spell the chapter number in binary.
   const sealNumber = $derived(entry.number);
   const bits = $derived(/^\d+$/.test(entry.number) ? Number(entry.number) : entry.number.charCodeAt(0));
-  const CORES = Array.from({ length: 16 }, (_, i) => ({ i, x: 25 + (i % 4) * 36.5, y: 25 + Math.floor(i / 4) * 36.5 }));
-  const layers = $derived(new Set(entry.layers ?? []));
+  const CORES = Array.from({ length: 16 }, (_, i) => ({ i, x: 12 + (i % 4) * 36.5, y: 12 + Math.floor(i / 4) * 36.5 }));
+  const answers = $derived(new Set(entry.answers ?? []));
   const sealTitle = $derived(entry.kind === 'chapter' ? `${entry.number}. ${meta.title}` : meta.title);
   const prereqs = $derived((meta.prerequisites ?? []).map((s) => findEntry('chapter', s) ?? findEntry('appendix', s)).filter((e) => e !== undefined));
 
@@ -65,14 +65,10 @@
 
 <article class="article">
   <header class="chapter-head wide">
-    <svg class="seal" viewBox="0 0 160 160" role="img" aria-label="Chapter {sealNumber} in binary on a plane of magnetic cores">
-      {#each [0, 1, 2, 3] as k (k)}
-        <path class="wire" d="M8 {25 + k * 36.5}H152M{25 + k * 36.5} 8V152" />
-      {/each}
-      <path class="sense" d="M8 8L152 152" />
+    <svg class="seal" viewBox="0 0 160 160" role="img" aria-label="Chapter {sealNumber} in binary on a grid of cells; flashing cells are ones">
       {#each CORES as c (c.i)}
         {@const on = ((bits >> (15 - c.i)) & 1) === 1}
-        <ellipse class="core" class:on cx={c.x} cy={c.y} rx="11" ry="5.6" transform="rotate(-38 {c.x} {c.y})" />
+        <rect class="cell" class:on x={c.x} y={c.y} width="28" height="28" rx="5" />
       {/each}
     </svg>
     <div class="head-text">
@@ -88,10 +84,10 @@
         </span>
       {/if}
     </div>
-    {#if entry.kind === 'chapter' && layers.size}
-      <ol class="layers ui" aria-label="Layers this chapter works on">
-        {#each LAYERS as l (l.id)}
-          <li class:lit={layers.has(l.id)} title={l.blurb}><span aria-hidden="true">{l.glyph}</span> {l.label}{#if layers.has(l.id)}<span class="visually-hidden"> (this chapter)</span>{/if}</li>
+    {#if entry.kind === 'chapter' && answers.size}
+      <ol class="layers ui" aria-label="The answers this chapter works on">
+        {#each ANSWERS as l (l.id)}
+          <li class:lit={answers.has(l.id)} title={l.blurb}><span aria-hidden="true">{l.glyph}</span> {l.label}{#if answers.has(l.id)}<span class="visually-hidden"> (this chapter)</span>{/if}</li>
         {/each}
       </ol>
     {/if}
@@ -235,7 +231,7 @@
     background: color-mix(in srgb, var(--sig-high) 12%, var(--panel));
   }
 
-  /* The emblem: a core plane. */
+  /* The emblem: a grid of cells; the chapter number flashes in binary. */
   .seal {
     grid-column: 2;
     grid-row: 1;
@@ -244,25 +240,15 @@
     height: auto;
     margin-top: 0.4rem;
   }
-  .seal .wire {
-    stroke: var(--line-strong);
-    stroke-width: 1;
-    fill: none;
-  }
-  .seal .sense {
-    stroke: color-mix(in srgb, var(--copper) 55%, transparent);
-    stroke-width: 1;
-    stroke-dasharray: 3 3;
-  }
-  .seal .core {
+  .seal .cell {
     fill: var(--panel);
-    stroke: var(--meta);
-    stroke-width: 3.2;
+    stroke: var(--node-line);
+    stroke-width: 1.4;
   }
-  .seal .core.on {
-    stroke: var(--amber);
-    fill: var(--amber-soft);
-    filter: drop-shadow(0 0 3px var(--amber-glow));
+  .seal .cell.on {
+    stroke: var(--flash);
+    fill: var(--flash-soft);
+    filter: drop-shadow(0 0 4px var(--flash-glow));
   }
   .layers {
     display: flex;

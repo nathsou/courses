@@ -9,8 +9,6 @@
   let scrolled = $state(false);
   const on = (p: string) => page.url.pathname.startsWith(`${base}/${p}`);
   const links = [
-    { path: 'lab', icon: 'bench', label: 'The lab bench', title: 'The lab bench: write an allocator and score it' },
-    { path: 'appendix/museum', icon: 'museum', label: 'The museum', title: 'The museum: historic memory failures, re-enacted' },
     { path: 'appendix/glossary-and-bibliography', icon: 'timeline', label: 'Timeline and glossary', title: 'Glossary, timeline and bibliography' },
   ] as const;
 </script>
@@ -23,9 +21,10 @@
   </button>
   <a class="brand" href="{base}/">
     <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M2 16H30M16 2V30" class="w" />
-      <path d="M4 4L28 28" class="w s" />
-      <ellipse cx="16" cy="16" rx="10" ry="5" transform="rotate(-38 16 16)" class="ring" />
+      <rect x="3" y="3" width="11" height="11" rx="2.5" class="cell" />
+      <rect x="18" y="3" width="11" height="11" rx="2.5" class="cell" />
+      <rect x="3" y="18" width="11" height="11" rx="2.5" class="cell" />
+      <rect x="18" y="18" width="11" height="11" rx="2.5" class="cell on" />
     </svg>
     <span class="name">{COURSE_TITLE}</span>
   </a>
@@ -88,20 +87,15 @@
     height: 1.75rem;
     flex: none;
   }
-  .ring {
-    fill: none;
-    stroke: var(--amber);
-    stroke-width: 3;
-    filter: drop-shadow(0 0 2px var(--amber-glow));
+  .cell {
+    fill: var(--panel);
+    stroke: var(--node-line);
+    stroke-width: 1.6;
   }
-  .w {
-    stroke: var(--line-strong);
-    stroke-width: 1.2;
-    fill: none;
-  }
-  .w.s {
-    stroke: var(--copper);
-    stroke-dasharray: 2 2;
+  .cell.on {
+    fill: var(--flash-soft);
+    stroke: var(--flash);
+    filter: drop-shadow(0 0 2px var(--flash-glow));
   }
   .page-title {
     font-size: 0.88rem;

@@ -1,6 +1,6 @@
 /**
  * Every TypeScript exercise in the chapters is checked the way a reader's answer would be: the reference solution
- * must pass every test (and the storage rule, where it applies), and the starter must not already pass.
+ * must pass every test, and the starter must not already pass.
  */
 import { describe, expect, test } from 'vitest';
 import { readdirSync, readFileSync, existsSync } from 'node:fs';

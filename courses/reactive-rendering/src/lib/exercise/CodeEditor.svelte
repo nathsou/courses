@@ -1,5 +1,5 @@
 <!--
-  A CodeMirror 6 editor themed with the course tokens, for TypeScript (exercises) and Mote (programs).
+  A CodeMirror 6 editor themed with the course tokens, for TypeScript (exercises) and plain text (templates).
   Mod-Enter runs. Loads CodeMirror lazily so pages with many editors stay light.
 -->
 <script lang="ts">
@@ -18,7 +18,7 @@
     highlightLine,
   }: {
     value: string;
-    lang?: 'ts' | 'mote';
+    lang?: 'ts' | 'text';
     readonly?: boolean;
     onchange?: (code: string) => void;
     onrun?: () => void;
@@ -57,27 +57,6 @@
         import('./editorTheme'),
       ]);
       if (destroyed) return;
-
-      const mote = language.StreamLanguage.define({
-        token(stream) {
-          if (stream.eatSpace()) return null;
-          if (stream.match('//')) {
-            stream.skipToEnd();
-            return 'comment';
-          }
-          if (stream.match(/^"(?:[^"\\]|\\.)*"/)) return 'string';
-          if (stream.match(/^(0x[0-9a-fA-F_]+|[0-9][0-9_]*)/)) return 'number';
-          if (stream.match(/^(struct|fn|let|var|if|else|while|for|in|return|break|continue|new|weak)\b/)) return 'keyword';
-          if (stream.match(/^(true|false|null)\b/)) return 'atom';
-          if (stream.match(/^(int|bool)\b/)) return 'typeName';
-          if (stream.match(/^(free|print|len|gc|assert|random)\b(?=\s*\()/)) return 'keyword';
-          if (stream.match(/^[A-Z][A-Za-z0-9_]*/)) return 'typeName';
-          if (stream.match(/^[a-z_][A-Za-z0-9_]*(?=\s*\()/)) return 'variableName.function';
-          if (stream.match(/^[a-z_][A-Za-z0-9_]*/)) return 'variableName';
-          stream.next();
-          return 'operator';
-        },
-      });
 
       const setLineEffect = StateEffect.define<number | undefined>();
       const lineMark = Decoration.line({ class: 'cm-current-line' });
@@ -127,7 +106,7 @@
             auto.closeBrackets(),
             auto.autocompletion(),
             language.syntaxHighlighting(highlightStyle),
-            lang === 'mote' ? mote : javascript({ typescript: true }),
+            ...(lang === 'ts' ? [javascript({ typescript: true })] : []),
             lineField,
             EditorState.tabSize.of(2),
             EditorState.readOnly.of(readonly),

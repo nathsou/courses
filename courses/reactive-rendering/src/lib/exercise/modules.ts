@@ -3,33 +3,39 @@
  * Language Models from Scratch. The library modules below are what exercises may import.
  */
 import { transform } from 'sucrase';
-import * as heapApi from '../mm/heap/api';
-import * as words from '../mm/heap/words';
-import * as allocators from '../mm/heap/allocators';
-import * as checker from '../mm/check/checker';
-import * as trace from '../mm/trace/trace';
-import * as sv39 from '../mm/machine/sv39';
-import * as phys from '../mm/machine/phys';
-import * as cache from '../mm/machine/cache';
-import * as kernel from '../mm/kernel/kernel';
-import * as buddy from '../mm/kernel/buddy';
-import * as replace from '../mm/kernel/replace';
-import * as gc from '../mm/managers/gcapi';
-import * as benchMod from '../mm/check/bench';
-import * as explore from '../mm/explore/tricolour';
+import * as dom from '../rx/dom';
+import * as keyed from '../rx/keyed';
+import * as vdom from '../rx/vdom';
+import * as ssr from '../rx/ssr';
+import * as scheduler from '../rx/scheduler';
+import * as signals from '../rx/signals';
+import * as reactive from '../rx/reactive';
+import * as template from '../rx/template';
+import * as lit from '../rx/lit';
+import * as svelte4 from '../rx/svelte4';
+import * as digest from '../rx/digest';
+import * as morph from '../rx/morph';
+import * as resume from '../rx/resume';
+import * as flight from '../rx/flight';
+import * as cd from '../rx/cd';
 
+/** What exercises may import: the course's reactive lab. */
 export const LIBRARY: Record<string, unknown> = {
-  '@mm/heap': { ...heapApi, ...words, WORD: allocators.WORD, ALIGN: allocators.ALIGN, MIN_BLOCK: allocators.MIN_BLOCK, align: allocators.align, pack: allocators.pack, blockSize: allocators.blockSize },
-  '@mm/allocators': allocators,
-  '@mm/check': checker,
-  '@mm/trace': trace,
-  '@mm/sv39': { ...sv39, ...phys },
-  '@mm/cache': cache,
-  '@mm/kernel': { ...kernel, ...buddy, PTE: sv39.PTE },
-  '@mm/replace': replace,
-  '@mm/gc': gc,
-  '@mm/bench': benchMod,
-  '@mm/explore': explore,
+  '@rx/dom': dom,
+  '@rx/keyed': keyed,
+  '@rx/vdom': vdom,
+  '@rx/ssr': ssr,
+  '@rx/scheduler': scheduler,
+  '@rx/signals': signals,
+  '@rx/reactive': reactive,
+  '@rx/template': template,
+  '@rx/lit': lit,
+  '@rx/svelte4': svelte4,
+  '@rx/digest': digest,
+  '@rx/morph': morph,
+  '@rx/resume': resume,
+  '@rx/flight': flight,
+  '@rx/cd': cd,
 };
 
 /** Lines added by `new Function` before the module body (for mapping stack traces). */

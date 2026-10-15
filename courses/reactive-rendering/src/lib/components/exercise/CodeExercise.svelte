@@ -1,13 +1,12 @@
 <!--
-  A TypeScript exercise against the simulated machine (```ts blocks). The reader edits the starter, runs the
+  A TypeScript exercise against the course's reactive lab (```ts blocks). The reader edits the starter, runs the
   tests in a worker (Mod-Enter), and sees each test's result. Feedback says exactly what was established: these
   tests passed on this code. Editing invalidates the result. Drafts are saved before every run.
-  Spec: { id, title, prompt, starter, solution, tests, storage?, use?, hints?, explain? }
+  Spec: { id, title, prompt, starter, solution, tests, hints?, explain? }
 -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import { progress } from '$lib/state/progress.svelte';
-  import { impls } from '$lib/state/impl.svelte';
   import ExerciseFrame from './ExerciseFrame.svelte';
   import CodeEditor from '$lib/exercise/CodeEditor.svelte';
   import type { RunReport } from '$lib/exercise/protocol';
@@ -20,9 +19,6 @@
     starter: string;
     solution?: string;
     tests: string;
-    storage?: boolean;
-    /** Remember passing code under this slot for "use my implementation". */
-    use?: string;
     hints?: string[];
     explain?: string;
   }
@@ -54,14 +50,13 @@
     running = true;
     const submitted = code;
     const { runExercise } = await import('$lib/exercise/runner');
-    const r = await runExercise({ id: spec.id, code: submitted, tests: spec.tests, storage: spec.storage });
+    const r = await runExercise({ id: spec.id, code: submitted, tests: spec.tests });
     running = false;
     // Bind the result to the code it was computed from.
     report = r;
     ranOn = submitted;
     if (r.ok && r.results.length && r.results.every((t) => t.passed)) {
       progress.markSolved(spec.id);
-      if (spec.use) impls.save(spec.use, submitted);
     }
   }
 
@@ -86,12 +81,7 @@
   {#if report}
     <div class="report ui" class:stale aria-live="polite">
       {#if stale}<p class="stale-note">You have edited the code since this run: the results below are for the previous version.</p>{/if}
-      {#if report.storage?.length}
-        <p class="vchip bad">✗ storage rule</p>
-        <ul class="tests">
-          {#each report.storage as v, i (i)}<li class="fail"><span class="mark">✗</span> line {v.line}: {v.message}</li>{/each}
-        </ul>
-      {:else if !report.ok}
+      {#if !report.ok}
         <p class="vchip bad">✗ did not run</p>
         <pre class="err">{report.error}</pre>
       {:else}
@@ -108,7 +98,6 @@
             </li>
           {/each}
         </ul>
-        {#if allPassed && spec.use}<p class="use"><Icon name="check" size={13} /> Saved: later figures can now run <em>your</em> implementation (look for “use my implementation”).</p>{/if}
       {/if}
       {#if report.logs.length}
         <details class="logs"><summary>Console ({report.logs.length})</summary><pre>{report.logs.join('\n')}</pre></details>
@@ -207,12 +196,6 @@
     background: var(--bad-soft);
     padding: 0.5rem 0.7rem;
     border-radius: var(--radius-sm);
-  }
-  .use {
-    color: var(--ok);
-    display: flex;
-    gap: 0.35rem;
-    align-items: center;
   }
   .logs pre {
     font-size: 0.76rem;
