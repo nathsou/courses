@@ -1,5 +1,5 @@
 ---
-title: Svelte 4, and the compiler that invalidates
+title: 'Svelte 3 and 4: compile-time invalidation'
 summary: Svelte 3 and 4 answered "what changed?" before the page ran. The compiler numbers each variable, turns every assignment into a bit, and writes an update function made of bit tests.
 number: 17
 duration: 55 minutes

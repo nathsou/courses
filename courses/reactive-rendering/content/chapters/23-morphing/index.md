@@ -1,5 +1,5 @@
 ---
-title: Morphing the DOM
+title: 'Morphing: HTML over the wire'
 summary: The opposite split. The browser holds no components and no signals; the server renders a new page after each action, and the browser makes the old DOM look like it.
 number: 23
 duration: 50 minutes

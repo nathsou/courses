@@ -1,5 +1,5 @@
 ---
-title: Vue, proxies and hints
+title: 'Vue: proxies and compiler hints'
 summary: Vue makes ordinary objects reactive with a Proxy and a table of who read what, and then uses a virtual DOM whose diff is told by the compiler where to look.
 number: 13
 duration: 60 minutes
@@ -63,8 +63,17 @@ Everything that is surprising about Vue’s reactivity follows from the one fact
 
 **Destructuring cuts the wire.** `const { count } = state` reads `state.count` once, *outside any effect*, and stores a number in a local variable. The local variable is not a proxy. Assigning to it does nothing and reading it tracks nothing. It is the same trap as Solid’s destructured props, from a different cause.
 
+What does this log?
+
+```js
+const state = reactive({ count: 0 });
+const { count } = state;
+watchEffect(() => console.log(count));
+state.count++;
+```
+
 ```predict
-q: "What does this log?\n\n```js\nconst state = reactive({ count: 0 });\nconst { count } = state;\nwatchEffect(() => console.log(count));\nstate.count++;\n```"
+q: "What does the code above log?"
 options:
   - text: "`0`, then `1`."
     why: "That would need the effect to read `state.count` through the proxy. It reads the local variable `count`, a plain number copied out of the proxy before the effect existed."

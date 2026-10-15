@@ -94,7 +94,7 @@ That is essentially the real thing, and you will write it yourself below. First,
 
 Do three things in the figure.
 
-1. **Change the name.** Watch the table: *pass 1* finds `name` changed and calls its listener, and the watcher labelled *name (→ shout)*, whose listener writes `scope.shout`. The watcher on `shout` sits earlier in the list, so in pass 1 it had already been read and did not see the new value. *Pass 2* sees `shout` change and fires its listener. *Pass 3* finds nothing different and the loop stops. The last pass is always the clean one: the digest does not know it is finished until it has looked and found nothing.
+1. **Change the name.** Watch the table: *pass 1* finds `name` changed and calls its listener, the one labelled *name (→ shout)*, which writes `scope.shout`. The watcher on `shout` sits earlier in the list, so in pass 1 it had already been read and did not see the new value. *Pass 2* sees `shout` change and fires its listener. *Pass 3* finds nothing different and the loop stops. The last pass is always the clean one: the digest does not know it is finished until it has looked and found nothing.
 2. **Change the quantity.** The total updates in the first pass. But the digest still runs a *second* pass, in which every watcher is called again to confirm that nothing else moved.
 3. **Raise the idle watchers.** They watch values that never change. Watch the count of watcher calls and the time grow with them, although nothing the page shows is different. A digest’s cost is *(watchers) × (passes)*, whatever changed.
 
@@ -285,9 +285,9 @@ It is fair to ask why AngularJS did not intercept `scope.name = 'x'`. In 2010 it
 
 - **Getters and setters.** ES5 (2009) let you define a property with `Object.defineProperty(obj, 'name', { get, set })` and so intercept reads and writes of *properties that you declare in advance*. Vue 1 and 2 used this: it walks an object, turns every property into a getter/setter pair, and records which computation was running at each read. It cannot see a property added later (`vm.newProp = 1` needed `Vue.set`), nor an array index assignment.
 - **`Object.observe`.** A proposed ES7 API that notified you asynchronously of *any* change to an object. Chrome shipped it in 2014 and Angular 2 was designed with it in mind; it was withdrawn in 2015 and removed from browsers soon after, because it did not compose with the rest of the language.
-- **`Proxy`.** ES2015 added objects whose operations (get, set, has, delete) are all interceptable. Browsers shipped it from 2016. A proxy can see everything: the new property, the array index, the `delete`. It is what Vue 3 and several other libraries use, and chapter 13 builds it.
+- **`Proxy`.** ES2015 added objects whose operations (get, set, has, delete) are all interceptable. All the major browsers had it by 2016. A proxy can see everything: the new property, the array index, the `delete`. It is what Vue 3 and several other libraries use, and chapter 13 builds it.
 
-Meanwhile the dirty-checking approach fell out of fashion for a more basic reason than any of these: its cost is a function of the page, not of the change. Angular, the 2016 rewrite, kept the idea of checking but changed *how often* and *how much* (chapter 14); and AngularJS itself reached the end of its support in 2022.
+Meanwhile the dirty-checking approach fell out of fashion for a more basic reason than any of these: its cost is a function of the page, not of the change. Angular, the 2016 rewrite, kept the idea of checking but changed *how often* and *how much* (chapter 14); and AngularJS itself reached the end of its support at the start of 2022.
 
 :::whatchanged
 For *dirty-checking*: **everything that could have changed**, re-read, over and over, until a whole pass finds nothing. It never needs to be told what changed, which is its strength (plain objects, no wrappers) and its weakness (the cost of a digest is watchers × passes, whatever actually moved).

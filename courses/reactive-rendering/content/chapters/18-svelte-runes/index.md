@@ -1,5 +1,5 @@
 ---
-title: Svelte 5 and runes
+title: 'Svelte 5: runes are signals the compiler hides'
 summary: Svelte kept the compiler and replaced the bits with signals. The compiler now turns $state into a signal, template holes into effects, and leaves what never changes as plain values.
 number: 18
 duration: 55 minutes

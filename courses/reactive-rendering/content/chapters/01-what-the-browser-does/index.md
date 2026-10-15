@@ -20,7 +20,7 @@ for (const el of items) {
 Two lines, one read and one write per item. Run it over a hundred items on a page of a couple of thousand nodes and it takes a visible fraction of a second; move one line and it takes a few milliseconds. Nothing in the code says why.
 
 ```predict
-q: Swap the two lines’ roles by doing *all the reads first*, then *all the writes*, in two loops. What happens to the amount of layout work the browser does?
+q: Now rewrite the loop as two loops: *all the reads first*, then *all the writes*. What happens to the amount of layout work the browser does?
 options:
   - text: Nothing changes. Reads and writes are the same operations in a different order.
     why: The operations are the same. The work the browser does in response is not, because the cost is charged at the moment of a read, not at the moment of a write.

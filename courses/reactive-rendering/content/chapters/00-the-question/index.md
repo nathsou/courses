@@ -19,7 +19,7 @@ That decision is the subject of this course. Every framework you have used makes
 **What changed?** When the state of a program changes, which parts of the page must change, and how does the system find them without doing more work than the change deserves?
 :::
 
-You will build a small, working version of each answer: a virtual DOM, a signals engine, a template compiler, a hydrator, a resumable page. They are not toys in the sense of being fake. They run, they have tests, and you can read all of them. They are small because the ideas are small, and because the real frameworks, which you will also meet, are those ideas plus a decade of corners.
+You will build the heart of each answer: a virtual DOM diff, a signals engine, the code that a template compiler writes, a server renderer, an islands runtime, a resumable loader. They are not toys in the sense of being fake. They run, they have tests, and you can read all of them. They are small because the ideas are small, and because the real frameworks, which you will also meet, are those ideas plus a decade of corners.
 
 ## A page, three ways
 

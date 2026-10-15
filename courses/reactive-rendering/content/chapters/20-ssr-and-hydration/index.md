@@ -1,5 +1,5 @@
 ---
-title: SSR and hydration
+title: 'Server rendering and hydration'
 summary: Run the components on the server, send the HTML, and make the page work. Rendering to a string is easy. Taking the result over in the browser, without losing it, is the problem every framework has to solve.
 number: 20
 duration: 60 minutes

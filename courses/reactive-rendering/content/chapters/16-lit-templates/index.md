@@ -1,5 +1,5 @@
 ---
-title: Lit and tagged templates
+title: 'Lit: templates without a compiler'
 summary: No compiler, no virtual DOM, no signals. A language feature that gives a template its identity, and a library that finds the holes once and compares each hole's value after that.
 number: 16
 duration: 50 minutes

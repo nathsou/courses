@@ -361,7 +361,7 @@ kbd,
   color: var(--fg);
   font-family: var(--font-display);
 }
-/* Section heading: a core (a tilted ferrite ring) threaded on a copper wire. */
+/* Section heading: a cell that has just been touched, threaded on its wire. */
 .article h2 {
   position: relative;
   font-weight: 560;
@@ -378,22 +378,22 @@ kbd,
   position: absolute;
   left: 0;
   top: -6px;
-  width: 14px;
-  height: 8px;
-  border-radius: 50%;
-  border: 2.5px solid var(--copper);
-  background: var(--bg);
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  border: 2px solid var(--flash);
+  background: var(--flash-soft);
+  box-shadow: 0 0 6px var(--flash-glow);
   box-sizing: border-box;
-  transform: rotate(-35deg);
 }
 .article h2::after {
   content: '';
   position: absolute;
-  left: 14px;
+  left: 11px;
   top: -1.5px;
   width: 3.5rem;
   height: 2px;
-  background: linear-gradient(90deg, var(--track), color-mix(in srgb, var(--track) 0%, transparent));
+  background: linear-gradient(90deg, var(--flash), color-mix(in srgb, var(--flash) 0%, transparent));
 }
 .article h3 {
   font-size: 1.25rem;

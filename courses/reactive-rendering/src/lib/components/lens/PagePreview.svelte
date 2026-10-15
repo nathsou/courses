@@ -79,6 +79,26 @@
     min-height: 6rem;
     overflow: auto;
   }
+  /* The article's heading styles must not leak into the page being previewed. */
+  .page :global(h1),
+  .page :global(h2),
+  .page :global(h3) {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin: 0 0 0.3rem;
+    padding: 0;
+    border: 0;
+  }
+  .page :global(h1)::before,
+  .page :global(h2)::before,
+  .page :global(h3)::before,
+  .page :global(h1)::after,
+  .page :global(h2)::after,
+  .page :global(h3)::after {
+    content: none;
+  }
   .page :global(input) {
     font: inherit;
     padding: 0.25rem 0.45rem;

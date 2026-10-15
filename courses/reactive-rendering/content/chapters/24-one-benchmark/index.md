@@ -1,5 +1,5 @@
 ---
-title: One benchmark, seven strategies
+title: 'Seven strategies, one benchmark'
 summary: The same page, the same eight scenarios and seven of the course's strategies, measured by counting what each does to the DOM. No strategy wins everything, and the way each one loses is the lesson.
 number: 24
 duration: 60 minutes

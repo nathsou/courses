@@ -100,8 +100,17 @@ An ordinary functionâ€™s `this` depends on how it is called; an arrow functionâ€
 
 The code in the course is TypeScript. Types are erased before it runs (the exercise sandbox uses Sucrase to strip them), so nothing in the chapters depends on a type, but they document what each function expects. `T extends object`, `Record<string, unknown>` and `Partial<T>` are the notations you will meet most.
 
+What does this print?
+
+```js
+let n = 1;
+const show = () => console.log(n);
+n = 2;
+show();
+```
+
 ```quiz
-q: "What does this print?\n\n```js\nlet n = 1;\nconst show = () => console.log(n);\nn = 2;\nshow();\n```"
+q: "What does the code above print?"
 options:
   - text: "1, because `n` was 1 when `show` was created."
     why: "A closure remembers the variable, not its value at creation. Reading it later gives the current value."

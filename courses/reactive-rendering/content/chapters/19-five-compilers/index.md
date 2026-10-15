@@ -1,5 +1,5 @@
 ---
-title: Five compilers, one counter
+title: 'The same component, five compilers'
 summary: React, Solid, Vue, Svelte and Angular compile the same small component. What did each compiler decide before the page ran, and what is left for the runtime to find out?
 number: 19
 duration: 60 minutes

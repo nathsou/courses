@@ -1,5 +1,5 @@
 ---
-title: Ownership and batching
+title: 'Ownership, cleanup and batching'
 summary: Two practical problems stand between a correct signals engine and a UI built on it. Writes that arrive together, and effects that create effects.
 number: 11
 duration: 55 minutes

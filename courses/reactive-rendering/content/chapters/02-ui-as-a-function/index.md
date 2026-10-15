@@ -138,7 +138,7 @@ Its cost is somewhere else. For the Notes app there are five things that can hap
 
 ::bookkeeping-grid{n="2.2"}
 
-Run the session with the first grid you are given. It looks plausible, and the page goes stale after the first toggle. This is the typical shape of the bug: nothing crashes, nothing is logged, and a *different* piece of the page than the one you were looking at is out of date. Twenty-five cells is a small app. The number of cells is (events) × (things on the page), and the number that matter is what the dependency structure of your program makes it. It grows with every feature, it is invisible in the code, and nothing checks it.
+Run the session with the first grid you are given. It looks plausible, and the page goes stale after the first toggle. This is the typical shape of the bug: nothing crashes, nothing is logged, and a *different* piece of the page than the one you were looking at is out of date. Twenty-five cells is a small app. The grid has one cell for every event and every thing on the page, and the number of cells that *matter* is whatever the dependency structure of your program makes it. It grows with every feature, it is invisible in the code, and nothing checks it.
 
 ```debug
 id: ui-as-a-function/forgotten-update
@@ -211,7 +211,7 @@ Put the two roads side by side and a pattern appears.
 
 **Rebuild** is correct by construction and pays at run time, in work and in lost DOM state. **Update by hand** is as fast as it can be and pays in the programmer, in bookkeeping that grows with the program and that nothing checks. Neither is acceptable, and what everything else in this course does is try to get *both*: the programmer writes `UI = f(state)`, the framework works out the minimal set of imperative updates, and the page keeps its nodes.
 
-That gives a three-part job for any such system, and the next fourteen chapters are variations on how each part is done:
+That gives a three-part job for any such system, and the rest of the course is a set of variations on how each part is done:
 
 1. **Describe.** Evaluate the view for the current state. (A function call; a template; a compiled function.)
 2. **Find what changed.** Compare with the previous description, or with a recorded set of dependencies, or with a precomputed map. This is the chapter-0 question.

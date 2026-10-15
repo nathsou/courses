@@ -1,5 +1,5 @@
 ---
-title: Angular, zones and signals
+title: 'Angular: zones, then signals'
 summary: Angular does not track what changed. It checks everything, and a patched browser tells it when. Then it learned to be told, and signals let it skip the walk.
 number: 14
 duration: 60 minutes
