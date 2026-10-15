@@ -92,3 +92,8 @@ captured:
   year: 2026
   title: Captured compiler outputs for the counter component (React, Solid, Vue, Svelte, Angular), with tool versions
   venue: docs/captured in the course repository
+react-hydration:
+  authors: React team
+  year: 2024
+  title: React documentation, hydrateRoot and Suspense for streaming server rendering
+  url: https://react.dev/reference/react-dom/client/hydrateRoot
