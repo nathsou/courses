@@ -1,0 +1,21 @@
+elliott-hudak-1997:
+  authors: Elliott, C. and Hudak, P.
+  year: 1997
+  title: Functional reactive animation
+  venue: Proceedings of the ACM SIGPLAN International Conference on Functional Programming (ICFP ’97)
+bainomugisha-2013:
+  authors: Bainomugisha, E., Carreton, A. L., Van Cutsem, T., Mostinckx, S. and De Meuter, W.
+  year: 2013
+  title: A survey on reactive programming
+  venue: ACM Computing Surveys 45(4), article 52
+hammer-adapton-2014:
+  authors: Hammer, M. A., Khoo, Y. P., Hicks, M. and Foster, J. S.
+  year: 2014
+  title: 'Adapton: composable, demand-driven incremental computation'
+  venue: Proceedings of the ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI ’14)
+carniato-fgr:
+  authors: Carniato, R.
+  year: 2021
+  title: A hands-on introduction to fine-grained reactivity
+  venue: DEV Community
+  url: https://dev.to/ryansolid/a-hands-on-introduction-to-fine-grained-reactivity-3ndf
