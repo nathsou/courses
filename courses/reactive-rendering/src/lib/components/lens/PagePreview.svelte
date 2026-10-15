@@ -36,6 +36,16 @@
     e.stopPropagation();
     asEl(n).blur();
   }
+  /** Keep a real control in step with its MiniDom node: the user's own typing and ticking change the real control first. */
+  function sync(node: HTMLInputElement, n: Snap) {
+    const apply = (n: Snap) => {
+      if (node.type === 'checkbox' || node.type === 'radio') {
+        if (node.checked !== n.checked) node.checked = n.checked;
+      } else if (node.value !== n.value) node.value = n.value;
+    };
+    apply(n);
+    return { update: apply };
+  }
   const attrs = (n: Snap) => Object.fromEntries(n.attrs.filter(([k]) => !k.includes(':') && !k.startsWith('on')));
 </script>
 
@@ -43,7 +53,7 @@
   {#if n.kind === 'text'}{n.text}
   {:else if n.kind === 'el'}
     {#if VOID.has(n.tag)}
-      <svelte:element this={n.tag} {...attrs(n)} value={n.tag === 'input' ? n.value : undefined} checked={n.checked || undefined} onclick={(e: MouseEvent) => onclick(e, n)} oninput={(e: Event) => oninput(e, n)} onfocus={(e: FocusEvent) => onfocus(e, n)} onblur={(e: FocusEvent) => onblur(e, n)} />
+      <svelte:element this={n.tag} {...attrs(n)} value={n.tag === 'input' ? n.value : undefined} checked={n.tag === 'input' ? n.checked : undefined} onclick={(e: MouseEvent) => onclick(e, n)} oninput={(e: Event) => oninput(e, n)} onfocus={(e: FocusEvent) => onfocus(e, n)} onblur={(e: FocusEvent) => onblur(e, n)} use:sync={n} />
     {:else}
       <svelte:element this={n.tag} {...attrs(n)} onclick={(e: MouseEvent) => onclick(e, n)}>
         {#each n.children as c (c.id)}{@render view(c)}{/each}

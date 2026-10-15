@@ -15,6 +15,8 @@ import { MiniDocument, MElement, MNode, MText, MComment, parseHTML } from './dom
 export interface MorphOptions {
   /** Do not overwrite the value of the focused control (the default): the user is typing in it. */
   ignoreActiveValue?: boolean;
+  /** Elements for which this returns true are left exactly as they are (htmx's `hx-preserve`, Turbo's `data-turbo-permanent`). */
+  preserve?: (el: MElement) => boolean;
 }
 
 export function morph(parent: MElement, html: string, opts: MorphOptions = {}): void {
@@ -24,7 +26,7 @@ export function morph(parent: MElement, html: string, opts: MorphOptions = {}): 
     n.parent = frag;
     frag.children.push(n);
   }
-  new Morpher(doc, opts.ignoreActiveValue ?? true).children(parent, frag);
+  new Morpher(doc, opts.ignoreActiveValue ?? true, opts.preserve).children(parent, frag);
 }
 
 const idOf = (n: MNode): string | null => (n instanceof MElement ? (n.attrs.get('id') ?? null) : null);
@@ -33,6 +35,7 @@ class Morpher {
   constructor(
     private doc: MiniDocument,
     private ignoreActiveValue: boolean,
+    private preserve?: (el: MElement) => boolean,
   ) {}
 
   /** Ids present anywhere below (and on) a node. */
@@ -128,6 +131,7 @@ class Morpher {
     } else if (old instanceof MComment && next instanceof MComment) {
       old.data = next.data;
     } else if (old instanceof MElement && next instanceof MElement) {
+      if (this.preserve?.(old)) return;
       this.attributes(old, next);
       this.children(old, next);
     }
@@ -139,8 +143,9 @@ class Morpher {
     if (old.tag === 'input' || old.tag === 'textarea' || old.tag === 'select') {
       const active = this.doc.activeElement === old;
       if (!(active && this.ignoreActiveValue)) {
-        const want = next.attrs.get('value');
-        if (want !== undefined && old.value !== want) old.value = want;
+        // As in idiomorph: a field takes the value the new HTML gives it (none means empty), unless the user is typing in it.
+        const want = next.attrs.get('value') ?? '';
+        if (old.tag !== 'select' && old.value !== want) old.value = want;
       }
       if (next.attrs.has('checked') !== old.checked && !(this.doc.activeElement === old && this.ignoreActiveValue)) old.checked = next.attrs.has('checked');
     }

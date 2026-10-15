@@ -97,3 +97,22 @@ describe('morph', () => {
     }
   });
 });
+
+describe('form state and preserved elements', () => {
+  test('a field that is not focused takes the value the new HTML gives it', () => {
+    const { root } = setup('<form><input id="q" value=""></form>');
+    const input = root.querySelector('#q') as MElement;
+    input.userInput('rea');
+    morph(root, '<form><input id="q" value=""></form>');
+    expect(input.value).toBe('');
+  });
+
+  test('a preserved element is left exactly as it is, with its subtree', () => {
+    const { root } = setup('<div><input id="q" value=""><p>old</p></div>');
+    const input = root.querySelector('#q') as MElement;
+    input.userInput('rea');
+    morph(root, '<div><input id="q" value=""><p>new</p></div>', { preserve: (el) => el.getAttribute('id') === 'q' });
+    expect(input.value).toBe('rea');
+    expect(root.querySelector('p')!.textContent).toBe('new');
+  });
+});
