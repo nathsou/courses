@@ -380,10 +380,11 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
       case 'math':
       case 'inlineMath': {
         termRefs(node.value).forEach((t) => ctx.termRefs.add(t));
-        const html = renderMath(node.value, node.type === 'math');
+        const display = node.type === 'math' || (node.data as { display?: boolean } | undefined)?.display === true;
+        const html = renderMath(node.value, display);
         parent.children[index] = {
           type: 'html',
-          value: node.type === 'math' ? `<div class="math-display">${html}</div>` : html,
+          value: node.type === 'math' ? `<div class="math-display">${html}</div>` : display ? `<span class="math-display">${html}</span>` : html,
         } as never;
         return;
       }
@@ -533,6 +534,10 @@ export async function compileMarkdown(source: string, file: string): Promise<Com
     if (parent && index !== undefined && node.children.length === 1 && child?.type === 'inlineMath' && raw.startsWith('$$') && raw.endsWith('$$')) {
       parent.children[index] = { type: 'math', value: child.value, position: node.position } as never;
     }
+  });
+  // $$…$$ inside a paragraph (no blank lines around it) parses as inline math; it is still meant as display math.
+  visit(tree, 'inlineMath', (node) => {
+    if (body.slice(node.position?.start.offset, node.position?.end.offset).startsWith('$$')) node.data = { ...node.data, display: true } as never;
   });
   visit(tree, (node) => {
     if (node.type === 'containerDirective' && ['equation', 'figure'].includes(node.name) && node.attributes?.id) ctx.slugs.set(node.attributes.id, 1);

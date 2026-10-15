@@ -34,7 +34,9 @@ Consequently, $\pi(x) \sim x/\log x$, $\theta(x) \sim x$ and $\psi(x) \sim x$ ar
 1. $\psi(x) - \theta(x) = \sum_{k \ge 2} \theta(x^{1/k})$, where the sum stops once $x^{1/k} < 2$, that is, after at most $\log_2 x$ terms. Each $\theta(y) \le y \log y$, so the sum is at most $\sqrt x \log x + \log_2 x \cdot x^{1/3} \log x = O(\sqrt x \log x)$.
 2. Each prime up to $x$ has $\log p \le \log x$, giving the first inequality. For the second, let $y = x/\log^2 x$. The primes up to $y$ number at most $y$, and each prime in $(y, x]$ has $\log p > \log y$, so
 $$\pi(x) \le y + \frac{\theta(x)}{\log y} = \frac{x}{\log^2 x} + \frac{\theta(x)}{\log x - 2\log\log x}.$$
-Since $\theta(x) = O(x)$ (proved below) and $\frac{1}{\log x - 2\log\log x} = \frac{1}{\log x} + O\left(\frac{\log\log x}{\log^2 x}\right)$, this is $\frac{\theta(x)}{\log x} + O\left(\frac{x \log\log x}{\log^2 x}\right)$. (With a little more care the $\log\log x$ disappears; we will not need it.)
+Since $\theta(x) = O(x)$ (proved below) and
+$$\frac{1}{\log x - 2\log\log x} = \frac{1}{\log x} + O\left(\frac{\log\log x}{\log^2 x}\right),$$
+this is $\frac{\theta(x)}{\log x} + O\left(\frac{x \log\log x}{\log^2 x}\right)$. (With a little more care the $\log\log x$ disappears; we will not need it.)
 :::
 
 So from now on we can study whichever of $\pi$, $\theta$, $\psi$ is most convenient, and translate.

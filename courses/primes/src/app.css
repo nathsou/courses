@@ -567,7 +567,8 @@ figure.code-block pre {
 
 /* Maths. */
 .math-display {
-  margin: 1.4rem 0;
+  display: block;
+  margin: 1.1rem 0;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.25rem 0;
@@ -577,6 +578,9 @@ figure.code-block pre {
 }
 .math-display .katex {
   font-size: 1.2em;
+}
+.math-display > .katex-display {
+  margin: 0;
 }
 [data-term] {
   border-radius: 2px;

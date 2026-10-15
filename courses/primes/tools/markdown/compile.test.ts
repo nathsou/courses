@@ -34,3 +34,9 @@ test('standalone one-line double-dollar equations use display layout', async () 
   expect(code).toContain('class="math-display"');
   expect(code).toContain('class="katex-display"');
 });
+
+test('$$…$$ inside a paragraph renders as display math', async () => {
+  const { code } = await compileMarkdown('So\n$$x^2$$\nholds.\n', file);
+  expect(code).toContain('<span class="math-display">');
+  expect(code).toContain('katex-display');
+});

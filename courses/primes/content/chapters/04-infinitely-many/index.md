@@ -37,7 +37,7 @@ Here is the construction, run as a machine. Start from $\{2\}$; $2 + 1 = 3$ is p
 
 ::euclid-machine
 
-Starting from $\{2\}$ and always keeping the smallest new prime gives the **Euclid–Mullin sequence**: $2, 3, 7, 43, 13, 53, 5, 6221671, 38709183810571, 139, \ldots$ It is conjectured that every prime eventually appears in it; nobody knows.:cite[oeis-a000945] After a few dozen terms the numbers to factor have hundreds of digits, and nobody can factor them. The *proof* does not care: it guarantees a new prime factor without finding it.
+Starting from $\{2\}$ and always keeping the smallest new prime gives the **Euclid–Mullin sequence**: $2$, $3$, $7$, $43$, $13$, $53$, $5$, $6221671$, $38709183810571$, $139$, … It is conjectured that every prime eventually appears in it; nobody knows.:cite[oeis-a000945] After a few dozen terms the numbers to factor have hundreds of digits, and nobody can factor them. The *proof* does not care: it guarantees a new prime factor without finding it.
 
 ```bug
 title: A popular mistake
