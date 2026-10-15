@@ -598,7 +598,7 @@ export function toHTML(node: MNode): string {
   if (node instanceof MComment) return `<!--${node.data}-->`;
   const el = node as MElement;
   if (el.tag === '#fragment') return el.children.map(toHTML).join('');
-  const attrs = [...el.attrs].map(([k, v]) => (v === '' ? ` ${k}` : ` ${k}="${escapeAttr(v)}"`)).join('');
+  const attrs = [...el.attrs].map(([k, v]) => ` ${k}="${escapeAttr(v)}"`).join('');
   if (VOID_TAGS.has(el.tag)) return `<${el.tag}${attrs}>`;
   return `<${el.tag}${attrs}>${el.children.map(toHTML).join('')}</${el.tag}>`;
 }
@@ -615,6 +615,7 @@ const decode = (s: string) =>
  * Handles nested elements, quoted/unquoted/boolean attributes, void tags, comments and entities.
  */
 export function parseHTML(doc: MiniDocument, html: string): MNode[] {
+  html = html.replace(/<!>/g, '<!---->'); // the empty comment marker used by templates
   const root = doc.createFragment();
   const stack: MElement[] = [root];
   const top = () => stack[stack.length - 1]!;

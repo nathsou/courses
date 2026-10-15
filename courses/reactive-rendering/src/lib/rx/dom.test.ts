@@ -145,7 +145,7 @@ describe('MiniDom tree operations', () => {
 describe('HTML parsing and serialisation', () => {
   test('round-trips attributes, void tags, comments and entities', () => {
     const doc = createDocument();
-    const html = '<div class="a b" hidden><input type="text" value="x&amp;y"><br><!--note--><p>1 &lt; 2</p></div>';
+    const html = '<div class="a b" hidden=""><input type="text" value="x&amp;y"><br><!--note--><p>1 &lt; 2</p></div>';
     const nodes = parseHTML(doc, html);
     expect(nodes.map((n) => toHTML(n)).join('')).toBe(html);
     const input = (nodes[0] as MElement).querySelector('input')!;
