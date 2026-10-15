@@ -18,6 +18,7 @@ import * as morph from '../rx/morph';
 import * as resume from '../rx/resume';
 import * as flight from '../rx/flight';
 import * as cd from '../rx/cd';
+import * as tc39 from 'signal-polyfill';
 
 /** What exercises may import: the course's reactive lab. */
 export const LIBRARY: Record<string, unknown> = {
@@ -36,6 +37,7 @@ export const LIBRARY: Record<string, unknown> = {
   '@rx/resume': resume,
   '@rx/flight': flight,
   '@rx/cd': cd,
+  '@rx/tc39': tc39,
 };
 
 /** Lines added by `new Function` before the module body (for mapping stack traces). */

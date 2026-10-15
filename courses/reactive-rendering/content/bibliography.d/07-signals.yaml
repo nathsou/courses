@@ -60,3 +60,8 @@ angular-zoneless:
   year: 2025
   title: Angular documentation, Zoneless change detection
   url: https://angular.dev/guide/zoneless
+tc39-signals:
+  authors: Eisenberg, R., Ehrenberg, D. and contributors
+  year: 2024
+  title: Signals, a TC39 proposal (stage 1), with the signal-polyfill package
+  url: https://github.com/tc39/proposal-signals
