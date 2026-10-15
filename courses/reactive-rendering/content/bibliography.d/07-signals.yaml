@@ -25,3 +25,18 @@ reactively:
   title: Super-charging fine-grained reactive performance
   venue: Milo’s blog and the Reactively repository (github.com/modderme123/reactively)
   url: https://github.com/modderme123/reactively
+solid-docs:
+  authors: Solid contributors
+  year: 2024
+  title: Solid documentation, fine-grained reactivity and control flow (`For`, `Show`, `Index`)
+  url: https://docs.solidjs.com/
+s-js:
+  authors: Haile, A.
+  year: 2015
+  title: S.js, simple, clean, fast reactive programming in Javascript
+  url: https://github.com/adamhaile/S
+surplus:
+  authors: Haile, A.
+  year: 2016
+  title: Surplus, high-performance JSX web views for S.js applications
+  url: https://github.com/adamhaile/surplus
