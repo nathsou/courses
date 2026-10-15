@@ -45,3 +45,18 @@ vue-reactivity-docs:
   year: 2024
   title: Vue documentation, Reactivity in Depth
   url: https://vuejs.org/guide/extras/reactivity-in-depth.html
+zonejs:
+  authors: Angular team
+  year: 2024
+  title: zone.js, a library that wraps asynchronous browser APIs (packages/zone.js in the Angular repository)
+  url: https://github.com/angular/angular/tree/main/packages/zone.js
+angular-signals:
+  authors: Angular team
+  year: 2025
+  title: Angular documentation, Signals
+  url: https://angular.dev/guide/signals
+angular-zoneless:
+  authors: Angular team
+  year: 2025
+  title: Angular documentation, Zoneless change detection
+  url: https://angular.dev/guide/zoneless
