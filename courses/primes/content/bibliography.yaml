@@ -438,3 +438,43 @@ maier1985:
   year: 1985
   title: Primes in short intervals
   venue: Michigan Mathematical Journal 32(2), 221–225
+euler-basel:
+  authors: Leonhard Euler
+  year: 1740
+  title: De summis serierum reciprocarum (E41)
+  venue: Commentarii academiae scientiarum Petropolitanae 7 (presented 1735), 123–134
+euler1744:
+  authors: Leonhard Euler
+  year: 1744
+  title: Variae observationes circa series infinitas (E72)
+  venue: Commentarii academiae scientiarum Petropolitanae 9 (presented 1737), 160–188
+apery1979:
+  authors: Roger Apéry
+  year: 1979
+  title: Irrationalité de ζ(2) et ζ(3)
+  venue: Astérisque 61, 11–13
+hadamard1893:
+  authors: Jacques Hadamard
+  year: 1893
+  title: Étude sur les propriétés des fonctions entières et en particulier d’une fonction considérée par Riemann
+  venue: Journal de Mathématiques Pures et Appliquées (4) 9, 171–215
+hardy1914:
+  authors: G. H. Hardy
+  year: 1914
+  title: Sur les zéros de la fonction ζ(s) de Riemann
+  venue: Comptes Rendus de l’Académie des Sciences 158, 1012–1014
+pratt2020:
+  authors: Kyle Pratt, Nicolas Robles, Alexandru Zaharescu and Dirk Zeindler
+  year: 2020
+  title: More than five-twelfths of the zeros of ζ are on the critical line
+  venue: Research in the Mathematical Sciences 7, article 2
+siegel1932:
+  authors: Carl Ludwig Siegel
+  year: 1932
+  title: Über Riemanns Nachlaß zur analytischen Zahlentheorie
+  venue: Quellen und Studien zur Geschichte der Mathematik B 2, 45–80
+turing1953:
+  authors: A. M. Turing
+  year: 1953
+  title: Some calculations of the Riemann zeta-function
+  venue: Proceedings of the London Mathematical Society (3) 3, 99–117
