@@ -114,3 +114,8 @@ rsc-rfc:
   title: Introducing Zero-Bundle-Size React Server Components
   venue: React blog, 21 December 2020
   url: https://react.dev/blog/2020/12/21/data-fetching-with-react-server-components
+qwik-resumable:
+  authors: Hevery, M. and the Qwik team
+  year: 2022
+  title: Qwik documentation, Resumable (and the Builder.io posts on resumability versus hydration)
+  url: https://qwik.dev/docs/concepts/resumable/
