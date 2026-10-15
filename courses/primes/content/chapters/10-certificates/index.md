@@ -5,7 +5,7 @@ summary: How to prove a number prime rather than merely believe it. Lucas’s co
 duration: About 1¾ hours
 prerequisites: [probable-primes, quadratic-residues]
 theorems: [Lucas’s theorem, Pratt certificates have polynomial size, Pocklington’s theorem, The Lucas–Lehmer test, AKS (PRIMES is in P)]
-techniques: [orders of elements, recursion, 'arithmetic in ℤ[√3]']
+techniques: ["orders of elements", "recursion", "arithmetic in ℤ[√3]"]
 ---
 
 A Miller–Rabin test that passes twenty rounds leaves a chance of error smaller than one in a trillion. For most purposes that is certainty. But it is not a *proof*, and sometimes a proof is what you want: for a record, for a published table, or because a probabilistic argument is not acceptable in your setting. This chapter is about **certificates**: short pieces of evidence that make a number's primality quick to *check*, even if finding the evidence was hard.

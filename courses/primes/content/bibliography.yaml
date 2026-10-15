@@ -633,3 +633,53 @@ deligne1974:
   year: 1974
   title: La conjecture de Weil. I
   venue: Publications Mathématiques de l’IHÉS 43, 273–307
+dirichlet1837:
+  authors: Peter Gustav Lejeune Dirichlet
+  year: 1837
+  title: Beweis des Satzes, dass jede unbegrenzte arithmetische Progression, deren erstes Glied und Differenz ganze Zahlen ohne gemeinschaftlichen Factor sind, unendlich viele Primzahlen enthält
+  venue: Abhandlungen der Königlichen Preußischen Akademie der Wissenschaften zu Berlin, 45–81
+chebyshev1853:
+  authors: P. L. Chebyshev
+  year: 1853
+  title: Lettre de M. le professeur Tchébychev à M. Fuss, sur un nouveau théorème relatif aux nombres premiers contenus dans les formes 4n + 1 et 4n + 3
+  venue: Bulletin de la Classe physico-mathématique de l’Académie Impériale des Sciences de Saint-Pétersbourg 11, 208
+leech1957:
+  authors: John Leech
+  year: 1957
+  title: Note on the distribution of prime numbers
+  venue: Journal of the London Mathematical Society 32(1), 56–58
+bays-hudson1978:
+  authors: Carter Bays and Richard H. Hudson
+  year: 1978
+  title: Details of the first region of integers x with π₃,₂(x) < π₃,₁(x)
+  venue: Mathematics of Computation 32(144), 571–576
+zagier1990:
+  authors: D. Zagier
+  year: 1990
+  title: A one-sentence proof that every prime p ≡ 1 (mod 4) is a sum of two squares
+  venue: American Mathematical Monthly 97(2), 144
+gww1998:
+  authors: Ellen Gethner, Stan Wagon and Brian Wick
+  year: 1998
+  title: A stroll through the Gaussian primes
+  venue: American Mathematical Monthly 105(4), 327–337
+brun1919:
+  authors: Viggo Brun
+  year: 1919
+  title: La série 1/5 + 1/7 + 1/11 + 1/13 + 1/17 + 1/19 + 1/29 + 1/31 + … où les dénominateurs sont nombres premiers jumeaux est convergente ou finie
+  venue: Bulletin des Sciences Mathématiques 43, 100–104 and 124–128
+chen1973:
+  authors: Chen Jingrun
+  year: 1973
+  title: On the representation of a larger even integer as the sum of a prime and the product of at most two primes
+  venue: Scientia Sinica 16, 157–176
+zhang2014:
+  authors: Yitang Zhang
+  year: 2014
+  title: Bounded gaps between primes
+  venue: Annals of Mathematics 179(3), 1121–1174
+maynard2015:
+  authors: James Maynard
+  year: 2015
+  title: Small gaps between primes
+  venue: Annals of Mathematics 181(1), 383–413
