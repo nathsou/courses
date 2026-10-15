@@ -370,4 +370,24 @@ describe('components and hooks', () => {
     root.render(h('ul', { class: 'l' }, h('li', { key: 1 }, 'x'), h('li', { key: 2 }, 'y')));
     expect(toHTML(doc.body.firstChild!)).toBe('<ul class="l"><li>x</li><li>y</li></ul>');
   });
+
+  test('inspect lists each component with its hook slots and render count', () => {
+    const { doc, root } = setup();
+    const C = () => {
+      const [n, setN] = useState(3);
+      useRef(0);
+      useEffect(() => {}, [n]);
+      return h('p', { onClick: () => setN(n + 1) }, n);
+    };
+    root.render(h('div', null, h(C)));
+    const tree = root.renderer.inspect(doc.body)!;
+    expect(tree.name).toBe('div');
+    const c = tree.children[0]!;
+    expect(c).toMatchObject({ name: 'C', kind: 'component', renders: 1 });
+    expect(c.hooks).toEqual([
+      { kind: 'state', value: '3' },
+      { kind: 'ref', value: '{ current: 0 }' },
+      { kind: 'effect', value: 'deps [3]' },
+    ]);
+  });
 });

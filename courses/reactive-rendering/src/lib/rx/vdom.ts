@@ -253,6 +253,17 @@ export function useLayoutEffect(run: () => void | (() => void), deps?: unknown[]
   effectHook('layout', run, deps);
 }
 
+export interface InspectNode {
+  /** Component name, or the element's tag. */
+  name: string;
+  kind: 'component' | 'element' | 'text';
+  /** For components: how many times it has rendered. */
+  renders: number;
+  /** For components: its hook slots, in call order. */
+  hooks: { kind: string; value: string }[];
+  children: InspectNode[];
+}
+
 // ───────────────────────── the renderer ─────────────────────────
 
 export interface RendererOptions {
@@ -262,6 +273,8 @@ export interface RendererOptions {
   autoFlush?: boolean;
   /** Called for every trace event as it happens. */
   onTrace?: (e: TraceEvent) => void;
+  /** Called when an automatic (microtask) flush throws, instead of leaving it unhandled. */
+  onError?: (e: unknown) => void;
 }
 
 export interface ComponentCount {
@@ -282,6 +295,7 @@ export class Renderer {
   private roots = new Map<MElement, Inst>();
   private nextId = 1;
   private onTrace?: (e: TraceEvent) => void;
+  private onError?: (e: unknown) => void;
 
   constructor(
     readonly doc: MiniDocument,
@@ -290,6 +304,7 @@ export class Renderer {
     this.strategy = opts.strategy ?? 'lis';
     this.autoFlush = opts.autoFlush ?? true;
     this.onTrace = opts.onTrace;
+    this.onError = opts.onError;
   }
 
   // ───── public ─────
@@ -313,6 +328,28 @@ export class Renderer {
     this.unmountInst(root, true);
     this.roots.delete(container);
     this.flushEffects();
+  }
+
+  /** The mounted tree under `container`, with each component's hook slots: for figures. */
+  inspect(container: MElement): InspectNode | null {
+    const root = this.roots.get(container);
+    return root ? this.inspectInst(root) : null;
+  }
+
+  private inspectInst(inst: Inst): InspectNode {
+    const v = inst.vnode;
+    if (isComponent(v)) {
+      return {
+        name: nameOf(v.type),
+        kind: 'component',
+        renders: inst.renderCount ?? 0,
+        hooks: (inst.hooks ?? []).map((h) => ({ kind: h.kind, value: hookSummary(h) })),
+        children: inst.kids.map((k) => this.inspectInst(k)),
+      };
+    }
+    if (v.type === TEXT) return { name: JSON.stringify(v.text), kind: 'text', renders: 0, hooks: [], children: [] };
+    if (v.type === EMPTY) return { name: '(empty)', kind: 'text', renders: 0, hooks: [], children: [] };
+    return { name: String(v.type), kind: 'element', renders: 0, hooks: [], children: inst.kids.map((k) => this.inspectInst(k)) };
   }
 
   /** Run pending state updates (batched), then effects. Returns the number of component renders it caused. */
@@ -354,7 +391,13 @@ export class Renderer {
     if (this.autoFlush && !this.flushQueued) {
       this.flushQueued = true;
       queueMicrotask(() => {
-        if (this.flushQueued) this.flush();
+        if (!this.flushQueued) return;
+        try {
+          this.flush();
+        } catch (e) {
+          if (!this.onError) throw e;
+          this.onError(e);
+        }
       });
     }
   }
@@ -727,6 +770,20 @@ export class Renderer {
         if (this.flushQueued) this.flush();
       });
     }
+  }
+}
+
+function hookSummary(h: Hook): string {
+  const fmt = (v: unknown) => (typeof v === 'function' ? 'ƒ' : typeof v === 'string' ? JSON.stringify(v) : v === undefined ? 'undefined' : JSON.stringify(v) ?? String(v));
+  switch (h.kind) {
+    case 'state':
+    case 'reducer':
+    case 'memo':
+      return fmt(h.value);
+    case 'ref':
+      return `{ current: ${fmt(h.ref.current)} }`;
+    case 'effect':
+      return h.deps === undefined ? 'runs after every render' : `deps [${h.deps.map(fmt).join(', ')}]`;
   }
 }
 

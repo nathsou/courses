@@ -1,0 +1,12 @@
+react-hooks-intro:
+  authors: Alpert, S. and Abramov, D.
+  year: 2018
+  title: Introducing Hooks
+  venue: React documentation (React Conf 2018; hooks shipped in React 16.8, February 2019)
+  url: https://legacy.reactjs.org/docs/hooks-intro.html
+abramov-useeffect:
+  authors: Abramov, D.
+  year: 2019
+  title: A complete guide to useEffect
+  venue: overreacted.io
+  url: https://overreacted.io/a-complete-guide-to-useeffect/
