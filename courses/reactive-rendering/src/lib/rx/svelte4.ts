@@ -12,12 +12,19 @@
  * flush. Everything here that is not a bitmask test is the same as a hand-written, imperative DOM update.
  */
 import { MiniDocument, MElement, MNode, MText, type Listener } from './dom';
+import { reconcile } from './keyed';
 
 export interface Fragment {
   /** create */ c(): void;
   /** mount */ m(target: MElement, anchor: MNode | null): void;
   /** update */ p(ctx: any[], dirty: number[]): void;
   /** destroy */ d(detaching?: boolean | 0 | 1): void;
+}
+
+export interface KeyedBlock extends Fragment {
+  key: string | number;
+  /** The first DOM node of the block: where an earlier block is inserted before. */
+  first: MNode | null;
 }
 
 export interface Internals {
@@ -34,6 +41,8 @@ export interface Internals {
   toggle_class(el: MElement, name: string, on: boolean): void;
   destroy_each(blocks: Fragment[], detaching: boolean | 0 | 1): void;
   ensure_array_like<T>(v: T[]): T[];
+  /** A keyed `{#each}` update: reuse a block per key, move the blocks that moved, create and destroy the rest. */
+  update_keyed_each<T>(blocks: KeyedBlock[], dirty: number[], getKey: (ctx: any[]) => string | number, ctx: any[], list: T[], target: MElement, anchor: MNode | null, create: (ctx: any[]) => KeyedBlock, getContext: (ctx: any[], list: T[], i: number) => any[]): KeyedBlock[];
   noop(): void;
   safe_not_equal(a: unknown, b: unknown): boolean;
   init(component: SvelteComponent, options: { target?: MElement }, instance: Instance, createFragment: (ctx: any[]) => Fragment, notEqual: (a: unknown, b: unknown) => boolean, props: Record<string, unknown>): void;
@@ -108,6 +117,29 @@ export function createSvelte4(doc: MiniDocument, opts: { manual?: boolean } = {}
       for (const b of blocks) b?.d(detaching);
     },
     ensure_array_like: (v) => v,
+    update_keyed_each(blocks, dirty, getKey, ctx, list, target, anchor, create, getContext) {
+      const oldKeys = blocks.map((b) => b.key);
+      const contexts = list.map((_, i) => getContext(ctx, list, i));
+      const newKeys = contexts.map((c) => getKey(c));
+      const steps = reconcile(oldKeys, newKeys, 'lis');
+      const placed: KeyedBlock[] = [];
+      const before = (a: any): MNode | null => (a === 'end' ? anchor : a === 'start' ? (blocks[0]?.first ?? anchor) : 'before' in a ? placed[a.before]!.first : (placed[a.after]!.first as MNode | null)?.nextSibling ?? anchor);
+      for (const st of steps) {
+        if (st.op === 'remove') blocks[st.from]!.d(1);
+        else if (st.op === 'insert') {
+          const b = create(contexts[st.to]!);
+          b.c();
+          b.m(target, before(st.anchor));
+          placed[st.to] = b;
+        } else {
+          const b = blocks[st.from]!;
+          b.p(contexts[st.to]!, dirty);
+          if (st.op === 'move') b.m(target, before(st.anchor));
+          placed[st.to] = b;
+        }
+      }
+      return placed;
+    },
     noop: () => {},
     // Objects and functions are always considered changed (a mutation in place would not be noticed otherwise).
     safe_not_equal: (a, b) => (a != a ? b == b : a !== b || (a !== null && typeof a === 'object') || typeof a === 'function'),

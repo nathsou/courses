@@ -12,7 +12,7 @@
  *
  * Every component render, bail-out and effect is recorded in `renderer.trace`, so figures can show *who rendered*.
  */
-import { MiniDocument, MElement, MNode, type Listener } from './dom';
+import { MiniDocument, MElement, MNode, MText, MComment, type Listener } from './dom';
 import { reconcile, type Anchor, type Key, type Strategy } from './keyed';
 
 // ───────────────────────── elements ─────────────────────────
@@ -72,6 +72,38 @@ function sameChildren(a: readonly VNode[], b: readonly VNode[]): boolean {
 }
 
 const nameOf = (c: Component) => c.displayName || c.name || 'Anonymous';
+
+
+/** The attributes an element with these props should have in the DOM (and in server-rendered HTML). */
+export function expectedAttrs(props: Props): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const name of Object.keys(props)) {
+    const value = props[name];
+    if (name === 'children' || name === 'ref' || (name.length > 2 && name.startsWith('on') && name[2] === name[2]!.toUpperCase())) continue;
+    if (value === undefined || value === null || value === false) continue;
+    const attr = name === 'className' ? 'class' : name;
+    if (name === 'style' && typeof value === 'object') {
+      out.set('style', Object.entries(value as Record<string, unknown>).map(([k, v]) => `${k.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())}: ${v}`).join('; '));
+    } else out.set(attr, value === true ? '' : String(value));
+  }
+  return out;
+}
+
+export interface Mismatch {
+  kind: 'tag' | 'text' | 'attribute' | 'extra' | 'missing';
+  /** Where in the tree, e.g. `div > ul > li[1]`. */
+  path: string;
+  expected?: string;
+  found?: string;
+}
+
+export interface HydrationReport {
+  mismatches: Mismatch[];
+  /** DOM nodes taken over from the server HTML. */
+  claimed: number;
+  /** DOM nodes the client had to create because the server HTML did not have them. */
+  created: number;
+}
 
 // ───────────────────────── instances ─────────────────────────
 
@@ -344,6 +376,113 @@ export class Renderer {
     this.onTrace?.(e);
   }
 
+  // ───── hydration ─────
+
+  /**
+   * Take over server-rendered HTML in `container`: walk the tree and the DOM together, claim each node instead of
+   * creating it, attach the event handlers and run the effects. Anything that differs is reported and repaired.
+   */
+  hydrate(tree: Child, container: MElement): HydrationReport {
+    const flat: VNode[] = [];
+    normalise(tree, flat);
+    const vnode = flat[0] ?? EMPTY_VNODE;
+    const report: HydrationReport = { mismatches: [], claimed: 0, created: 0 };
+    const cursor = { node: container.firstChild as MNode | null };
+    const inst = this.hydrateInst(vnode, null, container, cursor, report, '');
+    this.skipSeparators(cursor);
+    while (cursor.node) {
+      const extra = cursor.node;
+      report.mismatches.push({ kind: 'extra', path: 'root', found: describeNode(extra) });
+      cursor.node = extra.nextSibling;
+      container.removeChild(extra);
+    }
+    this.roots.set(container, inst);
+    this.flushEffects();
+    return report;
+  }
+
+  /** Server HTML separates adjacent text with `<!-- -->`; skip those markers. */
+  private skipSeparators(cursor: { node: MNode | null }): void {
+    while (cursor.node instanceof MComment) cursor.node = cursor.node.nextSibling;
+  }
+
+  private hydrateInst(vnode: VNode, parent: Inst | null, parentDom: MElement, cursor: { node: MNode | null }, report: HydrationReport, path: string): Inst {
+    const inst: Inst = { vnode, dom: null, kids: [], parent, id: this.nextId++ };
+    if (vnode.type === EMPTY) {
+      inst.dom = this.doc.createTextNode('');
+      parentDom.insertBefore(inst.dom, cursor.node);
+      return inst;
+    }
+    this.skipSeparators(cursor);
+    const found = cursor.node;
+    if (vnode.type === TEXT) {
+      if (found instanceof MText) {
+        if (found.data !== vnode.text) {
+          report.mismatches.push({ kind: 'text', path, expected: JSON.stringify(vnode.text), found: JSON.stringify(found.data) });
+          found.data = vnode.text!;
+        }
+        inst.dom = found;
+        cursor.node = found.nextSibling;
+        report.claimed++;
+      } else {
+        report.mismatches.push({ kind: 'missing', path, expected: JSON.stringify(vnode.text), found: found ? describeNode(found) : 'nothing' });
+        inst.dom = this.doc.createTextNode(vnode.text!);
+        parentDom.insertBefore(inst.dom, found);
+        report.created++;
+      }
+      return inst;
+    }
+    if (isComponent(vnode)) {
+      inst.hooks = [];
+      inst.renderCount = 0;
+      const out = this.renderComponent(inst);
+      const kid = this.hydrateInst(out, inst, parentDom, cursor, report, path);
+      inst.kids = [kid];
+      inst.dom = kid.dom;
+      this.note({ kind: 'mount', name: nameOf(vnode.type) });
+      return inst;
+    }
+    const tag = vnode.type as string;
+    const here = `${path ? path + ' > ' : ''}${tag}`;
+    let el: MElement;
+    if (found instanceof MElement && found.tag === tag) {
+      el = found;
+      cursor.node = found.nextSibling;
+      report.claimed++;
+      const want = expectedAttrs(vnode.props);
+      for (const [name, value] of want) {
+        if (el.getAttribute(name) !== value) report.mismatches.push({ kind: 'attribute', path: here, expected: `${name}="${value}"`, found: el.hasAttribute(name) ? `${name}="${el.getAttribute(name)}"` : 'no such attribute' });
+      }
+      for (const name of el.attrs.keys()) if (!want.has(name)) report.mismatches.push({ kind: 'attribute', path: here, expected: `no ${name}`, found: `${name}="${el.getAttribute(name)}"` });
+      // Writes only what differs; attaches the event handlers (the one thing the server HTML cannot carry).
+      this.patchProps(el, {}, vnode.props);
+      for (const name of [...el.attrs.keys()]) if (!want.has(name)) el.removeAttribute(name);
+      inst.dom = el;
+      const childCursor = { node: el.firstChild as MNode | null };
+      vnode.children.forEach((child, i) => inst.kids.push(this.hydrateInst(child, inst, el, childCursor, report, `${here}[${i}]`)));
+      this.skipSeparators(childCursor);
+      while (childCursor.node) {
+        const extra = childCursor.node;
+        report.mismatches.push({ kind: 'extra', path: here, found: describeNode(extra) });
+        childCursor.node = extra.nextSibling;
+        el.removeChild(extra);
+      }
+    } else {
+      report.mismatches.push({ kind: 'tag', path: here, expected: `<${tag}>`, found: found ? describeNode(found) : 'nothing' });
+      // Give up on the server markup for this subtree: build it on the client.
+      const fresh = this.mountInst(vnode, parent, parentDom, found);
+      report.created += countDom(fresh.dom!);
+      if (found) {
+        cursor.node = found.nextSibling;
+        parentDom.removeChild(found);
+      }
+      return fresh;
+    }
+    const ref = vnode.props.ref;
+    if (ref) this.setRef(ref, el);
+    return inst;
+  }
+
   // ───── mounting ─────
 
   private mountInst(vnode: VNode, parent: Inst | null, parentDom: MElement, anchor: MNode | null): Inst {
@@ -589,6 +728,14 @@ export class Renderer {
       });
     }
   }
+}
+
+function describeNode(n: MNode): string {
+  return n instanceof MText ? `text ${JSON.stringify(n.data)}` : n instanceof MElement ? `<${n.tag}>` : '<!-- -->';
+}
+
+function countDom(n: MNode): number {
+  return n instanceof MElement ? 1 + n.children.reduce((a, c) => a + countDom(c), 0) : 1;
 }
 
 function depth(inst: Inst): number {

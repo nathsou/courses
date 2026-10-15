@@ -85,6 +85,8 @@ export interface Engine {
 }
 
 const same = <T>(a: T, b: T) => Object.is(a, b);
+/** One node running this many times within a single update means the graph feeds itself. */
+const MAX_RUNS = 100;
 let nextId = 1;
 
 abstract class Base implements Engine {
@@ -340,13 +342,15 @@ export class TopologicalEngine extends Base {
   private flush(): void {
     if (this.flushing || this.batchDepth > 0) return;
     this.flushing = true;
+    const runs = new Map<TNode, number>();
     try {
-      let guard = 0;
       while (this.queue.size) {
-        if (guard++ > 1000) throw new Error('Maximum update depth exceeded: the graph never settles.');
         let next: TNode | null = null;
         for (const n of this.queue) if (!next || n.height < next.height) next = n;
         this.queue.delete(next!);
+        const count = (runs.get(next!) ?? 0) + 1;
+        runs.set(next!, count);
+        if (count > MAX_RUNS) throw new Error(`Maximum update depth exceeded: ${next!.label} ran ${MAX_RUNS} times in one update, so the graph never settles.`);
         this.run(next!);
       }
     } finally {
@@ -557,12 +561,15 @@ export class ColourEngine extends Base {
   private flush(): void {
     if (this.flushing || this.batchDepth > 0) return;
     this.flushing = true;
+    const runs = new Map<CNode, number>();
     try {
-      let guard = 0;
       while (this.queue.length) {
-        if (guard++ > 1000) throw new Error('Maximum update depth exceeded: an effect keeps triggering itself.');
         const e = this.queue.shift()!;
-        if (!e.dead) this.refresh(e);
+        if (e.dead) continue;
+        const count = (runs.get(e) ?? 0) + 1;
+        runs.set(e, count);
+        if (count > MAX_RUNS) throw new Error(`Maximum update depth exceeded: ${e.label} ran ${MAX_RUNS} times in one update. An effect keeps triggering itself.`);
+        this.refresh(e);
       }
     } finally {
       this.flushing = false;

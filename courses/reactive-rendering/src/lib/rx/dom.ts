@@ -419,7 +419,7 @@ export function countNodes(n: MNode): number {
 
 function compileSelector(sel: string): (e: MElement) => boolean {
   const parts: ((e: MElement) => boolean)[] = [];
-  const re = /(^[a-zA-Z][\w-]*)|\.([\w-]+)|#([\w-]+)|\[([\w-]+)(?:=("[^"]*"|'[^']*'|[^\]]*))?\]/g;
+  const re = /(^[a-zA-Z][\w-]*)|\.([\w-]+)|#([\w-]+)|\[([\w:-]+)(?:=("[^"]*"|'[^']*'|[^\]]*))?\]/g;
   let m: RegExpExecArray | null;
   let consumed = 0;
   while ((m = re.exec(sel.trim()))) {
