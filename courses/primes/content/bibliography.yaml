@@ -543,3 +543,63 @@ erdos1949:
   year: 1949
   title: On a new method in elementary number theory which leads to an elementary proof of the prime number theorem
   venue: Proceedings of the National Academy of Sciences 35(7), 374–384
+cramer1920:
+  authors: Harald Cramér
+  year: 1920
+  title: Some theorems concerning prime numbers
+  venue: Arkiv för Matematik, Astronomi och Fysik 15(5), 1–33
+odlyzko-zeros:
+  authors: A. M. Odlyzko
+  year: 2001
+  title: The 10²²-nd zero of the Riemann zeta function
+  venue: Dynamical, Spectral, and Arithmetic Zeta Functions, Contemporary Mathematics 290, AMS, 139–144
+haselgrove1958:
+  authors: C. B. Haselgrove
+  year: 1958
+  title: A disproof of a conjecture of Pólya
+  venue: Mathematika 5(2), 141–145
+rodgers-tao2020:
+  authors: Brad Rodgers and Terence Tao
+  year: 2020
+  title: The de Bruijn–Newman constant is non-negative
+  venue: Forum of Mathematics, Pi 8, e6
+hurst2018:
+  authors: Greg Hurst
+  year: 2018
+  title: Computations of the Mertens function and improved bounds on the Mertens conjecture
+  venue: Mathematics of Computation 87(310), 1013–1028
+odlyzko-teriele1985:
+  authors: A. M. Odlyzko and H. J. J. te Riele
+  year: 1985
+  title: Disproof of the Mertens conjecture
+  venue: Journal für die reine und angewandte Mathematik 357, 138–160
+robin1984:
+  authors: Guy Robin
+  year: 1984
+  title: Grandes valeurs de la fonction somme des diviseurs et hypothèse de Riemann
+  venue: Journal de Mathématiques Pures et Appliquées 63, 187–213
+lagarias2002:
+  authors: Jeffrey C. Lagarias
+  year: 2002
+  title: An elementary problem equivalent to the Riemann hypothesis
+  venue: American Mathematical Monthly 109(6), 534–543
+buthe2018:
+  authors: Jan Büthe
+  year: 2018
+  title: An analytic method for bounding ψ(x)
+  venue: Mathematics of Computation 87(312)
+skewes1933:
+  authors: S. Skewes
+  year: 1933
+  title: On the difference π(x) − li(x) (I)
+  venue: Journal of the London Mathematical Society 8(4), 277–283
+saouter-demichel2010:
+  authors: Yannick Saouter and Patrick Demichel
+  year: 2010
+  title: A sharp region where π(x) − li(x) is positive
+  venue: Mathematics of Computation 79(272), 2395–2405
+rubinstein-sarnak1994:
+  authors: Michael Rubinstein and Peter Sarnak
+  year: 1994
+  title: Chebyshev’s bias
+  venue: Experimental Mathematics 3(3), 173–197

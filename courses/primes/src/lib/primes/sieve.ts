@@ -146,15 +146,16 @@ export function factorWithSpf(k: number, spf: Int32Array): [number, number][] {
   return out;
 }
 
-/** The Möbius function μ(k) for k in 0..n (μ(0) is set to 0). */
+/** The Möbius function μ(k) for k in 0..n (μ(0) is set to 0). Uses n bytes plus a byte sieve. */
 export function mobiusTable(n: number): Int8Array {
-  const mu = new Int8Array(n + 1);
-  if (n >= 1) mu[1] = 1;
-  const { spf } = linearSieve(n);
-  for (let k = 2; k <= n; k++) {
-    const p = spf[k]!;
-    const m = k / p;
-    mu[k] = m % p === 0 ? 0 : (-mu[m]! as number);
+  const mu = new Int8Array(n + 1).fill(1);
+  mu[0] = 0;
+  const flags = sieve(n);
+  for (let p = 2; p <= n; p++) {
+    if (!flags[p]) continue;
+    for (let m = p; m <= n; m += p) mu[m] = -mu[m]!;
+    const p2 = p * p;
+    if (p2 <= n) for (let m = p2; m <= n; m += p2) mu[m] = 0;
   }
   return mu;
 }
