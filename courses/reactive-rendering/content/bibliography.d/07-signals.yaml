@@ -87,3 +87,8 @@ svelte-runes-docs:
   year: 2024
   title: Svelte documentation, Runes ($state, $derived, $effect, $props)
   url: https://svelte.dev/docs/svelte/what-are-runes
+captured:
+  authors: The course authors
+  year: 2026
+  title: Captured compiler outputs for the counter component (React, Solid, Vue, Svelte, Angular), with tool versions
+  venue: docs/captured in the course repository

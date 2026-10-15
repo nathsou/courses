@@ -7,7 +7,7 @@ component (a counter with a class that depends on its value). The files here are
 | File(s) | Tool | Version |
 |---|---|---|
 | `react.classic.js` | `@babel/preset-react` (automatic runtime, production) | Babel 7 |
-| `react.compiler.js` | `babel-plugin-react-compiler` | 1.0.0 |
+| `react.compiler.js`, `react.compiler.functional.js` | `babel-plugin-react-compiler` | 1.0.0 (the second file is the same component with `setCount(c => c + 1)`) |
 | `solid.dom.js`, `solid.ssr.js` | `babel-preset-solid` (`generate: 'dom'`, `'ssr'` hydratable) | 1.9.16 (solid-js 1.9.17) |
 | `vue.vdom.js`, `vue.vapor.js` (+ `*.inline.js`) | `@vue/compiler-sfc` | 3.6.0-rc.11 (the release candidate that includes Vapor mode) |
 | `svelte.client.js`, `svelte.server.js` | `svelte/compiler` | 5.57.2 |
