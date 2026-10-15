@@ -126,6 +126,10 @@ export interface SimResult {
   longestBlock: number;
   /** Frame windows (default 16.7 ms) with no chance to paint: the user sees these as jank. */
   droppedFrames: number;
+  /** Every frame window from the first keystroke to the end, and whether it had a chance to paint. */
+  frames: { start: number; end: number; dropped: boolean }[];
+  /** Moments at which the main thread gave the browser a turn (slice boundaries and idle time). */
+  yields: number[];
   /** Milliseconds of rendering thrown away because newer input made it stale. */
   wasted: number;
   worstLatency: number;
@@ -234,9 +238,12 @@ export function simulate(cfg: SimConfig): SimResult {
   // A frame window is "dropped" when no yield or idle point falls inside it.
   const gapTimes = gaps.slice().sort((a, b) => a - b);
   let dropped = 0;
+  const frames: SimResult['frames'] = [];
   const firstEvent = keys[0]?.at ?? 0;
   for (let f = Math.floor(firstEvent / frameMs) * frameMs; f + frameMs <= end; f += frameMs) {
-    if (!gapTimes.some((g) => g >= f && g < f + frameMs)) dropped++;
+    const miss = !gapTimes.some((g) => g >= f && g < f + frameMs);
+    if (miss) dropped++;
+    frames.push({ start: f, end: f + frameMs, dropped: miss });
   }
   return {
     mode: cfg.mode,
@@ -245,6 +252,8 @@ export function simulate(cfg: SimConfig): SimResult {
     end,
     longestBlock: longest,
     droppedFrames: dropped,
+    frames,
+    yields: [...new Set(gapTimes.map((g) => Math.round(g * 100) / 100))],
     wasted,
     worstLatency: Math.max(0, ...results.map((r) => r.latency)),
   };
