@@ -60,3 +60,10 @@ export function pairCorrelation(u: number): number {
   const x = Math.PI * u;
   return 1 - (Math.sin(x) / x) ** 2;
 }
+
+/** A uniformly random bigint with exactly `bits` bits (top bit set), from a seeded generator. */
+export function randomBits(bits: number, r: Rng): bigint {
+  let v = 1n;
+  for (let i = 1; i < bits; i++) v = (v << 1n) | (r.next() < 0.5 ? 1n : 0n);
+  return v;
+}

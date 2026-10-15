@@ -179,3 +179,28 @@ export function factorWithin(n: bigint, ms = 1500): [bigint, number][] | null {
   }
   return [...counts.entries()].sort((a, b) => (a[0] < b[0] ? -1 : 1));
 }
+
+/**
+ * Dickman's function ρ(u): the limiting proportion of integers up to x whose prime factors are all at most
+ * x^(1/u). ρ(u) = 1 on [0, 1] and u ρ′(u) = −ρ(u − 1). Computed on a grid by integrating the delay equation
+ * (trapezoid rule, step 1/steps); accurate to about 1e-6 for u ≤ 10 with the default step.
+ */
+export function dickmanRho(u: number, steps = 2000): number {
+  if (u <= 1) return 1;
+  const h = 1 / steps;
+  const n = Math.ceil(u * steps);
+  const r = new Float64Array(n + 1);
+  for (let i = 0; i <= Math.min(n, steps); i++) r[i] = 1;
+  for (let i = steps + 1; i <= n; i++) {
+    // ρ(t) = ρ(t − h) − ∫_{t−h}^{t} ρ(s − 1)/s ds, trapezoid rule.
+    const t = i * h;
+    const f0 = r[i - 1 - steps]! / (t - h);
+    const f1 = r[i - steps]! / t;
+    r[i] = r[i - 1]! - (h * (f0 + f1)) / 2;
+  }
+  // Linear interpolation for non-grid u.
+  const x = u * steps;
+  const i0 = Math.floor(x);
+  const frac = x - i0;
+  return i0 >= n ? r[n]! : r[i0]! * (1 - frac) + r[i0 + 1]! * frac;
+}

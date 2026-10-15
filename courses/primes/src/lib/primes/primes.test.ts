@@ -298,3 +298,13 @@ describe('random models', () => {
     expect(Math.abs(fake.length - Li(100_000)) / Li(100_000)).toBeLessThan(0.05);
   });
 });
+
+describe('Dickman rho', () => {
+  test('known values', async () => {
+    const { dickmanRho } = await import('./factor');
+    expect(dickmanRho(1)).toBe(1);
+    expect(dickmanRho(2)).toBeCloseTo(1 - Math.LN2, 5);
+    expect(dickmanRho(3)).toBeCloseTo(0.0486083883, 5);
+    expect(dickmanRho(4)).toBeCloseTo(0.0049109256, 6);
+  });
+});

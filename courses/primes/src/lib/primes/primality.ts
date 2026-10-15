@@ -78,6 +78,12 @@ export function strongProbablePrime(n: bigint, a: bigint): boolean {
   return false;
 }
 
+const SMALL_PRIMES: bigint[] = (() => {
+  const out: bigint[] = [];
+  for (let k = 43; k < 1000; k += 2) if (isPrimeTrial(k)) out.push(BigInt(k));
+  return out;
+})();
+
 /** The first thirteen primes as bases: deterministic for every n < 3.3 · 10^24 (Sorenson and Webster, 2015). */
 const BASES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n];
 
@@ -96,6 +102,8 @@ export function isPrime(n: number | bigint): boolean {
     if (n === p) return true;
     if (n % p === 0n) return false;
   }
+  // Cheap prefilter: about 92% of random candidates have a prime factor below 1000.
+  if (n > 1_000_000n) for (const p of SMALL_PRIMES) if (n % p === 0n) return false;
   for (const a of BASES) if (!strongProbablePrime(n, a)) return false;
   if (n < 3317044064679887385961981n) return true;
   // Pseudo-random extra bases from a fixed linear congruential sequence (reproducible).
