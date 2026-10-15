@@ -10,8 +10,8 @@
  *   wrong: a node that depends on one source through two paths is recomputed against a half-updated graph (a *glitch*).
  * - `topological`: changes are processed in order of each node's *height* (its distance from the sources), so every
  *   node runs after everything it depends on. Glitch-free, but it recomputes nodes nobody reads.
- * - `colour`: Reactively's three-colour algorithm (the ancestor of the cores of Solid 2, Preact Signals and Angular
- *   signals, which differ in details). A change marks direct dependents DIRTY and everything downstream CHECK; nothing
+ * - `colour`: Reactively's three-colour algorithm (the same family as the cores of Solid 2, Vue 3.6 and MobX; Angular
+ *   and Preact Signals use version numbers instead of colours). A change marks direct dependents DIRTY and everything downstream CHECK; nothing
  *   is recomputed until something reads it, and a CHECK node first asks its sources whether they really changed.
  *
  * All three record a trace of what they did (when `engine.tracing` is on) so that figures can replay a propagation.

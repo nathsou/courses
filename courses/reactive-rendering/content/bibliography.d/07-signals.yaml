@@ -19,3 +19,9 @@ carniato-fgr:
   title: A hands-on introduction to fine-grained reactivity
   venue: DEV Community
   url: https://dev.to/ryansolid/a-hands-on-introduction-to-fine-grained-reactivity-3ndf
+reactively:
+  authors: Mighdoll, M.
+  year: 2022
+  title: Super-charging fine-grained reactive performance
+  venue: Milo’s blog and the Reactively repository (github.com/modderme123/reactively)
+  url: https://github.com/modderme123/reactively
