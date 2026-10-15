@@ -23,7 +23,7 @@ test('internal links point at real pages', () => {
   const parts = new Set(PARTS.flatMap((p) => (p.essay ? [p.essay] : [])));
   const appendices = new Set(APPENDICES.map((a) => a.slug));
   const written = new Set(readdirSync(path.join(root, 'content/appendices')).map((d) => d.replace(/^[a-z]-/, '')));
-  const routes = new Set(['lab', 'chapters', 'museum', 'glossary', 'references', 'timeline', 'reading-paths']);
+  const routes = new Set(['chapters', 'glossary', 'references', 'timeline', 'reading-paths']);
   const bad: string[] = [];
   for (const file of [...walk(path.join(root, 'content')), ...walk(path.join(root, 'src/routes'))]) {
     const text = readFileSync(file, 'utf8');
