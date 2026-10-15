@@ -8,7 +8,7 @@ prerequisites: [templates-and-solid, five-compilers]
 
 Every chapter so far assumed that the page is built *in the browser*. The HTML file is nearly empty, a script runs, and the script creates the page. It is simple, and it has an obvious cost: until the script has been downloaded, parsed and run, there is nothing to see.
 
-The alternative is to run the components **on the server**, send finished HTML, and let the browser show it while the script is still on its way. That is *server-side rendering*, and it raises a harder question than it answers.
+The alternative is to run the components **on the server**, send finished HTML, and let the browser show it while the script is still on its way. That is *:term[server-side rendering]{id=ssr}*, and it raises a harder question than it answers.
 
 ## Rendering to a string
 
@@ -154,13 +154,13 @@ Try it. The server rendered the component to a string; the page shows that HTML,
 
 ::hydration-lab{n="20.1"}
 
-With the first preset (*Matching*), hydration is almost free in DOM terms: every node is **claimed**, none is created, none is rewritten, and the one DOM operation the lens shows is the listener on the button. Try *+1* before hydrating: nothing, because nothing is listening. Then hydrate and click again.
+With the first preset (*Matching*), :term[hydration]{id=hydration} is almost free in DOM terms: every node is **claimed**, none is created, none is rewritten, and the one DOM operation the lens shows is the listener on the button. Try *+1* before hydrating: nothing, because nothing is listening. Then hydrate and click again.
 
 Hydration’s job is four things at once: **claim** the DOM nodes, **attach** the handlers the HTML could not carry, **rebuild** the component state and closures (by running the components), and **run** the effects that the server skipped. The first is cheap. The other three are the *entire cost of running the application*, paid a second time.
 
 ## What goes wrong
 
-Hydration only works if the client’s render **produces the same tree** as the server’s. Walking and claiming nodes is a *trust exercise*: the client assumes that the *n*th child of the `div` is the thing its *n*th vnode would have created. When that is false, the framework has three bad options: crash, silently produce a page where handlers are attached to the wrong elements, or detect the mismatch and rebuild. React logs a warning and falls back to client rendering for the part that mismatched; the lab does the same and tells you where.
+Hydration only works if the client’s render **produces the same tree** as the server’s. Walking and claiming nodes is a *trust exercise*: the client assumes that the *n*th child of the `div` is the thing its *n*th vnode would have created. When that is false, the framework has three bad options: crash, silently produce a page where handlers are attached to the wrong elements, or detect the :term[mismatch]{id=hydration-mismatch} and rebuild. React logs a warning and falls back to client rendering for the part that mismatched; the lab does the same and tells you where.
 
 Switch the figure through the mismatching presets:
 
@@ -202,7 +202,7 @@ The cure the figure’s last preset shows is the one to remember: **make the fir
 
 Hydration repeats work. The server ran the components to produce HTML; the browser has to run *the same components* on the same data to build its own tree. The HTML arrived in the first place so that people would not wait for JavaScript, and now the JavaScript, plus all the data that the components need, plus the work of walking the page, is exactly what they are waiting for. The server’s work is being done twice.
 
-Here is the arithmetic as a model. Server rendering makes the content **visible** early. It cannot make it **interactive** any earlier, and it adds hydration to the work that has to happen before the page responds. The shaded region is the “uncanny valley”: the page looks ready, and taps do nothing.
+Here is the arithmetic as a model. Server rendering makes the content **visible** early. It cannot make it **interactive** any earlier, and it adds hydration to the work that has to happen before the page responds. The shaded region is the “:term[uncanny valley]{id=uncanny-valley}”: the page looks ready, and taps do nothing.
 
 ::valley{n="20.2"}
 
@@ -235,7 +235,7 @@ React 19 reports hydration mismatches with a diff in the console (it shows both 
 :::
 
 :::history{year=2016 title="From Next.js to streaming"}
-Server rendering of single-page applications reached many developers through Next.js (2016), which made React’s `renderToString` plus client takeover the default. React could already reuse server markup in `ReactDOM.render` (with a checksum, in version 15); version 16 (2017) added `hydrate`, and version 18 (2022) added `hydrateRoot` with streaming and Suspense. :cite[react-hydration] Solid, Vue, Angular (version 16, 2023) and Svelte all added their own. The trend of the next two chapters is the reverse: avoiding the second run.
+Server rendering of single-page applications reached many developers through Next.js (2016), which made React’s `renderToString` plus client takeover the default. React could already reuse server markup in `ReactDOM.render` (with a checksum, in version 15); version 16 (2017) added `hydrate`, and version 18 (2022) added `hydrateRoot` with :term[streaming]{id=streaming} and Suspense. :cite[react-hydration] Solid, Vue, Angular (version 16, 2023) and Svelte all added their own. The trend of the next two chapters is the reverse: avoiding the second run.
 :::
 
 :::whatchanged

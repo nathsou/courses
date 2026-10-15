@@ -71,7 +71,7 @@ That is why “lifting content up” through `children` stops a re-render, and w
 
 ## Stale closures
 
-Memoisation speeds things up when it is right and breaks things when it is wrong. The kind of wrong that is hardest to see is the **stale closure**, and chapter 6 gave you its cause: every render creates new functions, and each function *captures the values of the render that created it*.
+Memoisation speeds things up when it is right and breaks things when it is wrong. The kind of wrong that is hardest to see is the **:term[stale closure]{id=stale-closure}**, and chapter 6 gave you its cause: every render creates new functions, and each function *captures the values of the render that created it*.
 
 Normally this is the right behaviour. A click handler created in render 3 uses the `count` of render 3. The trouble comes with long-lived functions, subscriptions, timers, and anything saved by an effect that does not re-run:
 
@@ -348,7 +348,7 @@ Read it as the answer to this chapter’s question. The compiler gave the static
 
 Three things to understand about what that buys and what it does not.
 
-**It makes the render phase cheaper, not the DOM phase.** The diff still happens; it simply finds identical objects and stops early. The saving is in component calls and in comparisons.
+**It makes the :term[render phase]{id=render-phase} cheaper, not the DOM phase.** The diff still happens; it simply finds identical objects and stops early. The saving is in component calls and in comparisons.
 
 **It relies on the rules of React.** The compiler may only reorder, skip or cache work if your components are pure: no mutating props or state, no reading mutable globals during render. It checks, and *skips* components it cannot prove safe, which is why code written before it often compiles but is not optimised.
 
@@ -359,7 +359,7 @@ Three things to understand about what that buys and what it does not.
 :::
 
 :::whatchanged
-For *component re-rendering*: **this component, and by default everything it returns**, because a function that was handed new elements cannot be known to ignore them. `memo` narrows that to the subtrees whose props differ (shallowly). The React Compiler narrows it further, per element, and takes the dependency bookkeeping off the programmer. What the strategy never does is know *what a component read*, so it re-renders to find out.
+For *component re-rendering*: **this component, and by default everything it returns**, because a function that was handed new elements cannot be known to ignore them. `memo` narrows that to the subtrees whose props differ (shallowly). The :term[React Compiler]{id=react-compiler} narrows it further, per element, and takes the dependency bookkeeping off the programmer. What the strategy never does is know *what a component read*, so it re-renders to find out.
 :::
 
 ## What’s next

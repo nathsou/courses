@@ -286,7 +286,7 @@ The idea (*compile a template into direct DOM operations, with one effect per ho
 :::
 
 :::history{year=2015 title="S.js, Surplus and the road to Solid"}
-Compiling templates to direct DOM instructions over a signals library was worked out in JavaScript by Adam Haile’s **S.js** (a synchronous, glitch-free reactive library) and **Surplus** (a compiler from JSX to DOM instructions over S), a few years before Solid. :cite[s-js] :cite[surplus] Ryan Carniato’s **Solid** (first public in 2018) took the approach, added fine-grained *ownership* and a design that lets it run on both the server and the client, and made it the centre of a framework. :cite[solid-docs] Svelte had been compiling templates to DOM code since 2016 (chapters 17 and 18), but on a different model of *when* to update; it moved to signals in Svelte 5.
+Compiling templates to direct DOM instructions over a signals library was worked out in JavaScript by Adam Haile’s **S.js** (a synchronous, glitch-free reactive library) and **Surplus** (a compiler from JSX to DOM instructions over S), a few years before Solid. :cite[s-js] :cite[surplus] Ryan Carniato’s **Solid** (first public in 2018) took the approach, added :term[fine-grained]{id=fine-grained} *ownership* and a design that lets it run on both the server and the client, and made it the centre of a framework. :cite[solid-docs] Svelte had been compiling templates to DOM code since 2016 (chapters 17 and 18), but on a different model of *when* to update; it moved to signals in Svelte 5.
 :::
 
 :::whatchanged

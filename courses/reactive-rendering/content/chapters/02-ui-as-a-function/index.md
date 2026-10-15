@@ -220,7 +220,7 @@ That gives a three-part job for any such system, and the next fourteen chapters 
 The first step is a solved problem; the third is mostly bookkeeping. The *middle step* is where frameworks differ and what the rest of the course is about.
 
 :::history{year=2013 title="React is open-sourced"}
-At JSConf US in 2013 Facebook open-sourced React, and the idea behind it, re-rendering everything and letting the library work out the DOM changes, was greeted with scepticism: it put markup inside JavaScript, and it appeared to re-render the whole page on every change. Pete Hunt’s talk *Rethinking best practices* made the case for the trade, that the cost of the comparison is repaid by never having to write the update logic, and for the first time a large share of front-end developers took the declarative idea seriously. :cite[hunt-rethinking]
+At JSConf US in 2013 Facebook open-sourced React, and the idea behind it, re-rendering everything and letting the library work out the DOM changes, was greeted with scepticism: it put markup inside JavaScript, and it appeared to re-render the whole page on every change. Pete Hunt’s talk *Rethinking best practices* made the case for the trade, that the cost of the comparison is repaid by never having to write the update logic, and for the first time a large share of front-end developers took the :term[declarative]{id=declarative} idea seriously. :cite[hunt-rethinking]
 
 The idea was not new. Functional reactive languages for the browser, Elm among them, explored the same shape; and every server-side template engine had always worked this way, because a server renders a page from scratch for every request. What was new was making it cheap enough to do in the browser, repeatedly, on every change.
 :::

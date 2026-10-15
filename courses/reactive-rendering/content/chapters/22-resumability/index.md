@@ -30,7 +30,7 @@ Islands (chapter 21) cut the number of components that must do this. They do not
 </button>
 ```
 
-`on:click="increment.js#increment"` reads “when clicked, load `increment.js` and call its `increment`”. This reference is called a **QRL** in Qwik, the framework that made the design its identity.
+`on:click="increment.js#increment"` reads “when clicked, load `increment.js` and call its `increment`”. This reference is called a **:term[QRL]{id=qrl}** in Qwik, the framework that made the design its identity.
 
 **The subscriptions**, also as markers. `q:bind="count"` says that this text depends on the signal `count`. Chapter 9’s dependency record (*which effect reads which signal*) was built at run time by running the effects. Here the server writes it into the page, so that no code has to run to rebuild it.
 
@@ -44,7 +44,7 @@ Try it. The page is a counter, a rename button and a save button. Choose **Hydra
 
 ::resume-lab{n="22.1"}
 
-The numbers at the top say it. With hydration, the page must run about **50 KB** of JavaScript before it responds, however little you do afterwards. With resumability, it runs **740 bytes**, and spends more only on what you use: click the counter, and 420 bytes arrive. Click the rename button, and another 2 KB. The save handler, 5 KB, is *never downloaded* if you never press Save. The cost of the page is proportional to **what you did**, not to what the page contains.
+The numbers at the top say it. With hydration, the page must run about **50 KB** of JavaScript before it responds, however little you do afterwards. With :term[resumability]{id=resumability}, it runs **740 bytes**, and spends more only on what you use: click the counter, and 420 bytes arrive. Click the rename button, and another 2 KB. The save handler, 5 KB, is *never downloaded* if you never press Save. The cost of the page is proportional to **what you did**, not to what the page contains.
 
 Watch the lens, too. A click rewrites exactly one text node. There was no component function to call and no tree to diff, no signal engine to start: just the handler and the DOM nodes that were bound to what it wrote.
 

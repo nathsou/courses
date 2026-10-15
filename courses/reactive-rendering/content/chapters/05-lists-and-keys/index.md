@@ -73,7 +73,7 @@ hints:
 
 ## Two algorithms
 
-Given old and new lists of keys, the diff has to produce a short list of DOM operations. For a keyed list, every old child falls into one of three groups: matched with a new child that is in the *right relative place*, matched but *out of order*, or unmatched and to be removed. New children with no old match are created. The art is in the middle group.
+Given old and new lists of keys, the diff has to produce a short list of DOM operations. For a :term[keyed list]{id=keyed-list}, every old child falls into one of three groups: matched with a new child that is in the *right relative place*, matched but *out of order*, or unmatched and to be removed. New children with no old match are created. The art is in the middle group.
 
 ### React: the last placed index
 
@@ -93,7 +93,7 @@ It is simple and quick, and it has a characteristic weakness. Moving the *last* 
 
 Vue’s `patchKeyedChildren` (and the algorithms in Inferno and ivi that it follows) does two things React’s does not. It first **trims**: it skips over matching children at the start, and then at the end, since in real UIs most updates are insertions, removals or edits somewhere in the middle. Then, for the unmatched middle, it asks a sharper question: *which of the surviving items are already in the correct order relative to each other?* Those can be left alone. Only the rest have to move.
 
-Take the new order and write down, for each item, its position in the old order. For `d a b c` that is `3 0 1 2`. A set of items that are already in the right relative order is exactly an *increasing subsequence* of that sequence; the biggest such set is the **longest increasing subsequence** (LIS). Here it is `0 1 2`, the items `a b c`. Those stay. Only `d` moves: one DOM move instead of three.
+Take the new order and write down, for each item, its position in the old order. For `d a b c` that is `3 0 1 2`. A set of items that are already in the right relative order is exactly an *increasing subsequence* of that sequence; the biggest such set is the **:term[longest increasing subsequence]{id=lis}** (LIS). Here it is `0 1 2`, the items `a b c`. Those stay. Only `d` moves: one DOM move instead of three.
 
 The number of moves is therefore the number of surviving items minus the length of their LIS. That is the minimum possible, because every item outside a stable run has to be moved by something.
 

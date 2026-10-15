@@ -22,7 +22,7 @@ Chapter 17’s design had a ceiling. Reactivity depended on a compiler that coul
 <button onclick={() => count++}>+1</button>
 ```
 
-A rune looks like a function, and is not one. It is a *marker for the compiler*: `$state(0)` is not imported from anywhere, it exists only at compile time, and the compiler replaces it with something else. That is the mechanism of this chapter.
+A :term[rune]{id=rune} looks like a function, and is not one. It is a *marker for the compiler*: `$state(0)` is not imported from anywhere, it exists only at compile time, and the compiler replaces it with something else. That is the mechanism of this chapter.
 
 ## Compile it
 
@@ -168,7 +168,7 @@ Svelte 5 was released in October 2024, after a year in preview, with the announc
 :::
 
 :::whatchanged
-For *compile* in Svelte 5, and for *track* at the same time: **the signals each template effect read**, with the compiler writing the reads, and removing the signals that never change. It is the closest the course gets to having both answers at once: a build-time pass that decides what *can* be reactive, and a run-time engine that finds out what *was*.
+For *compile* in Svelte 5, and for *track* at the same time: **the signals each :term[template effect]{id=template-effect} read**, with the compiler writing the reads, and removing the signals that never change. It is the closest the course gets to having both answers at once: a build-time pass that decides what *can* be reactive, and a run-time engine that finds out what *was*.
 :::
 
 ## What’s next

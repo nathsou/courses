@@ -19,7 +19,7 @@ There are no getters or setters in your code, and no marker on `state` that says
 
 ## How a Proxy sees you
 
-A `Proxy` wraps an object and lets you intercept the operations done to it: reads (`get`), writes (`set`), `in` checks (`has`), `delete`, and iteration (`ownKeys`). That is what makes the trick possible. When an effect reads `state.user.name`, the proxy hears about it:
+A `Proxy` wraps an object and lets you intercept the operations done to it: reads (`get`), writes (`set`), `in` checks (`has`), `delete`, and iteration (`ownKeys`). That is what makes the trick possible. When an effect reads `state.user.name`, the :term[proxy]{id=proxy} hears about it:
 
 - `get(state, 'user')` is called, and the proxy records *“the running effect read property `user` of this object”*, then returns the nested object, itself wrapped in a proxy.
 - `get(user, 'name')` is called, recording *“the running effect read `name` of that object”*.
@@ -129,7 +129,7 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 1. **Hoisting.** `const _hoisted_1 = { class: "counter" }` is created once at module level, not on every render. The static `<h1>` is created on the first render and cached in `_cache[1]` (the flag `-1 /* CACHED */`). On a re-render the render function returns the *same vnode object*, and the diff skips it with one identity check.
 2. **Patch flags.** The `<p>` carries `3 /* TEXT, CLASS */`: a bit set that says *only the text and the class can change*. The diff compares those two fields and does not look at the other properties, or at the children.
-3. **The block tree.** `_openBlock()` and `_createElementBlock` start a *block*: while it is open, every vnode created with a patch flag is added to the block’s flat `dynamicChildren` list. On update, the diff walks that list, here just the `<p>`, in order, and never visits the static nodes in between. The hundred paragraphs are not compared against anything.
+3. **The block tree.** `_openBlock()` and `_createElementBlock` start a *block*: while it is open, every vnode created with a :term[patch flag]{id=patch-flag} is added to the block’s flat `dynamicChildren` list. On update, the diff walks that list, here just the `<p>`, in order, and never visits the static nodes in between. The hundred paragraphs are not compared against anything.
 
 Put a number on it. The card below has a dynamic title, a dynamic counter, and any number of static paragraphs. The same re-render is diffed with and without the three hints:
 
@@ -352,7 +352,7 @@ explain: "About fifty lines make the heart of Vue 3's reactivity: a `WeakMap` so
 
 ## Vapor: the same compiler without the diff
 
-Vue has a third layer, now in release candidates for 3.6: **Vapor mode**. It is Vue’s answer to the question of whether you can skip the virtual DOM and keep the templates. Here is what the compiler writes for the same counter in Vapor mode:
+Vue has a third layer, now in release candidates for 3.6: **Vapor mode**. It is Vue’s answer to the question of whether you can skip the virtual DOM and keep the templates. Here is what the compiler writes for the same counter in :term[Vapor mode]{id=vapor}:
 
 ```js
 const t0 = _template("<div class=counter><h1>Counter</h1><p> </p><button>+1", 1)
@@ -389,7 +389,7 @@ Vue 1 and 2 (2014 and 2016) made objects reactive by walking them once and repla
 :::
 
 :::whatchanged
-For *track* in Vue: **the properties the component’s render function read**, found by a Proxy and stored in a per-object table. The compiler then narrows the *diff*, with hoisting, patch flags and the block tree, so that the virtual DOM compares only the nodes that can have changed. In Vapor mode the diff is gone and each hole is an effect again.
+For *track* in Vue: **the properties the component’s render function read**, found by a Proxy and stored in a per-object table. The compiler then narrows the *diff*, with :term[hoisting]{id=hoisting}, patch flags and the :term[block tree]{id=block-tree}, so that the virtual DOM compares only the nodes that can have changed. In Vapor mode the diff is gone and each hole is an effect again.
 :::
 
 ## What’s next

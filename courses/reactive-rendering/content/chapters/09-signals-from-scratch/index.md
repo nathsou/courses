@@ -14,7 +14,7 @@ You have seen it twice already. Knockoutâ€™s `ko.computed` (chapter 3) and the â
 
 In a spreadsheet you type `4` in `A2` and `3` in `B2`, and in `C2` you type `=A2*B2`. `C2` shows `12`. Change `A2` to `5` and `C2` shows `15`. You did not write an update handler, a subscription or a re-render. You declared a relationship, and the sheet maintains it.
 
-Three kinds of thing are involved, and they are the three primitives of every signals library:
+Three kinds of thing are involved, and they are the three primitives of every :term[signals]{id=signal} library:
 
 | In a spreadsheet | In a signals library | What it is |
 |---|---|---|

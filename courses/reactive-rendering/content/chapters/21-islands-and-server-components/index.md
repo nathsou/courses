@@ -8,7 +8,7 @@ prerequisites: [ssr-and-hydration]
 
 Chapter 20 ended with a bill. Hydration re-runs *every* component in the browser, and ships all their code, so that the page can respond. Now look at a typical page: a blog post. A header, an article of fifty paragraphs, a like button, a comments form, a footer. Of those, **two components ever respond to anything**. Forty-eight paragraphs, the header and the footer are text and links, and the browser will never need to run the code that made them.
 
-Hydrating the paragraphs is waste, and there are two ways to stop. One is an **architecture**: split the page into static HTML and small interactive *islands*. The other is a **programming model**: let some components run on the server and *never reach the browser at all*.
+Hydrating the paragraphs is waste, and there are two ways to stop. One is an **architecture**: split the page into static HTML and small interactive *:term[islands]{id=island}*. The other is a **programming model**: let some components run on the server and *never reach the browser at all*.
 
 ## Islands
 
@@ -28,7 +28,7 @@ An island is a piece of the page that is hydrated on its own, surrounded by HTML
 
 Each island carries three things: **which component** it is, **its props**, written into the page as data, and **when to wake it**. A small runtime finds them and starts each one: nothing else on the page runs.
 
-Astro made this approach popular and calls the timing a *client directive*: `client:load` (hydrate immediately), `client:idle` (when the browser is idle), `client:visible` (when it scrolls into view), `client:only` (do not server-render it at all). :cite[astro-islands] The term *islands architecture* was popularised by Jason Miller in 2020, for the shape of the idea: a sea of static HTML with islands of interactivity. :cite[miller-islands]
+Astro made this approach popular and calls the timing a *:term[client directive]{id=client-directive}*: `client:load` (hydrate immediately), `client:idle` (when the browser is idle), `client:visible` (when it scrolls into view), `client:only` (do not server-render it at all). :cite[astro-islands] The term *islands architecture* was popularised by Jason Miller in 2020, for the shape of the idea: a sea of static HTML with islands of interactivity. :cite[miller-islands]
 
 Use the figure to put numbers on it. The page below has six components. In **Hydrate everything**, everything is a component of one application, and all of it ships. Switch to **Islands**, and only the three that need the browser do.
 
@@ -212,7 +212,7 @@ function Like({ postId, initial }) {
 }
 ```
 
-The `'use client'` directive marks a **boundary**. Everything above it is server-only; the file it appears in, and what it imports, is client code. A server component can render a client component and pass it props; a client component cannot import a server one, though it can *receive* server-rendered elements as `children`.
+The `'use client'` directive marks a **boundary**. Everything above it is server-only; the file it appears in, and what it imports, is client code. A :term[server component]{id=server-component} can render a :term[client component]{id=client-component} and pass it props; a client component cannot import a server one, though it can *receive* server-rendered elements as `children`.
 
 What travels over the network is a stream of **rows**. Switch the figure to *Server components* and read the payload it builds, produced by the lab’s own serializer.
 
@@ -220,7 +220,7 @@ What travels over the network is a stream of **rows**. Switch the figure to *Ser
 
 Each row is a piece of the tree. The first holds the page as nested elements: `["$","header",null,{…}]` is an element, with its type, its key and its props. The server components have **vanished**: what is left is the elements they returned. Where a client component should go there is a reference, `"$L1"`, which points to another row: a *module reference* that tells the browser which JavaScript file to load. The props are written next to it, as JSON.
 
-That is why **props crossing the boundary must be serializable**: they are literally written into the stream. A function cannot cross; React’s answer, for events that need server code, is a **Server Action**: a function marked `'use server'`, which crosses as a reference the browser calls back over the network.
+That is why **props crossing the boundary must be serializable**: they are literally written into the stream. A function cannot cross; React’s answer, for events that need server code, is a **:term[Server Action]{id=server-action}**: a function marked `'use server'`, which crosses as a reference the browser calls back over the network.
 
 The browser reads the rows, loads the referenced modules, and builds the same element tree it would have built by itself. Then it renders (and hydrates) as in chapter 20, with one difference: **the server components in that tree are already data.** They never run in the browser, they have no state, and they cost no JavaScript. The 58 KB of Markdown library in the figure is gone.
 

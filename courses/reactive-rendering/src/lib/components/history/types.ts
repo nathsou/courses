@@ -1,29 +1,25 @@
 /** Shapes of the history data in content/{timeline,lineage,museum,bios}.yaml (+ .d/*.yaml). */
 
-export const LANES = ['hardware', 'virtual-memory', 'allocators', 'safety', 'ownership', 'reference-counting', 'tracing', 'failures'] as const;
+export const LANES = ['platform', 'checking', 'vdom', 'signals', 'compilers', 'server'] as const;
 export type Lane = (typeof LANES)[number];
 
 export const LANE_LABELS: Record<Lane, string> = {
-  hardware: 'Memory hardware',
-  'virtual-memory': 'Virtual memory and kernels',
-  allocators: 'Allocators',
-  safety: 'Memory safety tools',
-  ownership: 'Ownership and regions',
-  'reference-counting': 'Reference counting',
-  tracing: 'Tracing collection',
-  failures: 'Failures',
+  platform: 'The browser and the language',
+  checking: 'Observers and dirty checking',
+  vdom: 'Virtual DOM',
+  signals: 'Signals and reactivity',
+  compilers: 'Templates and compilers',
+  server: 'The server and the first load',
 };
 
 /** Part each lane mostly belongs to, for the `part` filter. */
 export const LANE_PARTS: Record<Lane, string[]> = {
-  hardware: ['I'],
-  'virtual-memory': ['I', 'II'],
-  allocators: ['II', 'III'],
-  safety: ['IV'],
-  ownership: ['IV'],
-  'reference-counting': ['V'],
-  tracing: ['VI'],
-  failures: ['I', 'II', 'III', 'IV', 'V', 'VI'],
+  platform: ['I', 'VI'],
+  checking: ['I', 'III'],
+  vdom: ['II'],
+  signals: ['III'],
+  compilers: ['IV'],
+  server: ['V'],
 };
 
 export interface TimelineEvent {

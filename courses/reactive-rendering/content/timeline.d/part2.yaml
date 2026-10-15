@@ -1,0 +1,47 @@
+- year: 1989
+  lane: vdom
+  title: Tree edit distance
+  people: Kaizhong Zhang, Dennis Shasha
+  chapter: trees-as-values
+  text: 'An algorithm finds the cheapest sequence of edits that turns one ordered tree into another, in about cubic time: the general problem that React’s linear diff deliberately does not solve.'
+  cite: [zhang-shasha-1989]
+- year: 2013
+  lane: vdom
+  title: React is open-sourced
+  people: Jordan Walke and the Facebook team
+  chapter: ui-as-a-function
+  text: 'At JSConf US, Facebook releases a library that re-renders everything on each change and works out the DOM updates itself. Many in the audience think it is a bad idea.'
+  cite: [react-reconciliation]
+- year: 2016
+  lane: vdom
+  title: Vue 2 and its virtual DOM
+  people: Evan You
+  chapter: vue-proxies-and-hints
+  text: 'Vue adds a virtual DOM under its tracked, template-driven components, keeping the dependency tracking to decide *which component* renders.'
+- year: 2017
+  lane: vdom
+  title: React 16 and Fiber
+  people: Andrew Clark, Sebastian Markbåge and the React team
+  chapter: time-slicing
+  text: 'The reconciler is rewritten around fibers, units of work that can be paused: the groundwork for concurrent rendering.'
+  cite: [acdlite-fiber]
+- year: 2018
+  lane: vdom
+  title: Hooks announced
+  people: Sophie Alpert, Dan Abramov
+  chapter: components-and-hooks
+  text: 'State and effects for function components, by call order. Released in React 16.8 in 2019.'
+  cite: [react-hooks-intro]
+- year: 2022
+  lane: vdom
+  title: React 18
+  people: React team
+  chapter: time-slicing
+  text: 'Concurrent rendering becomes real: transitions, automatic batching, streaming server rendering with Suspense.'
+- year: 2025
+  lane: vdom
+  title: React Compiler 1.0
+  people: Joe Savona and the React team
+  chapter: who-re-renders
+  text: 'A build-time tool decides what each part of a component depends on and wraps it in a cache: memoization written by the compiler.'
+  cite: [react-compiler-docs]

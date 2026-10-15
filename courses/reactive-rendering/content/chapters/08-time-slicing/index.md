@@ -8,7 +8,7 @@ prerequisites: [who-re-renders]
 
 Chapter 7 treated rendering as work that costs *time*. This chapter is about the one property of that time that matters most to a person using the page: whether it can be **interrupted**.
 
-JavaScript in a browser runs on one main thread, and that same thread handles clicks, keystrokes, scrolling and painting. While a function is running, nothing else on the page can happen: no click is handled, no frame is painted. An update that takes sixty milliseconds is invisible. One that takes six hundred is a frozen tab.
+JavaScript in a browser runs on one :term[main thread]{id=main-thread}, and that same thread handles clicks, keystrokes, scrolling and painting. While a function is running, nothing else on the page can happen: no click is handled, no frame is painted. An update that takes sixty milliseconds is invisible. One that takes six hundred is a frozen tab.
 
 ## The freeze
 
@@ -39,7 +39,7 @@ This was a central reason the React team rewrote the core of the library between
 
 ## Fibers: a tree you can pause
 
-A *fiber* is a unit of work: one component (or element) in the tree, stored as an ordinary object. What makes it different from the recursion is that the tree is stored as a **linked list**: every fiber has a pointer to its first `child`, to its next `sibling`, and back up to its parent, `return`.
+A *:term[fiber]{id=fiber}* is a unit of work: one component (or element) in the tree, stored as an ordinary object. What makes it different from the recursion is that the tree is stored as a **linked list**: every fiber has a pointer to its first `child`, to its next `sibling`, and back up to its parent, `return`.
 
 ```ts
 interface Fiber {
@@ -182,7 +182,7 @@ explain: "That is the structural heart of Fiber: a depth-first walk whose whole 
 
 Being able to pause is only half of it. The other half is deciding what to run when you resume. React 18 sorts updates into **lanes**, priorities with different urgency. A keystroke or a click is *discrete* and urgent: it should be rendered and committed at once. A state update marked as a **transition** (`startTransition(() => setQuery(q))`, or the value returned by `useDeferredValue`) is declared by the programmer to be *not urgent*: it can be rendered in the background, interrupted, and even abandoned.
 
-Switch the figure to *Time-sliced, interruptible*. Three things change.
+Switch the figure to *:term[Time-sliced]{id=time-slicing}, interruptible*. Three things change.
 
 **Each keystroke is echoed within a slice.** The input’s update is high priority; it is rendered and committed the moment the current slice ends. The worst wait for a character is now at most about a slice plus the cost of the echo itself.
 

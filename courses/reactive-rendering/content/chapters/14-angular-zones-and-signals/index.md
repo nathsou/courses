@@ -37,7 +37,7 @@ template: function Counter_Template(rf, ctx) {
 
 The first half (`rf & 1`, “creation mode”) builds the nodes, once, in a straight line of instructions with no virtual tree. The second half (`rf & 2`, “update mode”) is the part that matters here. It is a list of *bindings*: “set the class `big` to the value of this expression”, “set the text to this interpolation”. Each instruction **evaluates its expression, compares it with the value it stored on the last pass, and writes to the DOM only if it differs.** `ɵɵadvance(3)` moves a cursor to the right node, in the same spirit as `nextSibling`.
 
-So the DOM writes are as minimal as in Solid, one text node when the count changes, but the *finding out* is different. There is no subscription. To know that `count()` changed, Angular has to *run the update block and look*. The cost of an update is therefore:
+So the DOM writes are as minimal as in Solid, one text node when the count changes, but the *finding out* is different. There is no subscription. To know that `count()` changed, Angular has to *run the :term[update block]{id=update-block} and look*. The cost of an update is therefore:
 
 > **the number of bindings in every view that is checked**, whether or not any of them changed.
 
@@ -51,7 +51,7 @@ If nothing tells Angular that something changed, how does it know when to run th
 
 JavaScript in a browser runs in *tasks*: a click handler, a timer callback, a promise reaction, a `fetch` response. Between tasks, the program’s state cannot change; during one, it can. So the moment a task *finishes* is the moment to look. If every place where tasks start can be wrapped, Angular gets the signal for free.
 
-That is **zone.js**. It replaces the browser’s asynchronous APIs, `setTimeout`, `addEventListener`, `Promise.prototype.then`, `XMLHttpRequest`, and dozens more, with versions that run your callback *inside a zone* and tell the zone when the callback is done. Angular listens to its zone, and when a task ends and no more work is queued, it runs change detection on the whole application. :cite[zonejs]
+That is **zone.js**. It replaces the browser’s asynchronous APIs, `setTimeout`, `addEventListener`, `Promise.prototype.then`, `XMLHttpRequest`, and dozens more, with versions that run your callback *inside a zone* and tell the zone when the callback is done. Angular listens to its zone, and when a task ends and no more work is queued, it runs :term[change detection]{id=change-detection} on the whole application. :cite[zonejs]
 
 You do not need to take that on trust: it takes about twenty lines.
 
@@ -196,7 +196,7 @@ When the zone says “a task ended”, Angular runs `ApplicationRef.tick()`, whi
 
 Angular’s components form a tree of **views**. A tick starts at the root view and, by default, *checks every view*: it runs each view’s update block, comparing every binding. That is a bounded and predictable cost, and with a thousand-binding application it takes a millisecond or two; with a hundred thousand it takes the frame.
 
-Angular’s tool for narrowing the walk is **`OnPush`**: `changeDetection: ChangeDetectionStrategy.OnPush` on a component says *“do not re-check me unless I have been marked.”* A view with OnPush is marked when:
+Angular’s tool for narrowing the walk is **`OnPush`**: `changeDetection: ChangeDetectionStrategy.OnPush` on a component says *“do not re-check me unless I have been marked.”* A view with :term[OnPush]{id=onpush} is marked when:
 
 - one of its inputs receives a different **reference** (not a mutated object: it compares with `===`);
 - an event handler in it, or in a descendant, runs;
@@ -209,7 +209,7 @@ A clean OnPush view is skipped together with **its entire subtree**, which is wh
 
 Work through these:
 
-1. **Default everywhere, zone.js on.** Every event, including an unrelated timer, re-evaluates all 62 bindings. Even `Unrelated timer`, which changes nothing in the app, runs the full tick: zone.js knows only that *a task ended*.
+1. **Default everywhere, zone.js on.** Every event, including an unrelated timer, re-evaluates all 62 bindings. Even `Unrelated timer`, which changes nothing in the app, runs the full tick: :term[zone.js]{id=zone-js} knows only that *a task ended*.
 2. **OnPush everywhere.** The timer now re-evaluates only the root (3 bindings; the root here is a Default view, as in most apps, where a root component is rarely OnPush). A click in Row3 re-evaluates Row3 *and every ancestor* on the way down: 25 bindings, since `markForCheck` marks the whole path. The marking has to reach all the ancestors because the walk goes top-down, and a clean ancestor would hide the dirty row.
 3. **Switch to zoneless.** The unrelated timer now causes **no check at all**: nothing notified Angular, so it did not look. This is the saving that zone-free Angular is after.
 4. **The signal** is the interesting row. With OnPush and a signal read by Row3’s template: 7 bindings, Row3’s four plus the root’s three. The ancestors in between (Main and Table) are **walked through, not re-evaluated**: a signal does not mark them dirty, it only says “something below needs a visit”.
@@ -224,7 +224,7 @@ Angular’s signals (introduced in version 16, 2023) are the same three primitiv
 
 Once views are told when something they read has changed, nobody needs zone.js to guess. **Zoneless** change detection removes it and runs a tick only when notified: by a signal that a template reads, an event listener in a template, `markForCheck`, the `async` pipe, `setInput`, or a view being attached or removed. :cite[angular-zoneless] It was introduced as experimental in version 18, became stable in 20.2, and version 21 makes it the default for new applications, which is why there is almost no more `zone.js` in new Angular projects.
 
-What it costs is the **discipline** that zone.js made unnecessary. In a zone application you can write `this.items = await fetch(…)` on a plain field and the screen updates, because the task ended and Angular checked. Without the zone, that assignment notifies no one and nothing happens. Zoneless code puts state in signals (or something that notifies, like `async`), which is the ergonomics that every library in this part has asked of its users.
+What it costs is the **discipline** that zone.js made unnecessary. In a zone application you can write `this.items = await fetch(…)` on a plain field and the screen updates, because the task ended and Angular checked. Without the zone, that assignment notifies no one and nothing happens. :term[Zoneless]{id=zoneless} code puts state in signals (or something that notifies, like `async`), which is the ergonomics that every library in this part has asked of its users.
 
 :::programmer
 **Why `ExpressionChangedAfterItHasBeenChecked` exists.** The pass goes top-down and one-way: parent bindings are evaluated before the children are created and checked. If a child’s code then changes something a *parent* binding already read, the parent’s DOM is stale, and nothing will fix it until the next tick. In development mode Angular runs the pass twice and throws if the second pass finds a different value. The error is a consequence of “check, don’t track”: a tracking system would simply have re-marked the parent. Signals avoid part of the problem, since a write notifies the views that read it, but a write made *during* a template’s evaluation is still an error.

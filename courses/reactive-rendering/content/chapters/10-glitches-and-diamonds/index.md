@@ -10,7 +10,7 @@ The engine you wrote in chapter 9 passes every test you were given, and it has a
 
 ## A state that never existed
 
-Here is the smallest graph that shows it. A signal `a` feeds two computed values, `b = 2a` and `c = 3a`. A third, `d = b + c`, reads both. An effect logs `d`. The graph has the shape of a diamond, and it has an invariant you can check by eye: whatever `a` is, `d` is `5a`.
+Here is the smallest graph that shows it. A signal `a` feeds two computed values, `b = 2a` and `c = 3a`. A third, `d = b + c`, reads both. An effect logs `d`. The graph has the shape of a :term[diamond]{id=diamond}, and it has an invariant you can check by eye: whatever `a` is, `d` is `5a`.
 
 ```ts
 const a = signal(1);
@@ -25,7 +25,7 @@ Run it in the lab. The default strategy, *Eager push*, is the chapter 9 design: 
 
 ::graph-lab{n="10.1"}
 
-The effect logs `5`, then `7`, then `10`. The value **7** is `4 + 3`: the new `b` added to the *old* `c`. There was never a moment when `a` was 1 and `b` was 4, or `a` was 2 and `c` was 3. The effect saw a state that no consistent version of the program ever had. This is called a **glitch**, a term from circuit design, where a signal flickers through a wrong value while two paths settle.
+The effect logs `5`, then `7`, then `10`. The value **7** is `4 + 3`: the new `b` added to the *old* `c`. There was never a moment when `a` was 1 and `b` was 4, or `a` was 2 and `c` was 3. The effect saw a state that no consistent version of the program ever had. This is called a **:term[glitch]{id=glitch}**, a term from circuit design, where a signal flickers through a wrong value while two paths settle.
 
 Replay the trace. Use the slider to step through what the engine did, and watch the order:
 
@@ -58,13 +58,13 @@ There are three well-known ways to do it.
 
 ## Fix 1: sort by height
 
-Give every node a **height**: sources are at 0, and a computed node is one higher than the tallest node it reads. In the diamond, `a` is 0, `b` and `c` are 1, `d` is 2. When a source changes, collect the nodes that need recomputing into a queue ordered by height, and always run the lowest first. Then `b` and `c` both run before `d`, and `d` runs once, after both. This is *topological order*, and it was the standard answer of the reactive-programming literature. :cite[bainomugisha-2013]
+Give every node a **height**: sources are at 0, and a computed node is one higher than the tallest node it reads. In the diamond, `a` is 0, `b` and `c` are 1, `d` is 2. When a source changes, collect the nodes that need recomputing into a queue ordered by height, and always run the lowest first. Then `b` and `c` both run before `d`, and `d` runs once, after both. This is *:term[topological order]{id=topological-order}*, and it was the standard answer of the reactive-programming literature. :cite[bainomugisha-2013]
 
 Switch the figure to *Topological* and press the button. The log shows `5, 10`.
 
 The price is paid elsewhere. The queue holds every node downstream of the write, and every one of them recomputes, whether anyone reads it or not. The node `x = 100a` has no readers: the effect never sees it, and no one else does. Topological order still computes it on every write. And heights must be kept up to date when dependencies change at run time, which is the case for any `IF` from chapter 9.
 
-Now switch the graph to *Cut-off* and press `n = n + 2`. The value `n` changes, but `even` does not: it is `true` before and after. Topological still re-runs the effect that reads it, because the effect was downstream. The next fix handles this.
+Now switch the graph to *:term[Cut-off]{id=cutoff}* and press `n = n + 2`. The value `n` changes, but `even` does not: it is `true` before and after. Topological still re-runs the effect that reads it, because the effect was downstream. The next fix handles this.
 
 ## Fix 2: mark first, compute on demand
 
@@ -402,7 +402,7 @@ explain: "The diamond is correct because by the time any effect runs, every node
 | Mark, then pull | yes | no | no | this chapter’s exercise |
 | Dirty / check, then pull | yes | no | yes | Reactively, Solid, MobX, Vue 3.4+, Angular, Preact |
 
-The table’s last row is the answer the field has converged on, and with *push-pull* it is the right name: **push** the news that something is stale; **pull** the values on demand. Writes cost in proportion to the part of the graph downstream of them; reads recompute only what they must.
+The table’s last row is the answer the field has converged on, and with *:term[push-pull]{id=push-pull}* it is the right name: **push** the news that something is stale; **pull** the values on demand. Writes cost in proportion to the part of the graph downstream of them; reads recompute only what they must.
 
 :::key
 **A write is two things.** *Say that things are out of date* (cheap, eager, mark-only) and *bring them up to date* (expensive, lazy, on demand). Glitches come from doing the second while still doing the first.

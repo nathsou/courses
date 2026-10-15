@@ -53,7 +53,7 @@ Writes **invalidate**. The browser recomputes **later, once**. That is a dirty-b
 
 Some reads cannot be answered from stale data. If you ask an element for `offsetHeight`, or call `getBoundingClientRect()`, the browser has to give you the *current* number, which means making style and layout current first, right now, in the middle of your script. This is called a **forced synchronous layout** (or *forced reflow*), and it is the one way for script to make the browser do the expensive work early and repeatedly.
 
-A forced layout is only as expensive as the layout that had to be redone, which is why it matters how many nodes the page has and how much of it the write could affect. And it is only forced if something is out of date. A read of `offsetHeight` with nothing invalidated is answered straight from the last layout.
+A :term[forced layout]{id=forced-layout} is only as expensive as the layout that had to be redone, which is why it matters how many nodes the page has and how much of it the write could affect. And it is only forced if something is out of date. A read of `offsetHeight` with nothing invalidated is answered straight from the last layout.
 
 Interleaving is what hurts. The write invalidates; the next read forces; the next write invalidates again. The browser does the whole pipeline's front half (style and layout) once per item instead of once per frame. This is *layout thrashing*.
 

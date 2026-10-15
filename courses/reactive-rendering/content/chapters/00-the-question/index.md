@@ -54,7 +54,7 @@ Each pane has three parts.
 **The counters** say what the last action cost, measured in *DOM operations*: every `createElement`, `insertBefore`, `setAttribute`, text write and `innerHTML` the strategy performed. “Live” operations are the ones performed on nodes already attached to the page, which are the ones a browser would have to style, lay out and paint. Operations on nodes that are still being assembled off-page are much cheaper, which is why the counter keeps them apart.
 
 :::note
-The document in these figures is not the browser’s. It is *MiniDom*, a small DOM written for this course, with the same shape of API (`createElement`, `appendChild`, `setAttribute`, events that bubble, `innerHTML`) and a log of every operation. It is what lets the lens count exactly, and it lets the same renderer code run in your browser, in a test and in the exercises’ sandbox. [Appendix B](/appendix/minidom/) lists what it models and what it leaves out.
+The document in these figures is not the browser’s. It is *MiniDom*, a small DOM written for this course, with the same shape of API (`createElement`, `appendChild`, `setAttribute`, events that bubble, `innerHTML`) and a log of every operation. It is what lets the :term[lens]{id=mutation-lens} count exactly, and it lets the same renderer code run in your browser, in a test and in the exercises’ sandbox. [Appendix B](/appendix/minidom/) lists what it models and what it leaves out.
 :::
 
 ## Reading the results

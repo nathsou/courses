@@ -6,7 +6,7 @@ duration: 55 minutes
 prerequisites: [ui-as-a-function]
 ---
 
-The first two strategies in the table of chapter 0 are the ends of a seesaw. *Rebuild* throws everything away and keeps nothing; *update by hand* keeps everything and writes the update logic itself. The virtual DOM is the first answer to sit in the middle: **rebuild the *description*, keep the nodes.**
+The first two strategies in the table of chapter 0 are the ends of a seesaw. *Rebuild* throws everything away and keeps nothing; *update by hand* keeps everything and writes the update logic itself. The :term[virtual DOM]{id=virtual-dom} is the first answer to sit in the middle: **rebuild the *description*, keep the nodes.**
 
 The description is cheap to rebuild because it is not the DOM. It is a tree of plain objects, in memory, with no layout and no attributes to compute, no style, no events. The nodes are expensive, so the system keeps them and only touches the ones where the new description disagrees with the old.
 

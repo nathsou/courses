@@ -10,7 +10,7 @@ Chapter 12 compiled a template into code, and chapter 13 had a compiler give hin
 
 ## A template that knows its call site
 
-JavaScript has a feature called *tagged template literals*. If you write a function name in front of a template literal, the function is called with the template split into two parts: the **static strings** between the holes, and the **values** of the holes:
+JavaScript has a feature called *:term[tagged template]{id=tagged-template} literals*. If you write a function name in front of a template literal, the function is called with the template split into two parts: the **static strings** between the holes, and the **values** of the holes:
 
 ```js
 function html(strings, ...values) {

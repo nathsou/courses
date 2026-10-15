@@ -312,7 +312,7 @@ A benchmark of this kind has real uses. It tells you what a strategy *can* do an
 - **How it behaves under your data.** Whether lists are reordered or replaced, whether rows have state, how often the whole page changes, decide the winner.
 
 :::programmer
-**Reading a framework benchmark.** Ask four questions of any table you meet. *What was counted* (time, operations, memory, bytes shipped), *what scenarios* (and whether any of them look like your app), *what the implementations were allowed to do* (keyed or unkeyed? hand-optimised? the same page, checked?), and *what is hidden by the summary* (a geometric mean averages a catastrophic scenario with a good one). Then discount everything by the question of how much of your application’s time is spent where the benchmark measures.
+**Reading a framework benchmark.** Ask four questions of any table you meet. *What was counted* (time, operations, memory, bytes shipped), *what scenarios* (and whether any of them look like your app), *what the implementations were allowed to do* (keyed or unkeyed? hand-optimised? the same page, checked?), and *what is hidden by the summary* (a :term[geometric mean]{id=geometric-mean} averages a catastrophic scenario with a good one). Then discount everything by the question of how much of your application’s time is spent where the benchmark measures.
 :::
 
 :::wild{framework="js-framework-benchmark" version="2026"}

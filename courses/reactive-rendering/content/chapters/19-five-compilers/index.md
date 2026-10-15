@@ -127,7 +127,7 @@ export default function Counter($$renderer) {
 There are no signals here, no effects and no DOM: `count` is a plain `let`, because on the server a component renders once and is thrown away. The compiler has changed what the program means, for the environment it is going to run in. Solid’s server output is a function that fills in a prepared string array, and React’s server renderer is a library that takes the same component and walks its output. The *source* is shared; the work that gets done is not.
 
 :::programmer
-**Reading compiler output is a good habit.** Every one of these tools has a playground or a flag that prints its output (Solid’s and Svelte’s playgrounds, Vue’s SFC Playground, `ngc`, and the React Compiler playground). Compiler output is not a stable interface, and the code that you read in this chapter is from the versions named in the figure and will not be the same after an upgrade, but the *shape* has been stable for years: the template, the walk, the holes, or the cache. When a framework surprises you, the fastest way to understand it is usually to look at what it wrote.
+**Reading compiler output is a good habit.** Every one of these tools has a playground or a flag that prints its output (Solid’s and Svelte’s playgrounds, Vue’s :term[SFC]{id=sfc} Playground, `ngc`, and the React Compiler playground). Compiler output is not a stable interface, and the code that you read in this chapter is from the versions named in the figure and will not be the same after an upgrade, but the *shape* has been stable for years: the template, the walk, the holes, or the cache. When a framework surprises you, the fastest way to understand it is usually to look at what it wrote.
 :::
 
 :::wild{framework="all five" version="October 2026"}

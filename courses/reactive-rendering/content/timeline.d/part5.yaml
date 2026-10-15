@@ -1,0 +1,54 @@
+- year: 2012
+  lane: server
+  title: Turbolinks
+  people: Sam Stephenson and Rails
+  chapter: morphing
+  text: 'Links fetch the next page in the background and swap the body, keeping the scripts running.'
+- year: 2014
+  lane: server
+  title: morphdom
+  people: Patrick Steele-Idem
+  chapter: morphing
+  text: 'A library that makes one DOM tree look like another by changing as little as possible, written for the Marko framework at eBay.'
+  cite: [morphdom]
+- year: 2016
+  lane: server
+  title: Next.js
+  people: Vercel
+  chapter: ssr-and-hydration
+  text: 'Server rendering of React applications, with the client taking over, becomes the default for a generation of sites.'
+  cite: [react-hydration]
+- year: 2020
+  lane: server
+  title: Islands architecture
+  people: Jason Miller
+  chapter: islands-and-server-components
+  text: 'A blog post names the shape of a mostly static page with small interactive islands, hydrated independently.'
+  cite: [miller-islands]
+- year: 2020
+  lane: server
+  title: React Server Components RFC
+  people: Dan Abramov, Lauren Tan, Joseph Savona, Sebastian Markbåge
+  chapter: islands-and-server-components
+  text: 'Zero-bundle-size components that run only on the server and ship as data.'
+  cite: [rsc-rfc]
+- year: 2022
+  lane: server
+  title: Astro 1.0, Qwik, and the App Router
+  people: Astro, Builder.io, Vercel
+  chapter: resumability
+  text: 'Islands ship in a mainstream framework, resumability appears as an alternative to hydration, and Next.js 13 brings server components to most React developers.'
+  cite: [astro-islands, qwik-resumable]
+- year: 2023
+  lane: server
+  title: Turbo 8 morphs page refreshes
+  people: Hotwire team
+  chapter: morphing
+  text: 'Whole-page refreshes are applied with Idiomorph, so that focus, scroll and form state survive a re-render from the server.'
+  cite: [turbo-morphing, idiomorph]
+- year: 2024
+  lane: server
+  title: Server components in stable React
+  people: React team
+  chapter: islands-and-server-components
+  text: 'React 19 makes server components part of the stable library, for frameworks that implement the server half.'

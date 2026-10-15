@@ -30,13 +30,13 @@ It is simple, and it is chapter 0’s *rebuild* strategy: all the old nodes are 
 
 The second is to **morph**: make the old DOM look like the new HTML, by changing as little as possible. Where an old node matches a new one (the same tag, the same `id`), keep it: update its attributes, and recurse into its children. Insert only what is new, and remove only what vanished. The nodes the user was interacting with *survive*, so everything they own survives too.
 
-Try both. The server renders an inbox. First **type something in the search box**, **tick the checkbox**, and then **click back into the search box**, so that it is focused. Then press the buttons that make the server send a new page, and look at what survives. Do it with *Morphing*, then with *innerHTML*.
+Try both. The server renders an inbox. First **type something in the search box**, **tick the checkbox**, and then **click back into the search box**, so that it is focused. Then press the buttons that make the server send a new page, and look at what survives. Do it with *:term[Morphing]{id=morphing}*, then with *innerHTML*.
 
 ::morph-lab{n="23.1"}
 
 With *innerHTML*, every press recreates every element (the last line counts how many are still the same objects: none) and the typed text, the tick and the focus are gone. With *Morphing*, the same HTML produces a handful of operations (a new `li`, a changed class), the search box is still the same node, with its focus and its text. Note the *Reverse the order* action: the messages are the same, in a new order. Morphing **moves** the existing `li` nodes instead of rewriting their text, because they have `id`s.
 
-Morphing is not magic, and the figure shows where it stops. **The ticked box is lost** even with morphing. A morph makes the old DOM look like the *new HTML*, and the new HTML says the box is unticked, because the server did not know that you had ticked it. The search box survived for a narrower reason: it was *focused*, and a morph does not overwrite the value of the control you are typing in. Click somewhere else and press an action, and the text goes too. In real applications this is solved by the server (it received the form’s values and renders them back into the HTML) or by marking elements as **preserved**: htmx’s `hx-preserve`, Turbo’s `data-turbo-permanent`. Tick *Mark the two form fields as preserved* in the figure and repeat: now both survive, as the library leaves those nodes alone.
+Morphing is not magic, and the figure shows where it stops. **The ticked box is lost** even with morphing. A morph makes the old DOM look like the *new HTML*, and the new HTML says the box is unticked, because the server did not know that you had ticked it. The search box survived for a narrower reason: it was *focused*, and a morph does not overwrite the value of the control you are typing in. Click somewhere else and press an action, and the text goes too. In real applications this is solved by the server (it received the form’s values and renders them back into the HTML) or by marking elements as **:term[preserved]{id=preserved-element}**: htmx’s `hx-preserve`, Turbo’s `data-turbo-permanent`. Tick *Mark the two form fields as preserved* in the figure and repeat: now both survive, as the library leaves those nodes alone.
 
 :::key
 **A morph is a diff between a DOM and an HTML string.** It is chapter 4’s tree diff with the old tree being the *live DOM* and the new tree being the *parsed response*, and chapter 5’s **keys** are the `id` attributes. It needs no components, because the thing being preserved is the browser’s own state.
@@ -257,7 +257,7 @@ options:
 :::
 
 :::wild{framework="htmx, Turbo, LiveView" version="2026"}
-htmx 2 (2024) takes Idiomorph as a swap extension (`hx-swap="morph"`); Turbo 8 (2023) morphs page refreshes with Idiomorph, adopted from the htmx project; Phoenix LiveView and Livewire (Laravel) both morph with their own variants of morphdom. Rails’ “Hotwire” bundle is Turbo and Stimulus; “HTMX + Alpine” is the same split with different parts.
+htmx 2 (2024) takes :term[Idiomorph]{id=idiomorph} as a swap extension (`hx-swap="morph"`); Turbo 8 (2023) morphs page refreshes with Idiomorph, adopted from the htmx project; Phoenix LiveView and Livewire (Laravel) both morph with their own variants of morphdom. Rails’ “Hotwire” bundle is Turbo and Stimulus; “HTMX + Alpine” is the same split with different parts.
 :::
 
 :::history{year=2011 title="pjax, Turbolinks, morphdom"}

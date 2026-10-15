@@ -144,3 +144,8 @@ krause-benchmark:
   year: 2015
   title: js-framework-benchmark
   url: https://github.com/krausest/js-framework-benchmark
+ajax-garrett:
+  authors: Garrett, J. J.
+  year: 2005
+  title: 'Ajax: a new approach to web applications'
+  venue: Adaptive Path, 18 February 2005

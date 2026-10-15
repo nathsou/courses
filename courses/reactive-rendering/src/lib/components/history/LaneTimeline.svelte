@@ -115,25 +115,19 @@
 <style>
   .timeline {
     margin: 1.6rem 0;
-    --l-logic: var(--series-8);
-    --l-model-checking: var(--series-1);
-    --l-sat: var(--series-6);
-    --l-smt: var(--series-2);
-    --l-deductive: var(--series-3);
-    --l-heap: var(--series-4);
-    --l-abstract-interpretation: var(--series-5);
-    --l-industry: var(--ink-2);
-    --l-disasters: var(--pencil);
+    --l-platform: var(--series-8);
+    --l-checking: var(--series-5);
+    --l-vdom: var(--series-1);
+    --l-signals: var(--series-3);
+    --l-compilers: var(--series-2);
+    --l-server: var(--series-4);
   }
-  .lane-logic { --c: var(--l-logic); }
-  .lane-model-checking { --c: var(--l-model-checking); }
-  .lane-sat { --c: var(--l-sat); }
-  .lane-smt { --c: var(--l-smt); }
-  .lane-deductive { --c: var(--l-deductive); }
-  .lane-heap { --c: var(--l-heap); }
-  .lane-abstract-interpretation { --c: var(--l-abstract-interpretation); }
-  .lane-industry { --c: var(--l-industry); }
-  .lane-disasters { --c: var(--l-disasters); }
+  .lane-platform { --c: var(--l-platform); }
+  .lane-checking { --c: var(--l-checking); }
+  .lane-vdom { --c: var(--l-vdom); }
+  .lane-signals { --c: var(--l-signals); }
+  .lane-compilers { --c: var(--l-compilers); }
+  .lane-server { --c: var(--l-server); }
 
   .strip {
     width: 100%;

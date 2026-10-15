@@ -1,0 +1,77 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+ssr:
+  term: 'server-side rendering'
+  definition: 'Running the components on the server to produce HTML, so that the page has content before any JavaScript runs.'
+  chapter: ssr-and-hydration
+hydration:
+  term: 'hydration'
+  definition: 'Taking over server-rendered HTML in the browser by running the components again and claiming the existing nodes, attaching handlers and state instead of creating nodes.'
+  chapter: ssr-and-hydration
+hydration-mismatch:
+  term: 'hydration mismatch'
+  definition: 'A difference between the server’s HTML and what the client’s first render produces. The framework must report it and repair the page.'
+  chapter: ssr-and-hydration
+uncanny-valley:
+  term: 'uncanny valley'
+  definition: 'The interval in which a server-rendered page is visible but does not respond, because it has not hydrated yet.'
+  chapter: ssr-and-hydration
+streaming:
+  term: 'streaming'
+  definition: 'Sending server-rendered HTML in chunks as parts of the page become ready, so a slow part does not hold up the rest.'
+  chapter: ssr-and-hydration
+island:
+  term: 'island'
+  definition: 'A part of a page that is hydrated on its own, surrounded by static HTML that is never hydrated.'
+  chapter: islands-and-server-components
+client-directive:
+  term: 'client directive'
+  definition: 'In Astro, an attribute (`client:load`, `client:idle`, `client:visible`) that says when an island hydrates.'
+  chapter: islands-and-server-components
+server-component:
+  term: 'server component'
+  definition: 'A component that runs only on the server. Its code never ships, and what reaches the browser is the elements it returned.'
+  chapter: islands-and-server-components
+client-component:
+  term: 'client component'
+  definition: 'A component marked `''use client''`: its code and everything it imports is sent to the browser, where it is hydrated and can have state and effects.'
+  chapter: islands-and-server-components
+flight:
+  term: 'Flight'
+  definition: 'React’s wire format for server components: a stream of rows describing the element tree, with references to client modules.'
+  chapter: islands-and-server-components
+server-action:
+  term: 'server action'
+  definition: 'A function marked `''use server''`, callable from the browser as a reference over the network.'
+  chapter: islands-and-server-components
+resumability:
+  term: 'resumability'
+  definition: 'Serialising the state, the handler references and the subscriptions into the HTML so that the browser continues the application instead of re-running it.'
+  chapter: resumability
+qrl:
+  term: 'QRL'
+  definition: 'A lazy-loadable reference to a function (`chunk.js#symbol`) written in the HTML. Qwik’s name for the address of a handler.'
+  chapter: resumability
+loader:
+  term: 'loader'
+  definition: 'The tiny global script of a resumable page that listens for events and fetches the handler an event needs.'
+  chapter: resumability
+optimizer:
+  term: 'optimizer'
+  definition: 'Qwik’s build tool that extracts each `$` closure into its own lazy chunk.'
+  chapter: resumability
+morphing:
+  term: 'morphing'
+  definition: 'Making the existing DOM look like new HTML by keeping nodes that match, updating them in place, and inserting or removing the rest.'
+  chapter: morphing
+html-over-the-wire:
+  term: 'HTML over the wire'
+  definition: 'The server sends HTML, not data, in response to events, and the browser puts it on the page. htmx, Turbo and LiveView work this way.'
+  chapter: morphing
+idiomorph:
+  term: 'idiomorph'
+  definition: 'A morphing algorithm that matches nodes using the sets of ids found inside them. Used by htmx and Turbo.'
+  chapter: morphing
+preserved-element:
+  term: 'preserved element'
+  definition: 'An element a morph must leave exactly as it is (`hx-preserve`, `data-turbo-permanent`), because the page owns its state.'
+  chapter: morphing

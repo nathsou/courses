@@ -1,0 +1,44 @@
+- year: 1998
+  lane: platform
+  title: DOM Level 1
+  people: W3C
+  chapter: what-the-browser-does
+  text: 'The W3C recommends the Document Object Model: a standard tree of nodes with `createElement`, `appendChild` and `setAttribute`. Every renderer in this course ends in calls like these.'
+- year: 2005
+  lane: platform
+  title: “Ajax”
+  people: Jesse James Garrett
+  chapter: the-question
+  text: 'An essay names the technique of updating part of a page with a background request. Pages become applications, and the question of how to put new data on the page becomes everyone’s.'
+- year: 2010
+  lane: checking
+  title: Backbone.js
+  people: Jeremy Ashkenas
+  chapter: before-frameworks
+  text: 'Models that emit events and views that listen to them: the observer pattern as a framework. Cleaning up the listeners (`stopListening`, 2012) becomes its own chore.'
+  cite: [backbone-docs]
+- year: 2010
+  lane: checking
+  title: AngularJS
+  people: Miško Hevery, Adam Abrons
+  chapter: before-frameworks
+  text: 'Google’s framework puts a watcher on every binding and runs a digest loop until nothing changes: dirty checking, at the scale of an application.'
+  cite: [angularjs-scope]
+- year: 2011
+  lane: server
+  title: pjax
+  people: Chris Wanstrath
+  chapter: morphing
+  text: 'GitHub swaps part of a page with the server’s HTML and updates the URL with the History API: the first widely used form of HTML over the wire.'
+- year: 2015
+  lane: platform
+  title: ES2015
+  people: TC39
+  chapter: lit-templates
+  text: 'The language gets tagged template literals and Proxy, the two features that lit-html and Vue 3 are built on.'
+- year: 2025
+  lane: platform
+  title: moveBefore
+  people: Chrome team
+  chapter: where-next
+  text: 'Chrome ships `Node.moveBefore()`, which moves a node without resetting its focus, scroll position or animations: the platform’s answer to the oldest cost of keyed lists.'

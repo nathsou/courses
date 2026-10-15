@@ -48,7 +48,7 @@ Try it. The component below is the real output of Svelte 4.2.19’s compiler, ru
 
 Look at the right-hand code. When you click `+1`, the handler invalidates `count`, so bit 0 is set. Then something else sets bit 1: `double`. That is the `$:` line, which the compiler has turned into a function that runs before each update and invalidates `double` whenever `count` is dirty. The flush then runs `p`, the update function, with the mask `0b11`: both `if` blocks run, and so does the class toggle, which also tests bit 0.
 
-Then press **three times in one tick**: three invalidations, **one** flush. The assignments only set bits and schedule a flush (in a microtask, in the browser); `p` runs once, with the final values. This is chapter 11’s batching, built into the compiler’s runtime: the update is a function of the *final* state, never of the intermediate ones.
+Then press **three times in one tick**: three :term[invalidations]{id=invalidation}, **one** flush. The assignments only set bits and schedule a flush (in a microtask, in the browser); `p` runs once, with the final values. This is chapter 11’s batching, built into the compiler’s runtime: the update is a function of the *final* state, never of the intermediate ones.
 
 ## The shape of the output
 
@@ -85,7 +85,7 @@ A component is **two functions**:
 - `instance` runs once and holds the component’s state. It returns `ctx`, an array in which each variable has its number.
 - `create_fragment` returns an object with four methods, **c**reate, **m**ount, **u**p**d**ate (`p`) and **d**estroy, which are the lifecycle of the DOM the component owns.
 
-There is no tree. The text nodes `t3` and `t5` are plain local variables, and `p` writes to them. The `set_data` function compares with the node’s old text and writes only if different. For one component, the cost of an update is **the number of bit tests**, which is the number of dependencies in the template, with a DOM write for each one that fires.
+There is no tree. The text nodes `t3` and `t5` are plain local variables, and `p` writes to them. The `set_data` function compares with the node’s old text and writes only if different. For one component, the cost of an update is **the number of :term[bit tests]{id=bitmask}**, which is the number of dependencies in the template, with a DOM write for each one that fires.
 
 :::key
 **The compiler turns “what changed?” into a number.** The runtime never discovers dependencies. They were written into `p` as bit tests by a compiler that read your code. What the runtime does is keep the one integer per component, `dirty`, which says which variables were assigned since the last flush.
