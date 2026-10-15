@@ -359,3 +359,82 @@ nist-pqc:
   year: 2024
   title: FIPS 203, 204 and 205 — the first post-quantum cryptography standards
   venue: Federal Information Processing Standards, August 2024
+lehmer1959:
+  authors: D. H. Lehmer
+  year: 1959
+  title: On the exact number of primes less than a given limit
+  venue: Illinois Journal of Mathematics 3(3), 381–388
+deleglise-rivat:
+  authors: Marc Deléglise and Joël Rivat
+  year: 1996
+  title: Computing π(x) — the Meissel, Lehmer, Lagarias, Miller, Odlyzko method
+  venue: Mathematics of Computation 65(213), 235–245
+  note: Also recounts the history of the earlier hand and machine computations, including Meissel’s and Lehmer’s values.
+lmo1985:
+  authors: J. C. Lagarias, V. S. Miller and A. M. Odlyzko
+  year: 1985
+  title: 'Computing π(x): the Meissel–Lehmer method'
+  venue: Mathematics of Computation 44(170), 537–560
+primecount:
+  authors: Kim Walisch
+  year: 2024
+  title: 'primecount: fast prime counting function implementations'
+  venue: open-source C++ library
+  url: https://github.com/kimwalisch/primecount
+chebyshev1852:
+  authors: P. L. Chebyshev
+  year: 1852
+  title: Mémoire sur les nombres premiers
+  venue: Journal de mathématiques pures et appliquées 17, 366–390
+  note: Proves 0.92129 x/log x < π(x) < 1.10555 x/log x for large x, and Bertrand’s postulate. A companion paper (1848, published 1852) shows that if π(x)/(x/log x) has a limit, it is 1.
+erdos1932:
+  authors: Paul Erdős
+  year: 1932
+  title: Beweis eines Satzes von Tschebyschef
+  venue: Acta Scientiarum Mathematicarum (Szeged) 5, 194–198
+bhp2001:
+  authors: R. C. Baker, G. Harman and J. Pintz
+  year: 2001
+  title: The difference between consecutive primes, II
+  venue: Proceedings of the London Mathematical Society 83(3), 532–562
+mertens1874:
+  authors: Franz Mertens
+  year: 1874
+  title: Ein Beitrag zur analytischen Zahlentheorie
+  venue: Journal für die reine und angewandte Mathematik 78, 46–62
+hardy-ramanujan1917:
+  authors: G. H. Hardy and S. Ramanujan
+  year: 1917
+  title: The normal number of prime factors of a number n
+  venue: Quarterly Journal of Mathematics 48, 76–92
+erdos-kac1940:
+  authors: P. Erdős and M. Kac
+  year: 1940
+  title: The Gaussian law of errors in the theory of additive number theoretic functions
+  venue: American Journal of Mathematics 62(1), 738–742
+cramer1936:
+  authors: Harald Cramér
+  year: 1936
+  title: On the order of magnitude of the difference between consecutive prime numbers
+  venue: Acta Arithmetica 2, 23–46
+nicely-gaps:
+  authors: Thomas R. Nicely
+  year: 2019
+  title: First occurrence prime gaps
+  venue: tables of maximal prime gaps, maintained since the 1990s
+  url: https://faculty.lynchburg.edu/~nicely/gaps/gaplist.html
+granville1995:
+  authors: Andrew Granville
+  year: 1995
+  title: Harald Cramér and the distribution of prime numbers
+  venue: Scandinavian Actuarial Journal 1995(1), 12–28
+hardy-littlewood1923:
+  authors: G. H. Hardy and J. E. Littlewood
+  year: 1923
+  title: "Some problems of 'Partitio numerorum' III: On the expression of a number as a sum of primes"
+  venue: Acta Mathematica 44, 1–70
+maier1985:
+  authors: Helmut Maier
+  year: 1985
+  title: Primes in short intervals
+  venue: Michigan Mathematical Journal 32(2), 221–225

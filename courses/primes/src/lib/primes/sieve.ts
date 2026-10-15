@@ -24,6 +24,25 @@ export function primesUpTo(n: number): number[] {
   return out;
 }
 
+let cached: number[] = [];
+let cachedLimit = 1;
+/** The primes ≤ n, reusing (a prefix of) the largest list computed so far. For the segmented sieves. */
+function smallPrimes(n: number): number[] {
+  if (n > cachedLimit) {
+    cached = primesUpTo(Math.max(n, 2 * cachedLimit));
+    cachedLimit = Math.max(n, 2 * cachedLimit);
+  }
+  if (n === cachedLimit) return cached;
+  let hi = cached.length;
+  let lo = 0;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (cached[mid]! <= n) lo = mid + 1;
+    else hi = mid;
+  }
+  return cached.slice(0, lo);
+}
+
 /** The first `count` primes. */
 export function firstPrimes(count: number): number[] {
   if (count <= 0) return [];
@@ -60,7 +79,7 @@ export function primesInRange(lo: number, hi: number): number[] {
   if (hi < 2 || hi < lo) return [];
   lo = Math.max(lo, 2);
   const root = isqrt(hi);
-  const small = primesUpTo(root);
+  const small = smallPrimes(root);
   const size = hi - lo + 1;
   const composite = new Uint8Array(size);
   for (const p of small) {
@@ -76,7 +95,7 @@ export function primesInRange(lo: number, hi: number): number[] {
 export function countPrimesInRange(lo: number, hi: number, block = 1 << 16): number {
   if (hi < 2 || hi < lo) return 0;
   lo = Math.max(lo, 2);
-  const small = primesUpTo(isqrt(hi));
+  const small = smallPrimes(isqrt(hi));
   const composite = new Uint8Array(block);
   let count = 0;
   for (let start = lo; start <= hi; start += block) {
