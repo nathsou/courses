@@ -1,0 +1,170 @@
+<!--
+  A code exercise: edit TypeScript against hidden tests and run them in a worker.
+  Spec: { id, title, prompt, starter, tests, solution (reference code), hints?, optional? }.
+  The tests import the reader's module as 'solution' and may import the course library as 'primes'.
+-->
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { progress } from '$lib/state/progress.svelte';
+  import { runExercise } from '$lib/code/runner';
+  import type { RunReport } from '$lib/code/protocol';
+  import CodeEditor from './CodeEditor.svelte';
+  import ExerciseFrame from './ExerciseFrame.svelte';
+  import Verdict from './parts/Verdict.svelte';
+  import Icon from '../ui/Icon.svelte';
+  import type { ExerciseBase } from './types';
+
+  interface Spec extends ExerciseBase {
+    optional?: boolean;
+    starter: string;
+    tests: string;
+    /** Reference solution source (shown on request, and used by the test suite). */
+    solution?: string;
+  }
+  let { spec }: { spec: Spec } = $props();
+
+  let code = $state(spec.starter);
+  // svelte-ignore state_referenced_locally
+  let expanded = $state(!spec.optional);
+  let editor: CodeEditor | undefined;
+  let running = $state(false);
+  let report = $state<RunReport | null>(null);
+  let testedCode = $state<string | null>(null);
+
+  onMount(() => {
+    progress.load();
+    const saved = progress.draft<string | null>(spec.id, null);
+    if (saved !== null && saved !== spec.starter) {
+      code = saved;
+      editor?.setValue(saved);
+    }
+  });
+
+  const passed = $derived(testedCode === code && report?.ok && report.results.length > 0 && report.results.every((r) => r.passed));
+  const solutionHtml = $derived(spec.solution ? `<pre class="solution-code"><code>${escape(spec.solution)}</code></pre>` : undefined);
+
+  function escape(s: string) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  async function run() {
+    if (running) return;
+    running = true;
+    progress.saveDraft(spec.id, code);
+    const submitted = code;
+    const nextReport = await runExercise(spec, submitted);
+    running = false;
+    if (code !== submitted) return;
+    testedCode = submitted;
+    report = nextReport;
+    if (passed) progress.markSolved(spec.id);
+  }
+  function edit(next: string) {
+    code = next;
+    report = null;
+    testedCode = null;
+    progress.saveDraft(spec.id, code);
+  }
+  function reset() {
+    if (code !== spec.starter && !confirm("Replace your draft with the starter code?")) return;
+    code = spec.starter;
+    editor?.setValue(spec.starter);
+    report = null;
+    progress.saveDraft(spec.id, spec.starter);
+  }
+</script>
+
+<details class="coding-choice" bind:open={expanded}>
+  <summary>{spec.optional ? 'Optional implementation extension' : 'Coding exercise'}: {spec.title}</summary>
+  {#if expanded}
+<ExerciseFrame id={spec.id} kind="Code" completionLabel="Tests passed" title={spec.title} prompt={spec.prompt} hints={spec.hints ?? []} solution={solutionHtml} solutionLabel="Show the reference solution">
+  <div class="code-ex">
+    <CodeEditor bind:this={editor} value={code} path="{spec.id}.ts" onchange={edit} onrun={run} minLines={10} label="Your code" />
+    <div class="bar ui">
+      <button class="run" onclick={run} disabled={running}><Icon name="play" size={14} /> {running ? 'Running…' : 'Run tests'}</button>
+      <button onclick={reset}><Icon name="reset" size={14} /> Reset</button>
+      <span class="hint">Ctrl/⌘ + Enter runs the tests</span>
+    </div>
+    {#if report}
+      {#if !report.ok}
+        <Verdict ok={false}>{report.error}</Verdict>
+      {:else}
+        <Verdict ok={!!passed}>{passed ? `All ${report.results.length} tests pass.` : `${report.results.filter((r) => !r.passed).length} of ${report.results.length} tests fail.`}</Verdict>
+        <ul class="results ui">
+          {#each report.results as r}
+            <li class:ok={r.passed}>
+              <span class="mark">{r.passed ? '✓' : '✗'}</span> {r.name}
+              {#if r.error}<pre>{r.error}</pre>{/if}
+            </li>
+          {/each}
+        </ul>
+      {/if}
+      {#if report.logs.length}<pre class="logs">{report.logs.join('\n')}</pre>{/if}
+    {/if}
+  </div>
+</ExerciseFrame>
+
+  {/if}
+</details>
+
+<style>
+  .coding-choice { margin: 1.5rem 0; }
+  .coding-choice > summary { cursor: pointer; padding: 0.7rem 0; font-weight: 600; }
+  .code-ex {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .bar {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+  }
+  .bar button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid var(--line-strong);
+    background: var(--panel);
+    color: var(--ink);
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    cursor: pointer;
+  }
+  .bar .run {
+    background: var(--accent);
+    color: var(--on-accent);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .hint {
+    color: var(--mute);
+    font-size: 0.75rem;
+  }
+  .results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.82rem;
+  }
+  .results li {
+    padding: 0.15rem 0;
+    color: var(--bad);
+  }
+  .results li.ok {
+    color: var(--ok);
+  }
+  .results pre,
+  .logs {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    white-space: pre-wrap;
+    margin: 0.2rem 0 0.2rem 1.2rem;
+    color: var(--ink-2);
+  }
+  .mark {
+    font-family: var(--font-mono);
+  }
+</style>

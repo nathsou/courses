@@ -81,6 +81,14 @@ const courses = [
     }),
   },
   {
+    // The Prime Staircase: the same single-package SvelteKit setup as Proofcraft.
+    name: 'primes',
+    env: (base) => ({
+      BASE_PATH: `${base}/primes`,
+      NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
+    }),
+  },
+  {
     // Every Path at Once (static analysis): the same single-package SvelteKit setup.
     name: 'static-analysis',
     env: (base) => ({

@@ -1,0 +1,233 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug) }
+abel-summation:
+  term: Abel summation
+  definition: 'The discrete analogue of integration by parts: $\sum_{n \le x}a_nf(n) = A(x)f(x) - \int_1^xA(t)f''(t)\,dt$ with $A(t) = \sum_{n \le t}a_n$.'
+  chapter: asymptotics
+admissible:
+  term: admissible tuple
+  definition: 'A set of shifts $h_1, \ldots, h_k$ that misses at least one residue class modulo every prime, so that $n + h_1, \ldots, n + h_k$ could all be prime.'
+  chapter: twin-primes
+analytic-continuation:
+  term: analytic continuation
+  definition: 'The unique extension of a holomorphic function to a larger connected domain; unique by the identity theorem.'
+  chapter: complex-zeta
+argument-principle:
+  term: argument principle
+  definition: 'The number of zeros minus poles of $f$ inside a closed curve equals the winding number of $f$ around $0$ along the curve.'
+  chapter: complex-analysis
+bernoulli-numbers:
+  term: Bernoulli numbers
+  definition: '$B_0 = 1$, $B_1 = -\frac12$, $B_2 = \frac16$, …, defined by $\sum_{j=0}^n\binom{n+1}{j}B_j = 0$; they give $\zeta(-n) = -B_{n+1}/(n+1)$ and $\zeta(2k)$.'
+  chapter: complex-zeta
+bezout:
+  term: Bézout’s identity
+  definition: 'For integers $a, b$ there are $x, y$ with $ax + by = \gcd(a, b)$; found by the extended Euclidean algorithm.'
+  chapter: euclid-algorithm
+brun-constant:
+  term: Brun’s constant
+  definition: 'The sum of $\frac1p + \frac1{p+2}$ over twin primes, about $1.90216$; finite by Brun’s theorem.'
+  chapter: twin-primes
+carmichael:
+  term: Carmichael number
+  definition: 'A composite $n$ with $a^{n-1} \equiv 1 \pmod n$ for every $a$ coprime to $n$, such as $561 = 3\cdot11\cdot17$.'
+  chapter: probable-primes
+character:
+  term: Dirichlet character
+  definition: 'A completely multiplicative function $\chi$ of period $q$ with $\chi(n) = 0$ exactly when $\gcd(n, q) > 1$.'
+  chapter: dirichlet
+chebyshev-functions:
+  term: Chebyshev functions
+  definition: '$\theta(x) = \sum_{p \le x}\log p$ and $\psi(x) = \sum_{p^k \le x}\log p$; the PNT is $\psi(x) \sim x$.'
+  chapter: chebyshev
+circle-method:
+  term: circle method
+  definition: 'Counting solutions of additive equations by integrating exponential sums over $\R/\Z$, split into major and minor arcs.'
+  chapter: goldbach
+convolution:
+  term: Dirichlet convolution
+  definition: '$(f * g)(n) = \sum_{d \mid n}f(d)g(n/d)$; convolving coefficients multiplies Dirichlet series.'
+  chapter: euler-product
+critical-line:
+  term: critical line
+  definition: 'The line $\operatorname{Re}s = \frac12$, the axis of symmetry of the functional equation; RH says all nontrivial zeros lie on it.'
+  chapter: functional-equation
+critical-strip:
+  term: critical strip
+  definition: 'The region $0 \le \operatorname{Re}s \le 1$, which contains every nontrivial zero of $\zeta$.'
+  chapter: functional-equation
+crt:
+  term: Chinese remainder theorem
+  definition: 'If $m, n$ are coprime, a pair of residues modulo $m$ and modulo $n$ determines a unique residue modulo $mn$.'
+  chapter: modular-arithmetic
+dirichlet-series:
+  term: Dirichlet series
+  definition: 'A series $\sum f(n)n^{-s}$; $\zeta(s)$ is the one with $f = 1$.'
+  chapter: euler-product
+discrete-log:
+  term: discrete logarithm
+  definition: 'Given $g$ and $h = g^x \bmod p$, the exponent $x$; believed hard to compute, which makes Diffie–Hellman secure.'
+  chapter: cryptography
+euler-product:
+  term: Euler product
+  definition: '$\zeta(s) = \prod_p(1 - p^{-s})^{-1}$ for $\operatorname{Re}s > 1$: unique factorisation written as an identity of functions.'
+  chapter: euler-product
+euler-gamma:
+  term: Euler’s constant γ
+  definition: '$\gamma = \lim(H_n - \log n) = 0.5772\ldots$; also the constant term of $\zeta(s)$ at $s = 1$, and $e^{-\gamma}$ appears in Mertens’ third theorem.'
+  chapter: asymptotics
+explicit-formula:
+  term: explicit formula
+  definition: '$\psi_0(x) = x - \sum_\rho x^\rho/\rho - \log 2\pi - \frac12\log(1 - x^{-2})$: the primes expressed through the zeros of $\zeta$.'
+  chapter: explicit-formula
+fermat-little:
+  term: Fermat’s little theorem
+  definition: 'If $p$ is prime and $p \nmid a$, then $a^{p-1} \equiv 1 \pmod p$.'
+  chapter: fermat-euler
+functional-equation:
+  term: functional equation
+  definition: '$\xi(s) = \xi(1 - s)$ for $\xi(s) = \frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$.'
+  chapter: functional-equation
+gamma-function:
+  term: Gamma function
+  definition: '$\Gamma(s) = \int_0^\infty e^{-x}x^{s-1}dx$, with $\Gamma(n) = (n-1)!$; meromorphic, never zero.'
+  chapter: gamma-function
+gaussian-integer:
+  term: Gaussian integer
+  definition: 'A complex number $a + bi$ with $a, b \in \Z$; they have unique factorisation.'
+  chapter: gaussian-primes
+gram-point:
+  term: Gram point
+  definition: 'A height $g_n$ with $\theta(g_n) = n\pi$; Gram’s law $(-1)^nZ(g_n) > 0$ usually holds and first fails at $g_{126}$.'
+  chapter: zeros
+hardy-z:
+  term: Hardy’s Z function
+  definition: '$Z(t) = e^{i\theta(t)}\zeta(\frac12 + it)$, a real function whose sign changes are zeros on the critical line.'
+  chapter: zeros
+holomorphic:
+  term: holomorphic
+  definition: 'Complex differentiable on an open set; such a function is infinitely differentiable and equals its power series.'
+  chapter: complex-analysis
+jacobi-symbol:
+  term: Jacobi symbol
+  definition: 'The extension of the Legendre symbol $\left(\frac an\right)$ to odd composite $n$, multiplicative in $n$; computable by reciprocity without factoring.'
+  chapter: quadratic-residues
+legendre-symbol:
+  term: Legendre symbol
+  definition: '$\left(\frac ap\right)$ is $1$ if $a$ is a nonzero square modulo $p$, $-1$ if not, and $0$ if $p \mid a$.'
+  chapter: quadratic-residues
+li:
+  term: logarithmic integral
+  definition: '$\operatorname{li}(x) = \int_0^x\frac{dt}{\log t}$ (principal value) and $\operatorname{Li}(x) = \int_2^x\frac{dt}{\log t}$; the best simple approximations to $\pi(x)$.'
+  chapter: gauss
+l-function:
+  term: L-function
+  definition: '$L(s, \chi) = \sum\chi(n)n^{-s} = \prod_p(1 - \chi(p)p^{-s})^{-1}$ for a Dirichlet character $\chi$.'
+  chapter: dirichlet
+mangoldt:
+  term: von Mangoldt function
+  definition: '$\Lambda(n) = \log p$ if $n$ is a power of the prime $p$, else $0$; $\sum_{d \mid n}\Lambda(d) = \log n$ and $\sum\Lambda(n)n^{-s} = -\zeta''(s)/\zeta(s)$.'
+  chapter: chebyshev
+mertens-function:
+  term: Mertens function
+  definition: '$M(x) = \sum_{n \le x}\mu(n)$; RH is equivalent to $M(x) = O(x^{1/2 + \varepsilon})$.'
+  chapter: faces
+miller-rabin:
+  term: Miller–Rabin test
+  definition: 'A probabilistic primality test using square roots of $1$; a composite passes for at most a quarter of bases.'
+  chapter: probable-primes
+mobius:
+  term: Möbius function
+  definition: '$\mu(n) = (-1)^k$ if $n$ is a product of $k$ distinct primes, $0$ if $n$ has a square factor; $\sum\mu(n)n^{-s} = 1/\zeta(s)$.'
+  chapter: euler-product
+mobius-inversion:
+  term: Möbius inversion
+  definition: '$g(n) = \sum_{d \mid n}f(d)$ if and only if $f(n) = \sum_{d \mid n}\mu(d)g(n/d)$.'
+  chapter: euler-product
+multiplicative:
+  term: multiplicative function
+  definition: 'A function with $f(1) = 1$ and $f(mn) = f(m)f(n)$ when $\gcd(m, n) = 1$; it has an Euler product.'
+  chapter: euler-product
+nontrivial-zero:
+  term: nontrivial zero
+  definition: 'A zero of $\zeta$ in the critical strip; equivalently a zero of $\xi$. The trivial zeros are $-2, -4, -6, \ldots$'
+  chapter: functional-equation
+order:
+  term: multiplicative order
+  definition: 'The smallest $k \ge 1$ with $a^k \equiv 1 \pmod n$; it divides $\varphi(n)$.'
+  chapter: fermat-euler
+pair-correlation:
+  term: pair correlation
+  definition: 'The density of pairs of zeros at a given (rescaled) distance; conjecturally $1 - (\sin\pi u/\pi u)^2$, as for random Hermitian matrices.'
+  chapter: random-matrices
+perron:
+  term: Perron’s formula
+  definition: 'Recovers $\sum_{n \le x}a_n$ from the Dirichlet series as $\frac1{2\pi i}\int_{(c)}F(s)\frac{x^s}{s}ds$.'
+  chapter: explicit-formula
+pi:
+  term: prime-counting function
+  definition: '$\pi(x)$, the number of primes $p \le x$: the staircase of the course.'
+  chapter: staircase
+pnt:
+  term: prime number theorem
+  definition: '$\pi(x) \sim x/\log x$; proved in 1896 by Hadamard and de la Vallée Poussin.'
+  chapter: pnt-plan
+poisson:
+  term: Poisson summation
+  definition: '$\sum_{n \in \Z}f(n) = \sum_{k \in \Z}\hat f(k)$ for nice $f$; for a Gaussian it gives the theta transformation.'
+  chapter: fourier
+primitive-root:
+  term: primitive root
+  definition: 'An $a$ whose powers give every unit modulo $n$; they exist modulo every prime.'
+  chapter: fermat-euler
+quadratic-reciprocity:
+  term: quadratic reciprocity
+  definition: 'For odd primes $p \ne q$, $\left(\frac pq\right)\left(\frac qp\right) = (-1)^{\frac{p-1}2\frac{q-1}2}$.'
+  chapter: quadratic-residues
+residue:
+  term: residue
+  definition: 'The coefficient of $\frac1{z - z_0}$ in the Laurent expansion of $f$ at $z_0$; contour integrals are $2\pi i$ times sums of residues.'
+  chapter: complex-analysis
+rh:
+  term: Riemann Hypothesis
+  definition: 'Every nontrivial zero of $\zeta$ has real part $\frac12$; equivalent to $\pi(x) = \operatorname{Li}(x) + O(\sqrt x\log x)$.'
+  chapter: riemann-hypothesis
+riemann-r:
+  term: Riemann’s R function
+  definition: '$R(x) = \sum_{n \ge 1}\frac{\mu(n)}{n}\operatorname{li}(x^{1/n})$, the smooth part of Riemann’s formula for $\pi(x)$.'
+  chapter: explicit-formula
+rsa:
+  term: RSA
+  definition: 'Public-key encryption with $c = m^e \bmod n$, $n = pq$; decryption needs $d = e^{-1} \bmod \varphi(n)$, which needs the factors.'
+  chapter: cryptography
+sieve:
+  term: sieve
+  definition: 'A method that removes multiples of small primes from a set and counts or bounds what survives.'
+  chapter: sieves
+singular-series:
+  term: singular series
+  definition: 'The product over primes of local correction factors in Hardy–Littlewood predictions, such as $2C_2$ for twin primes.'
+  chapter: random
+smooth:
+  term: smooth number
+  definition: 'An integer whose prime factors are all at most a bound $B$; their density is Dickman’s function $\rho(u)$ at $u = \log x/\log B$.'
+  chapter: quadratic-sieve
+totient:
+  term: Euler’s totient
+  definition: '$\varphi(n)$, the number of $1 \le a \le n$ coprime to $n$; $a^{\varphi(n)} \equiv 1 \pmod n$ for $\gcd(a, n) = 1$.'
+  chapter: fermat-euler
+twin-primes:
+  term: twin primes
+  definition: 'Primes $p, p + 2$; conjecturally infinitely many, with about $2C_2x/\log^2x$ pairs below $x$.'
+  chapter: random
+unique-factorisation:
+  term: unique factorisation
+  definition: 'Every integer $n \ge 2$ is a product of primes in exactly one way, up to order.'
+  chapter: unique-factorisation
+xi:
+  term: completed zeta function
+  definition: '$\xi(s) = \frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$, entire, with $\xi(s) = \xi(1 - s)$ and zeros exactly the nontrivial zeros of $\zeta$.'
+  chapter: functional-equation
+zeta:
+  term: Riemann zeta function
+  definition: '$\zeta(s) = \sum_{n \ge 1}n^{-s}$ for $\operatorname{Re}s > 1$, continued to $\C$ with one pole at $s = 1$.'
+  chapter: complex-zeta
