@@ -127,7 +127,7 @@ Then, in order:
 | M4 | Part IV and appendices A, C, D; zeros table | done (explicit formula sketched; everything it needs proved or stated) |
 | M5 | Part V | done (PNT proved in full via Newman; zero-free region, error terms and the elementary proof sketched) |
 | M6 | Part VI | done (equivalences proved where short; Littlewood, Montgomery, Hasse sketched; Weil, Deligne, Sato–Tate stated) |
-| M7 | Part VII, epilogue, appendices F and G | |
+| M7 | Part VII, epilogue, appendices F and G | done (Dirichlet and Fermat two squares proved; races, bounded gaps, Goldbach and Green–Tao stated or sketched) |
 | M8 | Proofread, UX review at phone and desktop widths in both themes, final checks | |
 
 ## Facts and sources

@@ -683,3 +683,43 @@ maynard2015:
   year: 2015
   title: Small gaps between primes
   venue: Annals of Mathematics 181(1), 383–413
+goldbach1742:
+  authors: Christian Goldbach and Leonhard Euler
+  year: 1742
+  title: Letters of 7 June and 30 June 1742
+  venue: Correspondance mathématique et physique de quelques célèbres géomètres du XVIIIème siècle, ed. P.-H. Fuss, St Petersburg 1843, vol. 1
+oliveira2014:
+  authors: Tomás Oliveira e Silva, Siegfried Herzog and Silvio Pardi
+  year: 2014
+  title: Empirical verification of the even Goldbach conjecture and computation of prime gaps up to 4·10¹⁸
+  venue: Mathematics of Computation 83(288), 2033–2060
+vinogradov1937:
+  authors: I. M. Vinogradov
+  year: 1937
+  title: Representation of an odd number as a sum of three primes
+  venue: Comptes Rendus (Doklady) de l’Académie des Sciences de l’URSS 15, 169–172
+helfgott2013:
+  authors: H. A. Helfgott
+  year: 2013
+  title: The ternary Goldbach conjecture is true
+  venue: arXiv:1312.7748
+green-tao2008:
+  authors: Ben Green and Terence Tao
+  year: 2008
+  title: The primes contain arbitrarily long arithmetic progressions
+  venue: Annals of Mathematics 167(2), 481–547
+edwards1974:
+  authors: H. M. Edwards
+  year: 1974
+  title: Riemann’s Zeta Function
+  venue: Academic Press (reprinted by Dover, 2001)
+titchmarsh1986:
+  authors: E. C. Titchmarsh
+  year: 1986
+  title: The Theory of the Riemann Zeta-Function
+  venue: 2nd edition, revised by D. R. Heath-Brown, Oxford University Press
+iwaniec-kowalski:
+  authors: Henryk Iwaniec and Emmanuel Kowalski
+  year: 2004
+  title: Analytic Number Theory
+  venue: American Mathematical Society Colloquium Publications 53

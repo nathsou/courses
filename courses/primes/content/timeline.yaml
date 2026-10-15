@@ -1,1 +1,206 @@
 # Timeline: list of { year, title, people, chapter, text }. Negative years are BC.
+- year: -300
+  title: Infinitely many primes
+  people: Euclid
+  chapter: infinitely-many
+  text: 'Book IX, Proposition 20 of the *Elements*: prime numbers are more than any assigned multitude of primes.'
+- year: -240
+  title: The sieve
+  people: Eratosthenes
+  chapter: sieves
+  text: 'A method for listing the primes by crossing out multiples, described later by Nicomachus.'
+- year: 1640
+  title: Fermat’s little theorem and two squares
+  people: Pierre de Fermat
+  chapter: fermat-euler
+  text: '$a^{p-1} \equiv 1 \pmod p$, and the claim that primes $p \equiv 1 \pmod 4$ are sums of two squares, both stated in letters without proof.'
+- year: 1735
+  title: The Basel problem
+  people: Leonhard Euler
+  chapter: euler-product
+  text: '$1 + \frac14 + \frac19 + \cdots = \frac{\pi^2}{6}$.'
+- year: 1737
+  title: The Euler product
+  people: Leonhard Euler
+  chapter: euler-product
+  text: '$\sum n^{-s} = \prod_p(1 - p^{-s})^{-1}$, and the divergence of $\sum 1/p$.'
+- year: 1742
+  title: Goldbach’s conjecture
+  people: Christian Goldbach, Leonhard Euler
+  chapter: goldbach
+  text: 'Every even number greater than $2$ is a sum of two primes: proposed in letters, still open.'
+- year: 1749
+  title: Two squares proved
+  people: Leonhard Euler
+  chapter: gaussian-primes
+  text: 'The first proof of Fermat’s two-squares theorem.'
+- year: 1792
+  title: Gauss’s guess
+  people: Carl Friedrich Gauss
+  chapter: gauss
+  text: 'From tables of primes, the density of primes near $x$ is about $1/\log x$ (recalled in a letter of 1849).'
+- year: 1796
+  title: Quadratic reciprocity
+  people: Carl Friedrich Gauss
+  chapter: quadratic-residues
+  text: 'The first complete proof, published in the *Disquisitiones Arithmeticae* (1801).'
+- year: 1837
+  title: Primes in progressions
+  people: Peter Gustav Lejeune Dirichlet
+  chapter: dirichlet
+  text: 'Infinitely many primes $\equiv a \pmod q$ when $\gcd(a, q) = 1$, with characters and $L$-functions.'
+- year: 1850
+  title: Chebyshev’s bounds
+  people: Pafnuty Chebyshev
+  chapter: chebyshev
+  text: 'π(x) is within constant factors of $x/\log x$; Bertrand’s postulate follows.'
+- year: 1859
+  title: Riemann’s paper
+  people: Bernhard Riemann
+  chapter: riemann-hypothesis
+  text: '*On the number of primes less than a given magnitude*: ζ as a complex function, the functional equation, the explicit formula, and the Riemann Hypothesis.'
+- year: 1874
+  title: Mertens’ theorems
+  people: Franz Mertens
+  chapter: mertens
+  text: 'Sums $\sum_{p \le x}\frac{\log p}{p}$ and $\sum_{p \le x}\frac1p$, and the product $\prod_{p \le x}(1 - \frac1p) \sim e^{-\gamma}/\log x$.'
+- year: 1876
+  title: Lucas’s test
+  people: Édouard Lucas
+  chapter: certificates
+  text: 'Proves $2^{127} - 1$ prime, the largest known prime for 75 years.'
+- year: 1893
+  title: Hadamard products
+  people: Jacques Hadamard
+  chapter: functional-equation
+  text: 'Entire functions of finite order are determined by their zeros; ξ has a product over the zeros of ζ.'
+- year: 1895
+  title: The explicit formula proved
+  people: Hans von Mangoldt
+  chapter: explicit-formula
+  text: '$\psi_0(x) = x - \sum_\rho x^\rho/\rho - \log 2\pi - \frac12\log(1 - x^{-2})$.'
+- year: 1896
+  title: The prime number theorem
+  people: Jacques Hadamard, Charles de la Vallée Poussin
+  chapter: pnt-plan
+  text: 'Independently: $\pi(x) \sim x/\log x$, via ζ(1 + it) ≠ 0.'
+- year: 1914
+  title: Zeros on the line, and Li’s lead
+  people: G. H. Hardy, J. E. Littlewood
+  chapter: littlewood
+  text: 'Hardy: infinitely many zeros on the critical line. Littlewood: π(x) − li(x) changes sign infinitely often.'
+- year: 1919
+  title: Brun’s theorem
+  people: Viggo Brun
+  chapter: twin-primes
+  text: 'The sum of the reciprocals of the twin primes converges; the birth of modern sieve methods.'
+- year: 1923
+  title: Partitio numerorum
+  people: G. H. Hardy, J. E. Littlewood
+  chapter: random
+  text: 'The circle method and the conjectures on prime tuples and Goldbach representations.'
+- year: 1932
+  title: The Riemann–Siegel formula
+  people: Carl Ludwig Siegel
+  chapter: zeros
+  text: 'Found in Riemann’s unpublished notes: Z(t) with about $\sqrt{t/2\pi}$ terms.'
+- year: 1933
+  title: Hasse’s bound
+  people: Helmut Hasse
+  chapter: finite-fields
+  text: '$|a_p| \le 2\sqrt p$ for elliptic curves: the Riemann Hypothesis over finite fields, in genus one.'
+- year: 1933
+  title: Skewes’ number
+  people: Stanley Skewes
+  chapter: littlewood
+  text: 'On RH, π(x) > li(x) for some $x < e^{e^{e^{79}}}$.'
+- year: 1936
+  title: Cramér’s model
+  people: Harald Cramér
+  chapter: random
+  text: 'Primes as a random set with density $1/\log n$, and the conjecture that gaps are $O(\log^2 p)$.'
+- year: 1937
+  title: Three primes
+  people: Ivan Vinogradov
+  chapter: goldbach
+  text: 'Every sufficiently large odd number is a sum of three primes.'
+- year: 1948
+  title: Weil’s theorem
+  people: André Weil
+  chapter: finite-fields
+  text: 'The Riemann Hypothesis for curves over finite fields.'
+- year: 1949
+  title: The elementary proof
+  people: Atle Selberg, Paul Erdős
+  chapter: error-terms
+  text: 'The prime number theorem without complex analysis, from Selberg’s symmetry formula.'
+- year: 1953
+  title: Turing’s method
+  people: Alan Turing
+  chapter: zeros
+  text: 'Checking that all zeros up to a height lie on the critical line, by comparing sign changes with $N(T)$.'
+- year: 1973
+  title: Pair correlation
+  people: Hugh Montgomery, Freeman Dyson
+  chapter: random-matrices
+  text: 'The zeros of ζ repel like eigenvalues of random Hermitian matrices.'
+- year: 1973
+  title: Chen’s theorem
+  people: Chen Jingrun
+  chapter: twin-primes
+  text: 'Infinitely many primes $p$ with $p + 2$ prime or a product of two primes.'
+- year: 1974
+  title: Deligne’s theorem
+  people: Pierre Deligne
+  chapter: finite-fields
+  text: 'The Weil conjectures: the Riemann Hypothesis for varieties over finite fields.'
+- year: 1977
+  title: RSA
+  people: Ron Rivest, Adi Shamir, Leonard Adleman
+  chapter: cryptography
+  text: 'Public-key encryption whose security rests on the difficulty of factoring.'
+- year: 1980
+  title: Newman’s proof
+  people: Donald Newman
+  chapter: pnt-proof
+  text: 'A short analytic proof of the prime number theorem through a Tauberian theorem for Laplace transforms.'
+- year: 1985
+  title: Mertens’ conjecture falls
+  people: Andrew Odlyzko, Herman te Riele
+  chapter: faces
+  text: '$\limsup M(x)/\sqrt x > 1.06$, though no explicit counterexample is known.'
+- year: 1994
+  title: Chebyshev’s bias explained
+  people: Michael Rubinstein, Peter Sarnak
+  chapter: prime-races
+  text: 'Logarithmic densities of prime races, conditional on GRH and linear independence of zeros.'
+- year: 2002
+  title: Primes is in P
+  people: Manindra Agrawal, Neeraj Kayal, Nitin Saxena
+  chapter: certificates
+  text: 'A deterministic polynomial-time primality test.'
+- year: 2004
+  title: Primes in long progressions
+  people: Ben Green, Terence Tao
+  chapter: goldbach
+  text: 'The primes contain arbitrarily long arithmetic progressions.'
+- year: 2013
+  title: Bounded gaps
+  people: Yitang Zhang, James Maynard, Terence Tao
+  chapter: twin-primes
+  text: 'Infinitely many pairs of primes at most $70{,}000{,}000$ apart (Zhang), then $600$ (Maynard), now $246$.'
+- year: 2013
+  title: Ternary Goldbach
+  people: Harald Helfgott
+  chapter: goldbach
+  text: 'Every odd number greater than $5$ is a sum of three primes.'
+- year: 2018
+  title: De Bruijn–Newman
+  people: Brad Rodgers, Terence Tao
+  chapter: riemann-hypothesis
+  text: '$\Lambda \ge 0$: the Riemann Hypothesis, if true, is only barely so.'
+- year: 2021
+  title: RH verified to 3 × 10¹²
+  people: Dave Platt, Tim Trudgian
+  chapter: zeros
+  text: 'Every zero of ζ with imaginary part up to $3 \times 10^{12}$ lies on the critical line.'
