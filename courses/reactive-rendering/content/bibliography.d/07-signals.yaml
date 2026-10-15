@@ -139,3 +139,8 @@ idiomorph:
   year: 2022
   title: Idiomorph, a DOM morphing algorithm
   url: https://github.com/bigskysoftware/idiomorph
+krause-benchmark:
+  authors: Krause, S.
+  year: 2015
+  title: js-framework-benchmark
+  url: https://github.com/krausest/js-framework-benchmark

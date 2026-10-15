@@ -47,6 +47,7 @@ describe('the Notes app, six ways', () => {
       app.rename(1);
       const st = doc.statsSince(mark);
       if (s === 'rebuild') expect(st.parsed, s).toBeGreaterThan(5);
+      else if (s === 'skip') expect(st, s).toMatchObject({ texts: 1, created: 0, inserted: 0, removed: 0 }); // it also parses the server's HTML
       else expect(st, s).toMatchObject({ texts: 1, created: 0, inserted: 0, removed: 0, parsed: 0 });
     }
   });

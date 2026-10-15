@@ -10,7 +10,7 @@
  * This is the "no client-side component state" end of the spectrum: no virtual DOM, no signals, no components in the
  * browser. The server renders the page; the browser reconciles the result.
  */
-import { MiniDocument, MElement, MNode, MText, MComment, parseHTML } from './dom';
+import { MiniDocument, MElement, MNode, MText, MComment } from './dom';
 
 export interface MorphOptions {
   /** Do not overwrite the value of the focused control (the default): the user is typing in it. */
@@ -21,11 +21,7 @@ export interface MorphOptions {
 
 export function morph(parent: MElement, html: string, opts: MorphOptions = {}): void {
   const doc = parent.doc;
-  const frag = doc.createFragment();
-  for (const n of parseHTML(doc, html)) {
-    n.parent = frag;
-    frag.children.push(n);
-  }
+  const frag = doc.fragmentFromHTML(html); // the browser parses the response too: logged as one parse
   new Morpher(doc, opts.ignoreActiveValue ?? true, opts.preserve).children(parent, frag);
 }
 

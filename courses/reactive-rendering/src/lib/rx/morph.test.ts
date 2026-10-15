@@ -13,7 +13,8 @@ describe('morph', () => {
   test('identical HTML changes nothing', () => {
     const { doc, root } = setup('<div class="a"><p>x</p><input value="v"></div>');
     morph(root, '<div class="a"><p>x</p><input value="v"></div>');
-    expect(doc.ops).toHaveLength(0);
+    // The response is parsed (one logged parse); nothing is written to the page.
+    expect(doc.ops.filter((o) => o.kind !== 'html')).toHaveLength(0);
   });
 
   test('changes text and attributes in place', () => {
