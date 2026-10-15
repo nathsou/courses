@@ -241,7 +241,7 @@ This was not a curiosity. In 1847 Gabriel Lamé announced a proof of Fermat’s 
 
 ```prove
 id: factorisation/prime-power-square
-title: "$\sqrt p$ is irrational, by descent"
+title: '$\sqrt p$ is irrational, by descent'
 prompt: 'Let $p$ be a prime and $m, n$ positive integers with $m^2 = p\,n^2$. Show this is impossible, using only Euclid’s lemma (not unique factorisation).'
 hints:
   - Take a solution with $m$ as small as possible.
