@@ -76,7 +76,7 @@ The first is simpler; the second, the **logarithmic integral**, is what Gauss ac
 Two things stand out.
 
 1. The ratio $\pi(x) / (x / \log x)$ creeps towards $1$, slowly. That is the content of the **prime number theorem**: $\pi(x) / (x/\log x) \to 1$ as $x \to \infty$. Gauss and Legendre conjectured it around 1800; it was proved in 1896, independently, by Jacques Hadamard and Charles de la Vallée Poussin. Part V of this course proves it in full.
-2. $\operatorname{Li}(x)$ is astonishingly accurate. At $x = 10^{24}$ it is off by about $1.7 \times 10^{10}$, an error in the twelfth significant digit. The error is roughly the size of $\sqrt{x}$ (here $10^{12}$), divided by a logarithm. Whether that remains true for *all* $x$ is the **Riemann Hypothesis**, the subject of Part VI.
+2. $\operatorname{Li}(x)$ is astonishingly accurate. At $x = 10^{24}$ it is off by about $1.7 \times 10^{10}$, a relative error of about one part in a trillion. The error is roughly the size of $\sqrt{x}$ (here $10^{12}$), divided by a logarithm. Whether that remains true for *all* $x$ is the **Riemann Hypothesis**, the subject of Part VI.
 
 ```quiz
 q: At $x = 10^{12}$, $\operatorname{Li}(x)$ overestimates $\pi(x)$ by about $38{,}000$. Roughly what fraction of $\pi(x)$ is that?

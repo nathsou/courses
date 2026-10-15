@@ -99,7 +99,7 @@ solution: |
     return out;
   }
 hints:
-  - 'Keep two counters and a flag for "class 1 is ahead"; record $p$ when the flag switches from false to true.'
+  - 'Keep two counters and a flag for “class 1 is ahead”; record $p$ when the flag switches from false to true.'
 ```
 
 :::exercises

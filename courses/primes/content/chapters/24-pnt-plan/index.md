@@ -70,7 +70,7 @@ A zero $\rho = \beta + i\gamma$ contributes a term of size $x^{\beta - 1}/|\rho|
 
 ::what-if-zero
 
-So the prime number theorem is “equivalent” to the statement that $\zeta$ has no zeros on the line $\operatorname{Re}s = 1$. (It cannot have zeros to the right, by the Euler product.) Making this rigorous through the explicit formula requires controlling infinitely many zeros at once, which is how Hadamard and de la Vallée Poussin proceeded, with a lot of work. Newman’s insight was that one can avoid the zeros entirely: a single complex-analytic lemma, applied to a suitable Laplace transform, converts "$\zeta$ has no zeros on $\sigma = 1$“ directly into ”$\psi(x) \sim x$".
+So the prime number theorem is “equivalent” to the statement that $\zeta$ has no zeros on the line $\operatorname{Re}s = 1$. (It cannot have zeros to the right, by the Euler product.) Making this rigorous through the explicit formula requires controlling infinitely many zeros at once, which is how Hadamard and de la Vallée Poussin proceeded, with a lot of work. Newman’s insight was that one can avoid the zeros entirely: a single complex-analytic lemma, applied to a suitable Laplace transform, converts “$\zeta$ has no zeros on $\sigma = 1$“ directly into ”$\psi(x) \sim x$”.
 
 ## The proof in five steps
 

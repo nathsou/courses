@@ -39,7 +39,7 @@ To say precisely how good such approximations are, we need the standard notation
 | $f = o(g)$ | $f(x)/g(x) \to 0$ | $\log x = o(x^{0.01})$ |
 | $f \asymp g$ | $f \ll g$ and $g \ll f$ | $\pi(x) \asymp x/\log x$ (Chapter 16) |
 
-Two warnings. First, $\sim$ is about *ratios*: $f \sim g$ allows $f - g$ to be huge. $x^2 + x \sim x^2$, although the difference grows without bound. Second, $O$ hides a constant, which may be large or unknown. "$\pi(x) = O(x/\log x)$" says nothing about the constant, and Chapter 16 works to make it explicit.
+Two warnings. First, $\sim$ is about *ratios*: $f \sim g$ allows $f - g$ to be huge. $x^2 + x \sim x^2$, although the difference grows without bound. Second, $O$ hides a constant, which may be large or unknown. “$\pi(x) = O(x/\log x)$” says nothing about the constant, and Chapter 16 works to make it explicit.
 
 In this notation, Gauss’s guess is the **prime number theorem**:
 

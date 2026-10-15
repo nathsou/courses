@@ -131,7 +131,7 @@ The converse (if $M_p$ is prime, then $M_p \mid s_{p-2}$) needs more: one shows,
 
 ### The record primes
 
-The Lucas–Lehmer test made Mersenne numbers the natural place to hunt for record primes. In 1952 Raphael Robinson ran it on the SWAC computer and found $M_{521}$ and $M_{607}$ in a single evening, the first primes found by a computer. Since 1996, almost every record has come from the Great Internet Mersenne Prime Search (GIMPS), a volunteer project started by George Woltman. In October 2024 GIMPS volunteer Luke Durant found $M_{136{,}279{,}841}$, a prime of $41{,}024{,}320$ digits, the $52$nd known Mersenne prime and the largest prime known at the time of writing.:cite[gimps]
+The Lucas–Lehmer test made Mersenne numbers the natural place to hunt for record primes. In 1952 Raphael Robinson ran it on the SWAC computer and found $M_{521}$ and $M_{607}$ in a single evening, the first Mersenne primes found by a computer. Since 1996, almost every record has come from the Great Internet Mersenne Prime Search (GIMPS), a volunteer project started by George Woltman. In October 2024 GIMPS volunteer Luke Durant found $M_{136{,}279{,}841}$, a prime of $41{,}024{,}320$ digits, the $52$nd known Mersenne prime and the largest prime known at the time of writing.:cite[gimps]
 
 ```code
 id: certificates/lucas-lehmer

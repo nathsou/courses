@@ -108,7 +108,7 @@ The difficulty, which took another fifty years, is to show that the limit *exist
 
 Let $\omega(n)$ be the number of distinct primes dividing $n$. It jumps around: $\omega(p) = 1$ but $\omega(30030) = 6$. On average, though, it is very regular.
 
-:::theorem{name="Hardy and Ramanujan" year=1917 status=proved}
+:::theorem{status=proved}
 $$\frac1x\sum_{n \le x}\omega(n) = \log\log x + M + O\!\left(\frac{1}{\log x}\right).$$
 :::
 

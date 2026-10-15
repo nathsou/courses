@@ -67,7 +67,7 @@ q: 'What does the factor $\prod_{i<j}|\lambda_i - \lambda_j|^2$ in the GUE eigen
 options:
   - text: Very small spacings are rare; the spacing density vanishes like $s^2$ at $s = 0$.
     correct: true
-    why: 'When two eigenvalues approach each other, the density goes to zero quadratically; this is "level repulsion".'
+    why: 'When two eigenvalues approach each other, the density goes to zero quadratically; this is “level repulsion”.'
   - text: The eigenvalues are complex.
     why: Hermitian matrices have real eigenvalues; the factor only says how they are spaced.
   - text: The eigenvalues are uniformly distributed.

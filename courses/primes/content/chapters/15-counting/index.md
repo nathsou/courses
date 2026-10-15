@@ -8,7 +8,7 @@ theorems: [Legendre’s formula, Meissel’s formula, ⌊x/n⌋ takes at most 2�
 techniques: [inclusion–exclusion, dynamic programming, memoisation]
 ---
 
-The table in Chapter 14 lists $\pi(10^{24}) = 18{,}435{,}599{,}767{,}349{,}200{,}867{,}866$. Nobody has ever listed those primes: a sieve up to $10^{24}$ would take longer than the age of the universe. The value was computed by an algorithm that counts primes without finding them. This chapter develops the idea from Legendre’s 1808 formula to an algorithm that runs in $O(x^{3/4})$ time and $O(\sqrt{x})$ memory, which you will implement.
+The table in Chapter 0 lists $\pi(10^{24}) = 18{,}435{,}599{,}767{,}349{,}200{,}867{,}866$. Nobody has ever listed those primes: a sieve up to $10^{24}$ would take longer than the age of the universe. The value was computed by an algorithm that counts primes without finding them. This chapter develops the idea from Legendre’s 1808 formula to an algorithm that runs in $O(x^{3/4})$ time and $O(\sqrt{x})$ memory, which you will implement.
 
 ## Legendre’s formula
 

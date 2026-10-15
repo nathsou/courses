@@ -26,7 +26,7 @@ Rules that are used without comment:
 - $\frac{1}{1 + O(\varepsilon)} = 1 + O(\varepsilon)$ and $e^{O(\varepsilon)} = 1 + O(\varepsilon)$ when $\varepsilon \to 0$; $\log(1 + O(\varepsilon)) = O(\varepsilon)$.
 - For every $\varepsilon > 0$ and $A$: $(\log x)^A = O_{A, \varepsilon}(x^\varepsilon)$, and $x^A = O_{A, \varepsilon}(e^{\varepsilon x})$.
 
-An equation with $O$ on the right is read left to right: $\operatorname{Li}(x) = x/\log x + O(x/\log^2 x)$ means "the difference is $O(x / \log^2 x)$".
+An equation with $O$ on the right is read left to right: $\operatorname{Li}(x) = x/\log x + O(x/\log^2 x)$ means “the difference is $O(x / \log^2 x)$”.
 
 ```quiz
 q: Which statement is false?

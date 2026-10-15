@@ -207,7 +207,7 @@ q: Which pair below $100$ makes Euclid’s algorithm take the most steps?
 options:
   - text: $(89, 55)$
     correct: true
-    why: Consecutive Fibonacci numbers. The quotients are all $1$ until the last division, so the remainders step down $55, 34, 21, 13, 8, 5, 3, 2, 1$, which is $9$ divisions.
+    why: Consecutive Fibonacci numbers. The quotients are all $1$ until the last division, so the remainders step down $34, 21, 13, 8, 5, 3, 2, 1, 0$: nine divisions.
   - text: $(99, 98)$
     why: '$99 = 1 \cdot 98 + 1$, then $98 = 98 \cdot 1 + 0$: two steps. A big quotient finishes things quickly.'
   - text: $(97, 89)$

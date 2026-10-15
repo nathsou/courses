@@ -96,7 +96,7 @@ title: ζ anywhere
 prompt: |
   Write `zetaEM(s, N)`, which evaluates $\zeta(s)$ at a complex number `s` (an object `{ re, im }`) with the formula above, using the terms $n < N$, the two boundary terms and the corrections $k = 1, \ldots, 6$ (ignore $R_6$). The Bernoulli numbers are $B_2, \ldots, B_{12} = \frac16, -\frac1{30}, \frac1{42}, -\frac1{30}, \frac5{66}, -\frac{691}{2730}$.
 
-  The library's complex arithmetic is available as `complex`: `c(re, im)`, `add`, `sub`, `mul`, `div`, `scale(z, k)` (multiply by a real number) and `powReal(n, s)`, which returns $n^{-s}$ (note the minus sign).
+  The library’s complex arithmetic is available as `complex`: `c(re, im)`, `add`, `sub`, `mul`, `div`, `scale(z, k)` (multiply by a real number) and `powReal(n, s)`, which returns $n^{-s}$ (note the minus sign).
 starter: |
   import { complex } from 'primes';
   const { c, add, sub, mul, div, scale, powReal } = complex;

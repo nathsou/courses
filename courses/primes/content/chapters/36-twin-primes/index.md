@@ -36,7 +36,7 @@ It would be tempting to sieve all the way to $z = \sqrt x$, where the survivors 
 
 ### The parity problem
 
-Why do sieves give good upper bounds but no lower bounds? Selberg pointed out an obstruction. A sieve only uses information about how many numbers in a set are divisible by each $d$. That information is the same for the set of numbers with an even number of prime factors and the set with an odd number; it cannot distinguish them. Since primes have an odd number of prime factors and products of two primes an even number, a pure sieve cannot tell "$p + 2$ is prime“ from ”$p + 2$ is a product of two primes". The best that sieves alone can do is **almost-primes**:
+Why do sieves give good upper bounds but no lower bounds? Selberg pointed out an obstruction. A sieve only uses information about how many numbers in a set are divisible by each $d$. That information is the same for the set of numbers with an even number of prime factors and the set with an odd number; it cannot distinguish them. Since primes have an odd number of prime factors and products of two primes an even number, a pure sieve cannot tell “$p + 2$ is prime” from “$p + 2$ is a product of two primes”. The best that sieves alone can do is **almost-primes**:
 
 :::theorem{name="Chen" year=1973 status=stated}
 There are infinitely many primes $p$ such that $p + 2$ is either prime or a product of two primes.:cite[chen1973]

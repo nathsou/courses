@@ -19,7 +19,7 @@ A **group** is a set $G$ with an operation $\cdot$ (written as multiplication) s
 The group is **abelian** (commutative) if $a \cdot b = b \cdot a$ for all $a, b$. Its **order** $|G|$ is its number of elements.
 :::
 
-Every group in this course is abelian except the permutations in Chapter 6's necklace proof. The main examples:
+Every group the course computes with is abelian (the rotations in Chapter 6’s necklace proof included). The main examples:
 
 | Group | Operation | Identity | Order | Where |
 | --- | --- | --- | ---: | --- |
@@ -51,7 +51,7 @@ The **order** of an element $a$ is the smallest $k \ge 1$ with $a^k = e$, if one
 In a finite group $G$, the order of every element divides $|G|$, and $a^{|G|} = e$.
 :::
 
-With $G = (\mathbb{Z}/n\mathbb{Z})^\times$ this is Euler’s theorem $a^{\varphi(n)} \equiv 1 \pmod n$; with $n = p$ prime it is Fermat’s little theorem. The cycles in Chapter 6's widget are the cosets of $\langle a \rangle$.
+With $G = (\mathbb{Z}/n\mathbb{Z})^\times$ this is Euler’s theorem $a^{\varphi(n)} \equiv 1 \pmod n$; with $n = p$ prime it is Fermat’s little theorem. The cycles in Chapter 6’s widget are the cosets of $\langle a \rangle$.
 
 ## Cyclic groups
 
@@ -98,7 +98,7 @@ Let $F$ be a field and $f \in F[x]$.
 2. Induction on $d$. If $r$ is a root, $f = (x - r) q$ with $\deg q = d - 1$. Any other root $s$ satisfies $(s - r) q(s) = 0$, and $s - r \ne 0$ is invertible in a field, so $q(s) = 0$. By induction $q$ has at most $d - 1$ roots.
 :::
 
-Over a ring with zero divisors, part 2 fails: $x^2 - 1$ has four roots modulo $8$. This is exactly where the hypothesis "$p$ prime" enters the proofs of primitive roots (Chapter 6), Euler’s criterion (Chapter 9) and the Miller–Rabin test (Chapter 8).
+Over a ring with zero divisors, part 2 fails: $x^2 - 1$ has four roots modulo $8$. This is exactly where the hypothesis “$p$ prime” enters the proofs of primitive roots (Chapter 6), Euler’s criterion (Chapter 9) and the Miller–Rabin test (Chapter 8).
 
 A consequence worth remembering: over $\mathbb{F}_p$, Fermat’s little theorem says every element is a root of $x^p - x$, which has degree $p$, so
 $$x^p - x = \prod_{a \in \mathbb{F}_p} (x - a) \qquad\text{in } \mathbb{F}_p[x].$$

@@ -72,7 +72,7 @@ How fast is it? If $f$ were a truly random map, the expected value of $\mu + \la
 id: factoring/rho
 title: Pollard’s ρ
 prompt: |
-  Write `rho(n)` for an odd composite bigint $n$ that is not a prime power, returning a factor $1 < d < n$. Use $f(x) = x^2 + c \bmod n$ and Floyd's tortoise and hare, starting from $2$; if the gcd ever equals $n$, retry with the next $c$. The tests include $n$ around $10^{20}$ whose smallest factor has 9 digits, which takes a fraction of a second with ρ and far too long with trial division.
+  Write `rho(n)` for an odd composite bigint $n$ that is not a prime power, returning a factor $1 < d < n$. Use $f(x) = x^2 + c \bmod n$ and Floyd’s tortoise and hare, starting from $2$; if the gcd ever equals $n$, retry with the next $c$. The tests include $n$ around $10^{20}$ whose smallest factor has 9 digits, which takes a fraction of a second with ρ and far too long with trial division.
 starter: |
   import { gcdBig } from 'primes';
 
@@ -117,7 +117,7 @@ solution: |
   }
 hints:
   - 'Inside a loop over `c = 1n, 2n, …`: move the tortoise one step and the hare two, then take `gcdBig(|x − y|, n)`.'
-  - A gcd of $1$ means "keep going"; a gcd equal to $n$ means both cycles closed at once, so try the next $c$.
+  - A gcd of $1$ means “keep going”; a gcd equal to $n$ means both cycles closed at once, so try the next $c$.
 ```
 
 ## Pollard’s $p - 1$ method
@@ -146,7 +146,7 @@ group operations: **subexponential** in the size of $p$, between polynomial and 
 
 ## The race
 
-Each method has numbers it is good at. Try the presets: two factors close together (Fermat’s day), a 19-digit product of two 10-digit primes far apart (ρ’s day), a factor whose $p - 1$ is smooth ($p - 1$'s day), and a 100-digit RSA challenge number, which defeats all four.
+Each method has numbers it is good at. Try the presets: two factors close together (Fermat’s day), a 19-digit product of two 10-digit primes far apart (ρ’s day), a factor whose $p - 1$ is smooth ($p - 1$’s day), and a 100-digit RSA challenge number, which defeats all four.
 
 ::factor-race
 

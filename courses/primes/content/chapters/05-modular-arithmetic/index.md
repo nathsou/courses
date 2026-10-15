@@ -42,7 +42,7 @@ options:
 
 ### The integers modulo $n$
 
-Every integer is congruent to exactly one of $0, 1, \ldots, n - 1$ (its remainder). These $n$ **residue classes**, with addition and multiplication done modulo $n$, form a number system called $\mathbb{Z}/n\mathbb{Z}$, "the integers modulo $n$". It has its own addition and multiplication tables, which you can explore below.
+Every integer is congruent to exactly one of $0, 1, \ldots, n - 1$ (its remainder). These $n$ **residue classes**, with addition and multiplication done modulo $n$, form a number system called $\mathbb{Z}/n\mathbb{Z}$, “the integers modulo $n$”. It has its own addition and multiplication tables, which you can explore below.
 
 ::clock-table
 

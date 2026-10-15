@@ -34,7 +34,7 @@ $$3\left(-\frac{\zeta'}{\zeta}(\sigma)\right) + 4\left(-\operatorname{Re}\frac{\
 3. **The zeros.** The Hadamard product (Chapter 21) gives, for $1 < \sigma \le 2$ and $|t| \ge 2$, $-\operatorname{Re}\frac{\zeta'}{\zeta}(\sigma + it) = O(\log|t|) - \sum_\rho\operatorname{Re}\frac{1}{\sigma + it - \rho}$, and every term $\operatorname{Re}\frac{1}{s - \rho}$ is positive because $\operatorname{Re}(s - \rho) > 0$. Dropping all but one zero $\rho = \beta + it$ gives $-\operatorname{Re}\frac{\zeta'}{\zeta}(\sigma + it) \le -\frac{1}{\sigma - \beta} + O(\log|t|)$, and dropping all of them at $2t$ gives $-\operatorname{Re}\frac{\zeta'}{\zeta}(\sigma + 2it) \le O(\log|t|)$.
 4. **Combine.** $\frac{3}{\sigma - 1} - \frac{4}{\sigma - \beta} + A\log|t| \ge 0$ for some constant $A$. Take $\sigma = 1 + \frac{a}{\log|t|}$ with $a$ small: this forces $1 - \beta \ge \frac{c}{\log|t|}$.
 
-Step 4 is again "$4 > 3$": the zero, if it were too close to the line, would beat the pole.
+Step 4 is again “$4 > 3$”: the zero, if it were too close to the line, would beat the pole.
 
 ## The error term
 

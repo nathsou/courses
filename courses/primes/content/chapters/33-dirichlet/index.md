@@ -39,7 +39,7 @@ For example, modulo $4$ there are two characters: $\chi_0$, and $\chi_{-4}$ with
 
 The key property is the second orthogonality relation of Appendix C: for $\gcd(a, q) = 1$,
 $$\frac{1}{\varphi(q)}\sum_\chi\overline{\chi(a)}\,\chi(n) = \begin{cases}1 & n \equiv a \pmod q,\\ 0 & \text{otherwise.}\end{cases}$$
-It turns the condition "$n \equiv a$" into a combination of multiplicative functions, and multiplicative functions have Euler products.
+It turns the condition “$n \equiv a$” into a combination of multiplicative functions, and multiplicative functions have Euler products.
 
 ## L-functions
 

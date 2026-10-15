@@ -56,7 +56,7 @@ The owner of the private key knows $p$ and $q$, so decryption can use the Chines
 id: crypto/rsa-crt
 title: RSA decryption with the CRT
 prompt: |
-  Write `decrypt(c, p, q, d)` returning $m = c^d \bmod pq$, but compute it with the Chinese remainder theorem: $m_p = c^{d \bmod (p-1)} \bmod p$, $m_q = c^{d \bmod (q-1)} \bmod q$, then combine with **Garner's formula** $m = m_q + q \cdot \big((m_p - m_q) \cdot q^{-1} \bmod p\big)$. You may use `modPowBig` and `modInverseBig` from `primes`. Make sure intermediate values modulo $p$ are non-negative.
+  Write `decrypt(c, p, q, d)` returning $m = c^d \bmod pq$, but compute it with the Chinese remainder theorem: $m_p = c^{d \bmod (p-1)} \bmod p$, $m_q = c^{d \bmod (q-1)} \bmod q$, then combine with **Garner’s formula** $m = m_q + q \cdot \big((m_p - m_q) \cdot q^{-1} \bmod p\big)$. You may use `modPowBig` and `modInverseBig` from `primes`. Make sure intermediate values modulo $p$ are non-negative.
 starter: |
   import { modPowBig, modInverseBig } from 'primes';
 

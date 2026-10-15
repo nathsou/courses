@@ -86,7 +86,7 @@ $$\sigma(n) \le H_n + e^{H_n}\log H_n,$$
 with equality only for $n = 1$.
 :::
 
-An elementary inequality about divisor sums, checkable by a short program for any given $n$, is equivalent to the hardest problem in mathematics. (There is no contradiction: the difficulty is in "for every $n$".)
+An elementary inequality about divisor sums, checkable by a short program for any given $n$, is equivalent to the hardest problem in mathematics. (There is no contradiction: the difficulty is in “for every $n$”.)
 
 ```code
 id: faces/lagarias

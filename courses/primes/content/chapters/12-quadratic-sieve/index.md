@@ -19,7 +19,7 @@ Let $n$ be odd with at least two distinct prime factors. If $X$ is a random unit
 :::
 
 :::proof
-Write $n = \prod_{i=1}^k p_i^{e_i}$ with $k \ge 2$. Modulo each odd prime power $p_i^{e_i}$, the unit $X^2$ has exactly two square roots, $\pm X$ (the units modulo an odd prime power form a cyclic group, Appendix E). By the Chinese remainder theorem, $X^2$ has $2^k \ge 4$ square roots modulo $n$, one for each choice of signs. They are equally likely to be $X$, given $X^2$, since all of them square to the same value. Only two of them are $\pm X$. So the probability that $Y \equiv \pm X$ is $2/2^k \le \tfrac12$.
+Write $n = \prod_{i=1}^k p_i^{e_i}$ with $k \ge 2$. Modulo each odd prime power $p_i^{e_i}$, the unit $X^2$ has exactly two square roots, $\pm X$: if $Z^2 \equiv X^2$ then $p_i^{e_i} \mid (Z - X)(Z + X)$, and $p_i$ cannot divide both factors (it would divide their difference $2X$), so $p_i^{e_i}$ divides one of them. By the Chinese remainder theorem, $X^2$ has $2^k \ge 4$ square roots modulo $n$, one for each choice of signs. They are equally likely to be $X$, given $X^2$, since all of them square to the same value. Only two of them are $\pm X$. So the probability that $Y \equiv \pm X$ is $2/2^k \le \tfrac12$.
 :::
 
 So the problem becomes: find $X$ and $Y$ with $X^2 \equiv Y^2 \pmod n$ “independently”. Maurice Kraitchik’s idea, from the 1920s, is to find many $x$ for which $x^2 \bmod n$ factors into small primes, and then *multiply some of them together* so that the product is a perfect square.
@@ -33,7 +33,7 @@ Neither $32$ nor $200$ is a square, but their product is: $32 \cdot 200 = 6400 =
 1. **Factor base.** Choose a bound $B$ and keep the primes $p \le B$. Only some of them can ever divide $x^2 - n$: if $p \mid x^2 - n$ then $n \equiv x^2$ is a square modulo $p$. So the **factor base** is $2$ and the odd primes $p \le B$ with $\left(\frac np\right) = 1$, about half of them.
 2. **Relations.** For $x = \lceil \sqrt n\rceil, \lceil \sqrt n \rceil + 1, \ldots$, compute $Q(x) = x^2 - n$, and keep $x$ if $Q(x)$ is **$B$-smooth**. Each kept $x$ gives a **relation** $x^2 \equiv Q(x) = \prod_p p^{e_p} \pmod n$.
 3. **Linear algebra.** Record each relation’s exponent vector $(e_p)$ modulo $2$. A product of relations is a square exactly when the sum of their vectors is zero modulo $2$. So we need a set of vectors summing to zero over the field with two elements, $\mathbb{F}_2$: a linear dependency.
-4. **Square root and gcd.** For a dependency, let $X$ be the product of the $x$'s and $Y$ the product of $p^{(\text{total exponent of } p)/2}$; then $X^2 \equiv Y^2$, and $\gcd(X - Y, n)$ is a proper factor with probability at least $\frac12$. If it fails, use another dependency.
+4. **Square root and gcd.** For a dependency, let $X$ be the product of the $x$’s and $Y$ the product of $p^{(\text{total exponent of } p)/2}$; then $X^2 \equiv Y^2$, and $\gcd(X - Y, n)$ is a proper factor with probability at least $\frac12$. If it fails, use another dependency.
 
 Step through it with several values of $n$ and several bounds $B$:
 
@@ -139,11 +139,11 @@ There is a tension. A larger factor base makes each $Q(x)$ more likely to be smo
 
 Balancing the two costs, using Dickman’s estimate as a heuristic for these particular numbers, gives the optimum $B \approx \exp\left(\tfrac12\sqrt{\log n \log\log n}\right)$ and a total running time of
 $$L_n = \exp\left((1 + o(1))\sqrt{\log n \log\log n}\right).$$
-This function is **subexponential**: it grows more slowly than $n^\varepsilon$ for every $\varepsilon > 0$, and faster than any power of $\log n$. For a 100-digit $n$, $L_n \approx 10^{15}$ rather than trial division’s $10^{50}$. The analysis is heuristic, because the numbers $Q(x)$ are not random; nobody has proved the running time of the quadratic sieve, although John Dixon proved a subexponential bound in 1981 for a variant that chooses the $x$'s at random, and later work made such rigorous bounds sharper.:cite[dixon1981,crandall-pomerance]
+This function is **subexponential**: it grows more slowly than $n^\varepsilon$ for every $\varepsilon > 0$, and faster than any power of $\log n$. For a 100-digit $n$, $L_n \approx 10^{15}$ rather than trial division’s $10^{50}$. The analysis is heuristic, because the numbers $Q(x)$ are not random; nobody has proved the running time of the quadratic sieve, although John Dixon proved a subexponential bound in 1981 for a variant that chooses the $x$’s at random, and later work made such rigorous bounds sharper.:cite[dixon1981,crandall-pomerance]
 
 ## Why it is called a sieve
 
-Trial-dividing every $Q(x)$ by every prime in the factor base would be slow. The quadratic sieve finds the smooth values the way Eratosthenes found primes. For a prime $p$ in the factor base, $p \mid Q(x)$ exactly when $x^2 \equiv n \pmod p$, that is, when $x$ is congruent to one of the two square roots $\pm r_p$ of $n$ modulo $p$ (Chapter 9 shows how to compute them). So the $x$'s for which $p$ divides $Q(x)$ form two arithmetic progressions with difference $p$, and you can visit them by stepping, without testing anything.
+Trial-dividing every $Q(x)$ by every prime in the factor base would be slow. The quadratic sieve finds the smooth values the way Eratosthenes found primes. For a prime $p$ in the factor base, $p \mid Q(x)$ exactly when $x^2 \equiv n \pmod p$, that is, when $x$ is congruent to one of the two square roots $\pm r_p$ of $n$ modulo $p$ (Chapter 9 shows how to compute them). So the $x$’s for which $p$ divides $Q(x)$ form two arithmetic progressions with difference $p$, and you can visit them by stepping, without testing anything.
 
 :::algorithm[The sieving step]
 Store an array $A[x] \approx \log |Q(x)|$ over an interval of $x$. For each prime $p$ of the factor base and each root $r$ of $n$ modulo $p$, subtract $\log p$ from $A[x]$ for every $x \equiv r \pmod p$ in the interval (and handle prime powers similarly). Afterwards, the $x$ with $A[x] \approx 0$ are the candidates for smooth $Q(x)$; only those are factored by trial division.
