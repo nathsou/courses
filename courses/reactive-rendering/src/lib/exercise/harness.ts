@@ -104,6 +104,13 @@ export function deepEqual(a: unknown, b: unknown): boolean {
   return true;
 }
 
+/** True when every property of `expected` is present in `actual` with an equal value (recursively for objects). */
+function isSubset(actual: unknown, expected: unknown): boolean {
+  if (typeof expected !== 'object' || expected === null || Array.isArray(expected)) return deepEqual(actual, expected);
+  if (typeof actual !== 'object' || actual === null) return false;
+  return Object.entries(expected).every(([k, v]) => isSubset((actual as Record<string, unknown>)[k], v));
+}
+
 /** First index where two array-likes differ (for friendlier messages). */
 function firstDiff(a: unknown, b: unknown): string {
   if (!(Array.isArray(a) || ArrayBuffer.isView(a)) || !(Array.isArray(b) || ArrayBuffer.isView(b))) return '';
@@ -119,6 +126,7 @@ export interface Matchers {
   not: Matchers;
   toBe(expected: unknown): void;
   toEqual(expected: unknown): void;
+  toMatchObject(expected: Record<string, unknown>): void;
   toStrictEqual(expected: unknown): void;
   toBeCloseTo(expected: number, digits?: number): void;
   toBeGreaterThan(n: number): void;
@@ -144,6 +152,7 @@ function makeMatchers(actual: unknown, negate: boolean): Matchers {
   const m: Omit<Matchers, 'not'> = {
     toBe: (e) => check(Object.is(actual, e), () => `expected ${show(e)}, received ${show(actual)}`),
     toEqual: (e) => check(deepEqual(actual, e), () => `expected ${show(e)}, received ${show(actual)}${firstDiff(actual, e)}`),
+    toMatchObject: (e) => check(isSubset(actual, e), () => `expected ${show(actual)} to match ${show(e)}`),
     toStrictEqual: (e) => check(deepEqual(actual, e), () => `expected ${show(e)}, received ${show(actual)}${firstDiff(actual, e)}`),
     toBeCloseTo: (e, digits = 2) =>
       check(typeof actual === 'number' && Math.abs(actual - e) < 10 ** -digits / 2, () => `expected ≈ ${e} (±${10 ** -digits / 2}), received ${show(actual)}`),

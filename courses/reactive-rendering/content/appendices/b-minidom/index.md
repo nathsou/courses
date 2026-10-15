@@ -67,7 +67,7 @@ An event handler receives an `MEvent` with `type`, `target`, `currentTarget`, `d
 
 ## Querying and parsing
 
-`querySelector` and `querySelectorAll` support a tag, `.class`, `#id` and `[attribute]` or `[attribute=value]`, and compounds of them, with no combinators (`ul li` is rejected, loudly). `parseHTML(doc, html)` handles nested elements, quoted and unquoted attributes, void tags, comments and the entities `&lt; &gt; &amp; &quot; &#39; &nbsp;`; `toHTML(node)` serialises. `outline(node)` prints an indented tree, for tests.
+`querySelector` and `querySelectorAll` support `*`, a tag, `.class`, `#id` and `[attribute]` or `[attribute=value]`, and compounds of them, with no combinators (`ul li` is rejected, loudly). `parseHTML(doc, html)` handles nested elements, quoted and unquoted attributes, void tags, comments and the entities `&lt; &gt; &amp; &quot; &#39; &nbsp;`; `toHTML(node)` serialises. `outline(node)` prints an indented tree, for tests.
 
 ## The operation log
 

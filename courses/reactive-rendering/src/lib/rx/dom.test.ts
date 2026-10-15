@@ -97,6 +97,7 @@ describe('MiniDom tree operations', () => {
     expect(doc.body.querySelector('#a')).not.toBeNull();
     expect(doc.body.querySelectorAll('span.y').map((e) => e.textContent)).toEqual(['two']);
     expect(doc.body.querySelector('[data-k=2]')?.textContent).toBe('two');
+    expect(doc.body.querySelectorAll('*')).toHaveLength(3);
     expect(() => doc.body.querySelector('div span')).toThrow();
   });
 

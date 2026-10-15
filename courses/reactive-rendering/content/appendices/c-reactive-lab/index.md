@@ -12,7 +12,7 @@ import { test, expect } from '@rx/test';
 import { createEngine } from '@rx/signals';
 ```
 
-`@rx/test` is a small subset of Vitest (`test`, `describe`, `expect` with `toBe`, `toEqual`, `toBeCloseTo`, comparisons, `toContain`, `toHaveLength`, `toThrow` and `.not`), so that exercise tests run both in the browser sandbox and in the course’s own test suite.
+`@rx/test` is a small subset of Vitest (`test`, `describe`, `expect` with `toBe`, `toEqual`, `toMatchObject`, `toBeCloseTo`, comparisons, `toContain`, `toHaveLength`, `toThrow` and `.not`), so that exercise tests run both in the browser sandbox and in the course’s own test suite.
 
 | Module | Chapter | What it provides |
 |---|---|---|
