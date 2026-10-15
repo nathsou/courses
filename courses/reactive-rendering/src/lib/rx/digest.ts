@@ -9,6 +9,9 @@
  * This is *dirty checking*: cost per event = (number of watchers) × (number of passes), whatever actually changed.
  */
 
+/** What a digest did, for figures: one `watch` per watcher call, one `pass` at the end of each pass. */
+export type DigestEvent = { type: 'watch'; pass: number; label: string; value: unknown; changed: boolean } | { type: 'pass'; pass: number; dirty: boolean };
+
 export interface Watcher {
   watchFn: (scope: Scope) => unknown;
   listenerFn: (newValue: any, oldValue: any, scope: Scope) => void;
@@ -28,6 +31,9 @@ export class Scope {
   $$asyncQueue: (() => void)[] = [];
   /** Instrumentation, shared by the whole scope tree. */
   $$stats: { watchCalls: number; passes: number; digests: number; listenerCalls: number };
+  /** Set on the root to observe digests. */
+  $$trace: ((e: DigestEvent) => void) | null = null;
+  private $$pass = 0;
 
   constructor(parent?: Scope) {
     if (parent) {
@@ -76,7 +82,9 @@ export class Scope {
         this.$$stats.watchCalls++;
         const newValue = w.watchFn(scope);
         const oldValue = w.last;
-        if (!Scope.same(newValue, oldValue, w.valueEq)) {
+        const changed = !Scope.same(newValue, oldValue, w.valueEq);
+        this.$$root.$$trace?.({ type: 'watch', pass: this.$$root.$$pass, label: w.label ?? '', value: newValue, changed });
+        if (changed) {
           w.last = w.valueEq ? JSON.parse(JSON.stringify(newValue ?? null)) : newValue;
           this.$$stats.listenerCalls++;
           w.listenerFn(newValue, oldValue === INIT ? newValue : oldValue, scope);
@@ -95,9 +103,12 @@ export class Scope {
     let passes = 0;
     root.$$stats.digests++;
     let dirty: boolean;
+    root.$$pass = 0;
     do {
       while (root.$$asyncQueue.length) root.$$asyncQueue.shift()!();
       dirty = root.$$digestOnce();
+      root.$$trace?.({ type: 'pass', pass: root.$$pass, dirty });
+      root.$$pass++;
       passes++;
       root.$$stats.passes++;
       if ((dirty || root.$$asyncQueue.length) && !ttl--) throw new Error('10 $digest() iterations reached. Aborting!');
