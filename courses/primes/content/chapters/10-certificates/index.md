@@ -8,11 +8,11 @@ theorems: [Lucas’s theorem, Pratt certificates have polynomial size, Pocklingt
 techniques: ["orders of elements", "recursion", "arithmetic in ℤ[√3]"]
 ---
 
-A Miller–Rabin test that passes twenty rounds leaves a chance of error smaller than one in a trillion. For most purposes that is certainty. But it is not a *proof*, and sometimes a proof is what you want: for a record, for a published table, or because a probabilistic argument is not acceptable in your setting. This chapter is about **certificates**: short pieces of evidence that make a number's primality quick to *check*, even if finding the evidence was hard.
+A Miller–Rabin test that passes twenty rounds leaves a chance of error smaller than one in a trillion. For most purposes that is certainty. But it is not a *proof*, and sometimes a proof is what you want: for a record, for a published table, or because a probabilistic argument is not acceptable in your setting. This chapter is about **certificates**: short pieces of evidence that make a number’s primality quick to *check*, even if finding the evidence was hard.
 
 ## Lucas’s theorem: a converse to Fermat
 
-Fermat's little theorem cannot be reversed as it stands (Carmichael numbers). But it can be reversed if we ask for more than $a^{n-1} \equiv 1$: we ask that the order of $a$ be exactly $n - 1$.
+Fermat’s little theorem cannot be reversed as it stands (Carmichael numbers). But it can be reversed if we ask for more than $a^{n-1} \equiv 1$: we ask that the order of $a$ be exactly $n - 1$.
 
 :::theorem{name="Lucas’s theorem" who="Édouard Lucas; in this form, D. H. Lehmer" year=1876 status=proved}
 Let $n > 2$. If there is an integer $a$ such that $a^{n-1} \equiv 1 \pmod n$ and $a^{(n-1)/q} \not\equiv 1 \pmod n$ for every prime $q$ dividing $n - 1$, then $n$ is prime.
@@ -74,7 +74,7 @@ Let $N = k \cdot 2^m + 1$ with $k$ odd and $k < 2^m$. If $a^{(N-1)/2} \equiv -1 
 Apply Pocklington with $F = 2^m > \sqrt N$ (since $k < 2^m$, $N < 2^{2m}$) and $q = 2$. From $a^{(N-1)/2} \equiv -1$ we get $a^{N-1} \equiv 1$, and $\gcd(a^{(N-1)/2} - 1, N) = \gcd(-2, N) = 1$ since $N$ is odd.
 :::
 
-Conversely, if $N$ is prime, any quadratic non-residue $a$ works, by Euler's criterion; a few random tries find one. Large primes found by distributed projects such as PrimeGrid are often Proth primes for this reason.
+Conversely, if $N$ is prime, any quadratic non-residue $a$ works, by Euler’s criterion; a few random tries find one. Large primes found by distributed projects such as PrimeGrid are often Proth primes for this reason.
 
 ## Mersenne primes and the Lucas–Lehmer test
 
@@ -90,7 +90,7 @@ The largest known primes have, for decades, almost all been **Mersenne primes** 
 2. $2^p \equiv 1 \pmod q$, so the order of $2$ modulo $q$ divides $p$; it is not $1$, so it is $p$. The order divides $q - 1$, so $p \mid q - 1$; and $q - 1$ is even, so $2p \mid q - 1$.
 :::
 
-Part 2 makes trial division of Mersenne numbers efficient, since only $q = 2kp + 1$ need be tried. Euler used it in 1772 to prove $M_{31}$ prime by hand. It also lies behind a famous lecture. In October 1903, at a meeting of the American Mathematical Society, Frank Nelson Cole walked to the blackboard without a word, computed $2^{67} - 1$, then multiplied out $193{,}707{,}721 \times 761{,}838{,}257{,}287$, got the same number, and sat down to applause. Lucas had shown in 1876 that $M_{67}$ is composite without finding a factor; Cole later said the factors had taken him "three years of Sundays".:cite[cole1903]
+Part 2 makes trial division of Mersenne numbers efficient, since only $q = 2kp + 1$ need be tried. Euler used it in 1772 to prove $M_{31}$ prime by hand. It also lies behind a famous lecture. In October 1903, at a meeting of the American Mathematical Society, Frank Nelson Cole walked to the blackboard without a word, computed $2^{67} - 1$, then multiplied out $193{,}707{,}721 \times 761{,}838{,}257{,}287$, got the same number, and sat down to applause. Lucas had shown in 1876 that $M_{67}$ is composite without finding a factor; Cole later said the factors had taken him “three years of Sundays”.:cite[cole1903]
 
 For proving $M_p$ prime there is a test of astonishing simplicity.
 
@@ -104,7 +104,7 @@ Lucas found the test in the 1870s and used a version of it in 1876 to prove $M_{
 
 Each step is one squaring of a $p$-bit number, and reducing modulo $2^p - 1$ needs no division: $x \bmod (2^p - 1) = (x \bmod 2^p) + \lfloor x / 2^p \rfloor$, a shift and an addition (then one subtraction if needed). So the test costs $p - 2$ squarings: about $p^2 \log p$ bit operations with fast multiplication.
 
-Here is a proof of the direction that matters for records (if $M_p$ divides $s_{p-2}$, it is prime). It works in a number system like the ones in Chapter 3: numbers $a + b\sqrt 3$, with $a, b$ taken modulo a prime $q$. The idea is the same as in Lucas's theorem: find an element whose order is too large to fit in a small group.
+Here is a proof of the direction that matters for records (if $M_p$ divides $s_{p-2}$, it is prime). It works in a number system like the ones in Chapter 3: numbers $a + b\sqrt 3$, with $a, b$ taken modulo a prime $q$. The idea is the same as in Lucas’s theorem: find an element whose order is too large to fit in a small group.
 
 ::::zoom{levels="Idea, Sketch, Proof"}
 :::level[Idea]
@@ -187,9 +187,9 @@ hints:
 
 ## AKS: primality in polynomial time
 
-For general numbers, certificates need factorisations (Pratt, Pocklington) or heavy machinery: the elliptic curve primality proving method (ECPP) of Atkin and Morain, which replaces the group of units by the points on an elliptic curve, has proved primes with tens of thousands of digits, but its running time is only heuristically polynomial. Whether there is an algorithm that decides primality in time polynomial in the number of digits, with no unproved hypothesis and no randomness, was open until August 2002, when Manindra Agrawal and his students Neeraj Kayal and Nitin Saxena at IIT Kanpur posted a paper titled "PRIMES is in P".:cite[aks2004]
+For general numbers, certificates need factorisations (Pratt, Pocklington) or heavy machinery: the elliptic curve primality proving method (ECPP) of Atkin and Morain, which replaces the group of units by the points on an elliptic curve, has proved primes with tens of thousands of digits, but its running time is only heuristically polynomial. Whether there is an algorithm that decides primality in time polynomial in the number of digits, with no unproved hypothesis and no randomness, was open until August 2002, when Manindra Agrawal and his students Neeraj Kayal and Nitin Saxena at IIT Kanpur posted a paper titled “PRIMES is in P”.:cite[aks2004]
 
-The starting point is a polynomial version of Fermat's little theorem.
+The starting point is a polynomial version of Fermat’s little theorem.
 
 :::lemma{status=proved}
 Let $n \ge 2$ and $\gcd(a, n) = 1$. Then $n$ is prime if and only if $(X + a)^n \equiv X^n + a \pmod n$ as polynomials (that is, coefficient by coefficient).
@@ -216,7 +216,7 @@ The paper won the Gödel Prize in 2006. In practice AKS is far slower than ECPP,
 
 :::exercises
 1. Write down a Pratt certificate for $p = 97$ by hand.
-2. Use Proth's theorem to prove that $97 = 3 \cdot 2^5 + 1$ is prime: show that $5^{48} \equiv -1 \pmod{97}$. Why was $a = 5$ a good choice? (Use quadratic reciprocity.)
+2. Use Proth’s theorem to prove that $97 = 3 \cdot 2^5 + 1$ is prime: show that $5^{48} \equiv -1 \pmod{97}$. Why was $a = 5$ a good choice? (Use quadratic reciprocity.)
 3. Show that if $q$ is a prime factor of $M_p$ with $p$ odd, then $q \equiv \pm 1 \pmod 8$. (Since $2^{p+1} \equiv 2 \pmod q$ and $p + 1$ is even, $2$ is a square modulo $q$.)
 4. Let $q$ be prime and $q^e \parallel n$ (the exact power). Show that $q^e \nmid \binom nq$.
 :::

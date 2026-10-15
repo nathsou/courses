@@ -22,9 +22,9 @@ Let $n$ be odd with at least two distinct prime factors. If $X$ is a random unit
 Write $n = \prod_{i=1}^k p_i^{e_i}$ with $k \ge 2$. Modulo each odd prime power $p_i^{e_i}$, the unit $X^2$ has exactly two square roots, $\pm X$ (the units modulo an odd prime power form a cyclic group, Appendix E). By the Chinese remainder theorem, $X^2$ has $2^k \ge 4$ square roots modulo $n$, one for each choice of signs. They are equally likely to be $X$, given $X^2$, since all of them square to the same value. Only two of them are $\pm X$. So the probability that $Y \equiv \pm X$ is $2/2^k \le \tfrac12$.
 :::
 
-So the problem becomes: find $X$ and $Y$ with $X^2 \equiv Y^2 \pmod n$ "independently". Maurice Kraitchik's idea, from the 1920s, is to find many $x$ for which $x^2 \bmod n$ factors into small primes, and then *multiply some of them together* so that the product is a perfect square.
+So the problem becomes: find $X$ and $Y$ with $X^2 \equiv Y^2 \pmod n$ “independently”. Maurice Kraitchik’s idea, from the 1920s, is to find many $x$ for which $x^2 \bmod n$ factors into small primes, and then *multiply some of them together* so that the product is a perfect square.
 
-Here is the smallest example worth doing, from Pomerance's account of the method.:cite[pomerance-two-sieves] Let $n = 1649$. Near $\sqrt{1649} \approx 40.6$:
+Here is the smallest example worth doing, from Pomerance’s account of the method.:cite[pomerance-two-sieves] Let $n = 1649$. Near $\sqrt{1649} \approx 40.6$:
 $$41^2 \equiv 32 = 2^5, \qquad 42^2 \equiv 115 = 5 \cdot 23, \qquad 43^2 \equiv 200 = 2^3 \cdot 5^2.$$
 Neither $32$ nor $200$ is a square, but their product is: $32 \cdot 200 = 6400 = 80^2$. So $(41 \cdot 43)^2 \equiv 80^2 \pmod{1649}$. Since $41 \cdot 43 = 1763 \equiv 114$, we get $114^2 \equiv 80^2$, and $\gcd(114 - 80, 1649) = \gcd(34, 1649) = 17$. Indeed $1649 = 17 \cdot 97$.
 
@@ -32,7 +32,7 @@ Neither $32$ nor $200$ is a square, but their product is: $32 \cdot 200 = 6400 =
 
 1. **Factor base.** Choose a bound $B$ and keep the primes $p \le B$. Only some of them can ever divide $x^2 - n$: if $p \mid x^2 - n$ then $n \equiv x^2$ is a square modulo $p$. So the **factor base** is $2$ and the odd primes $p \le B$ with $\left(\frac np\right) = 1$, about half of them.
 2. **Relations.** For $x = \lceil \sqrt n\rceil, \lceil \sqrt n \rceil + 1, \ldots$, compute $Q(x) = x^2 - n$, and keep $x$ if $Q(x)$ is **$B$-smooth**. Each kept $x$ gives a **relation** $x^2 \equiv Q(x) = \prod_p p^{e_p} \pmod n$.
-3. **Linear algebra.** Record each relation's exponent vector $(e_p)$ modulo $2$. A product of relations is a square exactly when the sum of their vectors is zero modulo $2$. So we need a set of vectors summing to zero over the field with two elements, $\mathbb{F}_2$: a linear dependency.
+3. **Linear algebra.** Record each relation’s exponent vector $(e_p)$ modulo $2$. A product of relations is a square exactly when the sum of their vectors is zero modulo $2$. So we need a set of vectors summing to zero over the field with two elements, $\mathbb{F}_2$: a linear dependency.
 4. **Square root and gcd.** For a dependency, let $X$ be the product of the $x$'s and $Y$ the product of $p^{(\text{total exponent of } p)/2}$; then $X^2 \equiv Y^2$, and $\gcd(X - Y, n)$ is a proper factor with probability at least $\frac12$. If it fails, use another dependency.
 
 Step through it with several values of $n$ and several bounds $B$:
@@ -129,7 +129,7 @@ Everything hinges on step 2: how often is a number smooth? Let $\Psi(x, y)$ be t
 For each fixed $u \ge 1$, $\Psi(x, x^{1/u}) \sim \rho(u)\, x$ as $x \to \infty$, where $\rho$ is the continuous function with $\rho(u) = 1$ for $0 \le u \le 1$ and $u \rho'(u) = -\rho(u - 1)$ for $u > 1$.
 :::
 
-The function falls off very fast: $\rho(2) = 1 - \log 2 \approx 0.307$, $\rho(3) \approx 0.049$, $\rho(4) \approx 0.0049$, and roughly $\rho(u) \approx u^{-u}$. (For $1 \le u \le 2$ the statement is easy: a number up to $x$ fails to be $\sqrt[u]{x}$-smooth exactly when it has a prime factor $p > x^{1/u}$, and there is at most one, so the proportion that fails is $\sum_{x^{1/u} < p \le x} \frac 1p \approx \log u$ by Mertens' theorem of Chapter 17, which gives $\rho(u) = 1 - \log u$ on that range.)
+The function falls off very fast: $\rho(2) = 1 - \log 2 \approx 0.307$, $\rho(3) \approx 0.049$, $\rho(4) \approx 0.0049$, and roughly $\rho(u) \approx u^{-u}$. (For $1 \le u \le 2$ the statement is easy: a number up to $x$ fails to be $\sqrt[u]{x}$-smooth exactly when it has a prime factor $p > x^{1/u}$, and there is at most one, so the proportion that fails is $\sum_{x^{1/u} < p \le x} \frac 1p \approx \log u$ by Mertens’ theorem of Chapter 17, which gives $\rho(u) = 1 - \log u$ on that range.)
 
 ::smooth-density
 
@@ -137,9 +137,9 @@ The function falls off very fast: $\rho(2) = 1 - \log 2 \approx 0.307$, $\rho(3)
 
 There is a tension. A larger factor base makes each $Q(x)$ more likely to be smooth, but then you need more relations (one per prime) and more linear algebra. The values $Q(x) = x^2 - n$ for $x$ near $\sqrt n$ are about $2\sqrt{n}\,(x - \sqrt n)$, so roughly $n^{1/2}$ in size, which is the whole point of the method: they are much smaller than random residues modulo $n$, and so much more likely to be smooth.
 
-Balancing the two costs, using Dickman's estimate as a heuristic for these particular numbers, gives the optimum $B \approx \exp\left(\tfrac12\sqrt{\log n \log\log n}\right)$ and a total running time of
+Balancing the two costs, using Dickman’s estimate as a heuristic for these particular numbers, gives the optimum $B \approx \exp\left(\tfrac12\sqrt{\log n \log\log n}\right)$ and a total running time of
 $$L_n = \exp\left((1 + o(1))\sqrt{\log n \log\log n}\right).$$
-This function is **subexponential**: it grows more slowly than $n^\varepsilon$ for every $\varepsilon > 0$, and faster than any power of $\log n$. For a 100-digit $n$, $L_n \approx 10^{15}$ rather than trial division's $10^{50}$. The analysis is heuristic, because the numbers $Q(x)$ are not random; nobody has proved the running time of the quadratic sieve, although John Dixon proved a subexponential bound in 1981 for a variant that chooses the $x$'s at random, and later work made such rigorous bounds sharper.:cite[dixon1981,crandall-pomerance]
+This function is **subexponential**: it grows more slowly than $n^\varepsilon$ for every $\varepsilon > 0$, and faster than any power of $\log n$. For a 100-digit $n$, $L_n \approx 10^{15}$ rather than trial division’s $10^{50}$. The analysis is heuristic, because the numbers $Q(x)$ are not random; nobody has proved the running time of the quadratic sieve, although John Dixon proved a subexponential bound in 1981 for a variant that chooses the $x$'s at random, and later work made such rigorous bounds sharper.:cite[dixon1981,crandall-pomerance]
 
 ## Why it is called a sieve
 
@@ -151,7 +151,7 @@ Store an array $A[x] \approx \log |Q(x)|$ over an interval of $x$. For each prim
 
 The sieving costs about $\sum_{p \le B} \frac{2 \cdot (\text{interval length})}{p}$ subtractions, which is $\log\log B$ per position, as in Chapter 7. Practical versions add many refinements: several polynomials instead of one (the **multiple polynomial** quadratic sieve), relations with one or two large primes outside the factor base that are later matched up, and sparse linear algebra (block Lanczos or Wiedemann) instead of Gaussian elimination for matrices with millions of rows.
 
-In 1994, RSA-129, a 129-digit number published in 1977 by Rivest, Shamir and Adleman with the challenge to decrypt a message, was factored by the multiple polynomial quadratic sieve, using about 1600 computers coordinated by email over eight months. The secret message was "The Magic Words are Squeamish Ossifrage".:cite[rsa129]
+In 1994, RSA-129, a 129-digit number published in 1977 by Rivest, Shamir and Adleman with the challenge to decrypt a message, was factored by the multiple polynomial quadratic sieve, using about 1600 computers coordinated by email over eight months. The secret message was “The Magic Words are Squeamish Ossifrage”.:cite[rsa129]
 
 :::note
 **A stopping point.** The last section describes the number field sieve without proofs.
@@ -159,7 +159,7 @@ In 1994, RSA-129, a 129-digit number published in 1977 by Rivest, Shamir and Adl
 
 ## The number field sieve
 
-The quadratic sieve's weakness is that $Q(x)$ is about $\sqrt n$ in size. The **number field sieve**, proposed by Pollard in 1988 and developed by Lenstra, Lenstra, Manasse and Pollard, works with two polynomials sharing a root modulo $n$ and with smaller values, at the price of doing the "square" step in a ring of algebraic integers like the ones in Chapter 3.:cite[lenstra-nfs] Its heuristic running time is
+The quadratic sieve’s weakness is that $Q(x)$ is about $\sqrt n$ in size. The **number field sieve**, proposed by Pollard in 1988 and developed by Lenstra, Lenstra, Manasse and Pollard, works with two polynomials sharing a root modulo $n$ and with smaller values, at the price of doing the “square” step in a ring of algebraic integers like the ones in Chapter 3.:cite[lenstra-nfs] Its heuristic running time is
 $$\exp\left(\left(\left(\tfrac{64}{9}\right)^{1/3} + o(1)\right)(\log n)^{1/3} (\log\log n)^{2/3}\right),$$
 with the exponent of $\log n$ down from $\tfrac12$ to $\tfrac13$. Above about 100 digits it beats the quadratic sieve. In February 2020 a team led by Fabrice Boudot, Pierrick Gaudry, Aurore Guillevic, Nadia Heninger, Emmanuel Thomé and Paul Zimmermann factored RSA-250, a 250-digit (829-bit) number, using about 2700 core-years of computing; it is the largest RSA challenge number factored to date.:cite[rsa250] Typical RSA keys today have 2048 bits (617 digits), out of reach by an enormous margin.
 

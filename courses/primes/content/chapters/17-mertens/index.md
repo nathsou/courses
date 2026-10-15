@@ -8,7 +8,7 @@ theorems: [Mertens’ first theorem, Mertens’ second theorem, Mertens’ third
 techniques: [Abel (partial) summation, comparison with integrals, log n!]
 ---
 
-Chebyshev's bounds pin $\pi(x)$ down to within a constant factor. Franz Mertens showed in 1874 that some *weighted* sums over primes can be computed far more precisely, with bounded or even vanishing errors.:cite[mertens1874] His three theorems are the workhorses of elementary prime number theory: Chapter 7 used the second to analyse the sieve, Chapter 12 used it for smooth numbers, and here they will tell us how many prime factors a typical number has.
+Chebyshev’s bounds pin $\pi(x)$ down to within a constant factor. Franz Mertens showed in 1874 that some *weighted* sums over primes can be computed far more precisely, with bounded or even vanishing errors.:cite[mertens1874] His three theorems are the workhorses of elementary prime number theory: Chapter 7 used the second to analyse the sieve, Chapter 12 used it for smooth numbers, and here they will tell us how many prime factors a typical number has.
 
 The main tool is **Abel summation** (also called partial summation), the discrete version of integration by parts. Appendix B states and proves it; here is the version we use.
 
@@ -63,7 +63,7 @@ $$\sum_{p\le x}\frac1p = \log\log x + \underbrace{1 - \log\log 2 + \int_2^\infty
 :::
 ::::
 
-Compare Chapter 4, which showed $\sum_{p \le x} 1/p > \log\log x - 1$ with Euler's product: now we know the sum to within $O(1/\log x)$.
+Compare Chapter 4, which showed $\sum_{p \le x} 1/p > \log\log x - 1$ with Euler’s product: now we know the sum to within $O(1/\log x)$.
 
 ## Mertens’ third theorem
 
@@ -80,13 +80,13 @@ $$\log\prod_{p \le x}\left(1 - \frac1p\right) = -\sum_{p \le x}\frac1p - C + O\!
 Exponentiating, using $e^{O(\varepsilon)} = 1 + O(\varepsilon)$, the product is $\frac{e^{-(M + C)}}{\log x}\left(1 + O\left(\frac{1}{\log x}\right)\right)$. What remains is to show that $M + C = \gamma$. That identity has nothing to do with primes being rare or common; it comes from the behaviour of the zeta function near $s = 1$, and Chapter 19 proves it once $\zeta$ is available.
 :::
 
-There is something strange about $e^{-\gamma}$. A naive probabilistic argument says that a number is prime when it avoids all the primes $p \le \sqrt x$, each with probability $1 - 1/p$, independently; that would give a prime density of $\prod_{p \le \sqrt x}(1 - 1/p) \approx \frac{2e^{-\gamma}}{\log x} \approx \frac{1.123}{\log x}$, contradicting the true density $\frac{1}{\log x}$ by a factor of $2e^{-\gamma}$. The divisibility events for large primes are not independent, and the "probability" that a number is prime cannot be computed this way. This mismatch is a recurring warning in sieve theory; Chapter 36 returns to it.
+There is something strange about $e^{-\gamma}$. A naive probabilistic argument says that a number is prime when it avoids all the primes $p \le \sqrt x$, each with probability $1 - 1/p$, independently; that would give a prime density of $\prod_{p \le \sqrt x}(1 - 1/p) \approx \frac{2e^{-\gamma}}{\log x} \approx \frac{1.123}{\log x}$, contradicting the true density $\frac{1}{\log x}$ by a factor of $2e^{-\gamma}$. The divisibility events for large primes are not independent, and the “probability” that a number is prime cannot be computed this way. This mismatch is a recurring warning in sieve theory; Chapter 36 returns to it.
 
 ::mertens-plot
 
 ## Chebyshev’s observation
 
-Chebyshev could not prove that $\pi(x)/(x/\log x)$ has a limit, but he proved that if it does, the limit must be $1$. With Mertens' second theorem this takes a few lines.
+Chebyshev could not prove that $\pi(x)/(x/\log x)$ has a limit, but he proved that if it does, the limit must be $1$. With Mertens’ second theorem this takes a few lines.
 
 :::theorem{name="Chebyshev" year=1848 status=proved}
 If $\pi(x) \sim c\,x/\log x$ for some constant $c$, then $c = 1$.
@@ -95,13 +95,13 @@ If $\pi(x) \sim c\,x/\log x$ for some constant $c$, then $c = 1$.
 :::proof
 Abel summation with $a_n = 1$ on primes and $f(t) = 1/t$:
 $$\sum_{p \le x}\frac1p = \frac{\pi(x)}{x} + \int_2^x\frac{\pi(t)}{t^2}\,dt.$$
-If $\pi(t) = (c + o(1))\,t/\log t$, the first term tends to $0$ and the integral is $(c + o(1))\int_2^x \frac{dt}{t\log t} = (c + o(1))\log\log x$ (the $o(1)$ can be pulled out because the integral diverges). By Mertens' second theorem the left side is $(1 + o(1))\log\log x$. So $c = 1$.
+If $\pi(t) = (c + o(1))\,t/\log t$, the first term tends to $0$ and the integral is $(c + o(1))\int_2^x \frac{dt}{t\log t} = (c + o(1))\log\log x$ (the $o(1)$ can be pulled out because the integral diverges). By Mertens’ second theorem the left side is $(1 + o(1))\log\log x$. So $c = 1$.
 :::
 
 The difficulty, which took another fifty years, is to show that the limit *exists*.
 
 :::note
-**A stopping point.** The last section applies Mertens' theorems to the number of prime factors of a typical integer.
+**A stopping point.** The last section applies Mertens’ theorems to the number of prime factors of a typical integer.
 :::
 
 ## How many prime factors does a number have?
@@ -113,7 +113,7 @@ $$\frac1x\sum_{n \le x}\omega(n) = \log\log x + M + O\!\left(\frac{1}{\log x}\ri
 :::
 
 :::proof
-Swap the order of summation: $\sum_{n \le x}\omega(n) = \sum_{n \le x}\sum_{p \mid n} 1 = \sum_{p \le x}\left\lfloor \frac xp \right\rfloor = x\sum_{p \le x}\frac1p + O(\pi(x))$. Divide by $x$ and use Mertens' second theorem and $\pi(x) = O(x/\log x)$.
+Swap the order of summation: $\sum_{n \le x}\omega(n) = \sum_{n \le x}\sum_{p \mid n} 1 = \sum_{p \le x}\left\lfloor \frac xp \right\rfloor = x\sum_{p \le x}\frac1p + O(\pi(x))$. Divide by $x$ and use Mertens’ second theorem and $\pi(x) = O(x/\log x)$.
 :::
 
 A number around $10^{100}$ has, on average, only about $\log\log 10^{100} + 0.26 \approx 5.7$ distinct prime factors. Hardy and Ramanujan showed more: almost all $n$ have $\omega(n)$ close to $\log\log n$.:cite[hardy-ramanujan1917] In 1940 Paul Erdős and Mark Kac proved that $\omega(n)$ is distributed like a normal (Gaussian) random variable with mean and variance $\log\log n$, a central limit theorem for prime factors.:cite[erdos-kac1940] Because $\log\log n$ grows so slowly, the convergence is hard to see in any range a computer can reach:
@@ -131,6 +131,6 @@ A number around $10^{100}$ has, on average, only about $\log\log 10^{100} + 0.26
 :::exercises
 1. Use Abel summation to show that $\sum_{n \le x} \frac1n = \log x + \gamma + O(1/x)$, where $\gamma = 1 - \int_1^\infty \frac{t - \lfloor t\rfloor}{t^2}dt$. (Appendix B does this in detail.)
 2. Show that $\sum_{n \le x}\Omega(n) = x\log\log x + O(x)$ as well, where $\Omega(n)$ counts prime factors with multiplicity.
-3. Show that the average of $\omega(n)$ over $n \le x$ minus $\log\log x$ tends to $M$, and explain why the widget's window average behaves the same way.
+3. Show that the average of $\omega(n)$ over $n \le x$ minus $\log\log x$ tends to $M$, and explain why the widget’s window average behaves the same way.
 4. Show that the variance $\frac1x\sum_{n \le x}(\omega(n) - \log\log x)^2$ is $O(\log\log x)$ (Turán, 1934). Deduce that for every $\varepsilon > 0$, the proportion of $n \le x$ with $|\omega(n) - \log\log n| > (\log\log n)^{1/2 + \varepsilon}$ tends to $0$.
 :::

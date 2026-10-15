@@ -8,7 +8,7 @@ theorems: [The product of the primes up to x is less than 4^x, (log 2 − ε) x/
 techniques: [central binomial coefficients, Legendre’s formula for factorials, weighted counting]
 ---
 
-Gauss's guess was a guess. The first person to prove anything close to it was Pafnuty Chebyshev, in two papers around 1850.:cite[chebyshev1852] He showed that $\pi(x)$ is within about $10\%$ of $x/\log x$ for all large $x$, and that if $\pi(x)/(x/\log x)$ has a limit, the limit must be $1$. His tools were elementary: factorials and binomial coefficients. This chapter proves a slightly weaker version of his bounds by a neater route found by Paul Erdős, and then Erdős's famous proof that there is always a prime between $n$ and $2n$.
+Gauss’s guess was a guess. The first person to prove anything close to it was Pafnuty Chebyshev, in two papers around 1850.:cite[chebyshev1852] He showed that $\pi(x)$ is within about $10\%$ of $x/\log x$ for all large $x$, and that if $\pi(x)/(x/\log x)$ has a limit, the limit must be $1$. His tools were elementary: factorials and binomial coefficients. This chapter proves a slightly weaker version of his bounds by a neater route found by Paul Erdős, and then Erdős’s famous proof that there is always a prime between $n$ and $2n$.
 
 ## Weighting the primes
 
@@ -46,7 +46,7 @@ Everything in this chapter comes from one number: $\binom{2n}{n} = \frac{(2n)!}{
 **Its size.** $\binom{2n}{n}$ is the largest of the $2n + 1$ binomial coefficients $\binom{2n}{k}$, which sum to $2^{2n} = 4^n$. So
 $$\frac{4^n}{2n + 1} \le \binom{2n}{n} \le 4^n.$$
 
-**Its prime factorisation.** The exponent of a prime $p$ in $m!$ is given by **Legendre's formula**,
+**Its prime factorisation.** The exponent of a prime $p$ in $m!$ is given by **Legendre’s formula**,
 $$v_p(m!) = \left\lfloor \frac mp \right\rfloor + \left\lfloor \frac m{p^2} \right\rfloor + \left\lfloor \frac m{p^3} \right\rfloor + \cdots,$$
 because $\lfloor m/p^k \rfloor$ counts the multiples of $p^k$ up to $m$, and each multiple of $p^j$ but not $p^{j+1}$ is counted exactly $j$ times. Therefore
 $$v_p\binom{2n}{n} = \sum_{k \ge 1} \left( \left\lfloor \frac{2n}{p^k} \right\rfloor - 2\left\lfloor \frac{n}{p^k} \right\rfloor \right).$$
@@ -133,13 +133,13 @@ Taking logarithms, $\frac{n}{3}\log 4 < (\sqrt{2n} + 2)\log(2n)$. The left side 
 :::
 ::::
 
-Bertrand's postulate is a statement about gaps: $p_{k+1} < 2p_k$. The prime number theorem gives much more ($p_{k+1}/p_k \to 1$). How short an interval $(x, x + h]$ is guaranteed to contain a prime is a hard question. The best unconditional result is that $h = x^{0.525}$ works for large $x$ (Baker, Harman and Pintz, 2001); the Riemann Hypothesis would give about $\sqrt{x}\log x$; and **Legendre's conjecture**, that there is always a prime between $n^2$ and $(n + 1)^2$, is still open.:cite[bhp2001]
+Bertrand’s postulate is a statement about gaps: $p_{k+1} < 2p_k$. The prime number theorem gives much more ($p_{k+1}/p_k \to 1$). How short an interval $(x, x + h]$ is guaranteed to contain a prime is a hard question. The best unconditional result is that $h = x^{0.525}$ works for large $x$ (Baker, Harman and Pintz, 2001); the Riemann Hypothesis would give about $\sqrt{x}\log x$; and **Legendre’s conjecture**, that there is always a prime between $n^2$ and $(n + 1)^2$, is still open.:cite[bhp2001]
 
 :::key
 - $\Lambda(n) = \log p$ on prime powers; $\theta(x) = \sum_{p \le x}\log p$ and $\psi(x) = \sum_{n \le x}\Lambda(n)$. The statements $\pi(x) \sim x/\log x$, $\theta(x) \sim x$, $\psi(x) \sim x$ are equivalent.
 - $\binom{2n}{n}$ is between $4^n/(2n+1)$ and $4^n$; its prime powers are at most $2n$; primes in $(n, 2n]$ divide it once; primes in $(2n/3, n]$ never.
 - Hence $\prod_{p \le x} p < 4^x$ and $(\log 2 - \varepsilon)\frac{x}{\log x} < \pi(x) < (\log 4 + \varepsilon)\frac{x}{\log x}$.
-- Bertrand's postulate: there is always a prime in $(n, 2n]$.
+- Bertrand’s postulate: there is always a prime in $(n, 2n]$.
 :::
 
 ```prove
@@ -161,5 +161,5 @@ solution: |
 1. Show that $\log n = \sum_{d \mid n} \Lambda(d)$, and deduce that $\log(n!) = \sum_{m \le n} \Lambda(m) \lfloor n/m \rfloor$. Chapter 17 starts from this identity.
 2. Show that $\lfloor 2y \rfloor - 2\lfloor y \rfloor \in \{0, 1\}$ for every real $y$.
 3. Show that $p_{k+1} < 2p_k$ for every $k \ge 1$, and deduce that $p_k \le 2^k$.
-4. Use Bertrand's postulate to show that $H_n = 1 + \frac12 + \cdots + \frac1n$ is not an integer for $n \ge 2$.
+4. Use Bertrand’s postulate to show that $H_n = 1 + \frac12 + \cdots + \frac1n$ is not an integer for $n \ge 2$.
 :::

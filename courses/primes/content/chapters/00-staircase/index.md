@@ -11,7 +11,7 @@ Take the whole numbers $2, 3, 4, 5, \ldots$ and ask which of them can be built b
 
 Every other number above $1$ is a product of primes, so the primes are the atoms that all whole numbers are made from. This course is about them: how to recognise them, how to find them, how many there are, and the strange and beautiful mathematics that answers that last question.
 
-The list above looks irregular. Gaps open and close: $23$ and $29$ are six apart, then $29$ and $31$ only two. Nobody has found a formula that produces the $n$-th prime quickly, and there are good reasons to think there isn't one. And yet, if you step back far enough, the primes turn out to be astonishingly well behaved. This prologue shows you the one picture that captures both facts at once.
+The list above looks irregular. Gaps open and close: $23$ and $29$ are six apart, then $29$ and $31$ only two. Nobody has found a formula that produces the $n$-th prime quickly, and there are good reasons to think there isn’t one. And yet, if you step back far enough, the primes turn out to be astonishingly well behaved. This prologue shows you the one picture that captures both facts at once.
 
 ## Counting the primes
 

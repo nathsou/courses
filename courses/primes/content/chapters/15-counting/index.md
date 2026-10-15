@@ -8,13 +8,13 @@ theorems: [Legendre’s formula, Meissel’s formula, ⌊x/n⌋ takes at most 2�
 techniques: [inclusion–exclusion, dynamic programming, memoisation]
 ---
 
-The table in Chapter 14 lists $\pi(10^{24}) = 18{,}435{,}599{,}767{,}349{,}200{,}867{,}866$. Nobody has ever listed those primes: a sieve up to $10^{24}$ would take longer than the age of the universe. The value was computed by an algorithm that counts primes without finding them. This chapter develops the idea from Legendre's 1808 formula to an algorithm that runs in $O(x^{3/4})$ time and $O(\sqrt{x})$ memory, which you will implement.
+The table in Chapter 14 lists $\pi(10^{24}) = 18{,}435{,}599{,}767{,}349{,}200{,}867{,}866$. Nobody has ever listed those primes: a sieve up to $10^{24}$ would take longer than the age of the universe. The value was computed by an algorithm that counts primes without finding them. This chapter develops the idea from Legendre’s 1808 formula to an algorithm that runs in $O(x^{3/4})$ time and $O(\sqrt{x})$ memory, which you will implement.
 
 ## Legendre’s formula
 
 The sieve of Eratosthenes says: after removing the multiples of the primes up to $\sqrt{x}$, what remains in $[2, x]$ is the primes greater than $\sqrt x$. So we need to count what remains, not list it. Let
 $$\varphi(x, a) = \#\{1 \le n \le x : n \text{ has no prime factor among } p_1, \ldots, p_a\},$$
-where $p_1 = 2, p_2 = 3, \ldots$ are the primes in order. (This $\varphi$ has nothing to do with Euler's totient; the notation is traditional.) The numbers counted by $\varphi(x, a)$ with $a = \pi(\sqrt x)$ are $1$ and the primes in $(\sqrt x, x]$, so
+where $p_1 = 2, p_2 = 3, \ldots$ are the primes in order. (This $\varphi$ has nothing to do with Euler’s totient; the notation is traditional.) The numbers counted by $\varphi(x, a)$ with $a = \pi(\sqrt x)$ are $1$ and the primes in $(\sqrt x, x]$, so
 $$\pi(x) = \varphi(x, a) + a - 1, \qquad a = \pi(\sqrt x).$$
 
 Inclusion–exclusion counts $\varphi$ directly. Let $P = p_1 p_2 \cdots p_a$.
@@ -147,7 +147,7 @@ hints:
 
 ## The state of the art
 
-The algorithm above is not the fastest. In 1985 Lagarias, Miller and Odlyzko refined Meissel and Lehmer's method to run in $O(x^{2/3+\varepsilon})$ time, and Deléglise and Rivat (1996) and Gourdon (2001) improved the constants and memory use; Kim Walisch's open-source *primecount* implements these and holds the records for computing $\pi(x)$ combinatorially.:cite[lmo1985,deleglise-rivat,primecount] There is also an entirely different, **analytic** method, proposed by Lagarias and Odlyzko in 1987, that computes $\pi(x)$ from an integral involving the zeta function in about $O(x^{1/2+\varepsilon})$ time. It is the subject of Part IV, in spirit: the explicit formula of Chapter 23 writes $\pi(x)$ in terms of the zeros of $\zeta$.
+The algorithm above is not the fastest. In 1985 Lagarias, Miller and Odlyzko refined Meissel and Lehmer’s method to run in $O(x^{2/3+\varepsilon})$ time, and Deléglise and Rivat (1996) and Gourdon (2001) improved the constants and memory use; Kim Walisch’s open-source *primecount* implements these and holds the records for computing $\pi(x)$ combinatorially.:cite[lmo1985,deleglise-rivat,primecount] There is also an entirely different, **analytic** method, proposed by Lagarias and Odlyzko in 1987, that computes $\pi(x)$ from an integral involving the zeta function in about $O(x^{1/2+\varepsilon})$ time. It is the subject of Part IV, in spirit: the explicit formula of Chapter 23 writes $\pi(x)$ in terms of the zeros of $\zeta$.
 
 :::key
 - Legendre: $\pi(x) = \varphi(x, a) + a - 1$ with $a = \pi(\sqrt x)$, and $\varphi(x, a)$ follows from inclusion–exclusion or the recursion $\varphi(x, a) = \varphi(x, a-1) - \varphi(x/p_a, a-1)$.
@@ -157,8 +157,8 @@ The algorithm above is not the fastest. In 1985 Lagarias, Miller and Odlyzko ref
 :::
 
 :::exercises
-1. Compute $\pi(100)$ with Legendre's formula by hand: $a = \pi(10) = 4$, so expand $\varphi(100, 4)$ over the divisors of $210$.
+1. Compute $\pi(100)$ with Legendre’s formula by hand: $a = \pi(10) = 4$, so expand $\varphi(100, 4)$ over the divisors of $210$.
 2. Show that the cost of the $O(x^{3/4})$ algorithm is dominated by the primes $p \le x^{1/4}$, and estimate it as $\sum_{p \le x^{1/4}} \sqrt x + \sum_{x^{1/4} < p \le \sqrt x} x/p^2 = O(x^{3/4}/\log x)$.
 3. Modify the algorithm to compute $\sum_{p \le x} p$ instead of $\pi(x)$. (Initialise with $\frac{v(v+1)}{2} - 1$ and subtract $p$ times the corrections. Beware of floating-point precision for large $x$.)
-4. Why does Meissel's formula need only $\pi(v)$ for $v \le x^{2/3}$?
+4. Why does Meissel’s formula need only $\pi(v)$ for $v \le x^{2/3}$?
 :::

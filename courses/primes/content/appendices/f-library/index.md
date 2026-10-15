@@ -11,7 +11,7 @@ Every widget in this course runs on a small TypeScript library written for it, a
 import { sieve, modPow, isPrime, zeta, complex } from 'primes';
 ```
 
-Numbers are JavaScript `number`s unless a function says `bigint`. Functions on `number` are exact for integers below $2^{53} \approx 9 \times 10^{15}$. Complex numbers are plain objects `{ re, im }`, and their arithmetic lives in the `complex` namespace. The library's source and tests are in the course repository (`src/lib/primes`).
+Numbers are JavaScript `number`s unless a function says `bigint`. Functions on `number` are exact for integers below $2^{53} \approx 9 \times 10^{15}$. Complex numbers are plain objects `{ re, im }`, and their arithmetic lives in the `complex` namespace. The library’s source and tests are in the course repository (`src/lib/primes`).
 
 ## Arithmetic
 
@@ -20,14 +20,14 @@ Numbers are JavaScript `number`s unless a function says `bigint`. Functions on `
 | `gcd(a, b)`, `gcdBig(a, b)` | Greatest common divisor (Chapter 2). |
 | `lcm(a, b)` | Least common multiple. |
 | `extendedGcd(a, b)`, `extendedGcdBig(a, b)` | `[g, x, y]` with $ax + by = g = \gcd(a, b)$. |
-| `euclidSteps(a, b)` | The rows of Euclid's algorithm, for display. |
+| `euclidSteps(a, b)` | The rows of Euclid’s algorithm, for display. |
 | `mod(a, m)`, `modBig(a, m)` | The least non-negative residue of $a$ modulo $m$. |
 | `mulMod(a, b, m)` | $ab \bmod m$, exact for $m < 2^{53}$. |
 | `modPow(b, e, m)`, `modPowBig(b, e, m)` | $b^e \bmod m$ by repeated squaring (Chapter 5). |
 | `modInverse(a, m)`, `modInverseBig(a, m)` | $a^{-1} \bmod m$, or `undefined` if $\gcd(a, m) \ne 1$. |
 | `isqrt(n)`, `isqrtBig(n)`, `iroot(n, k)` | $\lfloor\sqrt n\rfloor$ and $\lfloor n^{1/k}\rfloor$. |
 | `crt(residues, moduli)` | Chinese remainder theorem: `{ x, m }`, or `undefined` if the moduli are not coprime. |
-| `totient(n)` | Euler's $\varphi(n)$. |
+| `totient(n)` | Euler’s $\varphi(n)$. |
 | `order(a, n)` | The multiplicative order of $a$ modulo $n$. |
 | `digits(n)` | Number of decimal digits of a bigint. |
 
@@ -56,7 +56,7 @@ Numbers are JavaScript `number`s unless a function says `bigint`. Functions on `
 | `strongProbablePrime(n, a)`, `millerRabinTrace(n, a)` | One Miller–Rabin round, and the sequence it inspects. |
 | `eulerProbablePrime(n, a)` | One Solovay–Strassen round. |
 | `liars(n)` | The Fermat, strong and Euler liars for a small odd composite $n$. |
-| `isCarmichael(n)` | Korselt's criterion. |
+| `isCarmichael(n)` | Korselt’s criterion. |
 | `legendre(a, p)`, `jacobi(a, n)` | Legendre and Jacobi symbols (Chapter 9). |
 | `lucasLehmer(p)`, `lucasLehmerTrace(p)` | The Lucas–Lehmer test for $2^p - 1$ (Chapter 10). |
 
@@ -67,20 +67,20 @@ Numbers are JavaScript `number`s unless a function says `bigint`. Functions on `
 | `factor(n)` | Complete factorisation of a bigint: `[prime, exponent]` pairs (Chapter 11). |
 | `factorWithin(n, ms)` | The same, giving up with `null` after `ms` milliseconds. |
 | `factorTrial(n)` | Factorisation by trial division. |
-| `fermatFactor(n)` | Fermat's difference-of-squares method. |
-| `pollardRho(n, x0, c)`, `rhoSequence(n, x0, c, length)` | Pollard's $\rho$ with Floyd cycle detection, and its sequence. |
-| `pollardPMinus1(n, B)` | Pollard's $p - 1$ with smoothness bound $B$. |
+| `fermatFactor(n)` | Fermat’s difference-of-squares method. |
+| `pollardRho(n, x0, c)`, `rhoSequence(n, x0, c, length)` | Pollard’s $\rho$ with Floyd cycle detection, and its sequence. |
+| `pollardPMinus1(n, B)` | Pollard’s $p - 1$ with smoothness bound $B$. |
 | `divisors(n)`, `isSmooth(n, B)`, `formatFactors(fs)` | Divisors, smoothness test, pretty-printing. |
-| `dickmanRho(u)` | Dickman's $\rho(u)$, the density of smooth numbers (Chapter 12). |
+| `dickmanRho(u)` | Dickman’s $\rho(u)$, the density of smooth numbers (Chapter 12). |
 
 ## Counting primes
 
 | Function | What it does |
 | --- | --- |
 | `primePi(x)` | $\pi(x)$ in $O(x^{3/4})$ time (Chapter 15). |
-| `primePiLegendre(x)`, `legendrePhi(x, a, primes)` | Legendre's formula and $\varphi(x, a)$. |
+| `primePiLegendre(x)`, `legendrePhi(x, a, primes)` | Legendre’s formula and $\varphi(x, a)$. |
 | `PI_POWERS_OF_TEN` | $\pi(10^k)$ for $k \le 25$, as bigints. |
-| `li(x)`, `Li(x)`, `riemannR(x)` | $\operatorname{li}$, $\operatorname{Li}$ and Riemann's $R$ (Chapters 14, 23). |
+| `li(x)`, `Li(x)`, `riemannR(x)` | $\operatorname{li}$, $\operatorname{Li}$ and Riemann’s $R$ (Chapters 14, 23). |
 | `chebyshev(x)` | `{ theta, psi }` (Chapter 16). |
 | `EULER_GAMMA`, `LI2` | $\gamma$ and $\operatorname{li}(2)$. |
 
@@ -99,7 +99,7 @@ Numbers are JavaScript `number`s unless a function says `bigint`. Functions on `
 | `theta(t)`, `hardyZ(t)`, `zetaOnLine(t)` | $\theta(t)$, $Z(t)$ and $\zeta(\frac12 + it)$ (Chapter 22). |
 | `riemannSiegelZ(t, terms)`, `c0(p)` | The Riemann–Siegel formula. |
 | `gramPoint(n)`, `findZeros(T)`, `zeroCountSmooth(T)` | Gram points, zeros up to height $T$, and $\theta(T)/\pi + 1$. |
-| `refineRoot(f, a, b)`, `lambertW(x)` | Root refinement, Lambert's $W$. |
+| `refineRoot(f, a, b)`, `lambertW(x)` | Root refinement, Lambert’s $W$. |
 | `ZEROS` | The first $100$ ordinates $\gamma$. |
 
 ## L-functions, Gaussian integers and curves
@@ -112,18 +112,18 @@ Numbers are JavaScript `number`s unless a function says `bigint`. Functions on `
 | `primitiveRoot(p)` | The smallest primitive root modulo $p$. |
 | `isGaussianPrime(a, b)`, `norm([a, b])` | Gaussian primes (Chapter 35). |
 | `twoSquares(p)`, `sumsOfTwoSquares(n)` | Writing numbers as $a^2 + b^2$. |
-| `zagier(t)`, `zagierTriples(p)` | Zagier's involution. |
+| `zagier(t)`, `zagierTriples(p)` | Zagier’s involution. |
 | `countPoints(a, b, p)`, `points(a, b, p)`, `traceOfFrobenius(a, b, p)`, `discriminant(a, b)` | Elliptic curves modulo $p$ (Chapter 32). |
 
 ## The explicit formula and random models
 
 | Function | What it does |
 | --- | --- |
-| `psiExplicit(x, zeros)`, `zeroPairTerm(x, gamma)` | $\psi_0(x)$ from zeros, and one pair's wave (Chapter 23). |
-| `piExplicit(x, zeros)` | Riemann's formula for $\pi(x)$. |
+| `psiExplicit(x, zeros)`, `zeroPairTerm(x, gamma)` | $\psi_0(x)$ from zeros, and one pair’s wave (Chapter 23). |
+| `piExplicit(x, zeros)` | Riemann’s formula for $\pi(x)$. |
 | `psiExact(x)`, `psiSteps(xMax)` | $\psi(x)$ exactly. |
 | `rng(seed)` | A seeded generator with `next()`, `int(lo, hi)`, `normal()`. |
 | `randomBits(bits, r)` | A random bigint with exactly `bits` bits. |
-| `cramerPrimes(n, seed)` | A sample of Cramér's random model (Chapter 18). |
+| `cramerPrimes(n, seed)` | A sample of Cramér’s random model (Chapter 18). |
 | `gueEigenvalues(n, r)` | Eigenvalues of a random GUE matrix (Chapter 31). |
 | `wignerGUE(s)`, `poissonSpacing(s)`, `pairCorrelation(u)` | Spacing and correlation densities. |

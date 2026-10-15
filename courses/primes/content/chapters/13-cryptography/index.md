@@ -12,9 +12,9 @@ Everything so far in Part II comes together here. Primality testing is easy (Cha
 
 ## The idea of a public key
 
-For most of history, two people who wanted to communicate secretly had to share a secret key in advance. In 1976 Whitfield Diffie and Martin Hellman published "New Directions in Cryptography", proposing that encryption could use a key that is **public** while decryption uses a different, **private** key, and showing how two strangers can agree on a shared secret over a public channel.:cite[diffie-hellman1976] A year later Ron Rivest, Adi Shamir and Leonard Adleman at MIT found a practical public-key encryption scheme built on factoring. It was described in Martin Gardner's *Scientific American* column in August 1977, together with the challenge number RSA-129 of Chapter 12.:cite[rsa1978]
+For most of history, two people who wanted to communicate secretly had to share a secret key in advance. In 1976 Whitfield Diffie and Martin Hellman published “New Directions in Cryptography”, proposing that encryption could use a key that is **public** while decryption uses a different, **private** key, and showing how two strangers can agree on a shared secret over a public channel.:cite[diffie-hellman1976] A year later Ron Rivest, Adi Shamir and Leonard Adleman at MIT found a practical public-key encryption scheme built on factoring. It was described in Martin Gardner’s *Scientific American* column in August 1977, together with the challenge number RSA-129 of Chapter 12.:cite[rsa1978]
 
-It later emerged that the same ideas had been found in secret at GCHQ, the British signals intelligence agency: James Ellis proposed "non-secret encryption" in 1970, Clifford Cocks found what is essentially RSA in 1973, and Malcolm Williamson found the Diffie–Hellman exchange around 1974. The work was declassified in 1997.:cite[ellis1997]
+It later emerged that the same ideas had been found in secret at GCHQ, the British signals intelligence agency: James Ellis proposed “non-secret encryption” in 1970, Clifford Cocks found what is essentially RSA in 1973, and Malcolm Williamson found the Diffie–Hellman exchange around 1974. The work was declassified in 1997.:cite[ellis1997]
 
 ## RSA
 
@@ -37,7 +37,7 @@ With $n, e, d$ as above, $(m^e)^d \equiv m \pmod n$ for every integer $m$, inclu
 
 ::::zoom{levels="Idea, Proof"}
 :::level[Idea]
-$ed = 1 + k(p-1)(q-1)$. Modulo $p$, Fermat's little theorem turns $m^{k(p-1)(q-1)}$ into $1$ (or $m \equiv 0$ anyway). The same holds modulo $q$, and the Chinese remainder theorem combines the two.
+$ed = 1 + k(p-1)(q-1)$. Modulo $p$, Fermat’s little theorem turns $m^{k(p-1)(q-1)}$ into $1$ (or $m \equiv 0$ anyway). The same holds modulo $q$, and the Chinese remainder theorem combines the two.
 :::
 :::level[Proof]
 Since $ed \equiv 1 \pmod{(p-1)(q-1)}$, write $ed = 1 + k(p-1)(q-1)$ with $k \ge 0$. We show $m^{ed} \equiv m \pmod p$. If $p \mid m$, both sides are $0$. Otherwise Fermat gives $m^{p-1} \equiv 1$, so
@@ -50,7 +50,7 @@ The same argument gives $m^{ed} \equiv m \pmod q$. As $p$ and $q$ are distinct p
 
 ### Decrypting four times faster
 
-The owner of the private key knows $p$ and $q$, so decryption can use the Chinese remainder theorem: compute $m_p = c^{d \bmod (p-1)} \bmod p$ and $m_q = c^{d \bmod (q-1)} \bmod q$ (Fermat lets the exponents be reduced), then combine them. Each exponentiation has half-size numbers and half-size exponents, so with schoolbook multiplication each costs about an eighth of the full one, and there are two: a speed-up of about four. Every RSA implementation does this. The playground above times both; in a browser's big-integer arithmetic the gain is smaller for small keys and approaches four for 2048-bit keys.
+The owner of the private key knows $p$ and $q$, so decryption can use the Chinese remainder theorem: compute $m_p = c^{d \bmod (p-1)} \bmod p$ and $m_q = c^{d \bmod (q-1)} \bmod q$ (Fermat lets the exponents be reduced), then combine them. Each exponentiation has half-size numbers and half-size exponents, so with schoolbook multiplication each costs about an eighth of the full one, and there are two: a speed-up of about four. Every RSA implementation does this. The playground above times both; in a browser’s big-integer arithmetic the gain is smaller for small keys and approaches four for 2048-bit keys.
 
 ```code
 id: crypto/rsa-crt
@@ -122,7 +122,7 @@ hints:
   - '`mp - mq` can be negative; normalise with `((x % p) + p) % p` before multiplying by `modInverseBig(q, p)`.'
 ```
 
-### What RSA's security rests on
+### What RSA’s security rests on
 
 If you can factor $n$, you can compute $(p - 1)(q - 1)$ and then $d$: factoring breaks RSA. Is the converse true? Two partial answers are known.
 
@@ -136,9 +136,9 @@ But decrypting a particular message without recovering $d$, the **RSA problem**,
 
 ### Textbook RSA is not enough
 
-The scheme above, used directly, has serious weaknesses, which is why it is called "textbook RSA":
+The scheme above, used directly, has serious weaknesses, which is why it is called “textbook RSA”:
 
-- **It is deterministic.** The same message always gives the same ciphertext, so an attacker who can guess the message ("yes" or "no") can check the guess by encrypting it.
+- **It is deterministic.** The same message always gives the same ciphertext, so an attacker who can guess the message (“yes” or “no”) can check the guess by encrypting it.
 - **It is malleable.** $(m_1^e)(m_2^e) = (m_1 m_2)^e$, so an attacker can transform a ciphertext into a related one without decrypting it.
 - **Small messages leak.** If $m^e < n$ (a short message with $e = 3$, say), then $c = m^e$ exactly and $m = \sqrt[e]{c}$ over the integers.
 
@@ -152,7 +152,7 @@ Key generation needs random primes of 1024 bits or more. The method is simple: p
 
 ## Diffie–Hellman and discrete logarithms
 
-Diffie and Hellman's key exchange uses a different hard problem. Fix a large prime $p$ and an element $g$ of large order modulo $p$.
+Diffie and Hellman’s key exchange uses a different hard problem. Fix a large prime $p$ and an element $g$ of large order modulo $p$.
 
 :::algorithm[Diffie–Hellman key exchange]
 Alice picks a secret $a$ and sends $A = g^a \bmod p$. Bob picks a secret $b$ and sends $B = g^b \bmod p$. Alice computes $B^a$ and Bob computes $A^b$; both equal $g^{ab} \bmod p$, the shared secret.
@@ -177,14 +177,14 @@ Let $n$ be odd, $\gcd(a, n) = 1$, and let $r$ be the order of $a$ modulo $n$. If
 :::
 
 :::proof
-Let $x = a^{r/2}$. Then $x^2 = a^r \equiv 1$, so $n \mid (x - 1)(x + 1)$. Also $x \not\equiv 1$, since $r/2$ is smaller than the order, and $x \not\equiv -1$ by assumption. So $n$ divides neither $x - 1$ nor $x + 1$, and $\gcd(x - 1, n)$ is neither $1$ (else $n \mid x + 1$, by Euclid's lemma applied prime by prime) nor $n$.
+Let $x = a^{r/2}$. Then $x^2 = a^r \equiv 1$, so $n \mid (x - 1)(x + 1)$. Also $x \not\equiv 1$, since $r/2$ is smaller than the order, and $x \not\equiv -1$ by assumption. So $n$ divides neither $x - 1$ nor $x + 1$, and $\gcd(x - 1, n)$ is neither $1$ (else $n \mid x + 1$, by Euclid’s lemma applied prime by prime) nor $n$.
 :::
 
 For $n$ odd with at least two distinct prime factors, at least half of the bases $a$ satisfy the hypothesis (a counting argument with the Chinese remainder theorem, which we do not give), so a few random tries suffice.
 
 ::shor-classical
 
-Building a quantum computer large enough to run Shor's algorithm on a 2048-bit number would need, by recent estimates, on the order of a million physical qubits with today's error rates, far beyond any existing machine; the largest numbers factored by a genuine run of the algorithm are tiny. But the threat is taken seriously, because encrypted data recorded today could be decrypted later. In August 2024 the US National Institute of Standards and Technology published its first **post-quantum** standards, based on lattice problems and hash functions rather than on factoring or discrete logarithms.:cite[nist-pqc] RSA and elliptic-curve cryptography are expected to be phased out over the next decade or two.
+Building a quantum computer large enough to run Shor’s algorithm on a 2048-bit number would need, by recent estimates, on the order of a million physical qubits with today’s error rates, far beyond any existing machine; the largest numbers factored by a genuine run of the algorithm are tiny. But the threat is taken seriously, because encrypted data recorded today could be decrypted later. In August 2024 the US National Institute of Standards and Technology published its first **post-quantum** standards, based on lattice problems and hash functions rather than on factoring or discrete logarithms.:cite[nist-pqc] RSA and elliptic-curve cryptography are expected to be phased out over the next decade or two.
 
 :::key
 - RSA: $n = pq$, $ed \equiv 1 \pmod{(p-1)(q-1)}$; $m \mapsto m^e$ encrypts and $c \mapsto c^d$ decrypts, correctly for every $m$ by Fermat and the CRT. Decryption with the CRT is about four times faster.
@@ -197,6 +197,6 @@ Building a quantum computer large enough to run Shor's algorithm on a 2048-bit n
 :::exercises
 1. With $p = 61$, $q = 53$ and $e = 17$, compute $d$, encrypt $m = 65$, and decrypt the result. (This is the classic example in many textbooks.)
 2. Show that if two RSA moduli share a prime factor, both are broken by one gcd. (In 2012 a survey of public keys on the internet found tens of thousands that did, because of poor random number generation.)
-3. Alice sends the same message $m$ with $e = 3$ to three people with coprime moduli $n_1, n_2, n_3$. Show how an eavesdropper recovers $m$ with the Chinese remainder theorem. (This is Håstad's broadcast attack, and a reason for padding.)
-4. Show that the order of $2$ modulo $15$ is $4$, and use it to factor $15$ as Shor's algorithm would.
+3. Alice sends the same message $m$ with $e = 3$ to three people with coprime moduli $n_1, n_2, n_3$. Show how an eavesdropper recovers $m$ with the Chinese remainder theorem. (This is Håstad’s broadcast attack, and a reason for padding.)
+4. Show that the order of $2$ modulo $15$ is $4$, and use it to factor $15$ as Shor’s algorithm would.
 :::

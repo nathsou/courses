@@ -8,11 +8,11 @@ theorems: [The Euler product, ζ(2) = π²/6, Möbius inversion, −ζ′(s)/ζ(
 techniques: [Dirichlet series, Dirichlet convolution, multiplicative functions, Abel summation]
 ---
 
-Part III attacked the primes with elementary estimates: Chebyshev's bounds, Mertens' theorems. They pin $\pi(x)$ down to within a constant factor, but no further. The rest of the course follows a different strategy, invented by Euler and perfected by Riemann: encode the primes in a function, and study the function.
+Part III attacked the primes with elementary estimates: Chebyshev’s bounds, Mertens’ theorems. They pin $\pi(x)$ down to within a constant factor, but no further. The rest of the course follows a different strategy, invented by Euler and perfected by Riemann: encode the primes in a function, and study the function.
 
 The function is the **zeta function**,
 $$\zeta(s) = \sum_{n=1}^\infty \frac1{n^s} = 1 + \frac1{2^s} + \frac1{3^s} + \cdots,$$
-and the encoding is Euler's product formula of 1737,:cite[euler1744] which is unique factorisation (Chapter 3) written as an identity between functions. In this chapter $s$ is a real number greater than $1$. Chapter 20 lets $s$ be complex; everything proved here stays true for complex $s$ with real part greater than $1$, with the same proofs.
+and the encoding is Euler’s product formula of 1737,:cite[euler1744] which is unique factorisation (Chapter 3) written as an identity between functions. In this chapter $s$ is a real number greater than $1$. Chapter 20 lets $s$ be complex; everything proved here stays true for complex $s$ with real part greater than $1$, with the same proofs.
 
 ## Dirichlet series
 
@@ -125,7 +125,7 @@ For example, $\sum_{d \mid n}\varphi(d) = n$ (Chapter 6) inverts to $\varphi = \
 
 ## ζ(2) = π²/6
 
-What is $\zeta(2) = 1 + \frac14 + \frac19 + \cdots$? Pietro Mengoli asked in 1650; the question became known as the Basel problem after the home town of Jacob Bernoulli, who publicised it and could not solve it. Euler found the answer in 1735, with an argument that treated $\frac{\sin x}{x}$ as a polynomial with roots $\pm\pi, \pm 2\pi, \ldots$:cite[euler-basel]. Here is a rigorous proof that uses only trigonometry; it goes back to Cauchy's *Cours d'analyse* of 1821.
+What is $\zeta(2) = 1 + \frac14 + \frac19 + \cdots$? Pietro Mengoli asked in 1650; the question became known as the Basel problem after the home town of Jacob Bernoulli, who publicised it and could not solve it. Euler found the answer in 1735, with an argument that treated $\frac{\sin x}{x}$ as a polynomial with roots $\pm\pi, \pm 2\pi, \ldots$:cite[euler-basel]. Here is a rigorous proof that uses only trigonometry; it goes back to Cauchy’s *Cours d’analyse* of 1821.
 
 :::theorem{name="The Basel problem" who="Euler" year=1735 status=proved}
 $$\zeta(2) = \sum_{n=1}^\infty \frac1{n^2} = \frac{\pi^2}{6}.$$
@@ -133,7 +133,7 @@ $$\zeta(2) = \sum_{n=1}^\infty \frac1{n^2} = \frac{\pi^2}{6}.$$
 
 ::::zoom{levels="Idea, Proof"}
 :::level[Idea]
-For $0 < x < \pi/2$, $\cot^2 x < 1/x^2 < 1 + \cot^2 x$. Apply this at the angles $x_k = \frac{k\pi}{2m+1}$, $k = 1, \ldots, m$. The numbers $\cot^2 x_k$ are the roots of an explicit polynomial (from de Moivre's formula), so their sum is known exactly: $\frac{m(2m-1)}{3}$. That squeezes $\sum_{k \le m} 1/k^2$ between two expressions that both tend to $\pi^2/6$.
+For $0 < x < \pi/2$, $\cot^2 x < 1/x^2 < 1 + \cot^2 x$. Apply this at the angles $x_k = \frac{k\pi}{2m+1}$, $k = 1, \ldots, m$. The numbers $\cot^2 x_k$ are the roots of an explicit polynomial (from de Moivre’s formula), so their sum is known exactly: $\frac{m(2m-1)}{3}$. That squeezes $\sum_{k \le m} 1/k^2$ between two expressions that both tend to $\pi^2/6$.
 :::
 :::level[Proof]
 Let $n = 2m + 1$. By de Moivre, $\cos nx + i\sin nx = (\cos x + i\sin x)^n$. Expand by the binomial theorem and keep the imaginary part:
@@ -152,7 +152,7 @@ Euler went on to find $\zeta(4) = \pi^4/90$, $\zeta(6) = \pi^6/945$, and in gene
 
 ### The probability that two numbers are coprime
 
-Choose two large random integers. The chance that both are divisible by a prime $p$ is $1/p^2$, so the chance that they have no common prime factor "should" be
+Choose two large random integers. The chance that both are divisible by a prime $p$ is $1/p^2$, so the chance that they have no common prime factor “should” be
 $$\prod_p\left(1 - \frac1{p^2}\right) = \frac1{\zeta(2)} = \frac{6}{\pi^2} \approx 0.6079.$$
 Chapter 17 warned that such independence arguments can fail. This one is correct, and Möbius inversion proves it.
 
@@ -193,10 +193,10 @@ The first identity is the convolution identity above, divided by $\zeta(s)$, whi
 
 Both identities extend to complex $s$ with $\operatorname{Re} s > 1$ (Chapter 20), where the double sum serves as the definition of $\log\zeta(s)$.
 
-Why does this matter? The coefficients of $-\zeta'/\zeta$ are $\Lambda(n)$, and their running total is Chebyshev's function $\psi(x) = \sum_{n \le x}\Lambda(n)$ (Chapter 16). Analysis can extract running totals of coefficients from a Dirichlet series: Chapter 23 does it with a contour integral. So everything about $\psi(x)$, and hence about $\pi(x)$, is hidden in the function $\zeta'/\zeta$. Two features of $\zeta$ control it:
+Why does this matter? The coefficients of $-\zeta'/\zeta$ are $\Lambda(n)$, and their running total is Chebyshev’s function $\psi(x) = \sum_{n \le x}\Lambda(n)$ (Chapter 16). Analysis can extract running totals of coefficients from a Dirichlet series: Chapter 23 does it with a contour integral. So everything about $\psi(x)$, and hence about $\pi(x)$, is hidden in the function $\zeta'/\zeta$. Two features of $\zeta$ control it:
 
 - **The pole at $s = 1$.** As $s \to 1^+$, $\zeta(s)$ behaves like $\frac1{s-1}$ (proved below), so $-\zeta'/\zeta$ behaves like $\frac{1}{s-1}$. That is also the behaviour of $\sum n^{-s}$, whose coefficients add up to $x$. This is the prime number theorem, $\psi(x) \sim x$, seen from a distance.
-- **The zeros of $\zeta$.** Each zero $\rho$ of $\zeta$ is a pole of $\zeta'/\zeta$, and each will contribute a wave to $\psi(x)$. That is Riemann's explicit formula (Chapter 23).
+- **The zeros of $\zeta$.** Each zero $\rho$ of $\zeta$ is a pole of $\zeta'/\zeta$, and each will contribute a wave to $\psi(x)$. That is Riemann’s explicit formula (Chapter 23).
 
 But $\zeta$ has no zeros with $s > 1$, and there the series defines it. To see zeros we need to go further left, into the complex plane, which is the subject of Chapter 20.
 
@@ -207,7 +207,7 @@ $$\zeta(s) = s\int_1^\infty \frac{\lfloor t\rfloor}{t^{s+1}}\,dt = \frac{s}{s-1}
 where $\{t\} = t - \lfloor t\rfloor$. (The boundary term $\lfloor x\rfloor x^{-s}$ tends to $0$, and $\int_1^\infty t \cdot t^{-s-1}dt = \frac{1}{s-1}$.)
 
 :::proposition{status=proved}
-$\zeta(s) = \frac1{s-1} + \gamma + O(s - 1)$ as $s \to 1^+$, where $\gamma = 1 - \int_1^\infty\{t\}t^{-2}\,dt$ is Euler's constant. In particular $(s-1)\zeta(s) \to 1$, and $\frac{1}{s-1} < \zeta(s) < \frac{s}{s-1}$ for $s > 1$.
+$\zeta(s) = \frac1{s-1} + \gamma + O(s - 1)$ as $s \to 1^+$, where $\gamma = 1 - \int_1^\infty\{t\}t^{-2}\,dt$ is Euler’s constant. In particular $(s-1)\zeta(s) \to 1$, and $\frac{1}{s-1} < \zeta(s) < \frac{s}{s-1}$ for $s > 1$.
 :::
 
 :::proof
@@ -226,18 +226,18 @@ $M + C = \gamma$. Consequently $\prod_{p \le x}\left(1 - \frac1p\right) \sim \fr
 
 ::::zoom{levels="Idea, Proof"}
 :::level[Idea]
-$\log\zeta(s) = \sum_p\sum_k \frac{1}{kp^{ks}}$. Write $s = 1 + \delta$: this is $\sum_n b_n n^{-\delta}$, where $b_n = \frac{1}{kp^k}$ when $n = p^k$. By Mertens' second theorem, the running total of the $b_n$ is $\log\log t + (M + C) + o(1)$. Abel summation turns this into $\log\zeta(1 + \delta) = \log\frac1\delta + (M + C) + \int_0^\infty e^{-v}\log v\,dv + o(1)$. But $\zeta(1 + \delta) \approx 1/\delta$, so the constants must cancel. The integral is $-\gamma$ (a lemma about the exponential function), so $M + C = \gamma$.
+$\log\zeta(s) = \sum_p\sum_k \frac{1}{kp^{ks}}$. Write $s = 1 + \delta$: this is $\sum_n b_n n^{-\delta}$, where $b_n = \frac{1}{kp^k}$ when $n = p^k$. By Mertens’ second theorem, the running total of the $b_n$ is $\log\log t + (M + C) + o(1)$. Abel summation turns this into $\log\zeta(1 + \delta) = \log\frac1\delta + (M + C) + \int_0^\infty e^{-v}\log v\,dv + o(1)$. But $\zeta(1 + \delta) \approx 1/\delta$, so the constants must cancel. The integral is $-\gamma$ (a lemma about the exponential function), so $M + C = \gamma$.
 :::
 :::level[Proof]
 **Step 1: an integral.** We show $I = \int_0^\infty e^{-v}\log v\,dv = -\gamma$. Integrate by parts on $[0, 1]$ with the antiderivative $1 - e^{-v}$ of $e^{-v}$, and on $[1, \infty)$ with $-e^{-v}$:
 $$I = \Big[(1 - e^{-v})\log v\Big]_0^1 - \int_0^1\frac{1 - e^{-v}}{v}\,dv + \Big[-e^{-v}\log v\Big]_1^\infty + \int_1^\infty\frac{e^{-v}}{v}\,dv.$$
 The boundary terms vanish (at $v = 0$ because $0 \le 1 - e^{-v} \le v$ and $v\log v \to 0$), so $I = \int_1^\infty\frac{e^{-v}}{v}dv - \int_0^1\frac{1 - e^{-v}}{v}dv$. Now start from $H_n = \sum_{k=1}^n\frac1k = \int_0^1(1 + w + \cdots + w^{n-1})\,dw = \int_0^1\frac{1 - w^n}{1 - w}dw$ and substitute $w = 1 - v/n$:
 $$H_n = \int_0^n\frac{1 - (1 - v/n)^n}{v}\,dv, \qquad H_n - \log n = \int_0^1\frac{1 - (1 - v/n)^n}{v}\,dv - \int_1^n\frac{(1 - v/n)^n}{v}\,dv.$$
-For fixed $v$, $(1 - v/n)^n$ increases with $n$ (once $n \ge v$) to the limit $e^{-v}$. The first integrand lies between $0$ and $1$ (Bernoulli's inequality $(1 - v/n)^n \ge 1 - v$) and tends to $\frac{1 - e^{-v}}{v}$; the second increases to $\frac{e^{-v}}{v}$. By dominated and monotone convergence, as $n \to \infty$, $\gamma = \int_0^1\frac{1 - e^{-v}}{v}dv - \int_1^\infty\frac{e^{-v}}{v}dv = -I$.
+For fixed $v$, $(1 - v/n)^n$ increases with $n$ (once $n \ge v$) to the limit $e^{-v}$. The first integrand lies between $0$ and $1$ (Bernoulli’s inequality $(1 - v/n)^n \ge 1 - v$) and tends to $\frac{1 - e^{-v}}{v}$; the second increases to $\frac{e^{-v}}{v}$. By dominated and monotone convergence, as $n \to \infty$, $\gamma = \int_0^1\frac{1 - e^{-v}}{v}dv - \int_1^\infty\frac{e^{-v}}{v}dv = -I$.
 
 **Step 2: the running total.** Let $b_n = \frac{1}{kp^k}$ if $n = p^k$ is a prime power and $b_n = 0$ otherwise, and $S(t) = \sum_{n \le t}b_n$. Then
 $$S(t) = \sum_{p \le t}\frac1p + \sum_{\substack{p^k \le t\\ k \ge 2}}\frac{1}{kp^k} = \log\log t + M + C + E(t), \qquad |E(t)| \le \frac{K}{\log t} \text{ for } t \ge 2,$$
-by Mertens' second theorem and the tail estimate $\sum_{p^k > t,\, k \ge 2}\frac{1}{kp^k} \le \sum_{m > \sqrt t}\frac{1}{m(m-1)} = O(t^{-1/2})$.
+by Mertens’ second theorem and the tail estimate $\sum_{p^k > t,\, k \ge 2}\frac{1}{kp^k} \le \sum_{m > \sqrt t}\frac{1}{m(m-1)} = O(t^{-1/2})$.
 
 **Step 3: Abel summation.** For $\delta > 0$, $\log\zeta(1 + \delta) = \sum_n b_n n^{-\delta}$, by the theorem of the previous section. Abel summation with $f(t) = t^{-\delta}$, letting $x \to \infty$ (the boundary term $S(x)x^{-\delta}$ tends to $0$, since $S$ grows like $\log\log x$), gives
 $$\log\zeta(1 + \delta) = \delta\int_2^\infty S(t)\,t^{-1-\delta}\,dt.$$
@@ -253,7 +253,7 @@ So $\log\zeta(1 + \delta) = \log\frac1\delta + M + C + I + o(1)$ as $\delta \to 
 :::
 ::::
 
-Mertens' theorem therefore links the primes to Euler's constant through $\zeta$, exactly as Chapter 17 announced.
+Mertens’ theorem therefore links the primes to Euler’s constant through $\zeta$, exactly as Chapter 17 announced.
 
 :::key
 - A Dirichlet series $\sum f(n)n^{-s}$ determines its coefficients. Multiplying series convolves coefficients: $(f * g)(n) = \sum_{d \mid n}f(d)g(n/d)$.
@@ -261,7 +261,7 @@ Mertens' theorem therefore links the primes to Euler's constant through $\zeta$,
 - $1/\zeta(s) = \sum\mu(n)n^{-s}$, so $\mu * 1 = \varepsilon$, Möbius inversion holds, and $\zeta(s) \ne 0$ for $\operatorname{Re} s > 1$.
 - $\zeta(2) = \pi^2/6$, and two random integers are coprime with probability $6/\pi^2$.
 - $-\zeta'(s)/\zeta(s) = \sum\Lambda(n)n^{-s}$: the primes are encoded in the logarithmic derivative of $\zeta$. Its pole at $s = 1$ predicts $\psi(x) \sim x$; its other poles, the zeros of $\zeta$, will produce the fluctuations.
-- $\zeta(s) = \frac1{s-1} + \gamma + O(s-1)$, and comparing with $\log\zeta$ shows that Mertens' product constant is $e^{-\gamma}$.
+- $\zeta(s) = \frac1{s-1} + \gamma + O(s-1)$, and comparing with $\log\zeta$ shows that Mertens’ product constant is $e^{-\gamma}$.
 :::
 
 ```code
@@ -333,5 +333,5 @@ hints:
 3. The **Liouville function** is $\lambda(n) = (-1)^{\Omega(n)}$, where $\Omega(n)$ counts prime factors with multiplicity. Show that $\sum\lambda(n)n^{-s} = \zeta(2s)/\zeta(s)$, and deduce that $\sum_{d \mid n}\lambda(d)$ is $1$ if $n$ is a perfect square and $0$ otherwise. Check it in the widget.
 4. Show that the probability that a random integer is square-free is $6/\pi^2$: the number of square-free $n \le N$ is $\frac{6}{\pi^2}N + O(\sqrt N)$. (Use $|\mu(n)| = \sum_{d^2 \mid n}\mu(d)$.)
 5. Use the Euler product to show that $\zeta(s) > 1$ for $s > 1$ and that $\log\zeta(s) \le \sum_p p^{-s} + \frac{1}{2}\sum_p\frac{p^{-2s}}{1 - p^{-s}}$. Deduce again that $\sum_p 1/p$ diverges, using $\zeta(s) > \frac1{s - 1}$.
-6. Euler's heuristic: if $\frac{\sin \pi x}{\pi x} = \prod_{n \ge 1}\left(1 - \frac{x^2}{n^2}\right)$ (which is true, and proved in Appendix D), compare the coefficients of $x^2$ on both sides to get $\zeta(2) = \pi^2/6$.
+6. Euler’s heuristic: if $\frac{\sin \pi x}{\pi x} = \prod_{n \ge 1}\left(1 - \frac{x^2}{n^2}\right)$ (which is true, and proved in Appendix D), compare the coefficients of $x^2$ on both sides to get $\zeta(2) = \pi^2/6$.
 :::

@@ -5,7 +5,7 @@ summary: The notation O, o, ~, ≪ and how to calculate with it; comparing sums 
 duration: About 1 hour
 ---
 
-Analytic number theory is mostly the art of estimating sums. This appendix collects the tools the course uses, with proofs of everything except the full Euler–Maclaurin formula and the constant in Stirling's formula.
+Analytic number theory is mostly the art of estimating sums. This appendix collects the tools the course uses, with proofs of everything except the full Euler–Maclaurin formula and the constant in Stirling’s formula.
 
 ## Asymptotic notation
 
@@ -63,7 +63,7 @@ $$\sum_{y < n \le x} a_n f(n) = (A(x) - A(y)) f(x) - \int_y^x \Big(\sum_{y < n \
 since $a_n$ contributes to the integrand exactly for $t \ge n$. The inner sum is $A(t) - A(y)$, and $\int_y^x A(y) f'(t)\,dt = A(y)(f(x) - f(y))$. Collecting terms gives the formula.
 :::
 
-The idea is that if you know how a sequence accumulates, $A(t)$, you can compute weighted sums of it. In the course: Mertens' second theorem (weights $1/\log p$ on $\frac{\log p}{p}$), Chebyshev's observation (weights $1/t$ on primes), Dirichlet series (Chapter 19, $f(t) = t^{-s}$), and bounds for $L$-functions (Chapter 33, where $A(t)$ is bounded and $f$ decreasing).
+The idea is that if you know how a sequence accumulates, $A(t)$, you can compute weighted sums of it. In the course: Mertens’ second theorem (weights $1/\log p$ on $\frac{\log p}{p}$), Chebyshev’s observation (weights $1/t$ on primes), Dirichlet series (Chapter 19, $f(t) = t^{-s}$), and bounds for $L$-functions (Chapter 33, where $A(t)$ is bounded and $f$ decreasing).
 
 ## Harmonic numbers and Euler’s constant
 
@@ -91,7 +91,7 @@ $$\sum_{a < n \le b} f(n) = \int_a^b f(t)\,dt + \frac{f(b) - f(a)}{2} + \sum_{k=
 with $R_m = -\frac{1}{(2m)!}\int_a^b B_{2m}(\{t\}) f^{(2m)}(t)\,dt$.
 :::
 
-The case $m = 0$, with remainder $\int_a^b (\{t\} - \tfrac12) f'(t)\,dt$, follows from Abel summation, and each further term comes from integrating by parts once more. The formula is how the course's library evaluates $\zeta(s)$ anywhere in the complex plane (Chapter 20): with $f(t) = t^{-s}$, the integral and the correction terms can be written down exactly, and the remainder is tiny.
+The case $m = 0$, with remainder $\int_a^b (\{t\} - \tfrac12) f'(t)\,dt$, follows from Abel summation, and each further term comes from integrating by parts once more. The formula is how the course’s library evaluates $\zeta(s)$ anywhere in the complex plane (Chapter 20): with $f(t) = t^{-s}$, the integral and the correction terms can be written down exactly, and the remainder is tiny.
 
 ## Stirling’s formula
 
@@ -100,10 +100,10 @@ $\log(n!) = n\log n - n + \tfrac12\log n + C + O\!\left(\frac1n\right)$ for some
 :::
 
 :::proof
-Apply Euler–Maclaurin with $m = 0$ to $f(t) = \log t$ on $[1, n]$: $\sum_{1 < k \le n}\log k = \int_1^n \log t\,dt + \frac{\log n}{2} + \int_1^n \frac{\{t\} - \frac12}{t}\,dt$. The first integral is $n\log n - n + 1$. The last converges as $n \to \infty$, because $\int_N^{N+1}(\{t\} - \frac12)\,dt = 0$ makes it oscillate with shrinking amplitude (integrate by parts once more to see a tail of size $O(1/n)$). That gives the form with an unknown constant $C$. The value $C = \frac12\log 2\pi$ follows from Wallis's product for $\pi$; we do not need it, except in Chapter 21, where Appendix D derives it from the Gamma function.
+Apply Euler–Maclaurin with $m = 0$ to $f(t) = \log t$ on $[1, n]$: $\sum_{1 < k \le n}\log k = \int_1^n \log t\,dt + \frac{\log n}{2} + \int_1^n \frac{\{t\} - \frac12}{t}\,dt$. The first integral is $n\log n - n + 1$. The last converges as $n \to \infty$, because $\int_N^{N+1}(\{t\} - \frac12)\,dt = 0$ makes it oscillate with shrinking amplitude (integrate by parts once more to see a tail of size $O(1/n)$). That gives the form with an unknown constant $C$. The value $C = \frac12\log 2\pi$ follows from Wallis’s product for $\pi$; the course needs it only through the Stirling series for $\log\Gamma$ (Chapters 21 and 22), and Appendix D derives it from the Gamma function.
 :::
 
-For complex arguments, Stirling's formula becomes an asymptotic series for $\log\Gamma(z)$, which Appendix D states and the library uses.
+For complex arguments, Stirling’s formula becomes an asymptotic series for $\log\Gamma(z)$, which Appendix D states and the library uses.
 
 :::key
 - $O$, $o$, $\sim$, $\asymp$ compare growth; $\sim$ is about ratios, $O$ hides a constant.

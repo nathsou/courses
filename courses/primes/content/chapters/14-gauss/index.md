@@ -12,7 +12,7 @@ Part III asks the question of the prologue in earnest: how many primes are there
 
 ## The density of primes
 
-Gauss's observation, recalled in his 1849 letter to Encke, was that primes near $x$ occur with frequency about $1/\log x$.:cite[gauss1849] Test it yourself anywhere up to $10^{15}$: count the primes among $100{,}000$ consecutive numbers and compare.
+Gauss’s observation, recalled in his 1849 letter to Encke, was that primes near $x$ occur with frequency about $1/\log x$.:cite[gauss1849] Test it yourself anywhere up to $10^{15}$: count the primes among $100{,}000$ consecutive numbers and compare.
 
 ::density-window
 
@@ -41,13 +41,13 @@ To say precisely how good such approximations are, we need the standard notation
 
 Two warnings. First, $\sim$ is about *ratios*: $f \sim g$ allows $f - g$ to be huge. $x^2 + x \sim x^2$, although the difference grows without bound. Second, $O$ hides a constant, which may be large or unknown. "$\pi(x) = O(x/\log x)$" says nothing about the constant, and Chapter 16 works to make it explicit.
 
-In this notation, Gauss's guess is the **prime number theorem**:
+In this notation, Gauss’s guess is the **prime number theorem**:
 
 $$\pi(x) \sim \frac{x}{\log x}.$$
 
 ## Li(x) and x/log x
 
-Here is the first surprise: Gauss's and Legendre's formulas, and the plain $x/\log x$, are all asymptotically the same.
+Here is the first surprise: Gauss’s and Legendre’s formulas, and the plain $x/\log x$, are all asymptotically the same.
 
 :::theorem{status=proved}
 $\operatorname{Li}(x) = \dfrac{x}{\log x} + O\!\left(\dfrac{x}{(\log x)^2}\right)$. In particular $\operatorname{Li}(x) \sim x/\log x$.
@@ -61,7 +61,7 @@ To bound the last integral, split it at $\sqrt x$. On $[2, \sqrt x]$ the integra
 
 Integrating by parts again and again gives an **asymptotic expansion**
 $$\operatorname{Li}(x) = \frac{x}{\log x}\left(1 + \frac{1!}{\log x} + \frac{2!}{\log^2 x} + \cdots + \frac{(K-1)!}{\log^{K-1} x}\right) + O_K\!\left(\frac{x}{\log^{K+1} x}\right).$$
-The series does not converge (the factorials win eventually), but for each fixed $K$ the error is smaller than the last term kept. Note what the first two terms say: $\operatorname{Li}(x) \approx \frac{x}{\log x}\left(1 + \frac{1}{\log x}\right) \approx \frac{x}{\log x - 1}$. So Legendre's form $x/(\log x - A)$ matches $\operatorname{Li}(x)$ to second order only when $A = 1$. His $1.08366$ fitted the tables of his day, but it is not the right constant as $x \to \infty$; Chebyshev pointed this out in 1849.:cite[goldstein1973]
+The series does not converge (the factorials win eventually), but for each fixed $K$ the error is smaller than the last term kept. Note what the first two terms say: $\operatorname{Li}(x) \approx \frac{x}{\log x}\left(1 + \frac{1}{\log x}\right) \approx \frac{x}{\log x - 1}$. So Legendre’s form $x/(\log x - A)$ matches $\operatorname{Li}(x)$ to second order only when $A = 1$. His $1.08366$ fitted the tables of his day, but it is not the right constant as $x \to \infty$; Chebyshev pointed this out in 1849.:cite[goldstein1973]
 
 If all three formulas are asymptotically equal, why does it matter which one you use? Because asymptotic equality is a statement about ratios, and the ratios converge at very different speeds.
 

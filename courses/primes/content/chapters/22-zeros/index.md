@@ -17,7 +17,7 @@ $$\pi^{-s/2}\,\Gamma\!\left(\tfrac s2\right) = \left|\pi^{-s/2}\,\Gamma\!\left(\
 so that $\theta(t) = \arg\Gamma(\frac14 + \frac{it}{2}) - \frac t2\log\pi$, with the argument chosen to vary continuously from $\theta(0) = 0$. This is the **Riemann–Siegel theta function**.
 
 :::definition
-**Hardy's Z function** is $Z(t) = e^{i\theta(t)}\,\zeta(\tfrac12 + it)$.
+**Hardy’s Z function** is $Z(t) = e^{i\theta(t)}\,\zeta(\tfrac12 + it)$.
 :::
 
 :::proposition{status=proved}
@@ -30,7 +30,7 @@ $$\xi(\tfrac12 + it) = -\tfrac12\left(t^2 + \tfrac14\right)\left|\pi^{-s/2}\Gamm
 The left side is real (Chapter 21) and the factor in front of $Z(t)$ is real and nonzero, so $Z(t)$ is real. The modulus statement is clear since $|e^{i\theta}| = 1$.
 :::
 
-Stirling's formula for $\log\Gamma$ (Appendix D) gives a fast expansion:
+Stirling’s formula for $\log\Gamma$ (Appendix D) gives a fast expansion:
 $$\theta(t) = \frac t2\log\frac{t}{2\pi} - \frac t2 - \frac\pi8 + \frac{1}{48t} + \frac{7}{5760t^3} + \cdots$$
 
 So a zero on the critical line is a sign change of a real function, and a sign change of a continuous real function certainly has a zero between. That is why zeros on the line can be *proved* to be exactly on it by finite computation: a sign change cannot be an approximation error once the computed values are known to be accurate to better than their size. A zero off the line, by contrast, would not show up as a sign change at all.
@@ -47,7 +47,7 @@ The idea: if $Z(t)$ had constant sign for $t > T_0$, then $\int_T^{2T}Z(t)\,dt$ 
 
 ## Computing Z quickly: Riemann–Siegel
 
-The Euler–Maclaurin method of Chapter 20 needs about $|t|/(2\pi)$ terms to evaluate $\zeta(\frac12 + it)$. In 1932 Carl Ludwig Siegel, reading Riemann's unpublished notes in Göttingen, found that Riemann had used a far better formula, which he had never published.:cite[siegel1932]
+The Euler–Maclaurin method of Chapter 20 needs about $|t|/(2\pi)$ terms to evaluate $\zeta(\frac12 + it)$. In 1932 Carl Ludwig Siegel, reading Riemann’s unpublished notes in Göttingen, found that Riemann had used a far better formula, which he had never published.:cite[siegel1932]
 
 :::theorem{name="Riemann–Siegel formula" who="Riemann; Siegel" year=1932 status=stated}
 Let $a = \sqrt{t/2\pi}$, $N = \lfloor a\rfloor$ and $p = a - N$. Then
@@ -71,15 +71,15 @@ options:
 
 ## Gram points
 
-Where should one look for sign changes? The main sum's first term is $2\cos\theta(t)$, and the others oscillate faster and are smaller on average. So $Z(t)$ tends to have the sign of $\cos\theta(t)$, which is $(-1)^n$ at the points where $\theta(t) = n\pi$.
+Where should one look for sign changes? The main sum’s first term is $2\cos\theta(t)$, and the others oscillate faster and are smaller on average. So $Z(t)$ tends to have the sign of $\cos\theta(t)$, which is $(-1)^n$ at the points where $\theta(t) = n\pi$.
 
 :::definition
-The **Gram points** $g_n$ are the solutions of $\theta(g_n) = n\pi$ for $n = -1, 0, 1, 2, \ldots$ ($g_{-1} \approx 9.667$, $g_0 \approx 17.846$, $g_1 \approx 23.170$). **Gram's law** is the statement $(-1)^nZ(g_n) > 0$.
+The **Gram points** $g_n$ are the solutions of $\theta(g_n) = n\pi$ for $n = -1, 0, 1, 2, \ldots$ ($g_{-1} \approx 9.667$, $g_0 \approx 17.846$, $g_1 \approx 23.170$). **Gram’s law** is the statement $(-1)^nZ(g_n) > 0$.
 :::
 
-If Gram's law holds at $g_{n-1}$ and $g_n$, then $Z$ changes sign between them, so there is a zero on the line in $(g_{n-1}, g_n)$. Gram's law holds for the first $126$ Gram points and then fails at $g_{126} \approx 282.455$, where $Z(g_{126}) \approx -0.028$ (the "Gram's law fails" preset). Higher up it fails more and more often, so it is a heuristic, not a law; but searching between Gram points, and looking harder in the rare intervals where the count comes out wrong, is how zeros are found in practice. Jørgen Gram used it in 1903 to locate the first $15$ zeros.
+If Gram’s law holds at $g_{n-1}$ and $g_n$, then $Z$ changes sign between them, so there is a zero on the line in $(g_{n-1}, g_n)$. Gram’s law holds for the first $126$ Gram points and then fails at $g_{126} \approx 282.455$, where $Z(g_{126}) \approx -0.028$ (the “Gram’s law fails” preset). Higher up it fails more and more often, so it is a heuristic, not a law; but searching between Gram points, and looking harder in the rare intervals where the count comes out wrong, is how zeros are found in practice. Jørgen Gram used it in 1903 to locate the first $15$ zeros.
 
-Most of the time the zeros are well separated: the average gap at height $t$ is $2\pi/\log(t/2\pi)$. But sometimes two zeros come very close and $Z$ barely crosses the axis between them. The "Lehmer's pair" preset shows the zeros at $t \approx 7005.0629$ and $7005.1006$, found by D. H. Lehmer in 1956, where $Z$ peaks at only about $0.004$ in between. **Lehmer pairs** are where the Riemann Hypothesis comes closest to failing: a small deformation of $\zeta$, in a sense made precise by de Bruijn and Newman, would push such a pair off the line.
+Most of the time the zeros are well separated: the average gap at height $t$ is $2\pi/\log(t/2\pi)$. But sometimes two zeros come very close and $Z$ barely crosses the axis between them. The “Lehmer’s pair” preset shows the zeros at $t \approx 7005.0629$ and $7005.1006$, found by D. H. Lehmer in 1956, where $Z$ peaks at only about $0.004$ in between. **Lehmer pairs** are where the Riemann Hypothesis comes closest to failing: a small deformation of $\zeta$, in a sense made precise by de Bruijn and Newman, would push such a pair off the line.
 
 ```code
 id: zeros/finder
@@ -181,7 +181,7 @@ So the count of zeros has a smooth main term and a fluctuating part $S(T)$, whic
 $S(T) = O(\log T)$.
 :::
 
-The idea: $S(T)$ is the change of $\arg\zeta$ along the horizontal segment from $2 + iT$ to $\frac12 + iT$ (the vertical part contributes $O(1)$, since $\zeta$ stays near $1$ on the line $\sigma = 2$). That change is at most $\pi$ times one more than the number of zeros of $\operatorname{Re}\zeta(\sigma + iT)$ on the segment, and Jensen's formula (Appendix A) bounds that number by $O(\log T)$, because $\zeta$ grows only polynomially in $T$.
+The idea: $S(T)$ is the change of $\arg\zeta$ along the horizontal segment from $2 + iT$ to $\frac12 + iT$ (the vertical part contributes $O(1)$, since $\zeta$ stays near $1$ on the line $\sigma = 2$). That change is at most $\pi$ times one more than the number of zeros of $\operatorname{Re}\zeta(\sigma + iT)$ on the segment, and Jensen’s formula (Appendix A) bounds that number by $O(\log T)$, because $\zeta$ grows only polynomially in $T$.
 
 ::zero-count
 
@@ -199,15 +199,15 @@ Applied to $T = 100$, the zero finder above finds $29$ sign changes, and $N(100)
 
 :::key
 - $Z(t) = e^{i\theta(t)}\zeta(\frac12 + it)$ is real, with $|Z| = |\zeta|$ on the critical line. Zeros on the line are sign changes, so they can be certified by computation.
-- Riemann–Siegel computes $Z(t)$ with $\sqrt{t/2\pi}$ terms. Gram points $\theta(g_n) = n\pi$ guide the search; Gram's law usually holds but first fails at $g_{126}$.
+- Riemann–Siegel computes $Z(t)$ with $\sqrt{t/2\pi}$ terms. Gram points $\theta(g_n) = n\pi$ guide the search; Gram’s law usually holds but first fails at $g_{126}$.
 - The argument principle and the symmetries of $\xi$ give $N(T) = \theta(T)/\pi + 1 + S(T) = \frac{T}{2\pi}\log\frac{T}{2\pi} - \frac{T}{2\pi} + \frac78 + O(\log T)$.
-- Turing's method compares sign changes with $N(T)$; the Riemann Hypothesis has been verified up to height $3 \times 10^{12}$.
+- Turing’s method compares sign changes with $N(T)$; the Riemann Hypothesis has been verified up to height $3 \times 10^{12}$.
 :::
 
 :::exercises
 1. Use the formula for $N(T)$ to estimate the number of zeros up to height $T = 10^6$, and the average gap between consecutive zeros at that height.
-2. Verify $g_0 \approx 17.846$ from the expansion $\theta(t) \approx \frac t2\log\frac{t}{2\pi} - \frac t2 - \frac\pi8$, using a few steps of Newton's method.
+2. Verify $g_0 \approx 17.846$ from the expansion $\theta(t) \approx \frac t2\log\frac{t}{2\pi} - \frac t2 - \frac\pi8$, using a few steps of Newton’s method.
 3. Show that $\theta(t)$ is increasing for $t > 6.29$ (it has a minimum near $t \approx 6.29$, where $\theta'(t) = 0$), so the Gram points $g_n$ for $n \ge -1$ are well defined.
 4. Extend your zero finder to report the number of Gram intervals $(g_{n-1}, g_n]$ up to $T$ that contain no zero, one zero, and two zeros. What happens near $g_{126}$?
-5. Explain why a double zero of $\zeta$ on the critical line would not produce a sign change of $Z$. How would Turing's method detect it?
+5. Explain why a double zero of $\zeta$ on the critical line would not produce a sign change of $Z$. How would Turing’s method detect it?
 :::

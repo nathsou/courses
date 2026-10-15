@@ -89,7 +89,7 @@ Integrate $f(z) = \frac{e^{sz}}{1 + e^z}$ round the rectangle with corners $\pm 
 
 Combining reflection with the Weierstrass product, using $\Gamma(1 - s) = -s\Gamma(-s)$:
 $$\frac{\sin\pi s}{\pi} = \frac{1}{\Gamma(s)\Gamma(1 - s)} = \frac{-1}{s\,\Gamma(s)\Gamma(-s)} = s\prod_{k \ge 1}\left(1 - \frac{s^2}{k^2}\right),$$
-because the factors $e^{\pm\gamma s}$ and $e^{\mp s/k}$ cancel in pairs. This is Euler's **sine product** $\sin\pi s = \pi s\prod_{k \ge 1}(1 - s^2/k^2)$, the formula behind his first solution of the Basel problem (Chapter 19, exercise 6).
+because the factors $e^{\pm\gamma s}$ and $e^{\mp s/k}$ cancel in pairs. This is Euler’s **sine product** $\sin\pi s = \pi s\prod_{k \ge 1}(1 - s^2/k^2)$, the formula behind his first solution of the Basel problem (Chapter 19, exercise 6).
 
 ## Duplication
 
@@ -112,7 +112,7 @@ with the principal branches of the logarithms. In particular, for fixed real $\s
 $$|\Gamma(\sigma + it)| = \sqrt{2\pi}\,|t|^{\sigma - 1/2}e^{-\pi|t|/2}\left(1 + O\!\left(\tfrac{1}{|t|}\right)\right).$$
 :::
 
-The proof applies Euler–Maclaurin (Appendix B) to $\sum_{k=0}^n\log(s + k)$ in the logarithm of Gauss's limit; the Bernoulli numbers come from the correction terms, and the error is controlled as long as $s$ stays away from the negative real axis. That argument gives the formula with some unknown constant $C$ in place of $\frac12\log 2\pi$. Duplication identifies it: take logarithms of $\Gamma(s)\Gamma(s + \frac12) = 2^{1-2s}\sqrt\pi\,\Gamma(2s)$ and insert $\log\Gamma(s) = (s - \frac12)\log s - s + C + o(1)$ for real $s \to \infty$. Using $s\log(s + \frac12) = s\log s + \frac12 + o(1)$, the left side is $(2s - \frac12)\log s - 2s + 2C + o(1)$ and the right side is $(2s - \frac12)\log s - 2s + \frac12\log 2\pi + C + o(1)$, so $C = \frac12\log 2\pi$. For integers this is Stirling's formula for $n! = \Gamma(n + 1)$, with the constant left open in Appendix B.
+The proof applies Euler–Maclaurin (Appendix B) to $\sum_{k=0}^n\log(s + k)$ in the logarithm of Gauss’s limit; the Bernoulli numbers come from the correction terms, and the error is controlled as long as $s$ stays away from the negative real axis. That argument gives the formula with some unknown constant $C$ in place of $\frac12\log 2\pi$. Duplication identifies it: take logarithms of $\Gamma(s)\Gamma(s + \frac12) = 2^{1-2s}\sqrt\pi\,\Gamma(2s)$ and insert $\log\Gamma(s) = (s - \frac12)\log s - s + C + o(1)$ for real $s \to \infty$. Using $s\log(s + \frac12) = s\log s + \frac12 + o(1)$, the left side is $(2s - \frac12)\log s - 2s + 2C + o(1)$ and the right side is $(2s - \frac12)\log s - 2s + \frac12\log 2\pi + C + o(1)$, so $C = \frac12\log 2\pi$. For integers this is Stirling’s formula for $n! = \Gamma(n + 1)$, with the constant left open in Appendix B.
 
 The expansion of the Riemann–Siegel theta function $\theta(t) = \operatorname{Im}\log\Gamma(\frac14 + \frac{it}2) - \frac t2\log\pi$ in Chapter 22 comes from taking imaginary parts here.
 
@@ -129,8 +129,8 @@ In the complex plane, $\Gamma$ has its poles on the negative real axis (pale spo
 
 :::exercises
 1. Show that $\Gamma(n + \frac12) = \frac{(2n)!}{4^nn!}\sqrt\pi$.
-2. Use the reflection formula to show that $|\Gamma(\frac12 + it)|^2 = \frac{\pi}{\cosh\pi t}$, and compare with Stirling's formula.
+2. Use the reflection formula to show that $|\Gamma(\frac12 + it)|^2 = \frac{\pi}{\cosh\pi t}$, and compare with Stirling’s formula.
 3. Show that the volume of the unit ball in $\R^n$ is $\frac{\pi^{n/2}}{\Gamma(\frac n2 + 1)}$. (Compute $\int_{\R^n}e^{-\pi|x|^2}dx = 1$ in polar coordinates.)
-4. Derive $\Gamma'(1) = -\gamma$ directly from Gauss's limit by differentiating its logarithm.
+4. Derive $\Gamma'(1) = -\gamma$ directly from Gauss’s limit by differentiating its logarithm.
 5. From $-\frac{\Gamma'}{\Gamma}(s) = \frac1s + \gamma + \sum_k\left(\frac1{s+k} - \frac1k\right)$, show that $\frac{\Gamma'}{\Gamma}(s) = \log s + O(1/|s|)$ for $\operatorname{Re}s \ge 1$. (This is the estimate behind $\frac{\zeta'}{\zeta}$ on the left of the critical strip in Chapter 23.)
 :::

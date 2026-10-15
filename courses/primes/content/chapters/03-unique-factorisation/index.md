@@ -28,14 +28,14 @@ The whole proof rests on one property of primes.
 If a prime $p$ divides a product $ab$, then $p \mid a$ or $p \mid b$.
 :::
 
-It is worth pausing on why this is not obvious. The definition of a prime says what *divides* $p$: only $1$ and $p$. Euclid's lemma says something about what $p$ *divides*. Converting one into the other is where Bézout's identity (Chapter 2) comes in.
+It is worth pausing on why this is not obvious. The definition of a prime says what *divides* $p$: only $1$ and $p$. Euclid’s lemma says something about what $p$ *divides*. Converting one into the other is where Bézout’s identity (Chapter 2) comes in.
 
 ::::zoom{levels="Idea, Proof"}
 :::level[Idea]
 If $p$ does not divide $a$, then $p$ and $a$ have no common factor except $1$, so Bézout gives $px + ay = 1$. Multiply by $b$: now $p$ divides both terms on the left, hence the right, which is $b$.
 :::
 :::level[Proof]
-Suppose $p \mid ab$ and $p \nmid a$; we show $p \mid b$. The only positive divisors of $p$ are $1$ and $p$, and $p$ does not divide $a$, so $\gcd(p, a) = 1$. By Bézout's identity there are integers $x, y$ with $px + ay = 1$. Multiplying by $b$,
+Suppose $p \mid ab$ and $p \nmid a$; we show $p \mid b$. The only positive divisors of $p$ are $1$ and $p$, and $p$ does not divide $a$, so $\gcd(p, a) = 1$. By Bézout’s identity there are integers $x, y$ with $px + ay = 1$. Multiplying by $b$,
 $$pbx + aby = b.$$
 $p$ divides $pbx$, and $p$ divides $ab$ by assumption, so $p$ divides $aby$. Hence $p$ divides the sum, which is $b$.
 :::
@@ -48,7 +48,7 @@ If $a \mid bc$ and $\gcd(a, b) = 1$, then $a \mid c$. And if a prime divides a p
 :::
 
 :::proof
-For the first statement: Bézout gives $ax + by = 1$, so $acx + bcy = c$, and $a$ divides both terms on the left. For the second, induct on $k$: $p \mid a_1 (a_2 \cdots a_k)$, so by Euclid's lemma $p \mid a_1$ or $p \mid a_2 \cdots a_k$, and in the second case the induction hypothesis applies.
+For the first statement: Bézout gives $ax + by = 1$, so $acx + bcy = c$, and $a$ divides both terms on the left. For the second, induct on $k$: $p \mid a_1 (a_2 \cdots a_k)$, so by Euclid’s lemma $p \mid a_1$ or $p \mid a_2 \cdots a_k$, and in the second case the induction hypothesis applies.
 :::
 
 ```parsons
@@ -73,13 +73,13 @@ $$n = p_1 p_2 \cdots p_k,$$
 and this factorisation is unique apart from the order of the factors.
 :::
 
-Euclid proved the essential ingredients (Book VII, Propositions 30–32, and Book IX, Proposition 14), but the first complete statement and proof is in Gauss's *Disquisitiones Arithmeticae* of 1801.:cite[euclid,gauss1801]
+Euclid proved the essential ingredients (Book VII, Propositions 30–32, and Book IX, Proposition 14), but the first complete statement and proof is in Gauss’s *Disquisitiones Arithmeticae* of 1801.:cite[euclid,gauss1801]
 
 Grouping equal primes gives the **canonical form** $n = p_1^{e_1} p_2^{e_2} \cdots p_r^{e_r}$ with $p_1 < p_2 < \cdots < p_r$ and every $e_i \ge 1$; for example $360 = 2^3 \cdot 3^2 \cdot 5$. It is often convenient to write $n = \prod_p p^{v_p(n)}$ over *all* primes, where $v_p(n)$, the **$p$-adic valuation**, is the exponent of $p$ in $n$ and is zero for all but finitely many $p$.
 
 ::::zoom{levels="Idea, Sketch, Proof"}
 :::level[Idea]
-Existence: keep splitting until only primes remain. Uniqueness: if two prime factorisations of the same number differed, the first prime of one would divide the product of the other, so by Euclid's lemma it would equal one of its primes. Cancel it and repeat.
+Existence: keep splitting until only primes remain. Uniqueness: if two prime factorisations of the same number differed, the first prime of one would divide the product of the other, so by Euclid’s lemma it would equal one of its primes. Cancel it and repeat.
 :::
 :::level[Sketch]
 *Existence* by strong induction: a prime is its own factorisation; a composite $n = ab$ with $1 < a, b < n$ is the product of factorisations of $a$ and $b$. *Uniqueness* by minimal counterexample: take the smallest $n$ with two different factorisations $p_1 \cdots p_k = q_1 \cdots q_l$. Then $p_1$ divides $q_1 \cdots q_l$, so $p_1 = q_j$ for some $j$; cancelling gives a smaller number with two different factorisations.
@@ -89,14 +89,14 @@ Existence: keep splitting until only primes remain. Uniqueness: if two prime fac
 
 *Uniqueness.* Suppose not, and let $n$ be the smallest integer greater than $1$ with two different factorisations
 $$n = p_1 p_2 \cdots p_k = q_1 q_2 \cdots q_l$$
-(different meaning that the lists are not rearrangements of each other). The prime $p_1$ divides $n = q_1 q_2 \cdots q_l$, so by the corollary to Euclid's lemma $p_1 \mid q_j$ for some $j$. As $q_j$ is prime and $p_1 > 1$, $p_1 = q_j$. Cancel it from both sides:
+(different meaning that the lists are not rearrangements of each other). The prime $p_1$ divides $n = q_1 q_2 \cdots q_l$, so by the corollary to Euclid’s lemma $p_1 \mid q_j$ for some $j$. As $q_j$ is prime and $p_1 > 1$, $p_1 = q_j$. Cancel it from both sides:
 $$\frac{n}{p_1} = p_2 \cdots p_k = q_1 \cdots \widehat{q_j} \cdots q_l,$$
 where the hat means that $q_j$ is omitted. If $n / p_1 = 1$, both sides are empty products, so $k = l = 1$ and the two factorisations were the same, a contradiction. Otherwise $n/p_1 > 1$ is smaller than $n$, and its two factorisations are different (since the original ones were, and we removed the same prime from both). This contradicts the minimality of $n$.
 :::
 ::::
 
 :::bridge
-Proofcraft, Chapter 6, proves the same theorem with an emphasis on the technique of strong induction, and Euclid's Elements, Book VII, has the original propositions with live figures.
+Proofcraft, Chapter 6, proves the same theorem with an emphasis on the technique of strong induction, and Euclid’s Elements, Book VII, has the original propositions with live figures.
 :::
 
 ### Write it yourself
@@ -198,7 +198,7 @@ Since $a$ and $b$ share no prime, every prime $p$ of $a$ has $v_p(a) = v_p(ab)$,
 :::
 
 :::note
-**A stopping point.** The rest of this chapter visits worlds where factorisation is not unique. It explains *why* Euclid's lemma was needed, but nothing later depends on it except Chapter 35, which returns to number systems like $\mathbb{Z}[i]$.
+**A stopping point.** The rest of this chapter visits worlds where factorisation is not unique. It explains *why* Euclid’s lemma was needed, but nothing later depends on it except Chapter 35, which returns to number systems like $\mathbb{Z}[i]$.
 :::
 
 ## Worlds without unique factorisation
@@ -213,30 +213,30 @@ two genuinely different factorisations into Hilbert primes.
 
 ::hilbert-numbers
 
-What went wrong? Existence still holds (the same splitting argument works). Uniqueness failed because Euclid's lemma fails: $21$ divides $9 \times 49$, but divides neither factor. And Euclid's lemma failed because Bézout's identity is not available: Hilbert's world is not closed under subtraction, so there is no division with remainder and no Euclid's algorithm.
+What went wrong? Existence still holds (the same splitting argument works). Uniqueness failed because Euclid’s lemma fails: $21$ divides $9 \times 49$, but divides neither factor. And Euclid’s lemma failed because Bézout’s identity is not available: Hilbert’s world is not closed under subtraction, so there is no division with remainder and no Euclid’s algorithm.
 
 This separates two ideas that coincide in the ordinary integers:
 
 - an **irreducible** element cannot be split into a product of non-units;
-- a **prime** element $p$ has Euclid's property: $p \mid ab$ implies $p \mid a$ or $p \mid b$.
+- a **prime** element $p$ has Euclid’s property: $p \mid ab$ implies $p \mid a$ or $p \mid b$.
 
-In $\mathbb{Z}$, every irreducible is prime: that is Euclid's lemma. In Hilbert's world, $21$ is irreducible but not prime. Unique factorisation holds exactly when the two notions agree (for systems where factorisations exist at all).
+In $\mathbb{Z}$, every irreducible is prime: that is Euclid’s lemma. In Hilbert’s world, $21$ is irreducible but not prime. Unique factorisation holds exactly when the two notions agree (for systems where factorisations exist at all).
 
 ### A world that matters: $\mathbb{Z}[\sqrt{-5}]$
 
-Hilbert's numbers are a toy. Here is a world that mathematicians actually needed. Take the numbers $a + b\sqrt{-5}$ with $a, b$ integers. They can be added, subtracted and multiplied, like the integers. In this world,
+Hilbert’s numbers are a toy. Here is a world that mathematicians actually needed. Take the numbers $a + b\sqrt{-5}$ with $a, b$ integers. They can be added, subtracted and multiplied, like the integers. In this world,
 
 $$6 = 2 \times 3 = \left(1 + \sqrt{-5}\right)\left(1 - \sqrt{-5}\right).$$
 
 To see that these four factors cannot be split further, use the **norm** $N(a + b\sqrt{-5}) = a^2 + 5b^2$, which is multiplicative: $N(xy) = N(x)N(y)$. (Check this by expanding, or note that $N(z) = z\bar z$.) If $2 = xy$ with neither factor a unit, then $4 = N(x) N(y)$ with $N(x), N(y) > 1$, so $N(x) = 2$. But $a^2 + 5b^2 = 2$ has no integer solutions. The same argument works for $3$ (no element has norm $3$) and for $1 \pm \sqrt{-5}$ (norm $6 = 2 \times 3$, and again nothing has norm $2$ or $3$). And $2$ is not a unit multiple of $1 \pm \sqrt{-5}$, because their norms differ. So $6$ really has two different factorisations into irreducibles.
 
-This was not a curiosity. In 1847 Gabriel Lamé announced a proof of Fermat's Last Theorem to the Paris Academy, built on factorising $x^n + y^n$ in a number system like this one. Joseph Liouville immediately asked whether factorisation there was unique, and it emerged that Ernst Kummer had already shown in 1844 that it often is not. Kummer went on to rescue unique factorisation by inventing "ideal numbers", which became the ideals of modern algebra.:cite[edwards-flt] Chapter 35 visits a happier world, the Gaussian integers $\mathbb{Z}[i]$, where unique factorisation holds and explains which primes are sums of two squares.
+This was not a curiosity. In 1847 Gabriel Lamé announced a proof of Fermat’s Last Theorem to the Paris Academy, built on factorising $x^n + y^n$ in a number system like this one. Joseph Liouville immediately asked whether factorisation there was unique, and it emerged that Ernst Kummer had already shown in 1844 that it often is not. Kummer went on to rescue unique factorisation by inventing “ideal numbers”, which became the ideals of modern algebra.:cite[edwards-flt] Chapter 35 visits a happier world, the Gaussian integers $\mathbb{Z}[i]$, where unique factorisation holds and explains which primes are sums of two squares.
 
 :::key
-- Euclid's lemma ($p \mid ab \Rightarrow p \mid a$ or $p \mid b$) comes from Bézout's identity, and it is the heart of uniqueness.
+- Euclid’s lemma ($p \mid ab \Rightarrow p \mid a$ or $p \mid b$) comes from Bézout’s identity, and it is the heart of uniqueness.
 - The fundamental theorem: every $n > 1$ is a product of primes in exactly one way, up to order. Existence by strong induction, uniqueness by a minimal counterexample.
 - With factorisations in hand, divisors, $\tau$, $\sigma$, gcd and lcm are exponent bookkeeping, and $\sqrt{n}$ is irrational unless $n$ is a square.
-- Uniqueness can fail when Euclid's lemma does: Hilbert's numbers $4k + 1$ and $\mathbb{Z}[\sqrt{-5}]$.
+- Uniqueness can fail when Euclid’s lemma does: Hilbert’s numbers $4k + 1$ and $\mathbb{Z}[\sqrt{-5}]$.
 :::
 
 ```prove
@@ -251,12 +251,12 @@ rubric:
   - You used Euclid’s lemma to deduce $p \mid m$, so $m = pm'$.
   - You derived $n^2 = p m'^2$, a smaller solution, and reached a contradiction.
 solution: |
-  Suppose solutions exist and take one with $m$ as small as possible. Since $p \mid m^2 = m \cdot m$, Euclid's lemma gives $p \mid m$; write $m = pm'$. Then $p^2 m'^2 = p n^2$, so $n^2 = p m'^2$. That is a solution $(n, m')$ with $n < m$ (as $m^2 = pn^2 > n^2$), contradicting minimality. This is Fermat's method of **infinite descent**.
+  Suppose solutions exist and take one with $m$ as small as possible. Since $p \mid m^2 = m \cdot m$, Euclid’s lemma gives $p \mid m$; write $m = pm'$. Then $p^2 m'^2 = p n^2$, so $n^2 = p m'^2$. That is a solution $(n, m')$ with $n < m$ (as $m^2 = pn^2 > n^2$), contradicting minimality. This is Fermat’s method of **infinite descent**.
 ```
 
 :::exercises
 1. Show that $\tau(n)$ is odd exactly when $n$ is a perfect square.
 2. A number is **perfect** if $\sigma(n) = 2n$ (as $6 = 1 + 2 + 3$). Show that if $2^k - 1$ is prime then $2^{k-1}(2^k - 1)$ is perfect. (Euler proved that every *even* perfect number has this form; nobody knows whether odd perfect numbers exist.)
 3. Prove that $\log_2 3$ is irrational.
-4. In Hilbert's world, find a number with three different factorisations into Hilbert primes. (Hint: multiply four different ordinary primes of the form $4k + 3$. The smallest such number is $4389$.)
+4. In Hilbert’s world, find a number with three different factorisations into Hilbert primes. (Hint: multiply four different ordinary primes of the form $4k + 3$. The smallest such number is $4389$.)
 :::

@@ -10,7 +10,7 @@ techniques: [primitive roots, pairing arguments, counting lattice points]
 
 Modulo $7$, the squares of $1, 2, \ldots, 6$ are $1, 4, 2, 2, 4, 1$. Only half the non-zero residues are squares: $1, 2, 4$. Which half, for a given prime, turns out to be one of the richest questions in elementary number theory. Gauss called its answer, the law of **quadratic reciprocity**, the *theorema aureum*, the golden theorem, and proved it eight different ways.
 
-The course needs squares modulo $p$ for practical reasons too. Chapter 4 promised a proof that there are infinitely many primes of the form $4k + 1$; it is here. The Solovay–Strassen test, a cousin of Miller–Rabin, is built on squares; the quadratic sieve (Chapter 12) and Shor's algorithm discussion (Chapter 13) need square roots modulo $p$; and the characters of Chapter 33 generalise the symbol defined below.
+The course needs squares modulo $p$ for practical reasons too. Chapter 4 promised a proof that there are infinitely many primes of the form $4k + 1$; it is here. The Solovay–Strassen test, a cousin of Miller–Rabin, is built on squares; the quadratic sieve (Chapter 12) and Shor’s algorithm discussion (Chapter 13) need square roots modulo $p$; and the characters of Chapter 33 generalise the symbol defined below.
 
 ## Quadratic residues
 
@@ -25,7 +25,7 @@ Modulo an odd prime $p$, exactly $(p - 1)/2$ of the non-zero residues are quadra
 :::
 
 :::proof
-$x^2 \equiv y^2$ means $p \mid (x - y)(x + y)$, so $y \equiv \pm x$ (Euclid's lemma). So the $p - 1$ non-zero residues pair off as $\{x, -x\}$ (different, since $p$ is odd), and each pair has the same square, while different pairs have different squares. That gives $(p-1)/2$ squares.
+$x^2 \equiv y^2$ means $p \mid (x - y)(x + y)$, so $y \equiv \pm x$ (Euclid’s lemma). So the $p - 1$ non-zero residues pair off as $\{x, -x\}$ (different, since $p$ is odd), and each pair has the same square, while different pairs have different squares. That gives $(p-1)/2$ squares.
 :::
 
 The **Legendre symbol** packages this:
@@ -33,7 +33,7 @@ $$\left(\frac ap\right) = \begin{cases} 0 & p \mid a, \\ +1 & a \text{ is a quad
 
 ### Euler’s criterion
 
-How do you tell whether $a$ is a square without listing all the squares? Fermat's little theorem says $a^{p-1} \equiv 1$, so $a^{(p-1)/2}$ is a square root of $1$, which modulo a prime means $\pm 1$. Euler noticed which sign you get.
+How do you tell whether $a$ is a square without listing all the squares? Fermat’s little theorem says $a^{p-1} \equiv 1$, so $a^{(p-1)/2}$ is a square root of $1$, which modulo a prime means $\pm 1$. Euler noticed which sign you get.
 
 :::theorem{name="Euler’s criterion" who="Leonhard Euler" year=1748 status=proved}
 For an odd prime $p$ and any integer $a$,
@@ -46,11 +46,11 @@ $$a^{(p-1)/2} = g^{k(p-1)/2} = \left(g^{(p-1)/2}\right)^k \equiv (-1)^k,$$
 which is $+1$ exactly when $k$ is even, that is, when $a$ is a square.
 :::
 
-Two consequences follow at once. The symbol is **multiplicative**, $\left(\frac{ab}{p}\right) = \left(\frac ap\right)\left(\frac bp\right)$ (multiply the right-hand sides of Euler's criterion): the product of two non-residues is a residue. And it can be computed with one modular exponentiation.
+Two consequences follow at once. The symbol is **multiplicative**, $\left(\frac{ab}{p}\right) = \left(\frac ap\right)\left(\frac bp\right)$ (multiply the right-hand sides of Euler’s criterion): the product of two non-residues is a residue. And it can be computed with one modular exponentiation.
 
 ### When is $-1$ a square?
 
-Put $a = -1$ in Euler's criterion: $\left(\frac{-1}{p}\right) = (-1)^{(p-1)/2}$, which is $+1$ exactly when $(p - 1)/2$ is even.
+Put $a = -1$ in Euler’s criterion: $\left(\frac{-1}{p}\right) = (-1)^{(p-1)/2}$, which is $+1$ exactly when $(p - 1)/2$ is even.
 
 :::corollary{status=proved}
 $-1$ is a square modulo an odd prime $p$ if and only if $p \equiv 1 \pmod 4$.
@@ -66,7 +66,7 @@ There are infinitely many primes of the form $4k + 1$.
 Let $p_1, \ldots, p_n$ be any finite list of primes of the form $4k+1$, and let $N = (2p_1 \cdots p_n)^2 + 1$. Let $q$ be any prime factor of $N$. Then $q$ is odd (since $N$ is odd), and $(2p_1 \cdots p_n)^2 \equiv -1 \pmod q$, so $-1$ is a square modulo $q$, and therefore $q \equiv 1 \pmod 4$. If $q$ were some $p_i$, it would divide $N$ and $N - 1$, hence $1$. So $q$ is a new prime of the form $4k + 1$.
 :::
 
-The same fact is the key to Fermat's theorem that every prime $p \equiv 1 \pmod 4$ is a sum of two squares (Chapter 35): if $x^2 \equiv -1 \pmod p$, then $p$ divides $x^2 + 1 = (x + i)(x - i)$, and that factorisation in the Gaussian integers does the rest.
+The same fact is the key to Fermat’s theorem that every prime $p \equiv 1 \pmod 4$ is a sum of two squares (Chapter 35): if $x^2 \equiv -1 \pmod p$, then $p$ divides $x^2 + 1 = (x + i)(x - i)$, and that factorisation in the Gaussian integers does the rest.
 
 ```quiz
 q: Is $3$ a quadratic residue modulo $13$?
@@ -92,7 +92,7 @@ it determines $\left(\frac ap\right)$ for every $a$.
 
 Euler found it empirically in the 1740s; Legendre published a flawed proof in 1785 and gave the symbol its name; Gauss, aged eighteen, found the first complete proof in April 1796 and published it in the *Disquisitiones*. He later gave seven more. Today there are well over three hundred published proofs.:cite[lemmermeyer,gauss1801]
 
-Before proving it, watch it work. Is $5$ a square modulo $103$? Since $5 \equiv 1 \pmod 4$, $\left(\frac{5}{103}\right) = \left(\frac{103}{5}\right) = \left(\frac{3}{5}\right)$, and the squares modulo $5$ are $1$ and $4$, so the answer is $-1$: no. Reciprocity turns a question about a large modulus into one about a small modulus, exactly like a step of Euclid's algorithm.
+Before proving it, watch it work. Is $5$ a square modulo $103$? Since $5 \equiv 1 \pmod 4$, $\left(\frac{5}{103}\right) = \left(\frac{103}{5}\right) = \left(\frac{3}{5}\right)$, and the squares modulo $5$ are $1$ and $4$, so the answer is $-1$: no. Reciprocity turns a question about a large modulus into one about a small modulus, exactly like a step of Euclid’s algorithm.
 
 ### Gauss’s lemma and the case $a = 2$
 
@@ -105,30 +105,30 @@ Let $p$ be an odd prime and $p \nmid a$. Reduce the numbers $a, 2a, \ldots, \fra
 :::proof
 Write the reduced values as $\pm r_k$ with $1 \le r_k \le \frac{p-1}{2}$. The $r_k$ are all different: if $ia \equiv \pm ja$ then $i \equiv \pm j$, and for $1 \le i, j \le \frac{p-1}{2}$ that forces $i = j$. So $r_1, \ldots, r_{(p-1)/2}$ is a rearrangement of $1, \ldots, \frac{p-1}{2}$. Multiplying all the congruences $ka \equiv \pm r_k$:
 $$a^{(p-1)/2} \left(\tfrac{p-1}{2}\right)! \equiv (-1)^\mu \left(\tfrac{p-1}{2}\right)! \pmod p.$$
-Cancel the factorial and apply Euler's criterion.
+Cancel the factorial and apply Euler’s criterion.
 :::
 
 For $a = 2$ the numbers $2, 4, \ldots, p - 1$ are easy to sort: those above $p/2$ become negative. Counting them for each $p \bmod 8$ gives the second supplementary law: $2$ is a square modulo $p$ exactly when $p \equiv \pm 1 \pmod 8$ (exercise 1).
 
 ### Eisenstein’s proof
 
-Gotthold Eisenstein turned Gauss's lemma into a count of lattice points in 1844.:cite[eisenstein1844] Here is the picture: draw the rectangle of lattice points with $1 \le x \le \frac{p-1}{2}$ and $1 \le y \le \frac{q-1}{2}$, and the diagonal $y = \frac qp x$.
+Gotthold Eisenstein turned Gauss’s lemma into a count of lattice points in 1844.:cite[eisenstein1844] Here is the picture: draw the rectangle of lattice points with $1 \le x \le \frac{p-1}{2}$ and $1 \le y \le \frac{q-1}{2}$, and the diagonal $y = \frac qp x$.
 
 ::lattice-count
 
 ::::zoom{levels="Idea, Sketch, Proof"}
 :::level[Idea]
-The number of lattice points below the diagonal has the same parity as Gauss's $\mu$ for $\left(\frac qp\right)$; the number above has the parity of $\mu$ for $\left(\frac pq\right)$. Together they fill the rectangle, which has $\frac{p-1}{2} \cdot \frac{q-1}{2}$ points.
+The number of lattice points below the diagonal has the same parity as Gauss’s $\mu$ for $\left(\frac qp\right)$; the number above has the parity of $\mu$ for $\left(\frac pq\right)$. Together they fill the rectangle, which has $\frac{p-1}{2} \cdot \frac{q-1}{2}$ points.
 :::
 :::level[Sketch]
-(1) *Eisenstein's lemma*: for odd $a$, $\mu \equiv \sum_{k=1}^{(p-1)/2} \lfloor ka/p \rfloor \pmod 2$, by summing $ka = p\lfloor ka/p\rfloor + (\text{remainder})$ over $k$ and reducing modulo $2$. (2) With $a = q$, the sum counts the lattice points under the diagonal, column by column. (3) Symmetrically, $\left(\frac pq\right) = (-1)^{\text{points above}}$. (4) No lattice point lies on the diagonal, since $p \nmid qx$ for $x < p$. So the two counts add up to the size of the rectangle.
+(1) *Eisenstein’s lemma*: for odd $a$, $\mu \equiv \sum_{k=1}^{(p-1)/2} \lfloor ka/p \rfloor \pmod 2$, by summing $ka = p\lfloor ka/p\rfloor + (\text{remainder})$ over $k$ and reducing modulo $2$. (2) With $a = q$, the sum counts the lattice points under the diagonal, column by column. (3) Symmetrically, $\left(\frac pq\right) = (-1)^{\text{points above}}$. (4) No lattice point lies on the diagonal, since $p \nmid qx$ for $x < p$. So the two counts add up to the size of the rectangle.
 :::
 :::level[Proof]
-*Step 1 (Eisenstein's lemma).* Let $a$ be odd, $p \nmid a$, and $m = \frac{p-1}{2}$. For $k = 1, \ldots, m$ write $ka = p \lfloor ka/p \rfloor + t_k$ with $0 < t_k < p$. In Gauss's lemma, $ka$ reduces to a negative number exactly when $t_k > p/2$; there are $\mu$ such $k$, and for them the absolute value is $p - t_k$. As shown in the proof of Gauss's lemma, the numbers $\{t_k : t_k < p/2\} \cup \{p - t_k : t_k > p/2\}$ are exactly $1, \ldots, m$. So, writing $L = \sum_{t_k > p/2} t_k$,
+*Step 1 (Eisenstein’s lemma).* Let $a$ be odd, $p \nmid a$, and $m = \frac{p-1}{2}$. For $k = 1, \ldots, m$ write $ka = p \lfloor ka/p \rfloor + t_k$ with $0 < t_k < p$. In Gauss’s lemma, $ka$ reduces to a negative number exactly when $t_k > p/2$; there are $\mu$ such $k$, and for them the absolute value is $p - t_k$. As shown in the proof of Gauss’s lemma, the numbers $\{t_k : t_k < p/2\} \cup \{p - t_k : t_k > p/2\}$ are exactly $1, \ldots, m$. So, writing $L = \sum_{t_k > p/2} t_k$,
 $$\sum_{k=1}^m k = \sum_{t_k < p/2} t_k + \sum_{t_k > p/2} (p - t_k) = \sum_{k=1}^m t_k - 2L + \mu p.$$
 Summing the defining equations, $a \sum_k k = pT + \sum_k t_k$ with $T = \sum_{k=1}^m \lfloor ka/p \rfloor$. Subtract:
 $$(a - 1)\sum_{k=1}^m k = pT - \mu p + 2L.$$
-Modulo $2$, the left side is $0$ (as $a$ is odd) and $p \equiv 1$, so $T \equiv \mu$. By Gauss's lemma, $\left(\frac ap\right) = (-1)^T$.
+Modulo $2$, the left side is $0$ (as $a$ is odd) and $p \equiv 1$, so $T \equiv \mu$. By Gauss’s lemma, $\left(\frac ap\right) = (-1)^T$.
 
 *Step 2.* With $a = q$, $T = \sum_{x=1}^{(p-1)/2} \lfloor qx/p \rfloor$. For each column $x$, the lattice points $(x, y)$ with $1 \le y < qx/p$ number $\lfloor qx/p \rfloor$, and they lie in the rectangle because $qx/p < q/2$. So $T$ is the number of lattice points of the rectangle strictly below the diagonal.
 
@@ -145,7 +145,7 @@ Proofcraft, Chapter 10, builds the same proof step by step as a proof-writing ex
 
 ## The Jacobi symbol
 
-To use reciprocity like Euclid's algorithm, you would have to factor the numbers that appear along the way into primes. Jacobi removed that need in 1837. For odd $n = p_1 p_2 \cdots p_k$ (primes, possibly repeated), define
+To use reciprocity like Euclid’s algorithm, you would have to factor the numbers that appear along the way into primes. Jacobi removed that need in 1837. For odd $n = p_1 p_2 \cdots p_k$ (primes, possibly repeated), define
 
 $$\left(\frac an\right) = \left(\frac{a}{p_1}\right)\left(\frac{a}{p_2}\right) \cdots \left(\frac{a}{p_k}\right).$$
 
@@ -209,13 +209,13 @@ hints:
 
 ## The Solovay–Strassen test
 
-Euler's criterion holds for every prime. For a composite odd $n$, compare $a^{(n-1)/2} \bmod n$ with the Jacobi symbol $\left(\frac an\right)$; if they differ, $n$ is certainly composite. A composite $n$ for which they agree is an **Euler pseudoprime** to base $a$, and $a$ is an **Euler liar**.
+Euler’s criterion holds for every prime. For a composite odd $n$, compare $a^{(n-1)/2} \bmod n$ with the Jacobi symbol $\left(\frac an\right)$; if they differ, $n$ is certainly composite. A composite $n$ for which they agree is an **Euler pseudoprime** to base $a$, and $a$ is an **Euler liar**.
 
 :::theorem{name="Solovay–Strassen" year=1977 status=sketched}
 For odd composite $n$, at most half of the units modulo $n$ are Euler liars.
 :::
 
-*Sketch.* The Euler liars form a subgroup of the units (both sides of the test are multiplicative in $a$). It is proper: if $p^2 \mid n$ for some prime $p$, an element of order $p$ modulo $p^2$ (lifted by the Chinese remainder theorem) breaks it; if $n = p m$ is squarefree, choose $a$ to be a non-residue modulo $p$ and $1$ modulo $m$, so that $\left(\frac an\right) = -1$ while $a^{(n-1)/2} \equiv 1 \pmod m$, which rules out $a^{(n-1)/2} \equiv -1 \pmod n$. Lagrange's theorem gives the bound.:cite[solovay-strassen]
+*Sketch.* The Euler liars form a subgroup of the units (both sides of the test are multiplicative in $a$). It is proper: if $p^2 \mid n$ for some prime $p$, an element of order $p$ modulo $p^2$ (lifted by the Chinese remainder theorem) breaks it; if $n = p m$ is squarefree, choose $a$ to be a non-residue modulo $p$ and $1$ modulo $m$, so that $\left(\frac an\right) = -1$ while $a^{(n-1)/2} \equiv 1 \pmod m$, which rules out $a^{(n-1)/2} \equiv -1 \pmod n$. Lagrange’s theorem gives the bound.:cite[solovay-strassen]
 
 Robert Solovay and Volker Strassen published this in 1977, and it was the first randomised primality test to be widely noticed. Miller–Rabin has since replaced it in practice, because every strong liar is an Euler liar (Chapter 8, exercise 3) and strong liars are at most a quarter of the bases, not a half.
 
@@ -232,7 +232,7 @@ If $p \equiv 3 \pmod 4$ and $a$ is a quadratic residue modulo $p$, then $x = a^{
 :::
 
 :::proof
-$(p + 1)/4$ is an integer, and $x^2 = a^{(p+1)/2} = a \cdot a^{(p-1)/2} \equiv a \cdot 1$ by Euler's criterion.
+$(p + 1)/4$ is an integer, and $x^2 = a^{(p+1)/2} = a \cdot a^{(p-1)/2} \equiv a \cdot 1$ by Euler’s criterion.
 :::
 
 For $p \equiv 1 \pmod 4$ there is no such formula, but there are efficient algorithms. The **Tonelli–Shanks algorithm** (Tonelli 1891, Shanks 1973) writes $p - 1 = 2^s d$ with $d$ odd, starts from the guess $x = a^{(d+1)/2}$, for which $x^2 = a \cdot a^d$, and then repairs the error $a^d$ (an element whose order is a power of $2$) using powers of a fixed non-residue, one bit at a time. It takes $O(s^2)$ multiplications after the initial exponentiations. Finding the non-residue is the only randomised step: half of all residues work, but nobody can prove that a *small* non-residue always exists without assuming the generalised Riemann Hypothesis, under which one below $2(\log p)^2$ exists.:cite[crandall-pomerance]
@@ -240,15 +240,15 @@ For $p \equiv 1 \pmod 4$ there is no such formula, but there are efficient algor
 Modulo a composite $n = pq$, square roots are as hard as factoring. If you could find square roots modulo $n$, pick a random $x$, ask for a square root $y$ of $x^2$; with probability $\frac12$, $y \not\equiv \pm x$, and then $\gcd(x - y, n)$ is a factor. This is the reason the Rabin cryptosystem is provably as hard to break as factoring, and it is the same trick the quadratic sieve (Chapter 12) is built on.
 
 :::key
-- Modulo an odd prime, half the non-zero residues are squares. Euler's criterion: $\left(\frac ap\right) \equiv a^{(p-1)/2}$.
+- Modulo an odd prime, half the non-zero residues are squares. Euler’s criterion: $\left(\frac ap\right) \equiv a^{(p-1)/2}$.
 - $-1$ is a square iff $p \equiv 1 \pmod 4$; hence infinitely many primes $4k + 1$. $2$ is a square iff $p \equiv \pm 1 \pmod 8$.
-- Quadratic reciprocity: $\left(\frac pq\right)\left(\frac qp\right) = (-1)^{\frac{p-1}{2}\frac{q-1}{2}}$. Eisenstein's proof counts lattice points on the two sides of a diagonal.
+- Quadratic reciprocity: $\left(\frac pq\right)\left(\frac qp\right) = (-1)^{\frac{p-1}{2}\frac{q-1}{2}}$. Eisenstein’s proof counts lattice points on the two sides of a diagonal.
 - The Jacobi symbol extends the Legendre symbol to odd moduli and is computed like a gcd. Solovay–Strassen tests primality with it.
 - Square roots modulo $p$ are easy (one exponentiation when $p \equiv 3 \bmod 4$; Tonelli–Shanks otherwise); modulo $pq$ they are as hard as factoring.
 :::
 
 :::exercises
-1. Use Gauss's lemma with $a = 2$ to show that $\left(\frac 2p\right) = 1$ exactly when $p \equiv \pm 1 \pmod 8$. Then show there are infinitely many primes $8k + 7$. (Hint: consider $\frac12\left((4p_1 \cdots p_n)^2 - 2\right) = 8(p_1 \cdots p_n)^2 - 1$.)
+1. Use Gauss’s lemma with $a = 2$ to show that $\left(\frac 2p\right) = 1$ exactly when $p \equiv \pm 1 \pmod 8$. Then show there are infinitely many primes $8k + 7$. (Hint: consider $\frac12\left((4p_1 \cdots p_n)^2 - 2\right) = 8(p_1 \cdots p_n)^2 - 1$.)
 2. For which primes $p$ is $3$ a quadratic residue? Answer in terms of $p \bmod 12$.
 3. Show that $\varepsilon(n) = (-1)^{(n-1)/2}$ satisfies $\varepsilon(mn) = \varepsilon(m)\varepsilon(n)$ for odd $m, n$, and use it to extend quadratic reciprocity to the Jacobi symbol.
 4. Show that if $p \equiv 1 \pmod 4$ is prime and $x = \left(\frac{p-1}{2}\right)!$, then $x^2 \equiv -1 \pmod p$ (this is Chapter 6, exercise 2). Use it to find a square root of $-1$ modulo $13$.

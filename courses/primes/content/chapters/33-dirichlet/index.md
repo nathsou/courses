@@ -22,7 +22,7 @@ The proof introduced characters and $L$-functions, two of the most important ide
 
 **Primes $\equiv 1 \pmod 4$.** If $p_1, \ldots, p_k$ were all of them, consider $N = (2p_1\cdots p_k)^2 + 1$. Any prime factor $p$ of $N$ is odd and has $-1$ as a square modulo $p$, so $p \equiv 1 \pmod 4$ (Chapter 9); and it is not one of the $p_i$.
 
-Similar tricks handle $a \equiv 1 \pmod q$ for every $q$ (using cyclotomic polynomials, exercise 3), and a few other cases, but no such trick is known for general $a$. For that, Dirichlet adapted Euler's proof that $\sum_p 1/p$ diverges (Chapter 4), using a function that singles out the residue class $a$.
+Similar tricks handle $a \equiv 1 \pmod q$ for every $q$ (using cyclotomic polynomials, exercise 3), and a few other cases, but no such trick is known for general $a$. For that, Dirichlet adapted Euler’s proof that $\sum_p 1/p$ diverges (Chapter 4), using a function that singles out the residue class $a$.
 
 ## Characters
 
@@ -86,10 +86,10 @@ Sum the logarithms: $\sum_\chi\log L(s, \chi) = \sum_{p, k}\frac{1}{kp^{ks}}\sum
 :::
 
 :::proof[Proof of the theorem for complex χ]
-If $L(1, \chi) = 0$ for a complex character, then also $L(1, \bar\chi) = \overline{L(1, \chi)} = 0$, and $\bar\chi \ne \chi$. In the product $\prod_\chi L(s, \chi)$, as $s \to 1^+$: the factor $L(s, \chi_0)$ grows like $\frac{C}{s - 1}$; the factors $L(s, \chi)$ and $L(s, \bar\chi)$ are holomorphic and vanish at $1$, so each is $O(s - 1)$; and the others are bounded. The product is $O(s - 1) \to 0$, contradicting the lemma. (This is the same "two zeros beat one pole" count as in Chapter 25.)
+If $L(1, \chi) = 0$ for a complex character, then also $L(1, \bar\chi) = \overline{L(1, \chi)} = 0$, and $\bar\chi \ne \chi$. In the product $\prod_\chi L(s, \chi)$, as $s \to 1^+$: the factor $L(s, \chi_0)$ grows like $\frac{C}{s - 1}$; the factors $L(s, \chi)$ and $L(s, \bar\chi)$ are holomorphic and vanish at $1$, so each is $O(s - 1)$; and the others are bounded. The product is $O(s - 1) \to 0$, contradicting the lemma. (This is the same “two zeros beat one pole” count as in Chapter 25.)
 :::
 
-For a real character $\chi \ne \chi_0$, only one factor could vanish, and one zero exactly cancels the pole. A different idea is needed: positivity of coefficients, and Landau's theorem from Chapter 30 in its form for series.
+For a real character $\chi \ne \chi_0$, only one factor could vanish, and one zero exactly cancels the pole. A different idea is needed: positivity of coefficients, and Landau’s theorem from Chapter 30 in its form for series.
 
 :::proof[Proof of the theorem for real χ]
 Consider $F(s) = \zeta(s)L(s, \chi) = \sum_{n \ge 1}a_nn^{-s}$, where $a_n = \sum_{d \mid n}\chi(d)$ (Dirichlet convolution, Chapter 19). The function $a$ is multiplicative, and at a prime power $p^k$, since $\chi(p) \in \{1, -1, 0\}$,
@@ -98,12 +98,12 @@ So $a_n \ge 0$ for all $n$, and $a_{m^2} \ge 1$ for every $m$.
 
 Suppose $L(1, \chi) = 0$. Then $F$, which is holomorphic on $\operatorname{Re}s > 0$ except possibly at $s = 1$, has no pole at $1$: the zero of $L$ cancels the simple pole of $\zeta$. So $F$ is holomorphic on the whole half-plane $\operatorname{Re}s > 0$.
 
-**Landau's theorem** for Dirichlet series with nonnegative coefficients says: if $\sum a_nn^{-s}$ converges for $\operatorname{Re}s > \sigma_c$ but not to the left, then its sum cannot be continued holomorphically to a neighbourhood of the real point $\sigma_c$. (The proof is the one given in Chapter 30: expand in a Taylor series at a real point to the right of $\sigma_c$, and use positivity to exchange the sums.) Since $F$ is holomorphic on the real interval $(0, \infty)$, the series $\sum a_nn^{-s}$ must converge for every real $s > 0$. But at $s = \frac12$,
+**Landau’s theorem** for Dirichlet series with nonnegative coefficients says: if $\sum a_nn^{-s}$ converges for $\operatorname{Re}s > \sigma_c$ but not to the left, then its sum cannot be continued holomorphically to a neighbourhood of the real point $\sigma_c$. (The proof is the one given in Chapter 30: expand in a Taylor series at a real point to the right of $\sigma_c$, and use positivity to exchange the sums.) Since $F$ is holomorphic on the real interval $(0, \infty)$, the series $\sum a_nn^{-s}$ must converge for every real $s > 0$. But at $s = \frac12$,
 $$\sum_n\frac{a_n}{\sqrt n} \ge \sum_m\frac{a_{m^2}}{m} \ge \sum_m\frac1m = \infty.$$
 This contradiction shows $L(1, \chi) \ne 0$.
 :::
 
-That completes the proof of Dirichlet's theorem. Dirichlet's own argument for real characters was different: he computed $L(1, \chi)$ in terms of the class number of a quadratic form, which is a positive integer. That **class number formula** is a deep result in its own right; for example $L(1, \chi_{-4}) = 1 - \frac13 + \frac15 - \cdots = \frac\pi4$ corresponds to the class number $1$ of the form $x^2 + y^2$.
+That completes the proof of Dirichlet’s theorem. Dirichlet’s own argument for real characters was different: he computed $L(1, \chi)$ in terms of the class number of a quadratic form, which is a positive integer. That **class number formula** is a deep result in its own right; for example $L(1, \chi_{-4}) = 1 - \frac13 + \frac15 - \cdots = \frac\pi4$ corresponds to the class number $1$ of the form $x^2 + y^2$.
 
 ```numeric
 id: dirichlet/l1-mod-3
@@ -116,7 +116,7 @@ hints:
 
 ## Equidistribution
 
-Dirichlet's theorem says each admissible class gets infinitely many primes. In fact they share them equally.
+Dirichlet’s theorem says each admissible class gets infinitely many primes. In fact they share them equally.
 
 ::residue-shares
 
@@ -124,7 +124,7 @@ Dirichlet's theorem says each admissible class gets infinitely many primes. In f
 If $\gcd(a, q) = 1$, then $\pi(x; q, a) = \#\{p \le x : p \equiv a \pmod q\} \sim \dfrac{\pi(x)}{\varphi(q)}$.
 :::
 
-The proof combines this chapter with Chapters 24–26: one needs $L(1 + it, \chi) \ne 0$ for all real $t$ (the 3–4–1 argument works, exercise 5) and Newman's method for each $L$-function. Quantitative versions raise new problems. The error term depends on the zeros of $L(s, \chi)$, and the **generalised Riemann Hypothesis** (all nontrivial zeros on $\operatorname{Re}s = \frac12$) would give $\pi(x; q, a) = \frac{\operatorname{Li}(x)}{\varphi(q)} + O(\sqrt x\log(qx))$. Unconditionally, a possible real zero of $L(s, \chi)$ very close to $s = 1$ (a **Siegel zero**) cannot yet be ruled out, and it limits what can be proved when $q$ is large compared with $x$.
+The proof combines this chapter with Chapters 24–26: one needs $L(1 + it, \chi) \ne 0$ for all real $t$ (the 3–4–1 argument works, exercise 5) and Newman’s method for each $L$-function. Quantitative versions raise new problems. The error term depends on the zeros of $L(s, \chi)$, and the **generalised Riemann Hypothesis** (all nontrivial zeros on $\operatorname{Re}s = \frac12$) would give $\pi(x; q, a) = \frac{\operatorname{Li}(x)}{\varphi(q)} + O(\sqrt x\log(qx))$. Unconditionally, a possible real zero of $L(s, \chi)$ very close to $s = 1$ (a **Siegel zero**) cannot yet be ruled out, and it limits what can be proved when $q$ is large compared with $x$.
 
 How far must one go to find the first prime $\equiv a \pmod q$? Linnik proved in 1944 that it is at most $q^L$ for an absolute constant $L$; the current record is $L = 5$ (Xylouris, 2011). GRH would give about $q^2\log^2q$, and it is conjectured that $q^{1 + \varepsilon}$ suffices.
 
@@ -132,7 +132,7 @@ How far must one go to find the first prime $\equiv a \pmod q$? Linnik proved in
 - If $\gcd(a, q) = 1$ there are infinitely many primes $\equiv a \pmod q$, and $\sum_{p \equiv a}1/p$ diverges.
 - Characters $\chi$ modulo $q$ isolate the class $a$: $\frac1{\varphi(q)}\sum_\chi\overline{\chi(a)}\chi(n) = [n \equiv a]$. Their $L$-functions have Euler products, and $\sum_{p \equiv a}p^{-s} = \frac{1}{\varphi(q)}\sum_\chi\overline{\chi(a)}\log L(s, \chi) + O(1)$.
 - The principal character gives the divergence; the others must stay bounded, which is $L(1, \chi) \ne 0$.
-- Complex $\chi$: $\prod_\chi L(s, \chi) \ge 1$ and two zeros would beat one pole. Real $\chi$: $\zeta(s)L(s, \chi)$ has nonnegative coefficients with $a_{m^2} \ge 1$, and Landau's theorem forbids a cancellation of the pole.
+- Complex $\chi$: $\prod_\chi L(s, \chi) \ge 1$ and two zeros would beat one pole. Real $\chi$: $\zeta(s)L(s, \chi)$ has nonnegative coefficients with $a_{m^2} \ge 1$, and Landau’s theorem forbids a cancellation of the pole.
 - The primes are equidistributed among the $\varphi(q)$ classes; error terms involve GRH and possible Siegel zeros.
 :::
 

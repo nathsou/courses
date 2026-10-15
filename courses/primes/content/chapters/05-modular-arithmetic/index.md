@@ -8,7 +8,7 @@ theorems: [Inverses modulo n, The Chinese remainder theorem, Euler’s φ is mul
 techniques: [congruences, constructive proof, binary expansion]
 ---
 
-At $10$ o'clock, five hours later it is $3$ o'clock, not $15$. Arithmetic in which numbers wrap around is called **modular arithmetic**, and it is the setting for almost everything in Part II: primality tests, factoring algorithms and cryptography all compute with remainders. Gauss introduced the notation in 1801, and it made arguments about divisibility so much shorter that it has been used ever since.:cite[gauss1801]
+At $10$ o’clock, five hours later it is $3$ o’clock, not $15$. Arithmetic in which numbers wrap around is called **modular arithmetic**, and it is the setting for almost everything in Part II: primality tests, factoring algorithms and cryptography all compute with remainders. Gauss introduced the notation in 1801, and it made arguments about divisibility so much shorter that it has been used ever since.:cite[gauss1801]
 
 ## Congruences
 
@@ -55,12 +55,12 @@ Let $n \ge 2$. An integer $a$ has an **inverse** modulo $n$ (an integer $x$ with
 :::
 
 :::proof
-If $\gcd(a, n) = 1$, Bézout's identity gives $ax + ny = 1$ for some integers $x, y$, so $ax \equiv 1 \pmod n$. Conversely, if $ax \equiv 1 \pmod n$, then $ax - 1 = ny$ for some $y$, so $ax - ny = 1$, and any common divisor of $a$ and $n$ divides $1$.
+If $\gcd(a, n) = 1$, Bézout’s identity gives $ax + ny = 1$ for some integers $x, y$, so $ax \equiv 1 \pmod n$. Conversely, if $ax \equiv 1 \pmod n$, then $ax - 1 = ny$ for some $y$, so $ax - ny = 1$, and any common divisor of $a$ and $n$ divides $1$.
 
 For uniqueness, if $ax \equiv ax' \equiv 1$, then $x \equiv x(ax') = (xa)x' \equiv x' \pmod n$.
 :::
 
-The residues coprime to $n$ are the **units** of $\mathbb{Z}/n\mathbb{Z}$, and their number is **Euler's totient** $\varphi(n)$. So $\varphi(12) = 4$ (the units are $1, 5, 7, 11$) and $\varphi(p) = p - 1$ for a prime $p$.
+The residues coprime to $n$ are the **units** of $\mathbb{Z}/n\mathbb{Z}$, and their number is **Euler’s totient** $\varphi(n)$. So $\varphi(12) = 4$ (the units are $1, 5, 7, 11$) and $\varphi(p) = p - 1$ for a prime $p$.
 
 When $p$ is prime, every non-zero residue is a unit, so you can divide by anything except $0$. That makes $\mathbb{Z}/p\mathbb{Z}$ a **field**, like the rationals or the reals but finite, and it is often written $\mathbb{F}_p$. Much of what you know about solving equations carries over to it: a linear equation $ax = b$ with $a \not\equiv 0$ has exactly one solution, and (Chapter 6 and Appendix E) a polynomial of degree $d$ has at most $d$ roots. Modulo a composite, both facts fail: $x^2 \equiv 1 \pmod 8$ has four solutions.
 
@@ -101,11 +101,11 @@ Build, for each $i$, a number $e_i$ that is $1$ modulo $n_i$ and $0$ modulo all 
 $$x = \sum_{i=1}^{k} a_i M_i y_i.$$
 Modulo $n_j$, every term with $i \ne j$ vanishes (as $n_j \mid M_i$), and the $j$-th term is $a_j M_j y_j \equiv a_j \pmod{n_j}$.
 
-*Uniqueness.* If $x$ and $x'$ are both solutions, then each $n_i$ divides $x - x'$. The $n_i$ are pairwise coprime, so their product divides $x - x'$. (By induction: if $n_1 \cdots n_{i-1}$ divides $c$, write $c = n_1 \cdots n_{i-1}\, t$; then $n_i \mid c$ and $\gcd(n_i, n_1 \cdots n_{i-1}) = 1$ give $n_i \mid t$ by the corollary to Euclid's lemma in Chapter 3.)
+*Uniqueness.* If $x$ and $x'$ are both solutions, then each $n_i$ divides $x - x'$. The $n_i$ are pairwise coprime, so their product divides $x - x'$. (By induction: if $n_1 \cdots n_{i-1}$ divides $c$, write $c = n_1 \cdots n_{i-1}\, t$; then $n_i \mid c$ and $\gcd(n_i, n_1 \cdots n_{i-1}) = 1$ give $n_i \mid t$ by the corollary to Euclid’s lemma in Chapter 3.)
 :::
 ::::
 
-For Sunzi's problem: $N = 105$, $M_1 = 35 \equiv 2 \pmod 3$ with inverse $2$; $M_2 = 21 \equiv 1 \pmod 5$ with inverse $1$; $M_3 = 15 \equiv 1 \pmod 7$ with inverse $1$. So $x = 2 \cdot 35 \cdot 2 + 3 \cdot 21 \cdot 1 + 2 \cdot 15 \cdot 1 = 233 \equiv 23 \pmod{105}$.
+For Sunzi’s problem: $N = 105$, $M_1 = 35 \equiv 2 \pmod 3$ with inverse $2$; $M_2 = 21 \equiv 1 \pmod 5$ with inverse $1$; $M_3 = 15 \equiv 1 \pmod 7$ with inverse $1$. So $x = 2 \cdot 35 \cdot 2 + 3 \cdot 21 \cdot 1 + 2 \cdot 15 \cdot 1 = 233 \equiv 23 \pmod{105}$.
 
 ```numeric
 id: crt/sunzi-variant

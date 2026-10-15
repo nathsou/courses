@@ -18,11 +18,11 @@ $$\xi(s) = \xi(1 - s).$$
 Equivalently, $\zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(1 - s)\,\zeta(1 - s)$.
 :::
 
-The factor $\pi^{-s/2}\Gamma(s/2)$ is the "missing Euler factor at infinity", and $\frac12 s(s-1)$ removes two poles. The ingredients are the Gamma function and a function of Jacobi, the theta function, whose own symmetry comes from Fourier analysis. Riemann gave two proofs; this is the second.:cite[riemann1859]
+The factor $\pi^{-s/2}\Gamma(s/2)$ is the “missing Euler factor at infinity”, and $\frac12 s(s-1)$ removes two poles. The ingredients are the Gamma function and a function of Jacobi, the theta function, whose own symmetry comes from Fourier analysis. Riemann gave two proofs; this is the second.:cite[riemann1859]
 
 ## Ingredient 1: the Gamma function
 
-Euler's Gamma function extends the factorial. Appendix D proves everything stated here.
+Euler’s Gamma function extends the factorial. Appendix D proves everything stated here.
 
 :::definition
 For $\operatorname{Re} s > 0$, $\displaystyle\Gamma(s) = \int_0^\infty e^{-x}x^{s-1}\,dx$.
@@ -106,7 +106,7 @@ In $\zeta(s) = \pi^{s/2}\,\Lambda(s)\cdot\frac{1}{\Gamma(s/2)}$, the factor $\fr
 
 Setting $s = 2k$ in the asymmetric form (in the version with $s$ and $1 - s$ swapped: $\zeta(1 - s) = 2(2\pi)^{-s}\cos(\frac{\pi s}2)\Gamma(s)\zeta(s)$, exercise 2) and using $\zeta(1 - 2k) = -B_{2k}/(2k)$ from Chapter 20:
 $$\zeta(2k) = \frac{(-1)^{k+1}B_{2k}\,(2\pi)^{2k}}{2\,(2k)!}, \qquad \zeta(2) = \frac{\pi^2}6,\quad\zeta(4) = \frac{\pi^4}{90},\quad\zeta(6) = \frac{\pi^6}{945}.$$
-Euler's values at the positive even integers are the mirror images of the values at the negative odd integers.
+Euler’s values at the positive even integers are the mirror images of the values at the negative odd integers.
 
 ```numeric
 id: functional-equation/zeta-8
@@ -157,7 +157,7 @@ Taking the logarithmic derivative of this product, and of the definition of $\xi
 :::key
 - $\Gamma(s) = \int_0^\infty e^{-x}x^{s-1}dx$ turns exponentials into powers: $\int_0^\infty e^{-au}u^{s-1}du = a^{-s}\Gamma(s)$.
 - Poisson summation $\sum f(n) = \sum\hat f(n)$, applied to a Gaussian, gives $\theta(1/x) = \sqrt x\,\theta(x)$.
-- Riemann's proof: $\pi^{-s/2}\Gamma(s/2)\zeta(s) = \int_0^\infty\omega(x)x^{s/2 - 1}dx$; folding at $x = 1$ with the theta formula gives a formula that is visibly symmetric under $s \leftrightarrow 1 - s$ and valid everywhere.
+- Riemann’s proof: $\pi^{-s/2}\Gamma(s/2)\zeta(s) = \int_0^\infty\omega(x)x^{s/2 - 1}dx$; folding at $x = 1$ with the theta formula gives a formula that is visibly symmetric under $s \leftrightarrow 1 - s$ and valid everywhere.
 - $\xi(s) = \frac12 s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$ is entire and $\xi(s) = \xi(1 - s)$. Trivial zeros come from the poles of $\Gamma(s/2)$; the nontrivial zeros lie in $0 \le \sigma \le 1$, symmetric about $\sigma = \frac12$ and the real axis.
 - $\xi$ is real on the critical line, so zeros there are sign changes.
 :::
@@ -166,7 +166,7 @@ Taking the logarithmic derivative of this product, and of the definition of $\xi
 1. Check the theta formula numerically at $x = 1/2$: compute $\theta(2)$ and $\theta(1/2)/\sqrt2$ by hand to four decimal places. How many terms does each need?
 2. Derive $\zeta(1 - s) = 2(2\pi)^{-s}\cos\left(\frac{\pi s}{2}\right)\Gamma(s)\zeta(s)$ from the form in the theorem by replacing $s$ with $1 - s$ and using the reflection formula.
 3. Use the functional equation to show that $\zeta'(0)/\zeta(0) = \log 2\pi$, so $\zeta'(0) = -\frac12\log 2\pi$. (Take logarithmic derivatives of the asymmetric form at $s = 0$, and use $\zeta(1 + \varepsilon) \approx 1/\varepsilon$ together with $\Gamma(1 - s)\sin(\pi s/2) \approx \frac{\pi s}{2}$.)
-4. Show that $|\zeta(-\sigma + it)| \asymp |t|^{\frac12 + \sigma}|\zeta(1 + \sigma - it)|$ as $|t| \to \infty$ for fixed $\sigma$, using Stirling's formula $|\Gamma(x + iy)| \sim \sqrt{2\pi}|y|^{x - 1/2}e^{-\pi|y|/2}$ (Appendix D). Deduce that $\zeta$ grows polynomially in $|t|$ on every vertical line.
+4. Show that $|\zeta(-\sigma + it)| \asymp |t|^{\frac12 + \sigma}|\zeta(1 + \sigma - it)|$ as $|t| \to \infty$ for fixed $\sigma$, using Stirling’s formula $|\Gamma(x + iy)| \sim \sqrt{2\pi}|y|^{x - 1/2}e^{-\pi|y|/2}$ (Appendix D). Deduce that $\zeta$ grows polynomially in $|t|$ on every vertical line.
 5. Show that the zeros of $\xi$ in the critical strip are the same as those of $\zeta$, including multiplicities.
 6. Poisson summation also holds for $f(u) = \frac{1}{1 + u^2}$, whose Fourier transform is $\hat f(v) = \pi e^{-2\pi|v|}$. Use it to find a closed form for $\sum_{n \in \Z}\frac{1}{1 + n^2}$, and check it numerically.
 :::

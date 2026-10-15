@@ -14,7 +14,7 @@ On 7 June 1742 Christian Goldbach wrote to Leonhard Euler suggesting that every 
 Every even integer $n \ge 4$ is the sum of two primes.
 :::
 
-The **ternary** (or "weak") Goldbach conjecture is that every odd $n \ge 7$ is a sum of three primes; it follows from the binary one (subtract $3$). The binary conjecture has been checked by computer for every even number up to $4 \times 10^{18}$ (Oliveira e Silva, Herzog and Pardi, 2014).:cite[oliveira2014] The ternary conjecture is now a theorem.
+The **ternary** (or “weak”) Goldbach conjecture is that every odd $n \ge 7$ is a sum of three primes; it follows from the binary one (subtract $3$). The binary conjecture has been checked by computer for every even number up to $4 \times 10^{18}$ (Oliveira e Silva, Herzog and Pardi, 2014).:cite[oliveira2014] The ternary conjecture is now a theorem.
 
 ## The comet
 
@@ -22,7 +22,7 @@ Let $r(n)$ be the number of ordered pairs of primes $(p, q)$ with $p + q = n$. P
 
 ::goldbach-comet
 
-The number of representations grows steadily, roughly like $n/\log^2n$, so a counterexample would have to be a dramatic outlier. The comet has distinct bands. They come from small primes, as in Chapter 18: if $3 \mid n$, then $p + q = n$ with $p, q \ne 3$ forces $q \equiv -p \pmod 3$, which is automatic among the two allowed classes, whereas for $3 \nmid n$ one of the two choices of $p \bmod 3$ is ruled out. Hardy and Littlewood's heuristic, the same singular series reasoning as for twin primes, predicts
+The number of representations grows steadily, roughly like $n/\log^2n$, so a counterexample would have to be a dramatic outlier. The comet has distinct bands. They come from small primes, as in Chapter 18: if $3 \mid n$, then $p + q = n$ with $p, q \ne 3$ forces $q \equiv -p \pmod 3$, which is automatic among the two allowed classes, whereas for $3 \nmid n$ one of the two choices of $p \bmod 3$ is ruled out. Hardy and Littlewood’s heuristic, the same singular series reasoning as for twin primes, predicts
 $$r(n) \sim 2C_2\prod_{\substack{p \mid n\\ p > 2}}\frac{p - 1}{p - 2}\cdot\frac{n}{\log^2n},$$
 with the twin prime constant $C_2 = 0.6601\ldots$ Dividing by this prediction collapses the comet onto a single band around $1$.
 
@@ -44,13 +44,13 @@ by Parseval. The last factor is about $n\log n$, while the main term is of size 
 Every sufficiently large odd integer is a sum of three primes.
 :::
 
-Ivan Vinogradov proved the needed bound for $S(\alpha)$ on the minor arcs in 1937, unconditionally, by decomposing sums over primes into bilinear sums (a precursor of "Vaughan's identity").:cite[vinogradov1937] Hardy and Littlewood had done it in 1923 assuming GRH. "Sufficiently large" was at first ineffective, and later explicit but astronomical (Borozdkin gave $3^{3^{15}}$ in 1956, a number with about $6{,}846{,}169$ digits), far beyond any computer check.
+Ivan Vinogradov proved the needed bound for $S(\alpha)$ on the minor arcs in 1937, unconditionally, by decomposing sums over primes into bilinear sums (a precursor of “Vaughan’s identity”).:cite[vinogradov1937] Hardy and Littlewood had done it in 1923 assuming GRH. “Sufficiently large” was at first ineffective, and later explicit but astronomical (Borozdkin gave $3^{3^{15}}$ in 1956, a number with about $6{,}846{,}169$ digits), far beyond any computer check.
 
 :::theorem{name="Ternary Goldbach" who="Helfgott" year=2013 status=stated}
 Every odd integer $n \ge 7$ is a sum of three primes. Consequently every even integer $n \ge 4$ is a sum of at most four primes.
 :::
 
-Harald Helfgott closed the gap in 2013 by sharpening every estimate in the circle method to the point where the "sufficiently large" threshold dropped to about $10^{27}$, and combining it with a computer verification below that bound (using the binary Goldbach verification to $4 \times 10^{18}$ and a ladder of primes).:cite[helfgott2013]
+Harald Helfgott closed the gap in 2013 by sharpening every estimate in the circle method to the point where the “sufficiently large” threshold dropped to about $10^{27}$, and combining it with a computer verification below that bound (using the binary Goldbach verification to $4 \times 10^{18}$ and a ladder of primes).:cite[helfgott2013]
 
 For the binary conjecture, the best results are of two kinds. **Almost all** even numbers are Goldbach numbers: the number of exceptions up to $x$ is $O(x^{1-\delta})$ for some $\delta > 0$ (Montgomery and Vaughan, 1975). And sieves give **almost primes**: Chen proved in 1973 that every sufficiently large even number is $p + P_2$, where $P_2$ is a prime or a product of two primes (Chapter 36).:cite[chen1973]
 
@@ -114,7 +114,7 @@ A different kind of additive pattern: $3, 5, 7$ and $5, 11, 17, 23, 29$ are arit
 For every $k$ there are infinitely many arithmetic progressions of $k$ primes.:cite[green-tao2008]
 :::
 
-Ben Green and Terence Tao proved this in 2004 by combining **Szemerédi's theorem** (every subset of the integers with positive upper density contains arbitrarily long progressions) with a "transference principle": the primes, though of density zero, sit inside a set of "pseudorandom" almost-primes in which they have positive relative density, and Szemerédi's theorem can be made to work relative to such a set. The proof gives no useful bound on where the progressions are. The longest known has $27$ terms (found in 2019 by a distributed computation).
+Ben Green and Terence Tao proved this in 2004 by combining **Szemerédi’s theorem** (every subset of the integers with positive upper density contains arbitrarily long progressions) with a “transference principle”: the primes, though of density zero, sit inside a set of “pseudorandom” almost-primes in which they have positive relative density, and Szemerédi’s theorem can be made to work relative to such a set. The proof gives no useful bound on where the progressions are. The longest known has $27$ terms (found in 2019 by a distributed computation).
 
 The common difference of a progression of $k$ primes must be divisible by every prime $p \le k$, unless the progression starts at $p$: otherwise the terms cover all residues modulo $p$. The widget shows this happening: the shortest progressions of length $7$ to $10$ have differences $150$ and $210$.
 

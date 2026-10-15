@@ -8,7 +8,7 @@ theorems: [The sieve is correct, The sieve costs O(n log log n), The linear siev
 techniques: [algorithm correctness, harmonic sums, cache-aware design]
 ---
 
-Trial division answers "is this number prime?" one number at a time. To list *all* the primes up to $N$, there is something far better, and it is more than 2,000 years old. Eratosthenes of Cyrene, the librarian of Alexandria who also estimated the circumference of the Earth, is credited with it by Nicomachus of Gerasa, writing around 100 AD.:cite[oconnor-eratosthenes] The idea is to never test a number at all: instead, cross out everything that is *not* prime, and see what is left.
+Trial division answers “is this number prime?” one number at a time. To list *all* the primes up to $N$, there is something far better, and it is more than 2,000 years old. Eratosthenes of Cyrene, the librarian of Alexandria who also estimated the circumference of the Earth, is credited with it by Nicomachus of Gerasa, writing around 100 AD.:cite[oconnor-eratosthenes] The idea is to never test a number at all: instead, cross out everything that is *not* prime, and see what is left.
 
 ## The sieve
 
@@ -60,7 +60,7 @@ The sieve of Eratosthenes makes $N \log\log N + O(N)$ crossings to list the prim
 :::
 
 :::proof
-The number of crossings is $\sum_{p \le \sqrt N} \left(\lfloor N/p \rfloor - p + 1\right)$, which differs from $N \sum_{p \le \sqrt N} 1/p$ by at most $\sum_{p \le \sqrt N} p \le N$. **Mertens' second theorem**, proved in Chapter 17, says $\sum_{p \le x} 1/p = \log\log x + O(1)$. With $x = \sqrt N$, $\log \log \sqrt N = \log\log N - \log 2$, so the total is $N\log\log N + O(N)$.
+The number of crossings is $\sum_{p \le \sqrt N} \left(\lfloor N/p \rfloor - p + 1\right)$, which differs from $N \sum_{p \le \sqrt N} 1/p$ by at most $\sum_{p \le \sqrt N} p \le N$. **Mertens’ second theorem**, proved in Chapter 17, says $\sum_{p \le x} 1/p = \log\log x + O(1)$. With $x = \sqrt N$, $\log \log \sqrt N = \log\log N - \log 2$, so the total is $N\log\log N + O(N)$.
 :::
 
 $\log \log N$ grows so slowly that it is practically a constant: it is about $2.6$ at $N = 10^6$, $3.0$ at $10^9$ and $3.6$ at $10^{16}$. For $N = 10^6$ the sieve makes $2{,}122{,}048$ crossings (the formula $N\log\log N$ gives $2.6$ million), about two per number. So listing all the primes up to $N$ costs barely more than writing the numbers down, whereas testing each number by trial division would cost about $N^{3/2}/\log N$ divisions.
@@ -73,7 +73,7 @@ The textbook sieve is simple, but on a modern machine its speed is dominated by 
 
 **Wheels.** Push the same idea further. Modulo $30 = 2 \cdot 3 \cdot 5$, only the $8$ residues $1, 7, 11, 13, 17, 19, 23, 29$ are coprime to $30$, so storing only those keeps $8/30 \approx 27\%$ of the numbers. With the primes up to $7$ the fraction is $48/210 \approx 23\%$, and in general it is $\prod_{p \le B}(1 - 1/p)$, which shrinks only like $1/\log B$ (Chapter 17 again), so large wheels give diminishing returns.
 
-**Segments.** A sieve up to $10^9$ needs a gigabyte at one byte per number, and every crossing touches a random place in it, missing the processor's cache. A **segmented sieve** first finds the primes up to $\sqrt N$ with a small sieve, then processes $[2, N]$ in blocks of, say, $64$ kilobytes, crossing out multiples of the small primes in each block. Memory falls to $O(\sqrt{N})$ plus one block, every access stays in cache, and, as a bonus, you can sieve *any* interval $[A, B]$ without sieving everything below it. That is how the course's library finds the $37$ primes between $10^{12}$ and $10^{12} + 1000$ in a millisecond, using only the $78{,}498$ primes below $10^6$.
+**Segments.** A sieve up to $10^9$ needs a gigabyte at one byte per number, and every crossing touches a random place in it, missing the processor’s cache. A **segmented sieve** first finds the primes up to $\sqrt N$ with a small sieve, then processes $[2, N]$ in blocks of, say, $64$ kilobytes, crossing out multiples of the small primes in each block. Memory falls to $O(\sqrt{N})$ plus one block, every access stays in cache, and, as a bonus, you can sieve *any* interval $[A, B]$ without sieving everything below it. That is how the course’s library finds the $37$ primes between $10^{12}$ and $10^{12} + 1000$ in a millisecond, using only the $78{,}498$ primes below $10^6$.
 
 **Bits.** One bit per number instead of one byte saves another factor of $8$ in memory, at the cost of some bit manipulation.
 
@@ -81,7 +81,7 @@ The race below runs five versions in your browser. All of them must agree.
 
 ::sieve-race
 
-Record-breaking implementations combine all of these, along with careful handling of small primes. Kim Walisch's *primesieve* counts the primes below $10^{10}$ in a fraction of a second on a laptop.:cite[primesieve] Asymptotically better sieves exist: the sieve of Atkin and Bernstein (2004) needs $O(N / \log\log N)$ operations,:cite[atkin-bernstein] but in practice well-engineered segmented Eratosthenes is hard to beat.
+Record-breaking implementations combine all of these, along with careful handling of small primes. Kim Walisch’s *primesieve* counts the primes below $10^{10}$ in a fraction of a second on a laptop.:cite[primesieve] Asymptotically better sieves exist: the sieve of Atkin and Bernstein (2004) needs $O(N / \log\log N)$ operations,:cite[atkin-bernstein] but in practice well-engineered segmented Eratosthenes is hard to beat.
 
 ### The linear sieve
 
@@ -165,7 +165,7 @@ In 1963, sitting through a dull talk at a meeting, Stanisław Ulam doodled the i
 
 The diagonals are not mysterious once you see what they are. In the Ulam spiral, numbers along a diagonal line are the values of a quadratic polynomial $4n^2 + bn + c$. Some quadratics are prime unusually often, because they avoid small prime factors: $n^2 + n + 41$ is never divisible by $2, 3, 5, \ldots, 37$ (it is always odd, for instance, since $n^2 + n$ is even), and it is prime for $n = 0, 1, \ldots, 39$, as Euler noticed in 1772.:cite[euler1772] No polynomial can be prime for *every* $n$ (exercise 3), but some come impressively close.
 
-How often a polynomial hits primes is a deep and mostly open question. Nobody has proved that $n^2 + 1$ is prime infinitely often (this is the last of the four "unattackable" problems Edmund Landau listed in 1912). Hardy and Littlewood conjectured in 1923 a precise formula for how many primes $n^2 + n + 41$ and its cousins should produce, with a constant measuring how well the polynomial avoids small primes. Chapter 18 explains where such formulas come from, and how well they match the data.
+How often a polynomial hits primes is a deep and mostly open question. Nobody has proved that $n^2 + 1$ is prime infinitely often (this is the last of the four “unattackable” problems Edmund Landau listed in 1912). Hardy and Littlewood conjectured in 1923 a precise formula for how many primes $n^2 + n + 41$ and its cousins should produce, with a constant measuring how well the polynomial avoids small primes. Chapter 18 explains where such formulas come from, and how well they match the data.
 
 :::key
 - The sieve crosses out the multiples of each prime $p \le \sqrt N$, starting at $p^2$. What remains is prime.

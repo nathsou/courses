@@ -56,7 +56,7 @@ Suppose $\zeta(1 + it_0) = 0$ for some $t_0 \ne 0$. We compare the three factors
 - $\zeta(\sigma + it_0)$: $\zeta$ is holomorphic near $1 + it_0$ (its only pole is at $1$) and vanishes there, so $|\zeta(\sigma + it_0)| \le C(\sigma - 1)$ for $\sigma$ close to $1$, by the Taylor expansion. So $|\zeta(\sigma + it_0)|^4 \le C^4(\sigma - 1)^4$.
 - $\zeta(\sigma + 2it_0)$: since $2t_0 \ne 0$, $\zeta$ is holomorphic near $1 + 2it_0$, hence bounded there: $|\zeta(\sigma + 2it_0)| \le C'$.
 
-Multiplying, $\left|\zeta(\sigma)^3\zeta(\sigma + it_0)^4\zeta(\sigma + 2it_0)\right| \le 8C^4C'(\sigma - 1)$, which tends to $0$ as $\sigma \to 1^+$. This contradicts Mertens' inequality.
+Multiplying, $\left|\zeta(\sigma)^3\zeta(\sigma + it_0)^4\zeta(\sigma + 2it_0)\right| \le 8C^4C'(\sigma - 1)$, which tends to $0$ as $\sigma \to 1^+$. This contradicts Mertens’ inequality.
 :::
 
 The exponent count is the whole proof: the pole of order $1$ at $s = 1$ appears with weight $3$, the putative zero (of order at least $1$) with weight $4$, and $4 > 3$. A pole at $1 + 2it_0$ would have spoiled it, but there is none.
@@ -92,7 +92,7 @@ options:
   - text: That $\zeta(1 + 2it_0) \ne 0$.
     why: A zero there would only make the product smaller, which helps the contradiction. Nothing about its value is needed beyond boundedness.
   - text: That $|\zeta(1 + 2it_0)| \ge 1$.
-    why: Mertens' inequality is applied at $\sigma > 1$ to the product of all three factors; no individual factor needs a lower bound.
+    why: Mertens’ inequality is applied at $\sigma > 1$ to the product of all three factors; no individual factor needs a lower bound.
 ```
 
 :::key
@@ -104,7 +104,7 @@ options:
 
 :::exercises
 1. Where does the proof use $t_0 \ne 0$? What goes wrong at $t_0 = 0$?
-2. Show that $5 + 8\cos\theta + 4\cos 2\theta + \cos 3\theta = (1 + \cos\theta)(1 + 2\cos\theta)^2 \ge 0$, and use it to give another proof that $\zeta(1 + it) \ne 0$. Which exponent now beats the pole's?
+2. Show that $5 + 8\cos\theta + 4\cos 2\theta + \cos 3\theta = (1 + \cos\theta)(1 + 2\cos\theta)^2 \ge 0$, and use it to give another proof that $\zeta(1 + it) \ne 0$. Which exponent now beats the pole’s?
 3. Let $\chi$ be a real Dirichlet character (Chapter 33) and $L(s, \chi) = \sum\chi(n)n^{-s}$. Adapt the argument to show $L(1 + it, \chi) \ne 0$ for $t \ne 0$. Why does it say nothing about $t = 0$?
 4. Show that $\zeta(\sigma + it)$ has no zeros for $\sigma > 1$ directly from $\log|\zeta(s)| \ge -\sum_p\sum_k\frac{1}{kp^{k\sigma}} = -\log\zeta(\sigma)$, that is $|\zeta(\sigma + it)| \ge 1/\zeta(\sigma)$.
 :::

@@ -8,9 +8,9 @@ theorems: [Korselt’s criterion, At most half the bases are strong liars, At mo
 techniques: [contrapositive testing, subgroups, the Chinese remainder theorem, randomised algorithms]
 ---
 
-Trial division needs about $\sqrt{n}$ steps, which is hopeless for a 300-digit number. Fermat's little theorem suggests something completely different: if $n$ is prime, then $a^{n-1} \equiv 1 \pmod n$ for every $a$ not divisible by $n$. Exponentiation by squaring computes $a^{n-1} \bmod n$ with about $2\log_2 n$ multiplications, a few thousand for a 300-digit number. So if the congruence *fails*, we learn that $n$ is composite, in a fraction of a second, without finding a single factor.
+Trial division needs about $\sqrt{n}$ steps, which is hopeless for a 300-digit number. Fermat’s little theorem suggests something completely different: if $n$ is prime, then $a^{n-1} \equiv 1 \pmod n$ for every $a$ not divisible by $n$. Exponentiation by squaring computes $a^{n-1} \bmod n$ with about $2\log_2 n$ multiplications, a few thousand for a 300-digit number. So if the congruence *fails*, we learn that $n$ is composite, in a fraction of a second, without finding a single factor.
 
-The catch is the other direction: if the congruence *holds*, is $n$ prime? This chapter is about that question. The answer is "not necessarily", then "not even if it holds for every base", and finally, with Miller and Rabin's refinement, "almost certainly, if it holds for a few random bases", with a theorem that says how certain.
+The catch is the other direction: if the congruence *holds*, is $n$ prime? This chapter is about that question. The answer is “not necessarily”, then “not even if it holds for every base”, and finally, with Miller and Rabin’s refinement, “almost certainly, if it holds for a few random bases”, with a theorem that says how certain.
 
 ## The Fermat test
 
@@ -18,7 +18,7 @@ The catch is the other direction: if the congruence *holds*, is $n$ prime? This 
 **Input:** an integer $n > 2$ and a base $1 < a < n - 1$. Compute $a^{n-1} \bmod n$. If it is not $1$, output **composite** (and $a$ is a **Fermat witness**). Otherwise output **probably prime**.
 :::
 
-"Composite" is always correct; it is Fermat's little theorem read backwards. "Probably prime" can be wrong. A composite $n$ with $a^{n-1} \equiv 1 \pmod n$ is a **Fermat pseudoprime to base $a$**, and $a$ is a **Fermat liar** for it.
+“Composite” is always correct; it is Fermat’s little theorem read backwards. “Probably prime” can be wrong. A composite $n$ with $a^{n-1} \equiv 1 \pmod n$ is a **Fermat pseudoprime to base $a$**, and $a$ is a **Fermat liar** for it.
 
 The smallest pseudoprime to base $2$ is $341 = 11 \cdot 31$: $2^{10} = 1024 = 3 \cdot 341 + 1$, so $2^{10} \equiv 1$, and hence $2^{340} = (2^{10})^{34} \equiv 1 \pmod{341}$. Pierre Frédéric Sarrus pointed this out in 1820, disproving a claim, which some have attributed to ancient China, that $2^{n-1} \equiv 1$ characterises primes.:cite[crandall-pomerance] But base $3$ exposes it: $3^{340} \equiv 56 \pmod{341}$. Pseudoprimes are rare; there are $21{,}853$ to base $2$ below $25 \times 10^9$, against about a billion primes.:cite[psw1980] So a natural plan is to try several bases.
 
@@ -63,23 +63,23 @@ By the Chinese remainder theorem, $a^{n-1} \equiv 1 \pmod n$ for all units $a$ e
 :::
 ::::
 
-Check $561$: $560 = 2^4 \cdot 5 \cdot 7$ is divisible by $2$, $10$ and $16$. The next Carmichael numbers are $1105 = 5 \cdot 13 \cdot 17$, $1729 = 7 \cdot 13 \cdot 19$ (Hardy's taxi-cab number), $2465$, $2821$, $6601$ and $8911$. Every Carmichael number is odd and has at least three prime factors (exercise 1). For a long time it was unknown whether there are infinitely many. In 1994 Alford, Granville and Pomerance proved that there are, and that for large $x$ there are more than $x^{2/7}$ of them below $x$.:cite[agp1994] So no fixed list of exceptions can repair the Fermat test.
+Check $561$: $560 = 2^4 \cdot 5 \cdot 7$ is divisible by $2$, $10$ and $16$. The next Carmichael numbers are $1105 = 5 \cdot 13 \cdot 17$, $1729 = 7 \cdot 13 \cdot 19$ (Hardy’s taxi-cab number), $2465$, $2821$, $6601$ and $8911$. Every Carmichael number is odd and has at least three prime factors (exercise 1). For a long time it was unknown whether there are infinitely many. In 1994 Alford, Granville and Pomerance proved that there are, and that for large $x$ there are more than $x^{2/7}$ of them below $x$.:cite[agp1994] So no fixed list of exceptions can repair the Fermat test.
 
 ## A better test: square roots of 1
 
-Miller's idea uses one more fact that holds modulo primes and fails modulo composites.
+Miller’s idea uses one more fact that holds modulo primes and fails modulo composites.
 
 :::lemma{status=proved}
 If $p$ is an odd prime and $x^2 \equiv 1 \pmod p$, then $x \equiv 1$ or $x \equiv -1 \pmod p$.
 :::
 
 :::proof
-$p \mid x^2 - 1 = (x - 1)(x + 1)$, so by Euclid's lemma $p \mid x - 1$ or $p \mid x + 1$.
+$p \mid x^2 - 1 = (x - 1)(x + 1)$, so by Euclid’s lemma $p \mid x - 1$ or $p \mid x + 1$.
 :::
 
 Modulo a composite there can be more square roots of $1$: modulo $561$, $67^2 = 4489 = 8 \cdot 561 + 1$, so $67^2 \equiv 1$ although $67 \not\equiv \pm 1$. Such a **non-trivial square root of 1** proves that $n$ is composite, and more: $n$ divides $(x-1)(x+1)$ but neither factor, so $\gcd(x - 1, n)$ is a proper factor of $n$. Here $\gcd(66, 561) = 33$.
 
-How do we find square roots of $1$? Write $n - 1 = 2^s d$ with $d$ odd. Fermat's test computes $a^{n-1}$, which is $a^d$ squared $s$ times:
+How do we find square roots of $1$? Write $n - 1 = 2^s d$ with $d$ odd. Fermat’s test computes $a^{n-1}$, which is $a^d$ squared $s$ times:
 $$a^d,\ a^{2d},\ a^{4d},\ \ldots,\ a^{2^s d} = a^{n-1}.$$
 If $n$ is prime, the last term is $1$. Look at the first $1$ in the sequence. Unless the sequence starts with $1$, the term just before it squares to $1$, so (by the lemma) it must be $-1$. So for a prime $n$, either $a^d \equiv 1$, or $a^{2^r d} \equiv -1$ for some $0 \le r < s$.
 
@@ -95,7 +95,7 @@ Gary Miller proposed the test in 1976 as a deterministic algorithm whose correct
 
 ## How often does a composite fool the test?
 
-The decisive difference from the Fermat test is that there are no "strong Carmichael numbers": every odd composite has many strong witnesses. Here is a complete proof that at least half of the bases are witnesses. The argument has a pleasing shape: the liars always fit inside a subgroup that is not the whole group, and Lagrange's theorem does the rest.
+The decisive difference from the Fermat test is that there are no “strong Carmichael numbers”: every odd composite has many strong witnesses. Here is a complete proof that at least half of the bases are witnesses. The argument has a pleasing shape: the liars always fit inside a subgroup that is not the whole group, and Lagrange’s theorem does the rest.
 
 :::theorem{status=proved}
 Let $n$ be an odd composite number. Then the strong liars for $n$ number at most $\varphi(n)/2$. So a random base $a \in [2, n-2]$ exposes $n$ with probability at least $\tfrac12$.
@@ -103,13 +103,13 @@ Let $n$ be an odd composite number. Then the strong liars for $n$ number at most
 
 ::::zoom{levels="Idea, Sketch, Proof"}
 :::level[Idea]
-Show that all strong liars lie in a subgroup $B$ of the units modulo $n$ that is not all of the units. By Lagrange's theorem, a proper subgroup has at most half the elements.
+Show that all strong liars lie in a subgroup $B$ of the units modulo $n$ that is not all of the units. By Lagrange’s theorem, a proper subgroup has at most half the elements.
 :::
 :::level[Sketch]
 If $n$ is not a Carmichael number, the Fermat liars $\{a : a^{n-1} \equiv 1\}$ are already a proper subgroup, and strong liars are Fermat liars. If $n$ is a Carmichael number, it is squarefree with at least two prime factors, so $n = n_1 n_2$ with coprime $n_1, n_2 > 1$. Take the largest $j$ for which some unit $v$ has $v^{2^j d} \equiv -1$, and let $B = \{x : x^{2^j d} \equiv \pm 1\}$. Every strong liar lies in $B$; and the Chinese remainder theorem builds a unit $w$ with $w^{2^j d} \equiv -1 \pmod{n_1}$ but $\equiv 1 \pmod{n_2}$, which is not in $B$.
 :::
 :::level[Proof]
-Write $n - 1 = 2^s d$ with $d$ odd, and let $U$ be the group of units modulo $n$, of order $\varphi(n)$. Every strong liar is a unit (if $\gcd(a, n) > 1$ then $a^{n-1} \not\equiv 1$, and also $a^{2^r d} \not\equiv -1$). We find a subgroup $B \ne U$ containing all strong liars; then $|B| \le |U|/2$ by Lagrange's theorem (Appendix E), since $|B|$ is a proper divisor of $|U|$.
+Write $n - 1 = 2^s d$ with $d$ odd, and let $U$ be the group of units modulo $n$, of order $\varphi(n)$. Every strong liar is a unit (if $\gcd(a, n) > 1$ then $a^{n-1} \not\equiv 1$, and also $a^{2^r d} \not\equiv -1$). We find a subgroup $B \ne U$ containing all strong liars; then $|B| \le |U|/2$ by Lagrange’s theorem (Appendix E), since $|B|$ is a proper divisor of $|U|$.
 
 *Case 1: $n$ is not a Carmichael number.* Let $B = \{a \in U : a^{n-1} \equiv 1\}$. It is a subgroup (closed under products and inverses, contains $1$). Every strong liar is in $B$, since passing the Miller–Rabin test implies $a^{n-1} \equiv 1$. And $B \ne U$ because $n$ is not a Carmichael number.
 
@@ -123,7 +123,7 @@ $B$ is a subgroup: it contains $1$, and if $a^{2^j d}, b^{2^j d} \in \{\pm 1\}$ 
 :::
 ::::
 
-This proof follows Cormen, Leiserson, Rivest and Stein's textbook.:cite[clrs] The truth is better still, and it is the number usually quoted.
+This proof follows Cormen, Leiserson, Rivest and Stein’s textbook.:cite[clrs] The truth is better still, and it is the number usually quoted.
 
 :::theorem{name="Monier; Rabin" year=1980 status=sketched}
 For odd composite $n > 9$, the number of strong liars is at most $\varphi(n)/4$.
@@ -212,7 +212,7 @@ hints:
 
 **Under the Riemann Hypothesis.** If the generalised Riemann Hypothesis (Chapter 33) is true, every odd composite $n$ has a strong witness below $2(\log n)^2$, so testing those bases is a deterministic polynomial-time algorithm (Miller 1976, with the constant from Bach 1990).:cite[miller1976,bach1990] This was one of the first places where the Riemann Hypothesis mattered for computer science.
 
-**Baillie–PSW.** Most software (Mathematica, PARI/GP, many cryptography libraries) combines one Miller–Rabin round to base $2$ with a different kind of test, a "strong Lucas probable prime" test (Chapter 10 introduces Lucas sequences). No composite is known that passes both, and every composite below $2^{64}$ has been checked.:cite[psw1980]
+**Baillie–PSW.** Most software (Mathematica, PARI/GP, many cryptography libraries) combines one Miller–Rabin round to base $2$ with a different kind of test, a “strong Lucas probable prime” test (Chapter 10 introduces Lucas sequences). No composite is known that passes both, and every composite below $2^{64}$ has been checked.:cite[psw1980]
 
 **Certainty.** A probable prime is not a proof. When a proof is needed, Chapter 10 shows how to certify primality, and in 2002 Agrawal, Kayal and Saxena showed that it can always be done in polynomial time.
 
@@ -226,6 +226,6 @@ hints:
 :::exercises
 1. Show that a Carmichael number is odd and has at least three prime factors. (If $n = pq$ with $p < q$, then $q - 1 \mid n - 1 = p(q-1) + p - 1$.)
 2. Show that if $6k + 1$, $12k + 1$ and $18k + 1$ are all prime, then their product is a Carmichael number (Chernick, 1939). Which $k$ gives $1729$?
-3. Show that every strong liar is an Euler liar: if $n$ passes Miller–Rabin to base $a$, then $a^{(n-1)/2} \equiv \pm 1 \pmod n$. (Chapter 9 makes "Euler liar" precise.)
+3. Show that every strong liar is an Euler liar: if $n$ passes Miller–Rabin to base $a$, then $a^{(n-1)/2} \equiv \pm 1 \pmod n$. (Chapter 9 makes “Euler liar” precise.)
 4. Using the Miller–Rabin trace, explain why finding a non-trivial square root of $1$ modulo $n$ is as hard as factoring $n$, for $n = pq$. (This will matter in Chapter 13.)
 :::

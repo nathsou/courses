@@ -8,7 +8,7 @@ theorems: [Perron’s formula, The explicit formula for ψ(x), Riemann’s formu
 techniques: [contour integration, residues, Möbius inversion]
 ---
 
-This is the chapter the course has been building towards since the prologue. Chapter 19 showed that the primes are encoded in the function $-\zeta'/\zeta$; Chapters 20 to 22 found that function's poles. Here the encoding is decoded. The result, found by Riemann in 1859 for $\pi(x)$ and proved by Hans von Mangoldt in 1895 in the cleaner form for $\psi(x)$,:cite[vonmangoldt1895] is an exact formula for the prime staircase in terms of the zeros of $\zeta$.
+This is the chapter the course has been building towards since the prologue. Chapter 19 showed that the primes are encoded in the function $-\zeta'/\zeta$; Chapters 20 to 22 found that function’s poles. Here the encoding is decoded. The result, found by Riemann in 1859 for $\pi(x)$ and proved by Hans von Mangoldt in 1895 in the cleaner form for $\psi(x)$,:cite[vonmangoldt1895] is an exact formula for the prime staircase in terms of the zeros of $\zeta$.
 
 :::theorem{name="The explicit formula" who="Riemann; von Mangoldt" year=1895 status=sketched}
 For $x > 1$,
@@ -16,7 +16,7 @@ $$\psi_0(x) = x - \sum_\rho\frac{x^\rho}{\rho} - \log 2\pi - \tfrac12\log\!\left
 where $\psi_0(x)$ is $\psi(x)$ except at prime powers, where it is the average of the values just before and just after the jump, and the sum runs over the nontrivial zeros $\rho$ of $\zeta$, counted with multiplicity, in order of increasing $|\operatorname{Im}\rho|$.
 :::
 
-Every term has a meaning. The $x$ comes from the pole of $\zeta$ at $s = 1$: it is the prime number theorem's prediction. Each nontrivial zero $\rho$ contributes a correction $-x^\rho/\rho$. The constant $\log 2\pi = \zeta'(0)/\zeta(0)$ comes from $s = 0$, and the last term collects the trivial zeros. Before the proof, see what it does.
+Every term has a meaning. The $x$ comes from the pole of $\zeta$ at $s = 1$: it is the prime number theorem’s prediction. Each nontrivial zero $\rho$ contributes a correction $-x^\rho/\rho$. The constant $\log 2\pi = \zeta'(0)/\zeta(0)$ comes from $s = 0$, and the last term collects the trivial zeros. Before the proof, see what it does.
 
 ::explicit-formula
 
@@ -24,9 +24,9 @@ Every term has a meaning. The $x$ comes from the pole of $\zeta$ at $s = 1$: it 
 
 Pair each zero $\rho = \beta + i\gamma$ with its conjugate $\bar\rho = \beta - i\gamma$. Since $x^{\bar\rho}/\bar\rho$ is the complex conjugate of $x^\rho/\rho$,
 $$\frac{x^\rho}{\rho} + \frac{x^{\bar\rho}}{\bar\rho} = 2\operatorname{Re}\frac{x^\rho}{\rho} = \frac{2x^\beta}{|\rho|}\cos\big(\gamma\log x - \arg\rho\big).$$
-So each pair is a wave in the variable $\log x$, with frequency $\gamma$ and amplitude $2x^\beta/|\rho|$. If the zero is on the critical line, $\beta = \frac12$ and the amplitude is $2\sqrt x/|\rho|$. The low zeros make the slow, large waves, and the high zeros make the fast, small ones. Turn on "show the K-th wave" in the widget to see one at a time.
+So each pair is a wave in the variable $\log x$, with frequency $\gamma$ and amplitude $2x^\beta/|\rho|$. If the zero is on the critical line, $\beta = \frac12$ and the amplitude is $2\sqrt x/|\rho|$. The low zeros make the slow, large waves, and the high zeros make the fast, small ones. Turn on “show the K-th wave” in the widget to see one at a time.
 
-Adding the waves is like adding the terms of a Fourier series. Few terms give a smooth curve; many terms reproduce the jumps of the staircase, with the small overshoot near each jump (the Gibbs phenomenon) that every truncated Fourier series of a step function has. With $10{,}000$ pairs the reconstruction of $\psi(x)$ up to $2000$ is visually perfect. The button "Hear the zeros" plays the first thirty waves as tones: each pair becomes a sine wave with a pitch proportional to $\gamma$ (the first zero sounds as the note A at $110$ Hz) and loudness proportional to $1/|\rho|$. This is the sense of the phrase "the music of the primes", the title of Marcus du Sautoy's book about the Riemann Hypothesis.
+Adding the waves is like adding the terms of a Fourier series. Few terms give a smooth curve; many terms reproduce the jumps of the staircase, with the small overshoot near each jump (the Gibbs phenomenon) that every truncated Fourier series of a step function has. With $10{,}000$ pairs the reconstruction of $\psi(x)$ up to $2000$ is visually perfect. The button “Hear the zeros” plays the first thirty waves as tones: each pair becomes a sine wave with a pitch proportional to $\gamma$ (the first zero sounds as the note A at $110$ Hz) and loudness proportional to $1/|\rho|$. This is the sense of the phrase “the music of the primes”, the title of Marcus du Sautoy’s book about the Riemann Hypothesis.
 
 ```numeric
 id: explicit-formula/first-wave
@@ -61,7 +61,7 @@ For $x \ge 2$, $T \ge 2$ and $c = 1 + \frac1{\log x}$,
 $$\psi(x) = \frac1{2\pi i}\int_{c - iT}^{c + iT}\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\,ds + O\!\left(\frac{x\log^2 x}{T} + \log x\right).$$
 :::
 
-Summing the lemma's error bound $\frac{(x/n)^c}{\pi T|\log(x/n)|}$ against $\Lambda(n)n^{-c}$ gives the error term; the only delicate part is $n$ close to $x$, where $|\log(x/n)|$ is small, and there are few prime powers there.
+Summing the lemma’s error bound $\frac{(x/n)^c}{\pi T|\log(x/n)|}$ against $\Lambda(n)n^{-c}$ gives the error term; the only delicate part is $n$ close to $x$, where $|\log(x/n)|$ is small, and there are few prime powers there.
 
 ## Moving the line
 
@@ -87,7 +87,7 @@ Two estimates are needed, both consequences of the Hadamard product (Chapter 21)
 1. For $-1 \le \sigma \le 2$, $\frac{\zeta'}{\zeta}(s) = \sum_{|\gamma - t| < 1}\frac{1}{s - \rho} + O(\log|t|)$. In each interval $[T, T + 1]$ one can therefore choose a height $T'$ at distance at least $\frac{c}{\log T}$ from every $\gamma$, and on the horizontal segment at height $T'$, $\left|\frac{\zeta'}{\zeta}(s)\right| = O(\log^2 T)$.
 2. For $\sigma \le -1$, away from the trivial zeros, the functional equation gives $\left|\frac{\zeta'}{\zeta}(s)\right| = O(\log|s|)$.
 
-On the horizontal sides the integrand is then $O\!\left(\frac{x^\sigma\log^2 T}{T}\right)$, whose integral over $\sigma \le c$ is $O\!\left(\frac{x\log^2 T}{T\log x}\right)$. On the left side it is $O\!\left(\frac{x^{-U}\log U}{U}\right)T$, which vanishes as $U \to \infty$. Combined with Perron's formula, $\psi(x) = x - \sum_{|\gamma| < T}\frac{x^\rho}{\rho} - \log 2\pi - \frac12\log(1 - x^{-2}) + O\!\left(\frac{x\log^2(xT)}{T} + \log x\right)$, and letting $T \to \infty$ gives the explicit formula at points of continuity. Davenport's book, chapter 17, gives every detail.:cite[davenport]
+On the horizontal sides the integrand is then $O\!\left(\frac{x^\sigma\log^2 T}{T}\right)$, whose integral over $\sigma \le c$ is $O\!\left(\frac{x\log^2 T}{T\log x}\right)$. On the left side it is $O\!\left(\frac{x^{-U}\log U}{U}\right)T$, which vanishes as $U \to \infty$. Combined with Perron’s formula, $\psi(x) = x - \sum_{|\gamma| < T}\frac{x^\rho}{\rho} - \log 2\pi - \frac12\log(1 - x^{-2}) + O\!\left(\frac{x\log^2(xT)}{T} + \log x\right)$, and letting $T \to \infty$ gives the explicit formula at points of continuity. Davenport’s book, chapter 17, gives every detail.:cite[davenport]
 :::
 ::::
 
@@ -145,11 +145,11 @@ hints:
 
 Riemann worked with $\pi(x)$ directly, through the weighted count
 $$J(x) = \sum_{p^k \le x}\frac1k = \pi(x) + \tfrac12\pi(x^{1/2}) + \tfrac13\pi(x^{1/3}) + \cdots,$$
-whose Dirichlet series is $\log\zeta(s) = \sum_{p, k}\frac{1}{k}p^{-ks}$ (Chapter 19). Perron's formula with $\log\zeta$ in place of $-\zeta'/\zeta$, and the same contour shift (now with logarithmic singularities, handled by integrating by parts first), gives the formula Riemann wrote down in 1859:
+whose Dirichlet series is $\log\zeta(s) = \sum_{p, k}\frac{1}{k}p^{-ks}$ (Chapter 19). Perron’s formula with $\log\zeta$ in place of $-\zeta'/\zeta$, and the same contour shift (now with logarithmic singularities, handled by integrating by parts first), gives the formula Riemann wrote down in 1859:
 $$J(x) = \operatorname{li}(x) - \sum_\rho\operatorname{li}(x^\rho) - \log 2 + \int_x^\infty\frac{dt}{t(t^2 - 1)\log t}.$$
 Here $\operatorname{li}$ is the logarithmic integral (Chapter 14), and $\operatorname{li}(x^\rho)$ means $\operatorname{Ei}(\rho\log x)$, the analytic continuation. Then Möbius inversion (Chapter 19) recovers $\pi$ from $J$: since $J(x) = \sum_n\frac1n\pi(x^{1/n})$,
 $$\pi(x) = \sum_{n \ge 1}\frac{\mu(n)}{n}J(x^{1/n}),$$
-a finite sum because $J(y) = 0$ for $y < 2$. Applying the same inversion to the main term $\operatorname{li}(x)$ alone gives **Riemann's function**
+a finite sum because $J(y) = 0$ for $y < 2$. Applying the same inversion to the main term $\operatorname{li}(x)$ alone gives **Riemann’s function**
 $$R(x) = \sum_{n \ge 1}\frac{\mu(n)}{n}\operatorname{li}(x^{1/n}),$$
 a remarkably good smooth approximation to $\pi(x)$: $\pi(10^{20}) \approx 2.22 \times 10^{18}$, and $R(10^{20})$ is within about $4.9 \times 10^{6}$ of it, while $\operatorname{Li}(10^{20})$ is off by about $2.2 \times 10^{8}$. Switch the widget to $\pi(x)$ to see $R(x)$ (dashed) and the waves added to it.
 
@@ -180,10 +180,10 @@ One direction is the truncated explicit formula: with $T = x$, the sum over the 
 So the Riemann Hypothesis is a statement about primes: it says that the prime staircase hugs its smooth curve as tightly as a random walk would. Part VI is about that statement. But first, Part V uses the same ideas with much less information about the zeros (only that none lies on the line $\sigma = 1$) to prove that $\psi(x) \sim x$: the prime number theorem.
 
 :::key
-- Perron's formula: $\frac1{2\pi i}\int_{(c)}\frac{y^s}{s}ds$ is $1$ for $y > 1$ and $0$ for $y < 1$, so $\psi(x) = \frac1{2\pi i}\int_{(c)}\left(-\frac{\zeta'}{\zeta}(s)\right)\frac{x^s}{s}ds$.
+- Perron’s formula: $\frac1{2\pi i}\int_{(c)}\frac{y^s}{s}ds$ is $1$ for $y > 1$ and $0$ for $y < 1$, so $\psi(x) = \frac1{2\pi i}\int_{(c)}\left(-\frac{\zeta'}{\zeta}(s)\right)\frac{x^s}{s}ds$.
 - Moving the line left collects residues: $x$ from the pole, $-x^\rho/\rho$ from each zero, $-\log 2\pi$ from $s = 0$, and the trivial zeros. Result: $\psi_0(x) = x - \sum_\rho\frac{x^\rho}{\rho} - \log 2\pi - \frac12\log(1 - x^{-2})$.
 - Each pair of zeros is a wave of frequency $\gamma$ in $\log x$ and amplitude $2x^\beta/|\rho|$. Enough waves rebuild the staircase exactly; conversely the primes, as a sum of waves $n^{-it}$, resonate at the zeros.
-- Riemann's form: $J(x) = \operatorname{li}(x) - \sum_\rho\operatorname{li}(x^\rho) - \log 2 + \int_x^\infty\frac{dt}{t(t^2-1)\log t}$, and $\pi(x) = \sum\frac{\mu(n)}{n}J(x^{1/n})$.
+- Riemann’s form: $J(x) = \operatorname{li}(x) - \sum_\rho\operatorname{li}(x^\rho) - \log 2 + \int_x^\infty\frac{dt}{t(t^2-1)\log t}$, and $\pi(x) = \sum\frac{\mu(n)}{n}J(x^{1/n})$.
 - $\psi(x) - x = O(x^{\Theta + \varepsilon})$ exactly when no zero has real part above $\Theta$. RH is the case $\Theta = \frac12$.
 :::
 

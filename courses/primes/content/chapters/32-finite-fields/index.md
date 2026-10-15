@@ -33,7 +33,7 @@ With $X = q^n$ playing the role of $x$ and $n = \log_qX$ the role of $\log x$, t
 
 ## Points on curves modulo p
 
-A more interesting world comes from counting solutions of equations. Fix integers $a, b$ with $4a^3 + 27b^2 \ne 0$, and consider the **elliptic curve** $E : y^2 = x^3 + ax + b$. For a prime $p \ge 5$ not dividing $4a^3 + 27b^2$, let $N_p$ be the number of solutions $(x, y)$ modulo $p$, plus one "point at infinity". Each $x$ gives $1 + \left(\frac{x^3 + ax + b}{p}\right)$ values of $y$ (Legendre symbol, Chapter 9), so
+A more interesting world comes from counting solutions of equations. Fix integers $a, b$ with $4a^3 + 27b^2 \ne 0$, and consider the **elliptic curve** $E : y^2 = x^3 + ax + b$. For a prime $p \ge 5$ not dividing $4a^3 + 27b^2$, let $N_p$ be the number of solutions $(x, y)$ modulo $p$, plus one “point at infinity”. Each $x$ gives $1 + \left(\frac{x^3 + ax + b}{p}\right)$ values of $y$ (Legendre symbol, Chapter 9), so
 $$N_p = p + 1 + \sum_{x \bmod p}\left(\frac{x^3 + ax + b}{p}\right) = p + 1 - a_p.$$
 The **trace of Frobenius** $a_p$ is a sum of $p$ signs. If they were random coin flips, $a_p$ would be of size about $\sqrt p$.
 
@@ -47,7 +47,7 @@ Square-root cancellation, with a sharp constant, for every single prime. Emil Ar
 
 ::::zoom{levels="Idea, Sketch"}
 :::level[Idea]
-The points of $E$ with coordinates in the algebraic closure $\overline{\F_p}$ form a group. The map $\varphi(x, y) = (x^p, y^p)$ (the **Frobenius**) sends the curve to itself, and its fixed points are exactly the points with coordinates in $\F_p$. So $N_p$ is the number of fixed points of $\varphi$, that is, the size of the kernel of $1 - \varphi$. Maps of curves have a **degree**, and degrees behave like squared lengths: they form a positive definite quadratic form. Then $N_p = \deg(1 - \varphi) = 1 - a_p + p$, and positivity forces the "cross term" $a_p$ to satisfy the Cauchy–Schwarz inequality $|a_p| \le 2\sqrt{\deg 1\cdot\deg\varphi} = 2\sqrt p$.
+The points of $E$ with coordinates in the algebraic closure $\overline{\F_p}$ form a group. The map $\varphi(x, y) = (x^p, y^p)$ (the **Frobenius**) sends the curve to itself, and its fixed points are exactly the points with coordinates in $\F_p$. So $N_p$ is the number of fixed points of $\varphi$, that is, the size of the kernel of $1 - \varphi$. Maps of curves have a **degree**, and degrees behave like squared lengths: they form a positive definite quadratic form. Then $N_p = \deg(1 - \varphi) = 1 - a_p + p$, and positivity forces the “cross term” $a_p$ to satisfy the Cauchy–Schwarz inequality $|a_p| \le 2\sqrt{\deg 1\cdot\deg\varphi} = 2\sqrt p$.
 :::
 :::level[Sketch]
 1. The endomorphisms of $E$ (group homomorphisms given by rational functions) form a ring, and each nonzero one has a degree: the number of points in a generic fibre. The degree is multiplicative, and $\deg(m) = m^2$ for multiplication by an integer $m$.
@@ -58,13 +58,13 @@ The points of $E$ with coordinates in the algebraic closure $\overline{\F_p}$ fo
 :::
 ::::
 
-The whole proof rests on a **positivity**: a quantity that is a sum of squares, or a degree, cannot be negative. Positivity is also the shape of Weil's criterion for the classical Riemann Hypothesis (Chapter 29): RH is equivalent to the positivity of a certain quadratic form built from the explicit formula. For curves over finite fields, geometry supplies that positivity; for $\zeta$ nobody knows where it would come from.
+The whole proof rests on a **positivity**: a quantity that is a sum of squares, or a degree, cannot be negative. Positivity is also the shape of Weil’s criterion for the classical Riemann Hypothesis (Chapter 29): RH is equivalent to the positivity of a certain quadratic form built from the explicit formula. For curves over finite fields, geometry supplies that positivity; for $\zeta$ nobody knows where it would come from.
 
 ## The zeta function of a curve
 
-Why call Hasse's theorem a Riemann Hypothesis? Count points not only over $\F_p$ but over all its extensions $\F_{p^m}$: let $N_m$ be the number of points of $E$ (with the point at infinity) with coordinates in $\F_{p^m}$, and define
+Why call Hasse’s theorem a Riemann Hypothesis? Count points not only over $\F_p$ but over all its extensions $\F_{p^m}$: let $N_m$ be the number of points of $E$ (with the point at infinity) with coordinates in $\F_{p^m}$, and define
 $$Z(E, u) = \exp\left(\sum_{m \ge 1}\frac{N_m}{m}u^m\right), \qquad \zeta_E(s) = Z(E, p^{-s}).$$
-This is an Euler product over the "closed points" of $E$, the analogue of primes, in the same way that $\log\zeta(s) = \sum_{p,k}\frac{p^{-ks}}{k}$ (Chapter 19).
+This is an Euler product over the “closed points” of $E$, the analogue of primes, in the same way that $\log\zeta(s) = \sum_{p,k}\frac{p^{-ks}}{k}$ (Chapter 19).
 
 :::theorem{status=proved}
 Let $\alpha, \beta$ be the roots of $u^2 - a_pu + p$, so that $\alpha + \beta = a_p$ and $\alpha\beta = p$. If $N_m = p^m + 1 - \alpha^m - \beta^m$ for all $m$ (which is true; it follows from the theory of Frobenius), then
@@ -141,7 +141,7 @@ hints:
 
 ## Weil and Deligne
 
-André Weil proved the analogue of the Riemann Hypothesis for every curve over a finite field in the 1940s (announced in 1940, with complete proofs in 1948): for a curve of genus $g$, $Z(C, u)$ is $\frac{P(u)}{(1 - u)(1 - qu)}$ with $P$ a polynomial of degree $2g$ whose roots all have absolute value $q^{-1/2}$. Equivalently, $|N_1 - (q + 1)| \le 2g\sqrt q$.:cite[weil1948] In 1949 he conjectured the same for varieties of any dimension: rationality of the zeta function, a functional equation, and a Riemann Hypothesis for each piece. These **Weil conjectures** shaped twentieth-century algebraic geometry. Bernard Dwork proved rationality in 1960, Alexander Grothendieck and his school built étale cohomology to provide the "space" on which Frobenius acts, and Pierre Deligne proved the Riemann Hypothesis part in 1974, for which he received the Fields Medal in 1978.:cite[deligne1974]
+André Weil proved the analogue of the Riemann Hypothesis for every curve over a finite field in the 1940s (announced in 1940, with complete proofs in 1948): for a curve of genus $g$, $Z(C, u)$ is $\frac{P(u)}{(1 - u)(1 - qu)}$ with $P$ a polynomial of degree $2g$ whose roots all have absolute value $q^{-1/2}$. Equivalently, $|N_1 - (q + 1)| \le 2g\sqrt q$.:cite[weil1948] In 1949 he conjectured the same for varieties of any dimension: rationality of the zeta function, a functional equation, and a Riemann Hypothesis for each piece. These **Weil conjectures** shaped twentieth-century algebraic geometry. Bernard Dwork proved rationality in 1960, Alexander Grothendieck and his school built étale cohomology to provide the “space” on which Frobenius acts, and Pierre Deligne proved the Riemann Hypothesis part in 1974, for which he received the Fields Medal in 1978.:cite[deligne1974]
 
 The finer distribution of the angles $\theta_p$ with $a_p = 2\sqrt p\cos\theta_p$, visible in the histogram above, is the **Sato–Tate conjecture**: for curves without complex multiplication, $\theta_p$ is distributed with density $\frac2\pi\sin^2\theta$, which makes $\cos\theta_p$ follow a semicircle. It was proved for elliptic curves over $\Q$ by Clozel, Harris, Shepherd-Barron and Taylor (2008) and Barnet-Lamb, Geraghty, Harris and Taylor (2011). The density $\frac2\pi\sin^2\theta$ is the distribution of eigenvalue angles of a random matrix in $SU(2)$: random matrices again.
 
@@ -157,12 +157,12 @@ The finer distribution of the angles $\theta_p$ with $a_p = 2\sqrt p\cos\theta_p
 | operator? | Frobenius |
 | positivity? | degrees, intersection numbers |
 
-The function field proofs use a geometric object (the curve, its Frobenius, its intersection theory) that has no known counterpart for $\Z$. Finding the "curve" for which $\operatorname{Spec}\Z$ would be the analogue, sometimes called the "field with one element", is one of the long-standing dreams of the subject.
+The function field proofs use a geometric object (the curve, its Frobenius, its intersection theory) that has no known counterpart for $\Z$. Finding the “curve” for which $\operatorname{Spec}\Z$ would be the analogue, sometimes called the “field with one element”, is one of the long-standing dreams of the subject.
 
 :::key
 - Over $\F_q[T]$: $\zeta(s) = 1/(1 - q^{1-s})$ has no zeros, and $I_n = \frac1n\sum_{d \mid n}\mu(d)q^{n/d} = \frac{q^n}{n} + O(\frac{q^{n/2}}{n})$, a PNT with square-root error.
 - For $E: y^2 = x^3 + ax + b$, $N_p = p + 1 - a_p$ and Hasse: $|a_p| \le 2\sqrt p$, proved by positivity of the degree form and Cauchy–Schwarz for Frobenius.
-- $Z(E, u) = \frac{1 - a_pu + pu^2}{(1 - u)(1 - pu)}$; Hasse's bound is exactly the statement that the zeros of $\zeta_E(s) = Z(E, p^{-s})$ lie on $\operatorname{Re}s = \frac12$, and they are eigenvalues of Frobenius.
+- $Z(E, u) = \frac{1 - a_pu + pu^2}{(1 - u)(1 - pu)}$; Hasse’s bound is exactly the statement that the zeros of $\zeta_E(s) = Z(E, p^{-s})$ lie on $\operatorname{Re}s = \frac12$, and they are eigenvalues of Frobenius.
 - Weil (curves, 1948) and Deligne (all varieties, 1974) proved the general finite field Riemann Hypothesis; Sato–Tate describes the angles. For $\zeta$ itself, the missing ingredient is the geometry that supplies positivity.
 :::
 

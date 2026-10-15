@@ -8,9 +8,9 @@ theorems: [Euclid’s algorithm computes the gcd, Bézout’s identity, Lamé’
 techniques: [invariants, well-ordering, Fibonacci bounds]
 ---
 
-The **greatest common divisor** of two numbers is the largest number that divides both. Computing it looks like a factoring problem: factor both numbers and take the common primes. But factoring is hard (Chapter 1 ended on that note), and the greatest common divisor is not: Euclid's algorithm computes it for numbers with thousands of digits in a blink, without factoring anything. It is more than 2,300 years old, it appears in Book VII of the *Elements*,:cite[euclid] and every RSA key ever generated has been through it.
+The **greatest common divisor** of two numbers is the largest number that divides both. Computing it looks like a factoring problem: factor both numbers and take the common primes. But factoring is hard (Chapter 1 ended on that note), and the greatest common divisor is not: Euclid’s algorithm computes it for numbers with thousands of digits in a blink, without factoring anything. It is more than 2,300 years old, it appears in Book VII of the *Elements*,:cite[euclid] and every RSA key ever generated has been through it.
 
-This chapter proves that the algorithm is correct, extends it to produce **Bézout's identity**, which is the key to unique factorisation in Chapter 3 and to modular inverses in Chapter 5, and proves Lamé's bound on how fast it is.
+This chapter proves that the algorithm is correct, extends it to produce **Bézout’s identity**, which is the key to unique factorisation in Chapter 3 and to modular inverses in Chapter 5, and proves Lamé’s bound on how fast it is.
 
 ## The greatest common divisor
 
@@ -99,11 +99,11 @@ So $d$ is a common divisor, and every common divisor $c$ divides $d$, so $|c| \l
 :::
 ::::
 
-The second part of the theorem deserves emphasis: the gcd is not merely the *largest* common divisor, it is a *multiple of every* common divisor. That is a much stronger property, and Chapter 3 uses it to prove Euclid's lemma.
+The second part of the theorem deserves emphasis: the gcd is not merely the *largest* common divisor, it is a *multiple of every* common divisor. That is a much stronger property, and Chapter 3 uses it to prove Euclid’s lemma.
 
 ### The extended algorithm
 
-To compute $x$ and $y$, carry the coefficients along. Keep a row $(r, x, y)$ with the **invariant** $r = ax + by$. Start with the rows $(a, 1, 0)$ and $(b, 0, 1)$, which satisfy it trivially. Each new row is the row two above minus $q$ times the row above, where $q$ is the quotient of their $r$ values. Subtracting rows preserves the invariant, and the $r$ column runs through exactly the remainders of Euclid's algorithm.
+To compute $x$ and $y$, carry the coefficients along. Keep a row $(r, x, y)$ with the **invariant** $r = ax + by$. Start with the rows $(a, 1, 0)$ and $(b, 0, 1)$, which satisfy it trivially. Each new row is the row two above minus $q$ times the row above, where $q$ is the quotient of their $r$ values. Subtracting rows preserves the invariant, and the $r$ column runs through exactly the remainders of Euclid’s algorithm.
 
 ::extended-table
 
@@ -173,7 +173,7 @@ Most pairs finish in a few steps. The slow ones lie along lines whose slope is c
 That is the worst that can happen, and it is still fast.
 
 :::theorem{name="Lamé’s theorem" who="Gabriel Lamé" year=1844 status=proved}
-If $a \ge b > 0$ and Euclid's algorithm takes $n$ division steps on $(a, b)$, then $b \ge F_{n+1}$. Consequently $n$ is at most five times the number of decimal digits of $b$.
+If $a \ge b > 0$ and Euclid’s algorithm takes $n$ division steps on $(a, b)$, then $b \ge F_{n+1}$. Consequently $n$ is at most five times the number of decimal digits of $b$.
 :::
 
 This was one of the first theorems in the analysis of algorithms.:cite[lame1844,knuth-taocp2]
@@ -200,7 +200,7 @@ So $b \ge \varphi^{n-1}$, that is, $n \le 1 + \log_\varphi b$. If $b$ has $d$ de
 :::
 ::::
 
-So the gcd of two 300-digit numbers takes at most $1500$ division steps. On average it takes far fewer: for numbers up to $N$ the average is about $\tfrac{12 \log 2}{\pi^2} \log N \approx 0.84 \log N$ (a theorem of Heilbronn and Dixon from 1969–70 that we will not prove), which for $300$ digits is about $0.84 \times 691 \approx 580$.:cite[knuth-taocp2] Each step is one division of large numbers. Compare trial division's $10^{150}$ steps on a number of that size: the gcd is, for practical purposes, free.
+So the gcd of two 300-digit numbers takes at most $1500$ division steps. On average it takes far fewer: for numbers up to $N$ the average is about $\tfrac{12 \log 2}{\pi^2} \log N \approx 0.84 \log N$ (a theorem of Heilbronn and Dixon from 1969–70 that we will not prove), which for $300$ digits is about $0.84 \times 691 \approx 580$.:cite[knuth-taocp2] Each step is one division of large numbers. Compare trial division’s $10^{150}$ steps on a number of that size: the gcd is, for practical purposes, free.
 
 ```quiz
 q: Which pair below $100$ makes Euclid’s algorithm take the most steps?
@@ -225,7 +225,7 @@ options:
 **Binary gcd.** Division is the slowest arithmetic operation on most processors, and Josef Stein noticed in 1967 that you can avoid it entirely: $\gcd(2a, 2b) = 2\gcd(a, b)$, $\gcd(2a, b) = \gcd(a, b)$ for odd $b$, and $\gcd(a, b) = \gcd(a - b, b)$; together with shifts, these give an algorithm that uses only subtraction and halving.:cite[knuth-taocp2] Big-integer libraries use refinements of both approaches.
 
 :::key
-- $\gcd(a, b) = \gcd(b, a \bmod b)$, so repeated division with remainder reaches the gcd: Euclid's algorithm.
+- $\gcd(a, b) = \gcd(b, a \bmod b)$, so repeated division with remainder reaches the gcd: Euclid’s algorithm.
 - Bézout: $\gcd(a, b) = ax + by$ for some integers $x, y$, found by the extended algorithm, and every common divisor divides the gcd.
 - Lamé: the number of steps is at most five per decimal digit, with consecutive Fibonacci numbers as the worst case. Gcds are cheap; factoring is not.
 :::
@@ -234,5 +234,5 @@ options:
 1. Show that consecutive Fibonacci numbers are coprime, and that $\gcd(F_m, F_n) = F_{\gcd(m, n)}$. (The second is harder: first prove $F_{m+n} = F_{m+1} F_n + F_m F_{n-1}$.)
 2. Prove that $\gcd(n, n + 1) = 1$ and that $\gcd(2n + 1, 3n + 2) = 1$ for every integer $n$.
 3. Find all integer solutions of $35x + 21y = 14$. (First find one, then describe the rest.)
-4. Prove that $\gcd(2^m - 1, 2^n - 1) = 2^{\gcd(m, n)} - 1$. (Run Euclid's algorithm on the exponents.)
+4. Prove that $\gcd(2^m - 1, 2^n - 1) = 2^{\gcd(m, n)} - 1$. (Run Euclid’s algorithm on the exponents.)
 :::

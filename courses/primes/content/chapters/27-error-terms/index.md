@@ -8,7 +8,7 @@ theorems: [The de la Vallée Poussin zero-free region, ψ(x) = x + O(x exp(−c�
 techniques: [zero-free regions, the truncated explicit formula, Dirichlet convolution identities]
 ---
 
-The prime number theorem says $\psi(x)/x \to 1$, but not how fast. For applications, and for understanding, the size of the error matters. This chapter surveys what is known, proving the parts that are short and sketching the rest, and ends with the other famous proof of the theorem: the "elementary" one, which uses no complex analysis at all.
+The prime number theorem says $\psi(x)/x \to 1$, but not how fast. For applications, and for understanding, the size of the error matters. This chapter surveys what is known, proving the parts that are short and sketching the rest, and ends with the other famous proof of the theorem: the “elementary” one, which uses no complex analysis at all.
 
 ## The error, measured
 
@@ -70,7 +70,7 @@ options:
 
 ## Selberg’s symmetry formula
 
-For half a century the prime number theorem was believed to need complex analysis: it is "equivalent" to $\zeta$ having no zeros on $\sigma = 1$, a statement about a complex function. In 1948 Atle Selberg found an identity about primes that can be proved by elementary means (sums, Möbius inversion, and Chebyshev's estimates) and that contains enough information to imply the theorem.:cite[selberg1949]
+For half a century the prime number theorem was believed to need complex analysis: it is “equivalent” to $\zeta$ having no zeros on $\sigma = 1$, a statement about a complex function. In 1948 Atle Selberg found an identity about primes that can be proved by elementary means (sums, Möbius inversion, and Chebyshev’s estimates) and that contains enough information to imply the theorem.:cite[selberg1949]
 
 The tool is a second von Mangoldt function. Define $\Lambda_2 = \mu * \log^2$, so that $\sum_{d \mid n}\Lambda_2(d) = \log^2n$, the analogue of $\sum_{d \mid n}\Lambda(d) = \log n$.
 
@@ -99,16 +99,16 @@ Why is it called a symmetry formula? It treats primes and products of two primes
 
 ## The elementary proof
 
-From Selberg's formula, both Selberg and Paul Erdős found ways to deduce $\psi(x) \sim x$ in 1948, and their papers appeared in 1949.:cite[selberg1949,erdos1949] The idea, in Selberg's version: write $R(x) = \psi(x) - x$. Selberg's formula and partial summation give an inequality of the form
+From Selberg’s formula, both Selberg and Paul Erdős found ways to deduce $\psi(x) \sim x$ in 1948, and their papers appeared in 1949.:cite[selberg1949,erdos1949] The idea, in Selberg’s version: write $R(x) = \psi(x) - x$. Selberg’s formula and partial summation give an inequality of the form
 $$|R(x)|\log x \le \sum_{n \le x}\Lambda(n)\left|R\!\left(\frac xn\right)\right| + O(x\log\log x),$$
 which says that $|R(x)|$ is at most a weighted average of the values $|R(x/n)|$ at smaller arguments. If $|R(x)| \le \alpha x$ for large $x$ with some $\alpha > 0$, a careful averaging argument, using that $R$ cannot change too fast (because $\psi$ is increasing), shows that $|R(x)| \le \alpha'x$ with $\alpha' < \alpha$ for large $x$. Iterating gives $\limsup|R(x)|/x = 0$. The details take several pages, which is why we do not give them; chapter 22 of Hardy and Wright has a complete account.:cite[hardy-wright]
 
-"Elementary" means without complex analysis, not easy. The elementary proof is longer and less transparent than Newman's, and it gives weaker error terms. Its importance was conceptual: it showed that the prime number theorem is not intrinsically analytic, and the ideas (Selberg's weights, his "Selberg sieve") went on to have a large influence in sieve theory. The circumstances of its discovery led to a bitter dispute about credit between Selberg and Erdős. Selberg received a Fields Medal in 1950, for this work and for his results on the zeros of $\zeta$.
+“Elementary” means without complex analysis, not easy. The elementary proof is longer and less transparent than Newman’s, and it gives weaker error terms. Its importance was conceptual: it showed that the prime number theorem is not intrinsically analytic, and the ideas (Selberg’s weights, his “Selberg sieve”) went on to have a large influence in sieve theory. The circumstances of its discovery led to a bitter dispute about credit between Selberg and Erdős. Selberg received a Fields Medal in 1950, for this work and for his results on the zeros of $\zeta$.
 
 :::key
 - The error in the PNT depends on how far zeros stay from $\sigma = 1$. The 3–4–1 inequality applied to $\zeta'/\zeta$ gives no zeros with $\sigma \ge 1 - c/\log|t|$, hence $\psi(x) = x + O(xe^{-c\sqrt{\log x}})$ and $\pi(x) = \operatorname{Li}(x) + O(xe^{-c\sqrt{\log x}})$.
 - Vinogradov–Korobov (1958) is the best known: error $x\exp(-c(\log x)^{3/5}(\log\log x)^{-1/5})$. On RH the error would be $O(\sqrt x\log x)$, and the data look like that.
-- $\Lambda_2 = \mu * \log^2 = \Lambda\log + \Lambda * \Lambda$, and Selberg's formula $\sum_{n \le x}\Lambda_2(n) = 2x\log x + O(x)$ has an elementary proof. Selberg and Erdős deduced the PNT from it in 1949.
+- $\Lambda_2 = \mu * \log^2 = \Lambda\log + \Lambda * \Lambda$, and Selberg’s formula $\sum_{n \le x}\Lambda_2(n) = 2x\log x + O(x)$ has an elementary proof. Selberg and Erdős deduced the PNT from it in 1949.
 :::
 
 :::exercises
@@ -116,5 +116,5 @@ which says that $|R(x)|$ is at most a weighted average of the values $|R(x/n)|$ 
 2. Show that $\operatorname{Li}(x) - \frac{x}{\log x} \sim \frac{x}{\log^2x}$, so the PNT with the error term of this chapter implies $\pi(x) - \frac{x}{\log x} \sim \frac{x}{\log^2x}$. In particular $\pi(x) > \frac{x}{\log x}$ for all large $x$.
 3. Check the Rosser–Schoenfeld bounds at $x = 17$, $100$ and $10^6$.
 4. Verify the lemma $\Lambda_2 = \Lambda\log + \Lambda * \Lambda$ by computing both sides at $n = 12$ and $n = 30$.
-5. Explain why Selberg's formula is consistent with the PNT: if $\theta(x) \sim x$, show that each of $\sum_{p \le x}\log^2p$ and $\sum_{pq \le x}\log p\log q$ is $\sim x\log x$.
+5. Explain why Selberg’s formula is consistent with the PNT: if $\theta(x) \sim x$, show that each of $\sum_{p \le x}\log^2p$ and $\sum_{pq \le x}\log p\log q$ is $\sim x\log x$.
 :::

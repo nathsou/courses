@@ -8,7 +8,7 @@ theorems: [ζ is holomorphic for Re s > 1, Analytic continuation of ζ to the wh
 techniques: [complex powers, analytic continuation, Euler–Maclaurin summation, domain colouring]
 ---
 
-So far $s$ has been a real number greater than $1$. Riemann's insight, in his 1859 paper on the primes,:cite[riemann1859] was to let $s$ be complex. Then $\zeta$ becomes a function on the plane, smooth in the strongest possible sense, and the tools of complex analysis apply to it. This chapter builds that function. Appendix A reviews the complex analysis it needs: if "holomorphic", "identity theorem" or "pole" are rusty, read its sections on holomorphic functions, on zeros and analytic continuation, and on poles and residues now.
+So far $s$ has been a real number greater than $1$. Riemann’s insight, in his 1859 paper on the primes,:cite[riemann1859] was to let $s$ be complex. Then $\zeta$ becomes a function on the plane, smooth in the strongest possible sense, and the tools of complex analysis apply to it. This chapter builds that function. Appendix A reviews the complex analysis it needs: if “holomorphic”, “identity theorem” or “pole” are rusty, read its sections on holomorphic functions, on zeros and analytic continuation, and on poles and residues now.
 
 Following Riemann, we write
 $$s = \sigma + it, \qquad \sigma = \operatorname{Re} s,\quad t = \operatorname{Im} s.$$
@@ -173,7 +173,7 @@ The bracket is $\sum_{j=0}^{n+1}\binom{n+1}{j}B_j$ (the terms $j = 0, 1$ are $1$
 The zeros at $-2, -4, -6, \ldots$ are called the **trivial zeros**. Chapter 21 explains where they come from.
 
 :::warning
-**Does $1 + 2 + 3 + \cdots = -\frac1{12}$?** No. The series $\sum n^{-s}$ at $s = -1$ is $1 + 2 + 3 + \cdots$, which diverges, and $\zeta(-1)$ is not its sum: it is the value at $-1$ of the analytic continuation of a function that the series defines only for $\sigma > 1$. What is true is that various regularisations of divergent sums (Ramanujan's, or smoothing with a cut-off and discarding the divergent part) assign $1 + 2 + 3 + \cdots$ the value $-\frac1{12}$, and that this value appears in physics, for instance in the Casimir effect. But no rearrangement or grouping of the actual partial sums $1, 3, 6, 10, \ldots$ gets anywhere near it.
+**Does $1 + 2 + 3 + \cdots = -\frac1{12}$?** No. The series $\sum n^{-s}$ at $s = -1$ is $1 + 2 + 3 + \cdots$, which diverges, and $\zeta(-1)$ is not its sum: it is the value at $-1$ of the analytic continuation of a function that the series defines only for $\sigma > 1$. What is true is that various regularisations of divergent sums (Ramanujan’s, or smoothing with a cut-off and discarding the divergent part) assign $1 + 2 + 3 + \cdots$ the value $-\frac1{12}$, and that this value appears in physics, for instance in the Casimir effect. But no rearrangement or grouping of the actual partial sums $1, 3, 6, 10, \ldots$ gets anywhere near it.
 :::
 
 ## A picture of ζ
@@ -184,9 +184,9 @@ A complex function of a complex variable needs four real dimensions to graph. **
 
 Things to find in the picture:
 
-- **The pole at $s = 1$** ("around s = 1" view): a pale spot where the hues go round once, in the opposite order to the hues around a zero. Near $s = 1$, $\zeta(s) \approx \frac{1}{s - 1}$.
-- **The trivial zeros** ("left half-plane" view) at $-2, -4, -6, \ldots$, dark spots where all hues meet. Far to the left $\zeta$ grows enormous between them.
-- **The nontrivial zeros** ("zeros up to 45" view), on the dashed line $\sigma = \frac12$, at heights $14.13$, $21.02$, $25.01$, $30.42$, $32.94$, $37.59$, $40.92$ and $43.33$. Hover over one to see $|\zeta(s)|$ drop to almost nothing.
+- **The pole at $s = 1$** (“around s = 1” view): a pale spot where the hues go round once, in the opposite order to the hues around a zero. Near $s = 1$, $\zeta(s) \approx \frac{1}{s - 1}$.
+- **The trivial zeros** (“left half-plane” view) at $-2, -4, -6, \ldots$, dark spots where all hues meet. Far to the left $\zeta$ grows enormous between them.
+- **The nontrivial zeros** (“zeros up to 45” view), on the dashed line $\sigma = \frac12$, at heights $14.13$, $21.02$, $25.01$, $30.42$, $32.94$, $37.59$, $40.92$ and $43.33$. Hover over one to see $|\zeta(s)|$ drop to almost nothing.
 - **Symmetry.** $\zeta(\bar s) = \overline{\zeta(s)}$, because the series has real coefficients and the continuation inherits the property (by the identity theorem). So the lower half-plane is the mirror image of the upper one, with the hues reflected, and zeros come in conjugate pairs $\rho, \bar\rho$. On the real axis $\zeta$ is real: red where positive and cyan where negative. It is negative on the whole interval $(-2, 1)$; for instance $\zeta(\frac12) = -1.4603545\ldots$
 - **No zeros for $\sigma > 1$**, as the Euler product proved, and none on the line $\sigma = 1$ either: that is the subject of Chapter 25, and it is the key to the prime number theorem.
 

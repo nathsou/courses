@@ -8,7 +8,7 @@ theorems: [Littlewood (1914) for races, Rubinstein–Sarnak densities (condition
 techniques: [explicit formulas for L-functions, logarithmic density]
 ---
 
-By Chapter 33, the primes are shared equally between the residue classes modulo $q$ in the long run. But in 1853 Pafnuty Chebyshev remarked in a letter that there are "notably more" primes of the form $4k + 3$ than of the form $4k + 1$.:cite[chebyshev1853] Up to $10^7$, the class $3 \bmod 4$ is ahead at all but a few thousand integers $x$. This chapter explains why, and how such **prime races** behave in the long run.
+By Chapter 33, the primes are shared equally between the residue classes modulo $q$ in the long run. But in 1853 Pafnuty Chebyshev remarked in a letter that there are “notably more” primes of the form $4k + 3$ than of the form $4k + 1$.:cite[chebyshev1853] Up to $10^7$, the class $3 \bmod 4$ is ahead at all but a few thousand integers $x$. This chapter explains why, and how such **prime races** behave in the long run.
 
 ::race-chart
 
@@ -16,7 +16,7 @@ By Chapter 33, the primes are shared equally between the residue classes modulo 
 
 The lead of $3 \bmod 4$ is not permanent. John Leech found in 1957 that at $x = 26{,}861$ there are, for the first time, more primes $\equiv 1 \pmod 4$ (namely $1473$ against $1472$).:cite[leech1957] The next reversal begins at $616{,}841$, and there are dozens of short reversals below $10^7$. For the race between $2 \bmod 3$ and $1 \bmod 3$, the first reversal is at $608{,}981{,}813{,}029$ (Bays and Hudson, 1978).:cite[bays-hudson1978]
 
-Littlewood's 1914 theorem (Chapter 30) applies here too: each of these races has infinitely many lead changes. So the question is not "who wins" but "who leads, how often".
+Littlewood’s 1914 theorem (Chapter 30) applies here too: each of these races has infinitely many lead changes. So the question is not “who wins” but “who leads, how often”.
 
 ## Why the non-squares lead
 
@@ -48,12 +48,12 @@ options:
     why: The prime squares all land in residue classes, so the residues get a head start among prime powers that disappears when only primes are counted.
   - text: The smaller of $a$ and $b$.
     why: '$3 \bmod 4$ leads $1 \bmod 4$, and $2 \bmod 3$ leads $1 \bmod 3$: the size of the residue is irrelevant.'
-  - text: Neither, by Dirichlet's theorem.
-    why: Dirichlet's theorem (and the PNT for progressions) is about the long-run ratio, which is $1$; the race is about the lower-order term, which is biased.
+  - text: Neither, by Dirichlet’s theorem.
+    why: Dirichlet’s theorem (and the PNT for progressions) is about the long-run ratio, which is $1$; the race is about the lower-order term, which is biased.
 ```
 
 :::key
-- $\pi(x; 4, 3) > \pi(x; 4, 1)$ for most $x$ (Chebyshev's bias), but not all: first reversal at $26{,}861$; for $2 \bmod 3$ against $1 \bmod 3$, at $608{,}981{,}813{,}029$.
+- $\pi(x; 4, 3) > \pi(x; 4, 1)$ for most $x$ (Chebyshev’s bias), but not all: first reversal at $26{,}861$; for $2 \bmod 3$ against $1 \bmod 3$, at $608{,}981{,}813{,}029$.
 - The explicit formula for $L(s, \chi)$ gives $\frac{\sqrt x}{\log x}(1 + \sum2\operatorname{Re}\frac{x^{i\gamma}}{\rho})$: the $1$ comes from prime squares, which always fall in residue classes, so non-residues lead on average.
 - Under GRH and linear independence, races have logarithmic densities (Rubinstein–Sarnak): $0.9959$ for $3$ vs $1 \bmod 4$, $0.9990$ for $2$ vs $1 \bmod 3$.
 :::

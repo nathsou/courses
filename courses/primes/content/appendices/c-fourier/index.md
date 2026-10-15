@@ -21,7 +21,7 @@ If $q \mid a$ every term is $1$. Otherwise $w = e(a/q) \ne 1$ is a $q$-th root o
 
 So every function $f : \Z/q\Z \to \C$ is a combination of characters. Define $\hat f(k) = \frac1q\sum_n f(n)e(-kn/q)$. Then
 $$f(n) = \sum_{k=0}^{q-1}\hat f(k)\,e\!\left(\frac{kn}{q}\right), \qquad \frac1q\sum_n|f(n)|^2 = \sum_k|\hat f(k)|^2,$$
-the **inversion formula** and **Parseval's identity**. Both follow by substituting the definition and using orthogonality. This is the discrete Fourier transform, which a computer evaluates with the fast Fourier transform.
+the **inversion formula** and **Parseval’s identity**. Both follow by substituting the definition and using orthogonality. This is the discrete Fourier transform, which a computer evaluates with the fast Fourier transform.
 
 **Characters of finite abelian groups.** The same idea works for any finite abelian group $G$, such as the multiplicative group $(\Z/q\Z)^\times$. A **character** is a homomorphism $\chi : G \to \C^\times$. Since $g^{|G|} = 1$, the values are roots of unity.
 
@@ -52,7 +52,7 @@ A function $f$ on $\R$ with period $1$ has **Fourier coefficients** $c_k = \int_
 2. If $f$ is piecewise smooth with jumps, the symmetric partial sums $\sum_{|k| \le N}c_ke(kt)$ converge to $f(t)$ where $f$ is continuous, and to the midpoint $\frac12(f(t^-) + f(t^+))$ at a jump.
 :::
 
-For the first part, the series converges uniformly to a continuous function $g$ with the same Fourier coefficients as $f$; then $f - g$ is continuous with all coefficients $0$, and such a function is $0$ (by Fejér's theorem: the averages of the partial sums of any continuous function converge to it uniformly). The second part is Dirichlet's theorem on Fourier series.
+For the first part, the series converges uniformly to a continuous function $g$ with the same Fourier coefficients as $f$; then $f - g$ is continuous with all coefficients $0$, and such a function is $0$ (by Fejér’s theorem: the averages of the partial sums of any continuous function converge to it uniformly). The second part is Dirichlet’s theorem on Fourier series.
 
 The sawtooth $\{t\} - \frac12$, which appears in Abel summation and Euler–Maclaurin (Appendix B), has $c_0 = 0$ and $c_k = \frac{i}{2\pi k}$ for $k \ne 0$, so
 $$\{t\} - \frac12 = -\sum_{n \ge 1}\frac{\sin 2\pi nt}{\pi n}\qquad(t \notin \Z).$$
@@ -88,19 +88,19 @@ The substitution $x = e^u$ turns the additive structure of $\R$ into the multipl
 $$\mathcal Mf(s) = \int_0^\infty f(x)\,x^{s-1}\,dx.$$
 The Gamma function is the Mellin transform of $e^{-x}$, and Chapter 21 writes $\pi^{-s/2}\Gamma(s/2)\zeta(s)$ as the Mellin transform of $\omega(x) = \sum_{n \ge 1}e^{-\pi n^2x}$. Fourier inversion becomes **Mellin inversion**: under suitable conditions,
 $$f(x) = \frac{1}{2\pi i}\int_{c - i\infty}^{c + i\infty}\mathcal Mf(s)\,x^{-s}\,ds.$$
-Perron's formula (Chapter 23) is this for the step function equal to $1$ on $(0, 1)$ and $0$ on $(1, \infty)$, whose Mellin transform is $\frac1s$. Dirichlet series are Mellin transforms of step functions: $\sum a_nn^{-s} = s\int_1^\infty A(x)x^{-s-1}dx$ with $A(x) = \sum_{n \le x}a_n$, which is Abel summation once more.
+Perron’s formula (Chapter 23) is this for the step function equal to $1$ on $(0, 1)$ and $0$ on $(1, \infty)$, whose Mellin transform is $\frac1s$. Dirichlet series are Mellin transforms of step functions: $\sum a_nn^{-s} = s\int_1^\infty A(x)x^{-s-1}dx$ with $A(x) = \sum_{n \le x}a_n$, which is Abel summation once more.
 
 :::key
 - On $\Z/q\Z$: $\sum_n e(an/q)$ is $q$ or $0$; every function is a combination of the $q$ characters. On a finite abelian group the characters satisfy the same orthogonality, which isolates residue classes.
 - Periodic functions are sums of their Fourier series (uniformly if the coefficients are summable); at jumps, partial sums converge to the midpoint and overshoot by about $9\%$.
 - The Fourier transform exchanges narrow and wide; the Gaussian is self-dual. Poisson summation: $\sum f(n) = \sum\hat f(k)$.
-- The Mellin transform is the Fourier transform in multiplicative form; Gamma, theta and Perron's formula are instances.
+- The Mellin transform is the Fourier transform in multiplicative form; Gamma, theta and Perron’s formula are instances.
 :::
 
 :::exercises
-1. Prove Parseval's identity on $\Z/q\Z$.
-2. Compute the Fourier coefficients of the sawtooth $\{t\} - \frac12$ and check the series above at $t = \frac14$, where it gives Leibniz's series for $\frac\pi4$.
+1. Prove Parseval’s identity on $\Z/q\Z$.
+2. Compute the Fourier coefficients of the sawtooth $\{t\} - \frac12$ and check the series above at $t = \frac14$, where it gives Leibniz’s series for $\frac\pi4$.
 3. The function $f(x) = \frac{1}{x^2 + a^2}$ ($a > 0$) has $\hat f(\xi) = \frac{\pi}{a}e^{-2\pi a|\xi|}$. Apply Poisson summation to show $\sum_{n \in \Z}\frac{1}{n^2 + a^2} = \frac{\pi}{a}\coth\pi a$, and let $a \to 0$ to recover $\zeta(2) = \frac{\pi^2}6$.
 4. List the four characters of $(\Z/5\Z)^\times$, which is cyclic with generator $2$, and check both orthogonality relations.
-5. Show that the Mellin transform of $\frac{1}{e^x - 1}$ is $\Gamma(s)\zeta(s)$ for $\operatorname{Re}s > 1$. (Expand $\frac{1}{e^x - 1} = \sum_{n \ge 1}e^{-nx}$.) This was Riemann's first proof of the continuation of $\zeta$.
+5. Show that the Mellin transform of $\frac{1}{e^x - 1}$ is $\Gamma(s)\zeta(s)$ for $\operatorname{Re}s > 1$. (Expand $\frac{1}{e^x - 1} = \sum_{n \ge 1}e^{-nx}$.) This was Riemann’s first proof of the continuation of $\zeta$.
 :::

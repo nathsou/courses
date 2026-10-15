@@ -34,7 +34,7 @@ For all integers $a, b, c, x, y$:
 3. Write $b = ak$. As $b \ne 0$, $k \ne 0$, so $|k| \ge 1$ and $|b| = |a|\,|k| \ge |a|$.
 :::
 
-Part 2 is the workhorse. It says that the multiples of $a$ are closed under adding, subtracting and scaling: if $a$ divides two numbers, it divides any combination of them. In particular, if $a \mid b$ and $a \mid b + 1$, then $a \mid (b + 1) - b = 1$, so $a = \pm 1$. Chapter 4 builds Euclid's proof that there are infinitely many primes on exactly this observation.
+Part 2 is the workhorse. It says that the multiples of $a$ are closed under adding, subtracting and scaling: if $a$ divides two numbers, it divides any combination of them. In particular, if $a \mid b$ and $a \mid b + 1$, then $a \mid (b + 1) - b = 1$, so $a = \pm 1$. Chapter 4 builds Euclid’s proof that there are infinitely many primes on exactly this observation.
 
 ### Division with remainder
 
@@ -58,7 +58,7 @@ Take the largest multiple of $b$ that does not exceed $a$. What is left over is 
 ::::
 
 :::warning
-**Programmers, beware of negative numbers.** In mathematics the remainder is never negative: $-7 \bmod 3 = 2$, because $-7 = (-3) \cdot 3 + 2$. In JavaScript, C, Java and Rust, `-7 % 3` is `-1`: the `%` operator rounds the quotient towards zero, not downwards. Python's `%` agrees with the mathematicians. The course's library has `mod(a, m)`, which always returns a value in $[0, m)$.
+**Programmers, beware of negative numbers.** In mathematics the remainder is never negative: $-7 \bmod 3 = 2$, because $-7 = (-3) \cdot 3 + 2$. In JavaScript, C, Java and Rust, `-7 % 3` is `-1`: the `%` operator rounds the quotient towards zero, not downwards. Python’s `%` agrees with the mathematicians. The course’s library has `mod(a, m)`, which always returns a value in $[0, m)$.
 :::
 
 ```quiz
@@ -87,7 +87,7 @@ A picture helps. Lay out $n$ counters in a rectangle with whole rows. Every fact
 
 ### Why 1 is not prime
 
-The definition starts at $2$, and that is a deliberate choice, not an accident of history (for a while, some mathematicians did count $1$ as prime). The reason is the theorem the whole subject rests on: every integer above $1$ is a product of primes in exactly one way, up to the order of the factors (Chapter 3). If $1$ were prime, the "one way" would fail at once: $6 = 2 \cdot 3 = 1 \cdot 2 \cdot 3 = 1 \cdot 1 \cdot 2 \cdot 3 = \cdots$. Excluding $1$ keeps the most important theorem about primes simple to state. Numbers like $1$ and $-1$, which divide everything and have inverses, are called **units**; in Chapter 3 the same distinction reappears in other number systems.
+The definition starts at $2$, and that is a deliberate choice, not an accident of history (for a while, some mathematicians did count $1$ as prime). The reason is the theorem the whole subject rests on: every integer above $1$ is a product of primes in exactly one way, up to the order of the factors (Chapter 3). If $1$ were prime, the “one way” would fail at once: $6 = 2 \cdot 3 = 1 \cdot 2 \cdot 3 = 1 \cdot 1 \cdot 2 \cdot 3 = \cdots$. Excluding $1$ keeps the most important theorem about primes simple to state. Numbers like $1$ and $-1$, which divide everything and have inverses, are called **units**; in Chapter 3 the same distinction reappears in other number systems.
 
 ### Every number has a prime factor
 
@@ -193,7 +193,7 @@ Trial division is correct, short and fast enough for numbers up to about $10^{12
 | $40$ | $5 \times 10^{19}$ | $1{,}600$ years |
 | $300$ | $5 \times 10^{149}$ | far longer than the age of the universe |
 
-The size of the *input* is its number of digits (or bits), and trial division takes time exponential in that size: for a $b$-bit number, $\sqrt{n} \approx 2^{b/2}$. Cryptography routinely needs primes with $300$ digits or more (Chapter 13). Testing those requires a completely different idea, and Chapter 8 supplies one: a test that takes a fraction of a second on a 300-digit number, based on Fermat's little theorem (Chapter 6).
+The size of the *input* is its number of digits (or bits), and trial division takes time exponential in that size: for a $b$-bit number, $\sqrt{n} \approx 2^{b/2}$. Cryptography routinely needs primes with $300$ digits or more (Chapter 13). Testing those requires a completely different idea, and Chapter 8 supplies one: a test that takes a fraction of a second on a 300-digit number, based on Fermat’s little theorem (Chapter 6).
 
 :::question
 Trial division also *factors* numbers: run it, divide out the factor found, and repeat. Is factoring a 300-digit number with no small factors any easier than proving a 300-digit number prime this way? Keep your answer in mind: Chapters 8 and 11 show that, with better algorithms, these two problems turn out to have very different difficulty.

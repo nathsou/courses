@@ -16,7 +16,7 @@ The primes thin out: a quarter of the numbers up to $100$ are prime, but only on
 Prime numbers are more than any assigned multitude of prime numbers.
 :::
 
-That is Heath's translation of Euclid's statement:cite[euclid] given any finite list of primes, there is a prime that is not on the list.
+That is Heath’s translation of Euclid’s statement:cite[euclid] given any finite list of primes, there is a prime that is not on the list.
 
 ::::zoom{levels="Idea, Proof"}
 :::level[Idea]
@@ -30,7 +30,7 @@ If $p$ were one of the $p_i$, it would divide both $N$ and the product $p_1 \cdo
 ::::
 
 :::warning
-**Euclid's proof is not a proof by contradiction.** It is usually retold as "suppose there are finitely many primes; multiply them all and add one; contradiction." That version is correct, but it is not Euclid's, and it is weaker: Euclid's argument *constructs* a new prime from any finite list (at least in principle), and it applies to any list at all, not just a supposedly complete one.:cite[hardy-woodgold]
+**Euclid’s proof is not a proof by contradiction.** It is usually retold as “suppose there are finitely many primes; multiply them all and add one; contradiction.” That version is correct, but it is not Euclid’s, and it is weaker: Euclid’s argument *constructs* a new prime from any finite list (at least in principle), and it applies to any list at all, not just a supposedly complete one.:cite[hardy-woodgold]
 :::
 
 Here is the construction, run as a machine. Start from $\{2\}$; $2 + 1 = 3$ is prime, so add it; $2 \cdot 3 + 1 = 7$; $2 \cdot 3 \cdot 7 + 1 = 43$; then $2 \cdot 3 \cdot 7 \cdot 43 + 1 = 1807 = 13 \cdot 139$, and the machine keeps the smallest new factor, $13$.
@@ -56,14 +56,14 @@ notes:
 ```
 
 :::note
-**A stopping point.** That is the theorem. The next section gives four more proofs, which you can read in any order and skip on a first reading; the last two sections (primes $4k + 3$ and gaps) only need Euclid's proof.
+**A stopping point.** That is the theorem. The next section gives four more proofs, which you can read in any order and skip on a first reading; the last two sections (primes $4k + 3$ and gaps) only need Euclid’s proof.
 :::
 
 ## Four more proofs
 
 ### Fermat numbers are pairwise coprime
 
-The **Fermat numbers** are $F_n = 2^{2^n} + 1$: $F_0 = 3$, $F_1 = 5$, $F_2 = 17$, $F_3 = 257$, $F_4 = 65537$. In 1640 Fermat conjectured that they are all prime. The first five are, but in 1732 Euler found $F_5 = 4294967297 = 641 \times 6700417$, and no Fermat prime beyond $F_4$ has ever been found. Christian Goldbach had noticed, in a letter to Euler in 1730, that the Fermat numbers nevertheless prove Euclid's theorem.:cite[aigner-ziegler]
+The **Fermat numbers** are $F_n = 2^{2^n} + 1$: $F_0 = 3$, $F_1 = 5$, $F_2 = 17$, $F_3 = 257$, $F_4 = 65537$. In 1640 Fermat conjectured that they are all prime. The first five are, but in 1732 Euler found $F_5 = 4294967297 = 641 \times 6700417$, and no Fermat prime beyond $F_4$ has ever been found. Christian Goldbach had noticed, in a letter to Euler in 1730, that the Fermat numbers nevertheless prove Euclid’s theorem.:cite[aigner-ziegler]
 
 :::theorem{name="Goldbach" year=1730 status=proved}
 Distinct Fermat numbers are coprime. Consequently there are infinitely many primes.
@@ -80,7 +80,7 @@ As a bonus, this shows $p_{n+1} \le F_n$ (the $n + 1$ numbers $F_0, \ldots, F_n$
 
 ### Euler’s product
 
-Euler's proof of 1737 looks completely different, and it started a new subject.:cite[euler1737] It rests on two facts. The first is that the **harmonic series** diverges:
+Euler’s proof of 1737 looks completely different, and it started a new subject.:cite[euler1737] It rests on two facts. The first is that the **harmonic series** diverges:
 $$1 + \tfrac12 + \tfrac13 + \tfrac14 + \cdots = \infty.$$
 Nicole Oresme proved this around 1350 by grouping terms: $\tfrac13 + \tfrac14 > \tfrac12$, $\tfrac15 + \cdots + \tfrac18 > \tfrac12$, $\tfrac19 + \cdots + \tfrac1{16} > \tfrac12$, and so on, so the sum exceeds $1 + \tfrac12 + \tfrac12 + \cdots$. More precisely, comparing with the integral of $1/t$,
 $$\sum_{n \le x} \frac1n > \int_1^{x} \frac{dt}{t} = \log x \qquad (x \ge 1),$$
@@ -122,7 +122,7 @@ $$\log \log x < \sum_{p \le x} \frac1p + \sum_{p \le x} \frac1{p^2} < \sum_{p \l
 since $\sum_{n \ge 2} 1/n^2 < \sum_{n \ge 2} \frac{1}{n(n-1)} = \sum_{n \ge 2}\left(\frac{1}{n-1} - \frac1n\right) = 1$.
 :::
 
-So the primes are "denser" than the squares, for which $\sum 1/n^2$ converges, and much denser than any sequence that grows exponentially. Euler's idea of studying primes through a product over all of them, $\prod_p (1 - p^{-s})^{-1}$, is the seed of the zeta function and of all of Part IV. Chapter 17 sharpens this theorem to $\sum_{p \le x} 1/p = \log \log x + M + o(1)$.
+So the primes are “denser” than the squares, for which $\sum 1/n^2$ converges, and much denser than any sequence that grows exponentially. Euler’s idea of studying primes through a product over all of them, $\prod_p (1 - p^{-s})^{-1}$, is the seed of the zeta function and of all of Part IV. Chapter 17 sharpens this theorem to $\sum_{p \le x} 1/p = \log \log x + M + o(1)$.
 
 ### Erdős’s counting proof
 
@@ -140,7 +140,7 @@ A refinement of the same idea gives another proof that $\sum 1/p$ diverges. Supp
 
 ### Furstenberg’s topological proof
 
-In 1955, as an undergraduate, Hillel Furstenberg published a proof that uses the language of topology.:cite[furstenberg1955,aigner-ziegler] It needs only the definition of a topology: a collection of "open" sets, closed under arbitrary unions and finite intersections, containing the empty set and the whole space. A set is "closed" if its complement is open.
+In 1955, as an undergraduate, Hillel Furstenberg published a proof that uses the language of topology.:cite[furstenberg1955,aigner-ziegler] It needs only the definition of a topology: a collection of “open” sets, closed under arbitrary unions and finite intersections, containing the empty set and the whole space. A set is “closed” if its complement is open.
 
 :::theorem{name="Furstenberg" year=1955 status=proved}
 There are infinitely many primes.
@@ -157,11 +157,11 @@ $$\mathbb{Z} \setminus \{-1, 1\} = \bigcup_{p \text{ prime}} p\mathbb{Z}.$$
 If there were finitely many primes, the right-hand side would be a finite union of closed sets, hence closed. Then its complement $\{-1, 1\}$ would be open. But it is finite and non-empty, contradicting fact 1.
 :::
 
-The topology is a disguise: the proof is really about divisibility, like Euclid's.:cite[aigner-ziegler] But it is a striking illustration that a theorem about primes can be proved from very far away, a theme that returns with a vengeance when complex analysis proves the prime number theorem in Part V.
+The topology is a disguise: the proof is really about divisibility, like Euclid’s.:cite[aigner-ziegler] But it is a striking illustration that a theorem about primes can be proved from very far away, a theme that returns with a vengeance when complex analysis proves the prime number theorem in Part V.
 
 ## Primes in progressions: a first step
 
-Every prime other than $2$ is odd, so it is $4k + 1$ or $4k + 3$. Are there infinitely many of each kind? For $4k + 3$, a variation on Euclid's argument works.
+Every prime other than $2$ is odd, so it is $4k + 1$ or $4k + 3$. Are there infinitely many of each kind? For $4k + 3$, a variation on Euclid’s argument works.
 
 :::theorem{status=proved}
 There are infinitely many primes of the form $4k + 3$.
@@ -173,7 +173,7 @@ Let $p_1, \ldots, p_n$ be any finite list of primes of the form $4k + 3$, and se
 A product of numbers of the form $4k + 1$ has the same form, since $(4j + 1)(4k + 1) = 4(4jk + j + k) + 1$. So if every prime factor of $N$ were of the form $4k + 1$, $N$ would be too. It is not, so $N$ has a prime factor $q$ of the form $4k + 3$ (it is odd, so $2$ is not a factor). If $q$ were some $p_i$, it would divide $N$ and $4p_1 \cdots p_n$, hence $1$. So $q$ is a new prime of the form $4k + 3$.
 :::
 
-The same trick fails for $4k + 1$: a product of primes of the form $4k + 3$ can be $4k + 1$ ($3 \cdot 7 = 21$), so the new number's prime factors are not forced to have the right form. Infinitely many primes $4k + 1$ do exist; Chapter 9 proves it with one more idea (which primes divide numbers of the form $n^2 + 1$), and Chapter 33 proves **Dirichlet's theorem**: every progression $a, a + q, a + 2q, \ldots$ with $\gcd(a, q) = 1$ contains infinitely many primes. That needs the machinery of Part IV.
+The same trick fails for $4k + 1$: a product of primes of the form $4k + 3$ can be $4k + 1$ ($3 \cdot 7 = 21$), so the new number’s prime factors are not forced to have the right form. Infinitely many primes $4k + 1$ do exist; Chapter 9 proves it with one more idea (which primes divide numbers of the form $n^2 + 1$), and Chapter 33 proves **Dirichlet’s theorem**: every progression $a, a + q, a + 2q, \ldots$ with $\gcd(a, q) = 1$ contains infinitely many primes. That needs the machinery of Part IV.
 
 ```prove
 id: infinitely-many/six-k-five
@@ -220,17 +220,17 @@ Each proof gives a lower bound on $\pi(x)$, and comparing them with the truth is
 | Euler (via $\sum 1/p$) | grows faster than any power of $\log x$ (exercise 4) | |
 | Truth | $\pi(10^6)$ | $78{,}498$ |
 
-None of the elementary arguments comes close to the truth, which is about $x / \log x$. Getting there is the work of Part III (Chebyshev's bounds, which are within a constant factor) and Part V (the prime number theorem, which gets the constant right).
+None of the elementary arguments comes close to the truth, which is about $x / \log x$. Getting there is the work of Part III (Chebyshev’s bounds, which are within a constant factor) and Part V (the prime number theorem, which gets the constant right).
 
 :::key
 - Euclid: from any finite list of primes, $p_1 \cdots p_n + 1$ has a prime factor not on the list. The proof is constructive, not by contradiction.
-- Other proofs: Fermat numbers are pairwise coprime; Euler's product shows $\prod_{p \le x}(1 - 1/p)^{-1} > \log x$ and $\sum_{p \le x} 1/p > \log \log x - 1$; Erdős counts $n = sm^2$; Furstenberg uses arithmetic progressions as open sets.
+- Other proofs: Fermat numbers are pairwise coprime; Euler’s product shows $\prod_{p \le x}(1 - 1/p)^{-1} > \log x$ and $\sum_{p \le x} 1/p > \log \log x - 1$; Erdős counts $n = sm^2$; Furstenberg uses arithmetic progressions as open sets.
 - There are infinitely many primes $4k + 3$ (a variation on Euclid); $4k + 1$ needs more (Chapters 9 and 33).
 - Gaps can be arbitrarily long ($n! + 2, \ldots, n! + n$), but in practice they grow slowly.
 :::
 
 :::exercises
-1. Show by induction that the $n$-th prime satisfies $p_n \le 2^{2^{n-1}}$. (Use Euclid's construction: $p_{n+1} \le p_1 \cdots p_n + 1$.)
+1. Show by induction that the $n$-th prime satisfies $p_n \le 2^{2^{n-1}}$. (Use Euclid’s construction: $p_{n+1} \le p_1 \cdots p_n + 1$.)
 2. Show that if $2^m + 1$ is prime then $m$ is a power of $2$. (If $m$ has an odd factor $k > 1$, factor $x^k + 1$.) This is why Fermat looked at $2^{2^n} + 1$.
 3. Show that $F_5 = 2^{32} + 1$ is divisible by $641$ without dividing: note $641 = 5 \cdot 2^7 + 1 = 5^4 + 2^4$.
 4. Use $\sum_{p \le x} 1/p > \log \log x - 1$ to show that $\pi(x)$ cannot be bounded by $C (\log x)^k$ for any constants $C, k$. (Hint: if it were, use partial sums to bound $\sum_{p \le x} 1/p$.)

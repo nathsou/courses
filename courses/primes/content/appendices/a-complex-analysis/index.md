@@ -5,15 +5,15 @@ summary: "A refresher of everything Parts IV to VII use: complex exponentials an
 duration: About 1½ hours
 ---
 
-This appendix is for a reader who once took a course in complex analysis and has forgotten most of it. It states every result the course uses, proves the short ones, and points to where each is needed. A standard text such as Stein and Shakarchi's *Complex Analysis* has the full story.:cite[stein-shakarchi]
+This appendix is for a reader who once took a course in complex analysis and has forgotten most of it. It states every result the course uses, proves the short ones, and points to where each is needed. A standard text such as Stein and Shakarchi’s *Complex Analysis* has the full story.:cite[stein-shakarchi]
 
 ## Complex numbers, exponentials and logarithms
 
-A complex number is $z = x + iy$ with $x, y$ real and $i^2 = -1$; $|z| = \sqrt{x^2 + y^2}$ and $\bar z = x - iy$, so $|z|^2 = z\bar z$. The exponential $e^z = \sum_{n \ge 0}z^n/n!$ satisfies $e^{z + w} = e^ze^w$ and **Euler's formula**
+A complex number is $z = x + iy$ with $x, y$ real and $i^2 = -1$; $|z| = \sqrt{x^2 + y^2}$ and $\bar z = x - iy$, so $|z|^2 = z\bar z$. The exponential $e^z = \sum_{n \ge 0}z^n/n!$ satisfies $e^{z + w} = e^ze^w$ and **Euler’s formula**
 $$e^{i\theta} = \cos\theta + i\sin\theta,$$
 so every nonzero $z$ can be written $z = re^{i\theta}$ with $r = |z|$ and $\theta$ an **argument** of $z$, determined up to multiples of $2\pi$. The **principal argument** $\operatorname{Arg} z$ is the one in $(-\pi, \pi]$.
 
-A logarithm of $z \ne 0$ is any $w$ with $e^w = z$: $w = \log|z| + i\theta$ for any argument $\theta$. There is no continuous choice on all of $\C \setminus \{0\}$ (going once round the origin adds $2\pi i$), which is why the course always says how an argument is chosen: usually "by continuous variation along a path". For a positive real $a$ and complex $s$, $a^s$ always means $e^{s\log a}$ with the real logarithm, so $|a^s| = a^{\operatorname{Re}s}$.
+A logarithm of $z \ne 0$ is any $w$ with $e^w = z$: $w = \log|z| + i\theta$ for any argument $\theta$. There is no continuous choice on all of $\C \setminus \{0\}$ (going once round the origin adds $2\pi i$), which is why the course always says how an argument is chosen: usually “by continuous variation along a path”. For a positive real $a$ and complex $s$, $a^s$ always means $e^{s\log a}$ with the real logarithm, so $|a^s| = a^{\operatorname{Re}s}$.
 
 ## Holomorphic functions
 
@@ -44,20 +44,20 @@ With $z = z_0 + re^{it}$, $dz = ire^{it}dt$, the integral is $ir^{n+1}\int_0^{2\
 If $f$ is holomorphic on an open set containing a closed path $\gamma$ and everything inside it (for example, a rectangle or a disc with its boundary), then $\oint_\gamma f(z)\,dz = 0$.
 :::
 
-So integrals of holomorphic functions depend only on the endpoints, and a path can be deformed freely as long as it does not cross a point where $f$ fails to be holomorphic. That is what "moving the line of integration" means in Chapter 23.
+So integrals of holomorphic functions depend only on the endpoints, and a path can be deformed freely as long as it does not cross a point where $f$ fails to be holomorphic. That is what “moving the line of integration” means in Chapter 23.
 
 :::theorem{name="Cauchy’s integral formula" status=proved}
 Under the same hypotheses, for $z_0$ inside the circle $\gamma$: $\displaystyle f(z_0) = \frac{1}{2\pi i}\oint_\gamma\frac{f(z)}{z - z_0}\,dz$.
 :::
 
 :::proof
-By Cauchy's theorem the circle can be shrunk to a small circle of radius $\varepsilon$ round $z_0$. There $\frac{f(z)}{z - z_0} = \frac{f(z_0)}{z - z_0} + \frac{f(z) - f(z_0)}{z - z_0}$. The first term integrates to $2\pi i f(z_0)$ by the lemma; the second is bounded (by $|f'(z_0)| + 1$, for small $\varepsilon$) on a path of length $2\pi\varepsilon$, so its integral tends to $0$.
+By Cauchy’s theorem the circle can be shrunk to a small circle of radius $\varepsilon$ round $z_0$. There $\frac{f(z)}{z - z_0} = \frac{f(z_0)}{z - z_0} + \frac{f(z) - f(z_0)}{z - z_0}$. The first term integrates to $2\pi i f(z_0)$ by the lemma; the second is bounded (by $|f'(z_0)| + 1$, for small $\varepsilon$) on a path of length $2\pi\varepsilon$, so its integral tends to $0$.
 :::
 
 Expanding $\frac{1}{z - z_0}$ in the integral formula as a geometric series gives the main consequences:
 
 - A holomorphic function is infinitely differentiable, and equals its Taylor series in every disc inside its domain.
-- **Cauchy's estimates:** if $|f| \le M$ on the circle $|z - z_0| = r$, then $|f^{(n)}(z_0)| \le n!\,M/r^n$.
+- **Cauchy’s estimates:** if $|f| \le M$ on the circle $|z - z_0| = r$, then $|f^{(n)}(z_0)| \le n!\,M/r^n$.
 - **Liouville:** a bounded entire function is constant (take $n = 1$ and $r \to \infty$).
 
 ## Limits and integrals of holomorphic functions
@@ -74,7 +74,7 @@ On a small circle inside $U$, the integral formula for $f_n$ passes to the limit
 
 For a series $\sum f_n$, uniform convergence on compact sets follows from the **M-test**: $|f_n| \le M_n$ there with $\sum M_n < \infty$. This is how Chapter 20 shows that $\zeta(s) = \sum n^{-s}$ is holomorphic for $\operatorname{Re}s > 1$.
 
-**Integrals.** If $g(x, s)$ is continuous, holomorphic in $s$ for each $x$, and $|g(x, s)| \le G(x)$ with $\int G < \infty$ for $s$ in each compact set, then $F(s) = \int g(x, s)\,dx$ is holomorphic. (Integrate $F$ round a small triangle and swap the integrals: the result is $0$, so $F$ is holomorphic by **Morera's theorem**, the converse of Cauchy's.) This covers $\Gamma(s) = \int_0^\infty e^{-x}x^{s-1}dx$, the integral $\int_1^\infty\{t\}t^{-s-1}dt$ of Chapter 20 and the theta integral of Chapter 21.
+**Integrals.** If $g(x, s)$ is continuous, holomorphic in $s$ for each $x$, and $|g(x, s)| \le G(x)$ with $\int G < \infty$ for $s$ in each compact set, then $F(s) = \int g(x, s)\,dx$ is holomorphic. (Integrate $F$ round a small triangle and swap the integrals: the result is $0$, so $F$ is holomorphic by **Morera’s theorem**, the converse of Cauchy’s.) This covers $\Gamma(s) = \int_0^\infty e^{-x}x^{s-1}dx$, the integral $\int_1^\infty\{t\}t^{-s-1}dt$ of Chapter 20 and the theta integral of Chapter 21.
 
 ## Zeros and analytic continuation
 
@@ -105,7 +105,7 @@ $$\frac{1}{2\pi i}\oint_\gamma f(z)\,dz = \sum_{\text{poles } z_k \text{ inside 
 :::
 
 :::proof
-Subtract from $f$ the principal part $\sum_{j \ge 1}c_{-j}(z - z_k)^{-j}$ at each pole inside. What remains is holomorphic inside $\gamma$, so its integral is $0$ by Cauchy's theorem. The integral of each principal part is $2\pi i\,c_{-1}$ by the lemma (deforming $\gamma$ to a small circle round $z_k$).
+Subtract from $f$ the principal part $\sum_{j \ge 1}c_{-j}(z - z_k)^{-j}$ at each pole inside. What remains is holomorphic inside $\gamma$, so its integral is $0$ by Cauchy’s theorem. The integral of each principal part is $2\pi i\,c_{-1}$ by the lemma (deforming $\gamma$ to a small circle round $z_k$).
 :::
 
 ## The argument principle
@@ -128,11 +128,11 @@ Chapter 22 uses this to count zeros of $\xi$ in a rectangle, and Chapter 25 uses
 
 ## Jensen’s formula and products
 
-**Jensen's formula.** If $f$ is holomorphic on $|z| \le R$ with $f(0) \ne 0$, and $a_1, \ldots, a_n$ are its zeros in $|z| < R$, then
+**Jensen’s formula.** If $f$ is holomorphic on $|z| \le R$ with $f(0) \ne 0$, and $a_1, \ldots, a_n$ are its zeros in $|z| < R$, then
 $$\log|f(0)| + \sum_{k=1}^n\log\frac{R}{|a_k|} = \frac{1}{2\pi}\int_0^{2\pi}\log|f(Re^{i\theta})|\,d\theta.$$
 (For $f$ without zeros, this is the mean value property of the harmonic function $\log|f|$; each zero is then divided out by a factor that has modulus $1$ on $|z| = R$.) The consequence used in the course: if $|f| \le M$ on $|z| = R$, the number of zeros in $|z| \le r < R$ is at most $\frac{\log(M/|f(0)|)}{\log(R/r)}$, since each such zero contributes at least $\log\frac Rr$ to the sum. Applied to $\zeta$ on discs of fixed size at height $T$, where $|\zeta|$ grows polynomially in $T$, it shows that $\zeta$ has $O(\log T)$ zeros with imaginary part in $[T, T + 1]$.
 
-**Entire functions and their zeros.** An entire function has **order** at most $\alpha$ if $|f(z)| \le Ce^{|z|^{\alpha + \varepsilon}}$ for every $\varepsilon > 0$. Jensen's formula shows that such a function has $O(r^{\alpha + \varepsilon})$ zeros in $|z| \le r$, and **Hadamard's factorisation theorem** (1893) says that a function of order at most $1$ is determined by its zeros $a_k$ up to an exponential factor:
+**Entire functions and their zeros.** An entire function has **order** at most $\alpha$ if $|f(z)| \le Ce^{|z|^{\alpha + \varepsilon}}$ for every $\varepsilon > 0$. Jensen’s formula shows that such a function has $O(r^{\alpha + \varepsilon})$ zeros in $|z| \le r$, and **Hadamard’s factorisation theorem** (1893) says that a function of order at most $1$ is determined by its zeros $a_k$ up to an exponential factor:
 $$f(z) = z^me^{A + Bz}\prod_k\left(1 - \frac{z}{a_k}\right)e^{z/a_k}.$$
 The function $\xi$ of Chapter 21 has order $1$, and its product formula comes from this theorem.
 
@@ -141,13 +141,13 @@ The function $\xi$ of Chapter 21 has order $1$, and its product formula comes fr
 - Cauchy: integrals over closed paths vanish, so paths can be moved; the integral formula gives values and derivative bounds from boundary values.
 - Uniform limits of holomorphic functions, and integrals of holomorphic families, are holomorphic: this is why Dirichlet series and the Gamma integral are holomorphic.
 - Zeros are isolated, and the identity theorem makes analytic continuation unique.
-- Residue theorem: $\oint f = 2\pi i\sum\operatorname{Res}$. For $f'/f$ it counts zeros minus poles (argument principle). Jensen's formula bounds the number of zeros by the growth of $f$.
+- Residue theorem: $\oint f = 2\pi i\sum\operatorname{Res}$. For $f'/f$ it counts zeros minus poles (argument principle). Jensen’s formula bounds the number of zeros by the growth of $f$.
 :::
 
 :::exercises
 1. Show that $\overline{z}$ and $|z|^2$ fail the Cauchy–Riemann equations, except at $z = 0$ for the second.
 2. Compute $\oint_{|z|=2}\frac{e^z}{z(z - 1)}dz$ with the residue theorem.
 3. Show that the residue of $\frac{\zeta'(s)}{\zeta(s)}\cdot\frac{x^s}{s}$ at $s = 1$ is $-x$, and at a simple zero $\rho$ of $\zeta$ it is $\frac{x^\rho}{\rho}$.
-4. Use Cauchy's estimates to show that an entire function with $|f(z)| \le C(1 + |z|)^k$ is a polynomial of degree at most $k$.
+4. Use Cauchy’s estimates to show that an entire function with $|f(z)| \le C(1 + |z|)^k$ is a polynomial of degree at most $k$.
 5. In the widget, place the circle so that it contains exactly one zero and the pole. What winding number do you expect, and what does the curve $f(\gamma)$ look like?
 :::
