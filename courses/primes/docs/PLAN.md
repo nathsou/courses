@@ -118,17 +118,17 @@ Then, in order:
 
 ## Milestones
 
-| | Scope |
-|---|---|
-| M0 | Scaffold (site, compiler, code runner, design "Ledger", library skeleton), Prologue, monorepo wiring, PR |
-| M1 | Part I and appendix E |
-| M2 | Part II |
-| M3 | Part III and appendix B |
-| M4 | Part IV and appendices A, C, D; zeros table |
-| M5 | Part V |
-| M6 | Part VI |
-| M7 | Part VII, epilogue, appendices F and G |
-| M8 | Proofread, UX review at phone and desktop widths in both themes, final checks |
+| | Scope | Status |
+|---|---|---|
+| M0 | Scaffold (site, compiler, code runner, design "Ledger", library skeleton), Prologue, monorepo wiring, PR | done |
+| M1 | Part I and appendix E | done |
+| M2 | Part II | done (Miller–Rabin: the ½ bound proved, the ¼ bound sketched) |
+| M3 | Part III and appendix B | done |
+| M4 | Part IV and appendices A, C, D; zeros table | done (explicit formula sketched; everything it needs proved or stated) |
+| M5 | Part V | done (PNT proved in full via Newman; zero-free region, error terms and the elementary proof sketched) |
+| M6 | Part VI | |
+| M7 | Part VII, epilogue, appendices F and G | |
+| M8 | Proofread, UX review at phone and desktop widths in both themes, final checks | |
 
 ## Facts and sources
 

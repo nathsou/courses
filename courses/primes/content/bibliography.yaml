@@ -493,3 +493,53 @@ stein-shakarchi:
   year: 2003
   title: Complex Analysis
   venue: Princeton Lectures in Analysis II, Princeton University Press
+hadamard1896:
+  authors: Jacques Hadamard
+  year: 1896
+  title: Sur la distribution des zéros de la fonction ζ(s) et ses conséquences arithmétiques
+  venue: Bulletin de la Société Mathématique de France 24, 199–220
+delavalleepoussin1896:
+  authors: Charles-Jean de la Vallée Poussin
+  year: 1896
+  title: Recherches analytiques sur la théorie des nombres premiers
+  venue: Annales de la Société Scientifique de Bruxelles 20, 183–256 and 281–397
+newman1980:
+  authors: D. J. Newman
+  year: 1980
+  title: Simple analytic proof of the prime number theorem
+  venue: American Mathematical Monthly 87(9), 693–696
+zagier1997:
+  authors: Don Zagier
+  year: 1997
+  title: Newman’s short proof of the prime number theorem
+  venue: American Mathematical Monthly 104(8), 705–708
+mertens1898:
+  authors: Franz Mertens
+  year: 1898
+  title: Über eine Eigenschaft der Riemannschen ζ-Function
+  venue: Sitzungsberichte der Kaiserlichen Akademie der Wissenschaften in Wien, Mathematisch-Naturwissenschaftliche Classe 107, 1429–1434
+vonkoch1901:
+  authors: Helge von Koch
+  year: 1901
+  title: Sur la distribution des nombres premiers
+  venue: Acta Mathematica 24, 159–182
+schoenfeld1976:
+  authors: Lowell Schoenfeld
+  year: 1976
+  title: Sharper bounds for the Chebyshev functions θ(x) and ψ(x). II
+  venue: Mathematics of Computation 30(134), 337–360
+rosser-schoenfeld1962:
+  authors: J. Barkley Rosser and Lowell Schoenfeld
+  year: 1962
+  title: Approximate formulas for some functions of prime numbers
+  venue: Illinois Journal of Mathematics 6(1), 64–94
+selberg1949:
+  authors: Atle Selberg
+  year: 1949
+  title: An elementary proof of the prime-number theorem
+  venue: Annals of Mathematics 50(2), 305–313
+erdos1949:
+  authors: Paul Erdős
+  year: 1949
+  title: On a new method in elementary number theory which leads to an elementary proof of the prime number theorem
+  venue: Proceedings of the National Academy of Sciences 35(7), 374–384
