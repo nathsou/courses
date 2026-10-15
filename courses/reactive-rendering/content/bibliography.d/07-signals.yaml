@@ -70,3 +70,15 @@ lit-docs:
   year: 2024
   title: Lit documentation, Templates and Reactive properties
   url: https://lit.dev/docs/
+harris-rethinking:
+  authors: Harris, R.
+  year: 2019
+  title: 'Svelte 3: Rethinking reactivity'
+  venue: svelte.dev blog, 22 April 2019
+  url: https://svelte.dev/blog/svelte-3-rethinking-reactivity
+harris-vdom:
+  authors: Harris, R.
+  year: 2018
+  title: Virtual DOM is pure overhead
+  venue: svelte.dev blog, 27 December 2018
+  url: https://svelte.dev/blog/virtual-dom-is-pure-overhead
