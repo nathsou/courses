@@ -92,7 +92,7 @@
 
 <style>
   .widget {
-    --strip: light-dark(#ebe4d6, #131c29);
+    --strip: light-dark(#e6eaf6, #141a2b);
     margin: 2.5rem 0;
     background: var(--panel);
     border: 1px solid var(--line-strong);

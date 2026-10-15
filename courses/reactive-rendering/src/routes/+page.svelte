@@ -1,24 +1,25 @@
 <script lang="ts">
   import { base } from '$app/paths';
-  import { COURSE_SUBTITLE, COURSE_TITLE, PARTS, APPENDICES, READING_PATHS, LAYERS } from '$content/outline';
+  import { COURSE_SUBTITLE, COURSE_TITLE, PARTS, APPENDICES, READING_PATHS, ANSWERS, VERSIONS, VERSIONS_AS_OF } from '$content/outline';
   import { ALL_ENTRIES, findEntry } from '$lib/content/registry';
   import { progress } from '$lib/state/progress.svelte';
-  import HexHero from '$lib/components/home/HexHero.svelte';
+  import HeroLens from '$lib/components/lens/HeroLens.svelte';
   import { onMount } from 'svelte';
 
   const available = new Set(ALL_ENTRIES.filter((e) => e.available).map((e) => `${e.kind}/${e.slug}`));
   const total = PARTS.reduce((n, p) => n + p.chapters.length, 0);
   const done = PARTS.reduce((n, p) => n + p.chapters.filter((c) => available.has(`chapter/${c.slug}`)).length, 0);
-  const layerById = new Map(LAYERS.map((l) => [l.id, l]));
+  const answerById = new Map(ANSWERS.map((l) => [l.id, l]));
 
-  const ANSWERS = [
-    ['The hardware', 'never frees anything.'],
-    ['The kernel', 'frees a frame when the last mapping goes.'],
-    ['malloc', 'frees when you tell it to.'],
-    ['Ownership', 'frees at the end of the owner’s scope.'],
-    ['Reference counting', 'frees when the count reaches zero.'],
-    ['A tracing collector', 'frees what nothing can reach.'],
-  ];
+  /** For each answer: what it says changed. */
+  const SAYS: Record<string, string> = {
+    rebuild: 'Everything. Start again from the new state.',
+    check: 'I cannot tell, so I will look at everything that could have changed.',
+    diff: 'Whatever differs between the last description of the page and this one.',
+    track: 'Whatever read the value that was just written.',
+    compile: 'Whatever the compiler could prove depends on it, before the page ever ran.',
+    skip: 'Nothing, here: the server already knows, or will send the new HTML.',
+  };
 
   let path: string | null = $state(null);
   const onPath = $derived(path ? new Set(READING_PATHS.find((p) => p.id === path)!.chapters) : null);
@@ -27,7 +28,7 @@
 
 <svelte:head>
   <title>{COURSE_TITLE}: {COURSE_SUBTITLE}</title>
-  <meta name="description" content="An interactive course on memory management for software engineers: page tables, TLBs and page faults, the kernel’s allocators, writing your own malloc, memory errors and sanitisers, ownership, reference counting and garbage collection, all running on a simulated machine in the browser." />
+  <meta name="description" content="An interactive course on how web frameworks keep the page in step with the state: innerHTML, dirty checking, the virtual DOM, signals, compilers, hydration, resumability and morphing, with React, Vue, Solid, Svelte, Angular, Lit and Qwik, all running as small working models in the browser." />
 </svelte:head>
 
 <div class="home">
@@ -37,33 +38,32 @@
       <h1>{COURSE_TITLE}</h1>
       <p class="sub">{COURSE_SUBTITLE}</p>
       <p class="lede">
-        Every program asks for memory and, sooner or later, has to give it back. Between your <code>new</code> and the
-        capacitors that hold the bits sit five layers that each hand out memory: caches, the kernel’s frames, page tables,
-        <code>malloc</code> and your language’s runtime. This course opens each one, has you build a small version of it on a
-        simulated RISC-V machine, and then breaks it on purpose.
+        You change one number. Somehow the right pixels change, and only those. Between your <code>count++</code> and the
+        screen sits a decision every framework has to make: <em>what changed?</em> This course builds a small, working
+        version of each framework’s answer (a virtual DOM, signals, a template compiler, hydration, resumability) and
+        puts a lens on the DOM that flashes every node an update touches.
       </p>
       <div class="cta ui">
         <a class="primary" href="{base}/chapters/{PARTS[0]!.chapters[0]!.slug}/">Start with chapter 0</a>
-        <a href="{base}/lab/">The lab bench</a>
-        <a href="{base}/appendix/museum/">The museum</a>
+        <a href="{base}/appendix/glossary-and-bibliography/">Glossary and timeline</a>
       </div>
     </div>
-    <div class="hero-dump"><HexHero /></div>
+    <div class="hero-lens"><HeroLens /></div>
   </section>
 
   <section class="who" aria-labelledby="who-h">
     <h2 id="who-h">One question, six answers</h2>
-    <p class="note">The whole course is about one question: <em>who frees it?</em> Each layer answers it differently.</p>
+    <p class="note">When the state changes, which parts of the page must change, and how do we find them? Each answer is a different trade between work done by you, by the framework at run time, and by a compiler before the page loads.</p>
     <ol class="answers ui">
-      {#each ANSWERS as [who, what], i (who)}
-        <li style:--i={i}><strong>{who}</strong> <span>{what}</span></li>
+      {#each ANSWERS as a, i (a.id)}
+        <li style:--i={i}><strong><span class="g" aria-hidden="true">{a.glyph}</span> {a.label}</strong> <span>“What changed?” — {SAYS[a.id]}</span></li>
       {/each}
     </ol>
   </section>
 
   <section class="paths" aria-labelledby="paths-h">
     <h2 id="paths-h">Four ways through</h2>
-    <p class="note">The chapters are written to be read in order, from the hardware up, but each one says what it assumes. Pick a path to highlight its chapters on the map below.</p>
+    <p class="note">The chapters are written to be read in order, but each one says what it assumes. Pick a path to highlight its chapters on the map below.</p>
     <div class="path-cards ui" role="group" aria-label="Reading paths">
       {#each READING_PATHS as p (p.id)}
         <button type="button" class="path" aria-pressed={path === p.id} onclick={() => (path = path === p.id ? null : p.id)}>
@@ -96,10 +96,10 @@
                 {#if ok}<a href="{base}/chapters/{c.slug}/">{c.title}</a>{:else}<span class="planned" title="Being written">{c.title}</span>{/if}
                 {#if c.optional}<span class="opt ui" title="Optional deeper chapter">◇ optional</span>{/if}
                 <p>{c.summary.replace(/`/g, '')}</p>
-                {#if c.flagship || c.layers?.length}
+                {#if c.flagship || c.answers?.length}
                   <p class="engines ui">
                     {#if c.flagship}<span class="flag">▶ {c.flagship}</span>{/if}
-                    {#each c.layers ?? [] as l (l)}<span title={layerById.get(l)?.blurb}><b aria-hidden="true">{layerById.get(l)?.glyph}</b> {layerById.get(l)?.label}</span>{/each}
+                    {#each c.answers ?? [] as l (l)}<span title={answerById.get(l)?.blurb}><b aria-hidden="true">{answerById.get(l)?.glyph}</b> {answerById.get(l)?.label}</span>{/each}
                   </p>
                 {/if}
               </div>
@@ -122,6 +122,14 @@
         {/each}
       </ol>
     </div>
+  </section>
+
+  <section class="versions ui" aria-labelledby="ver-h">
+    <h2 id="ver-h">Versions</h2>
+    <p class="note">Frameworks change faster than courses. Every statement about a real framework refers to these versions, as of {VERSIONS_AS_OF}; each chapter that names one says so again.</p>
+    <dl>
+      {#each Object.entries(VERSIONS) as [name, v] (name)}<div><dt>{name}</dt><dd>{v}</dd></div>{/each}
+    </dl>
   </section>
 </div>
 
@@ -185,15 +193,10 @@
   .hero-text {
     min-width: 0;
   }
-  .hero-dump {
-    transform: rotate(1.5deg);
-  }
+
   @media (max-width: 960px) {
     .hero {
       grid-template-columns: minmax(0, 1fr);
-    }
-    .hero-dump {
-      transform: none;
     }
   }
   .lede code {
@@ -373,5 +376,35 @@
   .engines b {
     color: var(--ink-blue);
     font-weight: 600;
+  }
+
+  .hero-lens {
+    min-width: 0;
+    width: min(100%, 25rem);
+  }
+  .g {
+    color: var(--flash);
+    margin-right: 0.15rem;
+  }
+  .versions dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: 0.4rem 1.2rem;
+    margin: 0;
+  }
+  .versions dl div {
+    display: flex;
+    gap: 0.6rem;
+    border-bottom: 1px solid var(--line);
+    padding: 0.25rem 0;
+    font-size: 0.88rem;
+  }
+  .versions dt {
+    font-weight: 700;
+    min-width: 4.5rem;
+  }
+  .versions dd {
+    margin: 0;
+    color: var(--ink-2);
   }
 </style>
