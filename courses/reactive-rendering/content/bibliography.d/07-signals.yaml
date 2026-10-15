@@ -82,3 +82,8 @@ harris-vdom:
   title: Virtual DOM is pure overhead
   venue: svelte.dev blog, 27 December 2018
   url: https://svelte.dev/blog/virtual-dom-is-pure-overhead
+svelte-runes-docs:
+  authors: Svelte team
+  year: 2024
+  title: Svelte documentation, Runes ($state, $derived, $effect, $props)
+  url: https://svelte.dev/docs/svelte/what-are-runes
