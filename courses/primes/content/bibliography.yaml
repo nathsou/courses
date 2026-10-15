@@ -603,3 +603,33 @@ rubinstein-sarnak1994:
   year: 1994
   title: Chebyshev’s bias
   venue: Experimental Mathematics 3(3), 173–197
+montgomery1973:
+  authors: H. L. Montgomery
+  year: 1973
+  title: The pair correlation of zeros of the zeta function
+  venue: Analytic Number Theory, Proceedings of Symposia in Pure Mathematics 24, AMS, 181–193
+dumitriu-edelman2002:
+  authors: Ioana Dumitriu and Alan Edelman
+  year: 2002
+  title: Matrix models for beta ensembles
+  venue: Journal of Mathematical Physics 43(11), 5830–5847
+keating-snaith2000:
+  authors: J. P. Keating and N. C. Snaith
+  year: 2000
+  title: Random matrix theory and ζ(1/2 + it)
+  venue: Communications in Mathematical Physics 214, 57–89
+hasse1933:
+  authors: Helmut Hasse
+  year: 1933
+  title: Beweis des Analogons der Riemannschen Vermutung für die Artinschen und F. K. Schmidtschen Kongruenzzetafunktionen in gewissen elliptischen Fällen
+  venue: Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, Mathematisch-Physikalische Klasse, 253–262
+weil1948:
+  authors: André Weil
+  year: 1948
+  title: Sur les courbes algébriques et les variétés qui s’en déduisent
+  venue: Actualités Scientifiques et Industrielles 1041, Hermann, Paris
+deligne1974:
+  authors: Pierre Deligne
+  year: 1974
+  title: La conjecture de Weil. I
+  venue: Publications Mathématiques de l’IHÉS 43, 273–307

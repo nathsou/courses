@@ -41,10 +41,7 @@ export function cramerPrimes(n: number, seed = 1): number[] {
   return out;
 }
 
-/**
- * Eigenvalues of an n×n GUE matrix are hard to compute without a linear-algebra library; the course instead
- * samples the Wigner surmise p(s) = (32/π²) s² e^{−4s²/π} for unitary-ensemble spacings.
- */
+/** The Wigner surmise p(s) = (32/π²) s² e^{−4s²/π}, a close approximation to the GUE spacing density. */
 export function wignerGUE(s: number): number {
   return (32 / (Math.PI * Math.PI)) * s * s * Math.exp((-4 * s * s) / Math.PI);
 }
@@ -66,4 +63,48 @@ export function randomBits(bits: number, r: Rng): bigint {
   let v = 1n;
   for (let i = 1; i < bits; i++) v = (v << 1n) | (r.next() < 0.5 ? 1n : 0n);
   return v;
+}
+
+/**
+ * Eigenvalues of a random n×n matrix from the Gaussian Unitary Ensemble, without complex linear algebra: by
+ * Dumitriu and Edelman (2002), the real symmetric tridiagonal matrix with diagonal N(0, 2) and off-diagonal
+ * entries χ_{2(n−1)}, χ_{2(n−2)}, …, χ_2, all divided by √2, has the same eigenvalue distribution as GUE
+ * (density ∝ Π|λᵢ − λⱼ|² e^{−Σλᵢ²/2}). Its eigenvalues are found by Sturm-sequence bisection. Returned sorted.
+ */
+export function gueEigenvalues(n: number, r: Rng): number[] {
+  const d = new Float64Array(n);
+  const e2 = new Float64Array(n); // squared off-diagonal entries; e2[i] couples i − 1 and i
+  for (let i = 0; i < n; i++) d[i] = r.normal(); // N(0, 2)/√2
+  for (let i = 1; i < n; i++) {
+    const k = 2 * (n - i); // degrees of freedom of the χ variable
+    let s = 0;
+    for (let j = 0; j < k; j++) s += r.normal() ** 2;
+    e2[i] = s / 2;
+  }
+  // Number of eigenvalues below x: sign changes of the Sturm sequence.
+  const below = (x: number) => {
+    let count = 0;
+    let q = d[0]! - x;
+    if (q < 0) count++;
+    for (let i = 1; i < n; i++) {
+      q = d[i]! - x - e2[i]! / (q === 0 ? 1e-300 : q);
+      if (q < 0) count++;
+    }
+    return count;
+  };
+  // Gershgorin bound.
+  let R = 0;
+  for (let i = 0; i < n; i++) R = Math.max(R, Math.abs(d[i]!) + Math.sqrt(e2[i] ?? 0) + Math.sqrt(i + 1 < n ? e2[i + 1]! : 0));
+  const out: number[] = [];
+  for (let k = 0; k < n; k++) {
+    let lo = -R;
+    let hi = R;
+    for (let it = 0; it < 60; it++) {
+      const mid = (lo + hi) / 2;
+      if (below(mid) > k) hi = mid;
+      else lo = mid;
+    }
+    out.push((lo + hi) / 2);
+  }
+  return out;
 }

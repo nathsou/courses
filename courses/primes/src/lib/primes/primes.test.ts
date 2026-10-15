@@ -308,3 +308,25 @@ describe('Dickman rho', () => {
     expect(dickmanRho(4)).toBeCloseTo(0.0049109256, 6);
   });
 });
+
+describe('random matrices', async () => {
+  const { gueEigenvalues, rng } = await import('./random');
+  test('GUE eigenvalues: n of them, sorted, with E[Σλ²] = n²', () => {
+    const r = rng(7);
+    let total = 0;
+    for (let t = 0; t < 20; t++) {
+      const ev = gueEigenvalues(60, r);
+      expect(ev).toHaveLength(60);
+      for (let i = 1; i < ev.length; i++) expect(ev[i]!).toBeGreaterThanOrEqual(ev[i - 1]!);
+      total += ev.reduce((s, x) => s + x * x, 0);
+    }
+    expect(total / 20 / 3600).toBeGreaterThan(0.95);
+    expect(total / 20 / 3600).toBeLessThan(1.05);
+  });
+  test('the semicircle: almost all eigenvalues lie within ±√(4n)', () => {
+    const ev = gueEigenvalues(200, rng(3));
+    const R = Math.sqrt(4 * 200);
+    expect(ev.filter((x) => Math.abs(x) > R * 1.05)).toHaveLength(0);
+    expect(ev[199]! - ev[0]!).toBeGreaterThan(1.8 * R);
+  });
+});
