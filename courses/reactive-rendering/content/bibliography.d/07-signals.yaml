@@ -40,3 +40,8 @@ surplus:
   year: 2016
   title: Surplus, high-performance JSX web views for S.js applications
   url: https://github.com/adamhaile/surplus
+vue-reactivity-docs:
+  authors: Vue contributors
+  year: 2024
+  title: Vue documentation, Reactivity in Depth
+  url: https://vuejs.org/guide/extras/reactivity-in-depth.html
