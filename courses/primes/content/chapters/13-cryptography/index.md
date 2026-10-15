@@ -61,7 +61,10 @@ starter: |
   import { modPowBig, modInverseBig } from 'primes';
 
   export function decrypt(c: bigint, p: bigint, q: bigint, d: bigint): bigint {
-    return modPowBig(c, d, p * q); // correct, but not using the CRT
+    const mp = 0n; // c^(d mod (p − 1)) mod p
+    const mq = 0n; // c^(d mod (q − 1)) mod q
+    // Combine mp and mq with Garner's formula.
+    return 0n;
   }
 tests: |
   import { test, expect } from 'test';
@@ -88,12 +91,19 @@ tests: |
     const k = keys(2n ** 1023n + 12345n, 2n ** 1023n + 987654321n);
     const m = 2n ** 2000n + 7n;
     const c = modPowBig(m, k.e, k.n);
-    let t = performance.now();
-    const full = modPowBig(c, k.d, k.n);
-    const tFull = performance.now() - t;
-    t = performance.now();
-    const viaCrt = decrypt(c, k.p, k.q, k.d);
-    const tCrt = performance.now() - t;
+    // Best of three runs each, so that one slow run (warm-up, garbage collection) cannot decide the result.
+    const best = (f) => {
+      let t = Infinity;
+      let out;
+      for (let i = 0; i < 3; i++) {
+        const s = performance.now();
+        out = f();
+        t = Math.min(t, performance.now() - s);
+      }
+      return [out, t];
+    };
+    const [full, tFull] = best(() => modPowBig(c, k.d, k.n));
+    const [viaCrt, tCrt] = best(() => decrypt(c, k.p, k.q, k.d));
     expect(viaCrt).toBe(full);
     expect(tCrt).toBeLessThan(tFull * 0.75);
   });
