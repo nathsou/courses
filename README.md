@@ -19,7 +19,7 @@ A collection of interactive textbooks. The [course index](site/index.html) links
 | For All Inputs: formal verification from SAT solvers to verified systems | `courses/formal-verification/` | `/formal-verification/` |
 | Memory Management | `courses/memory-management/` | `/memory-management/` |
 | Every Path at Once: static analysis, from your first lint rule to taint tracking and symbolic execution | `courses/static-analysis/` | `/static-analysis/` |
-| The Prime Staircase: from the sieve to the Riemann Hypothesis *(in progress)* | `courses/primes/` | `/primes/` |
+| The Prime Staircase: from the sieve to the Riemann Hypothesis | `courses/primes/` | `/primes/` |
 
 Every course has an “All courses” link beside its contents and a compact contents toggle in its own header or drawer handle. Sidebars collapse on desktop and open as drawers on smaller screens; each course remembers its desktop preference. The shared navigation lives in `packages/course-navigation/`.
 

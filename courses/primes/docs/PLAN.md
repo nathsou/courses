@@ -128,7 +128,7 @@ Then, in order:
 | M5 | Part V | done (PNT proved in full via Newman; zero-free region, error terms and the elementary proof sketched) |
 | M6 | Part VI | done (equivalences proved where short; Littlewood, Montgomery, Hasse sketched; Weil, Deligne, Sato–Tate stated) |
 | M7 | Part VII, epilogue, appendices F and G | done (Dirichlet and Fermat two squares proved; races, bounded gaps, Goldbach and Green–Tao stated or sketched) |
-| M8 | Proofread, UX review at phone and desktop widths in both themes, final checks | |
+| M8 | Proofread, UX review at phone and desktop widths in both themes, final checks | done (facts re-checked; every page audited at 390, 768 and 1440 px in both themes: no console errors, no horizontal overflow) |
 
 ## Facts and sources
 
