@@ -53,5 +53,5 @@ jsx:
   chapter: five-compilers
 aot:
   term: 'ahead-of-time compilation'
-  definition: 'Compiling templates at build time rather than in the browser. Angular’s default since 2016.'
+  definition: 'Compiling templates at build time rather than in the browser. Angular’s default since version 9 (2020).'
   chapter: angular-zones-and-signals

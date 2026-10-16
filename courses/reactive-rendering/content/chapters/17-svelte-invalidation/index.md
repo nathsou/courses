@@ -12,7 +12,7 @@ There are now three ways in the course to find out *what changed*, and each cost
 - **Record reads** at run time and notify (signals, Vue).
 - **Check everything** after any event (Angular’s default).
 
-Svelte, from 2016, took a fourth road, and in versions 3 and 4 (2019 to 2023) it was its identity: **let the compiler do it, and leave almost nothing for the runtime.** :cite[harris-rethinking]
+Svelte, from 2016, took a fourth road, and in versions 3 and 4 (2019 to 2024) it was its identity: **let the compiler do it, and leave almost nothing for the runtime.** :cite[harris-rethinking]
 
 ## What a compiler can see
 
@@ -182,7 +182,7 @@ options:
     why: "That is what a signals library would do: `scaled` runs inside the tracking scope and its reads are recorded. The Svelte 4 compiler only reads the *statement's text*."
   - text: "`total` is not recomputed, unless `scaled` itself is assigned."
     correct: true
-    why: "The statement `total = scaled()` mentions one variable that could change, `scaled`, which is a constant. With nothing to depend on, the compiler runs it once at the start. The standard fix is to pass the values in, so they appear in the text: `$: total = scaled(count, factor)`."
+    why: "The statement `total = scaled()` mentions one variable, `scaled`, and it is a constant that is never assigned. With nothing to depend on, the compiler runs it once at the start. The standard fix is to pass the values in, so they appear in the text: `$: total = scaled(count, factor)`."
   - text: "It throws an error at compile time."
     why: "It compiles without a warning. This is one of the quiet traps of the design."
 ```
@@ -364,11 +364,11 @@ explain: "This is `$$invalidate`, `make_dirty` and `flush` from `svelte/internal
 It is the cheapest design at run time, and it has the weakest model of what is reactive: *whatever the compiler can see*. The next chapter is what happened when Svelte kept the compiler and replaced the bits with signals.
 
 :::wild{framework="Svelte" version="4.2"}
-Svelte 4.2.19 is the last of the 4.x line, and the compiler output in this chapter is its real output (see `docs/captured/svelte4.counter.js`). Svelte 3’s arrival in April 2019 was the big change; version 4 (June 2023) was mostly housekeeping, with a smaller package and modern tooling. Svelte 4 is still maintained. Since version 5 (October 2024), new code is written with runes.
+Svelte 4.2 is the last minor version of the 4.x line, and the compiler output in this chapter is the real output of 4.2.19 (see `docs/captured/svelte4.counter.js`). Svelte 3’s arrival in April 2019 was the big change; version 4 (June 2023) was mostly housekeeping, with a smaller package and modern tooling. Svelte 4 is still maintained. Since version 5 (October 2024), new code is written with runes.
 :::
 
 :::history{year=2016 title="Svelte, from a compiler to a way of thinking"}
-Rich Harris started Svelte in 2016 as a compiler from templates to JavaScript that does not ship a framework runtime: “disappearing framework”. Version 3 (2019) added the *invalidation* model of this chapter, as a rethinking of reactivity: “instead of a virtual DOM, the compiler turns assignments into updates”. :cite[harris-rethinking] It argued, in a much-quoted post, that the virtual DOM is overhead *when you have a compiler that can do better*. :cite[harris-vdom] The model worked so well in components, and so poorly outside them, that Svelte 5 kept the compiler and replaced the mechanism.
+Rich Harris started Svelte in 2016 as a compiler from templates to JavaScript that does not ship a framework runtime: “disappearing framework”. Version 3 (2019) added the *invalidation* model of this chapter, as a rethinking of reactivity: instead of a virtual DOM, the compiler turns assignments into updates. :cite[harris-rethinking] Harris had argued, in a much-quoted post, that the virtual DOM is overhead *when you have a compiler that can do better*. :cite[harris-vdom] The model worked so well in components, and so poorly outside them, that Svelte 5 kept the compiler and replaced the mechanism.
 :::
 
 :::whatchanged

@@ -35,7 +35,7 @@ effect(() => { p.className = count.get() > 5 ? 'big' : ''; });
 
 It works, and it is as fast as DOM code can be. Press the button and exactly one text node is rewritten; at the sixth press, one attribute as well. No diff, no comparison, no virtual tree. There is nothing wasted, because *you* decided what depends on what.
 
-It is also the code nobody wants to write. Sixteen lines for four elements; every node needs a variable, every dynamic bit needs its own effect, and a list of such things would need the reconciliation of chapter 5 by hand.
+It is also the code nobody wants to write. Thirteen lines for four elements; every node needs a variable, every dynamic bit needs its own effect, and a list of such things would need the reconciliation of chapter 5 by hand.
 
 This is the job of a **compiler**. The program you want to write is the *template*:
 
@@ -97,7 +97,7 @@ export function Counter() {
 _$delegateEvents(["click"]);
 ```
 
-Read it against the three steps. The template string has no closing tags: the HTML parser fills them in, and the compiler drops what it does not need. The `firstChild` and `nextSibling` chain is the walk. `_$insert(_el$3, count, null)` is the text hole, and note that it is passed `count`, the *getter itself*, not `count()`: the runtime calls it inside its own effect. `_$effect(() => _$className(…))` is the attribute hole.
+Read it against the three steps. The template string has no closing tags at the end: the HTML parser fills them in, and the compiler drops what it does not need. The `firstChild` and `nextSibling` chain is the walk. `_$insert(_el$3, count, null)` is the text hole, and note that it is passed `count`, the *getter itself*, not `count()`: the runtime calls it inside its own effect. `_$effect(() => _$className(…))` is the attribute hole.
 
 One detail is different from our toy: the click handler is stored as `_el$5.$$click`, and `_$delegateEvents(["click"])` registers *one* listener on the document that finds the target and calls its `$$click`. Solid delegates the common events, so a list of a thousand buttons has one listener rather than a thousand, at the cost of a different event timing and some trouble with shadow DOM.
 
@@ -142,17 +142,17 @@ The same rule explains Solid’s most-quoted pitfalls: **destructuring props** (
 
 ## Lists: rows that exist once
 
-A list is a hole whose value is a set of nodes. Making that cheap is the job of `<For each={items()}>`, which compiles to a call to `mapArray`, and its design answers the question from chapter 5 in a different way. :cite[solid-docs]
+A list is a hole whose value is a set of nodes. Making that cheap is the job of `<For each={items()}>`, which is built on `mapArray`, and its design answers the question from chapter 5 in a different way. :cite[solid-docs]
 
 `mapArray` keeps a map from *each item* to its row, the nodes made for it. When the list changes it looks every item up in the map. If the item is there, its row is kept, and the row moves if its position changed; if not, the mapping function runs, once, to make a row, inside its own root (chapter 11), so that disposing the row is automatic. Items that are gone have their rows disposed. The mapping function **never re-runs for an item that is still in the list**: the row *is* the result of one call.
 
 That means the identity is the *item itself*, by reference: there is no `key` prop, because the items are the keys. A `For` over an array of strings uses the strings. This works with immutable updates that keep the same objects for the same items, and it falls apart when the list is rebuilt with new objects each time (fresh objects from a server response, say); the row for every item is thrown away and rebuilt. Solid’s answer, `<Index>`, keys by *position* instead.
 
-Compare the three on the Notes app from chapter 0. Do the three actions in each pane:
+Compare the two strategies on the Notes app from chapter 0. Do the three actions in each pane:
 
 ::notes-lens{strategies="diff,track" n="12.2" title="Notes: virtual DOM and compiled templates" subtitle="The same page and actions. The right-hand pane is built from compiled templates over signals."}
 
-Look at the *Rename note* action in particular. With the virtual DOM, the lens shows one text write, after a comparison of the whole list that you cannot see. With compiled templates, the same one text write happens, and there was nothing to compare: the row’s text hole read the note’s `text` signal, and that signal is what was written.
+Look at the *Rename the first note* action in particular. With the virtual DOM, the lens shows one text write, after a comparison of the whole list that you cannot see. With compiled templates, the same one text write happens, and there was nothing to compare: the row’s text hole read the note’s `text` signal, and that signal is what was written.
 
 ## Build it
 
@@ -269,7 +269,7 @@ tests: |
 hints:
   - "The static HTML contains `<p>Count: </p>`: the text node of the hole does not exist yet, `insert` creates it. `p` is `h1.nextSibling`, and `button` is `p.nextSibling`."
   - "The `class` hole needs `rt.effect`, because `rt.setAttribute` is a plain function: the effect is what re-runs it when `count` changes."
-explain: "Three steps, and nothing else: one clone, a walk with `firstChild` and `nextSibling`, and one effect for each place that can change. Every compiled-template framework does this, with variations: Solid writes the walk as a chain of variables and a separate effect per hole, Svelte 5 uses `$.child` and `$.sibling` and one effect for the whole template, Vue Vapor uses `_child` and `_next` and one `_renderEffect`. The test that matters is the second to last: after the first render, the only DOM operations are the writes to the nodes that read the signal."
+explain: "Three steps, and nothing else: one clone, a walk with `firstChild` and `nextSibling`, and one effect for each place that can change. Every compiled-template framework does this, with variations: Solid writes the walk as a chain of variables and a separate effect per hole, Svelte 5 uses `$.child` and `$.sibling` and one effect for the whole template, Vue Vapor uses `_child` and `_next` and one `_renderEffect`. The tests that matter are the two that count operations after a change: after the first render, the only DOM operations are the writes to the nodes that read the signal."
 ```
 
 ## Who else does this
@@ -286,7 +286,7 @@ The idea (*compile a template into direct DOM operations, with one effect per ho
 :::
 
 :::history{year=2015 title="S.js, Surplus and the road to Solid"}
-Compiling templates to direct DOM instructions over a signals library was worked out in JavaScript by Adam Haile’s **S.js** (a synchronous, glitch-free reactive library) and **Surplus** (a compiler from JSX to DOM instructions over S), a few years before Solid. :cite[s-js] :cite[surplus] Ryan Carniato’s **Solid** (first public in 2018) took the approach, added :term[fine-grained]{id=fine-grained} *ownership* and a design that lets it run on both the server and the client, and made it the centre of a framework. :cite[solid-docs] Svelte had been compiling templates to DOM code since 2016 (chapters 17 and 18), but on a different model of *when* to update; it moved to signals in Svelte 5.
+Compiling templates to direct DOM instructions over a signals library was worked out in JavaScript by Adam Haile’s **S.js** (a synchronous, glitch-free reactive library) and **Surplus** (a compiler from JSX to DOM instructions over S), a few years before Solid. :cite[s-js] :cite[surplus] Ryan Carniato’s **Solid** (first public in 2018) took the same :term[fine-grained]{id=fine-grained} approach, added a design that lets it run on both the server and the client, and made it the centre of a framework. :cite[solid-docs] Svelte had been compiling templates to DOM code since 2016 (chapters 17 and 18), but on a different model of *when* to update; it moved to signals in Svelte 5.
 :::
 
 :::whatchanged

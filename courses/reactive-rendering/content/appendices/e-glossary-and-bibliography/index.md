@@ -12,7 +12,7 @@ Each term links to the chapter that introduces it.
 
 ## Timeline
 
-Every dated event in the part essays, on one chart: from the first DOM standard to the Signals proposal. Click a dot to jump to its entry.
+Every dated event in the part essays, on one chart: from VisiCalc to Vue’s Vapor mode. Click a dot to jump to its entry.
 
 ::timeline
 

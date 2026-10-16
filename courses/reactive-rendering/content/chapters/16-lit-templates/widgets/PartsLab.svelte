@@ -6,6 +6,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import Widget from '$lib/components/ui/Widget.svelte';
+  import Code from '$lib/code/Code.svelte';
   import Button from '$lib/components/ui/Button.svelte';
   import Segmented from '$lib/components/ui/Segmented.svelte';
   import LensPane from '$lib/components/lens/LensPane.svelte';
@@ -123,7 +124,7 @@
     />
   {/snippet}
 
-  <pre class="src"><code>{source}</code></pre>
+  <Code class="src" lang="js" code={source} />
 
   <div class="actions ui">
     {#each actions as a, i (a.label)}<Button size="sm" variant="primary" onclick={() => act(i)}>{a.label}</Button>{/each}
@@ -156,7 +157,7 @@
 </Widget>
 
 <style>
-  .src {
+  :global(.src) {
     margin: 0 0 0.7rem;
     padding: 0.6rem 0.8rem;
     border: 1px solid var(--line);

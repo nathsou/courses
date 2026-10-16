@@ -10,6 +10,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { EditorView } from '@codemirror/view';
+  import type { Extension } from '@codemirror/state';
+  import type { CodeLang } from '$lib/code/highlight';
 
   let {
     value,
@@ -24,7 +26,7 @@
     typecheck = true,
   }: {
     value: string;
-    lang?: 'ts' | 'text';
+    lang?: CodeLang;
     readonly?: boolean;
     onchange?: (code: string) => void;
     onrun?: () => void;
@@ -51,20 +53,40 @@
     setLine?.(line);
   });
 
+  /** The syntax for each language, loaded on demand so a page only downloads the ones it shows. */
+  async function languageExtension(l: CodeLang): Promise<Extension> {
+    switch (l) {
+      case 'ts':
+      case 'js':
+      case 'json':
+        return (await import('@codemirror/lang-javascript')).javascript({ typescript: l === 'ts' });
+      case 'jsx':
+        return (await import('@codemirror/lang-javascript')).javascript({ typescript: true, jsx: true });
+      case 'html':
+        return (await import('@codemirror/lang-html')).html();
+      case 'vue':
+        return (await import('@codemirror/lang-vue')).vue();
+      case 'svelte':
+        return (await import('@replit/codemirror-lang-svelte')).svelte();
+      default:
+        return [];
+    }
+  }
+
   /** Each editor is its own file in the language service, so several can share the worker. */
   const path = `/exercise-${++editorCount}.ts`;
   let observer: IntersectionObserver | undefined;
   onMount(() => {
     let destroyed = false;
     (async () => {
-      const [{ EditorView, Decoration, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter, drawSelection }, { EditorState, StateField, StateEffect, Compartment }, cmds, language, { javascript }, auto, { highlightStyle }] = await Promise.all([
+      const [{ EditorView, Decoration, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter, drawSelection }, { EditorState, StateField, StateEffect, Compartment }, cmds, language, auto, { highlightStyle }, languageSupport] = await Promise.all([
         import('@codemirror/view'),
         import('@codemirror/state'),
         import('@codemirror/commands'),
         import('@codemirror/language'),
-        import('@codemirror/lang-javascript'),
         import('@codemirror/autocomplete'),
         import('./editorTheme'),
+        languageExtension(lang),
       ]);
       if (destroyed) return;
 
@@ -134,7 +156,7 @@
             auto.closeBrackets(),
             types.of(plain()),
             language.syntaxHighlighting(highlightStyle),
-            ...(lang === 'ts' ? [javascript({ typescript: true })] : []),
+            languageSupport,
             lineField,
             EditorState.tabSize.of(2),
             EditorState.readOnly.of(readonly),

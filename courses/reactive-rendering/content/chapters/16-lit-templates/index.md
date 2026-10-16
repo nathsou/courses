@@ -26,7 +26,7 @@ view('Ada', 3);
 Here is the property that makes Lit possible, and it is in the language specification: **the `strings` array is the same object every time the same expression is evaluated.** The array is created once for each place in the source where the tagged template appears, and frozen. `view('Ada', 3).strings === view('Grace', 7).strings` is `true`; a different line of code with identical text gets a *different* array.
 
 ```predict
-q: "Two functions in the same file contain tagged templates with exactly the same text, `html`<p>${x}</p>``. How many times does Lit prepare (parse) this template?"
+q: "Two functions in the same file contain tagged templates with exactly the same text, `` html`<p>${x}</p>` ``. How many times does Lit prepare (parse) this template?"
 options:
   - text: Once, because the text is the same.
     why: "Lit cannot afford to compare text on every render. It caches by the *identity* of the strings array, which is a cheap pointer comparison, and which the language promises is stable per place in the source."
@@ -236,7 +236,10 @@ Everything so far is the `html` function and `render`. Lit’s other half is **L
 ```js
 class Counter extends LitElement {
   static properties = { count: { type: Number } };
-  count = 0;
+  constructor() {
+    super();
+    this.count = 0;   // not a class field, which would hide Lit’s setter
+  }
   render() {
     return html`<p>Count: ${this.count}</p><button @click=${() => this.count++}>+1</button>`;
   }
@@ -250,11 +253,11 @@ Look at the cost structure. Updating one element re-runs its whole `render` func
 And since Lit has no opinion about state, it is easy to bring one: `@lit-labs/signals` (chapter 15) lets a Lit element track signals it reads in `render`, and request an update when they change.
 
 :::wild{framework="Lit" version="3.3"}
-In the real library, the markers are `<?lit$123456$>` processing-instruction-like comments for child parts, and attribute values get a `$lit$` suffix, chosen so that the browser’s HTML parser keeps them where they were put. Lit also uses `<template>` elements and `document.importNode`, and a `TreeWalker` to find the markers, and it has directives (`repeat`, `classMap`, `styleMap`, `until`, `guard`, `cache`) that are *custom parts*, functions that take over how a hole is rendered. Lit’s reactive elements use the platform’s custom elements and shadow DOM: the “component” is a real DOM element.
+In the real library, the markers are `<?lit$123456$>` processing-instruction-like comments for child parts, and bound attribute names get a `$lit$` suffix, chosen so that the browser’s HTML parser keeps them where they were put. Lit also uses `<template>` elements and `document.importNode`, and a `TreeWalker` to find the markers, and it has directives (`repeat`, `classMap`, `styleMap`, `until`, `guard`, `cache`) that are *custom parts*, functions that take over how a hole is rendered. Lit’s reactive elements use the platform’s custom elements and shadow DOM: the “component” is a real DOM element.
 :::
 
 :::programmer
-**Where Lit sits among the strategies.** It is the one library in Part III with no compiler *and* no virtual DOM *and* no signals required. It sits at *dirty-check* in the course’s taxonomy: it re-runs the render function and compares values, like Angular, but per hole, with a template-shaped comparison that a vdom diff has to discover. In terms of the benchmark in chapter 24, that makes it cheap to update when few holes change, and linear in holes when many do. The price of running without a build tool is that Lit cannot know at build time which holes are static: it treats every hole as possibly dynamic, and it pays no costs for the static parts because they are never in a hole.
+**Where Lit sits among the strategies.** It is the one library in Part IV with no compiler *and* no virtual DOM *and* no signals required. It sits at *dirty-check* in the course’s taxonomy: it re-runs the render function and compares values, like Angular, but per hole, with a template-shaped comparison that a vdom diff has to discover. In terms of the benchmark in chapter 24, that makes it cheap to update when few holes change, and linear in holes when many do. The price of running without a build tool is that Lit cannot know at build time which holes are static: it treats every hole as possibly dynamic, and it pays no costs for the static parts because they are never in a hole.
 :::
 
 :::history{year=2017 title="lit-html"}
@@ -267,4 +270,4 @@ For *dirty-check* at the finest scale: **each hole’s value against its last va
 
 ## What’s next
 
-Chapters 12 to 16 have been about *runtime* answers. The next two chapters look at Svelte, the framework whose answer is mostly *compile-time*: first the Svelte 3 and 4 design, in which the compiler works out which variables each piece of the template depends on and writes the update code, and then Svelte 5, which swapped that for signals.
+Chapters 12 to 16 have mostly been about *runtime* answers. The next two chapters look at Svelte, the framework whose answer is mostly *compile-time*: first the Svelte 3 and 4 design, in which the compiler works out which variables each piece of the template depends on and writes the update code, and then Svelte 5, which swapped that for signals.

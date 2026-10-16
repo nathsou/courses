@@ -259,7 +259,7 @@ export function simulate(cfg: SimConfig): SimResult {
   };
 }
 
-/** Five keystrokes 60 ms apart into a list that takes about 130 ms to render. */
+/** Five keystrokes 60 ms apart into a list that takes about 125 ms to render. */
 export function typingScenario(mode: 'sync' | 'concurrent', leaves = 200, leafCost = 0.6): SimConfig {
   return {
     mode,

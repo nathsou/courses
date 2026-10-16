@@ -104,7 +104,7 @@ export const SNIPPETS: { id: Snippet; title: string; code: (n: number) => string
     id: 'interleaved',
     title: 'Read, then write, for each item',
     code: () => `for (const el of items) {\n  const h = el.offsetHeight;   // read\n  el.style.width = h + 'px';   // write\n}`,
-    note: 'Every read finds the previous write’s invalidation still pending, so every iteration forces a style recalculation and a layout.',
+    note: 'Every read finds the previous write’s invalidation still pending, so every read after the first forces a style recalculation and a layout.',
   },
   {
     id: 'batched',

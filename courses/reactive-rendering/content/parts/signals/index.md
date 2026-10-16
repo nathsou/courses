@@ -4,7 +4,7 @@ summary: 'From the first spreadsheet to a proposal for the language itself: how 
 number: III
 ---
 
-Every spreadsheet user has used a reactive program. In VisiCalc (1979) a cell holds a number or a formula, and when you change a number, the cells that depend on it recompute. :cite[bainomugisha-2013] Nobody tells the sheet which cells depend on which: the formulas say so by mentioning each other. The sheet works out the order. That is the idea of this part of the course, and it is much older than the web.
+Every spreadsheet user has used a reactive program. In VisiCalc (1979) a cell holds a number or a formula, and when you change a number, the cells that depend on it show new values. :cite[bainomugisha-2013] Nobody tells the sheet which cells depend on which: the formulas say so by mentioning each other. Since Lotus 1-2-3 (1983), the sheet also works out the order in which to recompute them. That is the idea of this part of the course, and it is much older than the web.
 
 ## Reactive programming
 
@@ -22,7 +22,7 @@ A signal sounds simple and has several hard parts. The first engines had **glitc
 
 ## A standard
 
-In 2024 a group of framework authors proposed to put the common core in the language. The TC39 Signals proposal defines `State`, `Computed` and a low-level `Watcher` from which effects can be built, and leaves scheduling and ownership to the libraries. :cite[tc39-signals] At the time of writing it is at stage 1. Whether it advances or not, it has already done something useful: it has made the shared core of seven libraries visible.
+In 2024 a group of framework authors proposed to put the common core in the language. The TC39 Signals proposal defines `State`, `Computed` and a low-level `Watcher` from which effects can be built, and leaves scheduling and ownership to the libraries. :cite[tc39-signals] At the time of writing it is at stage 1. Whether it advances or not, it has already done something useful: it has made the shared core of these libraries visible.
 
 Part III builds that core: a spreadsheet, the three primitives in forty lines, the glitch and its fixes, batching and ownership. Then it follows signals into Solid, Vue, Angular and the standard.
 

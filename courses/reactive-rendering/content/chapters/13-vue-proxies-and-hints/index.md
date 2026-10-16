@@ -46,7 +46,7 @@ It is the `current` variable of chapter 9 again: the table is the per-signal sub
 Things to check:
 
 - **Rename** re-runs `heading` and `summary` (they read `name`), and not the others.
-- **Count + 1** re-runs only `badge`, the one effect that reads `count`. Press it until `count` passes five: the table gains a row, `state.user.age` ← `badge`, because on that run the effect took the branch that reads the age for the first time. From then on **Birthday** re-runs `badge` as well as `summary`. The dependencies follow the run, as in chapter 9.
+- **Count + 1** re-runs only `badge`, the one effect that reads `count`. Press it until `count` passes five: `badge` joins `summary` in the `age` row of `state.user`, because on that run the effect took the branch that reads the age for the first time. From then on **Birthday** re-runs `badge` as well as `summary`. The dependencies follow the run, as in chapter 9.
 - **Add a property** re-runs only `fields`: it is the one that asked for `Object.keys(state.user)`, which the proxy hears as an `ownKeys` call and records against a special key meaning “the set of keys”.
 - **Replace the object** re-runs every effect, because they all read `state.user`: the *property* `user` of the root changed, even though no one touched `name`.
 - **Write the same value** does nothing: `set` compares the old and new values first.
@@ -86,7 +86,7 @@ options:
 
 **A hole in the net.** A Proxy can only intercept operations on *its target*. Vue 2 used `Object.defineProperty` instead, and had a hole: it could not see a property being **added** or **deleted**, since there was no getter on a property that did not yet exist, so Vue 2 needed `Vue.set(obj, 'newKey', value)`. Vue 3’s Proxy hears `set` of a new key and `deleteProperty`, and the `ownKeys` of iteration, so the hole is closed. In exchange Vue 3 requires a browser with Proxy, which cannot be polyfilled, and that is why Vue 2 lived on for a while for IE11.
 
-**Primitives need a box.** A proxy wraps objects. A number cannot be wrapped, so a bare `count` cannot be reactive; Vue gives you `ref(0)`, an object with one property called `.value`, whose getter tracks and whose setter triggers. That is the `.value` that everyone writes in Vue scripts, and it is the signal of this course with the name changed: `ref` is `signal`, `computed` is `computed`, `watchEffect` is `effect`. (In templates, and in the `<script setup>` compiler, `.value` is added for you.) Vue 3.5 also reworked how the dependency tables are stored: links between a source and a subscriber are version-checked, and chapter 10’s dirty-and-check design is how its computed values avoid needless recomputation.
+**Primitives need a box.** A proxy wraps objects. A number cannot be wrapped, so a bare `count` cannot be reactive; Vue gives you `ref(0)`, an object with one property called `.value`, whose getter tracks and whose setter triggers. That is the `.value` that everyone writes in Vue scripts, and it is the signal of this course with the name changed: `ref` is `signal`, `computed` is `computed`, `watchEffect` is `effect`. (In templates, `.value` is added for you.) Vue 3.5 also reworked how the dependency tables are stored: links between a source and a subscriber are version-checked, and chapter 10’s dirty-and-check design is how its computed values avoid needless recomputation.
 
 ## An effect per component
 
@@ -394,7 +394,7 @@ Vue 3.5 (September 2024) reworked reactivity so that dependencies are stored as 
 :::
 
 :::history{year=2014 title="From defineProperty to Proxy"}
-Vue 1 and 2 (2014 and 2016) made objects reactive by walking them once and replacing each property with a getter/setter pair (`Object.defineProperty`), the technique that Knockout’s observables and Backbone’s `set` had approached from different sides. :cite[vue-reactivity-docs] It could not see properties added later, nor array index writes, which is why Vue 2 had `Vue.set` and the odd array-method wrappers. Vue 3 (2020) switched to `Proxy`, ES2015’s object-level interception, and dropped Internet Explorer 11 with it. MobX followed the same path from `defineProperty` to `Proxy` in version 5.
+Vue 1 and 2 (2015 and 2016) made objects reactive by walking them once and replacing each property with a getter/setter pair (`Object.defineProperty`), the technique that Knockout’s observables and Backbone’s `set` had approached from different sides. :cite[vue-reactivity-docs] It could not see properties added later, nor array index writes, which is why Vue 2 had `Vue.set` and the odd array-method wrappers. Vue 3 (2020) switched to `Proxy`, ES2015’s object-level interception, and dropped Internet Explorer 11 with it. MobX made the same move from `defineProperty` to `Proxy` in version 5 (2018).
 :::
 
 :::whatchanged

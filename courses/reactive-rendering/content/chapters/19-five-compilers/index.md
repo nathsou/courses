@@ -8,7 +8,7 @@ prerequisites: [templates-and-solid, vue-proxies-and-hints, angular-zones-and-si
 
 You have now met every framework’s answer to *what changed?* one at a time. This chapter puts the answers next to each other, on the smallest program in which they differ: a counter that shows its value, adds a class once the value passes five, and has a button.
 
-All of the code below is real: it is what each framework’s compiler wrote for this component, captured on the versions in the figure for this course. :cite[captured]
+All of the code below is real: it is what each framework’s compiler wrote for this component, captured with the versions named in the figure. :cite[captured]
 
 ::compiler-compare{n="19.1"}
 
@@ -98,7 +98,7 @@ None of these is a point on a single line from “worse” to “better”. They
 - A **runtime cost** (the diff, the checking, the subscriptions), in return for working with any code.
 
 :::key
-**Every framework’s compiler is an answer to the same trade.** Work done at build time is work you do not do on a click, and it is paid for by what the compiler must be able to prove about your code. *Which* work moves is the choice. How far it moves, a compiler can only go as far as your program lets it.
+**Every framework’s compiler is an answer to the same trade.** Work done at build time is work you do not do on a click, and it is paid for by what the compiler must be able to prove about your code. *Which* work moves is the choice. How far it moves depends on how much of your program the compiler can see.
 :::
 
 ```predict
@@ -108,7 +108,7 @@ options:
     why: "Compilers in this chapter work file by file. Svelte 5 would see the call to `logChange` and treat its result as opaque. Whatever signals `logChange` reads are found at run time, by the reads."
   - text: "None of them. Compilers work on one file at a time, and what happens inside the call is opaque."
     correct: true
-    why: "The compiler can see that `count` is *passed* to the function, and that is all. Svelte 4 therefore cannot know what else the function depends on (the trap from chapter 17); React Compiler treats the call as a possible side effect and the result as unmemoizable; Solid, Vue and Svelte 5 find out at run time, when `logChange` reads signals or proxies inside an effect. The compile-time part of the work stops at the function boundary."
+    why: "The compiler can see that `count` is *passed* to the function, and that is all. Svelte 4 therefore cannot know what else the function depends on (the trap from chapter 17); React Compiler sees only that the call depends on `count`, and has to trust that `logChange` follows the Rules of React; Solid, Vue and Svelte 5 find out at run time, when `logChange` reads signals or proxies inside an effect. The compile-time part of the work stops at the function boundary."
   - text: "Only React’s, because it runs on JavaScript and can follow imports."
     why: "It processes one file at a time as well. Whole-program analysis would need a different kind of tool, and the cost of building it would be much larger than the savings."
 ```
@@ -144,4 +144,4 @@ All of the six answers meet here. *Rebuild* is React’s function re-running; *d
 
 ## What’s next
 
-The next three chapters are about **the server**. Chapter 20 is the problem every framework has to solve to use it: a page arrives as HTML, and the framework must take it over without throwing it away. That is hydration, and the three ways of making it cheaper.
+The next four chapters are about **the server**. Chapter 20 is the problem every framework has to solve to use it: a page arrives as HTML, and the framework must take it over without throwing it away. That is hydration, and the three ways of making it cheaper.

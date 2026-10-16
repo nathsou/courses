@@ -6,8 +6,9 @@
 <script lang="ts">
   import Widget from '$lib/components/ui/Widget.svelte';
   import CodeEditor from '$lib/exercise/CodeEditor.svelte';
+  import type { CodeLang } from '$lib/code/highlight';
 
-  let { n, title = 'One counter, seven outputs', caption, which: initial = 'react' }: { n?: string | number; title?: string; caption?: string; which?: string } = $props();
+  let { n, title = 'One counter, eight outputs', caption, which: initial = 'react' }: { n?: string | number; title?: string; caption?: string; which?: string } = $props();
 
   const files = import.meta.glob(['../../../../docs/captured/*', '!../../../../docs/captured/*.server.js', '!../../../../docs/captured/*.md'], { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
   const file = (name: string) => files[`../../../../docs/captured/${name}`] ?? '';
@@ -20,7 +21,7 @@
     sourceLabel: string;
     out: string;
     outLabel: string;
-    sourceLang: 'ts' | 'text';
+    sourceLang: CodeLang;
     /** What was decided before the page ran. */
     decided: string;
     /** What runs when the button is clicked. */
@@ -38,7 +39,7 @@
       sourceLabel: 'Counter.jsx',
       out: 'react.classic.js',
       outLabel: 'compiled',
-      sourceLang: 'ts',
+      sourceLang: 'jsx',
       decided: 'Almost nothing: JSX becomes nested calls to `jsx()` that build a description each time the function runs.',
       onClick: 'setCount queues a render. The whole function runs again, builds a new tree of descriptions, and React diffs it against the last one.',
       learns: 'It is told by `setCount`, and does not know what changed in the output: it re-runs and compares.',
@@ -51,7 +52,7 @@
       sourceLabel: 'Counter.jsx (unchanged)',
       out: 'react.compiler.js',
       outLabel: 'compiled',
-      sourceLang: 'ts',
+      sourceLang: 'jsx',
       decided: 'Which values each piece of JSX depends on. It allocates a cache of 9 slots (`_c(9)`) and wraps every element in a check of its inputs.',
       onClick: 'The function still runs. Each `if ($[n] !== count)` finds its inputs unchanged or not: the static `h1` comes from the cache, the paragraph and the button are rebuilt.',
       learns: 'Same as React: re-run. The compiler adds comparisons so that unchanged parts return the *same* objects, and the diff skips them by identity.',
@@ -64,7 +65,7 @@
       sourceLabel: 'Counter.jsx',
       out: 'solid.dom.js',
       outLabel: 'compiled (DOM)',
-      sourceLang: 'ts',
+      sourceLang: 'jsx',
       decided: 'The static HTML (a cloned template), the walk to each dynamic node, and one effect per hole. Components become setup functions that run once.',
       onClick: 'Only the two effects that read `count` run: one writes the text, one the class. The component function is not called.',
       learns: 'At run time: each `count()` inside an effect subscribes that effect.',
@@ -77,7 +78,7 @@
       sourceLabel: 'Counter.vue',
       out: 'vue.vdom.inline.js',
       outLabel: 'compiled (default mode)',
-      sourceLang: 'text',
+      sourceLang: 'vue',
       decided: 'Which nodes are static (hoisted or cached), and which fields of each dynamic node can change (`3 /* TEXT, CLASS */`). The block records its dynamic children.',
       onClick: 'The component’s render effect re-runs: it builds vnodes, and the diff walks only the block’s dynamic children, comparing text and class.',
       learns: 'At run time, through a Proxy: reading `count.value` during render subscribes the component.',
@@ -90,7 +91,7 @@
       sourceLabel: 'Counter.vue (same file)',
       out: 'vue.vapor.inline.js',
       outLabel: 'compiled (Vapor mode)',
-      sourceLang: 'text',
+      sourceLang: 'vue',
       decided: 'The static HTML, the walk, and one render effect for all the template’s holes. No virtual DOM is created at all.',
       onClick: 'The one `_renderEffect` runs and sets the class and the text; each setter writes only if its value changed.',
       learns: 'At run time: `count.value` inside the effect subscribes it.',
@@ -103,7 +104,7 @@
       sourceLabel: 'Counter.svelte',
       out: 'svelte.client.js',
       outLabel: 'compiled (client)',
-      sourceLang: 'text',
+      sourceLang: 'svelte',
       decided: 'That `count` is a signal; that every read of it is `$.get` and every write `$.update`; the static HTML; and one template effect for the holes.',
       onClick: '`$.update(count)` marks the effect, which runs once in a microtask: it calls `$.set_class` and `$.set_text`, which write only on change.',
       learns: 'At run time, with `$.get` subscribing the template effect, but the compiler wrote every one of those calls.',
@@ -116,7 +117,7 @@
       sourceLabel: 'Counter.svelte (Svelte 4 syntax)',
       out: 'svelte4.counter.js',
       outLabel: 'compiled',
-      sourceLang: 'text',
+      sourceLang: 'svelte',
       decided: 'Everything: which variables the template reads (as bits), where they are used (`p`), and how to update each (`set_data`, `toggle_class`).',
       onClick: '`$$invalidate(0, count += 1)` sets bit 0. One flush runs `p`, and the bit tests that match fire.',
       learns: 'It is told by the rewritten assignment. There is no tracking and no subscription.',

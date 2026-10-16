@@ -61,7 +61,7 @@ export function Counter() {
 }
 ```
 
-Passing the signal itself (`{count}`, not `{count.value}`) lets Preact bind the text node directly to the signal, so a change writes one text node and does not re-render the component.
+Passing the signal itself (`{count}`, not `{count.value}`) lets Preact bind the text node directly to the signal, so that text changes without a re-render. The class expression reads `count.value` during the render, which subscribes the component; to avoid re-rendering it at all, pass a `computed` class as a signal too.
 
 ## Solid 1.9
 

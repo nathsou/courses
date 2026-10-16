@@ -33,7 +33,7 @@ server-component:
   chapter: islands-and-server-components
 client-component:
   term: 'client component'
-  definition: 'A component marked `''use client''`: its code and everything it imports is sent to the browser, where it is hydrated and can have state and effects.'
+  definition: 'A component marked `''use client''`: its code and everything it imports are sent to the browser, where it is hydrated and can have state and effects.'
   chapter: islands-and-server-components
 flight:
   term: 'Flight'

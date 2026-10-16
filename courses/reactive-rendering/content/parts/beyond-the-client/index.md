@@ -8,7 +8,7 @@ For fifteen years the story of front-end frameworks was about what happens *in t
 
 ## HTML over the wire, again
 
-The oldest answer is the one the web started with. A server sends HTML, and the browser shows it. Before frameworks, replacing the whole page on every click was the only way. In 2011 GitHub’s pjax kept the speed of Ajax while sending HTML: a click fetched the next page’s HTML from the server and swapped it into the current page. Turbolinks followed in 2012. The swap was the problem: replacing a node destroys what the page owns (typed text, focus, scroll position), and it was **morphdom** (2014) and later **Idiomorph** that solved it, by turning one tree into another with the fewest changes. :cite[morphdom] :cite[idiomorph] Turbo 8 (2023), htmx and Phoenix LiveView all use morphing: an application that runs on the server, with a thin renderer in the browser. :cite[turbo-morphing]
+The oldest answer is the one the web started with. A server sends HTML, and the browser shows it. Before Ajax, replacing the whole page on every click was the only way. In 2011 GitHub’s pjax kept the speed of Ajax while sending HTML: a click fetched the next page’s HTML from the server and swapped it into the current page. Turbolinks followed in 2012. The swap was the problem: replacing a node destroys what the page owns (typed text, focus, scroll position), and it was **morphdom** (2015) and later **Idiomorph** that solved it, by turning one tree into another with the fewest changes. :cite[morphdom] :cite[idiomorph] Turbo 8 (2024), htmx and Phoenix LiveView all use morphing: an application that runs on the server, with a thin renderer in the browser. :cite[turbo-morphing]
 
 ## Server rendering and its bill
 
@@ -20,6 +20,6 @@ The rest of the part is about not paying that bill in full. **Islands** (describ
 
 ## What stays the same
 
-None of this changes the question. The server still has to find out what changed (the server components’ payloads, the morph’s diff, the resumable page’s subscriptions) and the six answers of chapter 0 reappear in new places: *rebuild* in the server-rendered page, *diff* in the morph, *track* in the resumable subscription, *skip* everywhere. The final chapters of the course put them all in one benchmark, and then in a decision.
+None of this changes the question. Someone still has to find out what changed (the server components’ payloads, the morph’s diff, the resumable page’s subscriptions) and the six answers of chapter 0 reappear in new places: *rebuild* in the server-rendered page, *diff* in the morph, *track* in the resumable subscription, *skip* everywhere. The final chapters of the course put them all in one benchmark, and then in a decision.
 
 ::timeline{part="V"}

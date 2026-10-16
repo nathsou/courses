@@ -21,7 +21,7 @@ effect(() => console.log(d.get()));   // 5
 a.set(2);                             // 10 … but what is logged in between?
 ```
 
-Run it in the lab. The default strategy, *Eager push*, is the chapter 9 design: writing a signal tells its subscribers at once, and they recompute at once. Press the button and read the log of what the effect saw.
+Run it in the lab. The default strategy, *Eager push*, works like the chapter 9 design: writing a signal tells its subscribers at once, and they recompute at once. Press the button and read the log of what the effect saw.
 
 ::graph-lab{n="10.1"}
 
@@ -30,10 +30,10 @@ The effect logs `5`, then `7`, then `10`. The value **7** is `4 + 3`: the new `b
 Replay the trace. Use the slider to step through what the engine did, and watch the order:
 
 1. `a` is written.
-2. `a` tells its first subscriber, `b`. `b` marks itself dirty and tells **its** subscriber, `d`. `d` marks itself dirty and tells the effect.
-3. The effect runs. It reads `d`, which is dirty, so `d` recomputes. It reads `b` (dirty: recompute, `4`) and `c`, which has not yet been told anything about `a`, so it is still clean, and returns its cached `3`.
+2. `a` tells its first subscriber, `b`, which recomputes at once (`4`) and tells **its** subscriber, `d`.
+3. `d` recomputes at once. It reads the new `b` (`4`) and `c`, which has not yet been told anything about `a`, so it still holds `3`. `d` becomes `7` and tells the effect, which runs and logs `7`.
 4. Only now does `a` get round to its *second* subscriber, `c`.
-5. `c` marks `d` dirty, `d` tells the effect, and the effect runs a second time, correctly.
+5. `c` recomputes (`6`), `d` recomputes (`10`), and the effect runs a second time, correctly.
 
 The effect ran too early, because the engine was still in the middle of telling people about a change.
 
@@ -47,7 +47,7 @@ prompt: |
 answer: 32
 unit: recomputations
 tolerance: 0
-explain: "Each recomputation of `d₁` tells both `b₂` and `c₂`, and *each* of those tells `d₂`, so `d₂` recomputes twice for every time `d₁` does. One diamond: `d₁` runs twice. Two: `d₂` runs four times. Doubling per diamond, five diamonds give 2⁵ = 32. The engine in the lab shows 2, 4, 8 for three diamonds. The cost is exponential in the depth, for a graph whose size is linear, and every intermediate run is also a glitch."
+explain: "Each recomputation of `d₁` tells both `b₂` and `c₂`, and *each* of those tells `d₂`, so `d₂` recomputes twice for every time `d₁` does. One diamond: `d₁` runs twice. Two: `d₂` runs four times. Doubling per diamond, five diamonds give 2⁵ = 32. The lab’s eager engine gives 2, 4 and 8 for three diamonds. The cost is exponential in the depth, for a graph whose size is linear, and every intermediate run is also a glitch."
 ```
 
 ## The cause: telling and running at the same time
@@ -64,7 +64,7 @@ Switch the figure to *Topological* and press the button. The log shows `5, 10`.
 
 The price is paid elsewhere. The queue holds every node downstream of the write, and every one of them recomputes, whether anyone reads it or not. The node `x = 100a` has no readers: the effect never sees it, and no one else does. Topological order still computes it on every write. And heights must be kept up to date when dependencies change at run time, which is the case for any `IF` from chapter 9.
 
-Now switch the graph to *:term[Cut-off]{id=cutoff}* and press `n = n + 2`. The value `n` changes, but `even` does not: it is `true` before and after. Topological still re-runs the effect that reads it, because the effect was downstream. The next fix handles this.
+Now switch the graph to *:term[Cut-off]{id=cutoff}* and press `n = n + 2`. The value `n` changes, but `even` (the node `p`) does not: it is `true` before and after. Topological order handles this case: `p` recomputes, finds its value unchanged, and does not queue the effect. Keep it in mind, because the next fix loses it.
 
 ## Fix 2: mark first, compute on demand
 
@@ -397,8 +397,8 @@ explain: "The diamond is correct because by the time any effect runs, every node
 
 | | Glitch-free | Does work nobody reads | Stops at equal values | Typical use |
 |---|---|---|---|---|
-| Eager push | no | yes | no | simple observers; event emitters |
-| Topological queue | yes | yes (every downstream node) | no | spreadsheets, FRP libraries |
+| Eager push | no | yes | if it compares | simple observers; event emitters |
+| Topological queue | yes | yes (every downstream node) | yes | spreadsheets, FRP libraries |
 | Mark, then pull | yes | no | no | this chapter’s exercise |
 | Dirty / check, then pull | yes | no | yes | Reactively, Solid, MobX, Vue 3.4+, Angular, Preact |
 

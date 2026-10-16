@@ -94,7 +94,7 @@ answer:
   line: 7
 notes:
   6: "The handler reads `count`: a value from the render that created it. That is correct behaviour, and the reason the next line matters."
-  5: "Returning the unsubscribe function is right: the effect cleans up after itself."
+  5: "Subscribing in an effect is right, and so is returning the unsubscribe function from it: the effect cleans up after itself."
 explain: "`[]` promises that the effect depends on nothing that changes, so it runs once, on mount, and the handler it registers closes over the first render’s `count`, which is 0, forever. Listing `[count]` makes the effect run again whenever `count` changes: the old handler is unsubscribed (the cleanup) and a new one, with the current count, is subscribed. The fix is not clever; the bug is that the dependency array is a promise the programmer makes by hand, and the lint rule `react-hooks/exhaustive-deps` exists because people break it."
 tests: |
   import { test, expect } from '@rx/test';
@@ -350,12 +350,12 @@ Three things to understand about what that buys and what it does not.
 
 **It makes the :term[render phase]{id=render-phase} cheaper, not the DOM phase.** The diff still happens; it simply finds identical objects and stops early. The saving is in component calls and in comparisons.
 
-**It relies on the rules of React.** The compiler may only reorder, skip or cache work if your components are pure: no mutating props or state, no reading mutable globals during render. It checks, and *skips* components it cannot prove safe, which is why code written before it often compiles but is not optimised.
+**It relies on the rules of React.** The compiler may only reorder, skip or cache work if your components are pure: no mutating props or state, no reading mutable globals during render. It checks what it can, and *skips* components in which it finds a violation, which is why code written before it often compiles but is not optimised.
 
-**It changes who is responsible.** A hand-written `useMemo` is a promise by a person. A compiler-written cache slot is a promise by a program, checked against the data flow it computed. Stale-dependency bugs of the kind in the exercise above stop being possible in the code the compiler writes, which is the strongest argument for it.
+**It changes who is responsible.** A hand-written `useMemo` is a promise by a person. A compiler-written cache slot is a promise by a program, checked against the data flow it computed. Stale-dependency bugs stop being possible in the caches the compiler writes, which is the strongest argument for it. (Effect dependency lists, like the one in the stale-closure exercise, are still yours to get right.)
 
 :::wild
-**Other frameworks never ask this question.** Vue re-renders a component only if the reactive state *that component’s render function read* changed, or if the props it received did (an update to a parent does not drag its children along unless their props differ). Solid and Svelte 5 do not re-run components at all; they update the nodes that read the changed value (Part III and IV). Angular’s `OnPush` strategy (chapter 14) is `memo` at the template level. Each of these answers *who re-renders?* by knowing what a component read, not by calling it to find out.
+**Other frameworks never ask this question.** Vue re-renders a component only if the reactive state *that component’s render function read* changed, or if the props it received did (an update to a parent does not drag its children along unless their props differ). Solid and Svelte 5 do not re-run components at all; they update the nodes that read the changed value (Parts III and IV). Angular’s `OnPush` strategy (chapter 14) is `memo` at the template level. Each of these answers *who re-renders?* by knowing what a component read, not by calling it to find out.
 :::
 
 :::whatchanged

@@ -4,6 +4,7 @@
 -->
 <script lang="ts">
   import Widget from '$lib/components/ui/Widget.svelte';
+  import Code from '$lib/code/Code.svelte';
   import Segmented from '$lib/components/ui/Segmented.svelte';
   import Slider from '$lib/components/ui/Slider.svelte';
   import { SNIPPETS, simulate, steps, type Snippet, type StageKind } from '$lib/rx/pipeline';
@@ -44,7 +45,7 @@
     <Slider label="Nodes on the page" bind:value={nodes} min={200} max={20000} step={200} format={(v) => v.toFixed(0)} />
   {/snippet}
 
-  <pre class="code" aria-label="The code being run">{current.code(items)}</pre>
+  <Code class="code" lang="js" label="The code being run" code={current.code(items)} />
 
   <div class="bar" role="img" aria-label="Timeline of pipeline stages: {result.stages.length} stages, {result.forcedLayouts} forced layouts, {result.totalMs.toFixed(1)} milliseconds">
     {#each result.stages as s, i (i)}
@@ -66,7 +67,7 @@
 </Widget>
 
 <style>
-  .code {
+  :global(.code) {
     margin: 0 0 0.8rem;
     padding: 0.6rem 0.8rem;
     background: var(--pn);

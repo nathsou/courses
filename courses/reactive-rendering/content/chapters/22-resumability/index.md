@@ -36,7 +36,7 @@ Islands (chapter 21) cut the number of components that must do this. They do not
 
 Now the browser has everything that hydration was trying to recover, and none of it required running the components:
 
-- **Load:** install *one* tiny listener (the **loader**, about a kilobyte) for the event types the page uses. No application code runs.
+- **Load:** install *one* tiny listener (the **:term[loader]{id=loader}**, about a kilobyte) for the event types the page uses. No application code runs.
 - **On a click:** the loader finds the closest element with `on:click`, reads its reference, **fetches that one file**, parses the state JSON for the first time, and runs the function with the state restored.
 - **The function** does what the handler did: it writes a signal. The write finds the nodes subscribed to that signal (`q:bind="count"`) and updates them. **No component is re-rendered**, because no component exists in the browser.
 
@@ -46,7 +46,7 @@ Try it. The page is a counter, a rename button and a save button. Choose **Hydra
 
 The numbers at the top say it. With hydration, the page must run about **50 KB** of JavaScript before it responds, however little you do afterwards. With :term[resumability]{id=resumability}, it runs **740 bytes**, and spends more only on what you use: click the counter, and 420 bytes arrive. Click the rename button, and another 2 KB. The save handler, 5 KB, is *never downloaded* if you never press Save. The cost of the page is proportional to **what you did**, not to what the page contains.
 
-Watch the lens, too. A click rewrites exactly one text node. There was no component function to call and no tree to diff, no signal engine to start: just the handler and the DOM nodes that were bound to what it wrote.
+Watch the lens, too. A click rewrites exactly one text node. There was no component function to call, no tree to diff and no signal engine to start: just the handler and the DOM nodes that were bound to what it wrote.
 
 :::key
 **Hydration re-runs; resumability resumes.** The state, the handler references and the subscriptions travel *in the HTML*, so the browser can continue the application instead of restarting it. The cost moves from load time, paid by everyone, to interaction time, paid by whoever interacts.
@@ -56,7 +56,7 @@ Watch the lens, too. A click rewrites exactly one text node. There was no compon
 
 Looks free. It is not, and the price is paid in the *programming model*, where the design reaches into your code.
 
-**Closures must be serializable, or splittable.** A handler like `() => setCount(count + 1)` closes over `count` and `setCount`. To give it an address, the build must extract it into its own file, and the things it captured must be *restorable* from the page: here, signals, which are in the JSON. Qwik’s **optimizer** does the extraction, at the places you mark with a `$` suffix:
+**Closures must be serializable, or splittable.** A handler like `() => setCount(count + 1)` closes over `count` and `setCount`. To give it an address, the build must extract it into its own file, and the things it captured must be *restorable* from the page: here, signals, which are in the JSON. Qwik’s **:term[optimizer]{id=optimizer}** does the extraction, at the places you mark with a `$` suffix:
 
 ```jsx
 export default component$(() => {
@@ -67,7 +67,7 @@ export default component$(() => {
 
 `component$` and `onClick$` are not ordinary functions: each `$` tells the optimizer *“this closure is a lazy-loadable unit”*. It becomes a separate exported function in a separate chunk, and the HTML refers to it by name. The code `count.value++` is the real code, and `count` is captured by reference to its serialized state.
 
-**What can be captured is limited.** Anything that is captured by a lazy closure must be serializable: primitives, plain objects, signals, and a few built-ins. A class instance with methods, a live database connection, a function value: none of these survives being written as JSON. Qwik offers `noSerialize()` for things that are rebuilt on the client, and an error message at build time for those that cannot be.
+**What can be captured is limited.** Anything that is captured by a lazy closure must be serializable: primitives, plain objects, signals, and a few built-ins. A class instance with methods, a live database connection, a function value: none of these survives being written as JSON. Qwik offers `noSerialize()` for things that are rebuilt on the client, and an error (from its lint rules at build time, or from the server when it serializes) for those that cannot be.
 
 **The first interaction waits for the network.** A hydrated page has already paid; a resumable page pays on first use: the click fetches a file. If the network is slow, the first click feels slow. The framework answers with **prefetching**: it knows from the build which chunks a page can need, and it fetches them in the background at low priority, through a service worker or modulepreload hints, so that most are in the cache before anyone clicks. The design moves the work from *before the page responds* to *while the user is reading*.
 

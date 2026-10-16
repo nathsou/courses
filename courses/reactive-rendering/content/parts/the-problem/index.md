@@ -20,6 +20,6 @@ The other fix went the opposite way. **AngularJS** (2010) did not ask models to 
 
 All of these ran into the same wall, and it was the browser’s. A write to the DOM is not just a memory write: it can invalidate style, force a new layout and a repaint. Doing a few of them is free and doing thousands in the wrong order is a frozen page. The first part of this course starts there (chapter 1), before it gets to any framework, because the cost of the answers is measured in the browser’s currency.
 
-Part I shows the problem in its simplest form, six ways of keeping a small page up to date, and the instrument the rest of the course uses to see what each one does to the DOM. The solutions came in waves: a virtual DOM (Part II) in 2013, signals (Part III) rediscovered and refined from 2010 onwards, compilers that decide before the page runs (Part IV), and the server taking work back (Part V).
+The prologue (chapter 0) shows the problem in its simplest form, one small page kept up to date in different ways, and the instrument the rest of the course uses to see what each one does to the DOM. The solutions came in waves: a virtual DOM (Part II) in 2013, signals (Part III) rediscovered and refined from 2010 onwards, compilers that decide before the page runs (Part IV), and the server taking work back (Part V).
 
 ::timeline{part="I"}

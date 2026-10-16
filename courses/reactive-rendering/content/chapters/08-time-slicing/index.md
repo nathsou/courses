@@ -8,15 +8,15 @@ prerequisites: [who-re-renders]
 
 Chapter 7 treated rendering as work that costs *time*. This chapter is about the one property of that time that matters most to a person using the page: whether it can be **interrupted**.
 
-JavaScript in a browser runs on one :term[main thread]{id=main-thread}, and that same thread handles clicks, keystrokes, scrolling and painting. While a function is running, nothing else on the page can happen: no click is handled, no frame is painted. An update that takes sixty milliseconds is invisible. One that takes six hundred is a frozen tab.
+JavaScript in a browser runs on one :term[main thread]{id=main-thread}, and that same thread handles clicks, keystrokes, scrolling and painting. While a function is running, nothing else on the page can happen: no click is handled, no frame is painted. An update that takes sixty milliseconds is barely noticed. One that takes six hundred is a frozen tab.
 
 ## The freeze
 
 Here is the problem in its sharpest form. A search box filters a long list. Each keystroke must do two things: show the character in the box, which is cheap and urgent, and re-render the filtered list, which is expensive and not urgent. A person typing fast would be happy for the list to lag a little, as long as the box keeps up.
 
-In a renderer that cannot stop, the two are tied together. The keystroke’s handler updates state, the framework re-renders the whole tree, including a list that takes 130 ms, and *only then* does the browser get to paint the character. Type five letters and each one waits for the renders of all the letters before it.
+In a renderer that cannot stop, the two are tied together. The keystroke’s handler updates state, the framework re-renders the whole tree, including a list that takes 125 ms, and *only then* does the browser get to paint the character. Type five letters and each one waits for the renders of all the letters before it.
 
-Run it. The figure simulates the main thread on a virtual clock: five keystrokes sixty milliseconds apart, into a list of 200 items that costs about 130 ms to render. The pink bands in the background are frames the browser could not paint.
+Run it. The figure simulates the main thread on a virtual clock: five keystrokes sixty milliseconds apart, into a list of 200 items that costs about 125 ms to render. The pink bands in the background are frames the browser could not paint.
 
 ::frame-timeline{n="8.1"}
 
@@ -73,7 +73,7 @@ function workLoop(shouldYield) {
 }
 ```
 
-To pause, return. To resume, call `workLoop` again later; `next` is still there. Between units of work the loop asks `shouldYield()`, and React’s scheduler answers *yes* once about five milliseconds have passed since it started, hands control back to the browser so that input can be handled and frames painted, and arranges to be called again (React uses a `MessageChannel` message, which runs as soon as the browser has had a turn). The result is that a 130 ms render is not one 130 ms block, but twenty-six slices of five milliseconds with the browser getting a turn between each.
+To pause, return. To resume, call `workLoop` again later; `next` is still there. Between units of work the loop asks `shouldYield()`, and React’s scheduler answers *yes* once about five milliseconds have passed since it started, hands control back to the browser so that input can be handled and frames painted, and arranges to be called again (React uses a `MessageChannel` message, which runs as soon as the browser has had a turn). The result is that a 125 ms render is not one 125 ms block, but twenty-five slices of five milliseconds with the browser getting a turn between each.
 
 ```build
 id: time-slicing/work-loop
@@ -188,7 +188,7 @@ Switch the figure to *:term[Time-sliced]{id=time-slicing}, interruptible*. Three
 
 **The list renders in the background, in slices.** The blue is now cut up by yield points, and the pink dropped-frame bands disappear: the browser gets a turn about every five milliseconds, so it can always paint.
 
-**Stale work is thrown away.** When the second keystroke arrives, the half-built list for the first one is out of date. The framework *discards it* (the pink vertical lines) and starts again for the newer value. The figure counts the wasted rendering. By the final keystroke, only the last list is rendered all the way through and committed; the lists for `r`, `re`, `rea` and `reac` were never shown to anyone.
+**Stale work is thrown away.** When the second keystroke arrives, the half-built list for the first one is out of date. The framework *discards it* (the magenta vertical lines) and starts again for the newer value. The figure counts the wasted rendering. By the final keystroke, only the last list is rendered all the way through and committed; the lists for `r`, `re`, `rea` and `reac` were never shown to anyone.
 
 That is why the render phase *must* be pure (chapter 7). If a render has side effects, throwing it away leaves them behind. If rendering is free of them, abandoning a render is free, except for the time it took.
 
@@ -204,7 +204,7 @@ Because a commit makes changes to the DOM, and a person can see a half-applied c
 
 Concurrency in rendering is not free, and the costs show up as new rules.
 
-**Tearing.** If a render is split across several slices, and during that time something outside React (a Redux store, a global variable, a browser API such as `matchMedia`) changes, then different components in the *same* render may read different values: one half of the screen from before the change, the other half from after. That inconsistency is called tearing. React’s answer is the `useSyncExternalStore` hook, through which external stores must be read: it detects a change during a render and forces that render to finish synchronously, accepting a frozen frame to avoid showing an inconsistent screen.
+**Tearing.** If a render is split across several slices, and during that time something outside React (a Redux store, a global variable, a browser API such as `matchMedia`) changes, then different components in the *same* render may read different values: one half of the screen from before the change, the other half from after. That inconsistency is called tearing. React’s answer is the `useSyncExternalStore` hook, through which external stores must be read: it detects a change made during a render and redoes that render synchronously, accepting a frozen frame to avoid showing an inconsistent screen.
 
 **Double rendering.** In development, React’s Strict Mode calls component functions twice, to catch impurity. It is the testing counterpart to the fact that concurrent rendering may call them any number of times.
 
@@ -224,4 +224,4 @@ For *time-sliced rendering*: nothing new, but **in what order, and what can be a
 
 ## What’s next
 
-Part II has now built a complete virtual DOM strategy: describe, diff, patch, keep state in slots, memoise, and slice. Part III starts from the opposite premise. Instead of re-running code to find out what changed, record, when the code first runs, which values each part of it read. Chapter 9 builds that from scratch around a global variable and a spreadsheet.
+Part II has now built a complete virtual DOM strategy: describe, diff, patch, keep state in slots, memoise, and slice. Part III starts from the opposite premise. Instead of re-running code to find out what changed, record, as the code runs, which values each part of it read. Chapter 9 builds that from scratch around a global variable and a spreadsheet.

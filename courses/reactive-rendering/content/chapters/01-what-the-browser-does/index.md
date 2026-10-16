@@ -17,7 +17,7 @@ for (const el of items) {
 }
 ```
 
-Two lines, one read and one write per item. Run it over a hundred items on a page of a couple of thousand nodes and it takes a visible fraction of a second; move one line and it takes a few milliseconds. Nothing in the code says why.
+Two lines, one read and one write per item. Run it over a hundred items on a page of a couple of thousand nodes and it takes a visible fraction of a second; split it into two loops and it takes a few milliseconds. Nothing in the code says why.
 
 ```predict
 q: Now rewrite the loop as two loops: *all the reads first*, then *all the writes*. What happens to the amount of layout work the browser does?
@@ -79,7 +79,7 @@ This gives a rough ordering, from cheap to expensive. It is a guide to thinking 
 
 - **Writes to detached nodes** cost allocation and nothing else.
 - **Compositor-only properties** (`transform`, `opacity`) skip layout. This is why animations should use them instead of `left` or `width`.
-- **Text and paint-only changes** (`color`, `background`) invalidate style and paint but not layout.
+- **Paint-only changes** (`color`, `background`) invalidate style and paint but not layout.
 - **Changes that can move boxes** (size, display, adding or removing nodes) invalidate layout, which is the expensive stage.
 - **Anything followed by a layout-dependent read** is charged immediately, and as often as you alternate.
 
@@ -103,7 +103,7 @@ answer:
 notes:
   2: "This write invalidates layout once. One invalidation is fine."
   4: "A cheap comparison, nothing to do with the DOM."
-explain: "`open.offsetHeight` is read inside the loop, right after the previous iteration’s write to `panel.style.height`. Each read finds layout out of date and forces it. Reading `open.offsetHeight` once, before the loop, makes every iteration a write: one layout, at the end of the frame."
+explain: "`open.offsetHeight` is read inside the loop, right after the previous iteration’s write to `panel.style.height`. Each read finds layout out of date and forces it. Reading `open.offsetHeight` once, before the loop, makes every iteration a write: one forced layout before the loop, and one more at the end of the frame."
 hints:
   - "Look for a read of a layout value that sits inside a loop that also writes."
   - "Does `open.offsetHeight` change between iterations?"

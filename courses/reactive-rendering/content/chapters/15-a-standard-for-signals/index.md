@@ -12,7 +12,7 @@ In 2024 a group of those authors proposed to fix that in the language itself.
 
 ## The proposal
 
-The **TC39 Signals proposal** adds a `Signal` object to JavaScript. TC39 is the committee that specifies the language, and a proposal moves through *stages*, from 0 (an idea) to 4 (shipping in every engine). Signals entered **stage 1** in April 2024, which means that the committee agrees the problem is worth solving and the design is open to change. :cite[tc39-signals] It has been a collaboration of people who maintain Angular, Ember, MobX, Preact, Qwik, RxJS, Solid, Svelte, Vue and others: the first time the competing designs have been merged on purpose.
+The **TC39 Signals proposal** adds a `Signal` object to JavaScript. TC39 is the committee that specifies the language, and a proposal moves through *stages*, from 0 (an idea) to 4 (finished: shipped in engines and added to the next edition of the standard). Signals entered **stage 1** in April 2024, which means that the committee agrees the problem is worth solving and the design is open to change. :cite[tc39-signals] It has been a collaboration of people who maintain Angular, Ember, MobX, Preact, Qwik, RxJS, Solid, Svelte, Vue and others: the first time the competing designs have been merged on purpose.
 
 It has a **polyfill**, a library that behaves as the standard would, and this chapter runs it for real. The surface is small:
 
@@ -257,7 +257,7 @@ hints:
 explain: "The whole effect system is the Watcher plus a `Computed` that does work. Compare with chapter 11: the owner/cleanup logic is the three lines about `cleanup`, and the batching is the `queued` flag. Everything else (the graph, glitch-freedom, cutoff) is inside the standard. A framework would add ownership (who disposes this effect?), ordering (parent effects before children) and its own scheduler, which is exactly where Angular, Solid and Lit differ."
 ```
 
-## One name for six things
+## One name for seven things
 
 Now that you have seen the engine, here is the same program in each library. The shape is always the same: a writable cell, a derived value and an effect.
 
@@ -272,7 +272,7 @@ Now that you have seen the engine, here is the same program in each library. The
 | **Qwik** | `useSignal(0)` | `useComputed$(fn)` | `useTask$(fn)` | `s.value` | `s.value = v` |
 | **MobX** | `observable.box(0)` | `computed(fn)` | `autorun(fn)` | `s.get()` | `s.set(v)` |
 
-Appendix D lists the full programs. The differences in the table are the differences in *how much the language hides*: Svelte’s compiler removes the call syntax altogether; Vue and Preact use a property accessor; Solid, Angular and the proposal use explicit calls.
+Appendix D lists the full programs. The differences in the table are the differences in *how much the language hides*: Svelte’s compiler removes the call syntax altogether; Vue, Preact and Qwik use a property accessor; Solid, Angular, MobX and the proposal use explicit calls.
 
 ## What the standard would give, and what it would not
 
@@ -289,7 +289,7 @@ What it will not give you:
 - **Certainty.** Stage 1 means design changes are expected, and a feature that every framework has already implemented in a slightly different way is hard to standardise: whichever semantics the standard picks, some framework has to change, and “subtle” differences like the order of effect runs are what real applications depend on.
 
 :::programmer
-**Should you use it today?** For applications, no: the polyfill’s own README warns against production use, and the proposal may change. For *libraries*, it is a good bet to write state management that exposes `Signal.State`-compatible objects, since adapters from your framework’s own signal (`toSignal` in Angular, `createSignal` wrappers in Solid, `signal-utils` for collections and async) are available. For learning, it is the best place to read what the *minimal* signal engine is.
+**Should you use it today?** For applications, no: the polyfill’s own README warns against production use, and the proposal may change. For *libraries*, it is a good bet to write state management that exposes `Signal.State`-compatible objects, since a thin adapter can bridge them to a framework’s own signals, and `signal-utils` already provides collections and async helpers built on the polyfill. For learning, it is the best place to read what the *minimal* signal engine is.
 :::
 
 :::history{year=2024 title="Stage 1"}

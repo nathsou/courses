@@ -138,7 +138,7 @@ Its cost is somewhere else. For the Notes app there are five things that can hap
 
 ::bookkeeping-grid{n="2.2"}
 
-Run the session with the first grid you are given. It looks plausible, and the page goes stale after the first toggle. This is the typical shape of the bug: nothing crashes, nothing is logged, and a *different* piece of the page than the one you were looking at is out of date. Twenty-five cells is a small app. The grid has one cell for every event and every thing on the page, and the number of cells that *matter* is whatever the dependency structure of your program makes it. It grows with every feature, it is invisible in the code, and nothing checks it.
+Run the session with the first grid you are given. It looks plausible, and the page goes stale after the very first action. This is the typical shape of the bug: nothing crashes, nothing is logged, and a *different* piece of the page than the one you were looking at is out of date. Twenty-five cells is a small app. The grid has one cell for every event and every thing on the page, and the number of cells that *matter* is whatever the dependency structure of your program makes it. It grows with every feature, it is invisible in the code, and nothing checks it.
 
 ```debug
 id: ui-as-a-function/forgotten-update

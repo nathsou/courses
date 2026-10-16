@@ -37,7 +37,7 @@ Libraries differ in **who calls the batch**:
 - **You do.** Preact Signals, MobX (`runInAction`) and Solid’s `batch` take an explicit call; outside one, a write flushes at once. Angular’s `effect` and Svelte’s `$effect` are not synchronous at all: they are *scheduled*.
 - **The framework does, around events and by time.** Vue queues effects and flushes them once, in a microtask after the current code finishes (that is what `nextTick` waits for). Svelte 5 batches updates into a microtask, and offers `flushSync()` for the rare time you need the DOM updated *now*. Angular runs effects as part of change detection.
 
-The second group makes the common case need no extra code, at a price you may have met: after `count = 1`, reading the DOM straight away shows the *old* page, until the framework gets its turn. It is the same trade as chapter 1’s forced layout: you may write many times, but you read from a frozen snapshot, and it is the library that decides when the snapshot is refreshed.
+The second group makes the common case need no extra code, at a price you may have met: after `count = 1`, reading the DOM straight away shows the *old* page, until the framework gets its turn. It is the mirror image of chapter 1’s deferred layout: the browser also postpones work after your writes, but there a read forces it to catch up; here you read a frozen snapshot, and it is the library that decides when the snapshot is refreshed.
 
 :::key
 **Batching is the answer to “when does the update happen?”** The graph answers *what*; the batch boundary answers *when*. Every framework has chosen a boundary: the end of a `batch`, the end of an event handler, the next microtask, the next frame.
@@ -81,7 +81,7 @@ Three tools come out of it, and every signals library has them under some name:
 | Register a cleanup with the current owner | `onCleanup` | `onScopeDispose`, `onWatcherCleanup` | return a function from `$effect` | `DestroyRef.onDestroy`; `effect((onCleanup) => …)` |
 | Dispose the owner | the root’s `dispose` | `scope.stop()` | the function `$effect.root` returns | the component is destroyed |
 
-Note the last row of the first column. In Solid, Vue and Angular, a **component** is an owner: the framework creates a root for it, runs your setup code inside it, and disposes the root when the component leaves the screen. That is why a `watch` or `effect` in a component needs no manual stop. Inside Vue’s `setup`, the same function called in a timeout, after `setup` has finished, has no owner, and the effect never stops: the famous “*it keeps running after the component is gone*” bug is the one in the figure.
+Note the Angular column. In Solid, Vue and Angular, a **component** is an owner: the framework creates a root for it, runs your setup code inside it, and disposes the root when the component leaves the screen. That is why a `watch` or `effect` in a component needs no manual stop. In Vue, the same call made in a timeout, after `setup` has finished, has no owner, and the effect never stops: the famous “*it keeps running after the component is gone*” bug is the one in the figure.
 
 ```predict
 q: "A Solid-style component runs `createEffect(() => { const id = setInterval(refresh, rate()); })`, where `rate` is a signal the user can change. The user changes `rate` three times. How many intervals are running?"
@@ -510,7 +510,7 @@ explain: "Two global variables now: `current` says whom a read should notify, an
 
 ## Why this is the heart of component models
 
-Look at what an owner tree is: a tree of things created by a function, each of which will be thrown away when its parent is. That is a **component tree**, with another name. In Solid, a component is a function that is called *once*, under an owner, and everything in it (effects, computed values, event listeners attached with `onCleanup`) belongs to that component’s node. When a conditional branch turns off, the engine disposes that branch’s owner, which disposes everything created inside it, down to the last timer. Vue’s `setup`, Angular’s injection context and a Svelte component’s effects work the same way.
+Look at what an owner tree is: a tree of things created by a function, each of which will be thrown away when its parent is. That is a **component tree**, with another name. In Solid, a component is a function that is called *once*, under an owner, and everything in it (effects, computed values, event listeners released with `onCleanup`) belongs to that component’s node. When a conditional branch turns off, the engine disposes that branch’s owner, which disposes everything created inside it, down to the last timer. Vue’s `setup`, Angular’s injection context and a Svelte component’s effects work the same way.
 
 This is the part that a virtual DOM gets for free and signals have to build. In a virtual DOM, every render creates a fresh description, and the old one is thrown away by the garbage collector; effects are attached to *component instances* that the renderer mounts and unmounts. In a signals library nothing is re-rendered, so something else must say *this chunk of the program is over*, and that is the owner.
 

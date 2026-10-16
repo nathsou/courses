@@ -6,7 +6,7 @@ duration: 60 minutes
 prerequisites: [before-frameworks, who-re-renders]
 ---
 
-Part II answered *what changed?* by re-running code and comparing the results. This part answers it by recording, the first time code runs, **which values it read**, and re-running only that code when one of those values is written.
+Part II answered *what changed?* by re-running code and comparing the results. This part answers it by recording, as code runs, **which values it read**, and re-running only that code when one of those values is written.
 
 You have seen it twice already. Knockout’s `ko.computed` (chapter 3) and the “track” pane of chapter 0’s lens both work this way, and a spreadsheet has done it since 1979.
 
@@ -28,7 +28,7 @@ Try it. The sheet below is built from the lab’s signals engine: each cell is a
 
 ::spreadsheet{n="9.1"}
 
-Three experiments. **Orders**: change `A2` and see that only `C2`, `D2`, `C5` and `D5` re-run: the cells downstream of it, and no others. **Select** `C5` to see what it reads (the three `C` cells above it) and select `C2` to see who reads *it*. **A branch**: this sheet’s `B2` is `=IF(B1>0, C3, D3)`. Change `D3`: nothing re-runs, because with `B1 = 1` the formula reads `C3`, not `D3`. Now set `B1` to `0` and change `D3` again: it does, and changing `C3` no longer does. The dependencies of a formula follow the *evaluation*, not the text.
+Three experiments. **Orders**: change `A2` and see that only `C2`, `D2`, `C5` and `D5` re-run: the cells downstream of it, and no others. **Select** `C5` to see what it reads (the three `C` cells above it) and select `C2` to see who reads *it*. **A branch**: this sheet’s `B2` is `=IF(B1>0, C3, D3)`. Change `D3`: nothing re-runs, because with `B1 = 1` the formula reads `C3`, not `D3`. Now set `B1` to `0` and change `D3` again: `B2` re-runs, and changing `C3` no longer re-runs it (only `B5`, which reads `C3` directly). The dependencies of a formula follow the *evaluation*, not the text.
 
 :::key
 **Dependencies are discovered by running.** The formula was not asked what it depends on. It was *run*, and the things it read while running were recorded. Run it again, and the record is rebuilt, which is why a formula whose branch changes stops depending on what it no longer reads.
@@ -305,13 +305,13 @@ With these three functions you can write the Notes app so that `count.set(…)` 
 The trade is clear. A virtual DOM pays, on every update, to compare what it has. A signal pays, on every read, to remember that it was read, and then pays nothing to find out who to tell. Which is cheaper depends on how often values are read against how often they are written, how much of the page each write affects, and how much memory a subscription costs. For a page where one small thing changes at a time, signals do almost no work per update. For a page where *most* of the data changes at once, the bookkeeping is overhead.
 
 :::programmer
-**Signals in every library.** Every framework in Part III is this chapter, plus decisions about what chapters 10 and 11 raise. The names differ. Solid: `createSignal` (returning a getter and a setter), `createMemo`, `createEffect`. Vue: `ref` (read and write `.value`), `computed`, `watchEffect`. Preact Signals: `signal`, `computed`, `effect`, all with `.value`. Angular: `signal`, `computed`, `effect`, read by calling the signal like a function. Svelte 5: `$state`, `$derived`, `$effect`, with the reads and writes disguised as ordinary variable access by the compiler. Qwik: `useSignal`, `useComputed$`, `useTask$`. MobX: `observable`, `computed`, `autorun`. A proposal to standardise the core is the subject of chapter 15.
+**Signals in every library.** Every framework in Part III is this chapter, plus decisions about what chapters 10 and 11 raise. The names differ. Solid: `createSignal` (returning a getter and a setter), `createMemo`, `createEffect`. Vue: `ref` (read and write `.value`), `computed`, `watchEffect`. Preact Signals: `signal`, `computed`, `effect`, with signals and computeds read through `.value`. Angular: `signal`, `computed`, `effect`, read by calling the signal like a function. Svelte 5: `$state`, `$derived`, `$effect`, with the reads and writes disguised as ordinary variable access by the compiler. Qwik: `useSignal`, `useComputed$`, `useTask$`. MobX: `observable`, `computed`, `autorun`. A proposal to standardise the core is the subject of chapter 15.
 :::
 
 ## Where this comes from
 
 :::history{year=1979 title="VisiCalc, and the long road to reactive UIs"}
-Dan Bricklin and Bob Frankston’s VisiCalc (1979) was the first spreadsheet for personal computers, and its *natural order* of recalculation, where a cell is recomputed after the cells it depends on, was the idea that made it useful. The academic line, *functional reactive programming*, started with Conal Elliott and Paul Hudak’s *Functional Reactive Animation* in 1997, and was surveyed by Bainomugisha and colleagues in 2013. :cite[elliott-hudak-1997] :cite[bainomugisha-2013] A parallel line, *incremental computation*, asks how to recompute only what an input change affects; Adapton (2014) is a representative system. :cite[hammer-adapton-2014] The web arrived late: Knockout (2010), Meteor’s Tracker, MobX (2015) and Vue 2 (2016) brought dependency tracking to JavaScript, and Solid, Preact Signals and Angular made it the centre of a framework. Ryan Carniato’s *A Hands-on Introduction to Fine-Grained Reactivity* is the clearest short walkthrough of the code in this chapter. :cite[carniato-fgr]
+Dan Bricklin and Bob Frankston’s VisiCalc (1979) was the first spreadsheet for personal computers. It recalculated row by row or column by column; *natural order* recalculation, where a cell is recomputed after the cells it depends on, reached personal computers with Lotus 1-2-3 in 1983. The academic line, *functional reactive programming*, started with Conal Elliott and Paul Hudak’s *Functional Reactive Animation* in 1997, and was surveyed by Bainomugisha and colleagues in 2013. :cite[elliott-hudak-1997] :cite[bainomugisha-2013] A parallel line, *incremental computation*, asks how to recompute only what an input change affects; Adapton (2014) is a representative system. :cite[hammer-adapton-2014] The web arrived late: Knockout (2010), Meteor’s Tracker, Vue (2014) and MobX (2015) brought dependency tracking to JavaScript, and Solid, Preact Signals and Angular made it the centre of a framework. Ryan Carniato’s *A Hands-on Introduction to Fine-Grained Reactivity* is the clearest short walkthrough of the code in this chapter. :cite[carniato-fgr]
 :::
 
 :::whatchanged

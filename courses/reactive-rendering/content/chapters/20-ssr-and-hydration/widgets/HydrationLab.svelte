@@ -6,6 +6,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import Widget from '$lib/components/ui/Widget.svelte';
+  import Code from '$lib/code/Code.svelte';
   import Button from '$lib/components/ui/Button.svelte';
   import Segmented from '$lib/components/ui/Segmented.svelte';
   import LensPane from '$lib/components/lens/LensPane.svelte';
@@ -92,7 +93,7 @@
   <p class="note ui">{PRESETS[which]!.note}</p>
 
   <div class="h ui">The HTML the server sent</div>
-  <pre class="html"><code>{serverHtml}</code></pre>
+  <Code class="html" lang="html" code={serverHtml} />
 
   <div class="actions ui">
     <Button variant="primary" size="sm" onclick={hydrate} disabled={hydrated}>Hydrate</Button>
@@ -130,7 +131,7 @@
     color: var(--mute);
     margin-bottom: 0.25rem;
   }
-  .html {
+  :global(.html) {
     margin: 0 0 0.7rem;
     padding: 0.5rem 0.7rem;
     border: 1px solid var(--line);

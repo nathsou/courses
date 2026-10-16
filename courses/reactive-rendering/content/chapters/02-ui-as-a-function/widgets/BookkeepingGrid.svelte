@@ -67,8 +67,11 @@
   let log = $state<{ action: Action; stale: Binding[]; ok: boolean }[] | null>(null);
 
   const mustTick = Object.values(TRUTH).reduce((n, b) => n + b.length, 0);
-  const wrongCells = $derived(
-    ACTIONS.flatMap((a) => BINDINGS.filter((b) => grid[a.id][b.id] !== TRUTH[a.id].includes(b.id)).map((b) => `${a.id}/${b.id}`)),
+  const extraCells = $derived(
+    ACTIONS.flatMap((a) => BINDINGS.filter((b) => grid[a.id][b.id] && !TRUTH[a.id].includes(b.id)).map((b) => `${a.id}/${b.id}`)),
+  );
+  const missingCells = $derived(
+    ACTIONS.flatMap((a) => BINDINGS.filter((b) => !grid[a.id][b.id] && TRUTH[a.id].includes(b.id)).map((b) => `${a.id}/${b.id}`)),
   );
 
   function run() {
@@ -127,7 +130,8 @@
         <p class="empty">Tick the cells, then run a session.</p>
       {:else if badCount === 0}
         <p class="good">✓ All 10 actions left the page consistent with the state.</p>
-        {#if wrongCells.length}<p class="hint">…but this grid ticks {wrongCells.length} cells more than needed: harmless, but each one is an update that was not necessary.</p>{/if}
+        {#if missingCells.length}<p class="hint">…but this grid leaves {missingCells.length} needed cell{missingCells.length === 1 ? '' : 's'} unticked that this session happened not to exercise: a longer session would go stale.</p>{/if}
+        {#if extraCells.length}<p class="hint">{missingCells.length ? '…and it' : '…but this grid'} ticks {extraCells.length} cell{extraCells.length === 1 ? '' : 's'} more than needed: harmless, but each one is an update that was not necessary.</p>{/if}
       {:else}
         <p class="bad">✗ The page went stale after action {firstBad + 1}: <b>{log[firstBad]!.action}</b>. Stale: {log[firstBad]!.stale.map((s) => BINDINGS.find((b) => b.id === s)!.label).join(', ')}.</p>
         <ol class="session">

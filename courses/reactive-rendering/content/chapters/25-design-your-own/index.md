@@ -17,9 +17,9 @@ The **compass** puts that question in front of you. Describe an application with
 
 ::compass{n="25.1"}
 
-Use the five starting points. Press **A news article** and read the top of the list: server rendering and islands, because the page is a document and almost none of it responds. Press **A spreadsheet**: signals and compiled templates, with the virtual DOM close behind, because every cell must respond at once and no server round trip is acceptable. **A chat application** and **A staff dashboard** sit between them, and the lists show it.
+Use the five starting points. Press **A news article** and read the top of the list: server rendering and islands, because the page is a document and almost none of it responds. Press **A spreadsheet**: signals and compiled templates, with Angular’s checking and the virtual DOM close behind, because every cell must respond at once and no server round trip is acceptable. **A chat application** and **A staff dashboard** sit between them, and the lists show it.
 
-Then do what the compass is for, and disagree with it. The weights are one author’s judgement, written in the widget’s source for anyone to change. Move a slider and ask whether the ranking ought to move the way it did. Where would you put a *shop’s product page*? It has content (reviews, descriptions), a few interactive parts (an image gallery, a basket button), a need for search-engine HTML, and shoppers on slow phones. The compass says islands or server components. A real shop mixes: the page is HTML from the server, the gallery is an island, the basket is state held in the browser, and checkout is a server-rendered flow.
+Then do what the compass is for, and disagree with it. The weights are one author’s judgement, written in the widget’s source for anyone to change. Move a slider and ask whether the ranking ought to move the way it did. Where would you put a *shop’s product page*? It has content (reviews, descriptions), a few interactive parts (an image gallery, a basket button), a need for search-engine HTML, and shoppers on slow phones. The compass says islands, with server rendering and morphing next. A real shop mixes: the page is HTML from the server, the gallery is an island, the basket is state held in the browser, and checkout is a server-rendered flow.
 
 ```predict
 q: "A team is building an internal tool: forty screens of forms and tables over a database, used by staff on office computers, behind a login. Search engines never see it. Which strategy does the *least* to help them?"
@@ -215,7 +215,7 @@ explain: "About thirty lines, and the core of a real framework: elements are cre
 
 ## Place
 
-Now put the real frameworks on a map. Two questions place them, and they are the ones from the first chapter. **What does the framework find out at build time, and what at run time?** And **where does the code run?**
+Now put the real frameworks on a map. Two questions place them, and they extend the questions of chapter 19. **What does the framework find out at build time, and what at run time?** And **where does the code run?**
 
 | | Decided at build time | Discovered at run time | Runs in the browser |
 |---|---|---|---|
@@ -230,7 +230,7 @@ Now put the real frameworks on a map. Two questions place them, and they are the
 | **Qwik** | the closures’ chunks and subscriptions | nothing at load: a click’s handler | the handler that ran |
 | **htmx and Turbo** | nothing | the difference between DOM and HTML, by morphing | a small library |
 
-Read the table against the six answers of chapter 0: **rebuild** survives in htmx; **dirty-check** is Angular’s; **diff** is React’s and Vue’s; **track** is Solid’s, Vue’s refs and Svelte 5’s; **compile** is everyone’s lean toward the left column; **skip** is Astro, RSC, Qwik. **Every real framework mixes them.** Vue is a diff *and* a tracker; Angular is a checker *and* a tracker; Next.js is a server renderer *and* a differ; Svelte 5 is a compiler *and* a tracker. The six answers are not six kinds of framework. They are six tools, and the frameworks are particular combinations.
+Read the table against the six answers of chapter 0: **rebuild** survives in htmx; **dirty-check** is Angular’s; **diff** is React’s and Vue’s; **track** is Solid’s, Vue’s refs and Svelte 5’s; **compile** is everyone’s lean toward the left column; **skip** is Astro’s, RSC’s and Qwik’s. **Every real framework mixes them.** Vue is a diff *and* a tracker; Angular is a checker *and* a tracker; Next.js is a server renderer *and* a differ; Svelte 5 is a compiler *and* a tracker. The six answers are not six kinds of framework. They are six tools, and the frameworks are particular combinations.
 
 :::programmer
 **What to take from the course.** When you meet a new framework, or a new version of an old one, do not ask what it is called or whether it is fast. Ask the three questions. *What does it find out before the page runs? How does it find out what changed once it does? Where does the code run, and what does the browser have to download and execute before it responds?* The answers sort it into the map, and the map says what it is good at.

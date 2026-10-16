@@ -6,7 +6,7 @@ duration: 60 minutes
 prerequisites: [ssr-and-hydration]
 ---
 
-Chapter 20 ended with a bill. Hydration re-runs *every* component in the browser, and ships all their code, so that the page can respond. Now look at a typical page: a blog post. A header, an article of fifty paragraphs, a like button, a comments form, a footer. Of those, **two components ever respond to anything**. Forty-eight paragraphs, the header and the footer are text and links, and the browser will never need to run the code that made them.
+Chapter 20 ended with a bill. Hydration re-runs *every* component in the browser, and ships all their code, so that the page can respond. Now look at a typical page: a blog post. A header, an article of fifty paragraphs, a like button, a comments form, a footer. Of those, **two components ever respond to anything**. The fifty paragraphs, the header and the footer are text and links, and the browser will never need to run the code that made them.
 
 Hydrating the paragraphs is waste, and there are two ways to stop. One is an **architecture**: split the page into static HTML and small interactive *:term[islands]{id=island}*. The other is a **programming model**: let some components run on the server and *never reach the browser at all*.
 
@@ -15,7 +15,7 @@ Hydrating the paragraphs is waste, and there are two ways to stop. One is an **a
 An island is a piece of the page that is hydrated on its own, surrounded by HTML that is never hydrated. The page is HTML; the islands are small programs that take over the parts of it that need to be alive.
 
 ```html
-<article> …forty-eight static paragraphs… </article>
+<article> …fifty static paragraphs… </article>
 
 <div data-island="LikeButton" data-client="load" data-props='{"initial":3}'>
   <button>♥ 3</button>          <!-- the server-rendered HTML of the island -->
@@ -248,7 +248,7 @@ options:
     correct: true
     why: "A client component's code, and everything it imports, is sent to the browser. The Markdown conversion that ran on the server for free now has to run in the browser as well, to hydrate the same article. A common design rule follows: put the `'use client'` boundary as low in the tree as it can go, around the one button, not around the page."
   - text: "The page gets faster, because the work moves from the server to the browser."
-    why: "The browser has to download, parse and run more, and the server still renders the HTML. It is only the first of the two clients that is saved by doing the work on the server."
+    why: "The browser has to download, parse and run more, and the server still renders the HTML, so the conversion now runs twice instead of once."
 ```
 
 ## Other paths to the same place

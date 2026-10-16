@@ -119,7 +119,7 @@
   <div class="cols">
     <div class="col">
       <div class="h ui">Component.svelte</div>
-      {#key which}<CodeEditor value={source} lang="text" label="Svelte component source" minLines={12} onchange={(c) => (source = c)} />{/key}
+      {#key which}<CodeEditor value={source} lang="svelte" label="Svelte component source" minLines={12} onchange={(c) => (source = c)} />{/key}
     </div>
     <div class="col">
       <div class="h ui">Compiled {loading ? '(loading the compiler…)' : ''}</div>

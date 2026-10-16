@@ -31,8 +31,9 @@ import { createEngine } from '@rx/signals';
 | `@rx/flight` | 21 | `serialize`, `deserialize`, `clientComponent`: the server-component stream. |
 | `@rx/resume` | 22 | `renderResumable`, `resume`, `qrl`, `bind`. |
 | `@rx/morph` | 23 | `morph(parent, html)`. |
+| `@rx/tc39` | 15 | `Signal`, from the `signal-polyfill` package: `Signal.State`, `Signal.Computed` and `Signal.subtle.Watcher`. |
 
-Two further modules are used by figures but not exported to exercises: `rx/pipeline.ts` (chapter 1’s cost model) and `rx/bench.ts` with `rx/notes.ts` (the benchmark’s seven adapters and the Notes app in six strategies).
+Further modules are used by figures but not exported to exercises: `rx/pipeline.ts` (chapter 1’s cost model), `rx/formula.ts` (chapter 9’s spreadsheet formulas), `rx/hints.ts` (chapter 13’s compiler hints), and `rx/bench.ts` with `rx/notes.ts` (the benchmark’s seven adapters and the Notes app in six strategies).
 
 ## Using a module on its own
 

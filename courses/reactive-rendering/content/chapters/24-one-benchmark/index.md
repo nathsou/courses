@@ -20,7 +20,7 @@ Read it in four passes.
 
 ## Pass one: look at one row
 
-Pick **Update every 10th row**. Five of the strategies do exactly 100 operations, one text write per row changed, whatever the strategy: virtual DOM, Lit, signals, Svelte 4. It is the cheapest result that is possible. The two that do not are *innerHTML* and *morph*, which each take the whole table as a string and work from it: **8,001** units for `innerHTML` (one parse of eight thousand nodes), and **8,101** for morph (the parse, plus the hundred writes). A strategy that discovers the change by comparison (the diff), by subscription (signals) or by checking a bit (Svelte 4) all find the same hundred places. The strategies that *do not* look do the same thing as before, to everything.
+Pick **Update every 10th row**. Five of the strategies do exactly 100 operations, one text write per row changed, whatever the strategy: virtual DOM, Lit, signals, Svelte 4. It is the cheapest result that is possible. The two that do not are *innerHTML* and *morph*, which each take the whole table as a string and work from it: **8,001** units for `innerHTML` (one parse of eight thousand nodes), and **8,101** for morph (the parse, plus the hundred writes). The strategies that discover the change by comparison (the diff), by subscription (signals) or by checking a bit (Svelte 4) all find the same hundred places. The strategies that *do not* look do the same thing as before, to everything.
 
 Now pick **Select a row**: *one* operation for everyone except the two string strategies. That is the whole claim of chapter 0, in a table: changing one attribute should cost one attribute write.
 
@@ -42,7 +42,7 @@ options:
 
 That is the surprise of the table: the *worst* algorithm for reordering is the best for replacing. It is not wrong to call it the worst, because the difference is in what each one assumes about the data.
 
-Then **Create 1,000 rows** shows another: `innerHTML` is the cheapest of all. One parse by the browser’s own native parser builds all eight thousand nodes, and nothing built by JavaScript, one `createElement` at a time, can beat it. That is the reason the compiled-template frameworks clone *prepared HTML* (chapter 12) instead of creating nodes. Look at the numbers for Lit and signals: they are the next cheapest, because they clone. Svelte 4’s generated code creates each node with `createElement`, so it costs more here.
+Then **Create 1,000 rows** shows another: `innerHTML` is the cheapest of all. One parse by the browser’s own native parser builds all eight thousand nodes, and nothing built by JavaScript, one `createElement` at a time, can beat it. That is the reason the compiled-template frameworks clone *prepared HTML* (chapter 12) instead of creating nodes. Look at the numbers for Lit and signals, though: a clone still makes every node, and this count charges for each one, plus the markers and text nodes their holes add, so here they come out above the virtual DOM. What cloning saves is engine time per node, which a count cannot show. Svelte 4’s generated code creates each node with `createElement` and inserts most of them into the live page one by one, so it costs the most here.
 
 ## Pass three: switch what you count
 
@@ -87,7 +87,7 @@ Look across the table instead of down it, and the same four facts show up.
 
 ## Hand-write the baseline
 
-The js-framework-benchmark has an entry called *vanilla*: hand-written DOM code, with no framework, which sets the floor everything else is measured against. It is the answer to the question every table of this kind needs, *how much of this is the strategy, and how much is irreducible?* Write it for this page.
+The js-framework-benchmark has an entry called *:term[vanilla]{id=vanilla}*: hand-written DOM code, with no framework, which sets the floor everything else is measured against. It is the answer to the question every table of this kind needs, *how much of this is the strategy, and how much is irreducible?* Write it for this page.
 
 ```build
 id: one-benchmark/vanilla
@@ -324,7 +324,7 @@ Krause’s benchmark started in 2015 as a way to compare Angular, React and Vue-
 :::
 
 :::whatchanged
-All six answers, side by side, with a price attached to each. **Rebuild** costs a parse of everything and wins at creating. **Diff** costs a walk and wins when little changes. **Track** and **compile** cost nothing to find what changed and win at updates, at the price of subscriptions, a compiler, or both. **Skip** is the strategy that keeps work from happening at all and is not in this table, because its costs are paid before the page loads. The table is a map of *where each strategy hurts*, rather than a ranking.
+Five of the six answers, side by side, with a price attached to each. **Rebuild** costs a parse of everything and wins at creating. **Diff** costs a walk and wins when little changes. **Track** and **compile** cost nothing to find what changed and win at updates, at the price of subscriptions, a compiler, or both. **Skip** is the strategy that keeps work from happening at all and is not in this table, because its costs are paid before the page loads. The table is a map of *where each strategy hurts*, rather than a ranking.
 :::
 
 ## What’s next

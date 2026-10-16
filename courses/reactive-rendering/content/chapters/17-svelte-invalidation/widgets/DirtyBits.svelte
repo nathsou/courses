@@ -5,6 +5,8 @@
 -->
 <script lang="ts">
   import Widget from '$lib/components/ui/Widget.svelte';
+  import Code from '$lib/code/Code.svelte';
+  import { highlightLines, styleOf } from '$lib/code/highlight';
   import Button from '$lib/components/ui/Button.svelte';
   import LensPane from '$lib/components/lens/LensPane.svelte';
   import { Lens } from '$lib/components/lens/lens.svelte';
@@ -38,6 +40,7 @@
       return { text, bit };
     });
   })();
+  const excerptTokens = highlightLines(excerpt.map((l) => l.text).join('\n'), 'js');
   const VARS = ['count', 'double'];
 
   let rt: Internals;
@@ -97,11 +100,11 @@
   <div class="cols">
     <div>
       <div class="h ui">Counter.svelte</div>
-      <pre class="code"><code>{SOURCE}</code></pre>
+      <Code class="code" lang="svelte" code={SOURCE} />
     </div>
     <div>
       <div class="h ui">Compiled: the update function <code>p</code></div>
-      <pre class="code upd"><code>{#each excerpt as l, i (i)}<span class="ln" class:ran={l.bit !== 0 && (ranBits & l.bit) !== 0} class:skip={l.bit !== 0 && (ranBits & l.bit) === 0 && mask !== 0}>{l.text || ' '}</span>{/each}</code></pre>
+      <pre class="code upd"><code>{#each excerpt as l, i (i)}<span class="ln" class:ran={l.bit !== 0 && (ranBits & l.bit) !== 0} class:skip={l.bit !== 0 && (ranBits & l.bit) === 0 && mask !== 0}>{#each excerptTokens[i] ?? [] as tok, j (j)}{#if tok.rule}<span style:color={styleOf.get(tok.rule)?.color} style:font-style={styleOf.get(tok.rule)?.italic ? 'italic' : undefined}>{tok.text}</span>{:else}{tok.text}{/if}{:else}{' '}{/each}</span>{/each}</code></pre>
       <p class="vars ui">Bits: {#each VARS as v, i (v)}<code>{v} = {1 << i}</code>{#if i < VARS.length - 1}, {/if}{/each}</p>
     </div>
   </div>
@@ -133,7 +136,7 @@
     color: var(--mute);
     margin-bottom: 0.3rem;
   }
-  .code {
+  :global(.code), .code {
     margin: 0;
     padding: 0.6rem 0.8rem;
     border: 1px solid var(--line);

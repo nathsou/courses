@@ -6,6 +6,7 @@
 -->
 <script lang="ts">
   import Widget from '$lib/components/ui/Widget.svelte';
+  import Code from '$lib/code/Code.svelte';
   import Segmented from '$lib/components/ui/Segmented.svelte';
   import { clientComponent, serialize, type FlightResult, type ServerComponent } from '$lib/rx/flight';
   import { h } from '$lib/rx/vdom';
@@ -120,7 +121,7 @@
 
   {#if mode === 'rsc' && result}
     <div class="h ui rows">What the browser receives: the component tree as rows ({payloadBytes} bytes of payload)</div>
-    <pre class="payload"><code>{result.payload}</code></pre>
+    <Code class="payload" lang="js" code={result.payload} />
     <p class="note ui">Server components appear only as the elements they returned. A client component is a reference (<code>$L1</code>) to a module row, plus its props. The browser downloads the referenced modules and nothing else: <b>{result.clientModules.length}</b> module{result.clientModules.length === 1 ? '' : 's'}, and <b>{Math.round(result.serverOnlyBytes / 1024)} KB</b> of component code never leaves the server.</p>
   {/if}
 </Widget>
@@ -229,7 +230,7 @@
   .rows {
     margin: 1rem 0 0.3rem;
   }
-  .payload {
+  :global(.payload) {
     margin: 0;
     padding: 0.6rem 0.8rem;
     border: 1px solid var(--line);

@@ -34,7 +34,7 @@ Try both. The server renders an inbox. First **type something in the search box*
 
 ::morph-lab{n="23.1"}
 
-With *innerHTML*, every press recreates every element (the last line counts how many are still the same objects: none) and the typed text, the tick and the focus are gone. With *Morphing*, the same HTML produces a handful of operations (a new `li`, a changed class), the search box is still the same node, with its focus and its text. Note the *Reverse the order* action: the messages are the same, in a new order. Morphing **moves** the existing `li` nodes instead of rewriting their text, because they have `id`s.
+With *innerHTML*, every press recreates every element (the last line counts how many are still the same objects: none) and the typed text, the tick and the focus are gone. With *Morphing*, the same HTML produces a handful of operations (a new `li`, a changed class), and the search box is still the same node, with its focus and its text. Note the *Reverse the order* action: the messages are the same, in a new order. Morphing **moves** the existing `li` nodes instead of rewriting their text, because they have `id`s.
 
 Morphing is not magic, and the figure shows where it stops. **The ticked box is lost** even with morphing. A morph makes the old DOM look like the *new HTML*, and the new HTML says the box is unticked, because the server did not know that you had ticked it. The search box survived for a narrower reason: it was *focused*, and a morph does not overwrite the value of the control you are typing in. Click somewhere else and press an action, and the text goes too. In real applications this is solved by the server (it received the form’s values and renders them back into the HTML) or by marking elements as **:term[preserved]{id=preserved-element}**: htmx’s `hx-preserve`, Turbo’s `data-turbo-permanent`. Tick *Mark the two form fields as preserved* in the figure and repeat: now both survive, as the library leaves those nodes alone.
 
@@ -218,7 +218,7 @@ Parsing a string, walking two trees, and sending whole HTML on each action is a 
 
 **Partial responses.** In htmx, the response is usually a *fragment*, not a page. `hx-target` says which element to swap, so the server renders only the like button and the browser swaps only that. Turbo’s *frames* and *streams* do the same: a stream is a list of tiny instructions (“replace `#likes` with this”, “append this to `#messages`”).
 
-**Page refreshes with morphing.** Turbo 8 (2023) took the other path: re-render the *whole page*, send all of it, and let the browser morph it, so that the server can stay as simple as a classic web application while the browser keeps scroll position, focus and form state. :cite[turbo-morphing]
+**Page refreshes with morphing.** Turbo 8 (2024) took the other path: re-render the *whole page*, send all of it, and let the browser morph it, so that the server can stay as simple as a classic web application while the browser keeps scroll position, focus and form state. :cite[turbo-morphing]
 
 **Diffing on the server.** Phoenix LiveView keeps a WebSocket open and a copy of the page’s state *on the server*. Its templates are split into **statics** and **dynamics**, exactly as in chapter 16: the static strings are sent to the browser once, and later updates send only the dynamic values that changed, as a small JSON patch, which the browser applies to its copy of the template. :cite[liveview] So LiveView puts a diff in the *server*, using template structure as the key, and the browser still morphs the rendered result into the page with `morphdom`. It is lit-html on the server side of a wire.
 
@@ -235,7 +235,7 @@ Parsing a string, walking two trees, and sending whole HTML on each action is a 
 
 The trade-offs belong to the *split*, not the algorithm:
 
-- **A round trip for every interaction.** Anything that must respond instantly (a drag, a hover, typing that filters a list) needs the server in the loop or a bit of client code. This is why htmx projects add Alpine.js or Stimulus: small local state in the browser, for the things that cannot wait.
+- **A round trip for every interaction.** Anything that must respond instantly (a drag, a hover, typing that filters a list) waits for the server unless a bit of client code handles it. This is why htmx projects add Alpine.js or Stimulus: small local state in the browser, for the things that cannot wait.
 - **No hydration and no duplicated logic.** The components exist once, on the server, in one language, with direct access to the database. Nothing runs twice.
 - **The server holds the session.** With a WebSocket as in LiveView, every connected user has state in server memory; with request-per-action designs it does not.
 - **Almost no JavaScript.** The browser needs a small library: 15 KB, not 150.
@@ -253,15 +253,15 @@ options:
 ```
 
 :::programmer
-**Choosing between this and the rest of Part V.** It depends on where the *state that matters* lives. If it is mostly on the server (a database, a session, a record being edited), the server-rendered split is natural, and the question becomes how to preserve the little state the browser owns. If it is mostly in the browser (a drawing, a game, a spreadsheet, an editor), a client application is the better fit, and the server is an API. Most real products are a mixture, which is why every framework in this part of the course now has a mode for each.
+**Choosing between this and the rest of Part V.** It depends on where the *state that matters* lives. If it is mostly on the server (a database, a session, a record being edited), the server-rendered split is natural, and the question becomes how to preserve the little state the browser owns. If it is mostly in the browser (a drawing, a game, a spreadsheet, an editor), a client application is the better fit, and the server is an API. Most real products are a mixture, which is why most frameworks in this part of the course now have a mode for each.
 :::
 
 :::wild{framework="htmx, Turbo, LiveView" version="2026"}
-htmx 2 (2024) takes :term[Idiomorph]{id=idiomorph} as a swap extension (`hx-swap="morph"`); Turbo 8 (2023) morphs page refreshes with Idiomorph, adopted from the htmx project; Phoenix LiveView and Livewire (Laravel) both morph with their own variants of morphdom. Rails’ “Hotwire” bundle is Turbo and Stimulus; “HTMX + Alpine” is the same split with different parts.
+htmx 2 (2024) takes :term[Idiomorph]{id=idiomorph} as a swap extension (`hx-swap="morph"`); Turbo 8 (2024) morphs page refreshes with Idiomorph, adopted from the htmx project; Phoenix LiveView morphs with morphdom, and Livewire (Laravel) with Alpine’s morph plugin. Rails’ “Hotwire” bundle is Turbo and Stimulus; “HTMX + Alpine” is the same split with different parts.
 :::
 
 :::history{year=2011 title="pjax, Turbolinks, morphdom"}
-The idea of replacing part of a page with a server’s HTML goes back to AJAX itself (the `innerHTML` of 2005’s “Ajax” era). **pjax** (GitHub, 2011) combined it with the History API, so that page changes were fast and the URL stayed correct. Its descendant **Turbolinks** (Rails, 2012) swapped the page body. **morphdom** (Patrick Steele-Idem, 2014, for the Marko framework at eBay) was the first widely used DOM-morphing library. :cite[morphdom] **Idiomorph** (Carson Gross, 2022) matches nodes using the sets of ids found inside them; this chapter’s `morph` follows its approach. :cite[idiomorph] Turbo 8, htmx and LiveView adopted morphing between 2022 and 2024.
+The idea of replacing part of a page with a server’s HTML goes back to AJAX itself (the `innerHTML` of 2005’s “Ajax” era). **pjax** (GitHub, 2011) combined it with the History API, so that page changes were fast and the URL stayed correct. Its descendant **Turbolinks** (Rails, 2012) swapped the page body. **morphdom** (Patrick Steele-Idem, 2015, for the Marko framework at eBay) was the first widely used DOM-morphing library. :cite[morphdom] **Idiomorph** (Carson Gross, 2022) matches nodes using the sets of ids found inside them; this chapter’s `morph` follows its approach. :cite[idiomorph] Turbo 8 and htmx adopted Idiomorph in 2023 and 2024; LiveView had morphed with morphdom from its first release.
 :::
 
 :::whatchanged
@@ -270,4 +270,4 @@ For *rebuild*, again, with the cost moved: **everything the server re-rendered**
 
 ## What’s next
 
-We have now seen seven answers to the same question. Chapter 24 puts seven strategies on the same benchmark, the same page and the same scenarios, and reads the numbers.
+We have now seen all six answers to the same question. Chapter 24 puts seven strategies on the same benchmark, the same page and the same scenarios, and reads the numbers.

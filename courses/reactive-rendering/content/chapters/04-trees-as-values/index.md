@@ -6,7 +6,7 @@ duration: 55 minutes
 prerequisites: [ui-as-a-function]
 ---
 
-The first two strategies in the table of chapter 0 are the ends of a seesaw. *Rebuild* throws everything away and keeps nothing; *update by hand* keeps everything and writes the update logic itself. The :term[virtual DOM]{id=virtual-dom} is the first answer to sit in the middle: **rebuild the *description*, keep the nodes.**
+The two roads of chapter 2 are the ends of a seesaw. *Rebuild* throws everything away and keeps nothing; *update by hand* keeps everything and writes the update logic itself. The :term[virtual DOM]{id=virtual-dom} is the first answer to sit in the middle: **rebuild the *description*, keep the nodes.**
 
 The description is cheap to rebuild because it is not the DOM. It is a tree of plain objects, in memory, with no layout and no attributes to compute, no style, no events. The nodes are expensive, so the system keeps them and only touches the ones where the new description disagrees with the old.
 
@@ -50,7 +50,7 @@ function createDom(doc: MiniDocument, v: VNode | string): MNode {
 
 Now the real question. The state changed, `view` returned a new tree, and the DOM still shows the old one. How do you turn one into the other with the fewest operations?
 
-That problem has a name, *tree edit distance*: the smallest sequence of insertions, deletions and relabelings that turns one tree into another. It is well studied and it is not cheap: the classic algorithm of Zhang and Shasha runs in time roughly proportional to the product of the sizes and depths of the two trees, and the general problem is at least cubic in the worst case. :cite[zhang-shasha-1989] :cite[bille-2005] React’s own documentation said, when it first described the algorithm, that the state of the art had a complexity “in the order of O(n³)” and that a thousand elements would then need a billion comparisons. :cite[react-reconciliation]
+That problem has a name, *tree edit distance*: the smallest sequence of insertions, deletions and relabelings that turns one tree into another. It is well studied and it is not cheap: the classic algorithm of Zhang and Shasha runs in time roughly proportional to the product of the sizes and depths of the two trees, and the best general algorithms are still cubic in the worst case. :cite[zhang-shasha-1989] :cite[bille-2005] React’s own documentation said, when it first described the algorithm, that the state of the art had a complexity “in the order of O(n³)” and that a thousand elements would then need a billion comparisons. :cite[react-reconciliation]
 
 So the algorithm *cheats*, in a way that is carefully chosen: it gives up on finding the best possible edit and settles for a good one, using two assumptions about how UIs behave.
 
@@ -256,7 +256,7 @@ prompt: |
 answer: 6
 unit: operations
 tolerance: 0
-explain: "One attribute write (`class` on the `ul`), one text write (`b` becomes `B`), and for the new item: create the `li`, create its text node, insert the text into the `li`, insert the `li` into the `ul`: four. 1 + 1 + 4 = 6. Notice that two of the four are insertions into nodes that are not yet on the page; only the last one is a live write."
+explain: "One attribute write (`class` on the `ul`), one text write (`b` becomes `B`), and for the new item: create the `li`, create its text node, insert the text into the `li`, insert the `li` into the `ul`: four. 1 + 1 + 4 = 6. Notice that only the last of the four, inserting the `li` into the `ul`, is a live write; the other three happen on nodes that are not yet on the page."
 ```
 
 ## What the diff cannot see

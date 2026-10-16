@@ -5,7 +5,7 @@ benchmark:
   chapter: one-benchmark
 geometric-mean:
   term: 'geometric mean'
-  definition: 'The *n*th root of the product of *n* ratios. The js-framework-benchmark uses the mean of each framework’s ratio to the best, so that one terrible scenario shows.'
+  definition: 'The *n*th root of the product of *n* ratios. The js-framework-benchmark combines each framework’s ratios to the best result in each scenario this way, so that no scenario counts for more because its numbers are larger.'
   chapter: one-benchmark
 vanilla:
   term: 'vanilla'

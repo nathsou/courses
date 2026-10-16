@@ -80,7 +80,7 @@ Press **+1** and watch three things. The `count` slot changes from 0 to 1 and th
 q: A component calls `useState` three times. After a re-render, which slot does the second call get?
 options:
   - text: The slot that was created for it by name, because each hook call is identified by its variable name.
-    why: The framework never sees variable names. By the time the function runs, `[name, setName]` is just two numbers returned by a call.
+    why: The framework never sees variable names. By the time the function runs, `[name, setName]` is just two values returned by a call.
   - text: Slot 1, because it is the second call in this render, as it was the second call in the last one.
     correct: true
     why: The framework identifies a hook only by how many hooks have been called before it in this render. That is why hooks must be called in the same order every time.
@@ -332,4 +332,4 @@ For *component state in a virtual DOM*: **this component**, when its setter is c
 
 ## What’s next
 
-Calling the component again also calls everything below it. Chapter 7 is about who re-renders when something changes, why the answer is “more than you think”, and the two tools for cutting it down: `memo`, which has traps, and a compiler that does it for you.
+Calling the component again also calls everything below it. Chapter 7 is about who re-renders when something changes, why the answer is “more than you think”, and the tools for cutting it down, from `memo`, which has traps, to a compiler that does it for you.

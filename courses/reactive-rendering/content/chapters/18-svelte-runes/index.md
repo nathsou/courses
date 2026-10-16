@@ -90,7 +90,7 @@ options:
     why: "That would be the straightforward translation, and it would be correct. But it would pay for a signal and a subscription for a value that cannot change."
   - text: "A plain value, `'Ada'`, and the text is written once at creation."
     correct: true
-    why: "The compiler sees every assignment in the file. With none, the `$state` is a constant, so it creates no signal, no subscription and no effect. This is the static-analysis half of Svelte surviving into the signals design. (If the variable is exported, bound with `bind:` or captured by something the compiler cannot follow, it stays a signal.)"
+    why: "The compiler sees every assignment in the file. With none, the `$state` is a constant, so it creates no signal, no subscription and no effect. This is the static-analysis half of Svelte surviving into the signals design. (If it is assigned anywhere, including through `bind:`, it stays a signal.)"
   - text: "A compile error, since a `$state` that is never updated is useless."
     why: "It is allowed: state that is not yet changed by anything is common while writing a component. The compiler just does not charge you for it."
 ```
@@ -103,7 +103,7 @@ prompt: |
 answer: 2
 unit: template effects
 tolerance: 0
-explain: "Two: one for the main template, which groups the `h1` class, the `h1` text and the paragraph text, and one inside each row of the `{#each}`, which groups the row's class and text. The `{#if}` branch has nothing dynamic in it, so it gets none. The compiler groups holes **by template**, and every `{#if}` branch and `{#each}` row is its own template, with its own lifetime. A row's effect lives and dies with the row, which is why it cannot be merged into the parent's."
+explain: "Two: one for the main template, which groups the `h1` class and the paragraph text (the `h1` text is a constant, written once), and one inside each row of the `{#each}`, which groups the row's class and text. The `{#if}` branch has nothing dynamic in it, so it gets none. The compiler groups holes **by template**, and every `{#if}` branch and `{#each}` row is its own template, with its own lifetime. A row's effect lives and dies with the row, which is why it cannot be merged into the parent's."
 ```
 
 ## Universal reactivity
@@ -151,7 +151,7 @@ hints:
 
 ## Is it still a compiler framework?
 
-Yes, and the *division of labour* has shifted. In Svelte 3 and 4 the compiler did nearly everything, and the runtime was a few hundred bytes of helpers. In Svelte 5 the runtime is a signals engine (with its own scheduling, ownership, and a dirty-and-check core in the style of chapter 10), and the compiler turns your component into calls to it. The compiler’s special position remains: it is what makes `count` and `count++` *look* like plain JavaScript, and what lets it *remove* signals from values that never change.
+Yes, and the *division of labour* has shifted. In Svelte 3 and 4 the compiler did nearly everything, and the runtime was a few kilobytes of helpers. In Svelte 5 the runtime is a signals engine (with its own scheduling, ownership, and a dirty-and-check core in the style of chapter 10), and the compiler turns your component into calls to it. The compiler’s special position remains: it is what makes `count` and `count++` *look* like plain JavaScript, and what lets it *remove* signals from values that never change.
 
 Svelte 5 also made reactivity granular at the **template** level, as Solid and Vapor are, and not component level as in React and Vue’s default. A change to one `$state` runs the effects that read it, not the component function. That function, as in Solid, runs **once**.
 

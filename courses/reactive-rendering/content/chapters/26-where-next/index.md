@@ -1,6 +1,6 @@
 ---
 title: Where this is going
-summary: Compilers that write memoisation, signals in the platform, DOM APIs that move nodes without resetting them, and why the six answers keep converging.
+summary: Compilers that write memoization, signals in the platform, DOM APIs that move nodes without resetting them, and why the six answers keep converging.
 number: 26
 duration: 45 minutes
 prerequisites: [five-compilers, resumability]
@@ -20,7 +20,7 @@ Press the answer buttons to highlight each. They are all over the map.
 
 ## Four trends
 
-**The compiler is taking over the work.** Chapters 12 to 19 were a series of compilers that decide more at build time: Solid finds the holes, Svelte 3 decided the dependencies, Vue found static trees and patch flags, React’s Compiler (1.0, October 2025) found what to memoize in code that *was not written for it*. The direction is clear. The limit is also clear: a compiler can only prove what your code lets it prove, and the frameworks that give the compiler the most to work with ask the most from your code.
+**The compiler is taking over the work.** Chapters 12 to 19 were a series of compilers that decide more at build time: Solid found the holes, Svelte 3 decided the dependencies, Vue found static trees and patch flags, React’s Compiler (1.0, October 2025) found what to memoize in code that *was not written for it*. The direction is clear. The limit is also clear: a compiler can only prove what your code lets it prove, and the frameworks that give the compiler the most to work with ask the most from your code.
 
 **Signals have become common ground.** Seven libraries, one idea, and a standard proposal (chapter 15, at stage 1 at the time of writing). Angular, Vue, Svelte, Solid, Preact, Qwik and MobX all have the same three primitives. Even React, which does not have them, is increasingly used with them: libraries bring signals to React components, and the Compiler’s memoization is the same *what depends on what* analysis in a different form. The remaining differences are about **when** (batching, scheduling) and **who owns** (disposal), the parts the standard deliberately leaves open.
 
@@ -28,7 +28,7 @@ Press the answer buttons to highlight each. They are all over the map.
 
 **The platform is catching up.** Several things that frameworks had to build by themselves are now, or are becoming, part of the browser:
 
-- **Moving nodes without resetting them.** For twenty years a DOM node that moved was *removed and inserted*, and a removal reset focus, scroll position, iframes and animations. That is the reason keyed lists, morphing, and chapter 5’s whole subject exist. `Node.moveBefore()`, which shipped in Chrome in early 2025, moves a node **atomically**, preserving that state, and other browsers are following. It lets a keyed reorder keep an input’s focus.
+- **Moving nodes without resetting them.** For twenty years a DOM node that moved was *removed and inserted*, and a removal reset focus, scroll position, iframes and animations. That is the reason keyed lists, morphing, and chapter 5’s whole subject exist. :term[`Node.moveBefore()`]{id=move-before}, which shipped in Chrome in early 2025, moves a node **atomically**, preserving that state, and other browsers are following. It lets a keyed reorder keep an input’s focus.
 - **Transitions between states.** The :term[View Transitions]{id=view-transitions} API animates between two versions of the page, in a single document or across navigations, and so does the work that frameworks and morphing libraries had to do themselves to make page changes feel continuous.
 - **Server-rendered web components.** Declarative Shadow DOM lets the server write a component’s shadow tree as HTML, so components that are not framework-specific can be server-rendered, which is what Lit’s SSR relies on.
 - **Template parts in the platform.** A proposal for *DOM Parts* would put chapter 16’s idea, a template with holes whose values can be updated cheaply, in the browser itself. Early days.
@@ -56,7 +56,7 @@ q: "A new framework is announced. It has a compiler, signals, server rendering w
 options:
   - text: "Compile, because that is the headline feature."
     why: "It is one of them. The other three features each correspond to another answer, and the description is the sign that this is not a framework with one."
-  - text: "All of the above: compile, track, diff and skip, each where it fits."
+  - text: "Four of them: compile, track, diff and skip, each where it fits."
     correct: true
     why: "This is the real situation of almost every framework: a mixture, chosen by the part of the application. The useful questions are not *which answer does it use* but *where does each part of my application land, and what does that cost?* The three questions of chapter 25 sort any such framework."
   - text: "None: it must have invented a new answer."

@@ -137,7 +137,7 @@
   <div class="cols">
     <div class="col">
       <div class="h ui">Template</div>
-      {#key which}<CodeEditor value={source} lang="text" label="Template source" minLines={7} onchange={(c) => (source = c)} />{/key}
+      {#key which}<CodeEditor value={source} lang="jsx" label="Template source" minLines={7} onchange={(c) => (source = c)} />{/key}
     </div>
     <div class="col">
       <div class="h ui">Compiled{#if compiled} <span class="pill">{compiled.holes} effect{compiled.holes === 1 ? '' : 's'}</span>{/if}</div>

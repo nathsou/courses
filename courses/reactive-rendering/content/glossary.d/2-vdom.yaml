@@ -65,7 +65,7 @@ render-phase:
   chapter: who-re-renders
 commit-phase:
   term: 'commit phase'
-  definition: 'The part of an update in which the changes are applied to the DOM and effects are run. It cannot be interrupted.'
+  definition: 'The part of an update in which the changes are applied to the DOM, layout effects run and the other effects are scheduled. It cannot be interrupted.'
   chapter: who-re-renders
 react-compiler:
   term: 'React Compiler'

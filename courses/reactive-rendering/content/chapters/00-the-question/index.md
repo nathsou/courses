@@ -13,7 +13,7 @@ count++
 
 A moment later the number on the screen is different. Nothing in that line mentions the page. Somewhere between the assignment and the pixels, something decided *which* piece of the page had to change, and changed that piece and, with luck, nothing else.
 
-That decision is the subject of this course. Every framework you have used makes it, and they make it in very different ways: React compares a new description of the page with the old one; Solid remembers which expressions read `count` and re-runs only those; Svelte works out at build time which text node depends on it; Angular, for a long time, looked at everything that *might* have changed; htmx asks the server for the new HTML and lets the browser reconcile it. Underneath the syntax, they are different answers to the same question.
+That decision is the subject of this course. Every framework you have used makes it, and they make it in very different ways: React compares a new description of the page with the old one; Solid remembers which expressions read `count` and re-runs only those; Svelte works out at build time which text node depends on it; Angular, for a long time, looked at everything that *might* have changed; htmx asks the server for the new HTML and swaps it into the page. Underneath the syntax, they are different answers to the same question.
 
 :::key
 **What changed?** When the state of a program changes, which parts of the page must change, and how does the system find them without doing more work than the change deserves?
@@ -100,7 +100,7 @@ The chapters of this course are organised around six answers to *what changed?* 
 | ⚙ **Compile** | A compiler works out ahead of time which DOM depends on which value. | Svelte, Solid’s templates, Vue’s compiler hints, the React Compiler, Angular’s Ivy | Needs a build step; the shape of the UI must be known in advance |
 | ☁ **Skip** | The server knows, or sends HTML, or the page resumes without running anything. | Server rendering, islands, server components, Qwik, htmx | Moves work and latency to the server and the network |
 
-No real framework uses just one. React is *diff*, with *compile* growing around it and *skip* in server components. Vue is *track* feeding a *diff* that *compile* has pre-digested. Angular was *dirty-check*, is becoming *track*, and has had *compile* since Ivy. Svelte 5 is *compile* generating *track*. The map is not a set of boxes; it is a set of directions, and frameworks move along them. Chapter 26 draws the map again with everything on it.
+No real framework uses just one. React is *diff*, with *compile* growing around it and *skip* in server components. Vue is *track* feeding a *diff* that *compile* has pre-digested. Angular was *dirty-check*, is becoming *track*, and has compiled its templates since Angular 2. Svelte 5 is *compile* generating *track*. The map is not a set of boxes; it is a set of directions, and frameworks move along them. Chapter 26 draws the map again with everything on it.
 
 You can see the answers as a progression, and the course is ordered that way, but that is a convenience of teaching and not a history. They overlap in time and keep borrowing from each other.
 

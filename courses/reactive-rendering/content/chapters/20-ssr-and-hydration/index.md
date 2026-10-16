@@ -190,8 +190,8 @@ answer:
 notes:
   3: "State that starts the same on both sides is fine: the server rendered `visible` as true, and so will the client."
   6: "This is where the mismatch shows up, but it is a symptom: the cause is the value being printed."
-  10: "A conditional on state is fine as long as the state starts the same on both sides."
-explain: "`new Date()` gives a different answer on the server and on the client: the render is not a function of its props and state alone. Hydration assumes that it is. The fixes are to render the time on the server and send it to the client with the HTML, or to render something stable first and update after hydration, in an effect: `const [now, setNow] = useState(null); useEffect(() => setNow(new Date()), [])`. The same applies to `Math.random()`, `window` checks, locale and timezone formatting, and anything else that depends on *where* or *when* the code runs."
+  8: "A conditional on state is fine as long as the state starts the same on both sides."
+explain: "`new Date()` gives a different answer on the server and on the client: the render is not a function of its props and state alone. Hydration assumes that it is. The fixes are to render the time on the server and send it to the client with the HTML, or to render something stable first and update after hydration, in an effect: `const [now, setNow] = useState(null); useEffect(() => setNow(new Date().toLocaleTimeString()), [])`. The same applies to `Math.random()`, `window` checks, locale and timezone formatting, and anything else that depends on *where* or *when* the code runs."
 hints:
   - "Which line reads something that is different on the server and in the browser?"
 ```
