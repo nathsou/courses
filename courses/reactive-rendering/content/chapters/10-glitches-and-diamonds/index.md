@@ -100,7 +100,7 @@ When a recomputation produces an equal value, it stops the spread: its own subsc
 
 Switch the figure to *Three colours*, set the graph to *Cut-off*, and press `n = n + 2`. The trace shows `p` marked dirty and the effect marked check; `p` runs, gets `"even"` again, and the effect is *skipped*: it never ran. Press `n = n + 1`: `p` changes, so the effect runs.
 
-This three-state scheme, *clean / check / dirty*, is the core of **Reactively** (Milo Mighdoll, 2022), whose small size and published benchmarks made it the reference for the design, :cite[reactively] and variants of it run in the modern signals libraries. Solid 2’s core has `REACTIVE_CHECK` and `REACTIVE_DIRTY` flags; Vue 3.6’s reactivity core (built on `alien-signals`) has `Dirty` and `Pending`; MobX has `STALE` and `POSSIBLY_STALE`; Angular’s and Preact’s signals keep a version number per source and compare it with what the reader last saw. The bookkeeping differs, but the question each asks is the same: *did a source really change?*
+This :term[three-colour]{id=three-colour} scheme, *clean / check / dirty*, is the core of **Reactively** (Milo Mighdoll, 2022), whose small size and published benchmarks made it the reference for the design, :cite[reactively] and variants of it run in the modern signals libraries. Solid 2’s core has `REACTIVE_CHECK` and `REACTIVE_DIRTY` flags; Vue 3.6’s reactivity core (built on `alien-signals`) has `Dirty` and `Pending`; MobX has `STALE` and `POSSIBLY_STALE`; Angular’s and Preact’s signals keep a version number per source and compare it with what the reader last saw. The bookkeeping differs, but the question each asks is the same: *did a source really change?*
 
 ## Fix the engine
 

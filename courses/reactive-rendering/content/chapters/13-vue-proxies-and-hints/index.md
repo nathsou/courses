@@ -26,7 +26,7 @@ A `Proxy` wraps an object and lets you intercept the operations done to it: read
 
 When someone later writes `state.user.name = 'Grace'`, the proxy’s `set` hears it, looks up *that object, that property*, and re-runs every effect recorded there.
 
-The bookkeeping is a single table, which Vue’s source calls `targetMap`: **object → property → set of effects**. Two functions maintain it, and they are the two verbs of this whole chapter:
+The bookkeeping is a single :term[table]{id=target-map}, which Vue’s source calls `targetMap`: **object → property → set of effects**. Two functions maintain it, and they are the two verbs of this whole chapter:
 
 ```ts
 function track(target, key) {            // called from every `get`
@@ -111,7 +111,7 @@ Compare that with React, where `setState` marks a component and the re-render ca
 | | React | Vue |
 |---|---|---|
 | What starts an update | `setState` in a component | a write to a reactive property that the component’s render read |
-| Which components re-render | the component, then *all* its children, unless they are memoized | exactly the components that read the changed property, plus children whose props changed |
+| Which components re-render | the component, then *all* its children, unless they are memoised | exactly the components that read the changed property, plus children whose props changed |
 | What stops the cascade | you (`memo`, `useMemo`, the Compiler) | Vue, by dependency tracking and a props comparison |
 
 So Vue pays for fine-grained tracking *at component granularity*, and then uses a virtual DOM inside each component. That leaves the diff of chapter 4 to do, and the compiler to make cheap.
@@ -152,7 +152,7 @@ Slide the number of static paragraphs up. The plain diff’s work grows with the
 
 ## Build it
 
-Time to write the core of the reactivity. This exercise implements `reactive`, `effect`, and the two functions of the table. It leaves out computed, refs and scheduling, which you have built in chapters 9–11, and concentrates on what is new: the proxy and the per-property table.
+Time to write the core of the reactivity. This exercise implements `reactive`, `effect`, and the two functions of the table. It leaves out computed, :term[refs]{id=ref} and scheduling, which you have built in chapters 9–11, and concentrates on what is new: the proxy and the per-property table.
 
 ```build
 id: vue-proxies-and-hints/reactive

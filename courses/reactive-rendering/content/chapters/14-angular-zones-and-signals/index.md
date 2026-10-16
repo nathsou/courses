@@ -10,7 +10,7 @@ Everything in Part III so far has been about *discovering* what changed: a Proxy
 
 ## The update block
 
-An Angular template is compiled, ahead of time, into a function with two halves. Here is what Angular 22’s compiler (`ngc`) wrote for the counter of this course:
+An Angular template is compiled, :term[ahead of time]{id=aot}, into a function with two halves. Here is what Angular 22’s compiler (`ngc`) wrote for the counter of this course:
 
 ```js
 template: function Counter_Template(rf, ctx) {
@@ -194,7 +194,7 @@ When the zone says “a task ended”, Angular runs `ApplicationRef.tick()`, whi
 
 ## Which: the whole tree, or only some
 
-Angular’s components form a tree of **views**. A tick starts at the root view and, by default, *checks every view*: it runs each view’s update block, comparing every binding. That is a bounded and predictable cost, and with a thousand-binding application it takes a millisecond or two; with a hundred thousand it takes the frame.
+Angular’s components form a tree of **:term[views]{id=view}**. A tick starts at the root view and, by default, *checks every view*: it runs each view’s update block, comparing every binding. That is a bounded and predictable cost, and with a thousand-binding application it takes a millisecond or two; with a hundred thousand it takes the frame.
 
 Angular’s tool for narrowing the walk is **`OnPush`**: `changeDetection: ChangeDetectionStrategy.OnPush` on a component says *“do not re-check me unless I have been marked.”* A view with :term[OnPush]{id=onpush} is marked when:
 

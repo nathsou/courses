@@ -221,7 +221,7 @@ Hydration needs the HTML to carry enough information for the client to match it,
 | **React** | By walking in render order. `<!-- -->` separates adjacent text, and `<!--$-->` and `<!--/$-->` mark Suspense boundaries, so that parts can hydrate separately. |
 | **Solid** | Hydration keys: each element a component creates dynamically is written with a `data-hk` key, and text holes are wrapped in `<!--$-->…<!--/-->`. Solid’s server output has a call to `ssrHydrationKey()` for this. |
 | **Svelte 5** | Comment markers around blocks (`<!--[-->` and `<!--]-->`), and a walk in the same order the compiler wrote. |
-| **Angular** | A serialized description of the DOM structure, in an `ngh` attribute and in the page’s state transfer, that the client uses to match nodes without re-deriving the structure. |
+| **Angular** | A serialised description of the DOM structure, in an `ngh` attribute and in the page’s state transfer, that the client uses to match nodes without re-deriving the structure. |
 | **Lit** | Comment markers (`<!--lit-part-->`) for each part, which the client finds with the same tree walk as chapter 16. |
 
 Each of these is a different answer to the same question, *how do I know which DOM node is mine?*, with different trade-offs between HTML size and client work. The cost of the weakest answer, “walk in the same order and hope”, is the mismatch problem above.

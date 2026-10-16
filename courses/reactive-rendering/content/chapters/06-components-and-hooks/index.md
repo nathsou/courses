@@ -6,7 +6,7 @@ duration: 55 minutes
 prerequisites: [trees-as-values, lists-and-keys]
 ---
 
-So far a description of the page has been a tree of elements built by a function. A *component* is the natural next step: a function that takes some inputs, called **props**, and returns a description. Components let you name a piece of UI, reuse it, and nest it.
+So far a description of the page has been a tree of elements built by a function. A *:term[component]{id=component}* is the natural next step: a function that takes some inputs, called **:term[props]{id=props}**, and returns a description. Components let you name a piece of UI, reuse it, and nest it.
 
 ```ts
 const Note = ({ text, done }: { text: string; done: boolean }) =>
@@ -70,7 +70,7 @@ function useState<T>(initial: T) {
 
 That is nearly all there is. Before the framework calls a component it sets `current` to that component’s instance and the cursor to 0.
 
-Watch it happen. The component below has three hooks. The table shows its slots after every render; the log shows what ran when.
+Watch it happen. The component below has three :term[hooks]{id=hook}. The table shows its slots after every render; the log shows what ran when.
 
 ::hook-slots{n="6.1"}
 
@@ -90,7 +90,7 @@ options:
 
 ## The rules of hooks are a statement about this list
 
-The documented rules for hooks look like arbitrary restrictions: *only call hooks at the top level; do not call them inside loops, conditions or nested functions; only call them from components.* Once you see the slot list, they are the same sentence.
+The documented :term[rules of hooks]{id=rules-of-hooks} look like arbitrary restrictions: *only call hooks at the top level; do not call them inside loops, conditions or nested functions; only call them from components.* Once you see the slot list, they are the same sentence.
 
 If a hook is called inside an `if`, then on some renders it takes a slot and on others it does not. Every hook *after* it shifts position, and they read each other’s state. In the figure, tick **Call a hook inside a condition** and press **+1**: slot 2 held a ref last time and is now asked for a state, and the framework refuses to go on. Real React reports `Rendered more hooks than during the previous render` or, when an early `return` skips hooks, `Rendered fewer hooks than expected. This may be caused by an accidental early return statement.`, and its lint rule `react-hooks/rules-of-hooks` flags the code before it runs.
 
@@ -293,7 +293,7 @@ explain: "Twelve lines. The real implementations keep the slots in a linked list
 
 ## Effects: after the render, when something changed
 
-State is half of what hooks provide. The other half is **effects**, for code that must run *because* something rendered, not as part of computing what to render: starting a subscription, setting the document’s title, measuring a node.
+State is half of what hooks provide. The other half is **:term[effects]{id=effect-hook}**, for code that must run *because* something rendered, not as part of computing what to render: starting a subscription, setting the document’s title, measuring a node.
 
 ```ts
 useEffect(() => {

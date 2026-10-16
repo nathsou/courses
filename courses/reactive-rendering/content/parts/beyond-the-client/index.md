@@ -16,7 +16,7 @@ Meanwhile single-page applications had a problem of their own: a blank page unti
 
 ## Not running it again
 
-The rest of the part is about not paying that bill in full. **Islands** (described by Jason Miller in 2020) hydrate only the interactive parts of a mostly static page. :cite[miller-islands] **Server components** (the React RFC of December 2020) keep some components on the server for good, so that their code never ships. :cite[rsc-rfc] **Resumability** (Qwik, from 2021) writes the state, the handler references and the subscriptions into the HTML, so that the browser can continue where the server stopped, without running the application at load. :cite[qwik-resumable] Each moves the line between work done once, on the server, and work the browser has to do, and each asks something of the programmer in return: a boundary to design, serializable props, serializable closures.
+The rest of the part is about not paying that bill in full. **Islands** (described by Jason Miller in 2020) hydrate only the interactive parts of a mostly static page. :cite[miller-islands] **Server components** (the React RFC of December 2020) keep some components on the server for good, so that their code never ships. :cite[rsc-rfc] **Resumability** (Qwik, from 2021) writes the state, the handler references and the subscriptions into the HTML, so that the browser can continue where the server stopped, without running the application at load. :cite[qwik-resumable] Each moves the line between work done once, on the server, and work the browser has to do, and each asks something of the programmer in return: a boundary to design, serialisable props, serialisable closures.
 
 ## What stays the same
 

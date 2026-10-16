@@ -44,7 +44,7 @@ That is the whole idea. The array’s identity *is* the template’s identity, s
 On the first call for a given `strings` array Lit does three things:
 
 1. **Prepare.** It joins the strings with a *marker* where each hole was, one that the HTML parser accepts in that position (a comment between tags, a recognisable attribute value inside a tag), and parses the result into a `<template>` element. This is the browser’s parser doing the work, the same one that parsed the page.
-2. **Find the parts.** It walks the parsed template once and notes where each marker ended up, as a *path*: “the third child of the first child”. Each marker becomes a **part**: a child part (a node position), an attribute part, a property part (`.value=${…}`), a boolean part (`?disabled=${…}`) or an event part (`@click=${…}`).
+2. **Find the parts.** It walks the parsed template once and notes where each marker ended up, as a *path*: “the third child of the first child”. Each marker becomes a **:term[part]{id=part}**: a child part (a node position), an attribute part, a property part (`.value=${…}`), a boolean part (`?disabled=${…}`) or an event part (`@click=${…}`).
 3. **Clone and fill.** It clones the template’s content (chapter 12’s cheap cloning again), follows each part’s path to the live node, and hands every part its value.
 
 On every later call with the same strings, steps 1 and 2 are skipped. The parts are already there, and rendering is just **handing each part its new value**:

@@ -55,8 +55,8 @@ loader:
   term: 'loader'
   definition: 'The tiny global script of a resumable page that listens for events and fetches the handler an event needs.'
   chapter: resumability
-optimizer:
-  term: 'optimizer'
+optimiser:
+  term: 'optimiser'
   definition: 'Qwik’s build tool that extracts each `$` closure into its own lazy chunk.'
   chapter: resumability
 morphing:

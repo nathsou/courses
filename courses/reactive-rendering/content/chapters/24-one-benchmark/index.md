@@ -48,7 +48,7 @@ Then **Create 1,000 rows** shows another: `innerHTML` is the cheapest of all. On
 
 Switch the figure to **Live operations**, which counts only operations on nodes that are attached to the page. These are the ones a browser has to react to with styling, layout and paint. Now `innerHTML` is the *best* in every row: its one operation is the one insertion of everything. The tables are turned, and the strategies that win by *work* now lose by *live operations*, because they attach a thousand rows one at a time, where `innerHTML` builds them all off-page and attaches once.
 
-Neither table is the truth. The first hides a thousand rows of work inside the word “parse”; the second hides a thousand rows of attachment inside the word “one”. A benchmark that reports one number has chosen what to hide, and that is the first thing to learn from reading one.
+Neither table is the truth. The first hides a thousand rows of work inside the word “parse”; the second hides a thousand rows of attachment inside the word “one”. A :term[benchmark]{id=benchmark} that reports one number has chosen what to hide, and that is the first thing to learn from reading one.
 
 Then switch to **Wall-clock ms**. These are real measurements of JavaScript on the lab’s fake DOM, and they will not agree with the rest. They are the number the other benchmark’s readers want, and the one that says the least about a browser, where rendering, layout and paint dominate.
 
@@ -320,7 +320,7 @@ Stefan Krause’s benchmark has run since 2015 and includes dozens of implementa
 :::
 
 :::history{year=2015 title="The benchmark that framework authors argue about"}
-Krause’s benchmark started in 2015 as a way to compare Angular, React and Vue-style frameworks on identical work, and grew into the field’s reference. :cite[krause-benchmark] Its main influence has been on how the frameworks are *written*: many of the choices in this part of the course (keyed reconciliation, templates cloned from HTML, signals with fine-grained rows) were tuned against it. Authors of frameworks, including those of Solid, Inferno, ivi and Svelte, have cited it in design discussions, and its critics point out that optimising for it can distort a framework toward one kind of page.
+Krause’s benchmark started in 2015 as a way to compare Angular, React and Vue-style frameworks on identical work, and grew into the field’s reference. :cite[krause-benchmark] Its main influence has been on how the frameworks are *written*: many of the choices in this part of the course (keyed reconciliation, templates cloned from HTML, signals with fine-grained rows) were tuned against it. Authors of frameworks, including those of Solid, Inferno, ivi and Svelte, have cited it in design discussions, and its critics point out that optimising for it can distort a framework towards one kind of page.
 :::
 
 :::whatchanged

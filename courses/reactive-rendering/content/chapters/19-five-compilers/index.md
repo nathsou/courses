@@ -24,7 +24,7 @@ Here are the answers, from the code you just read.
 
 | | Decided before the page runs | What the runtime discovers | What runs when `count` changes |
 |---|---|---|---|
-| **React** | almost nothing: JSX becomes `jsx()` calls | everything, by re-running and diffing | the component function, then the diff of its whole tree |
+| **React** | almost nothing: :term[JSX]{id=jsx} becomes `jsx()` calls | everything, by re-running and diffing | the component function, then the diff of its whole tree |
 | **React + Compiler** | which values each element depends on; a cache slot for each | whether each dependency *changed*, by `!==` | the function, with cached parts returned by identity so the diff skips them |
 | **Vue** | static nodes (hoisted), the fields that can change (patch flags), the block of dynamic nodes | which component read which property, with a Proxy | the component’s render, then a diff of only the dynamic nodes |
 | **Angular** | the creation steps and the list of bindings (update block) | which views to check (all, or those marked or notified) | the update block of each checked view |
@@ -81,7 +81,7 @@ explain: "The `<h1>` takes 1. The paragraph still takes 3. The button, with no c
 
 ## What each compiler chose, and what it cost
 
-**React** chose to keep the programming model simple (a function from state to a description, chapter 2) and make it fast after the fact, with a memoizing compiler. It gets to keep *any* JavaScript: hooks, conditionals, closures, anything. The price is that the work of the runtime, the diff, is never zero, and that the quality of memoization depends on the code being analyzable.
+**React** chose to keep the programming model simple (a function from state to a description, chapter 2) and make it fast after the fact, with a memoising compiler. It gets to keep *any* JavaScript: hooks, conditionals, closures, anything. The price is that the work of the runtime, the diff, is never zero, and that the quality of memoisation depends on the code being analyzable.
 
 **Vue** chose a *restricted language* (templates) so that the compiler could promise the diff things that a JavaScript render function cannot: this part of the tree is static, this node’s text may change and nothing else does. Its virtual DOM becomes “almost a compiled template”, and Vapor mode then drops the diff altogether.
 

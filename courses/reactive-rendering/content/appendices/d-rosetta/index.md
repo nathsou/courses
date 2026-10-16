@@ -38,7 +38,7 @@ export function Counter() {
 }
 ```
 
-The function runs again on every change. With the React Compiler, the memoization of `double` and of each element is written for you (chapter 19).
+The function runs again on every change. With the React Compiler, the memoisation of `double` and of each element is written for you (chapter 19).
 
 ## Preact Signals 1.14
 
@@ -206,7 +206,7 @@ export default component$(() => {
 });
 ```
 
-Each `$` marks a closure that the optimizer extracts into its own lazy chunk (chapter 22). `useVisibleTask$` runs only in the browser.
+Each `$` marks a closure that the optimiser extracts into its own lazy chunk (chapter 22). `useVisibleTask$` runs only in the browser.
 
 ## htmx 2
 

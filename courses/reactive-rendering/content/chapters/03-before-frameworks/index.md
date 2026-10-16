@@ -46,7 +46,7 @@ It has three weaknesses, and each one is a source of bugs in every codebase that
 
 ### Knockout got further, in 2010
 
-Steve Sanderson’s Knockout, released in 2010, took the observer pattern one step further than most of its contemporaries, and the step is worth noticing because it is the idea of Part III.
+Steve Sanderson’s Knockout, released in 2010, took the :term[observer pattern]{id=observer-pattern} one step further than most of its contemporaries, and the step is worth noticing because it is the idea of Part III.
 
 ```js
 const first = ko.observable('Ann');
@@ -70,9 +70,9 @@ $scope.price = 4;
 
 and to write `{{name}}` in the template. There was no `set` call, no observable wrapper, nothing for the framework to hook. In 2010 an assignment to a property of a plain object could not be intercepted. So the framework could not be *told* that `$scope.name` had changed. It had to **go and look**.
 
-That is :term[dirty checking]{id=dirty-checking}. For every binding in a template, AngularJS registers a **watcher**: a function that reads the current value, and a listener to call if it is not what it read last time. To find out what has changed, it calls *every* watcher, compares each result with the remembered one, and calls the listeners of those that differ.
+That is :term[dirty checking]{id=dirty-checking}. For every binding in a template, AngularJS registers a **:term[watcher]{id=watcher}**: a function that reads the current value, and a listener to call if it is not what it read last time. To find out what has changed, it calls *every* watcher, compares each result with the remembered one, and calls the listeners of those that differ. The same machinery gave AngularJS its famous :term[two-way binding]{id=two-way-binding}: `ng-model` watches the model to update the form control, and listens to the control to update the model.
 
-There is one more twist. A listener can change the scope (copy a value somewhere, compute a total), and then some *other* watcher’s value may have changed as a consequence. So one pass is not enough. The framework repeats the whole pass until a pass finds nothing different. The loop is called the **digest** :cite[angularjs-scope], and the door to it is `$apply`: AngularJS wrapped every entry point (a click handler, a timer, an HTTP response) in `$scope.$apply(fn)`, which runs your code and then digests.
+There is one more twist. A listener can change the scope (copy a value somewhere, compute a total), and then some *other* watcher’s value may have changed as a consequence. So one pass is not enough. The framework repeats the whole pass until a pass finds nothing different. The loop is called the **:term[digest]{id=digest-cycle}** :cite[angularjs-scope], and the door to it is `$apply`: AngularJS wrapped every entry point (a click handler, a timer, an HTTP response) in `$scope.$apply(fn)`, which runs your code and then digests.
 
 ```js
 $digest() {

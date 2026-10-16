@@ -8,7 +8,7 @@ prerequisites: [components-and-hooks]
 
 Chapter 6 ended on a cost. When a component’s state changes, the component’s function is called again, and so are the functions of every component *below* it. A counter in the root of an application re-runs the root, and the header, and the sidebar, and every row of every table, to produce a new tree that will, after the diff, differ from the old one in a single text node.
 
-This is not a bug. It follows from the design, and it is the reason the whole vocabulary of memoisation exists. This chapter shows exactly who re-renders and why, then the three tools for stopping it.
+This is not a bug. It follows from the design, and it is the reason the whole vocabulary of :term[memoisation]{id=memoisation} exists. This chapter shows exactly who re-renders and why, then the three tools for stopping it.
 
 ## Two phases
 
@@ -16,7 +16,7 @@ Every virtual DOM update has two phases, and the names matter because they say w
 
 **Render** is calling components. It evaluates functions, builds descriptions, and diffs them against the previous ones to work out *what should change*. It does not touch the DOM. Because it has no effect on the outside world, a render can be repeated, paused, thrown away or run twice, and none of those makes any difference to the page. This is why component functions must be *pure*: the same props and state must give the same output, and rendering must not mutate anything that existed before it started.
 
-**Commit** applies the result. It performs the DOM operations found by the diff, in one batch, and then runs what must follow the DOM being updated: refs are attached, layout effects run synchronously (before the browser can paint), and passive effects (`useEffect`) are scheduled to run soon after. :cite[react-render-commit]
+**:term[Commit]{id=commit-phase}** applies the result. It performs the DOM operations found by the diff, in one batch, and then runs what must follow the DOM being updated: refs are attached, layout effects run synchronously (before the browser can paint), and passive effects (`useEffect`) are scheduled to run soon after. :cite[react-render-commit]
 
 The word “re-render” in a React conversation almost always means the first phase alone. A component that re-renders has had its function *called*. That does not mean the DOM changed (usually it does not), and in the lens a re-render with an unchanged output costs zero DOM operations. It costs the work of calling the function and comparing what it returned.
 
@@ -36,7 +36,7 @@ Now work down the switches.
 
 **Move the state.** With *Where the search text lives* set to *In Search*, typing a letter re-renders only `Search`: its state is below the root, so only it and its children are called. *Lifted into App*, the same keystroke re-renders the whole tree. This is the cheapest fix and the one to reach for first: keep state as close as possible to where it is used.
 
-**Bail out with `memo`.** Switch on *memo()* and press **Count +1**. `Header` and `Sidebar` are now skipped: `memo` wraps a component so that, when its parent re-renders, it compares its new props with the old ones (shallowly, with `Object.is` on each) and returns its old output if they are equal. The `Item`s are not even reached: their parent was skipped.
+**Bail out with `memo`.** Switch on *memo()* and press **Count +1**. `Header` and `Sidebar` are now skipped: `memo` wraps a component so that, when its parent re-renders, it compares its new props with the old ones (shallowly, with `Object.is` on each) and returns its old output if they are equal. The `Item`s are not even reached: their parent was skipped. :cite[react-memo]
 
 **Break it.** Now switch on *Pass a new array and function to Sidebar on every render*. Press **Count +1** again. `Sidebar` re-renders, and with it all three `Item`s, though nothing about them changed. A new array and a new arrow function are never `Object.is`-equal to the last ones, even if they hold the same things. This is the commonest way for `memo` to silently do nothing.
 

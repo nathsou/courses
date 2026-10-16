@@ -9,7 +9,7 @@ prerequisites: [ssr-and-hydration, islands-and-server-components, signals-from-s
 Think about what hydration is *for*. The server sent HTML, and it looks right. The browser then downloads the application and runs it to recover three things:
 
 1. **Where each component is**: which DOM nodes belong to which component, so updates can find them.
-2. **The state**: the values the components hold, which `useState` rebuilds by running its initializer.
+2. **The state**: the values the components hold, which `useState` rebuilds by running its initialiser.
 3. **The behaviour**: the event handlers, which are closures over that state, and which cannot be written into HTML.
 
 The server *knew all three* when it rendered. It had the state, it ran the handlers’ definitions, it built the tree. And then it threw all of it away, wrote only the HTML, and asked the browser to work them out again by re-running the code.
@@ -18,11 +18,11 @@ Islands (chapter 21) cut the number of components that must do this. They do not
 
 ## Writing it down
 
-**Resumability** is the design that does. The server renders the page and also serializes what the browser needs to *continue* from that point, rather than start over. :cite[qwik-resumable] There are three pieces:
+**Resumability** is the design that does. The server renders the page and also serialises what the browser needs to *continue* from that point, rather than start over. :cite[qwik-resumable] There are three pieces:
 
 **The state**, as JSON in the page. Every signal and store the page uses, with its value.
 
-**The behaviour**, as *references*. An event handler is a closure, which cannot be serialized, but its **code** can be given an address: *this file, this function*. The HTML says it:
+**The behaviour**, as *references*. An event handler is a closure, which cannot be serialised, but its **code** can be given an address: *this file, this function*. The HTML says it:
 
 ```html
 <button on:click="increment.js#increment" q:id="0">
@@ -56,7 +56,7 @@ Watch the lens, too. A click rewrites exactly one text node. There was no compon
 
 Looks free. It is not, and the price is paid in the *programming model*, where the design reaches into your code.
 
-**Closures must be serializable, or splittable.** A handler like `() => setCount(count + 1)` closes over `count` and `setCount`. To give it an address, the build must extract it into its own file, and the things it captured must be *restorable* from the page: here, signals, which are in the JSON. Qwik’s **:term[optimizer]{id=optimizer}** does the extraction, at the places you mark with a `$` suffix:
+**Closures must be serialisable, or splittable.** A handler like `() => setCount(count + 1)` closes over `count` and `setCount`. To give it an address, the build must extract it into its own file, and the things it captured must be *restorable* from the page: here, signals, which are in the JSON. Qwik’s **:term[optimiser]{id=optimiser}** does the extraction, at the places you mark with a `$` suffix:
 
 ```jsx
 export default component$(() => {
@@ -65,9 +65,9 @@ export default component$(() => {
 });
 ```
 
-`component$` and `onClick$` are not ordinary functions: each `$` tells the optimizer *“this closure is a lazy-loadable unit”*. It becomes a separate exported function in a separate chunk, and the HTML refers to it by name. The code `count.value++` is the real code, and `count` is captured by reference to its serialized state.
+`component$` and `onClick$` are not ordinary functions: each `$` tells the optimiser *“this closure is a lazy-loadable unit”*. It becomes a separate exported function in a separate chunk, and the HTML refers to it by name. The code `count.value++` is the real code, and `count` is captured by reference to its serialised state.
 
-**What can be captured is limited.** Anything that is captured by a lazy closure must be serializable: primitives, plain objects, signals, and a few built-ins. A class instance with methods, a live database connection, a function value: none of these survives being written as JSON. Qwik offers `noSerialize()` for things that are rebuilt on the client, and an error (from its lint rules at build time, or from the server when it serializes) for those that cannot be.
+**What can be captured is limited.** Anything that is captured by a lazy closure must be serialisable: primitives, plain objects, signals, and a few built-ins. A class instance with methods, a live database connection, a function value: none of these survives being written as JSON. Qwik offers `noSerialize()` for things that are rebuilt on the client, and an error (from its lint rules at build time, or from the server when it serialises) for those that cannot be.
 
 **The first interaction waits for the network.** A hydrated page has already paid; a resumable page pays on first use: the click fetches a file. If the network is slow, the first click feels slow. The framework answers with **prefetching**: it knows from the build which chunks a page can need, and it fetches them in the background at low priority, through a service worker or modulepreload hints, so that most are in the cache before anyone clicks. The design moves the work from *before the page responds* to *while the user is reading*.
 
@@ -259,13 +259,13 @@ Put the four strategies of the last three chapters in one table:
 |---|---|---|---|
 | **Client rendering** | everything, and the page is blank until then | runs the component, diffs or updates | nothing, but nothing is visible early |
 | **SSR + hydration** | everything | the same | a dead page for a while; every component runs twice |
-| **Islands / server components** | only the islands, or only client components | the same, in the islands | a boundary to design, serializable props |
-| **Resumability** | the loader: 1 KB | fetch one function, run it, update subscribers | serializable closures, a build step, a first-interaction fetch |
+| **Islands / server components** | only the islands, or only client components | the same, in the islands | a boundary to design, serialisable props |
+| **Resumability** | the loader: 1 KB | fetch one function, run it, update subscribers | serialisable closures, a build step, a first-interaction fetch |
 
-Each row moves the work from *before the page responds* toward *when it is needed*, and each pays with a rule about what you may write. Resumability is the furthest: it asks the most of your code, and makes the least of the load.
+Each row moves the work from *before the page responds* towards *when it is needed*, and each pays with a rule about what you may write. Resumability is the furthest: it asks the most of your code, and makes the least of the load.
 
 :::wild{framework="Qwik" version="1.20"}
-Qwik was created by Miško Hevery (who also created AngularJS) at Builder.io, and its optimizer is written in Rust. A Qwik page’s HTML contains `on:click="chunk.js#symbol[0 1]"` attributes, `q:` markers for components and subscriptions, and a `<script type="qwik/json">` with the serialized state. `qwikloader` is about 1 KB. Qwik’s prefetching reads the build’s bundle graph to preload the chunks a route can need. The other frameworks have borrowed parts of the idea without adopting all of it: Angular’s *event replay* records clicks that happen before hydration finishes and replays them afterwards, using a small global listener in the same spirit as the loader.
+Qwik was created by Miško Hevery (who also created AngularJS) at Builder.io, and its optimiser is written in Rust. A Qwik page’s HTML contains `on:click="chunk.js#symbol[0 1]"` attributes, `q:` markers for components and subscriptions, and a `<script type="qwik/json">` with the serialised state. `qwikloader` is about 1 KB. Qwik’s prefetching reads the build’s bundle graph to preload the chunks a route can need. The other frameworks have borrowed parts of the idea without adopting all of it: Angular’s *event replay* records clicks that happen before hydration finishes and replays them afterwards, using a small global listener in the same spirit as the loader.
 :::
 
 :::history{year=2021 title="Resumability"}

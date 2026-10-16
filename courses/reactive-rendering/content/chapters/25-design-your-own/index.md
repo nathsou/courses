@@ -219,7 +219,7 @@ Now put the real frameworks on a map. Two questions place them, and they extend 
 
 | | Decided at build time | Discovered at run time | Runs in the browser |
 |---|---|---|---|
-| **React** | memoization (with the Compiler) | the changes, by diffing | everything, hydrated |
+| **React** | memoisation (with the Compiler) | the changes, by diffing | everything, hydrated |
 | **Next.js (RSC)** | which modules are client | the changes, by diffing client parts | client components only |
 | **Vue** | static nodes, patch flags | which component read what | everything (default mode) |
 | **Solid** | the holes of every template | which signals each hole read | everything, hydrated |
@@ -230,7 +230,7 @@ Now put the real frameworks on a map. Two questions place them, and they extend 
 | **Qwik** | the closures’ chunks and subscriptions | nothing at load: a click’s handler | the handler that ran |
 | **htmx and Turbo** | nothing | the difference between DOM and HTML, by morphing | a small library |
 
-Read the table against the six answers of chapter 0: **rebuild** survives in htmx; **dirty-check** is Angular’s; **diff** is React’s and Vue’s; **track** is Solid’s, Vue’s refs and Svelte 5’s; **compile** is everyone’s lean toward the left column; **skip** is Astro’s, RSC’s and Qwik’s. **Every real framework mixes them.** Vue is a diff *and* a tracker; Angular is a checker *and* a tracker; Next.js is a server renderer *and* a differ; Svelte 5 is a compiler *and* a tracker. The six answers are not six kinds of framework. They are six tools, and the frameworks are particular combinations.
+Read the table against the six answers of chapter 0: **rebuild** survives in htmx; **dirty-check** is Angular’s; **diff** is React’s and Vue’s; **track** is Solid’s, Vue’s refs and Svelte 5’s; **compile** is everyone’s lean towards the left column; **skip** is Astro’s, RSC’s and Qwik’s. **Every real framework mixes them.** Vue is a diff *and* a tracker; Angular is a checker *and* a tracker; Next.js is a server renderer *and* a differ; Svelte 5 is a compiler *and* a tracker. The six answers are not six kinds of framework. They are six tools, and the frameworks are particular combinations.
 
 :::programmer
 **What to take from the course.** When you meet a new framework, or a new version of an old one, do not ask what it is called or whether it is fast. Ask the three questions. *What does it find out before the page runs? How does it find out what changed once it does? Where does the code run, and what does the browser have to download and execute before it responds?* The answers sort it into the map, and the map says what it is good at.

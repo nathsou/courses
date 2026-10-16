@@ -143,7 +143,7 @@ export const PARTS: OutlinePart[] = [
     title: 'Epilogue',
     blurb: 'Where the lines are blurring.',
     chapters: [
-      { slug: 'where-next', number: '26', title: 'Where this is going', summary: 'Compilers that write memoization, signals in the platform, DOM APIs that move nodes without resetting them, and why the six answers keep converging.', flagship: 'The map', answers: ['rebuild', 'check', 'diff', 'track', 'compile', 'skip'] },
+      { slug: 'where-next', number: '26', title: 'Where this is going', summary: 'Compilers that write memoisation, signals in the platform, DOM APIs that move nodes without resetting them, and why the six answers keep converging.', flagship: 'The map', answers: ['rebuild', 'check', 'diff', 'track', 'compile', 'skip'] },
     ],
   },
 ];

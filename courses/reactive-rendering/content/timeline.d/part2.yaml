@@ -43,5 +43,5 @@
   title: React Compiler 1.0
   people: Joe Savona and the React team
   chapter: who-re-renders
-  text: 'A build-time tool decides what each part of a component depends on and wraps it in a cache: memoization written by the compiler.'
+  text: 'A build-time tool decides what each part of a component depends on and wraps it in a cache: memoisation written by the compiler.'
   cite: [react-compiler-docs]

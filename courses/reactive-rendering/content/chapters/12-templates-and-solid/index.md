@@ -37,7 +37,7 @@ It works, and it is as fast as DOM code can be. Press the button and exactly one
 
 It is also the code nobody wants to write. Thirteen lines for four elements; every node needs a variable, every dynamic bit needs its own effect, and a list of such things would need the reconciliation of chapter 5 by hand.
 
-This is the job of a **compiler**. The program you want to write is the *template*:
+This is the job of a **:term[compiler]{id=compiler}**. The program you want to write is the *template*:
 
 ```jsx
 <div class="counter">
@@ -54,11 +54,11 @@ and the compiler writes the code above, or its faster cousin.
 It reads the template and sorts what it finds into two kinds:
 
 - **static**: the element names, the nesting, `class="counter"`, the text `Counter`, `Count: `, `+1`. They never change, so no code needs to watch them.
-- **dynamic**: the *holes*, the `{…}` expressions: the text `{count()}`, the attribute `class={…}`, the handler. These are the only places that can ever need an update.
+- **dynamic**: the *:term[holes]{id=hole}*, the `{…}` expressions: the text `{count()}`, the attribute `class={…}`, the handler. These are the only places that can ever need an update.
 
 Then it writes three things.
 
-**1. The static part becomes an HTML string, cloned once.** Instead of `createElement` for every node, the compiler writes the static structure as HTML into a `<template>` element, once for the whole program, and every instance of the component is `template.content.cloneNode(true)`. The browser’s parser builds the nodes, and cloning a prepared tree is usually faster than building one node at a time from JavaScript, which is why Solid, Vue’s Vapor mode and Svelte 5 all do it.
+**1. The static part becomes an HTML string, :term[cloned]{id=cloning} once.** Instead of `createElement` for every node, the compiler writes the static structure as HTML into a `<template>` :term[element]{id=template-element}, once for the whole program, and every instance of the component is `template.content.cloneNode(true)`. The browser’s parser builds the nodes, and cloning a prepared tree is usually faster than building one node at a time from JavaScript, which is why Solid, Vue’s Vapor mode and Svelte 5 all do it.
 
 **2. It walks to the dynamic nodes.** After cloning, the code needs a handle on each node that has a hole. It reaches them by structure: `root.firstChild.nextSibling`. These are cheap pointer moves with no searching and no `querySelector`.
 
@@ -279,7 +279,7 @@ The idea (*compile a template into direct DOM operations, with one effect per ho
 - **Svelte 5** compiles the same counter to `$.from_html` (the cloned HTML), `$.child` and `$.sibling` (the walk), and `$.template_effect`, which reads signals that the compiler generates from `$state`. One difference worth noticing: all the holes of a template share **one** effect, which sets the class and the text together, and each setter skips the write if its value has not changed. Chapter 19 reads it side by side with Solid’s output.
 - **Vue 3.6’s Vapor mode** is the same compile target for Vue’s templates: `_template`, `_child`, `_next`, then a single `_renderEffect` with `_setClassName` and `_setText`, running over Vue’s own reactivity system, without a virtual DOM. A Vue app may mix components in either mode. Chapter 13 shows both outputs.
 - **Angular** compiles templates to *instructions* (`ɵɵdomElementStart`, `ɵɵtext`, `ɵɵtextInterpolate1`, `ɵɵadvance`) in two blocks, creation and update, a different design in which a change-detection pass runs the update block of a component and each instruction compares its value with the last one. It is not a set of per-hole effects (chapter 14 explains the change and where signals are heading).
-- **Qwik and Lit** have their own versions: Lit’s tagged templates *do not* need a compiler, because the browser parses the static strings (chapter 16); Qwik adds the optimizer’s lazy-loading boundaries on top of signals (chapter 22).
+- **Qwik and Lit** have their own versions: Lit’s tagged templates *do not* need a compiler, because the browser parses the static strings (chapter 16); Qwik adds the optimiser’s lazy-loading boundaries on top of signals (chapter 22).
 
 :::programmer
 **What a hole’s cost is.** Every hole is an effect, and every effect is an object, a subscription on each signal it reads, and an owner link. A page with ten thousand holes has ten thousand of them. That is the price of never comparing: memory and creation time instead of update time. The usual mitigations are the ones the compilers already use. Static parts cost nothing; one effect can serve several holes of the same template (as Svelte 5 and Vue Vapor do); and a list creates rows that each hold a few holes, rather than one huge update function. If creation time matters more than update time (a page you read once), the virtual DOM’s costs sit on the opposite side, which is why the benchmark in chapter 24 does not have a single winner.

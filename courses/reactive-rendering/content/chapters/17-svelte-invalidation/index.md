@@ -82,7 +82,7 @@ function instance($$self, $$props, $$invalidate) {
 
 A component is **two functions**:
 
-- `instance` runs once and holds the component’s state. It returns `ctx`, an array in which each variable has its number.
+- `instance` runs once and holds the component’s state. It returns :term[`ctx`]{id=svelte-ctx}, an array in which each variable has its number.
 - `create_fragment` returns an object with four methods, **c**reate, **m**ount, **u**p**d**ate (`p`) and **d**estroy, which are the lifecycle of the DOM the component owns.
 
 There is no tree. The text nodes `t3` and `t5` are plain local variables, and `p` writes to them. The `set_data` function compares with the node’s old text and writes only if different. For one component, the cost of an update is **the number of :term[bit tests]{id=bitmask}**, which is the number of dependencies in the template, with a DOM write for each one that fires.

@@ -59,7 +59,7 @@ function effect(fn) {
 The three rules of the protocol are what the next figure shows:
 
 1. **`notify` runs synchronously, inside the write**, the moment a watched signal is marked dirty. This is chapter 10’s “mark” phase. Because the graph is half-updated at that moment, `notify` is **forbidden from reading or writing any signal**. It may only schedule.
-2. The Watcher notifies **once**, then is silent until it is re-armed with `watcher.watch()` with no arguments. A hundred writes produce one notification; the framework’s scheduler does the rest.
+2. The :term[Watcher]{id=tc39-watcher} notifies **once**, then is silent until it is re-armed with `watcher.watch()` with no arguments. A hundred writes produce one notification; the framework’s scheduler does the rest.
 3. When the scheduler runs, it asks `getPending()` for the dirty computeds and **reads them** (`get()`). That is chapter 10’s “pull” phase: each is recomputed if its sources really changed, and not otherwise.
 
 Try it. `count` feeds `parity`, which the effect reads. The scheduler here is a button, so the gap between *notified* and *ran* is visible.

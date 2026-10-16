@@ -8,7 +8,7 @@ prerequisites: [the-question, what-the-browser-does]
 
 Imagine you are writing the Notes app from chapter 0 and you have never heard of a framework. You have a list of notes in a variable, and a page that has to show it. There are two ways to think about the job.
 
-The first is **imperative**: when something happens, say what to *do* to the page. “A note was added: create an `li`, put the text in it, append it to the list, and update the count at the top. A note was toggled: find its `li`, put a ✓ in front, update the count.” The program is a list of instructions for moving the page from the old state to the new one.
+The first is **imperative**: when something happens, say what to *do* to the page. “A note was added: create an `li`, put the text in it, append it to the list, and update the count at the top. A note was toggled: find its `li`, put a ✓ in front, update the count.” The program is a list of instructions for moving the page from the old :term[state]{id=state} to the new one.
 
 The second is **declarative**: say what the page should *look like* for a given state, and let something else get it there. “For these notes, the page is a search box, a line saying how many there are, and a list with one item per note.” The program never mentions a change. It only describes a state.
 
@@ -47,7 +47,7 @@ A DOM node is not just a description of what is on the screen. It also *holds st
 
 `innerHTML = …` replaces every node with a new one. The new nodes are correct, and empty of everything the user had done to the old ones. The function was pure; the page it was applied to was not.
 
-The figure below has six such pieces of state. Use the left column to set some of them, then re-render *the same* application state in two ways: by rebuilding with `innerHTML`, and by patching in place (matching old nodes to new ones and updating only what differs, which you will build yourself over the next three chapters).
+The figure below has six such pieces of state. Use the left column to set some of them, then re-render *the same* application state in two ways: by rebuilding with :term[`innerHTML`]{id=innerhtml}, and by patching in place (matching old nodes to new ones and updating only what differs, which you will build yourself over the next three chapters).
 
 ::rebuild-victims{n="2.1"}
 
@@ -213,7 +213,7 @@ Put the two roads side by side and a pattern appears.
 
 That gives a three-part job for any such system, and the rest of the course is a set of variations on how each part is done:
 
-1. **Describe.** Evaluate the view for the current state. (A function call; a template; a compiled function.)
+1. **Describe.** Evaluate the :term[view]{id=view-function} for the current state. (A function call; a template; a compiled function.)
 2. **Find what changed.** Compare with the previous description, or with a recorded set of dependencies, or with a precomputed map. This is the chapter-0 question.
 3. **Apply.** Write the minimal set of DOM operations, in one batch, off the page where possible (chapter 1).
 

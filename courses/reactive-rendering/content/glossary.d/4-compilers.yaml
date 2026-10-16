@@ -27,7 +27,7 @@ invalidation:
   term: 'invalidation'
   definition: 'Marking a variable as changed. Svelte 3 and 4 rewrite each assignment to `$$invalidate(i, value)`.'
   chapter: svelte-invalidation
-qrl-svelte-ctx:
+svelte-ctx:
   term: 'ctx'
   definition: 'In Svelte 3 and 4, the array of a component’s variables, numbered by the compiler.'
   chapter: svelte-invalidation

@@ -55,8 +55,8 @@ stale-closure:
   term: 'stale closure'
   definition: 'A function that remembers the value of a variable from the render that created it, and so sees old state after later renders.'
   chapter: who-re-renders
-memoization:
-  term: 'memoization'
+memoisation:
+  term: 'memoisation'
   definition: 'Remembering the result of a computation for given inputs so that it is not repeated. `useMemo`, `memo` and the React Compiler do it for values and elements.'
   chapter: who-re-renders
 render-phase:

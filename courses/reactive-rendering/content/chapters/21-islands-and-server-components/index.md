@@ -45,7 +45,7 @@ Two things to notice. First, the *Article body*: it needs a Markdown library of 
 Because islands are independent, three things get harder:
 
 - **No shared tree.** Each island is a separate application root. State cannot be passed through props from one to another, so they communicate through something outside the tree: a store, a custom event, the URL.
-- **Props are data.** They travel in the HTML as JSON, so they must be serializable. A function cannot be an island’s prop.
+- **Props are data.** They travel in the HTML as JSON, so they must be serialisable. A function cannot be an island’s prop.
 - **Static children are not composable.** An island cannot easily wrap static content that the server rendered: that HTML is outside its tree. (Frameworks provide *slots* for this, with their own limits.)
 
 And page navigation is usually a **normal page load**: each page is a document, and clicking a link fetches a new one, which suits content sites and fights with app-like behaviour that persists across routes.
@@ -214,13 +214,13 @@ function Like({ postId, initial }) {
 
 The `'use client'` directive marks a **boundary**. Everything above it is server-only; the file it appears in, and what it imports, is client code. A :term[server component]{id=server-component} can render a :term[client component]{id=client-component} and pass it props; a client component cannot import a server one, though it can *receive* server-rendered elements as `children`.
 
-What travels over the network is a stream of **rows**. Switch the figure to *Server components* and read the payload it builds, produced by the lab’s own serializer.
+What travels over the network, in the format React calls :term[Flight]{id=flight}, is a stream of **rows**. Switch the figure to *Server components* and read the payload it builds, produced by the lab’s own serialiser.
 
 ::page-budget{n="21.2" mode="rsc"}
 
 Each row is a piece of the tree. The first holds the page as nested elements: `["$","header",null,{…}]` is an element, with its type, its key and its props. The server components have **vanished**: what is left is the elements they returned. Where a client component should go there is a reference, `"$L1"`, which points to another row: a *module reference* that tells the browser which JavaScript file to load. The props are written next to it, as JSON.
 
-That is why **props crossing the boundary must be serializable**: they are literally written into the stream. A function cannot cross; React’s answer, for events that need server code, is a **:term[Server Action]{id=server-action}**: a function marked `'use server'`, which crosses as a reference the browser calls back over the network.
+That is why **props crossing the boundary must be serialisable**: they are literally written into the stream. A function cannot cross; React’s answer, for events that need server code, is a **:term[Server Action]{id=server-action}**: a function marked `'use server'`, which crosses as a reference the browser calls back over the network.
 
 The browser reads the rows, loads the referenced modules, and builds the same element tree it would have built by itself. Then it renders (and hydrates) as in chapter 20, with one difference: **the server components in that tree are already data.** They never run in the browser, they have no state, and they cost no JavaScript. The 58 KB of Markdown library in the figure is gone.
 
@@ -232,7 +232,7 @@ The browser reads the rows, loads the referenced modules, and builds the same el
 
 The structure is different from islands in more than where the boundary is.
 
-- **One tree.** Server and client components belong to a single React tree. A client component can contain server components as children; context, props and keys work across the line, within the rules of serialization.
+- **One tree.** Server and client components belong to a single React tree. A client component can contain server components as children; context, props and keys work across the line, within the rules of serialisation.
 - **Navigation without a reload.** Clicking a link asks the server for the *new payload* for the next route, and React **merges it into the existing client tree**: the server parts are replaced, and client components that remain (a sidebar with state, a playing video) keep their state. An MPA of islands cannot do this.
 - **Direct data access.** `await db.query(…)` is in the component. There is no API layer in between, no loading state to write for it, and nothing sent to the client but the result.
 - **Streaming.** Rows can be sent as they become ready: a slow component does not hold up the rest, and a Suspense boundary in the payload becomes a placeholder that the stream later fills.

@@ -1,6 +1,6 @@
 ---
 title: Where this is going
-summary: Compilers that write memoization, signals in the platform, DOM APIs that move nodes without resetting them, and why the six answers keep converging.
+summary: Compilers that write memoisation, signals in the platform, DOM APIs that move nodes without resetting them, and why the six answers keep converging.
 number: 26
 duration: 45 minutes
 prerequisites: [five-compilers, resumability]
@@ -14,15 +14,15 @@ Here are the frameworks of the course placed on two axes: how much each one **fi
 
 ::the-map{n="26.1"}
 
-The positions are judgement, from what the chapters showed, and not measurements: do not read the third decimal. The *trails* are the point. React starts in the top left (a runtime that discovers everything, in the browser) and moves right and down: a compiler decides memoization, and server components keep code off the client. Angular moves from “check everything” toward “be told by signals”. Vue moves from a virtual DOM toward Vapor. Svelte rewrote its mechanism (bits, then signals) and stayed on the right. The islands, resumable and morphing families have been at the bottom the whole time, and the rest are coming toward them.
+The positions are judgement, from what the chapters showed, and not measurements: do not read the third decimal. The *trails* are the point. React starts in the top left (a runtime that discovers everything, in the browser) and moves right and down: a compiler decides memoisation, and server components keep code off the client. Angular moves from “check everything” towards “be told by signals”. Vue moves from a virtual DOM towards Vapor. Svelte rewrote its mechanism (bits, then signals) and stayed on the right. The islands, resumable and morphing families have been at the bottom the whole time, and the rest are coming towards them.
 
 Press the answer buttons to highlight each. They are all over the map.
 
 ## Four trends
 
-**The compiler is taking over the work.** Chapters 12 to 19 were a series of compilers that decide more at build time: Solid found the holes, Svelte 3 decided the dependencies, Vue found static trees and patch flags, React’s Compiler (1.0, October 2025) found what to memoize in code that *was not written for it*. The direction is clear. The limit is also clear: a compiler can only prove what your code lets it prove, and the frameworks that give the compiler the most to work with ask the most from your code.
+**The compiler is taking over the work.** Chapters 12 to 19 were a series of compilers that decide more at build time: Solid found the holes, Svelte 3 decided the dependencies, Vue found static trees and patch flags, React’s Compiler (1.0, October 2025) found what to memoise in code that *was not written for it*. The direction is clear. The limit is also clear: a compiler can only prove what your code lets it prove, and the frameworks that give the compiler the most to work with ask the most from your code.
 
-**Signals have become common ground.** Seven libraries, one idea, and a standard proposal (chapter 15, at stage 1 at the time of writing). Angular, Vue, Svelte, Solid, Preact, Qwik and MobX all have the same three primitives. Even React, which does not have them, is increasingly used with them: libraries bring signals to React components, and the Compiler’s memoization is the same *what depends on what* analysis in a different form. The remaining differences are about **when** (batching, scheduling) and **who owns** (disposal), the parts the standard deliberately leaves open.
+**Signals have become common ground.** Seven libraries, one idea, and a standard proposal (chapter 15, at stage 1 at the time of writing). Angular, Vue, Svelte, Solid, Preact, Qwik and MobX all have the same three primitives. Even React, which does not have them, is increasingly used with them: libraries bring signals to React components, and the Compiler’s memoisation is the same *what depends on what* analysis in a different form. The remaining differences are about **when** (batching, scheduling) and **who owns** (disposal), the parts the standard deliberately leaves open.
 
 **Work moves to the server, and the browser runs less.** SSR with hydration (chapter 20) made the first paint fast and left a dead page. Islands, server components and resumability (chapters 21 and 22) cut what the browser runs. HTML-over-the-wire (chapter 23) removes most of it. There is now almost no framework without a server story, and the debate is about *where the boundary is drawn* and how much the programmer must know about it.
 
@@ -45,7 +45,7 @@ Press the answer buttons to highlight each. They are all over the map.
 
 **Mutations and forms.** Reading data is well served. *Writing* it (optimistic updates, retries, conflict handling, forms that work with and without JavaScript) is an area in which every framework has recently introduced a new primitive, from React’s Actions to SvelteKit’s form actions.
 
-**State that lives in both places.** When a server component and a client component share an idea of state, which owns it? Resumability serializes it; RSC passes props; local-first systems keep a database in the browser and sync. The right answer depends on the application, which is why this question is still being asked.
+**State that lives in both places.** When a server component and a client component share an idea of state, which owns it? Resumability serialises it; RSC passes props; local-first systems keep a database in the browser and sync. The right answer depends on the application, which is why this question is still being asked.
 
 **Cost you can see.** The benchmark of chapter 24 counted DOM operations because those are what a strategy decides. Whole-application cost (memory, bundle size, startup, accessibility updates, the work of layout and paint) is harder to attribute, and the tools to see it are still catching up to the tools to build it.
 

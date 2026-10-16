@@ -20,7 +20,7 @@ With the position algorithm, the label next to each box moves and the *box stays
 
 This is not a rare edge case. It is what happens to every list of components that have any state of their own (a text box, a checkbox, an expanded section, a hover animation) when the list is sorted, filtered, deleted from or inserted into anywhere except the end.
 
-The fix is to tell the diff what *identity* means. If each item has a **key**, a value that is the same for the same logical item across renders, the diff can match old and new children by key, not by position, and a reorder becomes a *move*: the same node, in a new place, keeping everything attached to it.
+The fix is to tell the diff what *identity* means. If each item has a **:term[key]{id=key}**, a value that is the same for the same logical item across renders, the diff can match old and new children by key, not by position, and a reorder becomes a *move*: the same node, in a new place, keeping everything attached to it.
 
 Switch the figure to either of the other algorithms and repeat the experiment. The typed text now follows its item. What differs between those two is how many nodes they move to get there.
 

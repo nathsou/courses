@@ -8,7 +8,7 @@ prerequisites: [trees-as-values, lists-and-keys, ssr-and-hydration]
 
 Every chapter since 9 has been a variation on one assumption: **the browser runs the application**. The components, the signals, the state and the update logic live in JavaScript on the page, and the server, if it appears at all, sends a first page and some data.
 
-There is a family of tools that reverses this. In **htmx**, **Hotwire Turbo**, **Phoenix LiveView**, **Laravel Livewire** and **Unpoly**, the application runs on the server. The browser’s job is to send events and show the HTML that comes back. There are no components in the browser, no signals, no virtual DOM, no hydration: nothing to rebuild, because nothing was ever torn down.
+There is a family of tools that reverses this, a style known as :term[HTML over the wire]{id=html-over-the-wire}. In **htmx**, **Hotwire Turbo**, **Phoenix LiveView**, **Laravel Livewire** and **Unpoly**, the application runs on the server. The browser’s job is to send events and show the HTML that comes back. There are no components in the browser, no signals, no virtual DOM, no hydration: nothing to rebuild, because nothing was ever torn down.
 
 ```html
 <button hx-post="/like" hx-target="#likes">♥ 3</button>   <!-- htmx -->

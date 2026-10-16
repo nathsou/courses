@@ -14,7 +14,7 @@ At **build time**, a compiler reads the template and writes the code. Svelte (20
 
 ## The middle
 
-Between those two extremes, the compilers of the big frameworks learned to *tell the runtime what they knew*. Vue 3’s compiler (2020) hoists static nodes, adds patch flags that say what can change on a node, and records a block tree of the dynamic nodes, so that its virtual DOM diff skips most of the template. :cite[vue-reactivity-docs] Angular has compiled templates ahead of time since version 2 (2016), and since its Ivy compiler (version 9, 2020) into creation and update blocks. React’s compiler writes memoization for code that was not written for it. In each case the *question* stayed the same and the amount settled before the page runs went up.
+Between those two extremes, the compilers of the big frameworks learned to *tell the runtime what they knew*. Vue 3’s compiler (2020) hoists static nodes, adds patch flags that say what can change on a node, and records a block tree of the dynamic nodes, so that its virtual DOM diff skips most of the template. :cite[vue-reactivity-docs] Angular has compiled templates ahead of time since version 2 (2016), and since its Ivy compiler (version 9, 2020) into creation and update blocks. React’s compiler writes memoisation for code that was not written for it. In each case the *question* stayed the same and the amount settled before the page runs went up.
 
 ## Signals under the template
 

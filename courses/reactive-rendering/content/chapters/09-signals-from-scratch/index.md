@@ -19,8 +19,8 @@ Three kinds of thing are involved, and they are the three primitives of every :t
 | In a spreadsheet | In a signals library | What it is |
 |---|---|---|
 | A cell holding a number | **signal** | A value that is written to, from outside |
-| A cell holding a formula | **computed** (or *memo*, *derived*) | A value defined in terms of other values; never written directly |
-| What is drawn on the screen | **effect** | Code that must run when what it reads has changed, to affect the outside world |
+| A cell holding a formula | **:term[computed]{id=computed}** (or *memo*, *derived*) | A value defined in terms of other values; never written directly |
+| What is drawn on the screen | **:term[effect]{id=signal-effect}** | Code that must run when what it reads has changed, to affect the outside world |
 
 The sheet’s great trick is that you never say which cells a formula uses *except by using them*. `=A2*B2` depends on `A2` and `B2` because it mentions them. And a formula like `=IF(B1>0, C3, D3)` depends on `C3` or on `D3`, **depending on the value of `B1`**: whichever it actually evaluates.
 
@@ -79,7 +79,7 @@ count.set(1);                                         // logs "count is 1"
 
 Three details turn this sketch into something that works.
 
-**Re-collect the dependencies on every run.** Before an effect runs again it removes itself from every signal it subscribed to, and subscribes afresh as it runs. This is what makes `IF` work: a branch not taken in this run is not read, so it is not subscribed to. Without it, an effect would keep depending on everything it had *ever* read.
+**Re-collect the dependencies on every run.** (The set of dependencies is :term[dynamic]{id=dynamic-dependencies}: it can differ from one run to the next.) Before an effect runs again it removes itself from every signal it subscribed to, and subscribes afresh as it runs. This is what makes `IF` work: a branch not taken in this run is not read, so it is not subscribed to. Without it, an effect would keep depending on everything it had *ever* read.
 
 **Computed values are reactions that are also signals.** A `computed(fn)` is read like a signal, but when its sources change it does not run `fn` at once: it marks itself *dirty* and tells *its* subscribers. The next time someone reads it, it runs `fn` (with itself as `current`, so it subscribes to its own sources) and caches the result. Reading it twice between changes runs `fn` once.
 
@@ -311,7 +311,7 @@ The trade is clear. A virtual DOM pays, on every update, to compare what it has.
 ## Where this comes from
 
 :::history{year=1979 title="VisiCalc, and the long road to reactive UIs"}
-Dan Bricklin and Bob Frankston’s VisiCalc (1979) was the first spreadsheet for personal computers. It recalculated row by row or column by column; *natural order* recalculation, where a cell is recomputed after the cells it depends on, reached personal computers with Lotus 1-2-3 in 1983. The academic line, *functional reactive programming*, started with Conal Elliott and Paul Hudak’s *Functional Reactive Animation* in 1997, and was surveyed by Bainomugisha and colleagues in 2013. :cite[elliott-hudak-1997] :cite[bainomugisha-2013] A parallel line, *incremental computation*, asks how to recompute only what an input change affects; Adapton (2014) is a representative system. :cite[hammer-adapton-2014] The web arrived late: Knockout (2010), Meteor’s Tracker, Vue (2014) and MobX (2015) brought dependency tracking to JavaScript, and Solid, Preact Signals and Angular made it the centre of a framework. Ryan Carniato’s *A Hands-on Introduction to Fine-Grained Reactivity* is the clearest short walkthrough of the code in this chapter. :cite[carniato-fgr]
+Dan Bricklin and Bob Frankston’s VisiCalc (1979) was the first spreadsheet for personal computers. It recalculated row by row or column by column; *natural order* recalculation, where a cell is recomputed after the cells it depends on, reached personal computers with Lotus 1-2-3 in 1983. The academic line, *functional reactive programming*, started with Conal Elliott and Paul Hudak’s *Functional Reactive Animation* in 1997, and was surveyed by Bainomugisha and colleagues in 2013. :cite[elliott-hudak-1997] :cite[bainomugisha-2013] A parallel line, *incremental computation*, asks how to recompute only what an input change affects; Adapton (2014) is a representative system. :cite[hammer-adapton-2014] The web arrived late: Knockout (2010), Meteor’s Tracker, Vue (2014) and MobX (2015) brought :term[dependency tracking]{id=dependency-tracking} to JavaScript, and Solid, Preact Signals and Angular made it the centre of a framework. Ryan Carniato’s *A Hands-on Introduction to Fine-Grained Reactivity* is the clearest short walkthrough of the code in this chapter. :cite[carniato-fgr]
 :::
 
 :::whatchanged

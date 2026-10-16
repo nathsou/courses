@@ -30,7 +30,7 @@ batch(() => {
 });   // marks as it goes; flushes once, at the end
 ```
 
-Inside `batch`, a write still *marks* everything stale (cheap, and immediate), but the flush of effects waits for the outermost `batch` to finish. Batches nest, and only the outermost one flushes. Reading a computed inside a batch still gives the right answer, since computeds are lazy and recompute from what has been written so far.
+Inside `batch`, a write still *marks* everything stale (cheap, and immediate), but the flush of effects waits for the outermost `batch` to finish. Batches nest, and only the outermost one flushes. Reading a computed inside a :term[batch]{id=batch} still gives the right answer, since computeds are lazy and recompute from what has been written so far.
 
 Libraries differ in **who calls the batch**:
 
@@ -55,9 +55,9 @@ With **plain effects**, nothing happens to it. Every “Show the next user” ad
 
 Switch to **owned effects**, and the card’s tree loses its old child every time. The rule that does it is small:
 
-> Every effect, and every root, **owns** the effects and cleanup functions created while it ran. When it re-runs, or is disposed, it disposes everything it owns first.
+> Every effect, and every :term[root]{id=root}, **owns** the effects and :term[cleanup]{id=cleanup} functions created while it ran. When it re-runs, or is disposed, it disposes everything it owns first.
 
-An owner is whatever is *running when something is created*, and the engine tracks that with one more global variable, next to the `current` reaction of chapter 9:
+An :term[owner]{id=owner} is whatever is *running when something is created*, and the engine tracks that with one more global variable, next to the `current` reaction of chapter 9:
 
 ```ts
 let owner: Scope | null = null;     // who is running now

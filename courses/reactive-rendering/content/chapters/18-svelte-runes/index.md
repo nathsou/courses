@@ -108,7 +108,7 @@ explain: "Two: one for the main template, which groups the `h1` class and the pa
 
 ## Universal reactivity
 
-The restriction that ended chapter 17 was “reactivity lives in components”. Runes lift it. The compiler also processes files named `.svelte.js` or `.svelte.ts`, and runes work in them:
+The restriction that ended chapter 17 was “reactivity lives in components”. Runes lift it, which Svelte calls :term[universal reactivity]{id=universal-reactivity}. The compiler also processes files named `.svelte.js` or `.svelte.ts`, and runes work in them:
 
 ```js
 // counter.svelte.js

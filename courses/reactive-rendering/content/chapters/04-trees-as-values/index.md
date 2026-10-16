@@ -6,7 +6,7 @@ duration: 55 minutes
 prerequisites: [ui-as-a-function]
 ---
 
-The two roads of chapter 2 are the ends of a seesaw. *Rebuild* throws everything away and keeps nothing; *update by hand* keeps everything and writes the update logic itself. The :term[virtual DOM]{id=virtual-dom} is the first answer to sit in the middle: **rebuild the *description*, keep the nodes.**
+The two roads of chapter 2 are the ends of a seesaw. *Rebuild* throws everything away and keeps nothing; *update by hand* keeps everything and writes the update logic itself. The :term[virtual DOM]{id=virtual-dom} is the first answer to sit in the middle: **rebuild the *description*, keep the nodes.** The step that matches the new description with the old and updates the nodes to fit is called :term[reconciliation]{id=reconciliation}.
 
 The description is cheap to rebuild because it is not the DOM. It is a tree of plain objects, in memory, with no layout and no attributes to compute, no style, no events. The nodes are expensive, so the system keeps them and only touches the ones where the new description disagrees with the old.
 
@@ -14,7 +14,7 @@ This chapter builds the two halves of that: a description you can write (`h`), a
 
 ## A page as a value
 
-An *element* of a virtual DOM is an object that says what a DOM node should be. This is the whole definition:
+An *element* of a virtual DOM (Vue and Preact call it a :term[vnode]{id=vnode}) is an object that says what a DOM node should be. This is the whole definition:
 
 ```ts
 type VNode = { type: string; props: Record<string, unknown>; children: (VNode | string)[] };
@@ -93,7 +93,7 @@ Try it. The lab below takes a “before” and an “after” as HTML, mounts th
 
 ::diff-lab{n="4.1"}
 
-Work through the presets with the lens open. **Text**: one text write, and every node keeps its identity. **Attribute**: two attribute writes. **Tag changes**: the `p` that became a `section` is replaced (created, inserted, removed), but *its sibling is untouched*, because Assumption 2 compares siblings one at a time. **Add** and **Remove**: new items are created and extra ones removed, at the end. **Reorder**: the one you will not like. The list `a b c d` becomes `d a b c`, and the diff, comparing by position, sees four items whose text changed; it rewrites all four text nodes and moves nothing.
+Work through the presets with the lens open. **Text**: one text write, and every node keeps its identity. **Attribute**: two attribute writes. **Tag changes**: the `p` that became a `section` is replaced (created, inserted, removed), but *its sibling is untouched*, because Assumption 2 compares siblings one at a time. **Add** and **Remove**: new items are created and extra ones removed, at the end. **Reorder**: the one you will not like. The list `a b c d` becomes `d a b c`, and the :term[diff]{id=diff}, comparing by position, sees four items whose text changed; it rewrites all four text nodes and moves nothing.
 
 ```predict
 q: A `<div>` containing a large, deeply nested form is changed so that the outer element is a `<section>` instead of a `<div>`, with exactly the same children. What does the diff do with the form?
@@ -109,7 +109,7 @@ options:
 
 ## Build the patch
 
-Here is the real thing, at the scale where you can write all of it. The starter has `h` and `createDom`; `patch` is the part to write. The tests check *which DOM operations happen*, not only that the result is right, because a patch that rebuilds everything is also right.
+Here is the real thing, at the scale where you can write all of it. The starter has `h` and `createDom`; `patch` is the part to write. The tests check *which DOM operations happen*, not only that the result is right, because a :term[patch]{id=patch} that rebuilds everything is also right.
 
 ```build
 id: trees-as-values/patch

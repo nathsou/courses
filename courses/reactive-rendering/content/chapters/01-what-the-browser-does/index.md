@@ -6,7 +6,7 @@ duration: 40 minutes
 prerequisites: [the-question]
 ---
 
-Chapter 0 counted DOM operations, as if each cost the same. They do not, and the difference is what every strategy in this course is trying to exploit. This chapter opens the browser far enough to see what a write costs, and, more usefully, *when* it is paid.
+Chapter 0 counted :term[DOM]{id=dom} operations, as if each cost the same. They do not, and the difference is what every strategy in this course is trying to exploit. This chapter opens the browser far enough to see what a write costs, and, more usefully, *when* it is paid.
 
 Start with a loop that looks harmless. It gives every item on the page the same width as its own height.
 
@@ -33,12 +33,12 @@ options:
 
 ## The pipeline
 
-The browser turns your HTML, CSS and script into pixels through a chain of stages. On the main thread, in order:
+The browser turns your HTML, CSS and script into pixels through a chain of stages :cite[kosaka-browser]. On the main thread, in order:
 
 1. **Script** runs: your code and the framework's. It reads and writes the DOM.
 2. **Style** works out, for each element, which CSS rules apply and what its computed values are.
-3. **Layout** works out where every box goes and how big it is. It is the expensive stage, because one box's size can depend on its parent's, its siblings' and its children's.
-4. **Paint** records what to draw in each layer: backgrounds, borders, text.
+3. **:term[Layout]{id=layout}** works out where every box goes and how big it is. It is the expensive stage, because one box's size can depend on its parent's, its siblings' and its children's.
+4. **:term[Paint]{id=paint}** records what to draw in each layer: backgrounds, borders, text.
 5. **Composite** (on a separate thread, the *compositor*) combines the painted layers into the final picture, and can move, fade or scale a layer without involving the main thread at all.
 
 Normally this happens once per frame, after your script has finished and before the screen refreshes. Around sixty times a second leaves about sixteen milliseconds for the whole chain, script included.
@@ -75,7 +75,7 @@ explain: "The first read finds nothing invalidated, so it is answered at once. I
 
 ## What is cheap and what is not
 
-This gives a rough ordering, from cheap to expensive. It is a guide to thinking about writes, not a table to memorise.
+This gives a rough ordering, from cheap to expensive. It is a guide to thinking about writes, not a table to memoise.
 
 - **Writes to detached nodes** cost allocation and nothing else.
 - **Compositor-only properties** (`transform`, `opacity`) skip layout. This is why animations should use them instead of `left` or `width`.
