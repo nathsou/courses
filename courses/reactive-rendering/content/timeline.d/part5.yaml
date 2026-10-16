@@ -4,7 +4,7 @@
   people: Sam Stephenson and Rails
   chapter: morphing
   text: 'Links fetch the next page in the background and swap the body, keeping the scripts running.'
-- year: 2014
+- year: 2015
   lane: server
   title: morphdom
   people: Patrick Steele-Idem
@@ -39,7 +39,7 @@
   chapter: resumability
   text: 'Islands ship in a mainstream framework, resumability appears as an alternative to hydration, and Next.js 13 brings server components to most React developers.'
   cite: [astro-islands, qwik-resumable]
-- year: 2023
+- year: 2024
   lane: server
   title: Turbo 8 morphs page refreshes
   people: Hotwire team

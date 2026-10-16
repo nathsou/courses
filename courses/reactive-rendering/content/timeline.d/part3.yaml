@@ -3,7 +3,7 @@
   title: VisiCalc
   people: Dan Bricklin, Bob Frankston
   chapter: signals-from-scratch
-  text: 'The first spreadsheet for personal computers recalculates cells in an order that respects their dependencies: a reactive program with cells for signals.'
+  text: 'The first spreadsheet for personal computers recalculates the cells that depend on an edit: a reactive program with cells for signals.'
 - year: 1997
   lane: signals
   title: Functional Reactive Animation
@@ -27,7 +27,7 @@
   cite: [hammer-adapton-2014]
 - year: 2014
   lane: signals
-  title: Vue 1
+  title: Vue
   people: Evan You
   chapter: vue-proxies-and-hints
   text: 'Reactive objects built with getters and setters, with a template compiler to match. Vue 3 (2020) replaces them with Proxy.'

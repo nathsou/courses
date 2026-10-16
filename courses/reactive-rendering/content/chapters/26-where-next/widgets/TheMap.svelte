@@ -23,7 +23,7 @@
   const ITEMS: Item[] = [
     { id: 'angularjs', name: 'AngularJS → Angular', answers: ['check'], path: [
       { year: 2010, x: 0.03, y: 0.97, note: 'Watchers on every binding, a digest loop until nothing changes.' },
-      { year: 2016, x: 0.4, y: 0.95, note: 'Angular 2: templates compiled ahead of time into update blocks; zone.js says when.' },
+      { year: 2016, x: 0.4, y: 0.95, note: 'Angular 2: templates compiled into change-detection code; zone.js says when.' },
       { year: 2023, x: 0.52, y: 0.92, note: 'Signals arrive; views can be told instead of checked.' },
       { year: 2025, x: 0.6, y: 0.85, note: 'Zoneless change detection; incremental hydration.' },
     ] },
@@ -34,7 +34,7 @@
       { year: 2025, x: 0.52, y: 0.75, note: 'React Compiler 1.0 decides memoization at build time.' },
     ] },
     { id: 'vue', name: 'Vue', answers: ['track', 'diff', 'compile'], path: [
-      { year: 2014, x: 0.4, y: 0.92, note: 'Vue 1: getters and setters track reads; templates compile to DOM fragments.' },
+      { year: 2014, x: 0.4, y: 0.92, note: 'Early Vue: getters and setters track reads; templates compile to DOM fragments.' },
       { year: 2016, x: 0.35, y: 0.93, note: 'Vue 2: a virtual DOM, with tracking deciding which component.' },
       { year: 2020, x: 0.55, y: 0.9, note: 'Vue 3: Proxy tracking; patch flags and block trees from the compiler.' },
       { year: 2026, x: 0.78, y: 0.86, note: 'Vapor mode: no virtual DOM at all.' },

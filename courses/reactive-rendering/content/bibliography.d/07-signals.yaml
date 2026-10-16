@@ -131,7 +131,7 @@ liveview:
   url: https://hexdocs.pm/phoenix_live_view/
 morphdom:
   authors: Steele-Idem, P.
-  year: 2014
+  year: 2015
   title: morphdom, fast and lightweight DOM diffing/patching
   url: https://github.com/patrick-steele-idem/morphdom
 idiomorph:
