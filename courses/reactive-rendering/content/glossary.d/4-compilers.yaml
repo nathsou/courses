@@ -1,0 +1,57 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+tagged-template:
+  term: 'tagged template'
+  definition: 'A template literal preceded by a function, which receives the static strings (the same array each time the expression is evaluated) and the values. Lit uses the array’s identity as the template’s identity.'
+  chapter: lit-templates
+part:
+  term: 'part'
+  definition: 'In Lit, the object that owns one hole of a template and updates it when its value changes.'
+  chapter: lit-templates
+template-element:
+  term: 'template element'
+  definition: 'An HTML `<template>`: inert markup that can be cloned cheaply, which is how frameworks build many instances of the same structure.'
+  chapter: templates-and-solid
+cloning:
+  term: 'cloning'
+  definition: 'Making a copy of a prepared tree of nodes with `cloneNode`, usually faster than building the nodes one at a time.'
+  chapter: templates-and-solid
+compiler:
+  term: 'compiler'
+  definition: 'A program that reads your component source and writes the code that runs. In UI frameworks it decides at build time what the runtime would otherwise discover.'
+  chapter: templates-and-solid
+bitmask:
+  term: 'bitmask'
+  definition: 'An integer in which each bit stands for one variable. Svelte 3 and 4 set a bit on assignment and test bits in the update function.'
+  chapter: svelte-invalidation
+invalidation:
+  term: 'invalidation'
+  definition: 'Marking a variable as changed. Svelte 3 and 4 rewrite each assignment to `$$invalidate(i, value)`.'
+  chapter: svelte-invalidation
+svelte-ctx:
+  term: 'ctx'
+  definition: 'In Svelte 3 and 4, the array of a component’s variables, numbered by the compiler.'
+  chapter: svelte-invalidation
+rune:
+  term: 'rune'
+  definition: 'A Svelte 5 marker such as `$state` or `$derived` that looks like a function and is a message to the compiler, which replaces it with signals.'
+  chapter: svelte-runes
+template-effect:
+  term: 'template effect'
+  definition: 'Svelte 5’s single effect for all the dynamic holes of a template.'
+  chapter: svelte-runes
+universal-reactivity:
+  term: 'universal reactivity'
+  definition: 'Runes working outside components, in `.svelte.js` and `.svelte.ts` files.'
+  chapter: svelte-runes
+sfc:
+  term: 'single-file component'
+  definition: 'A file that holds a component’s template, script and style together (`.vue`, `.svelte`), which a compiler splits.'
+  chapter: five-compilers
+jsx:
+  term: 'JSX'
+  definition: 'A syntax for writing element trees inside JavaScript. A compiler turns each tag into a function call (React) or into DOM operations (Solid).'
+  chapter: five-compilers
+aot:
+  term: 'ahead-of-time compilation'
+  definition: 'Compiling templates at build time rather than in the browser. Angular’s default since version 9 (2020).'
+  chapter: angular-zones-and-signals

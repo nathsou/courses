@@ -1,0 +1,74 @@
+- year: 1979
+  lane: signals
+  title: VisiCalc
+  people: Dan Bricklin, Bob Frankston
+  chapter: signals-from-scratch
+  text: 'The first spreadsheet for personal computers recalculates the cells that depend on an edit: a reactive program with cells for signals.'
+- year: 1997
+  lane: signals
+  title: Functional Reactive Animation
+  people: Conal Elliott, Paul Hudak
+  chapter: signals-from-scratch
+  text: 'Behaviours and events as first-class values, with the idea of “values that change over time” that later libraries inherit.'
+  cite: [elliott-hudak-1997]
+- year: 2010
+  lane: signals
+  title: Knockout
+  people: Steve Sanderson
+  chapter: before-frameworks
+  text: 'Observables and `ko.computed` detect their dependencies automatically, by recording what a function reads while it runs.'
+  cite: [knockout-docs]
+- year: 2014
+  lane: signals
+  title: Adapton
+  people: Matthew Hammer and colleagues
+  chapter: signals-from-scratch
+  text: 'Demand-driven incremental computation: recompute only what changes, and only when read, the programming-language ancestor of lazy computeds.'
+  cite: [hammer-adapton-2014]
+- year: 2014
+  lane: signals
+  title: Vue
+  people: Evan You
+  chapter: vue-proxies-and-hints
+  text: 'Reactive objects built with getters and setters, with a template compiler to match. Vue 3 (2020) replaces them with Proxy.'
+- year: 2015
+  lane: signals
+  title: MobX
+  people: Michel Weststrate
+  chapter: signals-from-scratch
+  text: 'Transparent reactive programming for JavaScript: observables, computed values and reactions, written without ceremony.'
+- year: 2018
+  lane: signals
+  title: Solid
+  people: Ryan Carniato
+  chapter: templates-and-solid
+  text: 'Fine-grained signals under compiled templates: components run once, and each hole of a template is an effect.'
+  cite: [carniato-fgr, solid-docs]
+- year: 2022
+  lane: signals
+  title: Reactively and Preact Signals
+  people: Milo Mighdoll; Jason Miller and Marvin Hagemeister
+  chapter: glitches-and-diamonds
+  text: 'Two small libraries show that a glitch-free, lazy, cutoff-aware signals core can be tiny, and bring signals to the wider JavaScript world.'
+  cite: [reactively]
+- year: 2023
+  lane: checking
+  title: Angular signals
+  people: Angular team
+  chapter: angular-zones-and-signals
+  text: 'Angular 16 introduces signals in developer preview, the first step in making zone.js optional.'
+  cite: [angular-signals]
+- year: 2024
+  lane: signals
+  title: TC39 Signals proposal
+  people: Rob Eisenberg, Daniel Ehrenberg and framework authors
+  chapter: a-standard-for-signals
+  text: 'A proposal to put `State`, `Computed` and the low-level `Watcher` in the language reaches stage 1.'
+  cite: [tc39-signals]
+- year: 2025
+  lane: checking
+  title: Zoneless Angular is stable
+  people: Angular team
+  chapter: angular-zones-and-signals
+  text: 'Change detection without zone.js is stable in 20.2 and the default for new applications in 21.'
+  cite: [angular-zoneless]

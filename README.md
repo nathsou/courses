@@ -20,6 +20,7 @@ A collection of interactive textbooks. The [course index](site/index.html) links
 | Memory Management | `courses/memory-management/` | `/memory-management/` |
 | Every Path at Once: static analysis, from your first lint rule to taint tracking and symbolic execution | `courses/static-analysis/` | `/static-analysis/` |
 | The Prime Staircase: from the sieve to the Riemann Hypothesis | `courses/primes/` | `/primes/` |
+| What Changed? Reactive rendering, from innerHTML to signals | `courses/reactive-rendering/` | `/reactive-rendering/` |
 
 Every course has an “All courses” link beside its contents and a compact contents toggle in its own header or drawer handle. Sidebars collapse on desktop and open as drawers on smaller screens; each course remembers its desktop preference. The shared navigation lives in `packages/course-navigation/`.
 
@@ -43,11 +44,12 @@ npm ci --prefix courses/formal-verification
 npm ci --prefix courses/memory-management
 npm ci --prefix courses/static-analysis
 npm ci --prefix courses/primes
+npm ci --prefix courses/reactive-rendering
 pnpm --dir courses/language-models install --frozen-lockfile
 npm run build
 ```
 
-The build creates `dist/index.html` and the sixteen course directories in `dist/`. The CIC course and Proofs Are Programs share their language implementation, `packages/kernel/`. For a local preview, serve `dist/` as the web root, for example with `python3 -m http.server 8000 -d dist`.
+The build creates `dist/index.html` and the seventeen course directories in `dist/`. The CIC course and Proofs Are Programs share their language implementation, `packages/kernel/`. For a local preview, serve `dist/` as the web root, for example with `python3 -m http.server 8000 -d dist`.
 
 On GitHub Actions, the build derives the Pages project path from `GITHUB_REPOSITORY`. If hosting under a different path, set `COURSES_BASE_PATH` to that path (or to an empty string for a domain root). Relative links on the index and the two Vite courses adapt automatically; Astro uses this value for astrophysics links and assets, and the build passes `<base>/<course>` to each SvelteKit course as `BASE_PATH`.
 

@@ -1305,3 +1305,65 @@ h1 {
   font: 400 14px / 1.55 var(--font-sans);
   color: var(--cmute);
 }
+
+/* What Changed? (reactive rendering): a DOM tree with one node flashing, and the operation counter. */
+.changed {
+  --cbg: #f6f7fb;
+  --cfg: #161d33;
+  --cmute: #5d6683;
+  --cac: #2b3fb6;
+  --cflash: #c026d3;
+  background:
+    linear-gradient(rgb(43 63 182 / 0.06) 1px, transparent 1px) 0 0 / 100% 22px,
+    var(--cbg);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+:root[data-theme='dark'] .changed {
+  --cbg: #0b0e17;
+  --cfg: #e8ebf5;
+  --cmute: #8e97b3;
+  --cac: #9ba9ff;
+  --cflash: #f0abfc;
+  background:
+    linear-gradient(rgb(155 169 255 / 0.06) 1px, transparent 1px) 0 0 / 100% 22px,
+    var(--cbg);
+}
+.changed .tree {
+  min-height: 92px;
+}
+.changed .code {
+  margin: 0;
+  font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--cfg);
+}
+.changed .l1 {
+  padding-left: 18px;
+}
+.changed .n {
+  color: var(--cac);
+}
+.changed .flash {
+  padding: 0 4px;
+  border-radius: 3px;
+  color: var(--cfg);
+  outline: 1.5px solid var(--cflash);
+  background: color-mix(in srgb, var(--cflash) 18%, transparent);
+}
+.changed .ops {
+  margin: 8px 0 0;
+  font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  font-size: 11.5px;
+  color: var(--cflash);
+}
+.changed h2 {
+  margin: 14px 0 10px;
+  font-size: 32px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.changed .desc {
+  color: var(--cmute);
+  line-height: 1.5;
+}

@@ -1,0 +1,18 @@
+react-render-commit:
+  authors: Meta Open Source
+  year: 2024
+  title: Render and Commit
+  venue: react.dev
+  url: https://react.dev/learn/render-and-commit
+react-memo:
+  authors: Meta Open Source
+  year: 2024
+  title: memo (React reference)
+  venue: react.dev
+  url: https://react.dev/reference/react/memo
+react-compiler-docs:
+  authors: Meta Open Source
+  year: 2025
+  title: React Compiler
+  venue: react.dev (the compiler reached version 1.0 in October 2025)
+  url: https://react.dev/learn/react-compiler

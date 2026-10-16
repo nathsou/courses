@@ -1,0 +1,85 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+virtual-dom:
+  term: 'virtual DOM'
+  definition: 'A tree of plain objects describing what the page should be. A renderer compares the new tree with the previous one and changes the real DOM where they differ.'
+  chapter: trees-as-values
+vnode:
+  term: 'vnode'
+  definition: 'One node of the virtual DOM: an object with a type (a tag or a component), props and children.'
+  chapter: trees-as-values
+diff:
+  term: 'diff'
+  definition: 'The comparison of two trees to find what differs. React’s is O(n) because it assumes nodes of different types hold different subtrees, and that keys identify children.'
+  chapter: trees-as-values
+patch:
+  term: 'patch'
+  definition: 'The list of DOM operations a diff produces, or the act of applying it.'
+  chapter: trees-as-values
+reconciliation:
+  term: 'reconciliation'
+  definition: 'React’s word for matching the new tree with the old and updating the DOM to fit.'
+  chapter: trees-as-values
+key:
+  term: 'key'
+  definition: 'A hint that tells the diff which child is which across renders: the child’s identity, written by the programmer.'
+  chapter: lists-and-keys
+keyed-list:
+  term: 'keyed list'
+  definition: 'A list of children each carrying a key, so that a reorder is recognised as moves rather than as rewrites of every row.'
+  chapter: lists-and-keys
+lis:
+  term: 'longest increasing subsequence'
+  definition: 'The longest run of values, in order of position, that is already increasing. Vue and ivi use it to find the largest set of list items that need not move.'
+  chapter: lists-and-keys
+component:
+  term: 'component'
+  definition: 'A reusable unit of UI: a function (or class) from props and state to a description. In virtual DOM frameworks it is called again on every update; in signals frameworks it runs once.'
+  chapter: components-and-hooks
+props:
+  term: 'props'
+  definition: 'The inputs a parent passes to a component.'
+  chapter: components-and-hooks
+hook:
+  term: 'hook'
+  definition: 'A function such as `useState` or `useEffect` that a component calls to keep state or effects across renders. They work by position: the *n*th call in a render is the *n*th slot.'
+  chapter: components-and-hooks
+rules-of-hooks:
+  term: 'rules of hooks'
+  definition: 'Call hooks in the same order on every render, never inside conditions or loops, because the framework identifies each one by its position.'
+  chapter: components-and-hooks
+effect-hook:
+  term: 'effect'
+  definition: 'Code run after the DOM has been updated, to reach outside the render: a subscription, a timer, a fetch. Its dependency array says when it must run again.'
+  chapter: components-and-hooks
+stale-closure:
+  term: 'stale closure'
+  definition: 'A function that remembers the value of a variable from the render that created it, and so sees old state after later renders.'
+  chapter: who-re-renders
+memoisation:
+  term: 'memoisation'
+  definition: 'Remembering the result of a computation for given inputs so that it is not repeated. `useMemo`, `memo` and the React Compiler do it for values and elements.'
+  chapter: who-re-renders
+render-phase:
+  term: 'render phase'
+  definition: 'The part of an update in which components run and the new tree is computed. It must be pure, and in React it can be interrupted and restarted.'
+  chapter: who-re-renders
+commit-phase:
+  term: 'commit phase'
+  definition: 'The part of an update in which the changes are applied to the DOM, layout effects run and the other effects are scheduled. It cannot be interrupted.'
+  chapter: who-re-renders
+react-compiler:
+  term: 'React Compiler'
+  definition: 'A build-time tool (1.0 in October 2025) that finds what each part of a component depends on and wraps it in a cache, so that unchanged elements are returned by identity.'
+  chapter: who-re-renders
+main-thread:
+  term: 'main thread'
+  definition: 'The single thread on which a page runs JavaScript, handles input, and (mostly) lays out and paints. A long task on it freezes the page.'
+  chapter: time-slicing
+fiber:
+  term: 'fiber'
+  definition: 'A unit of work in React’s reconciler: a node of the tree with pointers to its parent, child and sibling, so that a render can pause between nodes and resume.'
+  chapter: time-slicing
+time-slicing:
+  term: 'time slicing'
+  definition: 'Splitting a long render into small pieces and yielding to the browser between them, so that input is handled and frames are painted.'
+  chapter: time-slicing

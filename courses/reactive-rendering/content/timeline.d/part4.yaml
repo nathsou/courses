@@ -1,0 +1,54 @@
+- year: 2016
+  lane: compilers
+  title: Svelte
+  people: Rich Harris
+  chapter: svelte-invalidation
+  text: 'A compiler from templates to plain DOM code, with no framework runtime to ship.'
+- year: 2016
+  lane: checking
+  title: Angular 2
+  people: Angular team
+  chapter: angular-zones-and-signals
+  text: 'Templates are compiled into change-detection code for each view, and zone.js tells the framework when to run it.'
+  cite: [zonejs]
+- year: 2017
+  lane: compilers
+  title: lit-html
+  people: Justin Fagnani
+  chapter: lit-templates
+  text: 'Tagged template literals as a template language: the strings array’s identity is the template’s identity, and updates compare each hole.'
+  cite: [lit-docs]
+- year: 2018
+  lane: compilers
+  title: “Virtual DOM is pure overhead”
+  people: Rich Harris
+  chapter: svelte-invalidation
+  text: 'A post argues that when a compiler knows what depends on what, comparing trees is wasted work.'
+  cite: [harris-vdom]
+- year: 2019
+  lane: compilers
+  title: Svelte 3
+  people: Rich Harris
+  chapter: svelte-invalidation
+  text: 'Assignments are compiled into invalidations and updates into bit tests: “rethinking reactivity”.'
+  cite: [harris-rethinking]
+- year: 2020
+  lane: compilers
+  title: Vue 3
+  people: Evan You and the Vue team
+  chapter: vue-proxies-and-hints
+  text: 'Proxy-based reactivity, and a compiler that hoists static nodes, adds patch flags and records block trees to narrow the diff.'
+  cite: [vue-reactivity-docs]
+- year: 2024
+  lane: compilers
+  title: Svelte 5
+  people: Svelte team
+  chapter: svelte-runes
+  text: 'Runes replace the bit-mask design: the compiler now writes signals, and reactivity works outside components.'
+  cite: [svelte-runes-docs]
+- year: 2026
+  lane: compilers
+  title: Vue Vapor mode
+  people: Vue team
+  chapter: five-compilers
+  text: 'Vue 3.6 release candidates compile templates to direct DOM operations with no virtual DOM, over a reactivity core based on alien-signals.'

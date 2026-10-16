@@ -1,0 +1,16 @@
+angularjs-scope:
+  authors: Google
+  year: 2022
+  title: AngularJS API reference, $rootScope.Scope ($watch, $digest, $apply)
+  venue: angularjs.org (archived documentation)
+  url: https://docs.angularjs.org/api/ng/type/$rootScope.Scope
+knockout-docs:
+  authors: Sanderson, S.
+  year: 2010
+  title: Knockout.js documentation, Computed observables
+  url: https://knockoutjs.com/documentation/computedObservables.html
+backbone-docs:
+  authors: Ashkenas, J.
+  year: 2010
+  title: Backbone.js documentation, Events and Model
+  url: https://backbonejs.org/

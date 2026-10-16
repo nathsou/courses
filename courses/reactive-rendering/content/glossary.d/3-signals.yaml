@@ -1,0 +1,125 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+signal:
+  term: 'signal'
+  definition: 'A value that records which code read it and tells that code when it changes. The primitive of Solid, Vue refs, Angular, Preact and Svelte 5.'
+  chapter: signals-from-scratch
+computed:
+  term: 'computed'
+  definition: 'A value defined by a function of other signals: lazy, cached, and recomputed only when a source has really changed. Called *memo* or *derived* in some libraries.'
+  chapter: signals-from-scratch
+signal-effect:
+  term: 'effect (signals)'
+  definition: 'A function that runs once and again whenever the signals it read change, to affect the world outside the graph.'
+  chapter: signals-from-scratch
+dependency-tracking:
+  term: 'dependency tracking'
+  definition: 'Discovering what a computation depends on by recording what it reads while it runs, instead of asking the programmer to list it.'
+  chapter: signals-from-scratch
+dynamic-dependencies:
+  term: 'dynamic dependencies'
+  definition: 'Dependencies that follow what was actually read on the last run: a branch not taken is not a dependency.'
+  chapter: signals-from-scratch
+glitch:
+  term: 'glitch'
+  definition: 'A moment in which an effect sees a state that never existed, because it ran while the graph was half updated.'
+  chapter: glitches-and-diamonds
+diamond:
+  term: 'diamond'
+  definition: 'A graph in which one source reaches a node by two paths: the shape that exposes glitches.'
+  chapter: glitches-and-diamonds
+topological-order:
+  term: 'topological order'
+  definition: 'An order in which every node comes after everything it depends on. Running updates in this order avoids glitches.'
+  chapter: glitches-and-diamonds
+push-pull:
+  term: 'push-pull'
+  definition: 'Pushing the news that something is stale, and pulling values only when read. The model of modern signals cores.'
+  chapter: glitches-and-diamonds
+cutoff:
+  term: 'cutoff'
+  definition: 'Stopping propagation when a recomputed value equals the old one, so nothing downstream runs.'
+  chapter: glitches-and-diamonds
+three-colour:
+  term: 'three-colour algorithm'
+  definition: 'Marking nodes clean, check or dirty. A check node first asks its sources whether they changed. Reactively popularised it; several libraries use variants.'
+  chapter: glitches-and-diamonds
+batch:
+  term: 'batch'
+  definition: 'Grouping several writes so that effects run once, afterwards, with the final values.'
+  chapter: ownership-and-batching
+owner:
+  term: 'owner'
+  definition: 'The effect or root that was running when something was created, and that disposes it, together with its cleanups, when it re-runs or is disposed.'
+  chapter: ownership-and-batching
+cleanup:
+  term: 'cleanup'
+  definition: 'A function registered with the running owner to undo what the effect did: clear a timer, remove a listener.'
+  chapter: ownership-and-batching
+root:
+  term: 'root'
+  definition: 'An owner created by hand (`createRoot`, `effectScope`) to hold effects that outlive any other owner, and that you dispose yourself.'
+  chapter: ownership-and-batching
+fine-grained:
+  term: 'fine-grained reactivity'
+  definition: 'Updating exactly the node or attribute that reads a changed value, rather than re-running a component and comparing.'
+  chapter: templates-and-solid
+hole:
+  term: 'hole'
+  definition: 'A place in a template where a value goes: `{count()}`, `class={…}`. The compiler gives each one an effect.'
+  chapter: templates-and-solid
+proxy:
+  term: 'Proxy'
+  definition: 'A JavaScript object that intercepts operations on another object (reads, writes, deletes, key listings). Vue 3 uses it to track reads and writes on plain objects.'
+  chapter: vue-proxies-and-hints
+ref:
+  term: 'ref'
+  definition: 'Vue’s box around a primitive, with a `.value` whose getter tracks and whose setter triggers.'
+  chapter: vue-proxies-and-hints
+target-map:
+  term: 'target map'
+  definition: 'Vue’s table from object to property to the set of effects that read it.'
+  chapter: vue-proxies-and-hints
+patch-flag:
+  term: 'patch flag'
+  definition: 'A number the Vue compiler attaches to a vnode to say what can change on it (only its text, only its class), so the diff compares just that.'
+  chapter: vue-proxies-and-hints
+block-tree:
+  term: 'block tree'
+  definition: 'A flat list of a template’s dynamic nodes, kept by the Vue compiler so that the diff skips the static ones between them.'
+  chapter: vue-proxies-and-hints
+hoisting:
+  term: 'hoisting'
+  definition: 'Creating static vnodes once, outside the render function, so that a re-render returns the same object and the diff skips it.'
+  chapter: vue-proxies-and-hints
+vapor:
+  term: 'Vapor mode'
+  definition: 'Vue’s compile target without a virtual DOM, in which a template becomes direct DOM operations and effects. In release candidates in 3.6.'
+  chapter: vue-proxies-and-hints
+change-detection:
+  term: 'change detection'
+  definition: 'Angular’s process of checking each view’s bindings and writing those that differ.'
+  chapter: angular-zones-and-signals
+zone-js:
+  term: 'zone.js'
+  definition: 'A library that wraps the browser’s asynchronous APIs so that Angular is told when a task ends, and runs change detection then.'
+  chapter: angular-zones-and-signals
+onpush:
+  term: 'OnPush'
+  definition: 'An Angular strategy in which a view is checked only when marked: an input changes, an event fires in it, or a signal it reads changes.'
+  chapter: angular-zones-and-signals
+zoneless:
+  term: 'zoneless'
+  definition: 'Angular without zone.js: change detection runs only when something notifies it. Stable in 20.2 and the default for new applications from 21.'
+  chapter: angular-zones-and-signals
+view:
+  term: 'view'
+  definition: 'In Angular, the runtime counterpart of a component’s template: the node that holds its bindings and is checked as a unit.'
+  chapter: angular-zones-and-signals
+update-block:
+  term: 'update block'
+  definition: 'The half of an Angular template function (`rf & 2`) that evaluates the bindings and writes those that differ.'
+  chapter: angular-zones-and-signals
+tc39-watcher:
+  term: 'Watcher'
+  definition: 'In the Signals proposal, the low-level sink from which effects are built: it is told synchronously when watched signals become dirty, and may only schedule.'
+  chapter: a-standard-for-signals

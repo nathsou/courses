@@ -1,0 +1,16 @@
+zhang-shasha-1989:
+  authors: Zhang, K. and Shasha, D.
+  year: 1989
+  title: Simple fast algorithms for the editing distance between trees and related problems
+  venue: SIAM Journal on Computing 18(6), 1245–1262
+bille-2005:
+  authors: Bille, P.
+  year: 2005
+  title: A survey on tree edit distance and related problems
+  venue: Theoretical Computer Science 337(1–3), 217–239
+react-reconciliation:
+  authors: Meta Open Source
+  year: 2021
+  title: Reconciliation (React documentation, legacy site)
+  venue: legacy.reactjs.org
+  url: https://legacy.reactjs.org/docs/reconciliation.html

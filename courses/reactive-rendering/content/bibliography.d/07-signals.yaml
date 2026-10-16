@@ -1,0 +1,151 @@
+elliott-hudak-1997:
+  authors: Elliott, C. and Hudak, P.
+  year: 1997
+  title: Functional reactive animation
+  venue: Proceedings of the ACM SIGPLAN International Conference on Functional Programming (ICFP ’97)
+bainomugisha-2013:
+  authors: Bainomugisha, E., Carreton, A. L., Van Cutsem, T., Mostinckx, S. and De Meuter, W.
+  year: 2013
+  title: A survey on reactive programming
+  venue: ACM Computing Surveys 45(4), article 52
+hammer-adapton-2014:
+  authors: Hammer, M. A., Khoo, Y. P., Hicks, M. and Foster, J. S.
+  year: 2014
+  title: 'Adapton: composable, demand-driven incremental computation'
+  venue: Proceedings of the ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI ’14)
+carniato-fgr:
+  authors: Carniato, R.
+  year: 2021
+  title: A hands-on introduction to fine-grained reactivity
+  venue: DEV Community
+  url: https://dev.to/ryansolid/a-hands-on-introduction-to-fine-grained-reactivity-3ndf
+reactively:
+  authors: Mighdoll, M.
+  year: 2022
+  title: Super-charging fine-grained reactive performance
+  venue: Milo’s blog and the Reactively repository (github.com/modderme123/reactively)
+  url: https://github.com/modderme123/reactively
+solid-docs:
+  authors: Solid contributors
+  year: 2024
+  title: Solid documentation, fine-grained reactivity and control flow (`For`, `Show`, `Index`)
+  url: https://docs.solidjs.com/
+s-js:
+  authors: Haile, A.
+  year: 2015
+  title: S.js, simple, clean, fast reactive programming in Javascript
+  url: https://github.com/adamhaile/S
+surplus:
+  authors: Haile, A.
+  year: 2016
+  title: Surplus, high-performance JSX web views for S.js applications
+  url: https://github.com/adamhaile/surplus
+vue-reactivity-docs:
+  authors: Vue contributors
+  year: 2024
+  title: Vue documentation, Reactivity in Depth
+  url: https://vuejs.org/guide/extras/reactivity-in-depth.html
+zonejs:
+  authors: Angular team
+  year: 2024
+  title: zone.js, a library that wraps asynchronous browser APIs (packages/zone.js in the Angular repository)
+  url: https://github.com/angular/angular/tree/main/packages/zone.js
+angular-signals:
+  authors: Angular team
+  year: 2025
+  title: Angular documentation, Signals
+  url: https://angular.dev/guide/signals
+angular-zoneless:
+  authors: Angular team
+  year: 2025
+  title: Angular documentation, Zoneless change detection
+  url: https://angular.dev/guide/zoneless
+tc39-signals:
+  authors: Eisenberg, R., Ehrenberg, D. and contributors
+  year: 2024
+  title: Signals, a TC39 proposal (stage 1), with the signal-polyfill package
+  url: https://github.com/tc39/proposal-signals
+lit-docs:
+  authors: Lit team
+  year: 2024
+  title: Lit documentation, Templates and Reactive properties
+  url: https://lit.dev/docs/
+harris-rethinking:
+  authors: Harris, R.
+  year: 2019
+  title: 'Svelte 3: Rethinking reactivity'
+  venue: svelte.dev blog, 22 April 2019
+  url: https://svelte.dev/blog/svelte-3-rethinking-reactivity
+harris-vdom:
+  authors: Harris, R.
+  year: 2018
+  title: Virtual DOM is pure overhead
+  venue: svelte.dev blog, 27 December 2018
+  url: https://svelte.dev/blog/virtual-dom-is-pure-overhead
+svelte-runes-docs:
+  authors: Svelte team
+  year: 2024
+  title: Svelte documentation, Runes ($state, $derived, $effect, $props)
+  url: https://svelte.dev/docs/svelte/what-are-runes
+captured:
+  authors: The course authors
+  year: 2026
+  title: Captured compiler outputs for the counter component (React, Solid, Vue, Svelte, Angular), with tool versions
+  venue: docs/captured in the course repository
+react-hydration:
+  authors: React team
+  year: 2024
+  title: React documentation, hydrateRoot and Suspense for streaming server rendering
+  url: https://react.dev/reference/react-dom/client/hydrateRoot
+miller-islands:
+  authors: Miller, J.
+  year: 2020
+  title: Islands Architecture
+  venue: jasonformat.com
+  url: https://jasonformat.com/islands-architecture/
+astro-islands:
+  authors: Astro contributors
+  year: 2024
+  title: Astro documentation, Islands and client directives
+  url: https://docs.astro.build/en/concepts/islands/
+rsc-rfc:
+  authors: Abramov, D., Tan, L., Savona, J. and Markbåge, S.
+  year: 2020
+  title: Introducing Zero-Bundle-Size React Server Components
+  venue: React blog, 21 December 2020
+  url: https://react.dev/blog/2020/12/21/data-fetching-with-react-server-components
+qwik-resumable:
+  authors: Hevery, M. and the Qwik team
+  year: 2022
+  title: Qwik documentation, Resumable (and the Builder.io posts on resumability versus hydration)
+  url: https://qwik.dev/docs/concepts/resumable/
+turbo-morphing:
+  authors: Hotwire team
+  year: 2023
+  title: Turbo Handbook, Page refreshes (morphing)
+  url: https://turbo.hotwired.dev/handbook/page_refreshes
+liveview:
+  authors: McCord, C. and Phoenix team
+  year: 2024
+  title: Phoenix LiveView documentation (rendering, statics and dynamics)
+  url: https://hexdocs.pm/phoenix_live_view/
+morphdom:
+  authors: Steele-Idem, P.
+  year: 2015
+  title: morphdom, fast and lightweight DOM diffing/patching
+  url: https://github.com/patrick-steele-idem/morphdom
+idiomorph:
+  authors: Gross, C. and contributors
+  year: 2022
+  title: Idiomorph, a DOM morphing algorithm
+  url: https://github.com/bigskysoftware/idiomorph
+krause-benchmark:
+  authors: Krause, S.
+  year: 2015
+  title: js-framework-benchmark
+  url: https://github.com/krausest/js-framework-benchmark
+ajax-garrett:
+  authors: Garrett, J. J.
+  year: 2005
+  title: 'Ajax: a new approach to web applications'
+  venue: Adaptive Path, 18 February 2005

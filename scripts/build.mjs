@@ -96,6 +96,14 @@ const courses = [
       NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
     }),
   },
+  {
+    // What Changed? (reactive rendering): the same single-package SvelteKit setup.
+    name: 'reactive-rendering',
+    env: (base) => ({
+      BASE_PATH: `${base}/reactive-rendering`,
+      NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
+    }),
+  },
 ];
 const repository = process.env.GITHUB_REPOSITORY?.split('/')[1];
 const basePath = (process.env.COURSES_BASE_PATH ?? (repository ? `/${repository}` : '')).replace(/\/$/, '');

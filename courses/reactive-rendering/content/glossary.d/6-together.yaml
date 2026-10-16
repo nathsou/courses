@@ -1,0 +1,21 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+benchmark:
+  term: 'benchmark'
+  definition: 'A fixed set of scenarios run against several implementations. The course’s counts operations on a fake DOM; the js-framework-benchmark measures time in a browser.'
+  chapter: one-benchmark
+geometric-mean:
+  term: 'geometric mean'
+  definition: 'The *n*th root of the product of *n* ratios. The js-framework-benchmark combines each framework’s ratios to the best result in each scenario this way, so that no scenario counts for more because its numbers are larger.'
+  chapter: one-benchmark
+vanilla:
+  term: 'vanilla'
+  definition: 'Hand-written DOM code with no framework, the floor against which frameworks are compared.'
+  chapter: one-benchmark
+move-before:
+  term: 'moveBefore'
+  definition: 'A DOM method (in Chrome since early 2025) that moves a node without removing it, so that focus, iframes and animations are preserved.'
+  chapter: where-next
+view-transitions:
+  term: 'View Transitions'
+  definition: 'A browser API that animates between two states of a page, within one document or across navigations.'
+  chapter: where-next

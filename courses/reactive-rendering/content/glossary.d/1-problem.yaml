@@ -1,0 +1,61 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug of the chapter that introduces it) }.
+dom:
+  term: 'DOM'
+  definition: 'The Document Object Model, the browser’s live tree of the nodes on the page. Scripts read and write it; the browser re-renders from it.'
+  chapter: what-the-browser-does
+layout:
+  term: 'layout'
+  definition: 'The browser’s step of working out the size and position of every box on the page. Also called *reflow*. A write that changes geometry makes it necessary again.'
+  chapter: what-the-browser-does
+forced-layout:
+  term: 'forced layout'
+  definition: 'A layout that runs *now*, in the middle of a script, because the script read something (such as `offsetHeight`) that depends on pending writes. Interleaving reads and writes causes one per read.'
+  chapter: what-the-browser-does
+paint:
+  term: 'paint'
+  definition: 'The browser’s step of drawing the pixels of each layer. Cheaper than layout for properties like colour, which do not change geometry.'
+  chapter: what-the-browser-does
+mutation:
+  term: 'mutation'
+  definition: 'A change to the DOM: setting text or an attribute, inserting or removing a node. The course’s *mutation lens* counts them.'
+  chapter: the-question
+mutation-lens:
+  term: 'mutation lens'
+  definition: 'The course’s instrument for seeing what an update did to the DOM, as a log of operations, flashing nodes and counters. Every figure that shows a page uses it.'
+  chapter: the-question
+innerhtml:
+  term: 'innerHTML'
+  definition: 'A DOM property that replaces an element’s children with nodes parsed from a string. The simplest way to rebuild a view, and one that destroys everything the old nodes held.'
+  chapter: the-question
+state:
+  term: 'state'
+  definition: 'The data a user interface depends on and that can change: a counter, a list of notes, the text in a box. The UI is, ideally, a function of it.'
+  chapter: ui-as-a-function
+view-function:
+  term: 'view function'
+  definition: 'A function from state to a description of the page, `view(state) → UI`. The idea behind React, Elm and most of the course.'
+  chapter: ui-as-a-function
+declarative:
+  term: 'declarative'
+  definition: 'Describing what the page should look like for a given state, and leaving the work of getting there to the framework, as opposed to *imperative* step-by-step DOM instructions.'
+  chapter: ui-as-a-function
+observer-pattern:
+  term: 'observer pattern'
+  definition: 'Objects keep a list of subscribers and call them when they change. The oldest way to propagate change, and the basis of eager signals.'
+  chapter: before-frameworks
+dirty-checking:
+  term: 'dirty checking'
+  definition: 'Finding out what changed by comparing every watched value with its previous value, rather than being told. AngularJS’s digest loop and Angular’s change detection work this way.'
+  chapter: before-frameworks
+digest-cycle:
+  term: 'digest cycle'
+  definition: 'AngularJS’s loop that runs every watcher, again and again, until a full pass finds no change. The cost is the number of watchers times the number of passes.'
+  chapter: before-frameworks
+watcher:
+  term: 'watcher'
+  definition: 'In AngularJS, a function that reads a value plus a listener called when the value differs from last time. In the TC39 Signals proposal, a sink that is notified when watched signals become dirty.'
+  chapter: before-frameworks
+two-way-binding:
+  term: 'two-way binding'
+  definition: 'A binding that keeps a model value and a form control in step in both directions. Convenient, and a source of cascades that are hard to follow.'
+  chapter: before-frameworks
