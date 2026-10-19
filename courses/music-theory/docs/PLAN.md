@@ -1,4 +1,4 @@
-# Course plan: *Under Your Fingers*
+# Course plan: *Music Theory*
 
 The working plan for the course: decisions, through-lines, curriculum, the instrument and the score, exercises,
 milestones and risks. Update it when a decision changes or a chapter lands.
@@ -15,17 +15,18 @@ heard, named, played and written.
 
 | Topic | Decision | Status | Notes |
 |---|---|---|---|
-| Title | **Under Your Fingers** | proposed | Subtitle: *music theory at the piano, from the first note to jazz harmony*. Slug `music-theory`, published at `/music-theory/`. Other candidates in §14. |
+| Title | **Music Theory** | agreed | Subtitle: *at the piano, from the first note to jazz harmony*. Slug `music-theory`, published at `/music-theory/`. |
 | Reader | **An adult learning the piano** who can play a little and wants the basics explained properly | agreed | They can find middle C and play a simple melody with both hands, but may read slowly, may never have learnt *why* the keyboard is laid out as it is, and have gaps. Nothing is assumed: Part I starts from high and low. Each chapter opens with a short *Check yourself* (§5) so a reader who knows it can move on with evidence rather than guesswork. |
 | Repertoire | **Classical spine, with jazz and pop woven in** | agreed | Parts I–V follow the common-practice sequence (fundamentals, diatonic harmony, voice leading, chromatic harmony, form). Each classical idea shows its jazz or pop form where one exists (§2, through-line 4). Part VI is jazz and pop harmony; Part VII goes beyond tonality. |
 | Code | **None** | agreed | Every activity is musical: listen, name, play, write, analyse, harmonise. No editor and no code runner in the site. |
-| Input | **Web MIDI keyboard** as the instrument | agreed | The reader's digital piano or MIDI keyboard over USB or Bluetooth (§6). The on-screen keyboard and the computer keyboard (QWERTY rows) are the fallback, not the main path; they are needed anyway because Safari and iOS do not support Web MIDI. No microphone input (§14). |
+| Input | **Web MIDI keyboard** as the instrument | agreed | The reader's digital piano or MIDI keyboard over USB or Bluetooth (§6). The on-screen keyboard and the computer keyboard (QWERTY rows) are the fallback, not the main path; they are needed anyway because Safari and iOS do not support Web MIDI. |
+| Microphone | **None for now** | agreed | Monophonic pitch detection for acoustic-piano owners may be revisited after M9; nothing in the design depends on it. |
 | MIDI out | **Optional: play the course through the reader's own instrument** | proposed | When the device has a MIDI output, examples can sound on the reader's piano instead of the speakers. Off by default. |
 | Sound | Sampled grand piano in Web Audio; synthesised bass, drums and click for backing tracks | proposed | A reduced subset of an openly licensed multisample piano (candidate: *Salamander Grand Piano*, CC BY 3.0; licence to be confirmed in M0), a few velocity layers, sampled every minor third and resampled between, compressed to at most 8 MB, lazy-loaded. No recordings of performances are shipped; every example is played from its score. |
-| Notation | **Our own SVG engraver** with SMuFL glyphs (Bravura; Petaluma for lead sheets, both SIL OFL) | proposed | Bounded scope: single staff and grand staff, up to two voices per staff, clefs, key and time signatures, beams, ties, dots, tuplets, accidentals, chord symbols, Roman numerals and figures under the bass. Needed because the interactions draw on the score: live MIDI notes, voice-leading arrows, colouring by function, click-to-hear. Fallback if the scope runs away: VexFlow behind the same API (§13, risk 1). |
+| Notation | **Our own SVG engraver, no third-party code** | agreed | Bounded scope: single staff and grand staff, up to two voices per staff, clefs, key and time signatures, beams, ties, dots, tuplets, accidentals, chord symbols, Roman numerals and figures under the bass. The interactions draw on the score: live MIDI notes, voice-leading arrows, colouring by function, click-to-hear. Glyphs come from the SMuFL fonts Bravura and Petaluma (SIL OFL), self-hosted as font files; no notation library (§8, §14 risk 1). |
 | Score source | **A compact text format** in fenced `score` blocks | proposed | LilyPond-like, small enough to read in a diff: `\key g \major \time 3/4 | d'4 g'2 b'8( a' | ...`. Parsed by `src/lib/notation/parse.ts`; every score in the course is parsed and rendered in a test. |
-| Note names | C D E … by default; **Do Ré Mi** (fixed do) and German (B = H) as settings | proposed | One setting changes every label in the text, the keyboard and the exercises. |
-| Terms | **British terms with American equivalents** | proposed | *Crotchet (quarter note)* and *bar (measure)* on first use per chapter; a setting swaps which comes first. The glossary lists both. Jazz chapters use the jazz vocabulary (*changes*, *comping*, *voicing*) whatever the setting. |
+| Note names | **A setting**: letters (C D E, B♭ B), fixed-do solfège (Do Ré Mi / Do Re Mi … Si), or German (B = B♭, H = B♮) | agreed | One setting changes every label in the text, the keyboard and the exercises. **Default from the browser's language and region** (`navigator.languages`), never from geolocation or an IP lookup: French, Italian, Spanish, Portuguese and Romanian → solfège (accented *Ré* in French); German, Dutch, the Nordic languages, Czech, Slovak, Polish and Hungarian → German names; everything else → letters. §5a lists the full table. |
+| Terms | **A setting**: British (*crotchet*, *bar*) or American (*quarter note*, *measure*) first, the other in brackets on first use per chapter | agreed | **Default from the locale**: British for en-GB, en-IE, en-AU, en-NZ, en-ZA and en-IN; American for every other locale. The glossary lists both. Jazz chapters use the jazz vocabulary (*changes*, *comping*, *voicing*) whatever the setting. |
 | Copyright | **Only public-domain music, music written for the course, and chord progressions** | proposed | A melody or excerpt ships only if it is public domain in both the US and the EU (composer and lyricist both dead for more than 70 years, and published before 1931), or traditional, or written for the course. Copyrighted songs and standards are named and their progressions discussed (a progression is not protected), never notated or played. Jazz tunes are course-written contrafacts over common changes (blues, rhythm changes, ii–V–I). Each piece records its source and status in `content/repertoire.yaml`. |
 | Site | SvelteKit 2 + Svelte 5 (runes), `adapter-static`, TypeScript 6, the Markdown-with-directives compiler copied from *The Prime Staircase* | proposed | Single npm package. Output in `dist/`; base path from `BASE_PATH`, or `COURSES_BASE_PATH + /music-theory`. No CodeMirror and no code runner. |
 | Library | `src/lib/music`: pure TypeScript, no DOM | proposed | Pitch and spelling, intervals, scales and modes, chords and chord symbols, keys, Roman-numeral analysis, voice-leading rules, rhythm and quantisation, tuning, pitch-class sets. Every module tested. Widgets and exercise checkers share it (§7). |
@@ -40,12 +41,23 @@ heard, named, played and written.
 1. **Hear it, name it, play it, write it.** Each concept appears in all four modes, and exercises move between them:
    hear a chord and play it back; see a symbol and play it; play a progression and write its numerals; read a
    score and hear it in your head before pressing play.
-2. **One melody, harmonised again and again.** *Amazing Grace* (the tune *New Britain*, 1829; public domain) returns
-   at the end of each part with the harmony that part has taught: three chords (Part I), with sevenths and cadences
-   (II), in four voices (III), with secondary dominants and a modulation (IV), in an AABA arrangement (V), as a
-   jazz ballad with rootless voicings and reharmonisation (VI), and over planed and non-tonal harmony (VII). The
-   reader plays each version and, from Part II, writes part of it. Its pentatonic melody makes it a good test of
-   how far harmony can change a tune that stays the same.
+2. **Three pieces, at every level.** Three pieces return throughout the course, each newly arranged with
+   what the reader has just learnt, and each arrangement comes in playing levels (right hand only, hands
+   together simplified, full) with the course able to play either hand while the reader plays the other:
+   - **Korobeiniki**, the Russian folk song (lyrics by Nekrasov, 1861; traditional melody) that the world knows
+     from Tetris, is the running **melody**. It is in minor, which puts the leading note and harmonic minor
+     to work early. It ends each part (*Korobeiniki I–VII*): two chords and a melody (I), sevenths and a broken-chord
+     left hand (II), four voices and a two-voice canon (III), secondary dominants and a modulation (IV), a full
+     arrangement in a named form (V), a swing arrangement with rootless voicings and reharmonisation (VI), and a
+     whole-tone and octatonic distortion (VII). The course notates the folk melody from a public-domain source,
+     never the 1989 Game Boy arrangement, and uses no Tetris name or imagery beyond saying where the reader has
+     heard it.
+   - **Pachelbel's Canon in D** is the running **progression**: the eight-chord ground in Part II, the
+     descending-thirds sequence and the canon's three voices in Part III, variations over a ground in Part V,
+     and in Part VI the pop loop that grew from it and its jazz reharmonisation (*Canon I–IV*).
+   - **Chopin's Preludes, Op. 28** carry the **harmony** from simple to chromatic: No. 7 in A major (almost all
+     V7 and I) in Part II, No. 20 in C minor (a chromatic bass line in block chords) in Part IV, and No. 4 in
+     E minor for the epilogue.
 3. **All twelve keys.** Everything that can be played is asked for in every key, not just C. The practice room
    (§5) keeps a key-by-skill heatmap, and the course points the reader at the cold cells.
 4. **Classical and jazz are the same theory.** Bridges where the two meet: a sequence of descending fifths and a
@@ -87,29 +99,31 @@ Durations are reading-plus-playing estimates. Each chapter is one to three sessi
 11. **Inversions and the hand.** First and second inversion, slash chords, figures 6 and 6/4, closest-position
     voicing so the hand barely moves, left-hand root with right-hand triad.
 12. **Rhythm in more detail.** Compound metre (6/8, 9/8, 12/8), triplets, semiquavers, syncopation, swing.
-    *Amazing Grace I:* melody with I, IV and V.
+    *Korobeiniki I:* the melody with i and V.
 
 ### Part II: Harmony in practice
 13. **Function and cadence.** Tonic, predominant, dominant; the perfect, plagal, imperfect and interrupted
     cadences, heard and played.
-14. **Seventh chords.** The five qualities, diatonic sevenths, V7 and the tritone's resolution.
+14. **Seventh chords.** The five qualities, diatonic sevenths, V7 and the tritone's resolution; Chopin's
+    Prelude in A major, Op. 28 No. 7, played and analysed.
 15. **Progressions.** Harmonic rhythm, the circle-of-fifths progression, ii–V–I, the common pop loops, the 12-bar
-    blues.
+    blues. *Canon I:* Pachelbel's eight-chord ground.
 16. **Melody and non-chord tones.** Passing and neighbour notes, suspensions, appoggiaturas, anticipations;
     motif and phrase.
 17. **Accompanying a melody.** Choosing chords for a tune, reading a lead sheet, left-hand patterns: block, broken,
     Alberti, waltz, arpeggiated ballad.
 18. **Phrase and period.** Antecedent and consequent, the sentence, four- and eight-bar phrases, cadence as
-    punctuation. *Amazing Grace II.*
+    punctuation. *Korobeiniki II:* sevenths, cadences and a broken-chord left hand.
 
 ### Part III: Voice leading
 19. **Four voices.** SATB and keyboard style (three in the right hand, bass in the left), spacing, doubling,
     motion between voices, parallel fifths and octaves heard rather than just forbidden.
-20. **Two voices: counterpoint.** First and second species in brief; reading Bach's Invention No. 1 in C (BWV 772).
+20. **Two voices: counterpoint.** First and second species in brief; reading Bach's Invention No. 1 in C (BWV 772);
+    Korobeiniki as a two-voice canon.
 21. **Six-four chords and figured bass.** Cadential, passing and pedal six-fours; realising a figured bass at the
     keyboard, checked by the rule engine.
-22. **Sequences.** Descending fifths, descending thirds (Pachelbel), ascending 5–6; sequences in Bach and in pop.
-    *Amazing Grace III:* in four voices.
+22. **Sequences.** Descending fifths, descending thirds, ascending 5–6; sequences in Bach and in pop. *Canon II:*
+    the descending-thirds sequence under Pachelbel's three canonic voices. *Korobeiniki III:* in four voices.
 
 ### Part IV: Chromatic harmony
 23. **Secondary dominants.** V/V, V/vi and friends; tonicisation; secondary leading-note chords.
@@ -118,14 +132,15 @@ Durations are reading-plus-playing estimates. Each chapter is one to three sessi
 26. **The Neapolitan and augmented sixths.** ♭II6; Italian, French and German sixths; the German sixth as a
     tritone substitute (bridge to Ch. 36).
 27. **Diminished sevenths and chromatic mediants.** The diminished seventh as a pivot, enharmonic modulation,
-    third relations in Schubert and in film music. *Amazing Grace IV.*
+    third relations in Schubert and in film music; Chopin's Prelude in C minor, Op. 28 No. 20, chord by chord.
+    *Korobeiniki IV:* secondary dominants and a modulation to the relative major.
 
 ### Part V: Form
 28. **Small forms.** Binary, rounded binary, ternary; song forms AABA and verse–chorus; the blues as a form.
 29. **Sonata, rondo and variations.** Clementi's Sonatina Op. 36 No. 1 and Mozart's Sonata K. 545 analysed at the
-    keyboard; rondo; theme and variations.
+    keyboard; rondo; theme and variations. *Canon III:* variations over a ground bass.
 30. **Fugue** *(optional).* Subject, answer, countersubject, episode, stretto, in the C major fugue of the
-    *Well-Tempered Clavier*, Book I. *Amazing Grace V:* an AABA arrangement.
+    *Well-Tempered Clavier*, Book I. *Korobeiniki V:* a complete arrangement in rounded binary form.
 
 ### Part VI: Jazz and pop harmony
 31. **Lead sheets and extensions.** Chord symbols in full; 9ths, 11ths and 13ths; altered tones; which notes a
@@ -139,9 +154,9 @@ Durations are reading-plus-playing estimates. Each chapter is one to three sessi
     bebop scales. *Play:* improvise over a blues; the course shows where your notes fell against the changes;
     self-reviewed.
 36. **Reharmonisation.** Tritone substitution, backdoor ii–V, diminished passing chords, chromatic approach chords,
-    Coltrane changes (the progression only).
+    Coltrane changes (the progression only). *Canon IV:* the pop loop, then reharmonised as a jazz ballad.
 37. **Groove and accompaniment.** Comping rhythms, stride, bossa nova, the pop ballad, gospel left hands.
-    *Amazing Grace VI:* a jazz ballad.
+    *Korobeiniki VI:* swung, with rootless voicings and substitutions.
 
 ### Part VII: Beyond tonality
 38. **Colour harmony.** Debussy and Satie: planing, added-note chords, whole-tone and pentatonic harmony, the
@@ -152,7 +167,7 @@ Durations are reading-plus-playing estimates. Each chapter is one to three sessi
     Schoenberg's Op. 33a (public-domain status to confirm in M8).
 42. **Why twelve notes?** The harmonic series, Pythagorean tuning and its comma, just intonation, meantone, equal
     temperament; hear each on the course piano. *Bridge* to *The Prime Staircase*: no power of 3/2 is a power of
-    2, by unique factorisation. *Amazing Grace VII.*
+    2, by unique factorisation. *Korobeiniki VII:* the melody over whole-tone, octatonic and planed harmony.
 
 ### Epilogue
 43. **One piece, all the way down.** Chopin's Prelude in E minor, Op. 28 No. 4, analysed with everything in the
@@ -200,6 +215,24 @@ unlocks). Then, in order:
 A result is bound to what was played: replaying an exercise clears its result first, and *Check yourself*
 results expire after 30 days in the practice room's view.
 
+### 5a. Note names and terms by locale
+
+On the first visit the course reads `navigator.languages` (language and, where given, region) and picks both
+settings from the table below, then says so in one line under the header ("Note names: Do Ré Mi, from your
+browser's language. Change"). The choice is stored and never re-derived once the reader has changed it. No
+geolocation or network lookup is used.
+
+| Locale | Note names | Terms first |
+|---|---|---|
+| fr | Do Ré Mi Fa Sol La Si | American |
+| it, es, pt, ro | Do Re Mi Fa Sol La Si | American |
+| de, nl, da, nb, nn, sv, fi, cs, sk, pl, hu | C D E F G A H (B = B♭) | American |
+| en-GB, en-IE, en-AU, en-NZ, en-ZA, en-IN | C D E F G A B | British |
+| every other locale (including en-US, en-CA) | C D E F G A B | American |
+
+Solfège is fixed do (Do is always C), as taught in the countries that use it. Movable-do degree syllables are not
+used; scale degrees are numbers (1̂–7̂) whatever the setting. The table is tested in `src/lib/settings`.
+
 ### The practice room (`#/practice`)
 
 Short daily sessions drawn from the skills the reader has met: note reading, keys, intervals, chord qualities,
@@ -245,7 +278,7 @@ Pure TypeScript, no DOM, every module tested with Vitest.
 
 ## 8. The score (`src/lib/notation`)
 
-Parser for the text format; a layout engine (horizontal spacing by duration, accidentals, beams, ties, two
+No third-party code: parser, layout and renderer are the course's own. Parser for the text format; a layout engine (horizontal spacing by duration, accidentals, beams, ties, two
 voices, systems that reflow to the column width); an SVG renderer using Bravura (Petaluma for lead sheets).
 Hooks for highlighting notes as they sound, drawing live MIDI input onto the staff, arrows between notes for
 voice-leading faults, function colours and click-to-hear. Out of scope: lyrics beyond one line, more than two
@@ -316,8 +349,9 @@ Shares the collection's `theme` key.
 
 ## 14. Risks
 
-1. **The engraver.** Notation layout is a deep problem. Mitigation: a hard scope (§8), excerpts kept short, and a
-   VexFlow fallback behind the same `Score` API if v1 is not good enough by the end of M1.
+1. **The engraver.** Notation layout is a deep problem and there is no library to fall back on. Mitigation: a
+   hard scope (§8); excerpts kept short; a reference set of about 30 test scores covering every feature in §8,
+   rendered in a visual test at three widths and reviewed at the end of M1 before any part builds on the engraver.
 2. **Spelling from MIDI.** MIDI carries no spelling. Mitigation: spell by key and chord context in `pitch`, show
    the spelling chosen, and let the reader flip it in `spell` exercises.
 3. **Latency and timing.** Bluetooth MIDI and audio output add tens of milliseconds. Mitigation: calibration,
@@ -327,17 +361,17 @@ Shares the collection's `theme` key.
 5. **Sample size and licence.** Mitigation: a small multisample subset, lazy-loaded, licence recorded in the
    repertoire appendix; a synthesised piano if the licence does not hold.
 6. **Copyright.** Mitigation: the rule in §1 and `content/repertoire.yaml` with a status for each piece, re-checked
-   in M8.
+   in M8. Korobeiniki is notated from the folk melody, not from any game arrangement.
 7. **Over-strict rule checking.** Voice-leading rules are style conventions, not laws. Mitigation: per-exercise
    rule sets, faults explained and heard, "no faults found" never presented as "correct".
 
 ## 15. Open questions
 
-1. **Title.** *Under Your Fingers*; alternatives: *Between the Keys*, *Hear It, Play It*, *The Harmony Workshop*.
-2. **Engraver.** Our own (as proposed) or VexFlow from the start?
-3. **Microphone.** Monophonic pitch detection would let acoustic-piano owners do single-note exercises (not
-   chords). Leave out, or add later as an optional input?
-4. **Running melody.** *Amazing Grace* (proposed); alternatives: *Greensleeves* (minor) or a melody written for
-   the course.
-5. **Default note names and terms.** C D E with British terms first (proposed), or Do Ré Mi, or American terms
-   first?
+1. **Piano samples.** Confirm the Salamander Grand Piano licence in M0, or choose another openly licensed set or
+   a synthesised piano.
+2. **Schoenberg Op. 33a.** Confirm its public-domain status in the US and the EU in M8, or replace it with a row
+   written for the course.
+
+Decided on 2026-10-19: title *Music Theory*; our own engraver with no third-party code; no microphone for now;
+Korobeiniki, Pachelbel's Canon and Chopin's Preludes as the recurring pieces; note names and terms as settings
+with a default from the browser's locale.
