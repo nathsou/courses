@@ -16,7 +16,9 @@ docs/PLAN.md. Read it first. Lives in `courses/music-theory/` of the Interactive
   write them this way, never as bare text, wherever a note, chord or British/American term appears.
 - Scores: fenced ` ```score ` blocks in the format documented in `src/lib/notation/parse.ts` (absolute pitches: `c'` is
   C4; `f'` is F natural whatever the key). Attributes: caption, label, play="false", tempo.
-- Exercises: ` ```play ` blocks (steps of `chord:` or `notes:`), ` ```quiz `. Feedback says what was established:
+- Exercises: ` ```play ` blocks (steps of `chord:` or `notes:`), ` ```perform `, ` ```ear `, ` ```spell `, ` ```read `,
+  ` ```analyse `, ` ```realise ` (four-part or two-part writing checked by `src/lib/music/voicelead.ts`; give an
+  `example` realisation, which the content tests check for faults), ` ```quiz `. Feedback says what was established:
   "Played and checked", "answer checked"; never "correct" for anything a checker did not check.
 - Library: `src/lib/music` (pitch, names, interval, scale, chord, rhythm). Pure TypeScript, no DOM, tested.
 - Repertoire: only public-domain music, music written for the course, and chord progressions (PLAN §1 Copyright).

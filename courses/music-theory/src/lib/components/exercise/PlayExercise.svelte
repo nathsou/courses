@@ -29,6 +29,7 @@
   import ExerciseFrame from './ExerciseFrame.svelte';
   import Icon from '../ui/Icon.svelte';
   import { localise } from './localise.svelte';
+  import { listening } from './active';
 
   let { spec }: { spec: PlaySpec } = $props();
 
@@ -104,6 +105,7 @@
 
   onMount(() =>
     instrument.subscribe((e) => {
+      if (!listening(spec.id)) return;
       // Chords arrive one note at a time: wait a moment for the rest before judging.
       clearTimeout(settle);
       settle = window.setTimeout(() => evaluate(e.on), 90);
@@ -111,7 +113,7 @@
   );
 </script>
 
-<ExerciseFrame id={spec.id} kind="At the keyboard" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel="Played and checked">
+<ExerciseFrame id={spec.id} listens kind="At the keyboard" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel="Played and checked">
   <div class="play-ex ui" use:localise>
     <ol class="steps" aria-label="Steps">
       {#each spec.steps as s, i (i)}

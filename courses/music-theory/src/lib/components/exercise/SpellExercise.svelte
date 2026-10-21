@@ -18,6 +18,7 @@
   import { parseKey } from './play';
   import { checkSpelling, respellNote, type SpellItem, type SpellVerdict } from './spell';
   import { localise } from './localise.svelte';
+  import { listening } from './active';
 
   interface Spec {
     id: string;
@@ -70,10 +71,10 @@
     done = false;
   }
 
-  onMount(() => instrument.subscribe((e) => e.on && !done && toggle(e.midi)));
+  onMount(() => instrument.subscribe((e) => e.on && !done && listening(spec.id) && toggle(e.midi)));
 </script>
 
-<ExerciseFrame id={spec.id} kind="Write" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel="Answer checked">
+<ExerciseFrame id={spec.id} listens kind="Write" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel="Answer checked">
   <div class="spell ui" use:localise>
     {#if done}
       <p class="ok"><Icon name="check" size={15} /> Answer checked: all {spec.items.length} written correctly. <button onclick={restart}>Again</button></p>

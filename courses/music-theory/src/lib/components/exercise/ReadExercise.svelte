@@ -18,6 +18,7 @@
   import { parseKey } from './play';
   import { rng } from './ear';
   import { localise } from './localise.svelte';
+  import { listening } from './active';
 
   interface Spec {
     id: string;
@@ -86,7 +87,7 @@
     target = undefined;
     unsub?.();
     unsub = instrument.subscribe((e) => {
-      if (!e.on || !target || flash) return;
+      if (!e.on || !target || flash || !listening(spec.id)) return;
       if (e.midi === midi(target)) {
         right++;
         times = [...times, (e.time - shownAt) / 1000];
@@ -112,7 +113,7 @@
   });
 </script>
 
-<ExerciseFrame id={spec.id} kind="Read" title={spec.title} prompt={spec.prompt} hints={spec.hints} completionLabel="Answer checked">
+<ExerciseFrame id={spec.id} listens kind="Read" title={spec.title} prompt={spec.prompt} hints={spec.hints} completionLabel="Answer checked">
   <div class="read ui" use:localise>
     {#if target}
       <div class="note" class:ok={flash === 'ok'} class:bad={flash === 'bad'}>

@@ -119,7 +119,7 @@ mode: both
 tempo: 72
 range: [40, 76]
 score: |
-  \time 4/4 \key g \major \staff treble <b d' g'>2 <a d' f#'>2 | <b e' g'>2 <c' e' g'>2 | <b d' g'>1 | \staff bass g,2 d2 | e2 c2 | g,1 |
+  \time 4/4 \key g \major \staff treble <b d' g'>2 <a d' f#'>2 | <g b e'>2 <g c' e'>2 | <g b d'>1 | \staff bass g,2 d2 | e2 c2 | g,1 |
 hints:
   - 'From :c[G] (:n[B3] :n[D4] :n[G4]) to :c[D]: :n[D4] stays, :n[B3] steps down to :n[A3], :n[G4] steps down to :n[F#4].'
 ```

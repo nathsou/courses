@@ -17,6 +17,9 @@ import { QUALITIES } from '../../src/lib/music/chord';
 import { parseKey } from '../../src/lib/components/exercise/play';
 import { checkSpelling } from '../../src/lib/components/exercise/spell';
 import { onsetsOf } from '../../src/lib/components/exercise/perform';
+import { exampleChords, judge, realiseScore, slotsOf } from '../../src/lib/components/exercise/realise';
+import { checkVoiceLeading } from '../../src/lib/music/voicelead';
+import { midi } from '../../src/lib/music/pitch';
 
 const root = path.resolve(import.meta.dirname, '../../content');
 const files = ['chapters', 'appendices'].flatMap((dir) => {
@@ -53,7 +56,7 @@ describe('content music is valid', () => {
     });
     test(`${rel}: exercises`, () => {
       const ids = new Set<string>();
-      for (const kind of ['play', 'perform', 'ear', 'spell', 'read', 'analyse']) {
+      for (const kind of ['play', 'perform', 'ear', 'spell', 'read', 'analyse', 'realise']) {
         for (const b of blocks(src, kind)) {
           const spec = YAML.parse(b);
           expect(spec.id, `${kind} block needs an id`).toBeTruthy();
@@ -77,8 +80,49 @@ describe('content music is valid', () => {
             const slots = spec.per === 'bar' ? new Set(sc.staves.flatMap((st) => st.events.map((e) => e.bar))).size : spec.per === 'note' ? sc.staves[0]!.events.filter((e) => e.kind === 'note').length : onsetsOf(sc).length;
             expect(slots, `${spec.id}: one answer per ${spec.per ?? 'chord'}`).toBe(spec.answers.length);
           }
+          if (kind === 'realise') {
+            const slots = slotsOf(spec);
+            for (const list of [spec.figures, spec.numerals]) if (list) expect(list.length, `${spec.id}: one label per note`).toBe(slots.length);
+            parseScore(realiseScore(spec, slots, []));
+            const ex = exampleChords(spec);
+            if (ex.length) {
+              expect(ex.length, `${spec.id}: example has one chord per note`).toBe(slots.length);
+              ex.forEach((c, i) => expect(c[slots[i]!.given.voice], `${spec.id}: example chord ${i + 1} keeps the given note`).toBe(slots[i]!.given.midi));
+              const faults = judge(spec, slots, ex).filter((f) => f.severity === 'fault');
+              expect(faults.map((f) => `${f.at + 1}: ${f.text}`), `${spec.id}: example has faults`).toEqual([]);
+            }
+          }
         }
       }
     });
   }
 });
+
+/** Parallel fifths and octaves in the course's own four-part examples: keyboard-style chord scores and ear progressions. */
+describe('content voice leading', () => {
+  const C = { tonic: { letter: 'C' as const, alter: 0 }, mode: 'major' as const };
+  const rules = ['parallel-fifths', 'parallel-octaves', 'crossing'] as const;
+  const faults = (chords: number[][]) => checkVoiceLeading(chords, { key: C, style: 'keyboard', rules: [...rules] }).map((f) => `chord ${f.at + 1}: ${f.text}`);
+  for (const file of files) {
+    const src = readFileSync(file, 'utf8');
+    test(`${path.relative(root, file)}: no parallels`, () => {
+      // Ear progressions of four-note chords.
+      for (const m of src.matchAll(/- play: \[([^\]]+)\]/g)) {
+        const groups = m[1]!.split(',').map((g) => g.trim().split(/\s+/));
+        if (groups.length < 2 || groups.some((g) => g.length !== 4)) continue;
+        expect(faults(groups.map((g) => g.map((n) => midi(parsePitch(n))).sort((a, b) => b - a))), m[1]).toEqual([]);
+      }
+      // Scores of three-note chords over a bass, one voice per staff; a caption that mentions parallels is a demonstration.
+      for (const m of src.matchAll(/^```score([^\n]*)\n([\s\S]*?)^```/gm)) {
+        if (/parallel/i.test(m[1]!)) continue;
+        const sc = parseScore(m[2]!);
+        if (sc.staves.length !== 2 || sc.staves.some((st) => st.events.some((e) => e.voice === 1))) continue;
+        const [t, b] = sc.staves.map((st) => st.events.filter((e) => e.kind === 'note'));
+        if (t!.length < 2 || t!.length !== b!.length || t!.some((e, i) => e.start !== b![i]!.start || e.pitches.length !== 3 || b![i]!.pitches.length !== 1)) continue;
+        const chords = t!.map((e, i) => [...e.pitches.map(midi), midi(b![i]!.pitches[0]!)].sort((x, y) => y - x));
+        expect(faults(chords), m[2]!.slice(0, 80)).toEqual([]);
+      }
+    });
+  }
+});
+

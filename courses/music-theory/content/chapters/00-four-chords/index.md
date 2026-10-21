@@ -12,7 +12,7 @@ Press **Play** and listen. You have almost certainly heard this before, under ot
 
 ```score caption="Four chords, one bar each. Click a chord to hear it on its own." label="Four chords on the grand staff: C, G, A minor and F"
 \time 4/4 \key c \major \tempo 72
-\staff treble <e' g' c''>1^"C" | <d' g' b'>1^"G" | <e' a' c''>1^"Am" | <f' a' c''>1^"F" |
+\staff treble <e' g' c''>1^"C" | <d' g' b'>1^"G" | <c' e' a'>1^"Am" | <c' f' a'>1^"F" |
 \staff bass c1_"I" | g,1_"V" | a,1_"vi" | f,1_"IV" |
 ```
 :::

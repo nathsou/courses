@@ -22,7 +22,7 @@ items:
     answer: Comma
   - play: [C3 C4 E4 G4, F2 C4 F4 A4, C3 C4 E4 G4, G2 B3 D4 G4]
     answer: Comma
-  - play: [C3 C4 E4 G4, D3 D4 F4 A4, G2 B3 D4 G4, C3 C4 E4 G4]
+  - play: [C3 C4 E4 G4, D3 A3 D4 F4, G2 B3 D4 G4, C3 C4 E4 G4]
     answer: Full stop
 rounds: 6
 pass: 6

@@ -4,6 +4,7 @@
   import { onMount } from 'svelte';
   import { progress } from '$lib/state/progress.svelte';
   import Icon from '../ui/Icon.svelte';
+  import { register } from './active';
 
   let {
     id,
@@ -16,6 +17,7 @@
     completionLabel = 'Answer checked',
     children,
     footer,
+    listens = false,
   }: {
     id: string;
     kind: string;
@@ -27,6 +29,8 @@
     completionLabel?: string;
     children: Snippet;
     footer?: Snippet;
+    /** The exercise takes notes from the instrument (see ./active.ts). */
+    listens?: boolean;
   } = $props();
 
   let shownHints = $state(0);
@@ -39,7 +43,7 @@
   const solved = $derived(mounted && progress.isSolved(id));
 </script>
 
-<section class="exercise" class:solved aria-label="{kind}{title ? `: ${title}` : ''}">
+<section class="exercise" class:solved aria-label="{kind}{title ? `: ${title}` : ''}" use:register={listens ? id : undefined}>
   <header class="ui">
     <span class="kind"><Icon name="exercises" size={14} /> {kind}</span>
     {#if title}<span class="title">{title}</span>{/if}

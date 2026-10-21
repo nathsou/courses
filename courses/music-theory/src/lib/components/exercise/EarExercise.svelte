@@ -16,6 +16,7 @@
   import Icon from '../ui/Icon.svelte';
   import { question, rng, type EarSpec, type Question } from './ear';
   import { localise } from './localise.svelte';
+  import { listening } from './active';
 
   let { spec }: { spec: EarSpec } = $props();
 
@@ -60,7 +61,7 @@
     finished = false;
     unsub?.();
     unsub = instrument.subscribe((e) => {
-      if (!e.on || !q?.playback || answered !== undefined) return;
+      if (!e.on || !q?.playback || answered !== undefined || !listening(spec.id)) return;
       played = [...played, e.midi];
       const want = q.playback.flat();
       const i = played.length - 1;
@@ -87,7 +88,7 @@
   onDestroy(() => unsub?.());
 </script>
 
-<ExerciseFrame id={spec.id} kind="Ear" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel="Answer checked">
+<ExerciseFrame id={spec.id} listens={spec.kind === "pitch" || spec.kind === "echo"} kind="Ear" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel="Answer checked">
   <div class="ear ui" use:localise>
     {#if !q || finished}
       <div class="row">

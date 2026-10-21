@@ -73,6 +73,9 @@ function keyAlters(fifths: number): Record<Letter, number> {
 }
 
 const textWidth = (s: string, size = TEXT_SIZE) => s.length * size * 0.58;
+/** Roman numerals in the serif face: approximate advance widths in em, so figures sit just after the numeral. */
+const ROMAN_EM: Record<string, number> = { I: 0.33, V: 0.68, X: 0.68, i: 0.27, v: 0.48, x: 0.48, '°': 0.38, ø: 0.5, '+': 0.55, '♭': 0.4, '♯': 0.45 };
+const romanWidth = (s: string, size: number) => [...s].reduce((w, c) => w + (ROMAN_EM[c] ?? 0.58) * size, 0);
 
 function spaceFor(delta: number): number {
   return Math.max(1.9, 3.6 + 1.3 * Math.log2(delta / 480));
@@ -630,7 +633,7 @@ function drawBelow(prims: Prim[], s: string, x: number, y: number, ev: number): 
   }
   const base = m[1]!;
   const figs = m[2]!.length === 2 ? [m[2]![0]!, m[2]![1]!] : [m[2]!];
-  const w = textWidth(base, 1.85) * 0.92;
+  const w = romanWidth(base, 1.85);
   prims.push({ k: 'text', x: x - 0.5, y, s: base, anchor: 'middle', cls: 'roman', ev });
   const fx = x - 0.5 + w / 2 + 0.15;
   if (figs.length === 1) prims.push({ k: 'text', x: fx, y: y - 0.75, s: figs[0]!, anchor: 'start', cls: 'rfig', ev });

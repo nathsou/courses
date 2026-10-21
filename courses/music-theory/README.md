@@ -23,7 +23,11 @@ The site is SvelteKit 2 with Svelte 5 and `adapter-static`. The base path comes 
 - `content/chapters/<nn>-<slug>/index.md`: chapters in Markdown with directives (see `tools/markdown/compile.ts`).
   Navigation is `content/outline.ts`.
 - `src/lib/music`: the music library (pitch and spelling, note names, intervals, scales and keys, chords and
-  Roman numerals, rhythm). Pure TypeScript, no DOM.
+  Roman numerals, rhythm, voicing, non-chord tones, and `voicelead.ts`, the rule engine for four-part writing
+  and two-part counterpoint). Pure TypeScript, no DOM.
+- `src/lib/components/exercise`: the exercise types (`play`, `perform`, `ear`, `spell`, `read`, `analyse`,
+  `realise`), each a fenced YAML block documented at the top of its component. Their checking logic lives in
+  plain modules next to them, with tests.
 - `src/lib/notation`: the course's own engraver: the score text format (`parse.ts`), layout (`layout.ts`) and the
   `Score` component. No third-party notation code.
 - `src/lib/midi`, `src/lib/audio`: Web MIDI, computer-keyboard and on-screen input; the sampled piano and the

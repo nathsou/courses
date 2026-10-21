@@ -23,7 +23,7 @@ items:
     answer: Imperfect (ends on V)
   - play: [C3 C4 E4 G4, G2 B3 D4 G4, F2 C4 F4 A4, C3 C4 E4 G4]
     answer: Plagal (IV–I)
-  - play: [C3 C4 E4 G4, F2 C4 F4 A4, G2 B3 D4 G4, A2 C4 E4 A4]
+  - play: [C3 C4 E4 G4, F2 C4 F4 A4, G2 B3 D4 G4, A2 A3 C4 E4]
     answer: Interrupted (V–vi)
 rounds: 8
 pass: 7
@@ -118,7 +118,7 @@ interrupted cadence works because vi shares two notes with I: the ear expects ho
 it, and the music has to go round again to finish properly.
 
 ```score caption="The four cadences in :n[C] major: perfect, imperfect, plagal, interrupted." tempo="60"
-\time 4/4 \staff treble <b d' g'>2 <c' e' g'>2 \bar "||" | <c' e' g'>2 <b d' g'>2 \bar "||" | <c' f' a'>2 <c' e' g'>2 \bar "||" | <b d' g'>2 <c' e' a'>2 | \staff bass g,2_"V" c2_"I" | c2_"I" g,2_"V" | f,2_"IV" c2_"I" | g,2_"V" a,2_"vi" |
+\time 4/4 \staff treble <b d' g'>2 <c' e' g'>2 \bar "||" | <c' e' g'>2 <b d' g'>2 \bar "||" | <c' f' a'>2 <c' e' g'>2 \bar "||" | <b d' g'>2 <a c' e'>2 | \staff bass g,2_"V" c2_"I" | c2_"I" g,2_"V" | f,2_"IV" c2_"I" | g,2_"V" a,2_"vi" |
 ```
 
 ```ear
@@ -140,9 +140,9 @@ items:
     answer: Plagal (IV–I)
   - play: [C3 E4 G4 C5, A2 E4 A4 C5, F2 F4 A4 C5, C3 E4 G4 C5]
     answer: Plagal (IV–I)
-  - play: [C3 C4 E4 G4, F2 C4 F4 A4, G2 B3 D4 G4, A2 C4 E4 A4]
+  - play: [C3 C4 E4 G4, F2 C4 F4 A4, G2 B3 D4 G4, A2 A3 C4 E4]
     answer: Interrupted (V–vi)
-  - play: [C3 E4 G4 C5, D3 F4 A4 D5, G2 D4 G4 B4, A2 E4 A4 C5]
+  - play: [C3 E4 G4 C5, D3 D4 F4 A4, G2 D4 G4 B4, A2 C4 E4 C5]
     answer: Interrupted (V–vi)
 rounds: 10
 pass: 8

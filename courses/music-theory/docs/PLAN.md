@@ -13,12 +13,13 @@ heard, named, played and written.
 
 ## Status (21 October 2026)
 
-**Done: M0, M1, M2, M3.** Prologue; Parts I and II (chapters 1–18); the practice room; appendices A, B and C.
+**Done: M0–M4.** Prologue; Parts I–III (chapters 1–22); the practice room; appendices A, B and C.
 Exercise types built: `play`, `perform` (rhythm, notes, both), `ear`, `spell`, `read`, `analyse` (per chord, per
-bar or per note), `quiz`, and `:::check` (Check yourself). Engraver v1: grand staff, two voices per staff, tuplets, repeats, figures, chord symbols, Roman
+bar or per note), `realise` (four-part writing, keyboard or SATB style, and two-part species counterpoint,
+checked by the rule engine `voicelead.ts`), `quiz`, and `:::check` (Check yourself). Engraver v1: grand staff, two voices per staff, tuplets, repeats, figures, chord symbols, Roman
 numerals with inversion figures, note names, spacer rests, hidden time signatures; the reference scores are at
 `/engraving/`. Library: voice leading by nearest
-motion, non-chord-tone classification. **Next: M4** (Part III), then M5–M9.
+motion, non-chord-tone classification. **Next: M5** (Part IV), then M6–M9.
 
 Where the course differs from the plan below, the plan is kept as written and the difference is recorded here:
 
@@ -31,6 +32,14 @@ Where the course differs from the plan below, the plan is kept as written and th
   `echo` kind (hear a melody, play it back), sight-reading is `read` (single notes) and `perform` in `notes`
   mode (whole passages, untimed).
 - **Chopin, Prelude Op. 28 No. 7** is converted from Craig Sapp's Humdrum edition (`scripts/kern2score.py`).
+- **Bach, Invention No. 1** (bars 1–7): the notes follow the Bach-Gesellschaft edition (as engraved by the
+  Mutopia Project, CC BY-SA, used only as a reference), checked note by note, and were cross-checked against
+  David Huron's Humdrum encoding. That encoding's notice reserves derivative electronic formats, so Bach
+  excerpts are not converted from it; credit both sources in appendix D.
+- **Exercises answer to one exercise at a time:** the exercise last touched (or nearest the middle of the screen)
+  receives the keyboard's notes (`src/lib/components/exercise/active.ts`).
+- **Content lint:** the tests check every keyboard-style chord score and ear progression for parallel fifths and
+  octaves; it found and fixed parallels in chapters 0, 11, 13, 15, 18 and 22.
 - **Practice room:** a Leitner schedule (boxes at 1 minute, 10 minutes, 1, 3, 7 and 21 days) rather than SM-2;
   skills unlock when their chapter is opened, or all at once by a switch.
 - **Minor-scale fingerings** in appendix B are given only where editions agree (white-key tonics, F♯ and C♯);
@@ -365,7 +374,7 @@ Shares the collection's `theme` key.
 | M1 | *(done)* Part I, Ch. 1–6; engraver v1 (grand staff, rhythm, beams); `play`, `rhythm`, `ear`, `quiz`, `spell` exercises |
 | M2 | *(done)* Part I, Ch. 7–12; the practice room; appendix A and B |
 | M3 | *(done)* Part II; `analyse`, `dictation`, `sightread`; lead-sheet reading |
-| M4 | Part III; the voice-leading engine and `realise` |
+| M4 | *(done)* Part III; the voice-leading engine and `realise` |
 | M5 | Part IV |
 | M6 | Part V |
 | M7 | Part VI; Petaluma lead sheets, backing tracks, `improvise` |

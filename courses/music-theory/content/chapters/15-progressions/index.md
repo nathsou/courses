@@ -98,7 +98,7 @@ prompt: 'Four chords in :n[C] major. Which loop?'
 kind: custom
 options: [I – V – vi – IV, vi – IV – I – V, I – vi – IV – V, I – IV – V – IV]
 items:
-  - play: [C3 C4 E4 G4, G2 B3 D4 G4, A2 C4 E4 A4, F2 C4 F4 A4]
+  - play: [C3 C4 E4 G4, G2 B3 D4 G4, A2 A3 C4 E4, F2 A3 C4 F4]
     answer: I – V – vi – IV
   - play: [A2 C4 E4 A4, F2 C4 F4 A4, C3 C4 E4 G4, G2 B3 D4 G4]
     answer: vi – IV – I – V
@@ -153,7 +153,7 @@ through iii. The bass falls by a fourth and rises by a step, over and over. The 
 its canon: pop songs have used it for decades, often without anyone noticing.
 
 ```score caption="Pachelbel’s ground bass in :n[D] major, with its chords: the first appearance of the course’s running progression." tempo="66"
-\key d \major \time 4/4 \staff treble <f#' a' d''>4^"D" <e' a' c#''>4^"A" <d' f#' b'>4^"Bm" <c#' f#' a'>4^"F#m" | <b d' g'>4^"G" <a d' f#'>4^"D" <b d' g'>4^"G" <c#' e' a'>4^"A" | \staff bass d4_"I" a,4_"V" b,4_"vi" f#,4_"iii" | g,4_"IV" d,4_"I" g,4_"IV" a,4_"V" |
+\key d \major \time 4/4 \staff treble <f#' a' d''>4^"D" <e' a' c#''>4^"A" <d' f#' b'>4^"Bm" <c#' f#' a'>4^"F#m" | <b d' g'>4^"G" <a d' f#'>4^"D" <b d' g'>4^"G" <a c#' e'>4^"A" | \staff bass d4_"I" a,4_"V" b,4_"vi" f#,4_"iii" | g,4_"IV" d,4_"I" g,4_"IV" a,4_"V" |
 ```
 
 ```perform
@@ -163,7 +163,7 @@ prompt: 'Play the ground in the left hand and the chords in the right, at your o
 mode: notes
 range: [36, 79]
 score: |
-  \key d \major \time 4/4 \staff treble <f#' a' d''>4 <e' a' c#''>4 <d' f#' b'>4 <c#' f#' a'>4 | <b d' g'>4 <a d' f#'>4 <b d' g'>4 <c#' e' a'>4 | \staff bass d4 a,4 b,4 f#,4 | g,4 d,4 g,4 a,4 |
+  \key d \major \time 4/4 \staff treble <f#' a' d''>4 <e' a' c#''>4 <d' f#' b'>4 <c#' f#' a'>4 | <b d' g'>4 <a d' f#'>4 <b d' g'>4 <a c#' e'>4 | \staff bass d4 a,4 b,4 f#,4 | g,4 d,4 g,4 a,4 |
 ```
 
 ```perform
@@ -173,7 +173,7 @@ mode: both
 tempo: 56
 range: [36, 79]
 score: |
-  \key d \major \time 4/4 \staff treble <f#' a' d''>4 <e' a' c#''>4 <d' f#' b'>4 <c#' f#' a'>4 | <b d' g'>4 <a d' f#'>4 <b d' g'>4 <c#' e' a'>4 | \staff bass d4 a,4 b,4 f#,4 | g,4 d,4 g,4 a,4 |
+  \key d \major \time 4/4 \staff treble <f#' a' d''>4 <e' a' c#''>4 <d' f#' b'>4 <c#' f#' a'>4 | <b d' g'>4 <a d' f#'>4 <b d' g'>4 <a c#' e'>4 | \staff bass d4 a,4 b,4 f#,4 | g,4 d,4 g,4 a,4 |
 ```
 
 :::key

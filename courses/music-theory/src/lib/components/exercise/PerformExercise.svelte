@@ -30,6 +30,7 @@
   import Icon from '../ui/Icon.svelte';
   import { endTime, judgeTimed, matchesOnset, onsetsOf, type Press, type TimedResult } from './perform';
   import { localise } from './localise.svelte';
+  import { listening } from './active';
 
   interface Spec {
     id: string;
@@ -140,6 +141,7 @@
     phase = 'playing';
     marks = Object.fromEntries((onsets[0]?.ids ?? []).map((id) => [id, 'target']));
     unsub = instrument.subscribe((e) => {
+      if (!listening(spec.id)) return;
       clearTimeout(settle);
       settle = window.setTimeout(() => judgeUntimed(e.on), 90);
     });
@@ -197,7 +199,7 @@
   onDestroy(clear);
 </script>
 
-<ExerciseFrame id={spec.id} kind="At the keyboard" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel={label}>
+<ExerciseFrame id={spec.id} listens kind="At the keyboard" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel={label}>
   <div class="perform ui" use:localise data-downbeat={downbeat} data-phase={phase}>
     <Score src={spec.score} {marks} {tempo} caption={mode === 'rhythm' ? 'Listen first if you like; then tap the rhythm on any key.' : 'Listen first if you like.'} label="The score to play" />
     {#if mode !== 'rhythm'}

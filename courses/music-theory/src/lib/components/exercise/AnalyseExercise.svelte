@@ -42,6 +42,8 @@
   let typed: string[] = $state([]);
   let checked: (boolean | undefined)[] = $state([]);
   let current = $state(-1);
+  /** The °, ø and ♭ buttons help with Roman numerals; labels such as CT or P do not need them. */
+  const numerals = $derived(spec.answers.some((a) => /^[♭#b]?(VII|VI|IV|V|III|II|I|vii|vi|iv|v|iii|ii|i)/.test(a)));
   const allRight = $derived(checked.length === spec.answers.length && checked.every(Boolean));
   const marks = $derived(Object.fromEntries(current >= 0 ? (slots[current] ?? []).map((id) => [id, 'target']) : []));
 
@@ -78,11 +80,13 @@
               aria-label="Numeral for chord {i + 1}"
             />
           </label>
+          {#if numerals}
           <span class="sym">
             <button tabindex="-1" onmousedown={(e) => e.preventDefault()} onclick={() => insert(i, '°')}>°</button>
             <button tabindex="-1" onmousedown={(e) => e.preventDefault()} onclick={() => insert(i, 'ø')}>ø</button>
             <button tabindex="-1" onmousedown={(e) => e.preventDefault()} onclick={() => insert(i, '♭')}>♭</button>
           </span>
+          {/if}
         </li>
       {/each}
     </ol>
