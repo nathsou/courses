@@ -5,3 +5,6 @@ export { default as TapAlong } from './TapAlong.svelte';
 export { default as Metronome } from './Metronome.svelte';
 export { default as StaffPiano } from './StaffPiano.svelte';
 export { default as ScaleExplorer } from './ScaleExplorer.svelte';
+export { default as CircleOfFifths } from './CircleOfFifths.svelte';
+export { default as ChordLab } from './ChordLab.svelte';
+export { default as HarmonicSeries } from './HarmonicSeries.svelte';

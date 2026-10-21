@@ -219,7 +219,7 @@
         {:else if phase === 'playing'}
           Play!
         {:else if result}
-          <span class:ok={result.passed}>{#if result.passed}<Icon name="check" size={14} /> {label}: {/if}{summary}.</span>
+          <span class:ok={result.passed}>{#if result.passed}<Icon name="check" size={14} /> {`${label}: `}{/if}{summary}.</span>
         {:else}
           {mode === 'notes' ? 'Play each note when it is highlighted. There is no clock.' : settings.latencyMs ? `Tempo ${tempo}. Your timing allows for the ${settings.latencyMs} ms delay you measured.` : `Tempo ${tempo}. For fairer timing, measure your delay once with the tap-along in the prologue.`}
         {/if}

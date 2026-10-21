@@ -33,6 +33,11 @@ describe('perform: judging', () => {
     expect(r.extra.map((p) => p.midi)).toEqual([72]);
     expect(r.passed).toBe(false);
   });
+  it('calls a very late note late, not missed', () => {
+    const r = judgeTimed(onsets, [{ midi: 60, time: 0.3 }, { midi: 62, time: 1.3 }, { midi: 64, time: 2.3 }, { midi: 67, time: 2.3 }], { toleranceMs: 60, pitches: true });
+    expect(r.verdicts.map((v) => v.verdict)).toEqual(['late', 'late', 'late']);
+    expect(r.extra).toEqual([]);
+  });
   it('ignores pitch when only the rhythm counts', () => {
     const r = judgeTimed(onsets, [{ midi: 40, time: 0 }, { midi: 41, time: 1.05 }, { midi: 42, time: 2.1 }], { toleranceMs: 60, pitches: false });
     expect(r.verdicts.map((v) => v.verdict)).toEqual(['ok', 'ok', 'late']);

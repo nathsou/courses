@@ -128,7 +128,7 @@
         <button class="go" onclick={start}><Icon name="play" size={14} /> {finished ? 'Another run' : 'Start'}</button>
         <p aria-live="polite">
           {#if finished}
-            <span class:okt={right >= pass}>{#if right >= pass}<Icon name="check" size={14} /> Answer checked: {/if}{right} of {rounds} right, typically {median.toFixed(1)} s per note.{right >= pass ? ' Next time, try to beat that time.' : ` ${pass} pass; try another run.`}</span>
+            <span class:okt={right >= pass}>{#if right >= pass}<Icon name="check" size={14} /> {'Answer checked: '}{/if}{right} of {rounds} right, typically {median.toFixed(1)} s per note.{right >= pass ? ' Next time, try to beat that time.' : ` ${pass} pass; try another run.`}</span>
           {:else}
             {rounds} notes, one at a time. Play each one as soon as you can name it.
           {/if}

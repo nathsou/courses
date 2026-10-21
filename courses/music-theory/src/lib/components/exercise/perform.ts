@@ -54,14 +54,17 @@ export interface TimedResult {
 }
 
 /**
- * Match presses to onsets in time. Each onset takes the presses within `windowMs` of it (a chord's notes
- * arrive a few milliseconds apart). An onset is `ok` if its first press is within `toleranceMs` and, when
+ * Match presses to onsets in time. Each onset takes the presses nearer to it than to the onsets either side
+ * (or within `windowMs`), so a late note is reported as late, not as missed (a chord's notes arrive a few
+ * milliseconds apart). An onset is `ok` if its first press is within `toleranceMs` and, when
  * pitches count, the presses are exactly its notes.
  */
 export function judgeTimed(onsets: Onset[], presses: Press[], opts: { toleranceMs: number; pitches: boolean; windowMs?: number }): TimedResult {
-  const windowMs = opts.windowMs ?? Math.max(opts.toleranceMs * 2, 180);
   const used = new Set<number>();
-  const verdicts = onsets.map((o) => {
+  const verdicts = onsets.map((o, k) => {
+    // A press belongs to this onset if it is nearer to it than to its neighbours: half the gap either side.
+    const gap = Math.min(k > 0 ? o.time - onsets[k - 1]!.time : Infinity, k + 1 < onsets.length ? onsets[k + 1]!.time - o.time : Infinity);
+    const windowMs = opts.windowMs ?? Math.min(600, Math.max(opts.toleranceMs + 30, (gap * 1000) / 2));
     const near = presses
       .map((p, i) => ({ p, i, d: (p.time - o.time) * 1000 }))
       .filter((x) => !used.has(x.i) && Math.abs(x.d) <= windowMs)

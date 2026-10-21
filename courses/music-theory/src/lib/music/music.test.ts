@@ -220,3 +220,10 @@ describe('rhythm', () => {
     expect(ticks({ value: 8, dots: 0, tuplet: [3, 2] })).toBe(160);
   });
 });
+
+describe('minor-key chords from numerals', () => {
+  it('builds the common-practice set in A minor', () => {
+    const key = { tonic: parsePitch('A'), mode: 'minor' as const };
+    expect(['i', 'ii°', 'III', 'iv', 'V', 'VI', '#vii°'].map((r) => chordSymbol(chordFromRoman(r, key), { ascii: true }))).toEqual(['Am', 'Bdim', 'C', 'Dm', 'E', 'F', 'G#dim']);
+  });
+});

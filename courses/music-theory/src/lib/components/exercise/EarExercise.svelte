@@ -94,7 +94,7 @@
         <button class="go" onclick={start}><Icon name="play" size={14} /> {finished ? 'Another run' : 'Start'}</button>
         <p aria-live="polite">
           {#if finished}
-            <span class:ok={right >= pass}>{#if right >= pass}<Icon name="check" size={14} /> Answer checked: {/if}{right} of {rounds} right{right >= pass ? '.' : `; ${pass} passes. Try another run.`}</span>
+            <span class:ok={right >= pass}>{#if right >= pass}<Icon name="check" size={14} /> {'Answer checked: '}{/if}{right} of {rounds} right{right >= pass ? '.' : `; ${pass} passes. Try another run.`}</span>
           {:else}
             {rounds} rounds; {pass} right answers pass. Headphones help.
           {/if}
