@@ -73,6 +73,8 @@ function keyAlters(fifths: number): Record<Letter, number> {
 }
 
 const textWidth = (s: string, size = TEXT_SIZE) => s.length * size * 0.58;
+/** Width a column keeps for its text: chord symbols and figures; longer annotations ("second subject") may run on. */
+const reserved = (s: string | undefined) => (!s || /\s/.test(s) || s.length > 9 ? 0 : textWidth(s));
 /** Roman numerals in the serif face: approximate advance widths in em, so figures sit just after the numeral. */
 const ROMAN_EM: Record<string, number> = { I: 0.33, V: 0.68, X: 0.68, i: 0.27, v: 0.48, x: 0.48, '°': 0.38, ø: 0.5, '+': 0.55, '♭': 0.4, '♯': 0.45 };
 const romanWidth = (s: string, size: number) => [...s].reduce((w, c) => w + (ROMAN_EM[c] ?? 0.58) * size, 0);
@@ -136,7 +138,7 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
     const columns: Column[] = ticksIn.map((tick, i) => {
       const next = ticksIn[i + 1] ?? end;
       const at = evs.filter((e) => e.start === tick);
-      const text = Math.max(0, ...at.map((e) => Math.max(textWidth(e.above ?? ''), textWidth(e.below ?? ''))));
+      const text = Math.max(0, ...at.map((e) => Math.max(reserved(e.above), reserved(e.below))));
       const dots = at.some((e) => e.duration.dots > 0) ? 0.9 : 0;
       return { tick, pre: 0, space: spaceFor(next - tick), minSpace: Math.max(HEAD_W + 0.9 + dots, text + 0.6), x: 0 };
     });

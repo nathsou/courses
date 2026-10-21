@@ -13,13 +13,13 @@ heard, named, played and written.
 
 ## Status (21 October 2026)
 
-**Done: M0–M5.** Prologue; Parts I–IV (chapters 1–27); the practice room; appendices A, B and C.
+**Done: M0–M6.** Prologue; Parts I–V (chapters 1–30); the practice room; appendices A, B and C.
 Exercise types built: `play`, `perform` (rhythm, notes, both), `ear`, `spell`, `read`, `analyse` (per chord, per
 bar or per note), `realise` (four-part writing, keyboard or SATB style, and two-part species counterpoint,
 checked by the rule engine `voicelead.ts`), `quiz`, and `:::check` (Check yourself). Engraver v1: grand staff, two voices per staff, tuplets, repeats, figures, chord symbols, Roman
 numerals with inversion figures, note names, spacer rests, hidden time signatures; the reference scores are at
 `/engraving/`. Library: voice leading by nearest
-motion, non-chord-tone classification. **Next: M6** (Part V), then M7–M9.
+motion, non-chord-tone classification. **Next: M7** (Part VI), then M8–M9.
 
 Where the course differs from the plan below, the plan is kept as written and the difference is recorded here:
 
@@ -39,6 +39,10 @@ Where the course differs from the plan below, the plan is kept as written and th
   excerpts are not converted from it; credit both sources in appendix D.
 - **Exercises answer to one exercise at a time:** the exercise last touched (or nearest the middle of the screen)
   receives the keyboard's notes (`src/lib/components/exercise/active.ts`).
+- **Public-domain sources from Mutopia:** the Minuet in G (Bach-Gesellschaft), Clementi Op. 36 No. 1 (Schirmer, 1893),
+  WTC I Fugue 1 and Chopin Op. 28 Nos. 4, 7 and 20 are taken from Mutopia files placed in the public domain, with
+  `scripts/ly2score.py` (a small LilyPond reader) and checked against the engravings. Mozart K. 545 (CC BY-SA on
+  Mutopia) and Pachelbel (CC BY) were used only as references; the excerpts were entered by hand.
 - **Content lint:** the tests check every keyboard-style chord score and ear progression for parallel fifths and
   octaves; it found and fixed parallels in chapters 0, 11, 13, 15, 18 and 22.
 - **Practice room:** a Leitner schedule (boxes at 1 minute, 10 minutes, 1, 3, 7 and 21 days) rather than SM-2;
@@ -377,7 +381,7 @@ Shares the collection's `theme` key.
 | M3 | *(done)* Part II; `analyse`, `dictation`, `sightread`; lead-sheet reading |
 | M4 | *(done)* Part III; the voice-leading engine and `realise` |
 | M5 | *(done)* Part IV |
-| M6 | Part V |
+| M6 | *(done)* Part V |
 | M7 | Part VI; Petaluma lead sheets, backing tracks, `improvise` |
 | M8 | Part VII, Epilogue, appendices C–E; repertoire status re-checked |
 | M9 | Proofread; UX review at phone and desktop widths in both themes; tests with at least two real MIDI devices; final checks |
