@@ -96,9 +96,9 @@
 <div class="card ui">
   <p class="prompt">{@html html}</p>
   {#if card.type === 'read'}
-    <div class="staff"><Score src={chordScore([card.note], { staff: card.staff })} play={false} label="The note to play" /></div>
+    <div class="staff"><Score src={chordScore([card.note], { staff: card.staff })} play={false} reveal={false} label="The note to play" /></div>
   {:else if card.type === 'choose'}
-    {#if card.score}<div class="staff"><Score src={card.score} play={false} label="The question" /></div>{/if}
+    {#if card.score}<div class="staff"><Score src={card.score} play={false} reveal={false} label="The question" /></div>{/if}
     {#if card.hear}<button class="hear" onclick={hear}><Icon name="volume" size={14} /> Hear it again</button>{/if}
     <div class="options">
       {#each card.options as o (o)}

@@ -16,6 +16,8 @@ docs/PLAN.md. Read it first. Lives in `courses/music-theory/` of the Interactive
   write them this way, never as bare text, wherever a note, chord or British/American term appears.
 - Scores: fenced ` ```score ` blocks in the format documented in `src/lib/notation/parse.ts` (absolute pitches: `c'` is
   C4; `f'` is F natural whatever the key). Attributes: caption, label, play="false", tempo.
+- Scores explain themselves: hovering or tapping a note shows its name, value, interval and harmony (`src/lib/notation/explain.ts`).
+  Pass `reveal={false}` to `Score` wherever that would give an exercise's answer away.
 - Exercises: ` ```play ` blocks (steps of `chord:` or `notes:`), ` ```perform `, ` ```ear `, ` ```spell `, ` ```read `,
   ` ```analyse `, ` ```realise ` (four-part or two-part writing checked by `src/lib/music/voicelead.ts`; give an
   `example` realisation, which the content tests check for faults), ` ```quiz `. Feedback says what was established:

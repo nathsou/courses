@@ -117,7 +117,7 @@
   <div class="read ui" use:localise>
     {#if target}
       <div class="note" class:ok={flash === 'ok'} class:bad={flash === 'bad'}>
-        <Score src={chordScore([target], { staff: staffFor(target), key: keyText(key.tonic, key.mode) })} play={false} label="The note to play" />
+        <Score src={chordScore([target], { staff: staffFor(target), key: keyText(key.tonic, key.mode) })} play={false} reveal={false} label="The note to play" />
       </div>
       <p class="status" aria-live="polite">
         {#if flash === 'bad' && missed !== undefined}<span class="bad">That was {pitchName(spell(missed, key.fifths), settings.nameOptions)}; this is {pitchName(target, settings.nameOptions)}.</span>

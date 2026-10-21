@@ -364,6 +364,9 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
           const col = bar.columns.find((c) => c.tick === ev.start)!;
           const p = placed.get(ev.id)!;
           const ex = col.x + p.dx;
+          const headYs = ev.kind === 'note' ? p.heads.map((h) => top + stepY(staff.clef, h.step)) : [top, top + 4];
+          const y1 = Math.min(...headYs) - 0.5;
+          const y2 = Math.max(...headYs) + 0.5;
           events.set(ev.id, { x: ex, staffTop: top, system: si });
           if (ev.kind === 'rest' && ev.spacer) {
             /* takes time, draws nothing */
@@ -380,7 +383,12 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
           } else if (opts.noteName && ev.kind === 'note' && ev.pitches.length === 1 && grand && stIndex === 0) {
             prims.push({ k: 'text', x: ex + HEAD_W / 2, y: top + 4 + gap / 2 + 0.6, s: opts.noteName(ev.pitches[0]!), anchor: 'middle', cls: 'notename', ev: ev.id });
           }
-          prims.push({ k: 'hit', x: ex - 0.6, y: top - 2, w: HEAD_W + 1.2, h: 8, ev: ev.id });
+          // The click and hover target covers the staff and any notes on ledger lines beyond it.
+          if (!ev.spacer) {
+            const hy1 = Math.min(top - 2, y1 - 0.6);
+            const hy2 = Math.max(top + 6, y2 + 0.6);
+            prims.push({ k: 'hit', x: ex - 0.6, y: hy1, w: HEAD_W + 1.2, h: hy2 - hy1, ev: ev.id });
+          }
         }
       }
     }

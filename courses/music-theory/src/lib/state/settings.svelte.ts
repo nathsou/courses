@@ -22,6 +22,10 @@ interface Stored {
   latencyMs: number;
   /** Chosen MIDI input id, or null for every connected input. */
   midiInput: string | null;
+  /** Write note names under the notes of every score. */
+  scoreNames: boolean;
+  /** Show a piano keyboard under every score, lighting the notes as they play or are pointed at. */
+  scoreKeys: boolean;
 }
 
 class Settings {
@@ -33,6 +37,8 @@ class Settings {
   echoMidi = $state(false);
   latencyMs = $state(0);
   midiInput: string | null = $state(null);
+  scoreNames = $state(false);
+  scoreKeys = $state(false);
   /** Language tag the defaults came from (shown once under the header). */
   derivedFrom: string | undefined = $state(undefined);
   loaded = $state(false);
@@ -61,6 +67,8 @@ class Settings {
     this.echoMidi = stored.echoMidi ?? false;
     this.latencyMs = stored.latencyMs ?? 0;
     this.midiInput = stored.midiInput ?? null;
+    this.scoreNames = stored.scoreNames ?? false;
+    this.scoreKeys = stored.scoreKeys ?? false;
     this.loaded = true;
   }
 
@@ -75,6 +83,8 @@ class Settings {
       echoMidi: this.echoMidi,
       latencyMs: this.latencyMs,
       midiInput: this.midiInput,
+      scoreNames: this.scoreNames,
+      scoreKeys: this.scoreKeys,
     };
     try {
       localStorage.setItem(KEY, JSON.stringify(s));

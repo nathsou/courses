@@ -135,7 +135,7 @@
 
 <ExerciseFrame id={spec.id} listens kind="Realise" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel="Rules checked">
   <div class="re ui" use:localise>
-    <Score {src} marks={scoreMarks} tempo={spec.tempo} play={entered.length > 0} label="The given line and your chords" />
+    <Score {src} marks={scoreMarks} tempo={spec.tempo} strip={false} play={entered.length > 0} label="The given line and your chords" />
     <p class="how">
       {#if current >= 0}
         <span class="n">Chord {current + 1} of {slots.length}.</span>

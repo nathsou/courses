@@ -201,7 +201,7 @@
 
 <ExerciseFrame id={spec.id} listens kind="At the keyboard" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel={label}>
   <div class="perform ui" use:localise data-downbeat={downbeat} data-phase={phase}>
-    <Score src={spec.score} {marks} {tempo} caption={mode === 'rhythm' ? 'Listen first if you like; then tap the rhythm on any key.' : 'Listen first if you like.'} label="The score to play" />
+    <Score src={spec.score} {marks} {tempo} strip={false} caption={mode === 'rhythm' ? 'Listen first if you like; then tap the rhythm on any key.' : 'Listen first if you like.'} label="The score to play" />
     {#if mode !== 'rhythm'}
       <Keyboard lo={spec.range?.[0] ?? 48} hi={spec.range?.[1] ?? 84} marks={Object.fromEntries(wrongHeld.map((m) => [m, 'wrong']))} fifths={score.fifths} label="Keyboard for this exercise" />
     {/if}

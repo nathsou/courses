@@ -42,6 +42,7 @@ export const TERMS: { british: string; american: string }[] = [
   { british: 'crotchet rest', american: 'quarter rest' },
   { british: 'quaver rest', american: 'eighth rest' },
   { british: 'semiquaver rest', american: 'sixteenth rest' },
+  { british: 'demisemiquaver rest', american: 'thirty-second rest' },
   { british: 'bar', american: 'measure' },
   { british: 'bars', american: 'measures' },
   { british: 'tone', american: 'whole step' },

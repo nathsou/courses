@@ -10,7 +10,7 @@ skills:
 :::listen[Before anything else]
 Press **Play** and listen. You have almost certainly heard this before, under other melodies, in other keys.
 
-```score caption="Four chords, one bar each. Click a chord to hear it on its own." label="Four chords on the grand staff: C, G, A minor and F"
+```score caption="Four chords, one bar each. Point at a note to see its name and the chord it belongs to; click it to hear it on its own." label="Four chords on the grand staff: C, G, A minor and F"
 \time 4/4 \key c \major \tempo 72
 \staff treble <e' g' c''>1^"C" | <d' g' b'>1^"G" | <c' e' a'>1^"Am" | <c' f' a'>1^"F" |
 \staff bass c1_"I" | g,1_"V" | a,1_"vi" | f,1_"IV" |
@@ -40,6 +40,14 @@ your computer keyboard: the row :kbd[A] :kbd[S] :kbd[D] :kbd[F] … plays the wh
 above (:kbd[W] :kbd[E] :kbd[T] …) the black keys, and :kbd[Z] and :kbd[X] move down and up an octave. Safari
 and iPads cannot use MIDI keyboards at all; Chrome, Edge and Firefox can. [Appendix C](/appendix/setting-up-midi/)
 covers devices, browsers and what to do when nothing arrives.
+
+:::note[Reading the scores]
+Scores in the course can be explored (except in exercises that ask you to name what you see). Point at a note, or
+tap it, to see its name, its length, the interval from the note before and the chord sounding with it; click it to
+hear it. Once you have clicked a note, the arrow keys step through the score one note at a time. **Play** plays the whole score with a cursor, or from the note you have
+selected, and the speed button slows it to ¾ or half speed. **Names** writes the note names under the notes and
+**Keys** shows them on a keyboard as they play; both stay on for every score until you switch them off.
+:::
 
 :::note[Note names]
 The course writes note names in the system you choose: letters (:n[C] :n[D] :n[E] … :n[B]), fixed-do

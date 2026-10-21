@@ -59,7 +59,7 @@
 
 <ExerciseFrame id={spec.id} kind="Analyse" title={spec.title} prompt={spec.prompt} hints={spec.hints} solution={spec.solution} completionLabel="Answer checked">
   <div class="an ui" use:localise>
-    <Score src={spec.score} {marks} label="The passage to analyse" />
+    <Score src={spec.score} {marks} reveal={false} label="The passage to analyse" />
     <p class="key">{spec.key ? `Key: ${spec.key}. ` : ''}{spec.instruction ?? 'One numeral per chord, in order.'}</p>
     <ol class="boxes">
       {#each spec.answers as _, i (i)}
