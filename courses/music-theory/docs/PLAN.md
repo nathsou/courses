@@ -13,13 +13,13 @@ heard, named, played and written.
 
 ## Status (21 October 2026)
 
-**Done: M0–M4.** Prologue; Parts I–III (chapters 1–22); the practice room; appendices A, B and C.
+**Done: M0–M5.** Prologue; Parts I–IV (chapters 1–27); the practice room; appendices A, B and C.
 Exercise types built: `play`, `perform` (rhythm, notes, both), `ear`, `spell`, `read`, `analyse` (per chord, per
 bar or per note), `realise` (four-part writing, keyboard or SATB style, and two-part species counterpoint,
 checked by the rule engine `voicelead.ts`), `quiz`, and `:::check` (Check yourself). Engraver v1: grand staff, two voices per staff, tuplets, repeats, figures, chord symbols, Roman
 numerals with inversion figures, note names, spacer rests, hidden time signatures; the reference scores are at
 `/engraving/`. Library: voice leading by nearest
-motion, non-chord-tone classification. **Next: M5** (Part IV), then M6–M9.
+motion, non-chord-tone classification. **Next: M6** (Part V), then M7–M9.
 
 Where the course differs from the plan below, the plan is kept as written and the difference is recorded here:
 
@@ -31,7 +31,8 @@ Where the course differs from the plan below, the plan is kept as written and th
 - **Dictation and sight-reading** are not separate exercise types: melodic dictation is the `ear` exercise's
   `echo` kind (hear a melody, play it back), sight-reading is `read` (single notes) and `perform` in `notes`
   mode (whole passages, untimed).
-- **Chopin, Prelude Op. 28 No. 7** is converted from Craig Sapp's Humdrum edition (`scripts/kern2score.py`).
+- **Chopin, Preludes Op. 28 Nos. 7 and 20** were converted from Craig Sapp's Humdrum edition (`scripts/kern2score.py`)
+  or transcribed, then checked against public-domain Mutopia engravings of Edition Peters.
 - **Bach, Invention No. 1** (bars 1–7): the notes follow the Bach-Gesellschaft edition (as engraved by the
   Mutopia Project, CC BY-SA, used only as a reference), checked note by note, and were cross-checked against
   David Huron's Humdrum encoding. That encoding's notice reserves derivative electronic formats, so Bach
@@ -375,7 +376,7 @@ Shares the collection's `theme` key.
 | M2 | *(done)* Part I, Ch. 7–12; the practice room; appendix A and B |
 | M3 | *(done)* Part II; `analyse`, `dictation`, `sightread`; lead-sheet reading |
 | M4 | *(done)* Part III; the voice-leading engine and `realise` |
-| M5 | Part IV |
+| M5 | *(done)* Part IV |
 | M6 | Part V |
 | M7 | Part VI; Petaluma lead sheets, backing tracks, `improvise` |
 | M8 | Part VII, Epilogue, appendices C–E; repertoire status re-checked |
@@ -403,11 +404,10 @@ Shares the collection's `theme` key.
 
 1. **Schoenberg Op. 33a.** Confirm its public-domain status in the US and the EU in M8, or replace it with a row
    written for the course.
-2. **The Chopin encodings.** The preludes are converted from Craig Sapp's Humdrum files (github.com/craigsapp/
-   chopin-preludes, "Copyright 2001 by Craig Stuart Sapp", no licence stated). The notes of a public-domain work
-   are not themselves protected in most places, but some countries protect critical editions. Before release,
-   check each prelude bar by bar against a public-domain edition (the Breitkopf & Härtel complete works,
-   1878–80, on IMSLP) and credit the encoding in appendix D, or enter the notes independently from that edition.
+2. *(Resolved 21 October 2026.)* **The Chopin sources.** No. 7 was checked bar by bar against the Mutopia Project's
+   engraving, placed in the public domain by its typesetter (two corrections made); No. 20 follows Edition Peters
+   as engraved by Mutopia (public domain); No. 4 is available the same way (Peters, 1879). Craig Sapp's Humdrum
+   files were a cross-check only. Credit both in appendix D.
 
 Decided on 2026-10-19: title *Music Theory*; our own engraver with no third-party code; no microphone for now;
 Korobeiniki, Pachelbel's Canon and Chopin's Preludes as the recurring pieces; note names and terms as settings

@@ -76,7 +76,8 @@ export function voicing(c: Chord, octave = 3): Pitch[] {
 export function chordSymbol(c: Chord, opts: NameOptions = {}): string {
   const root = noteName(c.root, opts);
   const bass = c.bass && !(c.bass.letter === c.root.letter && c.bass.alter === c.root.alter) ? `/${noteName(c.bass, opts)}` : '';
-  return root + QUALITIES[c.quality].symbol + bass;
+  const symbol = opts.ascii ? QUALITIES[c.quality].symbol.replace('♭', 'b') : QUALITIES[c.quality].symbol;
+  return root + symbol + bass;
 }
 
 const SYMBOL_SUFFIXES: [RegExp, ChordQuality][] = [
@@ -208,8 +209,17 @@ export function diatonicTriads(key: Key): Chord[] {
   });
 }
 
-/** A chord from a Roman numeral in a key: "I", "V7", "vi", "ii", "IV", "♭VII". Inversions as figures: "I6", "V65". */
+/**
+ * A chord from a Roman numeral in a key: "I", "V7", "vi", "ii", "IV", "♭VII". Inversions as figures: "I6", "V65".
+ * Applied chords name their target after a slash: "V/V", "V7/ii", "vii°7/V" are built in the major key of the
+ * target's root, so that the applied leading note is always raised.
+ */
 export function chordFromRoman(text: string, key: Key): Chord {
+  const slash = text.lastIndexOf('/');
+  if (slash > 0) {
+    const target = chordFromRoman(text.slice(slash + 1), key);
+    return chordFromRoman(text.slice(0, slash), { tonic: target.root, mode: 'major' });
+  }
   const m = /^(♭|♯|b|#)?(VII|VI|V|IV|III|II|I|vii|vi|v|iv|iii|ii|i)(°|ø|\+)?(maj7|7|65|43|42|64|6)?$/.exec(text.trim());
   if (!m) throw new Error(`Not a Roman numeral: “${text}”`);
   const deg = NUMERALS.indexOf(m[2]!.toUpperCase());

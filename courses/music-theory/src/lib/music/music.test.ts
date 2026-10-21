@@ -226,6 +226,9 @@ describe('minor-key chords from numerals', () => {
   it('builds the common-practice set in A minor', () => {
     const key = { tonic: parsePitch('A'), mode: 'minor' as const };
     expect(['i', 'ii°', 'III', 'iv', 'V', 'VI', '#vii°'].map((r) => chordSymbol(chordFromRoman(r, key), { ascii: true }))).toEqual(['Am', 'Bdim', 'C', 'Dm', 'E', 'F', 'G#dim']);
+    const Cmaj = { tonic: { letter: 'C', alter: 0 }, mode: 'major' } as const;
+    expect(['V/V', 'V7/V', 'V7/ii', 'V/vi', 'vii°7/V', 'viiø7/V', 'V7/IV', 'vii°/ii', 'V65/V'].map((r) => chordSymbol(chordFromRoman(r, Cmaj), { ascii: true }))).toEqual(['D', 'D7', 'A7', 'E', 'F#dim7', 'F#m7b5', 'C7', 'C#dim', 'D7/F#']);
+    expect(chordSymbol(chordFromRoman('V7/III', key), { ascii: true })).toBe('G7');
   });
 });
 
