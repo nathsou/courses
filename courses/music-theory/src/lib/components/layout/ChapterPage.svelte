@@ -32,6 +32,7 @@
 
   onMount(() => {
     progress.load();
+    if (entry.kind === 'chapter') progress.visit(entry.slug);
     mounted = true;
     const heads = mod.toc.filter((t) => t.depth === 2).map((t) => document.getElementById(t.id)).filter((h) => h !== null);
     let frame = 0;

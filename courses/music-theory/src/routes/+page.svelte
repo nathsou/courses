@@ -32,7 +32,10 @@ e''4 b'8 c''8 d''4 c''8 b'8 | a'4 a'8 c''8 e''4 d''8 c''8 | b'4. c''8 d''4 e''4 
       everything after them: harmony, voice leading, form, jazz voicings and music beyond the major and minor keys.
       Connect a MIDI keyboard and the course listens to what you play.
     </p>
-    {#if first}<a class="start ui" href="{base}{first.href}">Start with the prologue →</a>{/if}
+    <div class="ctas ui">
+      {#if first}<a class="start" href="{base}{first.href}">Start with the prologue →</a>{/if}
+      <a class="practice" href="{base}/practice/">Practice room</a>
+    </div>
   </header>
 
   <section class="try" aria-label="Try the keyboard">
@@ -124,9 +127,23 @@ e''4 b'8 c''8 d''4 c''8 b'8 | a'4 a'8 c''8 e''4 d''8 c''8 | b'4. c''8 d''4 e''4 
     font-size: 1.2rem;
     max-width: 40rem;
   }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+  }
+  .practice {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+  }
   .start {
     display: inline-block;
-    margin-top: 0.4rem;
     background: var(--accent);
     color: var(--on-accent);
     padding: 0.6rem 1.2rem;

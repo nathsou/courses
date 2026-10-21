@@ -37,6 +37,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M9 4v16" /></svg>
     </button>
   </div>
+  <a class="practice" href="{base}/practice/" aria-current={current.startsWith('/practice') ? 'page' : undefined}>Practice room</a>
   {#each PARTS as part (part.id)}
     <section>
       <h2>{#if part.id !== '0' && part.id !== 'E'}<span class="part">Part {part.id}</span> {/if}{part.title}</h2>
@@ -63,6 +64,21 @@
     border-right: 1px solid var(--line-strong);
     font-size: 0.88rem;
     scrollbar-width: thin;
+  }
+  .practice {
+    display: block;
+    margin: 0 0 1.2rem;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .practice:hover,
+  .practice[aria-current='page'] {
+    border-color: var(--accent);
+    color: var(--accent);
   }
   section + section {
     margin-top: 1.5rem;

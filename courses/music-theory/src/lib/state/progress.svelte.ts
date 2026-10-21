@@ -6,6 +6,7 @@ import { browser } from '$app/environment';
 
 const SOLVED_KEY = 'music-theory:solved';
 const DRAFT_KEY = 'music-theory:drafts';
+const VISIT_KEY = 'music-theory:visited';
 
 function read<T>(key: string, fallback: T): T {
   if (!browser) return fallback;
@@ -28,6 +29,8 @@ function write(key: string, value: unknown): void {
 
 class Progress {
   solved: Record<string, number> = $state({});
+  /** Chapters the reader has opened (slug → first visit), which unlock practice-room skills. */
+  visited: Record<string, number> = $state({});
   private drafts: Record<string, unknown> = {};
   private loaded = false;
 
@@ -36,6 +39,14 @@ class Progress {
     this.loaded = true;
     this.solved = read(SOLVED_KEY, {});
     this.drafts = read(DRAFT_KEY, {});
+    this.visited = read(VISIT_KEY, {});
+  }
+
+  visit(slug: string): void {
+    this.load();
+    if (this.visited[slug]) return;
+    this.visited[slug] = Date.now();
+    write(VISIT_KEY, this.visited);
   }
 
   isSolved(id: string): boolean {
