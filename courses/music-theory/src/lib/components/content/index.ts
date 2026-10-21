@@ -20,3 +20,7 @@ export { default as Term } from './Term.svelte';
 export { default as ChordName } from './ChordName.svelte';
 export { default as Score } from '../../notation/Score.svelte';
 export { default as PlayExercise } from '../exercise/PlayExercise.svelte';
+export { default as PerformExercise } from '../exercise/PerformExercise.svelte';
+export { default as EarExercise } from '../exercise/EarExercise.svelte';
+export { default as SpellExercise } from '../exercise/SpellExercise.svelte';
+export { default as ReadExercise } from '../exercise/ReadExercise.svelte';

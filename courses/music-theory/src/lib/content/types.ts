@@ -8,6 +8,8 @@ export interface ContentModule {
   toc: TocEntry[];
   references: Reference[];
   glossary: Record<string, GlossaryEntry>;
+  /** Exercises in the chapter's Check yourself. */
+  checks: string[];
 }
 
 export interface ChapterMetadata {

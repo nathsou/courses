@@ -25,7 +25,7 @@ options:
 
 test('score blocks become Score components with their source and attributes', async () => {
   const { code } = await compileMarkdown('```score caption="Four chords" tempo="72" play="false"\n\\time 4/4 c\'1 |\n```\n', file);
-  expect(code).toContain('<B.Score src={"\\\\time 4/4 c\'1 |"} caption={"Four chords"} play={false} tempo={72} />');
+  expect(code).toContain('<B.Score src={"\\\\time 4/4 c\'1 |"} play={false} tempo={72} caption={withBase("Four chords")} />');
   expect(() => compile(code, { filename: 'x.svelte', generate: 'server' })).not.toThrow();
 });
 
@@ -51,4 +51,22 @@ steps:
 test('ratios in prose stay text', async () => {
   const { code } = await compileMarkdown('The octave is 2:1 and the fifth 3:2.', file);
   expect(code).toContain('2:1 and the fifth 3:2');
+});
+
+test('exercises inside :::check are listed as the chapter’s Check yourself', async () => {
+  const { code } = await compileMarkdown(`:::check
+\`\`\`play
+id: x/check-1
+steps:
+  - chord: C
+\`\`\`
+:::
+
+\`\`\`play
+id: x/later
+steps:
+  - chord: G
+\`\`\`
+`, file);
+  expect(code).toContain('export const checks = ["x/check-1"];');
 });

@@ -9,6 +9,7 @@
   import { midi } from '$lib/music/pitch';
   import { chordSymbol, parseChordSymbol } from '$lib/music/chord';
   import { settings } from '$lib/state/settings.svelte';
+  import { localise } from '$lib/components/exercise/localise.svelte';
   import { ticks } from '$lib/music/rhythm';
   import { layoutScore, type Layout } from './layout';
   import { parseScore, secondsPerTick, voiceCount, voiceEvents, type Score } from './parse';
@@ -164,7 +165,7 @@
     {/if}
   </div>
   {#if (play && !parsed.error) || caption}
-    <figcaption class="ui">
+    <figcaption class="ui" use:localise>
       {#if play && !parsed.error}
         <button class="play" onclick={toggle} aria-label={playing ? 'Stop' : 'Play the score'}>
           <Icon name={playing ? 'stop' : 'play'} size={14} />

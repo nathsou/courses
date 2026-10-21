@@ -163,3 +163,24 @@ describe('engraving reference', async () => {
     });
   }
 });
+
+describe('writing score text', async () => {
+  const { pitchToken, chordScore, keyText } = await import('./write');
+  const { parsePitch, midi } = await import('$lib/music/pitch');
+  it('round-trips pitches through tokens', () => {
+    for (const n of ['C4', 'F#3', 'Bb2', 'E##5', 'Abb1', 'C8', 'A0']) {
+      const ev = parseScore(pitchToken(parsePitch(n)) + '1 |').staves[0]!.events[0]!;
+      expect(midi(ev.pitches[0]!)).toBe(midi(parsePitch(n)));
+    }
+  });
+  it('splits a chord across the grand staff and leaves an empty staff blank', () => {
+    const s = parseScore(chordScore(['C3', 'E4', 'G4'].map((n) => parsePitch(n)), { key: keyText('Eb', 'major') }));
+    expect(s.fifths).toBe(-3);
+    expect(s.staves[0]!.events[0]!.pitches.length).toBe(2);
+    expect(s.staves[1]!.events[0]!.pitches.length).toBe(1);
+    const empty = parseScore(chordScore([parsePitch('C5')]));
+    expect(empty.staves[1]!.events[0]!.spacer).toBe(true);
+    const l = layoutScore(empty, { width: 40 });
+    expect(l.prims.filter((p) => 'cls' in p && p.cls === 'rest').length).toBe(0);
+  });
+});

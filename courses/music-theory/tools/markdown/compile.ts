@@ -18,8 +18,9 @@
  *   :t[crotchet]  :t[bar]{both}              a term in the reader's British or American set
  *
  * Fenced blocks: `score` (the course's score format, src/lib/notation/parse.ts; attributes after the
- * language: caption="…" play="false" tempo="72"), `quiz` (multiple choice) and `play` (an exercise
- * played on the reader's keyboard, checked note by note).
+ * language: caption="…" play="false" tempo="72" names="true"), `quiz` (multiple choice), and the keyboard
+ * exercises `play` (chords and notes held), `perform` (a score played or tapped, timed or not), `ear` (hear and
+ * name, or play back), `spell` (write notes, spelling counts) and `read` (a note-reading drill).
  *
  * Output is a Svelte component whose `<script module>` exports metadata, toc, references and glossary,
  * so routes can render chrome around the content.
@@ -59,11 +60,14 @@ interface Ctx {
   exercises: number;
   chapterNumber: string;
   slug: string;
+  /** Ids of the exercises inside :::check blocks (Check yourself). */
+  checks: string[];
+  inCheck: number;
   deps: Set<string>;
   asyncJobs: Promise<void>[];
 }
 
-const CALLOUTS = new Set(['note', 'tip', 'warning', 'info', 'challenge', 'exercises', 'definition', 'key', 'question', 'aside', 'bridge', 'listen', 'atthekeys']);
+const CALLOUTS = new Set(['check', 'note', 'tip', 'warning', 'info', 'challenge', 'exercises', 'definition', 'key', 'question', 'aside', 'bridge', 'listen', 'atthekeys']);
 const TEXT_DIRECTIVES = new Set(['sidenote', 'cite', 'term', 'kbd', 'n', 'c', 't']);
 const BUILTIN_BLOCKS: Record<string, string> = {
   history: 'History',
@@ -76,13 +80,21 @@ const BUILTIN_BLOCKS: Record<string, string> = {
 };
 const EXERCISE_BLOCKS: Record<string, string> = {
   play: 'PlayExercise',
+  perform: 'PerformExercise',
+  ear: 'EarExercise',
+  spell: 'SpellExercise',
+  read: 'ReadExercise',
 };
 /** Fields of exercise blocks that are data, not Markdown (passed through untouched). */
 const RAW_FIELDS: Record<string, string[]> = {
   play: ['steps', 'notes', 'chords', 'key', 'range', 'match'],
+  perform: ['score', 'mode', 'tempo', 'countIn', 'tolerance', 'click', 'range'],
+  ear: ['kind', 'pool', 'harmonic', 'rounds', 'pass', 'range', 'white', 'items', 'options'],
+  spell: ['key', 'staff', 'range'],
+  read: ['staff', 'range', 'white', 'key', 'rounds', 'pass'],
 };
 /** YAML fields of exercise blocks that hold Markdown (rendered at build time). */
-const MARKDOWN_FIELDS = new Set(['prompt', 'text', 'solution', 'why', 'explain', 'hint', 'hints', 'lines', 'distractors', 'rubric', 'feedback', 'note', 'success', 'options', 'label']);
+const MARKDOWN_FIELDS = new Set(['ask', 'prompt', 'text', 'solution', 'why', 'explain', 'hint', 'hints', 'lines', 'distractors', 'rubric', 'feedback', 'note', 'success', 'options', 'label']);
 
 /**
  * A deterministic shuffle of quiz options, seeded by the question text, so that authors can list the correct
@@ -341,7 +353,22 @@ function transformDirective(ctx: Ctx, node: Directive, parent: Parent, index: nu
   return index + 1;
 }
 
+/** Whether a node lies inside a :::check container (marked before the containers are flattened). */
+function isInCheck(node: Nodes): boolean {
+  return (node.data as { inCheck?: boolean } | undefined)?.inCheck === true;
+}
+
 async function transform(tree: Root, ctx: Ctx): Promise<void> {
+  // Mark everything inside :::check before directives are replaced by markers.
+  visit(tree, (node) => {
+    if (node.type === 'containerDirective' && node.name === 'check') {
+      const mark = (n: Nodes) => {
+        n.data = { ...(n.data ?? {}), inCheck: true } as never;
+        if ('children' in n) for (const c of n.children as Nodes[]) mark(c);
+      };
+      mark(node as Nodes);
+    }
+  });
   visit(tree, (node: Nodes, index, parent) => {
     if (index === undefined || !parent) return;
     switch (node.type) {
@@ -364,11 +391,18 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
         const meta = Object.fromEntries([...(code.meta ?? '').matchAll(/(\w+)="([^"]*)"/g)].map((m) => [m[1]!, m[2]!]));
         if (code.lang === 'score') {
           const extra: Record<string, unknown> = { src: code.value };
-          if (meta.caption) extra.caption = meta.caption;
           if (meta.label) extra.label = meta.label;
           if (meta.play === 'false') extra.play = false;
           if (meta.tempo) extra.tempo = Number(meta.tempo);
+          if (meta.names === 'true') extra.names = true;
           const i = ctx.components.push({ tag: 'B.Score', props: props({}, extra) }) - 1;
+          // Captions may hold :n[…], :c[…] and :t[…]: render them, like exercise prompts.
+          if (meta.caption)
+            ctx.asyncJobs.push(
+              renderInline(meta.caption).then((html) => {
+                ctx.components[i]!.props += ` caption={withBase(${JSON.stringify(html)})}`;
+              }),
+            );
           parent.children[index] = marker('leaf', i);
           return;
         }
@@ -393,6 +427,7 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
           const kind = code.lang;
           const data = parseYamlBlock<Record<string, unknown>>(ctx, code.value, kind);
           const id = String(data.id ?? `${ctx.slug}/${kind}-${++ctx.exercises}`);
+          if (isInCheck(code) && !ctx.checks.includes(id)) ctx.checks.push(id);
           const i = ctx.components.push({ tag: `B.${EXERCISE_BLOCKS[kind]}`, props: '' }) - 1;
           ctx.asyncJobs.push(
             (async () => {
@@ -448,6 +483,8 @@ export async function compileMarkdown(source: string, file: string): Promise<Com
     exercises: 0,
     chapterNumber: '',
     slug: '',
+    checks: [],
+    inCheck: 0,
     deps: new Set(),
     asyncJobs: [],
   };
@@ -521,6 +558,7 @@ export const metadata = ${JSON.stringify(metadata)};
 export const toc = ${JSON.stringify(ctx.toc)};
 export const references = ${JSON.stringify(references)};
 export const glossary = withBase(${JSON.stringify(glossary)});
+export const checks = ${JSON.stringify(ctx.checks)};
 </script>
 <script>
 import * as B from '$lib/components/content';

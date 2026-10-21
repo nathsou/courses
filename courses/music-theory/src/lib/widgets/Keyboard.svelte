@@ -27,6 +27,7 @@
     minKey = 22,
     maxKey = 38,
     label = 'Piano keyboard',
+    names = {},
   }: {
     /** Lowest and highest MIDI notes shown (snapped outwards to white keys). */
     lo?: number;
@@ -45,6 +46,8 @@
     minKey?: number;
     maxKey?: number;
     label?: string;
+    /** Spelt names by MIDI note, overriding the key-signature spelling (e.g. E♯ in F♯ major). */
+    names?: Record<number, import('$lib/music/pitch').Pitch>;
   } = $props();
 
   const first = $derived(isBlackKey(lo) ? lo - 1 : lo);
@@ -78,7 +81,7 @@
   const sounding = $derived(audio.sounding);
 
   function name(m: number): string {
-    return pitchName(spell(m, fifths), settings.nameOptions);
+    return pitchName(names[m] ?? spell(m, fifths), settings.nameOptions);
   }
 
   function showLabel(m: number): boolean {

@@ -5,6 +5,7 @@
   import type { ContentModule } from '$lib/content/types';
   import { findEntry, neighbours, type NavEntry } from '$lib/content/registry';
   import { nav } from '$lib/state/nav.svelte';
+  import { progress } from '$lib/state/progress.svelte';
   import PageDocs from '../content/PageDocs.svelte';
   import Icon from '../ui/Icon.svelte';
 
@@ -17,6 +18,9 @@
   const eyebrow = $derived(entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}${part ? (part.id === '0' || part.id === 'E' ? ` · ${part.title}` : ` · Part ${part.id} — ${part.title}`) : ''}`);
   const prereqs = $derived((meta.prerequisites ?? []).map((s) => findEntry('chapter', s) ?? findEntry('appendix', s)).filter((e) => e !== undefined));
 
+  let mounted = $state(false);
+  const known = $derived(mounted && mod.checks.length > 0 && mod.checks.every((id) => progress.isSolved(id)));
+
   $effect(() => {
     nav.toc = mod.toc;
     nav.pageTitle = `${entry.number}. ${meta.title}`;
@@ -27,6 +31,8 @@
   });
 
   onMount(() => {
+    progress.load();
+    mounted = true;
     const heads = mod.toc.filter((t) => t.depth === 2).map((t) => document.getElementById(t.id)).filter((h) => h !== null);
     let frame = 0;
     const update = () => {
@@ -65,6 +71,9 @@
         </span>
       {/if}
     </div>
+    {#if known}
+      <p class="known ui">You passed this chapter’s <em>Check yourself</em>: you can skim it, or move on.</p>
+    {/if}
     {#if meta.skills?.length}
       <div class="builds ui">
         <span class="label">Skills</span>
@@ -184,6 +193,15 @@
     }
   }
 
+  .known {
+    margin: 1rem 0 0;
+    padding: 0.4rem 0.8rem;
+    border-left: 3px solid var(--ok);
+    background: var(--ok-soft);
+    font-size: 0.88rem;
+    color: var(--ok);
+    font-weight: 600;
+  }
   .references {
     margin-top: 3rem;
     font-size: 0.95rem;

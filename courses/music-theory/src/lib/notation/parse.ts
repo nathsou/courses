@@ -8,12 +8,13 @@
  * - Pitches are absolute: `c` is C3, `c'` is C4 (middle C), `c''` is C5, `c,` is C2. Accidentals follow the
  *   letter: `f#`, `bb` (B flat), `e##`, `abb`, and `n` for a written natural (`fn'`).
  * - Durations follow the pitch (1, 2, 4, 8, 16, 32, with dots) and carry over to the next note when left out.
- * - `r` is a rest, `<c' e' g'>4` a chord, `~` after a note ties it to the next, `(` and `)` after notes open
+ * - `r` is a rest, `s` an invisible one (a spacer), `<c' e' g'>4` a chord, `~` after a note ties it to the next, `(` and `)` after notes open
  *   and close a slur, `|` checks that a bar ends there.
  * - `^"C"` puts text above a note (chord symbols), `_"I"` below it (Roman numerals).
  * - `\staff treble` or `\staff bass` starts a staff; without one there is a single treble staff (or the
  *   clef set by `\clef`). Two staves make a grand staff.
  * - `\partial 4` before the first note makes an upbeat of that length.
+ * - `\hidetime` leaves the time signature out (for scales and single chords).
  * - `\voice` starts a second voice on the same staff, from the beginning (stems up in the first voice, down in
  *   the second): `\staff treble e''2 d''2 | \voice c''2 b'2 |`.
  * - `\tuplet 3/2 { c'8 d' e' }` plays three notes in the time of two.
@@ -35,6 +36,8 @@ export interface ScoreEvent {
   /** Tuplet group this event belongs to, and its number (3 for a triplet). */
   tuplet?: { id: number; num: number };
   kind: 'note' | 'rest';
+  /** An invisible rest (`s`), which takes time but draws nothing. */
+  spacer?: boolean;
   pitches: Pitch[];
   /** Accidental written explicitly with `n` (a courtesy natural), by pitch index. */
   forceNatural: boolean[];
@@ -66,6 +69,8 @@ export interface Score {
   partial: number;
   /** Total length in ticks, including the upbeat. */
   length: number;
+  /** Leave the time signature out. */
+  hideTime: boolean;
   /** Bar-line styles by the number of the bar they end (0 for the upbeat bar). */
   barStyles: Record<number, BarStyle>;
 }
@@ -156,7 +161,7 @@ function parsePitchToken(s: string, at: number): { pitch: Pitch; natural: boolea
   return { pitch: { letter: m[1]!.toUpperCase() as Letter, alter, octave }, natural: acc === 'n' };
 }
 
-const NOTE = /^(r|<[^>]*>|[a-g](?:##|#|bb|b|n)?[',]*)(1|2|4|8|16|32)?(\.*)(~)?([()]*)$/;
+const NOTE = /^(r|s|<[^>]*>|[a-g](?:##|#|bb|b|n)?[',]*)(1|2|4|8|16|32)?(\.*)(~)?([()]*)$/;
 
 /** Parse a score. Throws ScoreError with the position of the first problem. */
 export function parseScore(src: string): Score {
@@ -166,6 +171,7 @@ export function parseScore(src: string): Score {
   let mode: Mode = 'major';
   let time: TimeSignature = { beats: 4, unit: 4 };
   let tempo = 80;
+  let hideTime = false;
   let partial = 0;
   let clef: Clef = 'treble';
   let id = 0;
@@ -265,6 +271,9 @@ export function parseScore(src: string): Score {
           barStyles[pos / bt] = style as BarStyle;
           break;
         }
+        case 'hidetime':
+          hideTime = true;
+          break;
         case 'partial': {
           const n = next();
           const m = n.t === 'note' ? /^(1|2|4|8|16)(\.*)$/.exec(n.v) : null;
@@ -305,7 +314,7 @@ export function parseScore(src: string): Score {
     const head = m[1]!;
     const pitches: Pitch[] = [];
     const naturals: boolean[] = [];
-    if (head !== 'r') {
+    if (head !== 'r' && head !== 's') {
       const parts = head.startsWith('<') ? head.slice(1, -1).trim().split(/\s+/) : [head];
       for (const p of parts) {
         const { pitch, natural } = parsePitchToken(p, tok.at);
@@ -328,7 +337,8 @@ export function parseScore(src: string): Score {
       staff: staves.length - 1,
       voice,
       tuplet: tuplet ? { id: tuplet.id, num: tuplet.num } : undefined,
-      kind: head === 'r' ? 'rest' : 'note',
+      kind: head === 'r' || head === 's' ? 'rest' : 'note',
+      spacer: head === 's' || undefined,
       pitches,
       forceNatural: naturals,
       duration: evDur,
@@ -352,7 +362,7 @@ export function parseScore(src: string): Score {
   const length = Math.max(...lengths);
   if (new Set(lengths).size > 1) throw new ScoreError(`Staves or voices have different lengths: ${voiceLengths.map((v) => `staff ${v.staff + 1} voice ${v.voice + 1}: ${v.length}`).join(', ')} ticks`);
   if (tuplet || depth) throw new ScoreError('Unclosed { in a tuplet');
-  return { staves, fifths, mode, time, tempo, partial, length, barStyles };
+  return { staves, fifths, mode, time, tempo, partial, length, barStyles, hideTime };
 }
 
 /** Seconds per tick at the score's tempo. */

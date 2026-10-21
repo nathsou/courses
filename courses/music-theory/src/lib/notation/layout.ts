@@ -240,7 +240,7 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
   const keyW = Math.abs(score.fifths) * 1.05;
   const timeW = 2.4 * Math.max(String(score.time.beats).length, String(score.time.unit).length) / 1.4 + 0.6;
   const left = grand ? 1.8 : 0.3;
-  const headerW = (first: boolean) => left + 0.6 + 2.9 + (keyW ? keyW + 0.5 : 0) + (first ? timeW : 0) + 0.6;
+  const headerW = (first: boolean) => left + 0.6 + 2.9 + (keyW ? keyW + 0.5 : 0) + (first && !score.hideTime ? timeW : 0) + 0.6;
   const width = Math.max(opts.width, 24);
   const lines: Bar[][] = [];
   let line: Bar[] = [];
@@ -303,7 +303,7 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
         x += 1.05;
       }
       if (keyW) x += 0.5;
-      if (first) {
+      if (first && !score.hideTime) {
         const digits = (n: number) => [...String(n)].map((d) => String.fromCodePoint(0xe080 + Number(d))).join('');
         const tw = timeW - 0.6;
         prims.push({ k: 'glyph', x: x + (tw - String(score.time.beats).length * 1.8) / 2, y: top + 1, ch: digits(score.time.beats), cls: 'timesig' });
@@ -360,7 +360,9 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
           const p = placed.get(ev.id)!;
           const ex = col.x + p.dx;
           events.set(ev.id, { x: ex, staffTop: top, system: si });
-          if (ev.kind === 'rest') drawRest(prims, ev, ex, top, bar, bt, stretch, multi ? (ev.voice === 0 ? -2 : 2) : 0);
+          if (ev.kind === 'rest' && ev.spacer) {
+            /* takes time, draws nothing */
+          } else if (ev.kind === 'rest') drawRest(prims, ev, ex, top, bar, bt, stretch, multi ? (ev.voice === 0 ? -2 : 2) : 0);
           else drawNote(prims, p, staff.clef, ex, top);
           if (ev.above) prims.push({ k: 'text', x: col.x, y: sysTop - Math.max(1.2, above(0) - 4 + 0.6) - 0.6, s: ev.above, anchor: 'start', cls: 'chordsym', ev: ev.id });
           if (ev.below) {

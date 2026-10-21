@@ -2,6 +2,7 @@
   import type { IconName } from '../ui/Icon.svelte';
 
   const KINDS: Record<string, { label: string; icon: IconName; hue: string; on: string }> = {
+    check: { label: 'Check yourself', icon: 'check', hue: 'var(--ok)', on: 'var(--fx-cream)' },
     note: { label: 'Note', icon: 'note', hue: 'var(--fx-blue)', on: 'var(--fx-cream)' },
     info: { label: 'Info', icon: 'info', hue: 'var(--fx-blue)', on: 'var(--fx-cream)' },
     tip: { label: 'Tip', icon: 'tip', hue: 'var(--fx-yellow)', on: 'var(--fx-ink)' },

@@ -52,6 +52,8 @@ describe('pitch', () => {
     expect(pitchName(spell(71, -6), { ascii: true })).toBe('Cb5');
     expect(pitchName(spell(65, 6), { ascii: true })).toBe('E#4');
     expect(pitchName(spell(61, -1), { ascii: true })).toBe('Db4');
+    expect(pitchName(spell(65, 1), { ascii: true })).toBe('F4'); // F natural in G major
+    expect(pitchName(spell(71, -1), { ascii: true })).toBe('B4'); // B natural in F major
   });
 
   it('respells enharmonically', () => {

@@ -32,6 +32,6 @@ export function localise(node: HTMLElement) {
     void settings.noteNames;
     void settings.terms;
     void settings.accentedRe;
-    localiseIn(node.closest('section') ?? node);
+    localiseIn(node.closest('section.exercise') ?? node);
   });
 }

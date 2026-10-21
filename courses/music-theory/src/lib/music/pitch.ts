@@ -83,8 +83,8 @@ export function signatureAlterations(fifths: number): Record<Letter, number> {
 
 /**
  * Spell a MIDI note in a key with `fifths` sharps or flats. Notes of the key take the key's spelling;
- * other notes are spelt with sharps in sharp keys and with flats in flat keys (and in C major: sharps,
- * except B♭ and E♭, which are the commoner chromatic notes there).
+ * other white keys keep their plain names; other black keys are spelt with sharps in sharp keys and with
+ * flats in flat keys (and in C major: sharps, except B♭ and E♭, the commoner chromatic notes there).
  */
 export function spell(m: number, fifths = 0): Pitch {
   const pc = mod(m, 12);
@@ -92,6 +92,9 @@ export function spell(m: number, fifths = 0): Pitch {
   for (const l of LETTERS) {
     if (pitchClass({ letter: l, alter: sig[l] }) === pc) return withOctave(l, sig[l], m);
   }
+  // A white key outside the key keeps its plain name (F♮ in G major, not E♯).
+  const natural = NATURAL.indexOf(pc);
+  if (natural >= 0) return withOctave(LETTERS[natural]!, 0, m);
   const preferFlats = fifths < 0 || (fifths === 0 && (pc === 10 || pc === 3));
   for (const l of LETTERS) {
     const alter = mod(pc - NATURAL[letterIndex(l)]! + 6, 12) - 6;
@@ -128,3 +131,13 @@ export function enharmonic(p: Pitch): Pitch | undefined {
 }
 
 export const isBlackKey = (m: number): boolean => [1, 3, 6, 8, 10].includes(mod(m, 12));
+
+/** Every spelling of a pitch with at most two accidentals, the simplest first: C♯4, D♭4, B𝄪3 for MIDI 61. */
+export function spellings(p: Pitch): Pitch[] {
+  const out: Pitch[] = [];
+  for (const l of LETTERS) {
+    const q = respell(p, l);
+    if (q) out.push(q);
+  }
+  return out.sort((a, b) => Math.abs(a.alter) - Math.abs(b.alter) || (a.alter > 0 ? -1 : 1));
+}

@@ -95,6 +95,9 @@
   --series-3: #b8862b;
   --series-4: #2e7a4e;
 
+  --chart-surface: var(--surface);
+  --grid: var(--line);
+  --axis: var(--line-strong);
   --radius: 6px;
   --radius-sm: 4px;
   --sidebar-w: 18rem;
