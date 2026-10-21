@@ -11,6 +11,22 @@ keeps score, they harmonise a melody and the course checks the voice leading. Th
 harmony and form; jazz and pop harmony are woven through it and take over in Part VI. Every idea is met four ways:
 heard, named, played and written.
 
+## Status (21 October 2026)
+
+**M0 done.** The site, design and collection wiring; the music library; MIDI, computer-keyboard and on-screen input
+with the instrument panel and the tap-along latency check; the course piano; engraver v0; the `play` exercise; the
+prologue and appendix C. Where M0 differs from the plan below, the plan is kept as written and the difference is
+recorded here:
+
+- **Engraver v0 already draws the grand staff**, with chords, beams within a beat, flags, ties, slurs, dots, rests,
+  ledger lines, key and time signatures, chord symbols above and Roman numerals below, and systems that break and
+  justify to the column width. Tuplets and second voices on a staff are not parsed yet (M1).
+- **Fonts:** Bravura is bundled from `src/lib/fonts/` (so the base path is handled); Petaluma waits for M7.
+- **Piano:** the Salamander licence is confirmed (CC BY 3.0); 60 samples, 3.6 MB.
+- **Korobeiniki:** the home page shows the opening phrase of the folk melody; checking it against a printed
+  public-domain source is still to do (M8, with the repertoire appendix).
+- **MIDI out** is not built yet.
+
 ## 1. Decisions
 
 | Topic | Decision | Status | Notes |
@@ -336,7 +352,7 @@ Shares the collection's `theme` key.
 
 | | Scope |
 |---|---|
-| M0 | Scaffold (site, compiler, design "Fallboard"), MIDI input with fallbacks, latency calibration, audio scheduler and sampled piano, `Keyboard`, engraver v0 (one staff), library skeleton, Prologue, collection wiring, PR |
+| M0 | *(done)* Scaffold (site, compiler, design "Fallboard"), MIDI input with fallbacks, latency calibration, audio scheduler and sampled piano, `Keyboard`, engraver v0 (one staff), library skeleton, Prologue, collection wiring, PR |
 | M1 | Part I, Ch. 1–6; engraver v1 (grand staff, rhythm, beams); `play`, `rhythm`, `ear`, `quiz`, `spell` exercises |
 | M2 | Part I, Ch. 7–12; the practice room; appendix A and B |
 | M3 | Part II; `analyse`, `dictation`, `sightread`; lead-sheet reading |
@@ -367,9 +383,7 @@ Shares the collection's `theme` key.
 
 ## 15. Open questions
 
-1. **Piano samples.** Confirm the Salamander Grand Piano licence in M0, or choose another openly licensed set or
-   a synthesised piano.
-2. **Schoenberg Op. 33a.** Confirm its public-domain status in the US and the EU in M8, or replace it with a row
+1. **Schoenberg Op. 33a.** Confirm its public-domain status in the US and the EU in M8, or replace it with a row
    written for the course.
 
 Decided on 2026-10-19: title *Music Theory*; our own engraver with no third-party code; no microphone for now;

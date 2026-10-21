@@ -4,7 +4,7 @@ title: Four chords
 summary: Connect your keyboard, play the four chords under a great many songs, and see what the rest of the course will explain.
 duration: 25 minutes
 skills:
-  - 'Chords: C, G, Am, F'
+  - 'The I–V–vi–IV loop'
 ---
 
 :::listen[Before anything else]

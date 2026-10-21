@@ -48,6 +48,7 @@ jobs:
             courses/static-analysis/package-lock.json
             courses/reactive-rendering/package-lock.json
             courses/primes/package-lock.json
+            courses/music-theory/package-lock.json
 
       - name: Install dependencies
         run: |
@@ -67,6 +68,7 @@ jobs:
           npm ci --prefix courses/static-analysis
           npm ci --prefix courses/reactive-rendering
           npm ci --prefix courses/primes
+          npm ci --prefix courses/music-theory
           pnpm --dir courses/language-models install --frozen-lockfile
 
       - name: Fetch the Mandarin course audio

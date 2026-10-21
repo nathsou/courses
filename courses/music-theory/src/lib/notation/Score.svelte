@@ -142,7 +142,7 @@
             <line x1={f(p.x1)} y1={f(p.y1)} x2={f(p.x2)} y2={f(p.y2)} stroke-width={p.w} class={cls(p.cls, p.ev)} />
           {:else if p.k === 'glyph'}
             {#if p.sy}
-              <text class="g {cls(p.cls, p.ev)}" transform="translate({f(p.x)} {f(p.y)}) scale(1 {f(p.sy)})">{p.ch}</text>
+              <text class="g {cls(p.cls, p.ev)}" transform="translate({f(p.x)} {f(p.y)}) scale({f(p.sx ?? 1)} {f(p.sy)})">{p.ch}</text>
             {:else}
               <text class="g {cls(p.cls, p.ev)}" x={f(p.x)} y={f(p.y)}>{p.ch}</text>
             {/if}

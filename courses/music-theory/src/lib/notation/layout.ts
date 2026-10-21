@@ -13,7 +13,7 @@ import type { Clef, Score, ScoreEvent } from './parse';
 
 export type Prim =
   | { k: 'line'; x1: number; y1: number; x2: number; y2: number; w: number; cls?: string; ev?: number }
-  | { k: 'glyph'; x: number; y: number; ch: string; cls?: string; ev?: number; sy?: number }
+  | { k: 'glyph'; x: number; y: number; ch: string; cls?: string; ev?: number; sx?: number; sy?: number }
   | { k: 'poly'; points: [number, number][]; cls?: string; ev?: number }
   | { k: 'path'; d: string; cls?: string; ev?: number }
   | { k: 'text'; x: number; y: number; s: string; anchor: 'start' | 'middle' | 'end'; cls: string; ev?: number }
@@ -254,7 +254,8 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
     const natural = bs.reduce((a, b) => a + b.natural, 0);
     const avail = width - hw;
     const last = si === lines.length - 1;
-    const stretch = last && natural < avail * 0.7 ? 1 : avail / natural;
+    // A short last line (or a short piece) stretches a little, never to the full width.
+    const stretch = last && natural < avail * 0.7 ? Math.min(avail / natural, 1.6) : avail / natural;
     const lineEnd = hw + natural * stretch;
     const sysTop = tops[0]!;
     const sysBottom = tops.at(-1)! + 4;
@@ -278,7 +279,9 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
       }
     }
     if (grand) {
-      prims.push({ k: 'glyph', x: 0.2, y: sysBottom, ch: G.brace, cls: 'brace', sy: (sysBottom - sysTop) / 4 });
+      const sy = (sysBottom - sysTop) / 4;
+      // Bravura's brace is one staff (4 spaces) tall; widen it with its height, a little less than in proportion.
+      prims.push({ k: 'glyph', x: 0.55, y: sysBottom, ch: G.brace, cls: 'brace', sx: sy * 0.8, sy });
       prims.push({ k: 'line', x1: left, y1: sysTop, x2: left, y2: sysBottom, w: M.thinBarline, cls: 'bar' });
     }
     if (opts.barNumbers && !first && bs[0]) prims.push({ k: 'text', x: left, y: sysTop - 1.6, s: String(bs[0].index), anchor: 'start', cls: 'barnum' });
