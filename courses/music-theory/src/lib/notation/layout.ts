@@ -9,7 +9,7 @@
 import { diatonic, letterIndex, type Letter, type Pitch } from '$lib/music/pitch';
 import { barTicks, beatTicks, ticks } from '$lib/music/rhythm';
 import { G, ACCIDENTAL_GLYPH, FLAG_DOWN, FLAG_UP, REST_GLYPH, M } from './glyphs';
-import type { Clef, Score, ScoreEvent } from './parse';
+import { voiceCount, voiceEvents, type BarStyle, type Clef, type Score, type ScoreEvent } from './parse';
 
 export type Prim =
   | { k: 'line'; x1: number; y1: number; x2: number; y2: number; w: number; cls?: string; ev?: number }
@@ -40,6 +40,8 @@ export interface LayoutOptions {
   width: number;
   /** Show bar numbers at the start of each system after the first. */
   barNumbers?: boolean;
+  /** Write a name under every single note (for beginners), e.g. (p) => pitchName(p). */
+  noteName?: (p: Pitch) => string;
 }
 
 const MIDDLE: Record<Clef, number> = { treble: 34, bass: 22 }; // B4, D3
@@ -108,6 +110,8 @@ interface Placed {
   heads: Head[];
   up: boolean;
   beamed: boolean;
+  /** Horizontal offset from the column, to keep a second voice clear of the first. */
+  dx: number;
 }
 
 export function layoutScore(score: Score, opts: LayoutOptions): Layout {
@@ -141,8 +145,10 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
   for (const staff of score.staves) {
     let state: Record<string, number> = {};
     let currentBar = -1;
-    let tiedFrom: Pitch[] = [];
-    for (const ev of staff.events) {
+    const tiedFrom: Pitch[][] = [[], []];
+    const multi = voiceCount(staff) > 1;
+    // Accidentals hold for the rest of the bar in every voice of the staff, so walk the voices together.
+    for (const ev of [...staff.events].sort((a, b) => a.start - b.start || a.voice - b.voice)) {
       if (ev.bar !== currentBar) {
         currentBar = ev.bar;
         state = {};
@@ -151,18 +157,18 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
       const heads: Head[] = ev.pitches.map((p, i) => {
         const key = `${p.letter}${p.octave}`;
         const current = state[key] ?? sig[p.letter];
-        const tiedInto = tiedFrom.some((q) => q.letter === p.letter && q.octave === p.octave && q.alter === p.alter);
+        const tiedInto = tiedFrom[ev.voice]!.some((q) => q.letter === p.letter && q.octave === p.octave && q.alter === p.alter);
         let acc: number | undefined;
         if (!tiedInto && (p.alter !== current || ev.forceNatural[i])) acc = p.alter;
         state[key] = p.alter;
         return { step: diatonic(p), acc, shifted: false };
       });
-      tiedFrom = ev.tie ? ev.pitches : [];
+      tiedFrom[ev.voice] = ev.tie ? ev.pitches : [];
       const mid = MIDDLE[staff.clef];
       const hi = Math.max(...heads.map((h) => h.step), mid);
       const lo = Math.min(...heads.map((h) => h.step), mid);
-      const up = heads.length ? hi - mid < mid - lo : true;
-      placed.set(ev.id, { ev, heads, up, beamed: false });
+      const up = multi ? ev.voice === 0 : heads.length ? hi - mid < mid - lo : true;
+      placed.set(ev.id, { ev, heads, up, beamed: false, dx: 0 });
       // Columns with an accidental need room in front.
       const col = bars.find((b) => b.index === ev.bar)!.columns.find((c) => c.tick === ev.start)!;
       const nAcc = heads.filter((h) => h.acc !== undefined).length;
@@ -173,16 +179,35 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
     }
   }
 
+  // ── Two voices on a staff: move the second voice's heads clear of the first's ──
+  for (const staff of score.staves) {
+    if (voiceCount(staff) < 2) continue;
+    const upper = voiceEvents(staff, 0);
+    for (const ev of voiceEvents(staff, 1)) {
+      if (ev.kind !== 'note') continue;
+      const other = upper.find((u) => u.start === ev.start && u.kind === 'note');
+      if (!other) continue;
+      const a = placed.get(other.id)!;
+      const b = placed.get(ev.id)!;
+      const clash = b.heads.some((h) => a.heads.some((g) => Math.abs(g.step - h.step) <= 1 && !(g.step === h.step && other.duration.value === ev.duration.value && other.duration.value > 1)));
+      if (clash) {
+        b.dx = HEAD_W + 0.15;
+        const col = bars.find((x) => x.index === ev.bar)!.columns.find((c) => c.tick === ev.start)!;
+        col.minSpace = Math.max(col.minSpace, 2 * HEAD_W + 1.1);
+      }
+    }
+  }
+
   // ── Beams: consecutive quavers or shorter within one beat ──
   const beamGroups: Placed[][] = [];
   const beat = beatTicks(score.time);
-  for (const staff of score.staves) {
+  for (const staff of score.staves) for (let v = 0; v < voiceCount(staff); v++) {
     let group: Placed[] = [];
     const flush = () => {
       if (group.length > 1) beamGroups.push(group);
       group = [];
     };
-    for (const ev of staff.events) {
+    for (const ev of voiceEvents(staff, v)) {
       const p = placed.get(ev.id)!;
       const beamable = ev.kind === 'note' && ev.duration.value >= 8;
       const beatOf = (e: ScoreEvent) => Math.floor((e.start - (e.bar === 0 ? -score.partial : (e.bar - 1) * bt)) / beat) + 1000 * e.bar;
@@ -195,7 +220,7 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
     const clef = score.staves[g[0]!.ev.staff]!.clef;
     const mid = MIDDLE[clef];
     const sum = g.reduce((a, p) => a + p.heads.reduce((s, h) => s + h.step - mid, 0) / p.heads.length, 0);
-    const up = sum < 0;
+    const up = voiceCount(score.staves[g[0]!.ev.staff]!) > 1 ? g[0]!.ev.voice === 0 : sum < 0;
     for (const p of g) {
       p.up = up;
       p.beamed = true;
@@ -236,9 +261,12 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
   const below = (si: number) => Math.max(4, ...score.staves[si]!.events.flatMap((e) => placed.get(e.id)!.heads.map((h) => (MIDDLE[score.staves[si]!.clef] - h.step) * 0.5 + 2 + (placed.get(e.id)!.up ? 0.6 : STEM_LEN))));
   const hasAbove = all.some((e) => e.above);
   const hasBelow = all.some((e) => e.below);
-  const topPad = Math.max(above(0) - 4 + 1.5, 2.5) + (hasAbove ? 2.6 : 0);
+  const belowLines = Math.max(1, ...all.map((e) => (e.below ? e.below.split('|').length : 0)));
+  const hasNames = !!opts.noteName;
+  const hasTuplets = all.some((e) => e.tuplet);
+  const topPad = Math.max(above(0) - 4 + 1.5, 2.5) + (hasAbove ? 2.6 : 0) + (hasTuplets ? 1.6 : 0);
   const gap = grand ? Math.max(STAFF_GAP, below(0) - 4 + above(1) - 4 + 1.5) : 0;
-  const bottomPad = Math.max(below(score.staves.length - 1) - 4 + 1.5, 2.5) + (hasBelow ? 2.8 : 0);
+  const bottomPad = Math.max(below(score.staves.length - 1) - 4 + 1.5, 2.5) + (hasBelow ? 2.8 + (belowLines - 1) * 1.9 : 0) + (hasNames ? 2.4 : 0) + (hasTuplets ? 2.2 : 0);
   const systemH = topPad + 4 + (grand ? gap + 4 : 0) + bottomPad;
 
   const systems: Layout['systems'] = [];
@@ -250,13 +278,17 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
   lines.forEach((bs, si) => {
     const tops = staffTops(si);
     const first = si === 0;
+    const startRepeat = ['|:', ':|:'].includes(score.barStyles[bs[0]!.index - 1] ?? '');
     const hw = headerW(first);
     const natural = bs.reduce((a, b) => a + b.natural, 0);
-    const avail = width - hw;
+    // Space in front of accidentals is fixed; everything else stretches.
+    const pres = bs.reduce((a, b) => a + b.columns.reduce((c, col) => c + col.pre, 0), 0);
+    const flex = natural - pres;
+    const avail = width - hw - (startRepeat ? 1.2 : 0);
     const last = si === lines.length - 1;
     // A short last line (or a short piece) stretches a little, never to the full width.
-    const stretch = last && natural < avail * 0.7 ? Math.min(avail / natural, 1.6) : avail / natural;
-    const lineEnd = hw + natural * stretch;
+    const stretch = last && natural < avail * 0.7 ? Math.min((avail - pres) / flex, 1.6) : (avail - pres) / flex;
+    const lineEnd = hw + (startRepeat ? 1.2 : 0) + pres + flex * stretch;
     const sysTop = tops[0]!;
     const sysBottom = tops.at(-1)! + 4;
 
@@ -290,6 +322,12 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
     const sysColumns: { tick: number; x: number }[] = [];
     let x = hw;
     for (const [bi, bar] of bs.entries()) {
+      // A start repeat before the first bar of a line goes after the clef and key, not at the end of the line before.
+      const before = score.barStyles[bar.index - 1];
+      if (bi === 0 && (before === '|:' || before === ':|:')) {
+        drawBarline(prims, '|:', x - 0.2, tops, sysTop, sysBottom);
+        x += 1.2;
+      }
       x += 1.2 * stretch;
       for (const c of bar.columns) {
         x += c.pre;
@@ -299,10 +337,10 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
       }
       x += 0.4 * stretch;
       const finalBar = si === lines.length - 1 && bi === bs.length - 1;
-      if (finalBar) {
-        prims.push({ k: 'line', x1: x - 1.0, y1: sysTop, x2: x - 1.0, y2: sysBottom, w: M.thinBarline, cls: 'bar' });
-        prims.push({ k: 'line', x1: x - 0.25, y1: sysTop, x2: x - 0.25, y2: sysBottom, w: M.thickBarline, cls: 'bar' });
-      } else prims.push({ k: 'line', x1: x, y1: sysTop, x2: x, y2: sysBottom, w: M.thinBarline, cls: 'bar' });
+      let style: BarStyle = score.barStyles[bar.index] ?? (finalBar ? '|.' : '|');
+      // At the end of a line, the start-repeat half of a bar line moves to the next line.
+      if (bi === bs.length - 1 && !finalBar) style = style === '|:' ? '|' : style === ':|:' ? ':|' : style;
+      drawBarline(prims, style, x, tops, sysTop, sysBottom);
     }
     systems.push({
       top: sysTop - topPad,
@@ -316,26 +354,38 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
     for (const bar of bs) {
       for (const [stIndex, staff] of score.staves.entries()) {
         const top = tops[stIndex]!;
+        const multi = voiceCount(staff) > 1;
         for (const ev of staff.events.filter((e) => e.bar === bar.index)) {
           const col = bar.columns.find((c) => c.tick === ev.start)!;
-          events.set(ev.id, { x: col.x, staffTop: top, system: si });
           const p = placed.get(ev.id)!;
-          if (ev.kind === 'rest') drawRest(prims, ev, col.x, top, bar, bt, stretch, hw);
-          else drawNote(prims, p, staff.clef, col.x, top);
+          const ex = col.x + p.dx;
+          events.set(ev.id, { x: ex, staffTop: top, system: si });
+          if (ev.kind === 'rest') drawRest(prims, ev, ex, top, bar, bt, stretch, multi ? (ev.voice === 0 ? -2 : 2) : 0);
+          else drawNote(prims, p, staff.clef, ex, top);
           if (ev.above) prims.push({ k: 'text', x: col.x, y: sysTop - Math.max(1.2, above(0) - 4 + 0.6) - 0.6, s: ev.above, anchor: 'start', cls: 'chordsym', ev: ev.id });
-          if (ev.below) prims.push({ k: 'text', x: col.x + HEAD_W / 2, y: sysBottom + Math.max(1.2, below(score.staves.length - 1) - 4 + 0.6) + 2, s: ev.below, anchor: 'middle', cls: 'roman', ev: ev.id });
-          prims.push({ k: 'hit', x: col.x - 0.6, y: top - 2, w: HEAD_W + 1.2, h: 8, ev: ev.id });
+          if (ev.below) {
+            const by = sysBottom + Math.max(1.2, below(score.staves.length - 1) - 4 + 0.6) + 2 + (hasNames ? 2.4 : 0);
+            drawBelow(prims, ev.below, col.x + HEAD_W / 2, by, ev.id);
+          }
+          if (opts.noteName && ev.kind === 'note' && ev.pitches.length === 1 && (stIndex === score.staves.length - 1 || !grand)) {
+            const ny = sysBottom + Math.max(1.2, below(score.staves.length - 1) - 4 + 0.6) + 1.9;
+            prims.push({ k: 'text', x: ex + HEAD_W / 2, y: ny, s: opts.noteName(ev.pitches[0]!), anchor: 'middle', cls: 'notename', ev: ev.id });
+          } else if (opts.noteName && ev.kind === 'note' && ev.pitches.length === 1 && grand && stIndex === 0) {
+            prims.push({ k: 'text', x: ex + HEAD_W / 2, y: top + 4 + gap / 2 + 0.6, s: opts.noteName(ev.pitches[0]!), anchor: 'middle', cls: 'notename', ev: ev.id });
+          }
+          prims.push({ k: 'hit', x: ex - 0.6, y: top - 2, w: HEAD_W + 1.2, h: 8, ev: ev.id });
         }
       }
     }
   });
 
-  // Beams (after positions are known).
+  // Beams (after positions are known), then tuplet numbers over their groups.
   for (const g of beamGroups) drawBeam(prims, g, score, events);
+  drawTuplets(prims, score, placed, events, beamGroups);
 
   // Ties and slurs.
-  for (const staff of score.staves) {
-    const evs = staff.events;
+  for (const staff of score.staves) for (let v = 0; v < voiceCount(staff); v++) {
+    const evs = voiceEvents(staff, v);
     let slurFrom: ScoreEvent | undefined;
     evs.forEach((ev, i) => {
       const box = events.get(ev.id)!;
@@ -451,11 +501,12 @@ function drawNote(prims: Prim[], p: Placed, clef: Clef, x: number, top: number):
   if (value >= 8) prims.push({ k: 'glyph', x: sx - STEM_W / 2, y: y2, ch: (up ? FLAG_UP : FLAG_DOWN)[value]!, cls: 'flag', ev: id });
 }
 
-function drawRest(prims: Prim[], ev: ScoreEvent, x: number, top: number, bar: { start: number; end: number; columns: Column[] }, bt: number, stretch: number, _hw: number): void {
+function drawRest(prims: Prim[], ev: ScoreEvent, x: number, top: number, bar: { start: number; end: number; columns: Column[] }, bt: number, stretch: number, shift: number): void {
   const fullBar = ticks(ev.duration) === bt && bar.columns.length === 1;
   const value = fullBar ? 1 : ev.duration.value;
   const ch = REST_GLYPH[value]!;
-  const y = value === 1 ? top + 1 : value === 2 ? top + 2 : top + 2;
+  // Rests of a second voice move out of the first voice's way (by whole spaces, so they keep their line).
+  const y = (value === 1 ? top + 1 : top + 2) + Math.round(shift);
   // A whole-bar rest is centred in the bar.
   const rx = fullBar ? x + Math.max(0, (bar.columns[0]!.space * stretch - M.restWhole) / 2) - 0.6 : x;
   prims.push({ k: 'glyph', x: rx, y, ch, cls: 'rest', ev: ev.id });
@@ -522,3 +573,100 @@ function drawBeam(prims: Prim[], g: Placed[], score: Score, events: Map<number, 
 }
 
 export { letterIndex };
+
+function drawBarline(prims: Prim[], style: BarStyle, x: number, tops: number[], y1: number, y2: number): void {
+  const thin = (at: number) => prims.push({ k: 'line', x1: at, y1, x2: at, y2, w: M.thinBarline, cls: 'bar' });
+  const thick = (at: number) => prims.push({ k: 'line', x1: at, y1, x2: at, y2, w: M.thickBarline, cls: 'bar' });
+  const dots = (at: number) => {
+    for (const t of tops) for (const dy of [1.5, 2.5]) prims.push({ k: 'glyph', x: at, y: t + dy, ch: G.dot, cls: 'bar' });
+  };
+  switch (style) {
+    case '|':
+      thin(x);
+      break;
+    case '||':
+      thin(x - 0.6);
+      thin(x);
+      break;
+    case '|.':
+      thin(x - 1.0);
+      thick(x - 0.25);
+      break;
+    case ':|':
+      dots(x - 1.9);
+      thin(x - 1.0);
+      thick(x - 0.25);
+      break;
+    case '|:':
+      thick(x + 0.25);
+      thin(x + 1.0);
+      dots(x + 1.4);
+      break;
+    case ':|:':
+      dots(x - 1.6);
+      thin(x - 0.7);
+      thick(x);
+      thin(x + 0.7);
+      dots(x + 1.1);
+      break;
+  }
+}
+
+/** Roman numerals and figured bass under the staff: "V65" puts 6 over 5 after the numeral; "6|4" stacks figures. */
+function drawBelow(prims: Prim[], s: string, x: number, y: number, ev: number): void {
+  const stack = s.split('|');
+  if (stack.length > 1) {
+    stack.forEach((line, i) => prims.push({ k: 'text', x, y: y + i * 1.9, s: line, anchor: 'middle', cls: 'figure', ev }));
+    return;
+  }
+  const m = /^(.*?[IVXivx°ø+])(65|43|42|64|6|7)$/.exec(s);
+  if (!m) {
+    prims.push({ k: 'text', x, y, s, anchor: 'middle', cls: 'roman', ev });
+    return;
+  }
+  const base = m[1]!;
+  const figs = m[2]!.length === 2 ? [m[2]![0]!, m[2]![1]!] : [m[2]!];
+  const w = textWidth(base, 1.85) * 0.92;
+  prims.push({ k: 'text', x: x - 0.5, y, s: base, anchor: 'middle', cls: 'roman', ev });
+  const fx = x - 0.5 + w / 2 + 0.15;
+  if (figs.length === 1) prims.push({ k: 'text', x: fx, y: y - 0.75, s: figs[0]!, anchor: 'start', cls: 'rfig', ev });
+  else {
+    prims.push({ k: 'text', x: fx, y: y - 1.05, s: figs[0]!, anchor: 'start', cls: 'rfig', ev });
+    prims.push({ k: 'text', x: fx, y: y + 0.25, s: figs[1]!, anchor: 'start', cls: 'rfig', ev });
+  }
+}
+
+/** Tuplet numbers: over the beam when the group is one beam, otherwise with a bracket. */
+function drawTuplets(prims: Prim[], score: Score, placed: Map<number, Placed>, events: Map<number, EventBox>, beams: Placed[][]): void {
+  const groups = new Map<number, ScoreEvent[]>();
+  for (const st of score.staves) for (const e of st.events) if (e.tuplet) groups.set(e.tuplet.id, [...(groups.get(e.tuplet.id) ?? []), e]);
+  for (const evs of groups.values()) {
+    const first = evs[0]!;
+    const last = evs.at(-1)!;
+    const a = events.get(first.id)!;
+    const b = events.get(last.id)!;
+    if (a.system !== b.system) continue;
+    const clef = score.staves[first.staff]!.clef;
+    const ids = new Set(evs.map((e) => e.id));
+    // The number goes on the side where most stems point, beyond the stem ends (or the beam).
+    const ups = evs.filter((e) => e.kind === 'note' && placed.get(e.id)!.up).length;
+    const up = ups * 2 >= evs.filter((e) => e.kind === 'note').length;
+    const ends = prims.filter((q): q is Extract<Prim, { k: 'line' }> => q.k === 'line' && q.cls === 'stem' && q.ev !== undefined && ids.has(q.ev)).map((q) => q.y2);
+    const ys = evs.flatMap((e) => placed.get(e.id)!.heads.map((h) => events.get(e.id)!.staffTop + stepY(clef, h.step)));
+    const top = a.staffTop;
+    const y = up ? Math.min(top - 0.8, ...ends.map((e) => e - 1.0), ...ys.map((e) => e - 1.4)) : Math.max(top + 5.6, ...ends.map((e) => e + 1.9), ...ys.map((e) => e + 2.2));
+    const x1 = a.x;
+    const x2 = b.x + HEAD_W;
+    const num = String(first.tuplet!.num);
+    const oneBeam = beams.some((g) => evs.every((e) => g.some((q) => q.ev.id === e.id)));
+    prims.push({ k: 'text', x: (x1 + x2) / 2, y: y + 0.5, s: num, anchor: 'middle', cls: 'tuplet' });
+    if (!oneBeam) {
+      const yb = y + (up ? 0.6 : -0.6);
+      const mid = (x1 + x2) / 2;
+      prims.push({ k: 'line', x1, y1: yb + (up ? 0.6 : -0.6), x2: x1, y2: yb, w: 0.1, cls: 'tupletbr' });
+      prims.push({ k: 'line', x1, y1: yb, x2: mid - 0.8, y2: yb, w: 0.1, cls: 'tupletbr' });
+      prims.push({ k: 'line', x1: mid + 0.8, y1: yb, x2, y2: yb, w: 0.1, cls: 'tupletbr' });
+      prims.push({ k: 'line', x1: x2, y1: yb, x2, y2: yb + (up ? 0.6 : -0.6), w: 0.1, cls: 'tupletbr' });
+    }
+  }
+}

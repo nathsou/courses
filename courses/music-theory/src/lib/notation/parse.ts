@@ -14,6 +14,10 @@
  * - `\staff treble` or `\staff bass` starts a staff; without one there is a single treble staff (or the
  *   clef set by `\clef`). Two staves make a grand staff.
  * - `\partial 4` before the first note makes an upbeat of that length.
+ * - `\voice` starts a second voice on the same staff, from the beginning (stems up in the first voice, down in
+ *   the second): `\staff treble e''2 d''2 | \voice c''2 b'2 |`.
+ * - `\tuplet 3/2 { c'8 d' e' }` plays three notes in the time of two.
+ * - `\bar "||"` (double), `"|."` (final), `"|:"`, `":|"` and `":|:"` (repeats) style the bar line here.
  */
 import { LETTERS, type Letter, type Pitch } from '$lib/music/pitch';
 import { barTicks, ticks, type Denominator, type Duration, type TimeSignature } from '$lib/music/rhythm';
@@ -21,9 +25,15 @@ import { fifthsOf, type Mode } from '$lib/music/scale';
 
 export type Clef = 'treble' | 'bass';
 
+export type BarStyle = '|' | '||' | '|.' | '|:' | ':|' | ':|:';
+
 export interface ScoreEvent {
   id: number;
   staff: number;
+  /** 0 for the first voice on the staff, 1 for the second. */
+  voice: number;
+  /** Tuplet group this event belongs to, and its number (3 for a triplet). */
+  tuplet?: { id: number; num: number };
   kind: 'note' | 'rest';
   pitches: Pitch[];
   /** Accidental written explicitly with `n` (a courtesy natural), by pitch index. */
@@ -56,6 +66,17 @@ export interface Score {
   partial: number;
   /** Total length in ticks, including the upbeat. */
   length: number;
+  /** Bar-line styles by the number of the bar they end (0 for the upbeat bar). */
+  barStyles: Record<number, BarStyle>;
+}
+
+/** The events of one voice of a staff, in order. */
+export function voiceEvents(staff: Staff, voice: number): ScoreEvent[] {
+  return staff.events.filter((e) => e.voice === voice);
+}
+
+export function voiceCount(staff: Staff): number {
+  return 1 + Math.max(0, ...staff.events.map((e) => e.voice));
 }
 
 export class ScoreError extends Error {}
@@ -64,6 +85,8 @@ type Token =
   | { t: 'cmd'; v: string; at: number }
   | { t: 'str'; v: string; at: number }
   | { t: 'bar'; at: number }
+  | { t: 'open'; at: number }
+  | { t: 'close'; at: number }
   | { t: 'note'; v: string; above?: string; below?: string; at: number };
 
 function tokenize(src: string): Token[] {
@@ -78,7 +101,10 @@ function tokenize(src: string): Token[] {
   };
   while (i < src.length) {
     const c = src[i]!;
-    if (/\s/.test(c) || c === '{' || c === '}') {
+    if (/\s/.test(c)) {
+      i++;
+    } else if (c === '{' || c === '}') {
+      out.push({ t: c === '{' ? 'open' : 'close', at: i });
       i++;
     } else if (c === '%') {
       while (i < src.length && src[i] !== '\n') i++;
@@ -148,13 +174,27 @@ export function parseScore(src: string): Score {
   let pos = 0;
   let dur: Duration = { value: 4, dots: 0 };
   let inSlur = false;
+  let voice = 0;
+  const barStyles: Record<number, BarStyle> = {};
+  /** Open tuplet groups: the ratio, the group id and the brace depth it closes at. */
+  let tuplet: { num: number; den: number; id: number; depth: number } | undefined;
+  let pendingTuplet: { num: number; den: number } | undefined;
+  let depth = 0;
+  let tupletId = 0;
+  /** Lengths of each finished voice, to check that the voices of a staff agree. */
+  const voiceLengths: { staff: number; voice: number; length: number }[] = [];
 
+  const endVoice = () => {
+    if (staff) voiceLengths.push({ staff: staves.length - 1, voice, length: pos + partial });
+  };
   const startStaff = (c: Clef) => {
+    endVoice();
     staff = { clef: c, events: [] };
     staves.push(staff);
-    pos = -partial;
+    pos = partial ? -partial : 0;
     dur = { value: 4, dots: 0 };
     inSlur = false;
+    voice = 0;
   };
 
   for (let k = 0; k < tokens.length; k++) {
@@ -199,6 +239,32 @@ export function parseScore(src: string): Score {
           if (!(tempo > 0)) throw new ScoreError(`Expected \\tempo <beats per minute> at ${tok.at}`);
           break;
         }
+        case 'voice': {
+          if (!staff) throw new ScoreError(`\\voice needs a staff with a first voice before it, at ${tok.at}`);
+          endVoice();
+          voice++;
+          if (voice > 1) throw new ScoreError(`At most two voices per staff, at ${tok.at}`);
+          pos = partial ? -partial : 0;
+          dur = { value: 4, dots: 0 };
+          inSlur = false;
+          break;
+        }
+        case 'tuplet': {
+          const n = next();
+          const m = n.t === 'note' ? /^(\d+)\/(\d+)$/.exec(n.v) : null;
+          if (!m || tokens[k + 1]?.t !== 'open') throw new ScoreError(`Expected \\tuplet n/m { … } at ${tok.at}`);
+          pendingTuplet = { num: Number(m[1]), den: Number(m[2]) };
+          break;
+        }
+        case 'bar': {
+          const n = next();
+          const style = n.t === 'str' ? n.v : '';
+          if (!['|', '||', '|.', '|:', ':|', ':|:'].includes(style)) throw new ScoreError(`Unknown bar line "${style}" at ${n.at}`);
+          const bt = barTicks(time);
+          if (((pos % bt) + bt) % bt !== 0) throw new ScoreError(`\\bar must come at a bar line, at ${tok.at}`);
+          barStyles[pos / bt] = style as BarStyle;
+          break;
+        }
         case 'partial': {
           const n = next();
           const m = n.t === 'note' ? /^(1|2|4|8|16)(\.*)$/.exec(n.v) : null;
@@ -212,6 +278,19 @@ export function parseScore(src: string): Score {
       continue;
     }
     if (tok.t === 'str') throw new ScoreError(`Unexpected text "${tok.v}" at ${tok.at}`);
+    if (tok.t === 'open') {
+      depth++;
+      if (pendingTuplet) {
+        tuplet = { ...pendingTuplet, id: tupletId++, depth };
+        pendingTuplet = undefined;
+      }
+      continue;
+    }
+    if (tok.t === 'close') {
+      if (tuplet && tuplet.depth === depth) tuplet = undefined;
+      depth--;
+      continue;
+    }
     if (!staff) startStaff(clef);
     const st = staff!;
     const bt = barTicks(time);
@@ -238,7 +317,8 @@ export function parseScore(src: string): Score {
       const nat = order.map(([, i]) => naturals[i]!);
       naturals.splice(0, naturals.length, ...nat);
     }
-    const length = ticks(dur);
+    const evDur: Duration = tuplet ? { ...dur, tuplet: [tuplet.num, tuplet.den] } : { ...dur };
+    const length = ticks(evDur);
     const barIndex = pos < 0 ? 0 : Math.floor(pos / bt) + 1;
     const barEnd = (Math.floor(pos / bt) + 1) * bt;
     if (pos + length > barEnd) throw new ScoreError(`“${tok.v}” at ${tok.at} crosses a bar line: split it and tie the halves with ~`);
@@ -246,10 +326,12 @@ export function parseScore(src: string): Score {
     const ev: ScoreEvent = {
       id: id++,
       staff: staves.length - 1,
+      voice,
+      tuplet: tuplet ? { id: tuplet.id, num: tuplet.num } : undefined,
       kind: head === 'r' ? 'rest' : 'note',
       pitches,
       forceNatural: naturals,
-      duration: { ...dur },
+      duration: evDur,
       start: pos,
       bar: barIndex,
       tie: !!m[4],
@@ -265,10 +347,12 @@ export function parseScore(src: string): Score {
   }
 
   if (!staves.length) throw new ScoreError('Empty score');
-  const lengths = staves.map((s) => (s.events.length ? s.events.at(-1)!.start + ticks(s.events.at(-1)!.duration) : -partial));
-  const length = Math.max(...lengths) + partial;
-  if (new Set(lengths).size > 1) throw new ScoreError(`Staves have different lengths: ${lengths.map((l) => l + partial).join(', ')} ticks`);
-  return { staves, fifths, mode, time, tempo, partial, length };
+  endVoice();
+  const lengths = voiceLengths.map((v) => v.length);
+  const length = Math.max(...lengths);
+  if (new Set(lengths).size > 1) throw new ScoreError(`Staves or voices have different lengths: ${voiceLengths.map((v) => `staff ${v.staff + 1} voice ${v.voice + 1}: ${v.length}`).join(', ')} ticks`);
+  if (tuplet || depth) throw new ScoreError('Unclosed { in a tuplet');
+  return { staves, fifths, mode, time, tempo, partial, length, barStyles };
 }
 
 /** Seconds per tick at the score's tempo. */

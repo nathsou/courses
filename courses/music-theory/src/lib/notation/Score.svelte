@@ -11,7 +11,8 @@
   import { settings } from '$lib/state/settings.svelte';
   import { ticks } from '$lib/music/rhythm';
   import { layoutScore, type Layout } from './layout';
-  import { parseScore, secondsPerTick, type Score } from './parse';
+  import { parseScore, secondsPerTick, voiceCount, voiceEvents, type Score } from './parse';
+  import { pitchName } from '$lib/music/names';
   import Icon from '$lib/components/ui/Icon.svelte';
 
   let {
@@ -22,6 +23,7 @@
     tempo,
     label = 'Score',
     space = 0,
+    names = false,
   }: {
     src: string;
     /** Extra classes by event id ("target", "wrong", "tonic" …). */
@@ -34,6 +36,8 @@
     label?: string;
     /** Staff space in CSS pixels (0: chosen from the width). */
     space?: number;
+    /** Write each single note's name under it (for beginners). */
+    names?: boolean;
   } = $props();
 
   const parsed = $derived.by((): { score?: Score; error?: string } => {
@@ -47,7 +51,7 @@
   let box: HTMLDivElement | undefined = $state();
   let width = $state(640);
   const sp = $derived(space || (width < 480 ? 7.5 : 9));
-  const layout = $derived.by((): Layout | undefined => (parsed.score ? layoutScore(parsed.score, { width: width / sp - 0.5, barNumbers: true }) : undefined));
+  const layout = $derived.by((): Layout | undefined => (parsed.score ? layoutScore(parsed.score, { width: width / sp - 0.5, barNumbers: true, noteName: names ? (p) => pitchName(p, settings.nameOptions) : undefined }) : undefined));
   let fontReady = $state(false);
   let playingIds: Set<number> = $state(new Set());
   let playing = $state(false);
@@ -55,8 +59,8 @@
   function notesOf(score: Score): (ScheduledNote & { id: number })[] {
     const spt = tempo ? (secondsPerTick(score) * score.tempo) / tempo : secondsPerTick(score);
     const out: (ScheduledNote & { id: number })[] = [];
-    for (const staff of score.staves) {
-      const evs = staff.events;
+    for (const staff of score.staves) for (let v = 0; v < voiceCount(staff); v++) {
+      const evs = voiceEvents(staff, v);
       evs.forEach((ev, i) => {
         if (ev.kind === 'rest') return;
         // A note tied into from the previous event is already sounding.
@@ -210,6 +214,27 @@
   .roman {
     font-family: var(--font-body);
     font-size: 1.85px;
+  }
+  .figure,
+  .rfig {
+    font-family: var(--font-body);
+    font-size: 1.55px;
+  }
+  .rfig {
+    font-size: 1.25px;
+  }
+  .tuplet {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1.5px;
+  }
+  line.tupletbr {
+    stroke: var(--ink);
+  }
+  .notename {
+    font-size: 1.35px;
+    fill: var(--accent);
+    font-weight: 600;
   }
   .barnum {
     font-size: 1.2px;

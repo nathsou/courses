@@ -101,3 +101,65 @@ describe('score layout', () => {
     expect(l.events.size).toBe(2);
   });
 });
+
+describe('engraver v1', () => {
+  const count = (src: string, cls: string, width = 80) => layoutScore(parseScore(src), { width }).prims.filter((p) => 'cls' in p && p.cls === cls).length;
+
+  it('reads a second voice and checks its length', () => {
+    const s = parseScore(String.raw`\staff treble e''2 d''2 | \voice c''2 b'2 | \staff bass <g c'>2 <g b>2 | \voice c2 g,2 |`);
+    expect(s.staves[0]!.events.map((e) => e.voice)).toEqual([0, 0, 1, 1]);
+    expect(() => parseScore(String.raw`\staff treble e''1 | \voice c''2`)).toThrow(/different lengths/);
+  });
+
+  it('draws two voices with opposite stems', () => {
+    const l = layoutScore(parseScore(String.raw`\staff treble e''2 d''2 | \voice c''2 b'2 |`), { width: 60 });
+    const stems = l.prims.filter((p) => p.k === 'line' && p.cls === 'stem') as { y1: number; y2: number }[];
+    expect(stems.filter((s) => s.y2 < s.y1).length).toBe(2); // up
+    expect(stems.filter((s) => s.y2 > s.y1).length).toBe(2); // down
+  });
+
+  it('moves a second voice a second away from the first', () => {
+    const l = layoutScore(parseScore(String.raw`\staff treble d''2 d''2 | \voice c''2 b'2 |`), { width: 60 });
+    const x = (id: number) => l.events.get(id)!.x;
+    expect(x(2)).toBeGreaterThan(x(0)); // C5 against D5: shifted
+    expect(x(3)).toBe(x(1)); // B4 against D5: a third, no shift
+  });
+
+  it('reads triplets and numbers them', () => {
+    const s = parseScore(String.raw`\tuplet 3/2 { c''8 d'' e'' } f''4 g''2 |`);
+    expect(s.staves[0]!.events.slice(0, 3).map((e) => e.start)).toEqual([0, 160, 320]);
+    expect(count(String.raw`\tuplet 3/2 { c''8 d'' e'' } f''4 g''2 |`, 'tuplet')).toBe(1);
+    expect(count(String.raw`\tuplet 3/2 { c''4 d'' e'' } g''2 |`, 'tupletbr')).toBe(4);
+  });
+
+  it('styles bar lines', () => {
+    expect(count(String.raw`c''1 \bar "||" | d''1 |`, 'bar')).toBe(4); // double (2), final (2)
+    expect(() => parseScore(String.raw`c''2 \bar "||" d''2 |`)).toThrow(/at a bar line/);
+    expect(count(String.raw`\bar "|:" c''1 | d''1 \bar ":|" |`, 'bar')).toBeGreaterThan(4);
+  });
+
+  it('stacks figures and raises inversion figures after a numeral', () => {
+    expect(count(String.raw`c'1_"6|4" |`, 'figure')).toBe(2);
+    expect(count(String.raw`c'1_"V65" |`, 'rfig')).toBe(2);
+    expect(count(String.raw`c'1_"I6" |`, 'rfig')).toBe(1);
+    expect(count(String.raw`c'1_"IV" |`, 'rfig')).toBe(0);
+  });
+
+  it('writes note names under single notes when asked', () => {
+    const l = layoutScore(parseScore("c'4 d'4 e'4 <c' e'>4 |"), { width: 60, noteName: (p) => p.letter });
+    expect(l.prims.filter((p) => p.k === 'text' && p.cls === 'notename').map((p) => (p as { s: string }).s)).toEqual(['C', 'D', 'E']);
+  });
+});
+
+describe('engraving reference', async () => {
+  const { GALLERY } = await import('./gallery');
+  for (const g of GALLERY) {
+    it(g.title, () => {
+      for (const width of [36, 60, 110]) {
+        const l = layoutScore(parseScore(g.src), { width });
+        expect(l.prims.length).toBeGreaterThan(10);
+        for (const p of l.prims) if (p.k === 'line') expect(Math.max(p.x1, p.x2)).toBeLessThanOrEqual(Math.max(width, 24) + 0.01);
+      }
+    });
+  }
+});
