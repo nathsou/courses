@@ -8,7 +8,11 @@ import { noteName, type NameOptions } from './names';
 import { letterIndex, midi, mod, parsePitch, pitchClass, spell, type Pitch, type PitchClassName } from './pitch';
 import { fifthsOf, keyScale, type Key } from './scale';
 
-export type ChordQuality = 'maj' | 'min' | 'dim' | 'aug' | 'sus2' | 'sus4' | '7' | 'maj7' | 'm7' | 'm7b5' | 'dim7';
+export type ChordQuality =
+  | 'maj' | 'min' | 'dim' | 'aug' | 'sus2' | 'sus4'
+  | '7' | 'maj7' | 'm7' | 'm7b5' | 'dim7'
+  | '6' | 'm6' | 'add9' | '7sus4' | 'mMaj7' | '7#5'
+  | '9' | 'maj9' | 'm9' | '7b9' | '7#9' | '7#11' | 'maj7#11' | 'm11' | '13';
 
 interface QualityInfo {
   intervals: string[];
@@ -32,6 +36,22 @@ export const QUALITIES: Record<ChordQuality, QualityInfo> = {
   m7: { intervals: ['P1', 'm3', 'P5', 'm7'], symbol: 'm7', name: 'minor seventh', upper: false, roman: '7' },
   m7b5: { intervals: ['P1', 'm3', 'd5', 'm7'], symbol: 'm7♭5', name: 'half-diminished seventh', upper: false, roman: 'ø7' },
   dim7: { intervals: ['P1', 'm3', 'd5', 'd7'], symbol: 'dim7', name: 'diminished seventh', upper: false, roman: '°7' },
+  // Added-note chords and extensions (Part VI). Roman suffixes follow jazz usage: "I6", "V9", "V7♭9".
+  '6': { intervals: ['P1', 'M3', 'P5', 'M6'], symbol: '6', name: 'major sixth', upper: true, roman: 'add6' },
+  m6: { intervals: ['P1', 'm3', 'P5', 'M6'], symbol: 'm6', name: 'minor sixth', upper: false, roman: 'add6' },
+  add9: { intervals: ['P1', 'M3', 'P5', 'M9'], symbol: 'add9', name: 'added ninth', upper: true, roman: 'add9' },
+  '7sus4': { intervals: ['P1', 'P4', 'P5', 'm7'], symbol: '7sus4', name: 'dominant seventh, suspended fourth', upper: true, roman: '7sus4' },
+  mMaj7: { intervals: ['P1', 'm3', 'P5', 'M7'], symbol: 'm(maj7)', name: 'minor–major seventh', upper: false, roman: '(maj7)' },
+  '7#5': { intervals: ['P1', 'M3', 'A5', 'm7'], symbol: '7♯5', name: 'augmented seventh', upper: true, roman: '+7' },
+  '9': { intervals: ['P1', 'M3', 'P5', 'm7', 'M9'], symbol: '9', name: 'dominant ninth', upper: true, roman: '9' },
+  maj9: { intervals: ['P1', 'M3', 'P5', 'M7', 'M9'], symbol: 'maj9', name: 'major ninth', upper: true, roman: 'maj9' },
+  m9: { intervals: ['P1', 'm3', 'P5', 'm7', 'M9'], symbol: 'm9', name: 'minor ninth', upper: false, roman: '9' },
+  '7b9': { intervals: ['P1', 'M3', 'P5', 'm7', 'm9'], symbol: '7♭9', name: 'dominant seventh, flat nine', upper: true, roman: '7♭9' },
+  '7#9': { intervals: ['P1', 'M3', 'P5', 'm7', 'A9'], symbol: '7♯9', name: 'dominant seventh, sharp nine', upper: true, roman: '7♯9' },
+  '7#11': { intervals: ['P1', 'M3', 'P5', 'm7', 'A11'], symbol: '7♯11', name: 'dominant seventh, sharp eleven', upper: true, roman: '7♯11' },
+  'maj7#11': { intervals: ['P1', 'M3', 'P5', 'M7', 'A11'], symbol: 'maj7♯11', name: 'major seventh, sharp eleven', upper: true, roman: 'maj7♯11' },
+  m11: { intervals: ['P1', 'm3', 'P5', 'm7', 'M9', 'P11'], symbol: 'm11', name: 'minor eleventh', upper: false, roman: '11' },
+  '13': { intervals: ['P1', 'M3', 'P5', 'm7', 'M9', 'M13'], symbol: '13', name: 'dominant thirteenth', upper: true, roman: '13' },
 };
 
 export interface Chord {
@@ -76,11 +96,26 @@ export function voicing(c: Chord, octave = 3): Pitch[] {
 export function chordSymbol(c: Chord, opts: NameOptions = {}): string {
   const root = noteName(c.root, opts);
   const bass = c.bass && !(c.bass.letter === c.root.letter && c.bass.alter === c.root.alter) ? `/${noteName(c.bass, opts)}` : '';
-  const symbol = opts.ascii ? QUALITIES[c.quality].symbol.replace('♭', 'b') : QUALITIES[c.quality].symbol;
+  const symbol = opts.ascii ? QUALITIES[c.quality].symbol.replace(/♭/g, 'b').replace(/♯/g, '#') : QUALITIES[c.quality].symbol;
   return root + symbol + bass;
 }
 
 const SYMBOL_SUFFIXES: [RegExp, ChordQuality][] = [
+  [/^(maj7|M7|Δ7?)(#11|♯11)$/, 'maj7#11'],
+  [/^(maj9|M9|Δ9)$/, 'maj9'],
+  [/^(m|min|-)\(?(maj7|M7|Δ7?)\)?$/, 'mMaj7'],
+  [/^(m9|min9|-9)$/, 'm9'],
+  [/^(m11|min11|-11)$/, 'm11'],
+  [/^(m6|min6|-6)$/, 'm6'],
+  [/^6$/, '6'],
+  [/^9$/, '9'],
+  [/^13$/, '13'],
+  [/^7(b9|♭9)$/, '7b9'],
+  [/^7(#9|♯9)$/, '7#9'],
+  [/^7(#11|♯11)$/, '7#11'],
+  [/^(7(#5|♯5|\+5?)|\+7|aug7)$/, '7#5'],
+  [/^7sus4?$/, '7sus4'],
+  [/^add9$/, 'add9'],
   [/^(maj7|M7|Δ7?)$/, 'maj7'],
   [/^(m7(b5|♭5)|ø7?)$/, 'm7b5'],
   [/^(dim7|°7|o7)$/, 'dim7'],
@@ -135,10 +170,12 @@ export function romanNumeral(c: Chord, key: Key): RomanNumeral {
   const prefix = diff > 0 ? '♯'.repeat(diff) : '♭'.repeat(-diff);
   const info = QUALITIES[c.quality];
   const numeral = info.upper ? NUMERALS[deg]! : NUMERALS[deg]!.toLowerCase();
-  const seventh = info.intervals.length === 4;
+  // Seventh chords take inversion figures (7, 65, 43, 42); added-note and extended chords keep their suffix.
+  const seventh = info.intervals.length === 4 && /7$/.test(info.intervals[3]!) && /7$/.test(info.roman);
+  const extended = info.intervals.length > 4 || (info.intervals.length === 4 && !seventh);
   const inv = inversion(c) ?? 0;
   let quality = info.roman;
-  let figures = seventh ? SEVENTH_FIGURES[inv]! : TRIAD_FIGURES[inv]!;
+  let figures = extended ? '' : seventh ? SEVENTH_FIGURES[inv]! : TRIAD_FIGURES[inv]!;
   if (seventh) quality = quality.replace(/7$/, '');
   return { prefix, numeral, quality, figures };
 }
@@ -167,7 +204,7 @@ export function identifyChord(notes: number[], fifths = 0): Identified[] {
     for (const [q, info] of Object.entries(QUALITIES) as [ChordQuality, QualityInfo][]) {
       const steps = info.intervals.map((i) => mod(rootPc + parseInterval(i).semitones, 12));
       const want = new Set(steps);
-      const omitFifth = info.intervals.length === 4 ? new Set(steps.filter((_, i) => i !== 2)) : undefined;
+      const omitFifth = info.intervals.length >= 4 ? new Set(steps.filter((_, i) => i !== 2)) : undefined;
       const exact = eq(pcs, want);
       const omitted = !exact && omitFifth && eq(pcs, omitFifth);
       if (!exact && !omitted) continue;

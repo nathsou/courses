@@ -19,6 +19,7 @@ import { checkSpelling } from '../../src/lib/components/exercise/spell';
 import { onsetsOf } from '../../src/lib/components/exercise/perform';
 import { exampleChords, judge, realiseScore, slotsOf } from '../../src/lib/components/exercise/realise';
 import { checkVoiceLeading } from '../../src/lib/music/voicelead';
+import { chartSlots } from '../../src/lib/components/exercise/improvise';
 import { midi } from '../../src/lib/music/pitch';
 
 const root = path.resolve(import.meta.dirname, '../../content');
@@ -56,7 +57,7 @@ describe('content music is valid', () => {
     });
     test(`${rel}: exercises`, () => {
       const ids = new Set<string>();
-      for (const kind of ['play', 'perform', 'ear', 'spell', 'read', 'analyse', 'realise']) {
+      for (const kind of ['play', 'perform', 'ear', 'spell', 'read', 'analyse', 'realise', 'improvise']) {
         for (const b of blocks(src, kind)) {
           const spec = YAML.parse(b);
           expect(spec.id, `${kind} block needs an id`).toBeTruthy();
@@ -80,6 +81,7 @@ describe('content music is valid', () => {
             const slots = spec.per === 'bar' ? new Set(sc.staves.flatMap((st) => st.events.map((e) => e.bar))).size : spec.per === 'note' ? sc.staves[0]!.events.filter((e) => e.kind === 'note').length : onsetsOf(sc).length;
             expect(slots, `${spec.id}: one answer per ${spec.per ?? 'chord'}`).toBe(spec.answers.length);
           }
+          if (kind === 'improvise') expect(chartSlots(spec.chart, spec.beats ?? 4).length).toBeGreaterThan(0);
           if (kind === 'realise') {
             const slots = slotsOf(spec);
             for (const list of [spec.figures, spec.numerals]) if (list) expect(list.length, `${spec.id}: one label per note`).toBe(slots.length);

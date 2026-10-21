@@ -13,17 +13,21 @@ heard, named, played and written.
 
 ## Status (21 October 2026)
 
-**Done: M0–M6.** Prologue; Parts I–V (chapters 1–30); the practice room; appendices A, B and C.
+**Done: M0–M7.** Prologue; Parts I–VI (chapters 1–37); the practice room; appendices A, B and C.
 Exercise types built: `play`, `perform` (rhythm, notes, both), `ear`, `spell`, `read`, `analyse` (per chord, per
 bar or per note), `realise` (four-part writing, keyboard or SATB style, and two-part species counterpoint,
 checked by the rule engine `voicelead.ts`), `quiz`, and `:::check` (Check yourself). Engraver v1: grand staff, two voices per staff, tuplets, repeats, figures, chord symbols, Roman
 numerals with inversion figures, note names, spacer rests, hidden time signatures; the reference scores are at
 `/engraving/`. Library: voice leading by nearest
-motion, non-chord-tone classification. **Next: M7** (Part VI), then M8–M9.
+motion, non-chord-tone classification. **Next: M8** (Part VII, epilogue, appendices D and E), then M9.
 
 Where the course differs from the plan below, the plan is kept as written and the difference is recorded here:
 
-- **Fonts:** Bravura is bundled from `src/lib/fonts/` (so the base path is handled); Petaluma waits for M7.
+- **Fonts:** Bravura is bundled from `src/lib/fonts/` (so the base path is handled). Petaluma (the handwritten
+  lead-sheet font) is not used: lead sheets are engraved in Bravura like everything else.
+- **Backing tracks** are the `improvise` exercise's own comping (bass on 1 and 3, chords on 1 and the swung "and" of 2)
+  and the ProgressionPlayer's patterns (block, pulse, broken, Alberti, waltz, arpeggio, stride, comping, walking bass,
+  bossa nova); there are no recorded tracks.
 - **Piano:** the Salamander licence is confirmed (CC BY 3.0); 60 samples, 3.6 MB.
 - **Korobeiniki:** the opening phrase follows the folk melody as commonly printed; checking it against a
   printed public-domain source is still to do (M8, with the repertoire appendix).
@@ -382,7 +386,7 @@ Shares the collection's `theme` key.
 | M4 | *(done)* Part III; the voice-leading engine and `realise` |
 | M5 | *(done)* Part IV |
 | M6 | *(done)* Part V |
-| M7 | Part VI; Petaluma lead sheets, backing tracks, `improvise` |
+| M7 | *(done)* Part VI; Petaluma lead sheets, backing tracks, `improvise` |
 | M8 | Part VII, Epilogue, appendices C–E; repertoire status re-checked |
 | M9 | Proofread; UX review at phone and desktop widths in both themes; tests with at least two real MIDI devices; final checks |
 

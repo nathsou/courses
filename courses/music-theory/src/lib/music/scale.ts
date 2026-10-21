@@ -2,7 +2,10 @@
 import { transpose, type Interval, parseInterval } from './interval';
 import { letterIndex, LETTERS, midi, mod, pitchClass, type Letter, type Pitch, type PitchClassName } from './pitch';
 
-export type ScaleKind = 'major' | 'natural-minor' | 'harmonic-minor' | 'melodic-minor' | 'major-pentatonic' | 'minor-pentatonic';
+export type ScaleKind =
+  | 'major' | 'natural-minor' | 'harmonic-minor' | 'melodic-minor' | 'major-pentatonic' | 'minor-pentatonic'
+  | 'dorian' | 'phrygian' | 'lydian' | 'mixolydian' | 'locrian'
+  | 'blues' | 'whole-tone' | 'octatonic-hw' | 'octatonic-wh' | 'bebop-dominant';
 
 const PATTERNS: Record<ScaleKind, string[]> = {
   major: ['P1', 'M2', 'M3', 'P4', 'P5', 'M6', 'M7'],
@@ -11,6 +14,28 @@ const PATTERNS: Record<ScaleKind, string[]> = {
   'melodic-minor': ['P1', 'M2', 'm3', 'P4', 'P5', 'M6', 'M7'],
   'major-pentatonic': ['P1', 'M2', 'M3', 'P5', 'M6'],
   'minor-pentatonic': ['P1', 'm3', 'P4', 'P5', 'm7'],
+  // The modes of the major scale (Ionian is major, Aeolian natural minor).
+  dorian: ['P1', 'M2', 'm3', 'P4', 'P5', 'M6', 'm7'],
+  phrygian: ['P1', 'm2', 'm3', 'P4', 'P5', 'm6', 'm7'],
+  lydian: ['P1', 'M2', 'M3', 'A4', 'P5', 'M6', 'M7'],
+  mixolydian: ['P1', 'M2', 'M3', 'P4', 'P5', 'M6', 'm7'],
+  locrian: ['P1', 'm2', 'm3', 'P4', 'd5', 'm6', 'm7'],
+  // The blues scale: minor pentatonic with the flattened fifth.
+  blues: ['P1', 'm3', 'P4', 'd5', 'P5', 'm7'],
+  'whole-tone': ['P1', 'M2', 'M3', 'A4', 'A5', 'A6'],
+  // Octatonic (diminished) scales: half step first, or whole step first.
+  'octatonic-hw': ['P1', 'm2', 'm3', 'M3', 'A4', 'P5', 'M6', 'm7'],
+  'octatonic-wh': ['P1', 'M2', 'm3', 'P4', 'd5', 'm6', 'M6', 'M7'],
+  // Mixolydian with a passing major seventh, so that chord tones fall on the beats.
+  'bebop-dominant': ['P1', 'M2', 'M3', 'P4', 'P5', 'M6', 'm7', 'M7'],
+};
+
+/** Display names of scale kinds. */
+export const SCALE_NAMES: Record<ScaleKind, string> = {
+  major: 'major (Ionian)', 'natural-minor': 'natural minor (Aeolian)', 'harmonic-minor': 'harmonic minor', 'melodic-minor': 'melodic minor',
+  'major-pentatonic': 'major pentatonic', 'minor-pentatonic': 'minor pentatonic', dorian: 'Dorian', phrygian: 'Phrygian', lydian: 'Lydian',
+  mixolydian: 'Mixolydian', locrian: 'Locrian', blues: 'blues', 'whole-tone': 'whole-tone', 'octatonic-hw': 'octatonic (half–whole)',
+  'octatonic-wh': 'octatonic (whole–half)', 'bebop-dominant': 'bebop dominant',
 };
 
 export function scaleIntervals(kind: ScaleKind): Interval[] {

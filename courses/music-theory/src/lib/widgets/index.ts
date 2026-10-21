@@ -9,3 +9,4 @@ export { default as CircleOfFifths } from './CircleOfFifths.svelte';
 export { default as ChordLab } from './ChordLab.svelte';
 export { default as HarmonicSeries } from './HarmonicSeries.svelte';
 export { default as ProgressionPlayer } from './ProgressionPlayer.svelte';
+export { default as ModeDrone } from './ModeDrone.svelte';

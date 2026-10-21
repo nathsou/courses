@@ -20,6 +20,7 @@
     kinds = 'major',
     tonics = 'C,G,D,A,E,B,F#,F,Bb,Eb,Ab,Db',
     signature = false,
+    subtitle = 'Choose a starting note and a scale. Each degree uses the next letter, so the sharps and flats fall where the pattern needs them.',
   }: {
     title?: string;
     tonic?: string;
@@ -29,6 +30,7 @@
     tonics?: string;
     /** Write the key signature instead of accidentals. */
     signature?: boolean;
+    subtitle?: string;
   } = $props();
 
   let t = $state('C');
@@ -37,7 +39,7 @@
     t = tonic;
     k = kind;
   });
-  const LABEL: Record<string, string> = { major: 'Major', 'natural-minor': 'Natural minor', 'harmonic-minor': 'Harmonic minor', 'melodic-minor': 'Melodic minor', 'major-pentatonic': 'Major pentatonic', 'minor-pentatonic': 'Minor pentatonic' };
+  const LABEL: Record<string, string> = { major: 'Major', 'natural-minor': 'Natural minor', 'harmonic-minor': 'Harmonic minor', 'melodic-minor': 'Melodic minor', 'major-pentatonic': 'Major pentatonic', 'minor-pentatonic': 'Minor pentatonic', dorian: 'Dorian', phrygian: 'Phrygian', lydian: 'Lydian', mixolydian: 'Mixolydian', locrian: 'Locrian', blues: 'Blues', 'whole-tone': 'Whole-tone', 'octatonic-hw': 'Octatonic (H–W)', 'octatonic-wh': 'Octatonic (W–H)', 'bebop-dominant': 'Bebop dominant' };
   const start = $derived.by((): Pitch => {
     const p = parsePitch(t, 4);
     return midi(p) > 67 ? { ...p, octave: 3 } : p;
@@ -52,7 +54,7 @@
   const stepName = (s: number) => (s === 1 ? 'S' : s === 2 ? 'T' : s === 3 ? 'T+S' : `${s}`);
 </script>
 
-<Widget {title} subtitle="Choose a starting note and a scale. Each degree uses the next letter, so the sharps and flats fall where the pattern needs them.">
+<Widget {title} {subtitle}>
   {#snippet controls()}
     <Segmented options={tonics.split(',').map((x) => ({ value: x, label: noteName(parsePitch(x), settings.nameOptions) }))} value={t} label="Starting note" onchange={(v) => (t = v)} size="sm" />
     {#if kinds.includes(',')}

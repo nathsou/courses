@@ -8,8 +8,8 @@
   import { settings } from '$lib/state/settings.svelte';
   import { chordFromRoman, chordSymbol, parseChordSymbol, romanNumeral, romanText, type Chord } from '$lib/music/chord';
   import { noteName } from '$lib/music/names';
-  import { LETTERS, midi, parsePitch, pitchClass, type Pitch, type PitchClassName } from '$lib/music/pitch';
-  import type { Key } from '$lib/music/scale';
+  import { LETTERS, midi, parsePitch, pitchClass, spell, type Pitch, type PitchClassName } from '$lib/music/pitch';
+  import { fifthsOf, type Key } from '$lib/music/scale';
   import { functionOf, voiceProgression, type Voiced } from '$lib/music/voicing';
   import Score from '$lib/notation/Score.svelte';
   import { keyText, pitchToken } from '$lib/notation/write';
@@ -17,7 +17,7 @@
   import Segmented from '$lib/components/ui/Segmented.svelte';
   import Icon from '$lib/components/ui/Icon.svelte';
 
-  type Pattern = 'block' | 'pulse' | 'broken' | 'alberti' | 'waltz' | 'arpeggio';
+  type Pattern = 'block' | 'pulse' | 'broken' | 'alberti' | 'waltz' | 'arpeggio' | 'stride' | 'charleston' | 'walking' | 'bossa';
   let {
     romans = 'I,IV,V,I',
     chords: symbols = '',
@@ -53,6 +53,7 @@
   });
   let playingIndex = $state(-1);
   const key = $derived<Key>({ tonic: (({ letter, alter }) => ({ letter, alter }))(parsePitch(t)), mode });
+  const keyFifths = $derived(fifthsOf(key));
   const chords = $derived(symbols ? transposed(symbols.split(',').map((c) => parseChordSymbol(c.trim()))) : romans.split(',').map((r) => chordFromRoman(r.trim(), key)));
   const list = $derived(symbols ? chords.map((c) => romanText(romanNumeral(c, key))) : romans.split(',').map((r) => r.trim()));
   /** Symbols are written in the first key offered; move them to the chosen key. */
@@ -83,10 +84,30 @@
   };
 
   /** Left-hand and right-hand events for one chord: [pitches, beats][] per hand. */
-  function bar(v: Voiced): { lh: [Pitch[], number][]; rh: [Pitch[], number][] } {
+  function bar(v: Voiced, i: number): { lh: [Pitch[], number][]; rh: [Pitch[], number][] } {
     const b = v.bass;
     const f = fifthAbove(v);
     switch (pat) {
+      case 'stride': {
+        // Bass low on 1 and 3, the chord in the middle of the keyboard on 2 and 4.
+        const mid = v.upper.map((p) => up(p, -1));
+        return { lh: [[[up(b, -1)], 1], [mid, 1], [[up(f, -1)], 1], [mid, 1]], rh: [[v.upper, 4]] };
+      }
+      case 'charleston':
+        // Root and fifth in the left hand; the chord on beat 1 and on the "and" of 2.
+        return { lh: [[[b], 2], [[f], 2]], rh: [[v.upper, 1.5], [v.upper, 0.5], [[], 2]] };
+      case 'bossa':
+        return { lh: [[[b], 1.5], [[f], 0.5], [[f], 1.5], [[b], 0.5]], rh: [[v.upper, 1.5], [v.upper, 1], [v.upper, 1.5]] };
+      case 'walking': {
+        // Root, a chord tone, the fifth, then a semitone below (or above) the next root.
+        const next = voiced[(i + 1) % voiced.length]!.bass;
+        const third = v.upper.map((p) => ({ ...p, octave: b.octave })).map((p) => (midi(p) <= midi(b) ? up(p, 1) : p)).sort((x, y) => midi(x) - midi(y))[0] ?? f;
+        let n = next;
+        while (midi(n) - midi(f) > 6) n = up(n, -1);
+        while (midi(f) - midi(n) > 6) n = up(n, 1);
+        const approach = spell(midi(n) + (midi(n) > midi(f) ? -1 : 1), keyFifths);
+        return { lh: [[[b], 1], [[third], 1], [[f], 1], [[approach], 1]], rh: [[v.upper, 1.5], [v.upper, 0.5], [[], 2]] };
+      }
       case 'pulse':
         return { lh: [[[b], 2], [[b], 2]], rh: [[v.upper, 1], [v.upper, 1], [v.upper, 1], [v.upper, 1]] };
       case 'broken':
@@ -106,10 +127,10 @@
     }
   }
 
-  const DUR: Record<number, string> = { 4: '1', 3: '2.', 2: '2', 1: '4', 0.5: '8' };
+  const DUR: Record<number, string> = { 4: '1', 3: '2.', 2: '2', 1.5: '4.', 1: '4', 0.5: '8' };
   const tok = (ps: Pitch[], d: number) => (ps.length === 0 ? `r${DUR[d]}` : ps.length === 1 ? `${pitchToken(ps[0]!)}${DUR[d]}` : `<${ps.map(pitchToken).join(' ')}>${DUR[d]}`);
   const src = $derived.by(() => {
-    const bars = voiced.map(bar);
+    const bars = voiced.map((v, i) => bar(v, i));
     const rh = bars.map((x, i) => x.rh.map(([p, d], j) => (j === 0 ? `${tok(p, d)}^"${chordSymbol(chords[i]!)}"` : tok(p, d))).join(' ')).join(' | ');
     const lh = bars.map((x, i) => x.lh.map(([p, d], j) => (j === 0 ? `${tok(p, d)}_"${list[i]}"` : tok(p, d))).join(' ')).join(' | ');
     return `${keyText(t, mode)} \\time ${beats}/4 \\tempo ${tempo} \\staff treble ${rh} | \\staff bass ${lh} |`;
@@ -120,7 +141,7 @@
     const notes: ScheduledNote[] = [];
     const starts: number[] = [];
     voiced.forEach((v, i) => {
-      const { lh, rh } = bar(v);
+      const { lh, rh } = bar(v, i);
       const t0 = i * beats * beat;
       starts.push(t0);
       for (const hand of [lh, rh]) {
@@ -135,7 +156,7 @@
     starts.forEach((s, i) => setTimeout(() => (playingIndex = i), (start + s - audio.ctx!.currentTime) * 1000));
     setTimeout(() => (playingIndex = -1), (start + voiced.length * beats * beat - audio.ctx!.currentTime) * 1000);
   }
-  const PATTERN_LABEL: Record<string, string> = { block: 'Block chords', pulse: 'Pulsed chords', broken: 'Broken bass', alberti: 'Alberti bass', waltz: 'Waltz', arpeggio: 'Arpeggio' };
+  const PATTERN_LABEL: Record<string, string> = { block: 'Block chords', pulse: 'Pulsed chords', broken: 'Broken bass', alberti: 'Alberti bass', waltz: 'Waltz', arpeggio: 'Arpeggio', stride: 'Stride', charleston: 'Comping', walking: 'Walking bass', bossa: 'Bossa nova' };
 </script>
 
 <Widget {title} subtitle={subtitle || 'Coloured by function: blue tonic, green predominant, orange dominant.'}>

@@ -54,7 +54,7 @@ export function rng(seed: number): () => number {
 const pick = <T>(r: () => number, xs: readonly T[]): T => xs[Math.floor(r() * xs.length)]!;
 
 const QUALITY_LABEL: Partial<Record<ChordQuality, string>> = { maj: 'major', min: 'minor', dim: 'diminished', aug: 'augmented', '7': 'dominant seventh', maj7: 'major seventh', m7: 'minor seventh', m7b5: 'half-diminished', dim7: 'diminished seventh', sus2: 'sus2', sus4: 'sus4' };
-const SCALE_LABEL: Partial<Record<ScaleKind, string>> = { major: 'major', 'natural-minor': 'natural minor', 'harmonic-minor': 'harmonic minor', 'melodic-minor': 'melodic minor', 'major-pentatonic': 'major pentatonic', 'minor-pentatonic': 'minor pentatonic' };
+const SCALE_LABEL: Partial<Record<ScaleKind, string>> = { major: 'major', 'natural-minor': 'natural minor', 'harmonic-minor': 'harmonic minor', 'melodic-minor': 'melodic minor', 'major-pentatonic': 'major pentatonic', 'minor-pentatonic': 'minor pentatonic', dorian: 'Dorian', phrygian: 'Phrygian', lydian: 'Lydian', mixolydian: 'Mixolydian', locrian: 'Locrian', blues: 'blues', 'whole-tone': 'whole-tone', 'octatonic-hw': 'octatonic' };
 
 export function question(spec: EarSpec, r: () => number): Question {
   const [lo, hi] = spec.range ?? [55, 72];

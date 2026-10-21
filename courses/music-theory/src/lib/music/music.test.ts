@@ -265,3 +265,28 @@ describe('non-chord tones', async () => {
     expect(classify([n(76, G), n(72, G), n(72, C)])).toEqual(['other', 'anticipation', 'chord']);
   });
 });
+
+describe('extended chord symbols', async () => {
+  const { parseChordSymbol, chordTones, romanNumeral, romanText } = await import('./chord');
+  const C = { tonic: { letter: 'C', alter: 0 }, mode: 'major' } as const;
+  const names = (s: string) => chordTones(parseChordSymbol(s)).map((p) => p.letter + (p.alter > 0 ? '#' : p.alter < 0 ? 'b' : '')).join(' ');
+  it('parses and prints added-note, extended and altered chords', () => {
+    for (const s of ['C6', 'Cm6', 'Cadd9', 'G7sus4', 'Cm(maj7)', 'G7#5', 'G9', 'Cmaj9', 'Dm9', 'G7b9', 'G7#9', 'G7#11', 'Cmaj7#11', 'Dm11', 'G13'])
+      expect(chordSymbol(parseChordSymbol(s), { ascii: true })).toBe(s);
+    expect(names('G13')).toBe('G B D F A E');
+    expect(names('G7b9')).toBe('G B D F Ab');
+    expect(names('Cmaj7#11')).toBe('C E G B F#');
+    expect(chordSymbol(parseChordSymbol('C-7'), { ascii: true })).toBe('Cm7');
+    expect(chordSymbol(parseChordSymbol('CΔ9'), { ascii: true })).toBe('Cmaj9');
+  });
+  it('identifies sixths and ninths, with or without the fifth', () => {
+    expect(chordSymbol(identifyChord([48, 52, 55, 57])[0]!.chord, { ascii: true })).toBe('C6');
+    expect(chordSymbol(identifyChord([45, 52, 55, 60])[0]!.chord, { ascii: true })).toBe('Am7');
+    expect(chordSymbol(identifyChord([43, 59, 65, 69])[0]!.chord, { ascii: true })).toBe('G9');
+  });
+  it('writes numerals for extended chords without inversion figures', () => {
+    expect(romanText(romanNumeral(parseChordSymbol('G9'), C))).toBe('V9');
+    expect(romanText(romanNumeral(parseChordSymbol('Dm7'), C))).toBe('ii7');
+    expect(romanText(romanNumeral(parseChordSymbol('G7#5'), C))).toBe('V+7');
+  });
+});

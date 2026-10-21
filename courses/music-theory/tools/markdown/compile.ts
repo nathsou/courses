@@ -87,6 +87,7 @@ const EXERCISE_BLOCKS: Record<string, string> = {
   read: 'ReadExercise',
   analyse: 'AnalyseExercise',
   realise: 'RealiseExercise',
+  improvise: 'ImproviseExercise',
 };
 /** Fields of exercise blocks that are data, not Markdown (passed through untouched). */
 const RAW_FIELDS: Record<string, string[]> = {
@@ -97,6 +98,7 @@ const RAW_FIELDS: Record<string, string[]> = {
   read: ['staff', 'range', 'white', 'key', 'rounds', 'pass'],
   analyse: ['score', 'answers', 'key', 'instruction', 'per'],
   realise: ['key', 'style', 'time', 'tempo', 'bass', 'soprano', 'figures', 'numerals', 'rules', 'range', 'example'],
+  improvise: ['chart', 'tempo', 'choruses', 'swing', 'range', 'beats'],
 };
 /** YAML fields of exercise blocks that hold Markdown (rendered at build time). */
 const MARKDOWN_FIELDS = new Set(['ask', 'prompt', 'text', 'solution', 'why', 'explain', 'hint', 'hints', 'lines', 'distractors', 'rubric', 'feedback', 'note', 'success', 'options', 'label']);

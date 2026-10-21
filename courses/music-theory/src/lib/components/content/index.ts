@@ -26,3 +26,4 @@ export { default as SpellExercise } from '../exercise/SpellExercise.svelte';
 export { default as ReadExercise } from '../exercise/ReadExercise.svelte';
 export { default as AnalyseExercise } from '../exercise/AnalyseExercise.svelte';
 export { default as RealiseExercise } from '../exercise/RealiseExercise.svelte';
+export { default as ImproviseExercise } from '../exercise/ImproviseExercise.svelte';

@@ -3,6 +3,8 @@
   Widgets are "wide" by default so they can use the margin column on large screens.
 -->
 <script lang="ts">
+  import { markup } from '$lib/practice/markup';
+  import { settings } from '$lib/state/settings.svelte';
   import type { Snippet } from 'svelte';
   import Icon from './Icon.svelte';
 
@@ -31,8 +33,8 @@
   <header class="ui">
     <div class="titles">
       <span class="kind">{kind}</span>
-      <h4>{title}</h4>
-      {#if subtitle}<p class="sub">{subtitle}</p>{/if}
+      <h4>{@html markup(title, settings.nameOptions, (w) => settings.term(w))}</h4>
+      {#if subtitle}<p class="sub">{@html markup(subtitle, settings.nameOptions, (w) => settings.term(w))}</p>{/if}
     </div>
     {#if onreset}
       <button class="reset" onclick={onreset} title="Reset" aria-label="Reset widget"><Icon name="reset" size={15} /></button>
