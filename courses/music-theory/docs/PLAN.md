@@ -13,15 +13,17 @@ heard, named, played and written.
 
 ## Status (21 October 2026)
 
-**Done: M0–M8.** Prologue; Parts I–VII (chapters 1–42); the epilogue (chapter 43, Chopin's Prelude in E minor);
+**Done: M0–M8, and M9 except real devices.** Prologue; Parts I–VII (chapters 1–42); the epilogue (chapter 43, Chopin's Prelude in E minor);
 the practice room (17 skills); appendices A–E.
 Exercise types built: `play`, `perform` (rhythm, notes, both), `ear`, `spell`, `read`, `analyse` (per chord, per
 bar or per note), `realise` (four-part writing, keyboard or SATB style, and two-part species counterpoint,
 checked by the rule engine `voicelead.ts`), `quiz`, and `:::check` (Check yourself). Engraver v1: grand staff, two voices per staff, tuplets, repeats, figures, chord symbols, Roman
 numerals with inversion figures, note names, spacer rests, hidden time signatures; the reference scores are at
 `/engraving/`. Library: voice leading by nearest
-motion, non-chord-tone classification, tuning and temperaments, pitch-class sets. **Next: M9** (proofreading, UX
-review, final checks).
+motion, non-chord-tone classification, tuning and temperaments, pitch-class sets. M9: Part VII and the epilogue proofread; every page checked at 390,
+768 and 1440 px in both themes (no horizontal overflow, no console errors); the link audit and the navigation
+checks pass on a prefixed build. **Still to do:** testing with at least two real MIDI keyboards (USB and
+Bluetooth); so far MIDI has been tested only with a simulated input.
 
 Where the course differs from the plan below, the plan is kept as written and the difference is recorded here:
 
@@ -389,8 +391,8 @@ Shares the collection's `theme` key.
 | M5 | *(done)* Part IV |
 | M6 | *(done)* Part V |
 | M7 | *(done)* Part VI; Petaluma lead sheets, backing tracks, `improvise` |
-| M8 | Part VII, Epilogue, appendices C–E; repertoire status re-checked |
-| M9 | Proofread; UX review at phone and desktop widths in both themes; tests with at least two real MIDI devices; final checks |
+| M8 | *(done)* Part VII, Epilogue, appendices C–E; repertoire status re-checked |
+| M9 | *(done, except real MIDI devices)* Proofread; UX review at phone and desktop widths in both themes; tests with at least two real MIDI devices; final checks |
 
 ## 14. Risks
 

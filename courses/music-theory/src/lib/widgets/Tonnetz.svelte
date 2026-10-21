@@ -51,8 +51,9 @@
   let path: Tri[] = $state([]);
   $effect.pre(() => {
     const r = START[start] ?? 0;
-    current = visible.find((t) => t.major && pcAt(t.i, t.j) === r && t.i >= 2) ?? visible[0]!;
-    path = [current];
+    const first = visible.find((t) => t.major && pcAt(t.i, t.j) === r && t.i >= 2) ?? visible[0]!;
+    current = first;
+    path = [first];
   });
 
   const name = (t: Triad) => noteName(spell(60 + t.root, 0), settings.nameOptions) + (t.major ? '' : 'm');

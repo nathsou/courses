@@ -21,7 +21,7 @@ A collection of interactive textbooks. The [course index](site/index.html) links
 | Every Path at Once: static analysis, from your first lint rule to taint tracking and symbolic execution | `courses/static-analysis/` | `/static-analysis/` |
 | The Prime Staircase: from the sieve to the Riemann Hypothesis | `courses/primes/` | `/primes/` |
 | What Changed? Reactive rendering, from innerHTML to signals | `courses/reactive-rendering/` | `/reactive-rendering/` |
-| Music Theory: at the piano, from the first note to jazz harmony *(in progress)* | `courses/music-theory/` | `/music-theory/` |
+| Music Theory: at the piano, from the first note to jazz harmony | `courses/music-theory/` | `/music-theory/` |
 
 Every course has an “All courses” link beside its contents and a compact contents toggle in its own header or drawer handle. Sidebars collapse on desktop and open as drawers on smaller screens; each course remembers its desktop preference. The shared navigation lives in `packages/course-navigation/`.
 

@@ -188,6 +188,8 @@
 <style>
   .score {
     margin: 1.6rem 0;
+    /* Inside a grid (the exercises) the figure must not grow to the score's width: its frame scrolls instead. */
+    min-width: 0;
   }
   .frame {
     overflow-x: auto;

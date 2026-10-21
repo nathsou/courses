@@ -53,7 +53,7 @@ and for the second subject coming back in :n[C] in :t[bar] 32.
 - **Exposition (bars 1–15).** First subject in :n[C] (bars 1–4, ending on the dominant); it begins again and turns
   towards :n[G] (bars 5–8, with :n[F#] in the bass at :t[bar] 6); the second subject in :n[G] (bars 9–15), ending with a
   perfect cadence in :n[G].
-- **Development (bars 16–23).** The first subject’s opening over :n[F] and :n[Eb] in the bass: G7, then the colours of
+- **Development (bars 16–23).** The first subject’s opening over :n[F] and :n[Eb] in the bass: :c[G7], then the colours of
   :n[C] minor (:n[Eb]), and a long stretch on :n[G], the dominant, ready for the return.
 - **Recapitulation (bars 24–38).** The first subject in :n[C], an octave lower; the transition rewritten so it stays
   at home; the second subject (bars 32–38) transposed from :n[G] to :n[C].
