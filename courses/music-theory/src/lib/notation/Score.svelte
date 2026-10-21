@@ -25,6 +25,7 @@
     label = 'Score',
     space = 0,
     names = false,
+    annotate = {},
   }: {
     src: string;
     /** Extra classes by event id ("target", "wrong", "tonic" …). */
@@ -39,6 +40,8 @@
     space?: number;
     /** Write each single note's name under it (for beginners). */
     names?: boolean;
+    /** Extra text under events, by event id (labels computed by a widget). */
+    annotate?: Record<number, string>;
   } = $props();
 
   const parsed = $derived.by((): { score?: Score; error?: string } => {
@@ -52,7 +55,12 @@
   let box: HTMLDivElement | undefined = $state();
   let width = $state(640);
   const sp = $derived(space || (width < 480 ? 7.5 : 9));
-  const layout = $derived.by((): Layout | undefined => (parsed.score ? layoutScore(parsed.score, { width: width / sp - 0.5, barNumbers: true, noteName: names ? (p) => pitchName(p, settings.nameOptions) : undefined }) : undefined));
+  const annotated = $derived.by(() => {
+    const sc = parsed.score;
+    if (!sc || !Object.keys(annotate).length) return sc;
+    return { ...sc, staves: sc.staves.map((st) => ({ ...st, events: st.events.map((e) => (annotate[e.id] ? { ...e, below: annotate[e.id] } : e)) })) };
+  });
+  const layout = $derived.by((): Layout | undefined => (annotated ? layoutScore(annotated, { width: width / sp - 0.5, barNumbers: true, noteName: names ? (p) => pitchName(p, settings.nameOptions) : undefined }) : undefined));
   let fontReady = $state(false);
   let playingIds: Set<number> = $state(new Set());
   let playing = $state(false);

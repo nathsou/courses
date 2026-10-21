@@ -20,7 +20,8 @@
  * Fenced blocks: `score` (the course's score format, src/lib/notation/parse.ts; attributes after the
  * language: caption="…" play="false" tempo="72" names="true"), `quiz` (multiple choice), and the keyboard
  * exercises `play` (chords and notes held), `perform` (a score played or tapped, timed or not), `ear` (hear and
- * name, or play back), `spell` (write notes, spelling counts) and `read` (a note-reading drill).
+ * name, or play back), `spell` (write notes, spelling counts), `read` (a note-reading drill) and `analyse`
+ * (Roman numerals under a score).
  *
  * Output is a Svelte component whose `<script module>` exports metadata, toc, references and glossary,
  * so routes can render chrome around the content.
@@ -84,6 +85,7 @@ const EXERCISE_BLOCKS: Record<string, string> = {
   ear: 'EarExercise',
   spell: 'SpellExercise',
   read: 'ReadExercise',
+  analyse: 'AnalyseExercise',
 };
 /** Fields of exercise blocks that are data, not Markdown (passed through untouched). */
 const RAW_FIELDS: Record<string, string[]> = {
@@ -92,6 +94,7 @@ const RAW_FIELDS: Record<string, string[]> = {
   ear: ['kind', 'pool', 'harmonic', 'rounds', 'pass', 'range', 'white', 'items', 'options'],
   spell: ['key', 'staff', 'range'],
   read: ['staff', 'range', 'white', 'key', 'rounds', 'pass'],
+  analyse: ['score', 'answers', 'key', 'instruction', 'per'],
 };
 /** YAML fields of exercise blocks that hold Markdown (rendered at build time). */
 const MARKDOWN_FIELDS = new Set(['ask', 'prompt', 'text', 'solution', 'why', 'explain', 'hint', 'hints', 'lines', 'distractors', 'rubric', 'feedback', 'note', 'success', 'options', 'label']);

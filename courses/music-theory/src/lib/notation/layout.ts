@@ -394,7 +394,9 @@ export function layoutScore(score: Score, opts: LayoutOptions): Layout {
       const p = placed.get(ev.id)!;
       if (ev.tie && evs[i + 1]) {
         const nb = events.get(evs[i + 1]!.id)!;
-        for (const h of p.heads) {
+        const nextSteps = new Set(placed.get(evs[i + 1]!.id)!.heads.map((h) => h.step));
+        // A tie joins a note to the same note in the next chord; notes of the chord that do not continue get none.
+        for (const h of p.heads.filter((x) => nextSteps.has(x.step))) {
           const y = box.staffTop + stepY(staff.clef, h.step);
           const x1 = box.x + HEAD_W + 0.15;
           const x2 = nb.system === box.system ? nb.x - 0.15 : x1 + 2.5;

@@ -26,6 +26,7 @@ import {
   ticks,
   transpose,
   voicing,
+
   type Key,
 } from './index';
 
@@ -225,5 +226,39 @@ describe('minor-key chords from numerals', () => {
   it('builds the common-practice set in A minor', () => {
     const key = { tonic: parsePitch('A'), mode: 'minor' as const };
     expect(['i', 'ii°', 'III', 'iv', 'V', 'VI', '#vii°'].map((r) => chordSymbol(chordFromRoman(r, key), { ascii: true }))).toEqual(['Am', 'Bdim', 'C', 'Dm', 'E', 'F', 'G#dim']);
+  });
+});
+
+describe('voicing progressions', async () => {
+  const { voiceProgression, functionOf } = await import('./voicing');
+  it('keeps the right hand close and the bass on the root', () => {
+    const key: Key = { tonic: P('C'), mode: 'major' };
+    const v = voiceProgression(['I', 'IV', 'V', 'I'].map((r) => chordFromRoman(r, key)));
+    expect(v.map((x) => x.bass.letter)).toEqual(['C', 'F', 'G', 'C']);
+    const moves = v.slice(1).map((x, i) => x.upper.reduce((a, p, j) => a + Math.abs(midi(p) - midi(v[i]!.upper[j]!)), 0));
+    expect(moves).toEqual([3, 6, 3]); // C–E–G to C–F–A to B–D–G to C–E–G
+  });
+  it('uses the written bass of an inversion', () => {
+    const key: Key = { tonic: P('C'), mode: 'major' };
+    expect(voiceProgression([chordFromRoman('I6', key)])[0]!.bass.letter).toBe('E');
+  });
+  it('names functions', () => {
+    expect(['I', 'ii', 'IV', 'V7', 'vi', 'vii°', 'iii', 'V/V', 'ii65', 'IV6'].map(functionOf)).toEqual(['tonic', 'predominant', 'predominant', 'dominant', 'tonic', 'dominant', 'tonic', 'dominant', 'predominant', 'predominant']);
+  });
+});
+
+describe('non-chord tones', async () => {
+  const { classify } = await import('./melody');
+  const C = [0, 4, 7];
+  const G = [7, 11, 2];
+  const F = [5, 9, 0];
+  const n = (midi: number, chord: number[], tied = false) => ({ midi, chord, tied });
+  it('finds passing, neighbour, appoggiatura, escape, suspension and anticipation notes', () => {
+    expect(classify([n(72, C), n(74, C), n(76, C)])).toEqual(['chord', 'passing', 'chord']);
+    expect(classify([n(81, F), n(79, F), n(81, F)])).toEqual(['chord', 'neighbour', 'chord']);
+    expect(classify([n(67, C), n(74, C), n(72, C)])).toEqual(['chord', 'appoggiatura', 'chord']);
+    expect(classify([n(72, C), n(74, C), n(67, C)])).toEqual(['chord', 'escape', 'chord']);
+    expect(classify([n(72, F), n(72, G, true), n(71, G)])).toEqual(['chord', 'suspension', 'chord']);
+    expect(classify([n(76, G), n(72, G), n(72, C)])).toEqual(['other', 'anticipation', 'chord']);
   });
 });

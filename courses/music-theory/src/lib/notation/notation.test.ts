@@ -184,3 +184,10 @@ describe('writing score text', async () => {
     expect(l.prims.filter((p) => 'cls' in p && p.cls === 'rest').length).toBe(0);
   });
 });
+
+describe('partial ties', () => {
+  it('ties only the notes that continue into the next chord', () => {
+    const l = layoutScore(parseScore("<c'' e''>2~ <c'' g''>2 |"), { width: 40 });
+    expect(l.prims.filter((p) => 'cls' in p && p.cls === 'tie').length).toBe(1);
+  });
+});

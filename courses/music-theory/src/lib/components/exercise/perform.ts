@@ -14,6 +14,8 @@ export interface Onset {
   pitches: number[];
   /** Score events that start here (for highlighting). */
   ids: number[];
+  /** Notes started earlier that are still sounding (held or tied over): allowed to be held, not required. */
+  sounding: number[];
 }
 
 /** Onsets of a score: every note start except notes tied over from the previous note. */
@@ -28,14 +30,23 @@ export function onsetsOf(score: Score, tempo?: number): Onset[] {
         const prev = evs[i - 1];
         const fresh = ev.pitches.map(midi).filter((m) => !(prev?.tie && prev.pitches.some((q) => midi(q) === m)));
         if (!fresh.length) return;
-        const o = byTick.get(ev.start) ?? { time: ev.start * spt, pitches: [], ids: [] };
+        const o = byTick.get(ev.start) ?? { time: ev.start * spt, pitches: [], ids: [], sounding: [] };
         o.pitches.push(...fresh.filter((m) => !o.pitches.includes(m)));
         o.ids.push(ev.id);
         byTick.set(ev.start, o);
       });
     }
   }
-  return [...byTick.entries()].sort((a, b) => a[0] - b[0]).map(([, o]) => ({ ...o, pitches: o.pitches.sort((a, b) => a - b) }));
+  // What is still sounding at each onset: notes (including tied continuations) that started earlier and have not ended.
+  const spans: { start: number; end: number; m: number }[] = [];
+  for (const staff of score.staves) for (const ev of staff.events) if (ev.kind === 'note') for (const p of ev.pitches) spans.push({ start: ev.start, end: ev.start + ticks(ev.duration), m: midi(p) });
+  return [...byTick.entries()]
+    .sort((a, b) => a[0] - b[0])
+    .map(([tick, o]) => ({
+      ...o,
+      pitches: o.pitches.sort((a, b) => a - b),
+      sounding: [...new Set(spans.filter((x) => x.start <= tick && x.end > tick && !o.pitches.includes(x.m)).map((x) => x.m))].sort((a, b) => a - b),
+    }));
 }
 
 export interface Press {
@@ -92,10 +103,10 @@ export function judgeTimed(onsets: Onset[], presses: Press[], opts: { toleranceM
   return { verdicts, extra, passed: verdicts.every((v) => v.verdict === 'ok') && extra.length === 0 };
 }
 
-/** Untimed: does a chord (the keys held together) match the onset? */
+/** Untimed: do the keys held match the onset? Every new note must be down; anything else held must still be sounding. */
 export function matchesOnset(held: number[], o: Onset): boolean {
-  const got = [...new Set(held)].sort((a, b) => a - b);
-  return got.length === o.pitches.length && got.every((m, i) => m === o.pitches[i]);
+  const h = new Set(held);
+  return o.pitches.every((m) => h.has(m)) && [...h].every((m) => o.pitches.includes(m) || o.sounding.includes(m));
 }
 
 export function parseForPerform(src: string): Score {

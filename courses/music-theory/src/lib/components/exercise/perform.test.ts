@@ -42,6 +42,13 @@ describe('perform: judging', () => {
     const r = judgeTimed(onsets, [{ midi: 40, time: 0 }, { midi: 41, time: 1.05 }, { midi: 42, time: 2.1 }], { toleranceMs: 60, pitches: false });
     expect(r.verdicts.map((v) => v.verdict)).toEqual(['ok', 'ok', 'late']);
   });
+  it('lets notes that are still sounding stay down', () => {
+    const o = onsetsOf(parseScore(String.raw`\staff treble c''2~ c''4 b'4 | \voice f'2 d'2 | \staff bass f,2 g,2 | \voice s1 |`));
+    expect(o.map((x) => [x.pitches, x.sounding])).toEqual([[[41, 65, 72], []], [[43, 62], [72]], [[71], [43, 62]]]);
+    expect(matchesOnset([43, 62, 72], o[1]!)).toBe(true);
+    expect(matchesOnset([43, 62, 71], o[2]!)).toBe(true);
+    expect(matchesOnset([43, 62, 71, 65], o[2]!)).toBe(false);
+  });
   it('matches held chords without timing', () => {
     expect(matchesOnset([67, 64], onsets[2]!)).toBe(true);
     expect(matchesOnset([64], onsets[2]!)).toBe(false);

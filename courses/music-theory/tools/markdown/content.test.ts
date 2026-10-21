@@ -16,6 +16,7 @@ import { parseInterval } from '../../src/lib/music/interval';
 import { QUALITIES } from '../../src/lib/music/chord';
 import { parseKey } from '../../src/lib/components/exercise/play';
 import { checkSpelling } from '../../src/lib/components/exercise/spell';
+import { onsetsOf } from '../../src/lib/components/exercise/perform';
 
 const root = path.resolve(import.meta.dirname, '../../content');
 const files = ['chapters', 'appendices'].flatMap((dir) => {
@@ -52,7 +53,7 @@ describe('content music is valid', () => {
     });
     test(`${rel}: exercises`, () => {
       const ids = new Set<string>();
-      for (const kind of ['play', 'perform', 'ear', 'spell', 'read']) {
+      for (const kind of ['play', 'perform', 'ear', 'spell', 'read', 'analyse']) {
         for (const b of blocks(src, kind)) {
           const spec = YAML.parse(b);
           expect(spec.id, `${kind} block needs an id`).toBeTruthy();
@@ -71,6 +72,11 @@ describe('content music is valid', () => {
           }
           if (kind === 'spell') for (const it of spec.items) expect(checkSpelling(it.answer.map((n: string) => parsePitch(n)), it).ok).toBe(true);
           if (kind === 'read') (spec.range ?? []).forEach((n: string) => parsePitch(n));
+          if (kind === 'analyse') {
+            const sc = parseScore(spec.score);
+            const slots = spec.per === 'bar' ? new Set(sc.staves.flatMap((st) => st.events.map((e) => e.bar))).size : spec.per === 'note' ? sc.staves[0]!.events.filter((e) => e.kind === 'note').length : onsetsOf(sc).length;
+            expect(slots, `${spec.id}: one answer per ${spec.per ?? 'chord'}`).toBe(spec.answers.length);
+          }
         }
       }
     });

@@ -13,19 +13,28 @@ heard, named, played and written.
 
 ## Status (21 October 2026)
 
-**M0 done.** The site, design and collection wiring; the music library; MIDI, computer-keyboard and on-screen input
-with the instrument panel and the tap-along latency check; the course piano; engraver v0; the `play` exercise; the
-prologue and appendix C. Where M0 differs from the plan below, the plan is kept as written and the difference is
-recorded here:
+**Done: M0, M1, M2, M3.** Prologue; Parts I and II (chapters 1–18); the practice room; appendices A, B and C.
+Exercise types built: `play`, `perform` (rhythm, notes, both), `ear`, `spell`, `read`, `analyse` (per chord, per
+bar or per note), `quiz`, and `:::check` (Check yourself). Engraver v1: grand staff, two voices per staff, tuplets, repeats, figures, chord symbols, Roman
+numerals with inversion figures, note names, spacer rests, hidden time signatures; the reference scores are at
+`/engraving/`. Library: voice leading by nearest
+motion, non-chord-tone classification. **Next: M4** (Part III), then M5–M9.
 
-- **Engraver v0 already draws the grand staff**, with chords, beams within a beat, flags, ties, slurs, dots, rests,
-  ledger lines, key and time signatures, chord symbols above and Roman numerals below, and systems that break and
-  justify to the column width. Tuplets and second voices on a staff are not parsed yet (M1).
+Where the course differs from the plan below, the plan is kept as written and the difference is recorded here:
+
 - **Fonts:** Bravura is bundled from `src/lib/fonts/` (so the base path is handled); Petaluma waits for M7.
 - **Piano:** the Salamander licence is confirmed (CC BY 3.0); 60 samples, 3.6 MB.
-- **Korobeiniki:** the home page shows the opening phrase of the folk melody; checking it against a printed
-  public-domain source is still to do (M8, with the repertoire appendix).
-- **MIDI out** is not built yet.
+- **Korobeiniki:** the opening phrase follows the folk melody as commonly printed; checking it against a
+  printed public-domain source is still to do (M8, with the repertoire appendix).
+- **MIDI out** is not built.
+- **Dictation and sight-reading** are not separate exercise types: melodic dictation is the `ear` exercise's
+  `echo` kind (hear a melody, play it back), sight-reading is `read` (single notes) and `perform` in `notes`
+  mode (whole passages, untimed).
+- **Chopin, Prelude Op. 28 No. 7** is converted from Craig Sapp's Humdrum edition (`scripts/kern2score.py`).
+- **Practice room:** a Leitner schedule (boxes at 1 minute, 10 minutes, 1, 3, 7 and 21 days) rather than SM-2;
+  skills unlock when their chapter is opened, or all at once by a switch.
+- **Minor-scale fingerings** in appendix B are given only where editions agree (white-key tonics, F♯ and C♯);
+  G♯, E♭ and B♭ minor are left to the reader's scale book.
 
 ## 1. Decisions
 
@@ -353,9 +362,9 @@ Shares the collection's `theme` key.
 | | Scope |
 |---|---|
 | M0 | *(done)* Scaffold (site, compiler, design "Fallboard"), MIDI input with fallbacks, latency calibration, audio scheduler and sampled piano, `Keyboard`, engraver v0 (one staff), library skeleton, Prologue, collection wiring, PR |
-| M1 | Part I, Ch. 1–6; engraver v1 (grand staff, rhythm, beams); `play`, `rhythm`, `ear`, `quiz`, `spell` exercises |
-| M2 | Part I, Ch. 7–12; the practice room; appendix A and B |
-| M3 | Part II; `analyse`, `dictation`, `sightread`; lead-sheet reading |
+| M1 | *(done)* Part I, Ch. 1–6; engraver v1 (grand staff, rhythm, beams); `play`, `rhythm`, `ear`, `quiz`, `spell` exercises |
+| M2 | *(done)* Part I, Ch. 7–12; the practice room; appendix A and B |
+| M3 | *(done)* Part II; `analyse`, `dictation`, `sightread`; lead-sheet reading |
 | M4 | Part III; the voice-leading engine and `realise` |
 | M5 | Part IV |
 | M6 | Part V |
@@ -385,6 +394,11 @@ Shares the collection's `theme` key.
 
 1. **Schoenberg Op. 33a.** Confirm its public-domain status in the US and the EU in M8, or replace it with a row
    written for the course.
+2. **The Chopin encodings.** The preludes are converted from Craig Sapp's Humdrum files (github.com/craigsapp/
+   chopin-preludes, "Copyright 2001 by Craig Stuart Sapp", no licence stated). The notes of a public-domain work
+   are not themselves protected in most places, but some countries protect critical editions. Before release,
+   check each prelude bar by bar against a public-domain edition (the Breitkopf & Härtel complete works,
+   1878–80, on IMSLP) and credit the encoding in appendix D, or enter the notes independently from that edition.
 
 Decided on 2026-10-19: title *Music Theory*; our own engraver with no third-party code; no microphone for now;
 Korobeiniki, Pachelbel's Canon and Chopin's Preludes as the recurring pieces; note names and terms as settings
