@@ -4,3 +4,143 @@
   people: MIDI Manufacturers Association
   chapter: four-chords
   text: Synthesiser makers agree a common language for keyboards and computers; keyboards still speak it.
+- year: 1026
+  title: Lines and syllables
+  people: Guido of Arezzo
+  chapter: grand-staff
+  text: 'In these years the monk Guido describes notes placed on lines and spaces a third apart, and the syllables *ut re mi fa sol la* for teaching singers to read: the ancestors of the staff and of solfège.'
+- year: 1558
+  title: Le istitutioni harmoniche
+  people: Gioseffo Zarlino
+  chapter: why-twelve-notes
+  text: Zarlino grounds harmony in the simple ratios of just intonation and treats the major and minor triads as the basic consonant chords.
+- year: 1691
+  title: Musicalische Temperatur
+  people: Andreas Werckmeister
+  chapter: why-twelve-notes
+  text: Werckmeister publishes well temperaments in which every key is usable, each with its own colour.
+- year: 1722
+  title: Traité de l’harmonie
+  people: Jean-Philippe Rameau
+  chapter: inversions
+  text: 'Rameau’s treatise introduces the idea of a chord’s root, so that a chord and its inversions are the same harmony, and of a “fundamental bass” moving beneath the music.'
+- year: 1722
+  title: The Well-Tempered Clavier, Book I
+  people: Johann Sebastian Bach
+  chapter: fugue
+  text: Twenty-four preludes and fugues, one in every major and minor key.
+- year: 1725
+  title: Gradus ad Parnassum
+  people: Johann Joseph Fux
+  chapter: counterpoint
+  text: Fux’s dialogue on species counterpoint, from which Haydn taught himself, and from which counterpoint is still taught.
+- year: 1725
+  title: The notebook for Anna Magdalena Bach
+  people: Johann Sebastian Bach, Christian Petzold
+  chapter: small-forms
+  text: 'A family keyboard book that includes the Minuet in G now attributed to Petzold.'
+- year: 1739
+  title: Tentamen novae theoriae musicae
+  people: Leonhard Euler
+  chapter: neo-riemannian
+  text: Euler draws a lattice of notes related by fifths and major thirds, the ancestor of the Tonnetz.
+- year: 1788
+  title: Sonata in C, K. 545
+  people: Wolfgang Amadeus Mozart
+  chapter: sonata-rondo-variations
+  text: Mozart enters “a little keyboard sonata for beginners” in his catalogue of works.
+- year: 1797
+  title: Six Sonatinas, Op. 36
+  people: Muzio Clementi
+  chapter: sonata-rondo-variations
+  text: Sonata form in miniature, written for pupils, and still among the first sonatas pianists learn.
+- year: 1815
+  title: The metronome
+  people: Johann Nepomuk Maelzel
+  chapter: pulse-and-rhythm
+  text: Maelzel patents the clockwork metronome; “M.M.” in a tempo marking stands for Maelzel’s Metronome.
+- year: 1824
+  title: Symphony No. 9
+  people: Ludwig van Beethoven
+  chapter: accompanying
+  text: The finale’s “Ode to Joy” theme, a sixteen-bar tune almost entirely in steps.
+- year: 1839
+  title: 24 Preludes, Op. 28
+  people: Frédéric Chopin
+  chapter: one-piece
+  text: One prelude in every major and minor key, round the circle of fifths; the course studies Nos. 4, 7 and 20.
+- year: 1861
+  title: Korobeiniki
+  people: Nikolay Nekrasov
+  chapter: four-chords
+  text: Nekrasov’s poem about travelling pedlars; set to music, it became one of the best-known Russian songs.
+- year: 1863
+  title: Die Lehre von den Tonempfindungen (On the Sensations of Tone)
+  people: Hermann von Helmholtz
+  chapter: intervals
+  text: Helmholtz explains consonance and dissonance through overtones and beating.
+- year: 1888
+  title: Trois Gymnopédies
+  people: Erik Satie
+  chapter: colour-harmony
+  text: Slow piano pieces that sway between chords without a cadence.
+- year: 1893
+  title: Vereinfachte Harmonielehre
+  people: Hugo Riemann
+  chapter: function-and-cadence
+  text: Riemann names the three harmonic functions, tonic, dominant and subdominant.
+- year: 1910
+  title: Préludes, Book I
+  people: Claude Debussy
+  chapter: colour-harmony
+  text: Includes “Voiles”, “La fille aux cheveux de lin” and “La cathédrale engloutie”.
+- year: 1911
+  title: Petrushka
+  people: Igor Stravinsky
+  chapter: symmetry
+  text: The ballet’s famous chord combines :c[C] and :c[F#] major, two triads of one octatonic scale.
+- year: 1923
+  title: The twelve-tone method
+  people: Arnold Schoenberg
+  chapter: pitch-class-sets
+  text: Schoenberg completes the Suite for Piano, Op. 25, his first work built entirely on a twelve-tone row.
+- year: 1930
+  title: I Got Rhythm
+  people: George and Ira Gershwin
+  chapter: ii-v-i
+  text: Its chord progression, “rhythm changes”, becomes the second most common form in jazz after the blues.
+- year: 1944
+  title: Technique de mon langage musical
+  people: Olivier Messiaen
+  chapter: symmetry
+  text: Messiaen describes his “modes of limited transposition”, among them the whole-tone and octatonic scales.
+- year: 1958
+  title: Bossa nova
+  people: João Gilberto, Antônio Carlos Jobim
+  chapter: groove
+  text: Gilberto’s recording of “Chega de Saudade” launches bossa nova and its guitar rhythm.
+- year: 1959
+  title: Kind of Blue and Giant Steps
+  people: Miles Davis, John Coltrane
+  chapter: modes
+  text: Davis records modal jazz (“So What”); Coltrane records his rapid key changes a major third apart (“Giant Steps”, released in 1960).
+- year: 1973
+  title: The Structure of Atonal Music
+  people: Allen Forte
+  chapter: pitch-class-sets
+  text: Forte catalogues the set classes, giving them the numbers still used, such as 3-3 for (014).
+- year: 1987
+  title: Generalized Musical Intervals and Transformations
+  people: David Lewin
+  chapter: neo-riemannian
+  text: Lewin’s transformational theory, from which neo-Riemannian theory grew.
+- year: 1989
+  title: Korobeiniki in Tetris
+  people: Hirokazu Tanaka
+  chapter: four-chords
+  text: 'An arrangement of the folk tune becomes the theme of the Game Boy version of Tetris. The course uses the folk tune, not the game’s arrangement.'
+- year: 1996
+  title: Hexatonic cycles
+  people: Richard Cohn
+  chapter: neo-riemannian
+  text: Cohn’s “Maximally smooth cycles” describes the hexatonic cycles and poles of late Romantic harmony.

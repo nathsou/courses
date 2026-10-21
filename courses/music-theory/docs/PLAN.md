@@ -13,13 +13,15 @@ heard, named, played and written.
 
 ## Status (21 October 2026)
 
-**Done: M0–M7.** Prologue; Parts I–VI (chapters 1–37); the practice room; appendices A, B and C.
+**Done: M0–M8.** Prologue; Parts I–VII (chapters 1–42); the epilogue (chapter 43, Chopin's Prelude in E minor);
+the practice room (17 skills); appendices A–E.
 Exercise types built: `play`, `perform` (rhythm, notes, both), `ear`, `spell`, `read`, `analyse` (per chord, per
 bar or per note), `realise` (four-part writing, keyboard or SATB style, and two-part species counterpoint,
 checked by the rule engine `voicelead.ts`), `quiz`, and `:::check` (Check yourself). Engraver v1: grand staff, two voices per staff, tuplets, repeats, figures, chord symbols, Roman
 numerals with inversion figures, note names, spacer rests, hidden time signatures; the reference scores are at
 `/engraving/`. Library: voice leading by nearest
-motion, non-chord-tone classification. **Next: M8** (Part VII, epilogue, appendices D and E), then M9.
+motion, non-chord-tone classification, tuning and temperaments, pitch-class sets. **Next: M9** (proofreading, UX
+review, final checks).
 
 Where the course differs from the plan below, the plan is kept as written and the difference is recorded here:
 
@@ -29,8 +31,8 @@ Where the course differs from the plan below, the plan is kept as written and th
   and the ProgressionPlayer's patterns (block, pulse, broken, Alberti, waltz, arpeggio, stride, comping, walking bass,
   bossa nova); there are no recorded tracks.
 - **Piano:** the Salamander licence is confirmed (CC BY 3.0); 60 samples, 3.6 MB.
-- **Korobeiniki:** the opening phrase follows the folk melody as commonly printed; checking it against a
-  printed public-domain source is still to do (M8, with the repertoire appendix).
+- **Korobeiniki:** the tune follows the folk melody as commonly known; it was not checked against a printed
+  public-domain source (none could be fetched in M8). Appendix D says so, and that no arrangement was used.
 - **MIDI out** is not built.
 - **Dictation and sight-reading** are not separate exercise types: melodic dictation is the `ear` exercise's
   `echo` kind (hear a melody, play it back), sight-reading is `read` (single notes) and `perform` in `notes`
@@ -70,7 +72,7 @@ Where the course differs from the plan below, the plan is kept as written and th
 | Score source | **A compact text format** in fenced `score` blocks | proposed | LilyPond-like, small enough to read in a diff: `\key g \major \time 3/4 | d'4 g'2 b'8( a' | ...`. Parsed by `src/lib/notation/parse.ts`; every score in the course is parsed and rendered in a test. |
 | Note names | **A setting**: letters (C D E, B♭ B), fixed-do solfège (Do Ré Mi / Do Re Mi … Si), or German (B = B♭, H = B♮) | agreed | One setting changes every label in the text, the keyboard and the exercises. **Default from the browser's language and region** (`navigator.languages`), never from geolocation or an IP lookup: French, Italian, Spanish, Portuguese and Romanian → solfège (accented *Ré* in French); German, Dutch, the Nordic languages, Czech, Slovak, Polish and Hungarian → German names; everything else → letters. §5a lists the full table. |
 | Terms | **A setting**: British (*crotchet*, *bar*) or American (*quarter note*, *measure*) first, the other in brackets on first use per chapter | agreed | **Default from the locale**: British for en-GB, en-IE, en-AU, en-NZ, en-ZA and en-IN; American for every other locale. The glossary lists both. Jazz chapters use the jazz vocabulary (*changes*, *comping*, *voicing*) whatever the setting. |
-| Copyright | **Only public-domain music, music written for the course, and chord progressions** | proposed | A melody or excerpt ships only if it is public domain in both the US and the EU (composer and lyricist both dead for more than 70 years, and published before 1931), or traditional, or written for the course. Copyrighted songs and standards are named and their progressions discussed (a progression is not protected), never notated or played. Jazz tunes are course-written contrafacts over common changes (blues, rhythm changes, ii–V–I). Each piece records its source and status in `content/repertoire.yaml`. |
+| Copyright | **Only public-domain music, music written for the course, and chord progressions** | proposed | A melody or excerpt ships only if it is public domain in both the US and the EU (composer and lyricist both dead for more than 70 years, and published before 1931), or traditional, or written for the course. Copyrighted songs and standards are named and their progressions discussed (a progression is not protected), never notated or played. Jazz tunes are course-written contrafacts over common changes (blues, rhythm changes, ii–V–I). Each piece records its source and status in appendix D (`content/appendices/d-repertoire`). |
 | Site | SvelteKit 2 + Svelte 5 (runes), `adapter-static`, TypeScript 6, the Markdown-with-directives compiler copied from *The Prime Staircase* | proposed | Single npm package. Output in `dist/`; base path from `BASE_PATH`, or `COURSES_BASE_PATH + /music-theory`. No CodeMirror and no code runner. |
 | Library | `src/lib/music`: pure TypeScript, no DOM | proposed | Pitch and spelling, intervals, scales and modes, chords and chord symbols, keys, Roman-numeral analysis, voice-leading rules, rhythm and quantisation, tuning, pitch-class sets. Every module tested. Widgets and exercise checkers share it (§7). |
 | Feedback | Says what was established | proposed | Per CONTRIBUTING.md: *played and checked*, *in time (±n ms)*, *answer checked*, *rules checked* (no voice-leading faults found, which is not a judgement that the music is good), *self-reviewed*. |
@@ -207,7 +209,7 @@ Durations are reading-plus-playing estimates. Each chapter is one to three sessi
 39. **Symmetry.** Whole-tone and octatonic scales; why symmetric scales blur the sense of key.
 40. **Neo-Riemannian harmony.** P, L and R, the Tonnetz, hexatonic cycles from Liszt to film scores.
 41. **Pitch-class sets and twelve-tone music.** Integer notation, normal form, set classes, rows and the matrix;
-    Schoenberg's Op. 33a (public-domain status to confirm in M8).
+    Schoenberg's Op. 33a named (see open question 1); the course row instead.
 42. **Why twelve notes?** The harmonic series, Pythagorean tuning and its comma, just intonation, meantone, equal
     temperament; hear each on the course piano. *Bridge* to *The Prime Staircase*: no power of 3/2 is a power of
     2, by unique factorisation. *Korobeiniki VII:* the melody over whole-tone, octatonic and planed harmony.
@@ -352,7 +354,7 @@ explanation), `:::atthekeys` (a hands-on interlude), and `::widget-name{props}`.
 repertoire are YAML in `content/`.
 
 Facts: every date, attribution and claim about a piece is cited in `content/bibliography.yaml`. Every score is
-checked against a public-domain edition (IMSLP, with the edition recorded in `content/repertoire.yaml`).
+checked against a public-domain edition (Mutopia, with the edition recorded in appendix D).
 
 ## 11. Look and feel: "Fallboard"
 
@@ -403,15 +405,17 @@ Shares the collection's `theme` key.
    appendix C names the browsers that work.
 5. **Sample size and licence.** Mitigation: a small multisample subset, lazy-loaded, licence recorded in the
    repertoire appendix; a synthesised piano if the licence does not hold.
-6. **Copyright.** Mitigation: the rule in §1 and `content/repertoire.yaml` with a status for each piece, re-checked
+6. **Copyright.** Mitigation: the rule in §1 and appendix D with a status for each piece, re-checked
    in M8. Korobeiniki is notated from the folk melody, not from any game arrangement.
 7. **Over-strict rule checking.** Voice-leading rules are style conventions, not laws. Mitigation: per-exercise
    rule sets, faults explained and heard, "no faults found" never presented as "correct".
 
 ## 15. Open questions
 
-1. **Schoenberg Op. 33a.** Confirm its public-domain status in the US and the EU in M8, or replace it with a row
-   written for the course.
+1. *(Resolved 21 October 2026.)* **Schoenberg Op. 33a.** Its row could not be checked against a printed edition
+   in this session, so Chapter 41 uses a row written for the course and only names Op. 33a. Schoenberg died in
+   1951, so his music is public domain in the EU from 2022; a later revision could quote Op. 33a once its row is
+   checked.
 2. *(Resolved 21 October 2026.)* **The Chopin sources.** No. 7 was checked bar by bar against the Mutopia Project's
    engraving, placed in the public domain by its typesetter (two corrections made); No. 20 follows Edition Peters
    as engraved by Mutopia (public domain); No. 4 is available the same way (Peters, 1879). Craig Sapp's Humdrum

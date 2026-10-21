@@ -1,12 +1,24 @@
 <script lang="ts">
   import { base } from '$app/paths';
+  import { tick } from 'svelte';
   import { findEntry } from '$lib/content/registry';
+  import { settings } from '$lib/state/settings.svelte';
+  import { localiseIn } from '$lib/components/exercise/localise.svelte';
   let { items }: { items: { id: string; term: string; definition: string; chapter?: string }[] } = $props();
   let q = $state('');
   const shown = $derived(items.filter((g) => !q || `${g.term} ${g.definition}`.toLowerCase().includes(q.toLowerCase())));
+  let el: HTMLElement | undefined = $state();
+  // Note names, chords and terms in the entries follow the reader's settings, including entries shown again after filtering.
+  $effect(() => {
+    void shown;
+    void settings.noteNames;
+    void settings.terms;
+    void settings.accentedRe;
+    tick().then(() => el && localiseIn(el));
+  });
 </script>
 
-<div class="glossary wide ui">
+<div class="glossary wide ui" bind:this={el}>
   <input class="search" type="search" placeholder="Filter {items.length} terms…" bind:value={q} aria-label="Filter glossary" />
   <dl>
     {#each shown as g (g.id)}

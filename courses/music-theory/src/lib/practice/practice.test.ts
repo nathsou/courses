@@ -44,6 +44,14 @@ describe('skills', () => {
       }
     }
   });
+  it('write chord symbols the markup can parse', async () => {
+    const { parseChordSymbol } = await import('$lib/music/chord');
+    const r = rng(5);
+    for (const s of SKILLS) {
+      const keys = s.keyed ? (s.mode === 'minor' ? MINOR_KEYS : MAJOR_KEYS).map((f) => keyOf(f, s.mode ?? 'major')) : [undefined];
+      for (const k of keys) for (const m of s.card(k, r).prompt.matchAll(/:c\[([^\]]+)\]/g)) expect(() => parseChordSymbol(m[1]!), `${s.id}: ${m[1]}`).not.toThrow();
+    }
+  });
   it('names all twelve keys once each', () => {
     expect(new Set(MAJOR_KEYS.map((f) => keyId(keyOf(f, 'major')))).size).toBe(12);
     expect(new Set(MINOR_KEYS.map((f) => mod(midi({ ...keyOf(f, 'minor').tonic, octave: 4 }), 12))).size).toBe(12);

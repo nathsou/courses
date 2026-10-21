@@ -188,6 +188,84 @@ export const SKILLS: Skill[] = [
       return { type: 'play', prompt: `Play :c[${nm(k!.tonic)}/${nm(bass)}] (${inv === 1 ? 'first' : 'second'} inversion).`, steps: [{ pcs: tones.map(pitchClass), bass: pitchClass(bass), label: `${nm(k!.tonic)}/${nm(bass)}` }], fifths: fifthsOf(k!) };
     },
   },
+  {
+    id: 'seventh-play',
+    title: 'Playing seventh chords',
+    chapter: 'seventh-chords',
+    keyed: true,
+    mode: 'major',
+    card: (k, r) => {
+      const q = pick(r, ['maj7', '7', 'm7', 'm7b5', 'dim7'] as ChordQuality[]);
+      const c = { root: k!.tonic, quality: q };
+      const sym = `${nm(k!.tonic)}${q}`;
+      return { type: 'play', prompt: `Play :c[${sym}] (${QUALITIES[q].name}).`, steps: [{ pcs: [...new Set(chordTones(c).map(pitchClass))], label: chordSymbol(c) }], fifths: fifthsOf(k!) };
+    },
+  },
+  {
+    id: 'seventh-ear',
+    title: 'Hearing seventh chords',
+    chapter: 'seventh-chords',
+    keyed: false,
+    card: (_k, r) => {
+      const labels: Partial<Record<ChordQuality, string>> = { maj7: 'Major seventh', '7': 'Dominant seventh', m7: 'Minor seventh', m7b5: 'Half-diminished', dim7: 'Diminished seventh' };
+      const q = pick(r, Object.keys(labels) as ChordQuality[]);
+      const a = 50 + Math.floor(r() * 10);
+      return { type: 'choose', prompt: 'Which kind of seventh chord?', hear: [QUALITIES[q].intervals.map((i) => a + parseInterval(i).semitones)], options: Object.values(labels) as string[], answer: labels[q]! };
+    },
+  },
+  {
+    id: 'cadence-ear',
+    title: 'Hearing cadences',
+    chapter: 'function-and-cadence',
+    keyed: false,
+    card: (_k, r) => {
+      // Four-chord phrases in C, voiced without parallels, then moved to a random key.
+      const I = [48, 64, 67, 72];
+      const phrases: Record<string, number[][]> = {
+        Perfect: [I, [53, 65, 69, 72], [55, 62, 67, 71], I],
+        Imperfect: [I, [45, 64, 69, 72], [41, 65, 69, 72], [43, 62, 67, 71]],
+        Plagal: [I, [45, 64, 69, 72], [41, 65, 69, 72], I],
+        Interrupted: [I, [53, 65, 69, 72], [55, 62, 67, 71], [57, 60, 64, 72]],
+      };
+      const name = pick(r, Object.keys(phrases));
+      const shift = Math.floor(r() * 12) - 5;
+      return { type: 'choose', prompt: 'A short phrase. Which cadence ends it?', hear: phrases[name]!.map((c) => c.map((m) => m + shift)), options: Object.keys(phrases), answer: name };
+    },
+  },
+  {
+    id: 'ii-v-i',
+    title: 'ii–V–I in every key',
+    chapter: 'ii-v-i',
+    keyed: true,
+    mode: 'major',
+    card: (k) => {
+      const chords = [
+        { root: transpose({ ...k!.tonic, octave: 4 }, 'M2'), quality: 'm7' as ChordQuality },
+        { root: transpose({ ...k!.tonic, octave: 4 }, 'P5'), quality: '7' as ChordQuality },
+        { root: k!.tonic, quality: 'maj7' as ChordQuality },
+      ];
+      const syms = chords.map((c) => `${nm(c.root)}${c.quality}`);
+      return {
+        type: 'play',
+        prompt: `ii7 – V7 – Imaj7 in :n[${nm(k!.tonic)}] major: :c[${syms[0]}], :c[${syms[1]}], :c[${syms[2]}]. Any voicing; try shells or guide tones moving by step.`,
+        steps: chords.map((c) => ({ pcs: [...new Set(chordTones(c).map(pitchClass))], label: chordSymbol(c) })),
+        fifths: fifthsOf(k!),
+      };
+    },
+  },
+  {
+    id: 'mode-ear',
+    title: 'Hearing modes',
+    chapter: 'modes',
+    keyed: false,
+    card: (_k, r) => {
+      const modes = { dorian: 'Dorian', phrygian: 'Phrygian', lydian: 'Lydian', mixolydian: 'Mixolydian', 'natural-minor': 'Aeolian' } as const;
+      const kind = pick(r, Object.keys(modes) as (keyof typeof modes)[]);
+      const tonic = spell(57 + Math.floor(r() * 7), 0);
+      const notes = scale(tonic, kind).map(midi);
+      return { type: 'choose', prompt: 'A mode, played up from its tonic. Which one?', hear: [...notes, midi(tonic) + 12].map((m) => [m]), options: Object.values(modes), answer: modes[kind] };
+    },
+  },
 ];
 
 export const skillById = (id: string) => SKILLS.find((s) => s.id === id);

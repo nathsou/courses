@@ -19,3 +19,379 @@ latency:
   term: latency
   definition: The delay between an action and its result; here, between a key going down and its message reaching the page, and between the page making a sound and you hearing it.
   chapter: four-chords
+pitch:
+  term: pitch
+  definition: How high or low a note sounds, set by how many times a second the string or air vibrates (its frequency).
+  chapter: high-and-low
+octave:
+  term: octave
+  definition: 'The distance from a note to the next note with the same name, eight white keys up: double the frequency. :n[C4] to :n[C5] is an octave.'
+  chapter: high-and-low
+middle-c:
+  term: middle C
+  definition: 'The :n[C] nearest the middle of the piano, :n[C4] in scientific pitch notation; it sits on a ledger line between the treble and bass staves.'
+  chapter: high-and-low
+semitone:
+  term: semitone (half step)
+  definition: The smallest step on the piano, from one key to the very next key, black or white.
+  chapter: semitones-and-tones
+tone:
+  term: tone (whole step)
+  definition: Two semitones.
+  chapter: semitones-and-tones
+accidental:
+  term: accidental
+  definition: 'A sign that raises or lowers a note: sharp (♯, a semitone up), flat (♭, a semitone down), natural (♮, cancels either), double sharp and double flat.'
+  chapter: semitones-and-tones
+enharmonic:
+  term: enharmonic
+  definition: 'Two names for the same key on the piano, such as :n[F#] and :n[Gb]. In a key, only one of the names is the right spelling.'
+  chapter: semitones-and-tones
+beat:
+  term: beat (pulse)
+  definition: The steady pulse you tap your foot to. Tempo is its speed, in beats per minute.
+  chapter: pulse-and-rhythm
+tempo:
+  term: tempo
+  definition: The speed of the beat, given in beats per minute or by an Italian word such as Andante or Allegro.
+  chapter: pulse-and-rhythm
+note-value:
+  term: note value
+  definition: 'How long a note lasts compared with the beat: :t[semibreve], :t[minim], :t[crotchet], :t[quaver], :t[semiquaver], each half as long as the one before.'
+  chapter: pulse-and-rhythm
+tie:
+  term: tie
+  definition: A curved line joining two notes of the same pitch, played as one note lasting for both values.
+  chapter: pulse-and-rhythm
+dot:
+  term: dot
+  definition: A dot after a note adds half its value; a dotted :t[minim] lasts three :t[crotchet]s.
+  chapter: pulse-and-rhythm
+bar:
+  term: bar (measure)
+  definition: A group of beats between two bar lines, the unit in which music is counted.
+  chapter: metre
+time-signature:
+  term: time signature
+  definition: 'Two numbers at the start of a piece: the upper one says how many beats there are in a bar, the lower one which note value is the beat (4 for a :t[crotchet]).'
+  chapter: metre
+upbeat:
+  term: upbeat (anacrusis, pickup)
+  definition: One or more notes before the first full bar, leading into its downbeat.
+  chapter: metre
+staff:
+  term: staff (stave)
+  definition: The five lines on which notes are written; each line and space is a white key.
+  chapter: grand-staff
+clef:
+  term: clef
+  definition: 'The sign at the start of a staff that fixes which note each line stands for: the treble clef curls round :n[G4], the bass clef’s dots surround :n[F3].'
+  chapter: grand-staff
+grand-staff:
+  term: grand staff
+  definition: A treble staff and a bass staff joined by a brace, as in piano music; middle C lies between them.
+  chapter: grand-staff
+ledger-line:
+  term: ledger line
+  definition: A short line added above or below a staff for a note beyond it.
+  chapter: grand-staff
+scale:
+  term: scale
+  definition: The notes of a key in order, from the tonic up to the next tonic.
+  chapter: major-scale
+major-scale:
+  term: major scale
+  definition: 'The scale of tones and semitones T T S T T T S, as on the white keys from :n[C] to :n[C].'
+  chapter: major-scale
+tonic:
+  term: tonic
+  definition: The first note of a scale and the home of its key; also the chord built on it (I).
+  chapter: major-scale
+scale-degree:
+  term: scale degree
+  definition: 'A note’s position in its scale, numbered from the tonic (1̂ to 7̂) or named: tonic, supertonic, mediant, subdominant, dominant, submediant, leading note.'
+  chapter: major-scale
+leading-note:
+  term: leading note (leading tone)
+  definition: The seventh degree of the major scale, a semitone below the tonic, which pulls up to it.
+  chapter: major-scale
+key-signature:
+  term: key signature
+  definition: The sharps or flats at the start of each staff, which apply to every note of that name for the whole piece unless cancelled.
+  chapter: circle-of-fifths
+circle-of-fifths:
+  term: circle of fifths
+  definition: The twelve keys arranged so that each is a fifth above the last; each step clockwise adds a sharp or removes a flat.
+  chapter: circle-of-fifths
+interval:
+  term: interval
+  definition: 'The distance between two notes, named by number (counting both letters: :n[C] to :n[E] is a third) and quality (major, minor, perfect, augmented, diminished).'
+  chapter: intervals
+consonance:
+  term: consonance and dissonance
+  definition: Intervals and chords that sound stable (consonant) or tense, wanting to move on (dissonant). The boundary is partly acoustic, partly a matter of style.
+  chapter: intervals
+harmonic-series:
+  term: harmonic series
+  definition: The frequencies at whole-number multiples of a note’s fundamental, present in almost every pitched sound; its first intervals are the octave, the fifth, the fourth and the major third.
+  chapter: intervals
+minor-scale:
+  term: minor scale
+  definition: 'A scale with a minor third above the tonic. Natural minor uses the key signature; harmonic minor raises the seventh; melodic minor raises the sixth and seventh going up.'
+  chapter: minor
+relative-key:
+  term: relative and parallel keys
+  definition: 'Relative keys share a key signature (:n[C] major and :n[A] minor); parallel keys share a tonic (:n[C] major and :n[C] minor).'
+  chapter: minor
+triad:
+  term: triad
+  definition: 'A chord of three notes stacked in thirds: root, third and fifth. Major, minor, diminished or augmented.'
+  chapter: triads
+chord-symbol:
+  term: chord symbol
+  definition: 'The name of a chord written above the music, as in pop and jazz: :c[C], :c[Am], :c[G7], :c[F/A].'
+  chapter: triads
+inversion:
+  term: inversion
+  definition: 'A chord with a note other than its root in the bass: first inversion has the third in the bass (6), second inversion the fifth (6/4).'
+  chapter: inversions
+voicing:
+  term: voicing
+  definition: The choice of octave, order and doubling for the notes of a chord.
+  chapter: inversions
+syncopation:
+  term: syncopation
+  definition: Accents off the beat, so that the rhythm pushes against the metre.
+  chapter: rhythm-in-detail
+triplet:
+  term: triplet
+  definition: Three notes in the time of two of the same value.
+  chapter: rhythm-in-detail
+swing:
+  term: swing
+  definition: 'Playing pairs of :t[quaver]s long–short, roughly in the ratio of a triplet, as in jazz.'
+  chapter: rhythm-in-detail
+compound-metre:
+  term: compound metre
+  definition: 'A metre whose beats divide into three, such as 6/8 (two dotted :t[crotchet] beats).'
+  chapter: rhythm-in-detail
+function:
+  term: harmonic function
+  definition: 'The role of a chord in a key: tonic (rest), predominant (moving away) or dominant (tension that leads home).'
+  chapter: function-and-cadence
+cadence:
+  term: cadence
+  definition: 'The chords that end a phrase: perfect (V–I), imperfect or half (ending on V), plagal (IV–I), interrupted or deceptive (V–vi).'
+  chapter: function-and-cadence
+seventh-chord:
+  term: seventh chord
+  definition: A triad with a fourth note a seventh above the root. The dominant seventh (V7) is the most important.
+  chapter: seventh-chords
+tritone:
+  term: tritone
+  definition: 'Three tones: the augmented fourth or diminished fifth, which divides the octave in half. In V7 it lies between the third and the seventh and resolves inwards or outwards.'
+  chapter: seventh-chords
+progression:
+  term: progression
+  definition: A succession of chords. Harmonic rhythm is how often the chords change.
+  chapter: progressions
+twelve-bar-blues:
+  term: twelve-bar blues
+  definition: A form of twelve bars on I, IV and V (usually all dominant sevenths), the basis of blues, rock and roll and much jazz.
+  chapter: progressions
+non-chord-tone:
+  term: non-chord tone
+  definition: 'A melody note outside the chord beneath it: passing note, neighbour note, suspension, appoggiatura, anticipation, escape note.'
+  chapter: non-chord-tones
+suspension:
+  term: suspension
+  definition: 'A note held over from one chord into the next, where it is dissonant, and then resolved down by step: preparation, suspension, resolution (4–3, 7–6, 9–8).'
+  chapter: non-chord-tones
+appoggiatura:
+  term: appoggiatura
+  definition: A dissonant note on a strong beat, reached by leap, that resolves by step.
+  chapter: non-chord-tones
+motif:
+  term: motif
+  definition: A short musical idea, a few notes long, that a piece repeats and varies.
+  chapter: non-chord-tones
+lead-sheet:
+  term: lead sheet
+  definition: A melody with chord symbols above it, from which the player makes the accompaniment.
+  chapter: accompanying
+phrase:
+  term: phrase
+  definition: A musical sentence, usually four or eight bars, ending with a cadence.
+  chapter: phrase-and-period
+period:
+  term: period
+  definition: Two phrases that begin alike, the first (antecedent) ending with a weaker cadence, the second (consequent) with a stronger one.
+  chapter: phrase-and-period
+satb:
+  term: SATB
+  definition: 'Soprano, alto, tenor and bass: four-part writing, the classical way of learning voice leading.'
+  chapter: four-voices
+voice-leading:
+  term: voice leading
+  definition: How each voice moves from one chord to the next; good voice leading moves each voice as little as possible and keeps the voices independent.
+  chapter: four-voices
+parallel-fifths:
+  term: parallel fifths and octaves
+  definition: Two voices a perfect fifth or octave apart moving to another fifth or octave. Avoided in classical part writing because the voices lose their independence.
+  chapter: four-voices
+counterpoint:
+  term: counterpoint
+  definition: The combination of independent melodic lines. Species counterpoint learns it in stages, over a given cantus firmus.
+  chapter: counterpoint
+cantus-firmus:
+  term: cantus firmus
+  definition: A given melody in long notes against which a counterpoint is written.
+  chapter: counterpoint
+canon:
+  term: canon
+  definition: A piece in which a melody is imitated exactly by another voice, starting later.
+  chapter: counterpoint
+cadential-six-four:
+  term: cadential six-four
+  definition: The tonic chord in second inversion over the dominant bass, resolving 6–5 and 4–3 into V at a cadence.
+  chapter: six-four-and-figured-bass
+figured-bass:
+  term: figured bass (thoroughbass)
+  definition: A bass line with numbers showing the intervals above it, from which a keyboard player improvised the harmony in the Baroque period.
+  chapter: six-four-and-figured-bass
+sequence:
+  term: sequence
+  definition: A pattern repeated at successively higher or lower pitches.
+  chapter: sequences
+secondary-dominant:
+  term: secondary dominant
+  definition: 'The dominant (or dominant seventh) of a chord other than the tonic, written V/x: V7/V is the dominant seventh of the dominant.'
+  chapter: secondary-dominants
+tonicisation:
+  term: tonicisation
+  definition: Making a chord other than the tonic sound briefly like a tonic, by preceding it with its own dominant.
+  chapter: secondary-dominants
+modulation:
+  term: modulation
+  definition: A change of key, often through a pivot chord that belongs to both keys.
+  chapter: modulation
+pivot-chord:
+  term: pivot chord
+  definition: A chord common to the old key and the new one, heard in the first and understood in the second.
+  chapter: modulation
+mixture:
+  term: modal mixture (borrowed chord)
+  definition: 'A chord borrowed from the parallel key, such as iv or ♭VI in a major key.'
+  chapter: mixture
+neapolitan:
+  term: Neapolitan sixth
+  definition: 'The major chord on the flattened second degree (♭II), usually in first inversion, used as a predominant.'
+  chapter: neapolitan-and-augmented-sixths
+augmented-sixth:
+  term: augmented sixth chord
+  definition: 'A predominant chord containing an augmented sixth between ♭6 and ♯4, which expand outwards to the dominant octave. Italian, French and German kinds.'
+  chapter: neapolitan-and-augmented-sixths
+diminished-seventh:
+  term: diminished seventh chord
+  definition: A chord of three stacked minor thirds; it divides the octave into four equal parts, so it can resolve to many keys.
+  chapter: diminished-and-mediants
+chromatic-mediant:
+  term: chromatic mediant
+  definition: 'A chord a third away from another, of the same quality, sharing one note: :c[C] to :c[E] or :c[Ab].'
+  chapter: diminished-and-mediants
+binary-form:
+  term: binary and ternary form
+  definition: 'Binary form has two halves (AB, each often repeated); ternary form has a return (ABA). Rounded binary brings back the opening at the end of the second half.'
+  chapter: small-forms
+sonata-form:
+  term: sonata form
+  definition: 'A form in three parts: exposition (two key areas), development and recapitulation (both subjects in the tonic).'
+  chapter: sonata-rondo-variations
+rondo:
+  term: rondo
+  definition: A form in which a refrain returns between contrasting episodes (ABACA).
+  chapter: sonata-rondo-variations
+fugue:
+  term: fugue
+  definition: A contrapuntal piece built on a subject that enters in each voice in turn, answered at the fifth.
+  chapter: fugue
+extension:
+  term: extension (tension)
+  definition: A note added above the seventh of a chord, a ninth, eleventh or thirteenth, possibly altered (♭9, ♯9, ♯11, ♭13).
+  chapter: lead-sheets-and-extensions
+shell-voicing:
+  term: shell voicing
+  definition: A left-hand voicing of the root with the third or the seventh, or both.
+  chapter: piano-voicings
+rootless-voicing:
+  term: rootless voicing
+  definition: A voicing of the third, seventh and tensions without the root, which the bass player supplies.
+  chapter: piano-voicings
+ii-v-i:
+  term: ii–V–I
+  definition: The most common progression in jazz, predominant – dominant – tonic, usually with sevenths.
+  chapter: ii-v-i
+mode:
+  term: mode
+  definition: 'One of the seven scales made by starting the major scale on each of its degrees: Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian.'
+  chapter: modes
+guide-tones:
+  term: guide tones
+  definition: The third and seventh of a chord, which define its quality and move by step from chord to chord.
+  chapter: improvising
+blues-scale:
+  term: blues scale
+  definition: 'The minor pentatonic scale with an added ♭5: :n[C] :n[Eb] :n[F] :n[Gb] :n[G] :n[Bb].'
+  chapter: improvising
+tritone-substitution:
+  term: tritone substitution
+  definition: 'Replacing a dominant seventh with the one a tritone away (:c[Db7] for :c[G7]); they share their third and seventh.'
+  chapter: reharmonisation
+comping:
+  term: comping
+  definition: Accompanying in jazz, with chords placed rhythmically around the melody or the soloist.
+  chapter: groove
+planing:
+  term: planing
+  definition: Moving a chord shape in parallel with a melody, so that the chords colour it instead of progressing.
+  chapter: colour-harmony
+whole-tone-scale:
+  term: whole-tone scale
+  definition: A six-note scale of tones only. There are two of them.
+  chapter: symmetry
+octatonic-scale:
+  term: octatonic scale (diminished scale)
+  definition: An eight-note scale of alternating semitones and tones. There are three of them.
+  chapter: symmetry
+tonnetz:
+  term: Tonnetz
+  definition: A lattice of pitch classes in fifths and thirds on which each triangle is a triad; the neo-Riemannian moves P, L and R flip one triangle into a neighbour.
+  chapter: neo-riemannian
+pitch-class:
+  term: pitch class
+  definition: 'All notes with the same name in any octave, numbered 0 (:n[C]) to 11 (:n[B]).'
+  chapter: pitch-class-sets
+prime-form:
+  term: prime form
+  definition: The most compact ordering of a pitch-class set, transposed to start on 0, which names its set class.
+  chapter: pitch-class-sets
+twelve-tone-row:
+  term: twelve-tone row (series)
+  definition: An ordering of all twelve pitch classes, used in its prime, retrograde, inverted and retrograde-inverted forms.
+  chapter: pitch-class-sets
+cent:
+  term: cent
+  definition: A hundredth of an equal-tempered semitone; 1200 cents make an octave.
+  chapter: why-twelve-notes
+temperament:
+  term: temperament
+  definition: 'A tuning that compromises the pure intervals of the harmonic series so that a keyboard can play in many keys: equal temperament makes every semitone 100 cents.'
+  chapter: why-twelve-notes
+comma:
+  term: comma
+  definition: 'A small interval left over when pure intervals fail to meet: the Pythagorean comma (about 23.5 cents) and the syntonic comma (about 21.5 cents).'
+  chapter: why-twelve-notes
+sustain-pedal:
+  term: sustain pedal (damper pedal)
+  definition: The right-hand pedal of the piano, which lifts the dampers so that notes keep sounding after the keys are released.
+  chapter: pianists-minimum

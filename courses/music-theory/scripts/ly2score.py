@@ -19,7 +19,7 @@ LETTERS = 'cdefgab'
 def tokenize(src):
     src = re.sub(r'%\{.*?%\}', ' ', src, flags=re.S)
     src = re.sub(r'%[^\n]*', ' ', src)
-    return re.findall(r'"(?:[^"\\]|\\.)*"|\\[a-zA-Z]+|<<|>>|\\\\|[{}<>|~]|[a-z]+[\',]*!?\??=?[\',]*\d*\.*|\d+\.*|\S', src)
+    return re.findall(r'"(?:[^"\\]|\\.)*"|\\[a-zA-Z]+|\\[<>!()\[\]]|<<|>>|\\\\|[{}<>|~]|[a-zA-Z]+[\',]*!?\??=?[\',]*\d*\.*|\d+/\d+|\d+\.*|\S', src)
 
 
 def find_variable(tokens, name):
