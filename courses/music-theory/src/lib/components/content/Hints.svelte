@@ -7,7 +7,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import Icon from '../ui/Icon.svelte';
-  import { setHints } from './zoom';
+  import { setHints } from './hints';
 
   let { title, children }: { title?: string; children?: Snippet } = $props();
 

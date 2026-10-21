@@ -23,20 +23,32 @@ options:
   expect(() => compile(code, { filename: file.replace(/\.md$/, '.svelte'), generate: 'server' })).not.toThrow();
 });
 
-test('heading ids do not collide with explicit equation ids', async () => {
-  const { code } = await compileMarkdown('## Energy\n\n:::equation{#energy}\n$$\nE = mc^2\n$$\n:::', file);
-  expect(code).toContain('<h2 id="energy-1">');
-  expect(code).toContain('id={"energy"}');
+test('score blocks become Score components with their source and attributes', async () => {
+  const { code } = await compileMarkdown('```score caption="Four chords" tempo="72" play="false"\n\\time 4/4 c\'1 |\n```\n', file);
+  expect(code).toContain('<B.Score src={"\\\\time 4/4 c\'1 |"} caption={"Four chords"} play={false} tempo={72} />');
+  expect(() => compile(code, { filename: 'x.svelte', generate: 'server' })).not.toThrow();
 });
 
-test('standalone one-line double-dollar equations use display layout', async () => {
-  const { code } = await compileMarkdown('$$E = mc^2$$', file);
-  expect(code).toContain('class="math-display"');
-  expect(code).toContain('class="katex-display"');
+test('note names, chords and terms follow the reader’s settings in prose and in exercise prompts', async () => {
+  const { code } = await compileMarkdown(`Middle :n[C4], the chord :c[Am], a :t[crotchet]{both}.
+
+\`\`\`play
+id: t/one
+prompt: 'Play :n[C4] then :c[G].'
+steps:
+  - chord: G
+\`\`\`
+`, file);
+  expect(code).toContain('<B.NoteName note={"C4"}>');
+  expect(code).toContain('<B.ChordName chord={"Am"}>');
+  expect(code).toContain('<B.Term both={true} word={"crotchet"}>');
+  expect(code).toContain('data-note=\\"C4\\"');
+  expect(code).toContain('data-chord=\\"G\\"');
+  expect(code).toContain('<B.PlayExercise spec={withBase(');
+  expect(() => compile(code, { filename: 'x.svelte', generate: 'server' })).not.toThrow();
 });
 
-test('$$…$$ inside a paragraph renders as display math', async () => {
-  const { code } = await compileMarkdown('So\n$$x^2$$\nholds.\n', file);
-  expect(code).toContain('<span class="math-display">');
-  expect(code).toContain('katex-display');
+test('ratios in prose stay text', async () => {
+  const { code } = await compileMarkdown('The octave is 2:1 and the fifth 3:2.', file);
+  expect(code).toContain('2:1 and the fifth 3:2');
 });

@@ -4,6 +4,8 @@
   import { mountSidebar, closeSidebar } from '../../../../packages/course-navigation/sidebar';
   import { onMount, type Snippet } from 'svelte';
   import { theme } from '$lib/state/theme.svelte';
+  import { settings } from '$lib/state/settings.svelte';
+  import { instrument } from '$lib/midi/instrument.svelte';
   import { nav } from '$lib/state/nav.svelte';
   import { COURSE_SUBTITLE, COURSE_TITLE } from '$content/outline';
   import TopBar from '$lib/components/layout/TopBar.svelte';
@@ -14,7 +16,20 @@
 
   onMount(() => {
     theme.init();
-    return mountSidebar('music-theory', state => (nav.sidebarOpen = state.open));
+    settings.load();
+    const stopKeys = instrument.mountKeys();
+    // Reconnect MIDI without a prompt when the reader has already allowed it.
+    navigator.permissions
+      ?.query({ name: 'midi' as PermissionName })
+      .then((p) => {
+        if (p.state === 'granted') void instrument.connect();
+      })
+      .catch(() => {});
+    const stopSidebar = mountSidebar('music-theory', state => (nav.sidebarOpen = state.open));
+    return () => {
+      stopKeys();
+      stopSidebar();
+    };
   });
   afterNavigate(closeSidebar);
 </script>
@@ -28,8 +43,8 @@
   </main>
 </div>
 <footer class="foot ui">
-  <svg class="bars" viewBox="0 0 80 14" aria-hidden="true"><path d="M0 13h6v-2h6v-2h8v-2h6v-2h10v-2h12v-2h32" /></svg>
   <p>{COURSE_TITLE} · {COURSE_SUBTITLE}</p>
+  <p class="credits">Piano: Salamander Grand Piano by Alexander Holm (CC BY 3.0). Music font: Bravura by Steinberg (SIL OFL).</p>
 </footer>
 
 <style>
@@ -68,20 +83,15 @@
     align-items: center;
     gap: 0.9rem 1.5rem;
   }
-  .bars {
-    width: 5rem;
-    height: 0.9rem;
-    flex: none;
-    fill: none;
-    stroke: var(--ac);
-    stroke-width: 1.6;
-  }
   .foot p {
     margin: 0;
-    font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--mute);
+  }
+  .foot .credits {
+    letter-spacing: 0.02em;
+    text-transform: none;
   }
 </style>

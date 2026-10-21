@@ -5,9 +5,8 @@
   import type { ContentModule } from '$lib/content/types';
   import { findEntry, neighbours, type NavEntry } from '$lib/content/registry';
   import { nav } from '$lib/state/nav.svelte';
-  import TermLayer from '../content/TermLayer.svelte';
+  import PageDocs from '../content/PageDocs.svelte';
   import Icon from '../ui/Icon.svelte';
-  import PrimePlate from './PrimePlate.svelte';
 
   let { mod, entry }: { mod: ContentModule; entry: NavEntry } = $props();
 
@@ -16,8 +15,6 @@
   const part = $derived(PARTS.find((p) => p.id === entry.part));
   const around = $derived(neighbours(entry.kind, entry.slug));
   const eyebrow = $derived(entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}${part ? (part.id === '0' || part.id === 'E' ? ` · ${part.title}` : ` · Part ${part.id} — ${part.title}`) : ''}`);
-  // Each chapter shows its own page of the factor table: chapter n gets (100n, 100n + 100]; appendices follow on.
-  const plateStart = $derived(entry.kind === 'chapter' ? 100 * Number(entry.number) : 100 * (40 + entry.number.charCodeAt(0) - 65));
   const prereqs = $derived((meta.prerequisites ?? []).map((s) => findEntry('chapter', s) ?? findEntry('appendix', s)).filter((e) => e !== undefined));
 
   $effect(() => {
@@ -56,7 +53,6 @@
 
 <article class="article">
   <header class="chapter-head wide">
-    <div class="plate"><PrimePlate start={plateStart} /></div>
     <div class="head-text">
     <p class="eyebrow">{eyebrow}</p>
     <h1>{meta.title}</h1>
@@ -69,24 +65,18 @@
         </span>
       {/if}
     </div>
-    {#if meta.theorems?.length}
+    {#if meta.skills?.length}
       <div class="builds ui">
-        <span class="label">Theorems</span>
-        {#each meta.theorems as b (b)}<span class="chip thm">{b}</span>{/each}
-      </div>
-    {/if}
-    {#if meta.techniques?.length}
-      <div class="builds ui">
-        <span class="label">Techniques</span>
-        {#each meta.techniques as b (b)}<span class="chip">{b}</span>{/each}
+        <span class="label">Skills</span>
+        {#each meta.skills as b (b)}<span class="chip">{b}</span>{/each}
       </div>
     {/if}
     </div>
   </header>
 
-  <TermLayer docs={{ terms: mod.terms, references: mod.references, glossary: mod.glossary }}>
+  <PageDocs docs={{ references: mod.references, glossary: mod.glossary }}>
     <Content />
-  </TermLayer>
+  </PageDocs>
 
   {#if mod.references.length}
     <section class="references">
@@ -118,9 +108,7 @@
   }
   .chapter-head {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 10.5rem;
-    gap: 2rem;
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr);
     padding: 3.25rem 0 2rem;
     margin-bottom: 0.5rem;
     border-bottom: 1px solid var(--line-strong);
@@ -132,20 +120,19 @@
   }
   .eyebrow {
     margin: 0 0 0.9rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-family: var(--font-ui);
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--accent);
   }
   h1 {
     font-family: var(--font-display);
-    font-size: clamp(2.1rem, 5.4vw, 3.1rem);
-    line-height: 1.04;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
     font-weight: 600;
-    font-variation-settings: 'SOFT' 50;
     margin: 0 0 1.1rem;
     overflow-wrap: break-word;
     hyphens: auto;
@@ -177,7 +164,6 @@
     font-size: 0.82rem;
   }
   .builds .label {
-    font-family: var(--font-mono);
     font-size: 0.66rem;
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -192,29 +178,9 @@
     color: var(--ink);
     font-weight: 500;
   }
-  .chip.thm {
-    background: var(--accent-soft);
-    color: var(--accent-ink);
-    font-weight: 600;
-  }
-
-  .plate {
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: end;
-    margin-top: 0.4em;
-  }
   @media (max-width: 720px) {
     .chapter-head {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 1.25rem;
       padding-top: 1.75rem;
-    }
-    .plate {
-      display: none;
-    }
-    .head-text {
-      grid-row: 2;
     }
   }
 
@@ -269,8 +235,7 @@
     grid-column: 2;
   }
   .dir {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--accent);

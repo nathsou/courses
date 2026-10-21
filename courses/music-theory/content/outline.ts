@@ -1,6 +1,6 @@
 /**
- * The course outline: single source of truth for navigation. A chapter becomes readable when a
- * matching `chapters/<nn>-<slug>/index.md` exists; until then it is listed as planned.
+ * The course outline: single source of truth for navigation (docs/PLAN.md §3). A chapter becomes readable
+ * when a matching `chapters/<nn>-<slug>/index.md` exists; until then it is listed as planned. Slugs are fixed.
  */
 
 export interface OutlineEntry {
@@ -8,10 +8,6 @@ export interface OutlineEntry {
   number: string;
   title: string;
   summary: string;
-  /** The theorem or result the chapter is built around (shown on the home page's timeline). */
-  theorem?: string;
-  /** Year of that result, for the timeline (negative for BC). */
-  year?: number;
   milestone: string;
 }
 
@@ -22,113 +18,119 @@ export interface OutlinePart {
   chapters: OutlineEntry[];
 }
 
-export const COURSE_TITLE = 'The Prime Staircase';
-export const COURSE_SUBTITLE = 'From the sieve to the Riemann Hypothesis';
+export const COURSE_TITLE = 'Music Theory';
+export const COURSE_SUBTITLE = 'At the piano, from the first note to jazz harmony';
 
 export const PARTS: OutlinePart[] = [
   {
     id: '0',
     title: 'Prologue',
-    blurb: 'One graph, π(x), and the question that runs through the whole course.',
-    chapters: [
-      { slug: 'staircase', number: '0', title: 'The prime staircase', summary: 'Count the primes, draw the staircase, meet Gauss’s guess, and watch the zeros of ζ redraw it.', theorem: 'Gauss’s guess: π(x) ≈ x / log x', year: 1792, milestone: 'M0' },
-    ],
+    blurb: 'Four chords, your keyboard, and what theory is for.',
+    chapters: [{ slug: 'four-chords', number: '0', title: 'Four chords', summary: 'Connect your keyboard, play the four chords under a great many songs, and see what the rest of the course will explain.', milestone: 'M0' }],
   },
   {
     id: 'I',
-    title: 'The atoms of arithmetic',
-    blurb: 'Divisibility, Euclid’s algorithm, unique factorisation, modular arithmetic and Fermat’s little theorem: everything later chapters stand on.',
+    title: 'Sound and the keyboard',
+    blurb: 'Pitch, rhythm, reading the grand staff, scales, keys, intervals and chords, from the very beginning.',
     chapters: [
-      { slug: 'divisors', number: '1', title: 'Divisors and primes', summary: 'What divides what, why 1 is not prime, and the first algorithm: trial division up to √n.', milestone: 'M1' },
-      { slug: 'euclid-algorithm', number: '2', title: 'Euclid’s algorithm', summary: 'The oldest non-trivial algorithm, Bézout’s identity, and Lamé’s bound on its running time.', theorem: 'Lamé’s theorem', year: 1844, milestone: 'M1' },
-      { slug: 'unique-factorisation', number: '3', title: 'Unique factorisation', summary: 'Euclid’s lemma, the fundamental theorem of arithmetic, and two worlds where factorisation is not unique.', theorem: 'The fundamental theorem of arithmetic', year: 1801, milestone: 'M1' },
-      { slug: 'infinitely-many', number: '4', title: 'Infinitely many primes', summary: 'Euclid’s proof (which is not by contradiction), Fermat numbers, Euler’s product, Furstenberg’s topology and arbitrarily long gaps.', theorem: 'There are infinitely many primes', year: -300, milestone: 'M1' },
-      { slug: 'modular-arithmetic', number: '5', title: 'Clock arithmetic', summary: 'Congruences, inverses, the Chinese remainder theorem and exponentiation by squaring.', milestone: 'M1' },
-      { slug: 'fermat-euler', number: '6', title: 'Fermat, Euler and the group of units', summary: 'Fermat’s little theorem, Lagrange’s theorem, Euler’s theorem and the existence of primitive roots.', theorem: 'Fermat’s little theorem', year: 1640, milestone: 'M1' },
+      { slug: 'high-and-low', number: '1', title: 'High and low', summary: 'Pitch, the keyboard’s pattern of twos and threes, the white-key names, middle C and the octave.', milestone: 'M1' },
+      { slug: 'semitones-and-tones', number: '2', title: 'Semitones, tones and the black keys', summary: 'Half and whole steps, sharps and flats, and why some white keys have no black key between them.', milestone: 'M1' },
+      { slug: 'pulse-and-rhythm', number: '3', title: 'Pulse and rhythm', summary: 'Beat, tempo and the metronome; note values, rests, dots and ties.', milestone: 'M1' },
+      { slug: 'metre', number: '4', title: 'Metre', summary: 'Bars and time signatures, strong and weak beats, counting aloud and the upbeat.', milestone: 'M1' },
+      { slug: 'grand-staff', number: '5', title: 'Reading the grand staff', summary: 'Lines and spaces, treble and bass clefs, ledger lines, landmark notes and reading by interval.', milestone: 'M1' },
+      { slug: 'major-scale', number: '6', title: 'The major scale', summary: 'The pattern of tones and semitones, scale degrees, the pull of the tonic and the first fingerings.', milestone: 'M1' },
+      { slug: 'circle-of-fifths', number: '7', title: 'Keys and the circle of fifths', summary: 'Key signatures, the order of sharps and flats, and all twelve major scales.', milestone: 'M2' },
+      { slug: 'intervals', number: '8', title: 'Intervals', summary: 'Number and quality, inversion, and consonance heard against the harmonic series.', milestone: 'M2' },
+      { slug: 'minor', number: '9', title: 'Minor', summary: 'Natural, harmonic and melodic minor; relative and parallel keys.', milestone: 'M2' },
+      { slug: 'triads', number: '10', title: 'Triads', summary: 'Four kinds of triad, triads on every degree, Roman numerals and chord symbols.', milestone: 'M2' },
+      { slug: 'inversions', number: '11', title: 'Inversions and the hand', summary: 'Inversions, slash chords and voicings that keep the hand still.', milestone: 'M2' },
+      { slug: 'rhythm-in-detail', number: '12', title: 'Rhythm in more detail', summary: 'Compound metre, triplets, semiquavers, syncopation and swing. Korobeiniki I.', milestone: 'M2' },
     ],
   },
   {
     id: 'II',
-    title: 'Finding primes',
-    blurb: 'Algorithms that list, test, certify and break apart numbers, and the cryptography that rests on them.',
+    title: 'Harmony in practice',
+    blurb: 'Function, cadences, seventh chords, progressions, melody and accompaniment.',
     chapters: [
-      { slug: 'sieves', number: '7', title: 'The sieve of Eratosthenes', summary: 'Why the sieve works and costs O(n log log n), and how wheels, segments and a linear sieve make it fast.', theorem: 'The sieve of Eratosthenes', year: -240, milestone: 'M2' },
-      { slug: 'probable-primes', number: '8', title: 'Probable primes', summary: 'The Fermat test and the Carmichael numbers that fool it, then Miller–Rabin and the proof that at most a quarter of bases lie.', theorem: 'The Miller–Rabin test', year: 1980, milestone: 'M2' },
-      { slug: 'quadratic-residues', number: '9', title: 'Squares modulo p', summary: 'Euler’s criterion, the Legendre and Jacobi symbols, quadratic reciprocity by counting lattice points, and Solovay–Strassen.', theorem: 'Quadratic reciprocity', year: 1796, milestone: 'M2' },
-      { slug: 'certificates', number: '10', title: 'Certificates of primality', summary: 'Lucas, Pratt and Pocklington certificates, the Lucas–Lehmer test behind every Mersenne record, and AKS.', theorem: 'The Lucas–Lehmer test', year: 1930, milestone: 'M2' },
-      { slug: 'factoring', number: '11', title: 'Taking numbers apart', summary: 'Fermat’s method, Pollard’s ρ and the birthday paradox, and Pollard’s p − 1.', theorem: 'Pollard’s ρ method', year: 1975, milestone: 'M2' },
-      { slug: 'quadratic-sieve', number: '12', title: 'The quadratic sieve', summary: 'Smooth numbers, factor bases, linear algebra over GF(2), and the road to the number field sieve.', theorem: 'The quadratic sieve', year: 1981, milestone: 'M2' },
-      { slug: 'cryptography', number: '13', title: 'Primes in cryptography', summary: 'RSA and Diffie–Hellman, how large primes are generated, and what Shor’s algorithm would change.', theorem: 'RSA', year: 1977, milestone: 'M2' },
+      { slug: 'function-and-cadence', number: '13', title: 'Function and cadence', summary: 'Tonic, predominant and dominant, and the cadences that end phrases.', milestone: 'M3' },
+      { slug: 'seventh-chords', number: '14', title: 'Seventh chords', summary: 'Five qualities, the diatonic sevenths, V7 and the tritone. Chopin’s Prelude in A major.', milestone: 'M3' },
+      { slug: 'progressions', number: '15', title: 'Progressions', summary: 'Harmonic rhythm, the circle of fifths, ii–V–I, pop loops and the 12-bar blues. Canon I.', milestone: 'M3' },
+      { slug: 'non-chord-tones', number: '16', title: 'Melody and non-chord tones', summary: 'Passing and neighbour notes, suspensions, appoggiaturas, motif and phrase.', milestone: 'M3' },
+      { slug: 'accompanying', number: '17', title: 'Accompanying a melody', summary: 'Choosing chords for a tune, reading a lead sheet and left-hand patterns.', milestone: 'M3' },
+      { slug: 'phrase-and-period', number: '18', title: 'Phrase and period', summary: 'Antecedent and consequent, the sentence, and cadences as punctuation. Korobeiniki II.', milestone: 'M3' },
     ],
   },
   {
     id: 'III',
-    title: 'Counting primes',
-    blurb: 'How many primes are there up to x? Gauss’s guess, fast exact counting, Chebyshev’s bounds and Mertens’ theorems.',
+    title: 'Voice leading',
+    blurb: 'Four voices, counterpoint, six-four chords, figured bass and sequences.',
     chapters: [
-      { slug: 'gauss', number: '14', title: 'Gauss’s guess', summary: 'Tables of primes, the density 1/log x, the logarithmic integral and the language of asymptotics.', theorem: 'π(x) ~ x / log x (conjectured)', year: 1849, milestone: 'M3' },
-      { slug: 'counting', number: '15', title: 'Counting without listing', summary: 'Legendre’s formula, Meissel and Lehmer, and an O(x^¾) algorithm that counts the primes below 10¹⁰ in a second.', theorem: 'Meissel’s formula', year: 1870, milestone: 'M3' },
-      { slug: 'chebyshev', number: '16', title: 'Chebyshev’s bounds', summary: 'θ, ψ and Λ; the central binomial coefficient; π(x) is of order x/log x; Bertrand’s postulate.', theorem: 'Chebyshev’s bounds', year: 1850, milestone: 'M3' },
-      { slug: 'mertens', number: '17', title: 'Mertens’ theorems', summary: 'Abel summation, the sums Σ log p / p and Σ 1/p, and Mertens’ product formula.', theorem: 'Mertens’ theorems', year: 1874, milestone: 'M3' },
-      { slug: 'random', number: '18', title: 'Are the primes random?', summary: 'Cramér’s model, gaps between primes, the Hardy–Littlewood conjectures, and Maier’s warning.', theorem: 'Cramér’s model', year: 1936, milestone: 'M3' },
+      { slug: 'four-voices', number: '19', title: 'Four voices', summary: 'SATB and keyboard style, spacing, doubling and motion between voices.', milestone: 'M4' },
+      { slug: 'counterpoint', number: '20', title: 'Two voices: counterpoint', summary: 'First and second species, Bach’s Invention in C, and Korobeiniki as a canon.', milestone: 'M4' },
+      { slug: 'six-four-and-figured-bass', number: '21', title: 'Six-four chords and figured bass', summary: 'Cadential, passing and pedal six-fours, and realising a figured bass at the keyboard.', milestone: 'M4' },
+      { slug: 'sequences', number: '22', title: 'Sequences', summary: 'Descending fifths and thirds, the ascending 5–6, in Bach and in pop. Canon II, Korobeiniki III.', milestone: 'M4' },
     ],
   },
   {
     id: 'IV',
-    title: 'The zeta function',
-    blurb: 'Euler’s product turns the primes into a function. Riemann extends it to the complex plane, and its zeros rebuild the staircase.',
+    title: 'Chromatic harmony',
+    blurb: 'Secondary dominants, modulation, mixture, augmented sixths and chromatic mediants.',
     chapters: [
-      { slug: 'euler-product', number: '19', title: 'Euler’s product', summary: 'Dirichlet series, the Euler product, ζ(2) = π²/6, Möbius inversion, and the series that encodes the primes.', theorem: 'The Euler product', year: 1737, milestone: 'M4' },
-      { slug: 'complex-zeta', number: '20', title: 'Zeta in the complex plane', summary: 'Complex powers, analytic continuation past the line where the series stops converging, and the pole at s = 1.', theorem: 'Analytic continuation of ζ', year: 1859, milestone: 'M4' },
-      { slug: 'functional-equation', number: '21', title: 'The functional equation', summary: 'The Gamma function, the theta function and Poisson summation give Riemann’s symmetry s ↔ 1 − s.', theorem: 'The functional equation of ζ', year: 1859, milestone: 'M4' },
-      { slug: 'zeros', number: '22', title: 'Finding the zeros', summary: 'Hardy’s Z function, the Riemann–Siegel formula, Gram points and counting zeros with the argument principle.', theorem: 'The Riemann–von Mangoldt formula', year: 1905, milestone: 'M4' },
-      { slug: 'explicit-formula', number: '23', title: 'Riemann’s explicit formula', summary: 'Perron’s formula and the sum over zeros: the prime staircase rebuilt, wave by wave, from the zeros of ζ.', theorem: 'Riemann’s explicit formula', year: 1895, milestone: 'M4' },
+      { slug: 'secondary-dominants', number: '23', title: 'Secondary dominants', summary: 'V/V and its relatives, tonicisation, and secondary leading-note chords.', milestone: 'M5' },
+      { slug: 'modulation', number: '24', title: 'Modulation', summary: 'Closely related keys, pivot chords, direct modulation and the pop key change.', milestone: 'M5' },
+      { slug: 'mixture', number: '25', title: 'Mixture', summary: 'Chords borrowed from the parallel minor, the Picardy third and modal interchange.', milestone: 'M5' },
+      { slug: 'neapolitan-and-augmented-sixths', number: '26', title: 'The Neapolitan and augmented sixths', summary: '♭II6 and the Italian, French and German sixths.', milestone: 'M5' },
+      { slug: 'diminished-and-mediants', number: '27', title: 'Diminished sevenths and chromatic mediants', summary: 'Enharmonic modulation and third relations. Chopin’s Prelude in C minor, Korobeiniki IV.', milestone: 'M5' },
     ],
   },
   {
     id: 'V',
-    title: 'The prime number theorem',
-    blurb: 'Gauss’s guess becomes a theorem: first the plan, then every step in full.',
+    title: 'Form',
+    blurb: 'How pieces are put together, from binary form to the fugue.',
     chapters: [
-      { slug: 'pnt-plan', number: '24', title: 'The plan', summary: 'What has to be shown, why the line Re s = 1 is the crux, and the whole proof in five steps.', theorem: 'The prime number theorem', year: 1896, milestone: 'M5' },
-      { slug: 'no-zeros-on-one', number: '25', title: 'No zeros on the line Re s = 1', summary: 'The inequality 3 + 4 cos θ + cos 2θ ≥ 0 and the proof that ζ(1 + it) ≠ 0.', theorem: 'ζ(1 + it) ≠ 0', year: 1896, milestone: 'M5' },
-      { slug: 'pnt-proof', number: '26', title: 'The proof in full', summary: 'Newman’s analytic theorem, the integral of ψ(x) − x, and from ψ(x) ~ x to π(x) ~ x / log x.', theorem: 'Newman’s proof', year: 1980, milestone: 'M5' },
-      { slug: 'error-terms', number: '27', title: 'Beyond the main term', summary: 'The zero-free region and the error term, Selberg’s formula, and the elementary proof.', theorem: 'The elementary proof of the PNT', year: 1949, milestone: 'M5' },
+      { slug: 'small-forms', number: '28', title: 'Small forms', summary: 'Binary, rounded binary and ternary forms, AABA and verse–chorus, and the blues.', milestone: 'M6' },
+      { slug: 'sonata-rondo-variations', number: '29', title: 'Sonata, rondo and variations', summary: 'Clementi and Mozart analysed at the keyboard. Canon III.', milestone: 'M6' },
+      { slug: 'fugue', number: '30', title: 'Fugue', summary: 'Subject, answer, episode and stretto in Bach’s C major fugue. Korobeiniki V.', milestone: 'M6' },
     ],
   },
   {
     id: 'VI',
-    title: 'The Riemann Hypothesis',
-    blurb: 'The most famous open problem in mathematics: what it says about the primes, its many disguises, and the evidence.',
+    title: 'Jazz and pop harmony',
+    blurb: 'Lead sheets, voicings, ii–V–I, modes, improvising, reharmonisation and groove.',
     chapters: [
-      { slug: 'riemann-hypothesis', number: '28', title: 'The Riemann Hypothesis', summary: 'The statement, why it is equivalent to the best possible error term for π(x), and what has been verified.', theorem: 'The Riemann Hypothesis (open)', year: 1859, milestone: 'M6' },
-      { slug: 'faces', number: '29', title: 'Faces of the Riemann Hypothesis', summary: 'The Möbius random walk, Mertens’ conjecture and its fall, Redheffer’s matrix, Robin and Lagarias.', theorem: 'Mertens’ conjecture is false', year: 1985, milestone: 'M6' },
-      { slug: 'littlewood', number: '30', title: 'When Li(x) falls behind', summary: 'Littlewood’s theorem that π(x) − Li(x) changes sign infinitely often, and Skewes’ enormous numbers.', theorem: 'Littlewood’s theorem', year: 1914, milestone: 'M6' },
-      { slug: 'random-matrices', number: '31', title: 'Zeros and random matrices', summary: 'Montgomery’s pair correlation, a conversation over tea with Dyson, and Odlyzko’s computations.', theorem: 'Montgomery’s pair correlation', year: 1973, milestone: 'M6' },
-      { slug: 'finite-fields', number: '32', title: 'The Riemann Hypothesis over finite fields', summary: 'Counting points on curves modulo p, Hasse’s bound, and the theorems of Weil and Deligne.', theorem: 'Hasse’s theorem', year: 1933, milestone: 'M6' },
+      { slug: 'lead-sheets-and-extensions', number: '31', title: 'Lead sheets and extensions', summary: 'Chord symbols in full, ninths, elevenths and thirteenths, and what a pianist leaves out.', milestone: 'M7' },
+      { slug: 'piano-voicings', number: '32', title: 'Piano voicings', summary: 'Shells, rootless voicings, drop 2, quartal voicings and upper structures.', milestone: 'M7' },
+      { slug: 'ii-v-i', number: '33', title: 'ii–V–I everywhere', summary: 'In all twelve keys, major and minor; turnarounds, rhythm changes and the jazz blues.', milestone: 'M7' },
+      { slug: 'modes', number: '34', title: 'Modes as colours', summary: 'The modes of the major scale over a drone, modal pop and modal jazz.', milestone: 'M7' },
+      { slug: 'improvising', number: '35', title: 'Improvising', summary: 'Guide tones, chord tones on strong beats, approach notes and the blues scale.', milestone: 'M7' },
+      { slug: 'reharmonisation', number: '36', title: 'Reharmonisation', summary: 'Tritone substitution, the backdoor ii–V, passing diminished chords and Coltrane changes. Canon IV.', milestone: 'M7' },
+      { slug: 'groove', number: '37', title: 'Groove and accompaniment', summary: 'Comping, stride, bossa nova, the pop ballad and gospel left hands. Korobeiniki VI.', milestone: 'M7' },
     ],
   },
   {
     id: 'VII',
-    title: 'Primes in patterns',
-    blurb: 'Primes in progressions, in races, in the Gaussian integers, in pairs and in sums.',
+    title: 'Beyond tonality',
+    blurb: 'Colour harmony, symmetric scales, neo-Riemannian moves, twelve-tone music and tuning.',
     chapters: [
-      { slug: 'dirichlet', number: '33', title: 'Primes in arithmetic progressions', summary: 'Characters, L-functions, L(1, χ) ≠ 0 and Dirichlet’s theorem.', theorem: 'Dirichlet’s theorem', year: 1837, milestone: 'M7' },
-      { slug: 'prime-races', number: '34', title: 'Prime races', summary: 'Why primes ≡ 3 (mod 4) usually lead, and how the zeros of L-functions explain the bias.', theorem: 'Rubinstein–Sarnak: Chebyshev’s bias explained', year: 1994, milestone: 'M7' },
-      { slug: 'gaussian-primes', number: '35', title: 'Gaussian primes', summary: 'Primes in ℤ[i], Fermat’s two-squares theorem twice over, and the Gaussian moat.', theorem: 'Fermat’s two-squares theorem', year: 1749, milestone: 'M7' },
-      { slug: 'twin-primes', number: '36', title: 'Twin primes and bounded gaps', summary: 'Brun’s theorem, sieve methods, and the breakthroughs of Zhang and Maynard.', theorem: 'Bounded gaps between primes', year: 2013, milestone: 'M7' },
-      { slug: 'goldbach', number: '37', title: 'Goldbach and friends', summary: 'The Goldbach comet, the circle method, Vinogradov and Helfgott, and Green–Tao.', theorem: 'Ternary Goldbach', year: 2013, milestone: 'M7' },
-      { slug: 'open-problems', number: '38', title: 'Epilogue: the map of the unknown', summary: 'Every open problem in the course, its status and its best partial result.', milestone: 'M7' },
+      { slug: 'colour-harmony', number: '38', title: 'Colour harmony', summary: 'Debussy and Satie: planing, added notes, whole-tone and pentatonic harmony.', milestone: 'M8' },
+      { slug: 'symmetry', number: '39', title: 'Symmetry', summary: 'Whole-tone and octatonic scales, and why they blur the key.', milestone: 'M8' },
+      { slug: 'neo-riemannian', number: '40', title: 'Neo-Riemannian harmony', summary: 'P, L and R, the Tonnetz and hexatonic cycles.', milestone: 'M8' },
+      { slug: 'pitch-class-sets', number: '41', title: 'Pitch-class sets and twelve-tone music', summary: 'Integer notation, set classes, rows and the matrix.', milestone: 'M8' },
+      { slug: 'why-twelve-notes', number: '42', title: 'Why twelve notes?', summary: 'The harmonic series, Pythagorean tuning, just intonation, meantone and equal temperament. Korobeiniki VII.', milestone: 'M8' },
     ],
+  },
+  {
+    id: 'E',
+    title: 'Epilogue',
+    blurb: 'One piece, analysed with everything in the course.',
+    chapters: [{ slug: 'one-piece', number: '43', title: 'One piece, all the way down', summary: 'Chopin’s Prelude in E minor, Op. 28 No. 4, analysed and played.', milestone: 'M8' }],
   },
 ];
 
 export const APPENDICES: OutlineEntry[] = [
-  { slug: 'complex-analysis', number: 'A', title: 'Complex analysis, again', summary: 'Everything the course uses: holomorphy, contour integrals, Cauchy, residues, continuation and the argument principle.', milestone: 'M4' },
-  { slug: 'asymptotics', number: 'B', title: 'Asymptotics and summation', summary: 'O, o, ~ and ≪; Abel summation; Euler–Maclaurin; γ; Stirling.', milestone: 'M3' },
-  { slug: 'fourier', number: 'C', title: 'Fourier analysis and Poisson summation', summary: 'Fourier analysis on ℤ/qℤ and on ℝ, Poisson summation and the theta function.', milestone: 'M4' },
-  { slug: 'gamma-function', number: 'D', title: 'The Gamma function', summary: 'Definition, functional equation, reflection and duplication, and Stirling’s formula.', milestone: 'M4' },
-  { slug: 'algebra', number: 'E', title: 'The algebra minimum', summary: 'Groups, rings and fields, cyclic groups and polynomials: just what the course needs.', milestone: 'M1' },
-  { slug: 'library', number: 'F', title: 'The primes library', summary: 'Every function that code exercises and widgets can import from primes.', milestone: 'M7' },
-  { slug: 'reference', number: 'G', title: 'Glossary, timeline and bibliography', summary: 'Every term, date and source in the course.', milestone: 'M7' },
+  { slug: 'reading-music', number: 'A', title: 'Reading music: quick reference', summary: 'Every symbol the course uses, with its British and American names.', milestone: 'M2' },
+  { slug: 'pianists-minimum', number: 'B', title: 'The pianist’s minimum', summary: 'Posture, fingering, scale and arpeggio fingerings, and the sustain pedal.', milestone: 'M2' },
+  { slug: 'setting-up-midi', number: 'C', title: 'Setting up MIDI', summary: 'Devices, browsers, USB and Bluetooth, latency and troubleshooting.', milestone: 'M0' },
+  { slug: 'repertoire', number: 'D', title: 'Repertoire', summary: 'Every piece and excerpt in the course, its source and its copyright status.', milestone: 'M8' },
+  { slug: 'reference', number: 'E', title: 'Glossary, timeline and bibliography', summary: 'Terms, dates and sources.', milestone: 'M8' },
 ];

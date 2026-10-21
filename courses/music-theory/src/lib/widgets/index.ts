@@ -1,4 +1,4 @@
 // Widgets shared across chapters (chapter-specific ones live in content/chapters/<ch>/widgets/).
-export { default as Staircase } from './Staircase.svelte';
-export { default as ZeroStaircase } from './ZeroStaircase.svelte';
-export { default as DomainColouring } from './DomainColouring.svelte';
+export { default as Keyboard } from './Keyboard.svelte';
+export { default as InstrumentSetup } from './InstrumentSetup.svelte';
+export { default as TapAlong } from './TapAlong.svelte';

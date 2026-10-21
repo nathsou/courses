@@ -1,38 +1,34 @@
 /**
- * Markdown → Svelte compiler for course content.
+ * Markdown → Svelte compiler for course content (from The Prime Staircase, without maths or code).
  *
- * Chapters are plain Markdown (GFM + $maths$) extended with directives:
+ * Chapters are plain Markdown (GFM) extended with directives:
  *
- *   :::note / :::tip / :::warning / :::lab / :::breakit / :::challenge / :::exercises
- *   :::history{year=1948 title="…"}          archive card
- *   :::equation{#zipf caption="…"}           numbered display equation (with a ```terms block)
+ *   :::note / :::tip / :::warning / :::key / :::question / :::bridge / :::exercises / …   callouts
+ *   :::listen[Before reading]                a sound to hear before the explanation
+ *   :::atthekeys[Try it]                     a hands-on interlude at the keyboard
+ *   :::history{year=1722 title="…"}          archive card
  *   :::details[Summary text]                 collapsible
  *   :::figure{caption="…" wide}              figure wrapper
+ *   :::bio{name="…" born=1685 died=1750}     biography card
+ *   ::::hints + :::hint[…]                   a hint ladder
  *   ::some-widget{prop=1 other="x"}          any Svelte widget (./widgets/SomeWidget.svelte or $lib/widgets)
- *   :sidenote[margin note]  :cite[key1,key2]  :term[glossary word]{id=…}
+ *   :sidenote[margin note]  :cite[key1,key2]  :term[glossary word]{id=…}  :kbd[A]
+ *   :n[C4]  :n[F#]                           a note name in the reader's chosen system (C, Do, H …)
+ *   :c[Am]  :c[G7/B]                         a chord symbol in the reader's note names
+ *   :t[crotchet]  :t[bar]{both}              a term in the reader's British or American set
  *
- * Mathematics:
- *   :::theorem{name="Euclid IX.20" who="Euclid" year="c. 300 BC"}   (also lemma, corollary,
- *                                            proposition, conjecture, claim) — numbered per chapter
- *   :::proof[Proof (Euler, 1737)]            proof with a tombstone
- *   :::bio{name="Carl Friedrich Gauss" born=1777 died=1855}          biography card
- *   ::::zoom + :::level[Idea]                a proof at several levels of detail
- *   ::::hints + :::hint[…]                   a hint ladder, revealed one rung at a time
+ * Fenced blocks: `score` (the course's score format, src/lib/notation/parse.ts; attributes after the
+ * language: caption="…" play="false" tempo="72"), `quiz` (multiple choice) and `play` (an exercise
+ * played on the reader's keyboard, checked note by note).
  *
- * Fenced blocks with language `terms` define hover docs for \term{id}{…} symbols; `quiz`
- * blocks become multiple-choice questions. Exercises are YAML blocks too: `step` (a chain of
- * claims checked by the CAS), `blanks` (fill in a proof), `parsons` (put the lines of a proof in
- * order), `bug` (find the faulty line) and `prove` (write a proof; model answer and rubric).
- *
- * Output is a Svelte component whose `<script module>` exports metadata, toc, terms,
- * references and glossary, so routes can render chrome around the content.
+ * Output is a Svelte component whose `<script module>` exports metadata, toc, references and glossary,
+ * so routes can render chrome around the content.
  */
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
 import remarkDirective from 'remark-directive';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
@@ -41,21 +37,12 @@ import { toString } from 'mdast-util-to-string';
 import YAML from 'yaml';
 import type { Root, Nodes, Parent, Html, Code, Heading, Image, Link } from 'mdast';
 import type { ContainerDirective, LeafDirective, TextDirective } from 'mdast-util-directive';
-import { highlight, renderMath, termRefs } from './render.ts';
 
 type Directive = ContainerDirective | LeafDirective | TextDirective;
 
 interface ComponentUse {
   tag: string;
   props: string;
-}
-
-interface RawTerm {
-  label?: string;
-  what?: string;
-  why?: string;
-  effect?: string;
-  param?: { key: string; min: number; max: number; step: number; value: number; log?: boolean };
 }
 
 interface Ctx {
@@ -65,14 +52,10 @@ interface Ctx {
   components: ComponentUse[];
   imports: string[];
   importCount: number;
-  terms: Record<string, RawTerm>;
-  termRefs: Set<string>;
   toc: { id: string; text: string; depth: 2 | 3 }[];
   slugs: Map<string, number>;
   cites: Set<string>;
   glossaryRefs: Set<string>;
-  equations: number;
-  theorems: number;
   exercises: number;
   chapterNumber: string;
   slug: string;
@@ -80,35 +63,23 @@ interface Ctx {
   asyncJobs: Promise<void>[];
 }
 
-const CALLOUTS = new Set(['note', 'tip', 'warning', 'info', 'lab', 'breakit', 'challenge', 'exercises', 'definition', 'key', 'question', 'aside', 'bridge', 'algorithm']);
-const TEXT_DIRECTIVES = new Set(['sidenote', 'cite', 'term', 'kbd']);
+const CALLOUTS = new Set(['note', 'tip', 'warning', 'info', 'challenge', 'exercises', 'definition', 'key', 'question', 'aside', 'bridge', 'listen', 'atthekeys']);
+const TEXT_DIRECTIVES = new Set(['sidenote', 'cite', 'term', 'kbd', 'n', 'c', 't']);
 const BUILTIN_BLOCKS: Record<string, string> = {
   history: 'History',
-  equation: 'Equation',
   details: 'Details',
   figure: 'Figure',
   columns: 'Columns',
-  proof: 'Proof',
   bio: 'Bio',
-  zoom: 'Zoom',
-  level: 'ZoomLevel',
   hints: 'Hints',
   hint: 'Hint',
 };
-const THEOREM_KINDS = new Set(['theorem', 'lemma', 'corollary', 'proposition', 'conjecture', 'claim']);
 const EXERCISE_BLOCKS: Record<string, string> = {
-  step: 'StepCheck',
-  blanks: 'Blanks',
-  parsons: 'Parsons',
-  bug: 'SpotBug',
-  prove: 'ProveIt',
-  code: 'CodeExercise',
-  numeric: 'Numeric',
+  play: 'PlayExercise',
 };
 /** Fields of exercise blocks that are data, not Markdown (passed through untouched). */
 const RAW_FIELDS: Record<string, string[]> = {
-  code: ['starter', 'solution', 'tests'],
-  numeric: ['answer', 'tolerance', 'unit', 'factor'],
+  play: ['steps', 'notes', 'chords', 'key', 'range', 'match'],
 };
 /** YAML fields of exercise blocks that hold Markdown (rendered at build time). */
 const MARKDOWN_FIELDS = new Set(['prompt', 'text', 'solution', 'why', 'explain', 'hint', 'hints', 'lines', 'distractors', 'rubric', 'feedback', 'note', 'success', 'options', 'label']);
@@ -197,16 +168,20 @@ function resolveComponent(ctx: Ctx, name: string): string {
   throw new Error(`${ctx.file}: unknown directive/widget "${name}" — expected ./widgets/${Name}.svelte or an export named ${Name} in src/lib/widgets/index.ts`);
 }
 
-const inlineProcessor = unified().use(remarkParse).use(remarkGfm).use(remarkMath);
+const inlineProcessor = unified().use(remarkParse).use(remarkGfm).use(remarkDirective);
 
-/** Render a short Markdown string (term docs, quiz text) to HTML. Maths is supported. */
+/** Render a short Markdown string (quiz text, exercise prompts) to HTML. */
 async function renderInline(md: string | undefined): Promise<string | undefined> {
   if (md == null) return undefined;
   const tree = inlineProcessor.parse(String(md)) as Root;
   visit(tree, (node, index, parent) => {
     if (node.type === 'link' && node.url.startsWith('/') && !node.url.startsWith('//')) node.url = `__COURSE_BASE__${node.url}`;
-    if ((node.type === 'inlineMath' || node.type === 'math') && parent && index !== undefined) {
-      parent.children[index] = { type: 'html', value: renderMath(node.value, node.type === 'math') } as never;
+    // Note names and terms inside prompts depend on the reader's settings: leave a placeholder the
+    // exercise components fill in.
+    if (node.type === 'textDirective' && parent && index !== undefined && (node.name === 'n' || node.name === 'c' || node.name === 't')) {
+      const both = node.attributes && 'both' in node.attributes ? ' data-both' : '';
+      const attr = { n: 'note', c: 'chord', t: 'word' }[node.name];
+      parent.children[index] = { type: 'html', value: `<span data-${attr}="${toString(node).replace(/"/g, '&quot;')}"${both}>${toString(node)}</span>` } as never;
     }
   });
   const hast = await unified().use(remarkRehype, { allowDangerousHtml: true }).run(tree);
@@ -241,7 +216,7 @@ function parseYamlBlock<T>(ctx: Ctx, src: string, kind: string): T {
   // Prose fields often contain “: ” (which YAML reads as a nested mapping). Turn an unquoted
   // single-line prose value that contains one into a block scalar.
   src = src.replace(
-    /^(\s*)(why|prompt|solution|explain|hint|text|title|note|q|success|feedback|tutor):[ \t]+(?![|>'"])(.*: .*)$/gm,
+    /^(\s*)(why|prompt|solution|explain|hint|text|title|note|q|success|feedback):[ \t]+(?![|>'"])(.*: .*)$/gm,
     (_, indent: string, key: string, value: string) => `${indent}${key}: |\n${indent}  ${value}`,
   );
   try {
@@ -250,7 +225,7 @@ function parseYamlBlock<T>(ctx: Ctx, src: string, kind: string): T {
     const msg = e instanceof Error ? e.message : String(e);
     throw new Error(
       `${path.relative(ctx.contentRoot, ctx.file)}: invalid YAML in a \`\`\`${kind} block — ${msg}\n` +
-        `Hint: quote values that contain ": " or start with a special character; use single quotes when the value contains backslashes (LaTeX).`,
+        `Hint: quote values that contain ": " or start with a special character.`,
     );
   }
 }
@@ -318,7 +293,19 @@ function transformDirective(ctx: Ctx, node: Directive, parent: Parent, index: nu
       parent.children.splice(index, 1, marker('leaf', ctx.components.length - 1));
       return index + 1;
     }
-    if (name === 'term') {
+    if (name === 'n') {
+      tag = 'B.NoteName';
+      extra.note = toString(node);
+      node.children = [];
+    } else if (name === 'c') {
+      tag = 'B.ChordName';
+      extra.chord = toString(node);
+      node.children = [];
+    } else if (name === 't') {
+      tag = 'B.Term';
+      extra.word = toString(node);
+      node.children = [];
+    } else if (name === 'term') {
       const id = attrs.id ?? toString(node).toLowerCase();
       delete attrs.id;
       ctx.glossaryRefs.add(id);
@@ -335,16 +322,11 @@ function transformDirective(ctx: Ctx, node: Directive, parent: Parent, index: nu
     ctx.asyncJobs.push(buildReferenceList(ctx, name, i));
     parent.children.splice(index, 1, marker('leaf', i));
     return index + 1;
-  } else if (THEOREM_KINDS.has(name)) {
-    tag = 'B.Theorem';
-    extra.kind = name;
-    if (name !== 'conjecture') extra.n = `${ctx.chapterNumber ? `${ctx.chapterNumber}.` : ''}${++ctx.theorems}`;
   } else if (CALLOUTS.has(name)) {
     tag = 'B.Callout';
     extra.kind = name;
   } else if (BUILTIN_BLOCKS[name]) {
     tag = `B.${BUILTIN_BLOCKS[name]}`;
-    if (name === 'equation') extra.n = ++ctx.equations;
   } else {
     tag = resolveComponent(ctx, name);
   }
@@ -377,24 +359,18 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
         return;
       }
 
-      case 'math':
-      case 'inlineMath': {
-        termRefs(node.value).forEach((t) => ctx.termRefs.add(t));
-        const display = node.type === 'math' || (node.data as { display?: boolean } | undefined)?.display === true;
-        const html = renderMath(node.value, display);
-        parent.children[index] = {
-          type: 'html',
-          value: node.type === 'math' ? `<div class="math-display">${html}</div>` : display ? `<span class="math-display">${html}</span>` : html,
-        } as never;
-        return;
-      }
-
       case 'code': {
         const code = node as Code;
-        if (code.lang === 'terms') {
-          Object.assign(ctx.terms, parseYamlBlock<Record<string, RawTerm>>(ctx, code.value, 'terms'));
-          parent.children.splice(index, 1);
-          return index;
+        const meta = Object.fromEntries([...(code.meta ?? '').matchAll(/(\w+)="([^"]*)"/g)].map((m) => [m[1]!, m[2]!]));
+        if (code.lang === 'score') {
+          const extra: Record<string, unknown> = { src: code.value };
+          if (meta.caption) extra.caption = meta.caption;
+          if (meta.label) extra.label = meta.label;
+          if (meta.play === 'false') extra.play = false;
+          if (meta.tempo) extra.tempo = Number(meta.tempo);
+          const i = ctx.components.push({ tag: 'B.Score', props: props({}, extra) }) - 1;
+          parent.children[index] = marker('leaf', i);
+          return;
         }
         if (code.lang === 'quiz') {
           const data = parseYamlBlock<{ q: string; options: { text: string; correct?: boolean; why?: string }[] }>(ctx, code.value, 'quiz');
@@ -427,15 +403,8 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
           parent.children[index] = marker('leaf', i);
           return;
         }
-        const meta = Object.fromEntries([...(code.meta ?? '').matchAll(/(\w+)="([^"]*)"/g)].map((m) => [m[1]!, m[2]!]));
-        const html: Html = { type: 'html', value: '' };
-        parent.children[index] = html as never;
-        ctx.asyncJobs.push(
-          highlight(code.value, code.lang).then((h) => {
-            const caption = meta.title ? `<figcaption>${meta.title.replace(/</g, '&lt;')}</figcaption>` : '';
-            html.value = `<figure class="code-block" data-lang="${code.lang ?? 'text'}">${caption}${h}</figure>`;
-          }),
-        );
+        const escaped = code.value.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+        parent.children[index] = { type: 'html', value: `<pre class="plain"><code>${escaped}</code></pre>` } as never;
         return;
       }
 
@@ -458,27 +427,6 @@ async function transform(tree: Root, ctx: Ctx): Promise<void> {
   await Promise.all(ctx.asyncJobs);
 }
 
-async function renderTerms(ctx: Ctx): Promise<Record<string, unknown>> {
-  const global = loadYaml<Record<string, RawTerm>>(path.join(ctx.contentRoot, 'terms.yaml'), ctx);
-  const out: Record<string, unknown> = {};
-  const ids = new Set([...ctx.termRefs, ...Object.keys(ctx.terms)]);
-  for (const id of ids) {
-    const t = ctx.terms[id] ?? global[id];
-    if (!t) {
-      console.warn(`[course] ${path.relative(ctx.contentRoot, ctx.file)}: \\term{${id}} has no definition`);
-      continue;
-    }
-    out[id] = {
-      label: await renderInline(t.label ?? id),
-      what: await renderInline(t.what ?? ''),
-      why: await renderInline(t.why),
-      effect: await renderInline(t.effect),
-      param: t.param,
-    };
-  }
-  return out;
-}
-
 export interface CompileResult {
   code: string;
   dependencies: string[];
@@ -493,14 +441,10 @@ export async function compileMarkdown(source: string, file: string): Promise<Com
     components: [],
     imports: [],
     importCount: 0,
-    terms: {},
-    termRefs: new Set(),
     toc: [],
     slugs: new Map(),
     cites: new Set(),
     glossaryRefs: new Set(),
-    equations: 0,
-    theorems: 0,
     exercises: 0,
     chapterNumber: '',
     slug: '',
@@ -526,21 +470,9 @@ export async function compileMarkdown(source: string, file: string): Promise<Com
   ctx.chapterNumber = metadata.number;
   ctx.slug = metadata.slug as string;
 
-  const tree = unified().use(remarkParse).use(remarkGfm).use(remarkMath).use(remarkDirective).parse(body) as Root;
-  // A paragraph consisting of $$…$$ is display math even when written on one line.
-  visit(tree, 'paragraph', (node, index, parent) => {
-    const child = node.children[0];
-    const raw = body.slice(node.position?.start.offset, node.position?.end.offset).trim();
-    if (parent && index !== undefined && node.children.length === 1 && child?.type === 'inlineMath' && raw.startsWith('$$') && raw.endsWith('$$')) {
-      parent.children[index] = { type: 'math', value: child.value, position: node.position } as never;
-    }
-  });
-  // $$…$$ inside a paragraph (no blank lines around it) parses as inline math; it is still meant as display math.
-  visit(tree, 'inlineMath', (node) => {
-    if (body.slice(node.position?.start.offset, node.position?.end.offset).startsWith('$$')) node.data = { ...node.data, display: true } as never;
-  });
+  const tree = unified().use(remarkParse).use(remarkGfm).use(remarkDirective).parse(body) as Root;
   visit(tree, (node) => {
-    if (node.type === 'containerDirective' && ['equation', 'figure'].includes(node.name) && node.attributes?.id) ctx.slugs.set(node.attributes.id, 1);
+    if (node.type === 'containerDirective' && node.name === 'figure' && node.attributes?.id) ctx.slugs.set(node.attributes.id, 1);
   });
   await transform(tree, ctx);
   const hast = await unified().use(remarkRehype, { allowDangerousHtml: true }).run(tree);
@@ -558,8 +490,6 @@ export async function compileMarkdown(source: string, file: string): Promise<Com
     if (kind === 'close') return `</${c.tag}>`;
     return `<${c.tag}${p} />`;
   });
-
-  const terms = await renderTerms(ctx);
 
   const bib = loadYaml<Record<string, Omit<import('../../src/lib/content/types.ts').Reference, 'key'>>>(path.join(contentRoot, 'bibliography.yaml'), ctx);
   const references = [...ctx.cites].map((key) => {
@@ -589,7 +519,6 @@ function withBase(value) {
 }
 export const metadata = ${JSON.stringify(metadata)};
 export const toc = ${JSON.stringify(ctx.toc)};
-export const terms = withBase(${JSON.stringify(terms)});
 export const references = ${JSON.stringify(references)};
 export const glossary = withBase(${JSON.stringify(glossary)});
 </script>

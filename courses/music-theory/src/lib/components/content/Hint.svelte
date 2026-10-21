@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import { slide } from 'svelte/transition';
-  import { getHints } from './zoom';
+  import { getHints } from './hints';
 
   let { title, children }: { title?: string; children?: Snippet } = $props();
   const hints = getHints();

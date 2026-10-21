@@ -6,8 +6,8 @@
     info: { label: 'Info', icon: 'info', hue: 'var(--fx-blue)', on: 'var(--fx-cream)' },
     tip: { label: 'Tip', icon: 'tip', hue: 'var(--fx-yellow)', on: 'var(--fx-ink)' },
     warning: { label: 'Caution', icon: 'warning', hue: 'var(--fx-red)', on: 'var(--fx-cream)' },
-    lab: { label: 'Lab', icon: 'lab', hue: 'var(--fx-blue)', on: 'var(--fx-cream)' },
-    breakit: { label: 'Break it', icon: 'breakit', hue: 'var(--fx-red)', on: 'var(--fx-cream)' },
+    listen: { label: 'Listen first', icon: 'volume', hue: 'var(--fx-blue)', on: 'var(--fx-cream)' },
+    atthekeys: { label: 'At the keys', icon: 'piano', hue: 'var(--fx-yellow)', on: 'var(--fx-ink)' },
     challenge: { label: 'Challenge', icon: 'challenge', hue: 'var(--fx-yellow)', on: 'var(--fx-ink)' },
     exercises: { label: 'Exercises', icon: 'exercises', hue: 'var(--fx-blue)', on: 'var(--fx-cream)' },
     definition: { label: 'Definition', icon: 'definition', hue: 'var(--fg)', on: 'var(--bg)' },
@@ -15,7 +15,6 @@
     question: { label: 'Think about it', icon: 'question', hue: 'var(--fx-yellow)', on: 'var(--fx-ink)' },
     aside: { label: 'Aside', icon: 'aside', hue: 'var(--mute)', on: 'var(--bg)' },
     bridge: { label: 'Bridge', icon: 'bridge', hue: 'var(--fx-blue)', on: 'var(--fx-cream)' },
-    algorithm: { label: 'Algorithm', icon: 'algorithm', hue: 'var(--fg)', on: 'var(--bg)' },
   };
 </script>
 

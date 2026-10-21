@@ -12,7 +12,8 @@
   import { instrument } from '$lib/midi/instrument.svelte';
   import { audio } from '$lib/audio/engine.svelte';
   import { settings } from '$lib/state/settings.svelte';
-  import { isBlackKey, pitchName, spell } from '$lib/music/pitch';
+  import { isBlackKey, spell } from '$lib/music/pitch';
+  import { pitchName } from '$lib/music/names';
 
   let {
     lo = 36,
@@ -170,13 +171,16 @@
 </script>
 
 <div class="kbd-wrap ui" bind:this={box}>
+  <!-- A composite widget (one tab stop, arrow keys inside): the svg itself takes focus and key events. -->
+  <!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
   <svg
     class="kbd"
     class:interactive
     width={svgWidth}
     height={svgHeight}
     viewBox="0 0 {whites.length * W} {H + 2}"
-    role="group"
+    role="application"
+    aria-roledescription="piano keyboard"
     aria-label="{label}{interactive ? ': arrow keys choose a key, Enter or Space plays it' : ''}"
     tabindex={interactive ? 0 : -1}
     onpointerdown={onPointerDown}
