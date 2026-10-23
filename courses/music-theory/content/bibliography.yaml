@@ -1,0 +1,175 @@
+# Bibliography: key → { authors, year, title, venue, url, note }
+midi-1983:
+  authors: MIDI Manufacturers Association and Japan MIDI Standards Committee
+  year: 1983
+  title: MIDI 1.0 Detailed Specification
+  venue: The MIDI Association
+  url: https://midi.org/midi-1-0
+  note: Note on and note off messages, velocity, and control change 64 (the sustain pedal), as the course reads them.
+webmidi:
+  authors: W3C Audio Working Group
+  year: 2024
+  title: Web MIDI API
+  venue: W3C Working Draft
+  url: https://www.w3.org/TR/webmidi/
+  note: How a web page asks for access to MIDI devices and receives their messages.
+salamander:
+  authors: Alexander Holm
+  year: 2016
+  title: Salamander Grand Piano V3
+  venue: FreePats, CC BY 3.0
+  url: https://freepats.zenvoid.org/Piano/acoustic-grand-piano.html
+  note: The course piano; a Yamaha C5 sampled in minor thirds at 16 velocity layers, of which the course uses two.
+smufl:
+  authors: Steinberg Media Technologies
+  year: 2013
+  title: Standard Music Font Layout (SMuFL) and the Bravura font
+  venue: W3C Music Notation Community Group
+  url: https://www.smufl.org/
+  note: The code points and metrics behind every symbol in the course's scores.
+fux-1725:
+  authors: Johann Joseph Fux
+  year: 1725
+  title: Gradus ad Parnassum
+  venue: Vienna. English translation of the counterpoint chapters by Alfred Mann, The Study of Counterpoint (Norton, 1965)
+  note: The source of species counterpoint (Chapter 20).
+rameau-1722:
+  authors: Jean-Philippe Rameau
+  year: 1722
+  title: Traité de l’harmonie réduite à ses principes naturels
+  venue: Paris, Ballard
+  note: Chord roots, inversion and the fundamental bass (Chapters 10, 11 and 13).
+riemann-1893:
+  authors: Hugo Riemann
+  year: 1893
+  title: Vereinfachte Harmonielehre, oder die Lehre von den tonalen Funktionen der Akkorde
+  venue: London, Augener
+  note: Harmonic functions (Chapter 13).
+helmholtz-1863:
+  authors: Hermann von Helmholtz
+  year: 1863
+  title: Die Lehre von den Tonempfindungen
+  venue: Braunschweig, Vieweg. English translation by Alexander J. Ellis, On the Sensations of Tone (1875)
+  note: Overtones, beating and consonance (Chapters 8 and 42).
+schoenberg-1911:
+  authors: Arnold Schoenberg
+  year: 1911
+  title: Harmonielehre
+  venue: Vienna, Universal Edition. English translation by Roy E. Carter, Theory of Harmony (1978)
+  note: A composer’s harmony textbook, from the triad to the edge of atonality.
+messiaen-1944:
+  authors: Olivier Messiaen
+  year: 1944
+  title: Technique de mon langage musical
+  venue: Paris, Leduc
+  note: The modes of limited transposition (Chapter 39).
+piston-1941:
+  authors: Walter Piston
+  year: 1941
+  title: Harmony
+  venue: New York, Norton
+  note: A standard harmony textbook; later editions revised by Mark DeVoto.
+aldwell-schachter-1978:
+  authors: Edward Aldwell and Carl Schachter
+  year: 1978
+  title: Harmony and Voice Leading
+  venue: New York, Harcourt Brace Jovanovich
+  note: Harmony taught through voice leading, as in Parts III and IV.
+kostka-payne-1984:
+  authors: Stefan Kostka and Dorothy Payne
+  year: 1984
+  title: Tonal Harmony
+  venue: New York, Knopf
+  note: A common North American textbook for the material of Parts II to V.
+caplin-1998:
+  authors: William E. Caplin
+  year: 1998
+  title: 'Classical Form: A Theory of Formal Functions for the Instrumental Music of Haydn, Mozart, and Beethoven'
+  venue: New York, Oxford University Press
+  note: Sentence and period (Chapter 18) and sonata form (Chapter 29).
+gjerdingen-2007:
+  authors: Robert O. Gjerdingen
+  year: 2007
+  title: Music in the Galant Style
+  venue: New York, Oxford University Press
+  note: Eighteenth-century patterns of bass and melody, among them the sequences of Chapter 22.
+levine-1989:
+  authors: Mark Levine
+  year: 1989
+  title: The Jazz Piano Book
+  venue: Petaluma, Sher Music
+  note: Shells, rootless voicings, drop 2, quartal voicings and upper structures (Chapter 32).
+levine-1995:
+  authors: Mark Levine
+  year: 1995
+  title: The Jazz Theory Book
+  venue: Petaluma, Sher Music
+  note: Chord–scale theory, ii–V–I, reharmonisation and Coltrane changes (Part VI).
+forte-1973:
+  authors: Allen Forte
+  year: 1973
+  title: The Structure of Atonal Music
+  venue: New Haven, Yale University Press
+  note: Set classes and their names (Chapter 41).
+rahn-1980:
+  authors: John Rahn
+  year: 1980
+  title: Basic Atonal Theory
+  venue: New York, Longman
+  note: Normal form as the course computes it (Chapter 41).
+lewin-1987:
+  authors: David Lewin
+  year: 1987
+  title: Generalized Musical Intervals and Transformations
+  venue: New Haven, Yale University Press
+  note: The transformational theory behind Chapter 40.
+cohn-1996:
+  authors: Richard Cohn
+  year: 1996
+  title: 'Maximally Smooth Cycles, Hexatonic Systems, and the Analysis of Late-Romantic Triadic Progressions'
+  venue: Music Analysis 15 (1)
+  note: Hexatonic cycles and poles (Chapter 40).
+cohn-2012:
+  authors: Richard Cohn
+  year: 2012
+  title: 'Audacious Euphony: Chromatic Harmony and the Triad’s Second Nature'
+  venue: New York, Oxford University Press
+  note: Neo-Riemannian theory at book length (Chapter 40).
+tymoczko-2011:
+  authors: Dmitri Tymoczko
+  year: 2011
+  title: 'A Geometry of Music: Harmony and Counterpoint in the Extended Common Practice'
+  venue: New York, Oxford University Press
+  note: Voice leading between chords of any kind, as in the left hand of Chopin’s E minor Prelude (Chapter 43).
+barbour-1951:
+  authors: J. Murray Barbour
+  year: 1951
+  title: 'Tuning and Temperament: A Historical Survey'
+  venue: East Lansing, Michigan State College Press
+  note: Pythagorean, just, meantone and well temperaments (Chapter 42).
+duffin-2007:
+  authors: Ross W. Duffin
+  year: 2007
+  title: How Equal Temperament Ruined Harmony (and Why You Should Care)
+  venue: New York, Norton
+  note: A readable case for the temperaments of Chapter 42.
+leitner-1972:
+  authors: Sebastian Leitner
+  year: 1972
+  title: So lernt man lernen
+  venue: Freiburg, Herder
+  note: The box system behind the practice room’s schedule.
+mutopia:
+  authors: The Mutopia Project
+  year: 2026
+  title: Free sheet music for everyone
+  venue: mutopiaproject.org
+  url: https://www.mutopiaproject.org/
+  note: Public-domain engravings from which, or against which, every classical score in the course was checked (Appendix D).
+kernscores:
+  authors: Craig Stuart Sapp
+  year: 2001
+  title: Chopin, 24 Preludes, Op. 28 (Humdrum encoding)
+  venue: KernScores, Center for Computer Assisted Research in the Humanities, Stanford
+  url: https://kern.humdrum.org/
+  note: Humdrum encodings of Chopin’s Preludes and of Bach (by David Huron), used as a second check (Appendix D).

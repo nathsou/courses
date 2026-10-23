@@ -14,7 +14,8 @@ BASE = (sys.argv[1] if len(sys.argv) > 1 else 'http://127.0.0.1:8000').rstrip('/
 COURSES = ['astrophysics', 'cic', 'proofs-are-programs', 'compiler-backends',
            'incompleteness', 'elements', 'language-models', 'proofs',
            'digital-circuits', 'particle-physics', 'mandarin', 'formal-verification', 'human-evolution',
-           'static-analysis', 'primes', 'memory-management', 'reactive-rendering']
+           'static-analysis', 'primes', 'memory-management', 'reactive-rendering',
+           'music-theory']
 
 
 with sync_playwright() as pw:

@@ -21,6 +21,7 @@ A collection of interactive textbooks. The [course index](site/index.html) links
 | Every Path at Once: static analysis, from your first lint rule to taint tracking and symbolic execution | `courses/static-analysis/` | `/static-analysis/` |
 | The Prime Staircase: from the sieve to the Riemann Hypothesis | `courses/primes/` | `/primes/` |
 | What Changed? Reactive rendering, from innerHTML to signals | `courses/reactive-rendering/` | `/reactive-rendering/` |
+| Music Theory: at the piano, from the first note to jazz harmony | `courses/music-theory/` | `/music-theory/` |
 
 Every course has an “All courses” link beside its contents and a compact contents toggle in its own header or drawer handle. Sidebars collapse on desktop and open as drawers on smaller screens; each course remembers its desktop preference. The shared navigation lives in `packages/course-navigation/`.
 
@@ -45,15 +46,16 @@ npm ci --prefix courses/memory-management
 npm ci --prefix courses/static-analysis
 npm ci --prefix courses/primes
 npm ci --prefix courses/reactive-rendering
+npm ci --prefix courses/music-theory
 pnpm --dir courses/language-models install --frozen-lockfile
 npm run build
 ```
 
-The build creates `dist/index.html` and the seventeen course directories in `dist/`. The CIC course and Proofs Are Programs share their language implementation, `packages/kernel/`. For a local preview, serve `dist/` as the web root, for example with `python3 -m http.server 8000 -d dist`.
+The build creates `dist/index.html` and the eighteen course directories in `dist/`. The CIC course and Proofs Are Programs share their language implementation, `packages/kernel/`. For a local preview, serve `dist/` as the web root, for example with `python3 -m http.server 8000 -d dist`.
 
 On GitHub Actions, the build derives the Pages project path from `GITHUB_REPOSITORY`. If hosting under a different path, set `COURSES_BASE_PATH` to that path (or to an empty string for a domain root). Relative links on the index and the two Vite courses adapt automatically; Astro uses this value for astrophysics links and assets, and the build passes `<base>/<course>` to each SvelteKit course as `BASE_PATH`.
 
-Pushes that touch `courses/language-models/` also run its tests, type checks and Python lab checks (`.github/workflows/language-models.yml`); pushes that touch `courses/incompleteness/` run its conversion check, type check and tests (`.github/workflows/incompleteness.yml`); pushes that touch `courses/proofs/` run its tests, type checks and build (`.github/workflows/proofs.yml`); pushes that touch `courses/elements/` run its conversion check, type check and tests (`.github/workflows/elements.yml`); pushes that touch `courses/digital-circuits/` run its tests, type check and build (`.github/workflows/digital-circuits.yml`); pushes that touch `courses/particle-physics/` do the same (`.github/workflows/particle-physics.yml`), so do pushes that touch `courses/mandarin/` (`.github/workflows/mandarin.yml`), so do pushes that touch `courses/formal-verification/` (`.github/workflows/formal-verification.yml`), so do pushes that touch `courses/memory-management/` (`.github/workflows/memory-management.yml`), so do pushes that touch `courses/static-analysis/`, which also check every SonarJS reference against the pinned commit (`.github/workflows/static-analysis.yml`), and so do pushes that touch `courses/primes/` (`.github/workflows/primes.yml`).
+Pushes that touch `courses/language-models/` also run its tests, type checks and Python lab checks (`.github/workflows/language-models.yml`); pushes that touch `courses/incompleteness/` run its conversion check, type check and tests (`.github/workflows/incompleteness.yml`); pushes that touch `courses/proofs/` run its tests, type checks and build (`.github/workflows/proofs.yml`); pushes that touch `courses/elements/` run its conversion check, type check and tests (`.github/workflows/elements.yml`); pushes that touch `courses/digital-circuits/` run its tests, type check and build (`.github/workflows/digital-circuits.yml`); pushes that touch `courses/particle-physics/` do the same (`.github/workflows/particle-physics.yml`), so do pushes that touch `courses/mandarin/` (`.github/workflows/mandarin.yml`), so do pushes that touch `courses/formal-verification/` (`.github/workflows/formal-verification.yml`), so do pushes that touch `courses/memory-management/` (`.github/workflows/memory-management.yml`), so do pushes that touch `courses/static-analysis/`, which also check every SonarJS reference against the pinned commit (`.github/workflows/static-analysis.yml`), so do pushes that touch `courses/primes/` (`.github/workflows/primes.yml`), and so do pushes that touch `courses/music-theory/` (`.github/workflows/music-theory.yml`).
 Human Evolution runs its model/content tests, type check, prefixed build and browser learning/navigation checks (`.github/workflows/human-evolution.yml`).
 Pushes that touch `packages/kernel/` (the language shared by the CIC course and Proofs Are Programs) run the checks of both courses (`.github/workflows/cic.yml` and `.github/workflows/proofs-are-programs.yml`).
 

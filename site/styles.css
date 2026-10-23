@@ -1002,6 +1002,18 @@ h1 {
 .evolution-tree svg { width:200px; height:85px; }
 .evolution-tree path { fill:none; stroke:light-dark(#285e4d,#8cbca5); stroke-width:2; stroke-linecap:round; }
 .evolution-tree circle { fill:light-dark(#a66c20,#ddad64); }
+/* Music Theory: "Fallboard" — engraved staff paper, three chords, the red of piano-hammer felt. */
+.card.fallboard {
+  --cbg: light-dark(#f7f4ec, #151413);
+  --cfg: light-dark(#1b1a18, #ece6d6);
+  --cmute: light-dark(#625d55, #a59f91);
+  --cac: light-dark(#8c2a35, #d6b25e);
+  background: var(--cbg);
+}
+.fallboard .stave { width:200px; height:70px; margin-bottom:18px; display:block; }
+.fallboard .stave .lines { fill:none; stroke:light-dark(#4a4640,#bdb6a6); stroke-width:1; }
+.fallboard .stave .notes ellipse { fill:light-dark(#1b1a18,#ece6d6); }
+.fallboard .stave .keys path { stroke:light-dark(#8c2a35,#d6b25e); stroke-width:3; stroke-linecap:round; }
 /* 11 · For All Inputs: "The Notary" — certificate paper, a seal, red pencil */
 .notary {
   --cbg: #f6f1e4;

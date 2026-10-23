@@ -1,0 +1,496 @@
+@import '@fontsource-variable/source-serif-4/opsz.css';
+@import '@fontsource-variable/source-serif-4/opsz-italic.css';
+@import '@fontsource-variable/ibm-plex-sans';
+@import '@fontsource-variable/cormorant-garamond';
+
+/* Music glyphs: Bravura (Steinberg, SIL OFL 1.1; src/lib/fonts/Bravura-OFL.txt). */
+@font-face {
+  font-family: Bravura;
+  src: url('./lib/fonts/Bravura.woff2') format('woff2');
+  font-display: block;
+}
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   "Fallboard": by day, engraved score paper (warm white, black ink, fine stave rules) with the deep red
+   of piano-hammer felt as the accent; by night, the black lacquer of a grand piano, ivory text and the
+   gold of the fallboard lettering. Function colours (tonic, predominant, dominant) are fixed across the
+   course and always paired with a letter. Core tokens: --bg --fg --mute --ac --pn; the other names are
+   aliases so that every component re-skins from here. */
+
+:root {
+  color-scheme: light;
+  --font-display: 'Cormorant Garamond Variable', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Source Serif 4 Variable', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'IBM Plex Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-ui);
+
+  --bg: #f7f4ec;
+  --fg: #1b1a18;
+  --mute: #625d55;
+  --ac: #8c2a35;
+  --pn: #ede8dc;
+
+  --page: var(--bg);
+  --surface: #fbf9f4;
+  --surface-2: var(--pn);
+  --surface-3: #ddd6c6;
+  --ink: var(--fg);
+  --ink-2: #3b3833;
+  --ink-3: #5e5950;
+  --line: #ddd6c6;
+  --line-strong: #b9b09e;
+  --ruling: #d9d2c2;
+  --staff: #4a4640;
+  --shadow: 0 1px 2px rgba(27, 26, 24, 0.06), 0 6px 18px -10px rgba(27, 26, 24, 0.2);
+
+  --accent: #8c2a35;
+  --accent-soft: color-mix(in srgb, #8c2a35 10%, var(--bg));
+  --accent-ink: #6e1f29;
+  --on-accent: #fbf8f1;
+  --focus: #2f5f9e;
+
+  --ok: #2b6a47;
+  --ok-soft: color-mix(in srgb, #2b6a47 12%, var(--bg));
+  --bad: #a3302a;
+  --bad-soft: color-mix(in srgb, #a3302a 12%, var(--bg));
+  --maybe: #7f5300;
+  --maybe-soft: color-mix(in srgb, #b8862b 18%, var(--bg));
+
+  /* Callouts and cards. */
+  --fx-red: #8c2a35;
+  --fx-blue: #2f5f9e;
+  --fx-yellow: #b8862b;
+  --fx-ink: #1b1a18;
+  --fx-cream: #fbf8f1;
+  --note: #2f5f9e;
+  --tip: #2f5f9e;
+  --warn: #a3302a;
+  --challenge: #9a6b14;
+  --history: #7f5300;
+  --history-soft: color-mix(in srgb, #b8862b 14%, var(--bg));
+  --term-hl: rgba(184, 134, 43, 0.22);
+  --term-hl-strong: rgba(184, 134, 43, 0.42);
+
+  /* Harmonic function: T, PD, D. */
+  --fn-t: #2f5f9e;
+  --fn-pd: #2e7a4e;
+  --fn-d: #b4511c;
+  --fn-t-soft: color-mix(in srgb, #2f5f9e 26%, #fffdf8);
+  --fn-pd-soft: color-mix(in srgb, #2e7a4e 26%, #fffdf8);
+  --fn-d-soft: color-mix(in srgb, #b4511c 26%, #fffdf8);
+
+  /* The keyboard (keys stay ivory and black in both themes). */
+  --key-white: #fffdf8;
+  --key-black: #1f1d1b;
+  --key-edge: #8f877a;
+  --key-held: #c08a2a;
+  --key-target: #ead7a2;
+  --key-target-ink: #8a5f12;
+  --key-sounding: #a9c4e8;
+  --key-label: #6a645a;
+  --key-label-on-black: #f6f1e5;
+
+  --series-1: #2f5f9e;
+  --series-2: #8c2a35;
+  --series-3: #b8862b;
+  --series-4: #2e7a4e;
+
+  --chart-surface: var(--surface);
+  --grid: var(--line);
+  --axis: var(--line-strong);
+  --radius: 6px;
+  --radius-sm: 4px;
+  --sidebar-w: 18rem;
+  --main-w: 42rem;
+  --margin-w: 17rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) {
+    color-scheme: dark;
+    --bg: #111110;
+    --fg: #ece6d6;
+    --mute: #a59f91;
+    --ac: #d6b25e;
+    --pn: #1c1b19;
+    --surface: #181715;
+    --surface-3: #2a2825;
+    --ink-2: #d2ccbc;
+    --ink-3: #a59f91;
+    --line: #2c2a26;
+    --line-strong: #4a4640;
+    --ruling: #2c2a26;
+    --staff: #bdb6a6;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 22px -12px rgba(0, 0, 0, 0.6);
+    --accent: #ddb967;
+    --accent-soft: color-mix(in srgb, #d6b25e 13%, var(--bg));
+    --accent-ink: #ecd193;
+    --on-accent: #111110;
+    --focus: #8db4e8;
+    --ok: #79c79a;
+    --ok-soft: color-mix(in srgb, #4fae7e 16%, var(--bg));
+    --bad: #f08a7a;
+    --bad-soft: color-mix(in srgb, #e06a5a 15%, var(--bg));
+    --maybe: #e8b45a;
+    --maybe-soft: color-mix(in srgb, #d6b25e 14%, var(--bg));
+    --fx-red: #e07d86;
+    --fx-blue: #8db4e8;
+    --fx-yellow: #d6b25e;
+    --fx-ink: #111110;
+  --fx-cream: #f6f1e5;
+    --fx-cream: #f6f1e5;
+    --note: #8db4e8;
+    --tip: #8db4e8;
+    --warn: #f08a7a;
+    --challenge: #e8b45a;
+    --history: #e8b45a;
+    --history-soft: color-mix(in srgb, #d6b25e 10%, var(--bg));
+    --term-hl: rgba(214, 178, 94, 0.18);
+    --term-hl-strong: rgba(214, 178, 94, 0.36);
+    --fn-t: #8db4e8;
+    --fn-pd: #79c79a;
+    --fn-d: #f0995d;
+    --fn-t-soft: color-mix(in srgb, #5d8fd6 45%, #e9e3d3);
+    --fn-pd-soft: color-mix(in srgb, #4fae7e 45%, #e9e3d3);
+    --fn-d-soft: color-mix(in srgb, #e0803f 45%, #e9e3d3);
+    --key-white: #e9e3d3;
+    --key-black: #0b0b0a;
+    --key-edge: #57524a;
+    --key-held: #d6b25e;
+    --key-target: #c7b37a;
+    --key-target-ink: #ecd193;
+    --key-sounding: #8db4e8;
+    --key-label: #57524a;
+    --key-label-on-black: #f6f1e5;
+    --series-1: #8db4e8;
+    --series-2: #e07d86;
+    --series-3: #d6b25e;
+    --series-4: #79c79a;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #111110;
+  --fg: #ece6d6;
+  --mute: #a59f91;
+  --ac: #d6b25e;
+  --pn: #1c1b19;
+  --surface: #181715;
+  --surface-3: #2a2825;
+  --ink-2: #d2ccbc;
+  --ink-3: #a59f91;
+  --line: #2c2a26;
+  --line-strong: #4a4640;
+  --ruling: #2c2a26;
+  --staff: #bdb6a6;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 22px -12px rgba(0, 0, 0, 0.6);
+  --accent: #ddb967;
+  --accent-soft: color-mix(in srgb, #d6b25e 13%, var(--bg));
+  --accent-ink: #ecd193;
+  --on-accent: #111110;
+  --focus: #8db4e8;
+  --ok: #79c79a;
+  --ok-soft: color-mix(in srgb, #4fae7e 16%, var(--bg));
+  --bad: #f08a7a;
+  --bad-soft: color-mix(in srgb, #e06a5a 15%, var(--bg));
+  --maybe: #e8b45a;
+  --maybe-soft: color-mix(in srgb, #d6b25e 14%, var(--bg));
+  --fx-red: #e07d86;
+  --fx-blue: #8db4e8;
+  --fx-yellow: #d6b25e;
+  --fx-ink: #111110;
+  --note: #8db4e8;
+  --tip: #8db4e8;
+  --warn: #f08a7a;
+  --challenge: #e8b45a;
+  --history: #e8b45a;
+  --history-soft: color-mix(in srgb, #d6b25e 10%, var(--bg));
+  --term-hl: rgba(214, 178, 94, 0.18);
+  --term-hl-strong: rgba(214, 178, 94, 0.36);
+  --fn-t: #8db4e8;
+  --fn-pd: #79c79a;
+  --fn-d: #f0995d;
+  --fn-t-soft: color-mix(in srgb, #5d8fd6 45%, #e9e3d3);
+  --fn-pd-soft: color-mix(in srgb, #4fae7e 45%, #e9e3d3);
+  --fn-d-soft: color-mix(in srgb, #e0803f 45%, #e9e3d3);
+  --key-white: #e9e3d3;
+  --key-black: #0b0b0a;
+  --key-edge: #57524a;
+  --key-held: #d6b25e;
+  --key-target: #c7b37a;
+  --key-target-ink: #ecd193;
+  --key-sounding: #8db4e8;
+  --key-label: #57524a;
+  --key-label-on-black: #f6f1e5;
+  --series-1: #8db4e8;
+  --series-2: #e07d86;
+  --series-3: #d6b25e;
+  --series-4: #79c79a;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.1875rem;
+  line-height: 1.62;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+  opacity: 0.8;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--term-hl-strong);
+}
+
+.ui {
+  font-family: var(--font-ui);
+}
+
+/* ───────────────────────── Article grid ─────────────────────────
+   main column for prose; `wide` spans into the right margin; `full` spans the viewport.
+   Sidenotes float into the margin on wide screens. */
+
+.article {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(1rem, 1fr)
+    [wide-start main-start] minmax(0, var(--main-w))
+    [main-end] minmax(0, calc(var(--margin-w) + 2.5rem))
+    [wide-end] minmax(1rem, 1fr) [full-end];
+  counter-reset: sidenote;
+}
+.article > * {
+  grid-column: main;
+  min-width: 0;
+}
+.article > .wide {
+  grid-column: wide;
+}
+.article > .full {
+  grid-column: full;
+}
+@media (max-width: 1279px) {
+  .article {
+    grid-template-columns: [full-start] minmax(1rem, 1fr) [wide-start main-start] minmax(0, 46rem) [main-end wide-end] minmax(1rem, 1fr) [full-end];
+  }
+}
+
+/* ───────────────────────── Prose ───────────────────────── */
+
+.article h2,
+.article h3,
+.article h4 {
+  color: var(--ink);
+}
+.article h2 {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.6vw, 2.3rem);
+  letter-spacing: -0.005em;
+  line-height: 1.12;
+  margin: 4rem 0 1.1rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line-strong);
+}
+/* Five fine rules, like a short length of stave, sit on the section line. */
+.article h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -5px;
+  width: 3.2rem;
+  height: 9px;
+  background: repeating-linear-gradient(to bottom, var(--ac) 0 1px, transparent 1px 2px);
+}
+.article h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 2.5rem 0 0.6rem;
+}
+.article h4 {
+  font-family: var(--font-ui);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 1.75rem 0 0.4rem;
+}
+.article p,
+.article ul,
+.article ol {
+  margin: 0 0 1.1rem;
+}
+.article li + li {
+  margin-top: 0.3rem;
+}
+.article li > p {
+  margin-bottom: 0.4rem;
+}
+.article strong {
+  font-weight: 700;
+}
+.article hr {
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+  margin: 2.75rem 0;
+}
+.article blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  border-left: 3px solid var(--ruling);
+  color: var(--ink-2);
+  font-style: italic;
+}
+/* Markdown lists only (widget and exercise lists are left alone): accent numerals and small dots. */
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ol {
+  list-style: none;
+  counter-reset: item;
+  padding-left: 2rem;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ol > li {
+  counter-increment: item;
+  position: relative;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ol > li::before {
+  content: counter(item);
+  position: absolute;
+  left: -2rem;
+  width: 1.5rem;
+  text-align: right;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.82em;
+  line-height: inherit;
+  padding-top: 0.12em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ul {
+  list-style: none;
+  padding-left: 1.4rem;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ul > li {
+  position: relative;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ul > li::before {
+  content: '';
+  position: absolute;
+  left: -1.05rem;
+  top: 0.66em;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--ac);
+}
+.article .table-scroll { overflow-x: auto; min-width: 0; }
+.article .table-scroll > table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+.article .table-scroll th,
+.article .table-scroll td {
+  text-align: left;
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid var(--ruling);
+  vertical-align: top;
+}
+.article th {
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line-strong);
+}
+.article :not(pre) > code {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.82em;
+  background: var(--surface-2);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+.article img {
+  max-width: 100%;
+  height: auto;
+}
+
+pre.plain {
+  margin: 1.4rem 0;
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+/* Footnotes (GFM). */
+.article .footnotes {
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+
+/* ───────────────────────── Utility ───────────────────────── */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

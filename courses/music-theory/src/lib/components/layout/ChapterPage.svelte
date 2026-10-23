@@ -1,0 +1,274 @@
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { base } from '$app/paths';
+  import { PARTS, COURSE_TITLE } from '$content/outline';
+  import type { ContentModule } from '$lib/content/types';
+  import { findEntry, neighbours, type NavEntry } from '$lib/content/registry';
+  import { nav } from '$lib/state/nav.svelte';
+  import { progress } from '$lib/state/progress.svelte';
+  import PageDocs from '../content/PageDocs.svelte';
+  import Icon from '../ui/Icon.svelte';
+
+  let { mod, entry }: { mod: ContentModule; entry: NavEntry } = $props();
+
+  const Content = $derived(mod.default);
+  const meta = $derived(mod.metadata);
+  const part = $derived(PARTS.find((p) => p.id === entry.part));
+  const around = $derived(neighbours(entry.kind, entry.slug));
+  const eyebrow = $derived(entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}${part ? (part.id === '0' || part.id === 'E' ? ` · ${part.title}` : ` · Part ${part.id} — ${part.title}`) : ''}`);
+  const prereqs = $derived((meta.prerequisites ?? []).map((s) => findEntry('chapter', s) ?? findEntry('appendix', s)).filter((e) => e !== undefined));
+
+  let mounted = $state(false);
+  const known = $derived(mounted && mod.checks.length > 0 && mod.checks.every((id) => progress.isSolved(id)));
+
+  $effect(() => {
+    nav.toc = mod.toc;
+    nav.pageTitle = `${entry.number}. ${meta.title}`;
+    return () => {
+      nav.toc = [];
+      nav.pageTitle = null;
+    };
+  });
+
+  onMount(() => {
+    progress.load();
+    if (entry.kind === 'chapter') progress.visit(entry.slug);
+    mounted = true;
+    const heads = mod.toc.filter((t) => t.depth === 2).map((t) => document.getElementById(t.id)).filter((h) => h !== null);
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      // Active = last section heading above the upper third of the viewport.
+      let active: string | null = null;
+      for (const h of heads) if (h.getBoundingClientRect().top < innerHeight * 0.33) active = h.id;
+      nav.activeId = active;
+    };
+    const onScroll = () => (frame ||= requestAnimationFrame(update));
+    addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => {
+      removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
+    };
+  });
+</script>
+
+<svelte:head>
+  <title>{entry.number}. {meta.title} — {COURSE_TITLE}</title>
+  <meta name="description" content={meta.summary} />
+</svelte:head>
+
+<article class="article">
+  <header class="chapter-head wide">
+    <div class="head-text">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{meta.title}</h1>
+    <p class="summary">{meta.summary}</p>
+    <div class="meta ui">
+      {#if meta.duration}<span><Icon name="history" size={14} /> {meta.duration}</span>{/if}
+      {#if prereqs.length}
+        <span>Assumes:
+          {#each prereqs as p, i (p.slug)}{#if i}, {/if}{#if p.available}<a href="{base}{p.href}">{p.number}. {p.title}</a>{:else}<span title="Coming soon">{p.number}. {p.title}</span>{/if}{/each}
+        </span>
+      {/if}
+    </div>
+    {#if known}
+      <p class="known ui">You passed this chapter’s <em>Check yourself</em>: you can skim it, or move on.</p>
+    {/if}
+    {#if meta.skills?.length}
+      <div class="builds ui">
+        <span class="label">Skills</span>
+        {#each meta.skills as b (b)}<span class="chip">{b}</span>{/each}
+      </div>
+    {/if}
+    </div>
+  </header>
+
+  <PageDocs docs={{ references: mod.references, glossary: mod.glossary }}>
+    <Content />
+  </PageDocs>
+
+  {#if mod.references.length}
+    <section class="references">
+      <h2 id="references">References</h2>
+      <ol>
+        {#each mod.references as r (r.key)}
+          <li id="ref-{r.key}">
+            <span class="authors">{r.authors}</span> ({r.year}). {#if r.url}<a href={r.url} target="_blank" rel="noopener"><em>{r.title}</em></a>{:else}<em>{r.title}</em>{/if}{#if r.venue}. {r.venue}{/if}.
+            {#if r.note}<span class="note">{r.note}</span>{/if}
+          </li>
+        {/each}
+      </ol>
+    </section>
+  {/if}
+
+  <nav class="pager ui" aria-label="Chapter navigation">
+    {#if around.prev}
+      <a class="prev" href="{base}{around.prev.href}"><span class="dir">← Previous</span><span class="t">{around.prev.number}. {around.prev.title}</span></a>
+    {:else}<span></span>{/if}
+    {#if around.next}
+      <a class="next" href="{base}{around.next.href}"><span class="dir">Next →</span><span class="t">{around.next.number}. {around.next.title}</span></a>
+    {/if}
+  </nav>
+</article>
+
+<style>
+  .article {
+    padding-bottom: 5rem;
+  }
+  .chapter-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 3.25rem 0 2rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .head-text {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+  }
+  .eyebrow {
+    margin: 0 0 0.9rem;
+    font-family: var(--font-ui);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+    margin: 0 0 1.1rem;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  .summary {
+    font-size: 1.32rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0 0 1.4rem;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.86rem;
+    color: var(--ink-2);
+  }
+  .meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .builds {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    font-size: 0.82rem;
+  }
+  .builds .label {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--mute);
+    margin-right: 0.3rem;
+    min-width: 5.5rem;
+  }
+  .chip {
+    padding: 0.12rem 0.6rem;
+    border-radius: var(--radius-sm);
+    background: var(--pn);
+    color: var(--ink);
+    font-weight: 500;
+  }
+  @media (max-width: 720px) {
+    .chapter-head {
+      padding-top: 1.75rem;
+    }
+  }
+
+  .known {
+    margin: 1rem 0 0;
+    padding: 0.4rem 0.8rem;
+    border-left: 3px solid var(--ok);
+    background: var(--ok-soft);
+    font-size: 0.88rem;
+    color: var(--ok);
+    font-weight: 600;
+  }
+  .references {
+    margin-top: 3rem;
+    font-size: 0.95rem;
+  }
+  .references ol {
+    padding-left: 1.4rem;
+  }
+  .references li {
+    margin-bottom: 0.5rem;
+  }
+  .references li:target {
+    background: var(--term-hl);
+    border-radius: var(--radius-sm);
+  }
+  .authors {
+    font-weight: 600;
+  }
+  .note {
+    display: block;
+    color: var(--ink-2);
+    font-size: 0.88rem;
+  }
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 4rem;
+  }
+  .pager a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.9rem 1.1rem;
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    text-decoration: none;
+    color: var(--ink);
+    transition: background-color 120ms;
+  }
+  .pager a:hover {
+    background: var(--pn);
+    opacity: 1;
+  }
+  .pager a:hover .t {
+    color: var(--accent);
+  }
+  .next {
+    text-align: right;
+    grid-column: 2;
+  }
+  .dir {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+  .t {
+    font-weight: 700;
+    font-size: 1.02rem;
+  }
+  @media (max-width: 560px) {
+    .pager {
+      grid-template-columns: 1fr;
+    }
+    .next {
+      grid-column: 1;
+    }
+  }
+</style>
