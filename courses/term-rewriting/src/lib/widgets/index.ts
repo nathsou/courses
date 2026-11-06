@@ -1,0 +1,25 @@
+// Widgets shared across chapters (chapter-specific ones live in content/chapters/<ch>/widgets/).
+export { default as MatchStepper } from './MatchStepper.svelte';
+export { default as ReductionGraph } from './ReductionGraph.svelte';
+export { default as ArsLab } from './ArsLab.svelte';
+export { default as StrategyRace } from './StrategyRace.svelte';
+export { default as UnifyStepper } from './UnifyStepper.svelte';
+export { default as ShareBench } from './ShareBench.svelte';
+export { default as IndexView } from './IndexView.svelte';
+export { default as CompileView } from './CompileView.svelte';
+export { default as HydraGame } from './HydraGame.svelte';
+export { default as PolyInterp } from './PolyInterp.svelte';
+export { default as LpoProof } from './LpoProof.svelte';
+export { default as EmbeddingGame } from './EmbeddingGame.svelte';
+export { default as DependencyGraph } from './DependencyGraph.svelte';
+export { default as CriticalPairs } from './CriticalPairs.svelte';
+export { default as ProofBuilder } from './ProofBuilder.svelte';
+export { default as CompletionAnimator } from './CompletionAnimator.svelte';
+export { default as ACMatcher } from './ACMatcher.svelte';
+export { default as EGraphView } from './EGraphView.svelte';
+export { default as LambdaLab } from './LambdaLab.svelte';
+export { default as StateSpace } from './StateSpace.svelte';
+export { default as TuringLab } from './TuringLab.svelte';
+export { default as PcpLab } from './PcpLab.svelte';
+export { default as AutomatonView } from './AutomatonView.svelte';
+export { default as TermExplorer } from './TermExplorer.svelte';

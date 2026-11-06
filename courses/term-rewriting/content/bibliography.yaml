@@ -1,0 +1,457 @@
+# Bibliography: key → { authors, year, title, venue, url, note }
+baader-nipkow1998:
+  authors: Franz Baader and Tobias Nipkow
+  year: 1998
+  title: Term Rewriting and All That
+  venue: Cambridge University Press
+  note: The standard textbook; this course follows its order for the core theory.
+terese2003:
+  authors: Terese (Marc Bezem, Jan Willem Klop and Roel de Vrijer, eds.)
+  year: 2003
+  title: Term Rewriting Systems
+  venue: Cambridge Tracts in Theoretical Computer Science 55, Cambridge University Press
+  note: The encyclopaedic reference, including orthogonality, strategies and higher-order rewriting.
+klop1992:
+  authors: Jan Willem Klop
+  year: 1992
+  title: Term rewriting systems
+  venue: Handbook of Logic in Computer Science, vol. 2, Oxford University Press, 1–116
+dershowitz-jouannaud1990:
+  authors: Nachum Dershowitz and Jean-Pierre Jouannaud
+  year: 1990
+  title: Rewrite systems
+  venue: Handbook of Theoretical Computer Science, vol. B, Elsevier, 243–320
+girafe:
+  authors: Nathan Soufflet
+  year: 2023
+  title: 'Girafe: term rewriting systems infrastructure'
+  venue: GitHub repository (version 1.1.0)
+  url: https://github.com/nathsou/girafe
+  note: The rule language this course uses, and a compiler from rules to JavaScript, OCaml and Haskell.
+thue1914:
+  authors: Axel Thue
+  year: 1914
+  title: Probleme über Veränderungen von Zeichenreihen nach gegebenen Regeln
+  venue: Skrifter utgit av Videnskapsselskapet i Kristiania, I. Matematisk-naturvidenskabelig klasse, no. 10
+church-rosser1936:
+  authors: Alonzo Church and J. Barkley Rosser
+  year: 1936
+  title: Some properties of conversion
+  venue: Transactions of the American Mathematical Society 39(3), 472–482
+newman1942:
+  authors: M. H. A. Newman
+  year: 1942
+  title: On theories with a combinatorial definition of “equivalence”
+  venue: Annals of Mathematics 43(2), 223–243
+post1946:
+  authors: Emil L. Post
+  year: 1946
+  title: A variant of a recursively unsolvable problem
+  venue: Bulletin of the American Mathematical Society 52(4), 264–268
+post1947:
+  authors: Emil L. Post
+  year: 1947
+  title: Recursive unsolvability of a problem of Thue
+  venue: Journal of Symbolic Logic 12(1), 1–11
+markov1947:
+  authors: Andrey A. Markov (Jr.)
+  year: 1947
+  title: On the impossibility of certain algorithms in the theory of associative systems
+  venue: Doklady Akademii Nauk SSSR 55, 583–586 (in Russian)
+novikov1955:
+  authors: Pyotr S. Novikov
+  year: 1955
+  title: On the algorithmic unsolvability of the word problem in group theory
+  venue: Trudy Matematicheskogo Instituta imeni V. A. Steklova 44, 1–143 (in Russian)
+boone1959:
+  authors: William W. Boone
+  year: 1959
+  title: The word problem
+  venue: Annals of Mathematics 70(2), 207–265
+birkhoff1935:
+  authors: Garrett Birkhoff
+  year: 1935
+  title: On the structure of abstract algebras
+  venue: Proceedings of the Cambridge Philosophical Society 31(4), 433–454
+schonfinkel1924:
+  authors: Moses Schönfinkel
+  year: 1924
+  title: Über die Bausteine der mathematischen Logik
+  venue: Mathematische Annalen 92, 305–316
+curry-feys1958:
+  authors: Haskell B. Curry and Robert Feys
+  year: 1958
+  title: Combinatory Logic, Volume I
+  venue: North-Holland
+barendregt1984:
+  authors: Henk P. Barendregt
+  year: 1984
+  title: 'The Lambda Calculus: Its Syntax and Semantics (revised edition)'
+  venue: North-Holland
+hindley-seldin2008:
+  authors: J. Roger Hindley and Jonathan P. Seldin
+  year: 2008
+  title: 'Lambda-Calculus and Combinators: An Introduction'
+  venue: Cambridge University Press
+debruijn1972:
+  authors: Nicolaas G. de Bruijn
+  year: 1972
+  title: Lambda calculus notation with nameless dummies
+  venue: Indagationes Mathematicae 34, 381–392
+abadi1991:
+  authors: Martín Abadi, Luca Cardelli, Pierre-Louis Curien and Jean-Jacques Lévy
+  year: 1991
+  title: Explicit substitutions
+  venue: Journal of Functional Programming 1(4), 375–416
+lescanne1994:
+  authors: Pierre Lescanne
+  year: 1994
+  title: 'From λσ to λυ: a journey through calculi of explicit substitutions'
+  venue: POPL 1994, 60–69
+robinson1965:
+  authors: J. Alan Robinson
+  year: 1965
+  title: A machine-oriented logic based on the resolution principle
+  venue: Journal of the ACM 12(1), 23–41
+paterson-wegman1978:
+  authors: Michael S. Paterson and Mark N. Wegman
+  year: 1978
+  title: Linear unification
+  venue: Journal of Computer and System Sciences 16(2), 158–167
+martelli-montanari1982:
+  authors: Alberto Martelli and Ugo Montanari
+  year: 1982
+  title: An efficient unification algorithm
+  venue: ACM Transactions on Programming Languages and Systems 4(2), 258–282
+knuth-bendix1970:
+  authors: Donald E. Knuth and Peter B. Bendix
+  year: 1970
+  title: Simple word problems in universal algebras
+  venue: Computational Problems in Abstract Algebra (J. Leech, ed.), Pergamon Press, 263–297
+huet1980:
+  authors: Gérard Huet
+  year: 1980
+  title: 'Confluent reductions: abstract properties and applications to term rewriting systems'
+  venue: Journal of the ACM 27(4), 797–821
+huet1981:
+  authors: Gérard Huet
+  year: 1981
+  title: A complete proof of correctness of the Knuth–Bendix completion algorithm
+  venue: Journal of Computer and System Sciences 23(1), 11–21
+huet-lankford1978:
+  authors: Gérard Huet and Dallas Lankford
+  year: 1978
+  title: On the uniform halting problem for term rewriting systems
+  venue: Rapport de recherche 283, IRIA
+huet-levy1991:
+  authors: Gérard Huet and Jean-Jacques Lévy
+  year: 1991
+  title: Computations in orthogonal rewriting systems, I and II
+  venue: 'Computational Logic: Essays in Honor of Alan Robinson, MIT Press, 395–443'
+  note: Circulated as an INRIA report in 1979.
+rosen1973:
+  authors: Barry K. Rosen
+  year: 1973
+  title: Tree-manipulating systems and Church–Rosser theorems
+  venue: Journal of the ACM 20(1), 160–187
+odonnell1977:
+  authors: Michael J. O’Donnell
+  year: 1977
+  title: Computing in Systems Described by Equations
+  venue: Lecture Notes in Computer Science 58, Springer
+vanoostrom1994:
+  authors: Vincent van Oostrom
+  year: 1994
+  title: Confluence by decreasing diagrams
+  venue: Theoretical Computer Science 126(2), 259–280
+toyama1987:
+  authors: Yoshihito Toyama
+  year: 1987
+  title: Counterexamples to termination for the direct sum of term rewriting systems
+  venue: Information Processing Letters 25(3), 141–143
+dershowitz-manna1979:
+  authors: Nachum Dershowitz and Zohar Manna
+  year: 1979
+  title: Proving termination with multiset orderings
+  venue: Communications of the ACM 22(8), 465–476
+dershowitz1982:
+  authors: Nachum Dershowitz
+  year: 1982
+  title: Orderings for term-rewriting systems
+  venue: Theoretical Computer Science 17(3), 279–301
+dershowitz1987:
+  authors: Nachum Dershowitz
+  year: 1987
+  title: Termination of rewriting
+  venue: Journal of Symbolic Computation 3(1–2), 69–116
+kamin-levy1980:
+  authors: Sam Kamin and Jean-Jacques Lévy
+  year: 1980
+  title: Two generalizations of the recursive path ordering
+  venue: Unpublished note, Department of Computer Science, University of Illinois
+lankford1979:
+  authors: Dallas S. Lankford
+  year: 1979
+  title: On proving term rewriting systems are Noetherian
+  venue: Technical report MTP-3, Mathematics Department, Louisiana Tech University
+kirby-paris1982:
+  authors: Laurie Kirby and Jeff Paris
+  year: 1982
+  title: Accessible independence results for Peano arithmetic
+  venue: Bulletin of the London Mathematical Society 14(4), 285–293
+higman1952:
+  authors: Graham Higman
+  year: 1952
+  title: Ordering by divisibility in abstract algebras
+  venue: Proceedings of the London Mathematical Society s3-2(1), 326–336
+kruskal1960:
+  authors: Joseph B. Kruskal
+  year: 1960
+  title: Well-quasi-ordering, the tree theorem, and Vazsonyi’s conjecture
+  venue: Transactions of the American Mathematical Society 95(2), 210–225
+nash-williams1963:
+  authors: Crispin St. J. A. Nash-Williams
+  year: 1963
+  title: On well-quasi-ordering finite trees
+  venue: Proceedings of the Cambridge Philosophical Society 59(4), 833–835
+arts-giesl2000:
+  authors: Thomas Arts and Jürgen Giesl
+  year: 2000
+  title: Termination of term rewriting using dependency pairs
+  venue: Theoretical Computer Science 236(1–2), 133–178
+giesl2017:
+  authors: Jürgen Giesl, Cornelius Aschermann, Marc Brockschmidt, Fabian Emmes, Florian Frohn, Carsten Fuhs, Jera Hensel, Carsten Otto, Martin Plücker, Peter Schneider-Kamp, Thomas Ströder, Stephanie Swiderski and René Thiemann
+  year: 2017
+  title: Analyzing program termination and complexity automatically with AProVE
+  venue: Journal of Automated Reasoning 58(1), 3–31
+korp2009:
+  authors: Martin Korp, Christian Sternagel, Harald Zankl and Aart Middeldorp
+  year: 2009
+  title: Tyrolean Termination Tool 2
+  venue: RTA 2009, Lecture Notes in Computer Science 5595, 295–304
+zankl2011:
+  authors: Harald Zankl, Bertram Felgenhauer and Aart Middeldorp
+  year: 2011
+  title: CSI – a confluence tool
+  venue: CADE-23, Lecture Notes in Computer Science 6803, 499–505
+tpdb:
+  authors: The termination community
+  year: 2024
+  title: The Termination Problems Data Base (TPDB)
+  venue: termination-portal.org
+  url: https://termination-portal.org/wiki/TPDB
+cops:
+  authors: The confluence community
+  year: 2024
+  title: Confluence Problems (COPS)
+  venue: University of Innsbruck
+  url: https://cops.uibk.ac.at/
+bachmair-dershowitz-plaisted1989:
+  authors: Leo Bachmair, Nachum Dershowitz and David A. Plaisted
+  year: 1989
+  title: Completion without failure
+  venue: Resolution of Equations in Algebraic Structures, vol. 2, Academic Press, 1–30
+hsiang-rusinowitch1987:
+  authors: Jieh Hsiang and Michaël Rusinowitch
+  year: 1987
+  title: On word problems in equational theories
+  venue: ICALP 1987, Lecture Notes in Computer Science 267, 54–71
+bachmair1991:
+  authors: Leo Bachmair
+  year: 1991
+  title: Canonical Equational Proofs
+  venue: Birkhäuser
+mccune1997:
+  authors: William McCune
+  year: 1997
+  title: Solution of the Robbins problem
+  venue: Journal of Automated Reasoning 19(3), 263–276
+hillenbrand1997:
+  authors: Thomas Hillenbrand, Arnim Buch, Roland Vogt and Bernd Löchner
+  year: 1997
+  title: 'WALDMEISTER: high-performance equational deduction'
+  venue: Journal of Automated Reasoning 18(2), 265–270
+buchberger1965:
+  authors: Bruno Buchberger
+  year: 1965
+  title: Ein Algorithmus zum Auffinden der Basiselemente des Restklassenringes nach einem nulldimensionalen Polynomideal
+  venue: PhD thesis, University of Innsbruck
+plotkin1972:
+  authors: Gordon D. Plotkin
+  year: 1972
+  title: Building-in equational theories
+  venue: Machine Intelligence 7, 73–90
+peterson-stickel1981:
+  authors: Gerald E. Peterson and Mark E. Stickel
+  year: 1981
+  title: Complete sets of reductions for some equational theories
+  venue: Journal of the ACM 28(2), 233–264
+nelson-oppen1980:
+  authors: Greg Nelson and Derek C. Oppen
+  year: 1980
+  title: Fast decision procedures based on congruence closure
+  venue: Journal of the ACM 27(2), 356–364
+downey-sethi-tarjan1980:
+  authors: Peter J. Downey, Ravi Sethi and Robert E. Tarjan
+  year: 1980
+  title: Variations on the common subexpression problem
+  venue: Journal of the ACM 27(4), 758–771
+joshi2002:
+  authors: Rajeev Joshi, Greg Nelson and Keith Randall
+  year: 2002
+  title: 'Denali: a goal-directed superoptimizer'
+  venue: PLDI 2002, 304–314
+tate2009:
+  authors: Ross Tate, Michael Stepp, Zachary Tatlock and Sorin Lerner
+  year: 2009
+  title: 'Equality saturation: a new approach to optimization'
+  venue: POPL 2009, 264–276
+willsey2021:
+  authors: Max Willsey, Chandrakana Nandi, Yisu Remy Wang, Oliver Flatt, Zachary Tatlock and Pavel Panchekha
+  year: 2021
+  title: 'egg: fast and extensible equality saturation'
+  venue: Proceedings of the ACM on Programming Languages 5 (POPL), article 23
+  url: https://doi.org/10.1145/3434304
+zhang2023:
+  authors: Yihong Zhang, Yisu Remy Wang, Oliver Flatt, David Cao, Philip Zucker, Eli Rosenthal, Zachary Tatlock and Max Willsey
+  year: 2023
+  title: 'Better together: unifying Datalog and equality saturation'
+  venue: Proceedings of the ACM on Programming Languages 7 (PLDI), 468–492
+  note: The paper behind egglog.
+panchekha2015:
+  authors: Pavel Panchekha, Alex Sanchez-Stern, James R. Wilcox and Zachary Tatlock
+  year: 2015
+  title: Automatically improving accuracy for floating point expressions
+  venue: PLDI 2015, 1–11
+  note: Herbie.
+ershov1958:
+  authors: Andrei P. Ershov
+  year: 1958
+  title: On programming of arithmetic operations
+  venue: Communications of the ACM 1(8), 3–6
+goto1974:
+  authors: Eiichi Goto
+  year: 1974
+  title: Monocopy and associative algorithms in an extended Lisp
+  venue: Technical report 74-03, Information Science Laboratory, University of Tokyo
+vandenbrand2000:
+  authors: Mark G. J. van den Brand, Hayco A. de Jong, Paul Klint and Pieter A. Olivier
+  year: 2000
+  title: Efficient annotated terms
+  venue: 'Software: Practice and Experience 30(3), 259–291'
+filliatre-conchon2006:
+  authors: Jean-Christophe Filliâtre and Sylvain Conchon
+  year: 2006
+  title: Type-safe modular hash-consing
+  venue: ACM SIGPLAN Workshop on ML 2006, 12–19
+mccune1992:
+  authors: William McCune
+  year: 1992
+  title: Experiments with discrimination-tree indexing and path indexing for term retrieval
+  venue: Journal of Automated Reasoning 9(2), 147–167
+sekar2001:
+  authors: R. Sekar, I. V. Ramakrishnan and Andrei Voronkov
+  year: 2001
+  title: Term indexing
+  venue: Handbook of Automated Reasoning, vol. II, Elsevier, 1853–1964
+maranget2008:
+  authors: Luc Maranget
+  year: 2008
+  title: Compiling pattern matching to good decision trees
+  venue: ACM SIGPLAN Workshop on ML 2008, 35–46
+fokkink2000:
+  authors: Wan Fokkink, Jasper Kamperman and Pum Walters
+  year: 2000
+  title: Lazy rewriting on eager machinery
+  venue: ACM Transactions on Programming Languages and Systems 22(1), 45–86
+visser1998:
+  authors: Eelco Visser, Zine-el-Abidine Benaissa and Andrew Tolmach
+  year: 1998
+  title: Building program optimizers with rewriting strategies
+  venue: ICFP 1998, 13–26
+visser2004:
+  authors: Eelco Visser
+  year: 2004
+  title: Program transformation with Stratego/XT
+  venue: Domain-Specific Program Generation, Lecture Notes in Computer Science 3016, 216–238
+borovansky1998:
+  authors: Peter Borovanský, Claude Kirchner, Hélène Kirchner, Pierre-Etienne Moreau and Christophe Ringeissen
+  year: 1998
+  title: An overview of ELAN
+  venue: Workshop on Rewriting Logic and its Applications (WRLA 1998), Electronic Notes in Theoretical Computer Science 15
+plotkin1981:
+  authors: Gordon D. Plotkin
+  year: 1981
+  title: A structural approach to operational semantics
+  venue: Technical report DAIMI FN-19, Aarhus University
+felleisen1987:
+  authors: Matthias Felleisen
+  year: 1987
+  title: The calculi of λv-CS conversion
+  venue: PhD thesis, Indiana University
+felleisen-hieb1992:
+  authors: Matthias Felleisen and Robert Hieb
+  year: 1992
+  title: The revised report on the syntactic theories of sequential control and state
+  venue: Theoretical Computer Science 103(2), 235–271
+klop1980:
+  authors: Jan Willem Klop
+  year: 1980
+  title: Combinatory Reduction Systems
+  venue: PhD thesis, Utrecht University (Mathematical Centre Tracts 127)
+nipkow1991:
+  authors: Tobias Nipkow
+  year: 1991
+  title: Higher-order critical pairs
+  venue: LICS 1991, 342–349
+miller1991:
+  authors: Dale Miller
+  year: 1991
+  title: A logic programming language with lambda-abstraction, function variables, and simple unification
+  venue: Journal of Logic and Computation 1(4), 497–536
+meseguer1992:
+  authors: José Meseguer
+  year: 1992
+  title: Conditional rewriting logic as a unified model of concurrency
+  venue: Theoretical Computer Science 96(1), 73–155
+clavel2007:
+  authors: Manuel Clavel, Francisco Durán, Steven Eker, Patrick Lincoln, Narciso Martí-Oliet, José Meseguer and Carolyn Talcott
+  year: 2007
+  title: 'All About Maude: A High-Performance Logical Framework'
+  venue: Lecture Notes in Computer Science 4350, Springer
+rosu-serbanuta2010:
+  authors: Grigore Roşu and Traian Florin Şerbănuţă
+  year: 2010
+  title: An overview of the K semantic framework
+  venue: Journal of Logic and Algebraic Programming 79(6), 397–434
+dauchet-tison1990:
+  authors: Max Dauchet and Sophie Tison
+  year: 1990
+  title: The theory of ground rewrite systems is decidable
+  venue: LICS 1990, 242–248
+comon-tata:
+  authors: Hubert Comon, Max Dauchet, Rémi Gilleron, Florent Jacquemard, Denis Lugiez, Christof Löding, Sophie Tison and Marc Tommasi
+  year: 2008
+  title: Tree Automata Techniques and Applications
+  venue: Online book
+  url: https://inria.hal.science/hal-03367725
+rado1962:
+  authors: Tibor Radó
+  year: 1962
+  title: On non-computable functions
+  venue: Bell System Technical Journal 41(3), 877–884
+sipser2012:
+  authors: Michael Sipser
+  year: 2012
+  title: Introduction to the Theory of Computation (third edition)
+  venue: Cengage Learning
+hofbauer-lautemann1989:
+  authors: Dieter Hofbauer and Clemens Lautemann
+  year: 1989
+  title: Termination proofs and the length of derivations
+  venue: RTA 1989, Lecture Notes in Computer Science 355, 167–177
+hirokawa-middeldorp2004:
+  authors: Nao Hirokawa and Aart Middeldorp
+  year: 2004
+  title: Dependency pairs revisited
+  venue: RTA 2004, Lecture Notes in Computer Science 3091, 249–268
