@@ -73,6 +73,18 @@ export function perspective(out: Mat4, fovy: number, aspect: number, near: numbe
   return out;
 }
 
+export function ortho(out: Mat4, l: number, r: number, b: number, t: number, n: number, f: number): Mat4 {
+  out.fill(0);
+  out[0] = 2 / (r - l);
+  out[5] = 2 / (t - b);
+  out[10] = -2 / (f - n);
+  out[12] = -(r + l) / (r - l);
+  out[13] = -(t + b) / (t - b);
+  out[14] = -(f + n) / (f - n);
+  out[15] = 1;
+  return out;
+}
+
 export function lookAt(out: Mat4, eye: ArrayLike<number>, target: ArrayLike<number>, up: ArrayLike<number> = [0, 1, 0]): Mat4 {
   let zx = eye[0]! - target[0]!, zy = eye[1]! - target[1]!, zz = eye[2]! - target[2]!;
   let l = Math.hypot(zx, zy, zz) || 1;

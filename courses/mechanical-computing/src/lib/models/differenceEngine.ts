@@ -199,7 +199,7 @@ export function differenceEngineModel(): ModelDef<DESlice> {
   for (let c = 0; c < COLS; c++) {
     nodes.push({ name: `axis${c}`, parts: [part('axis', 'steel')] });
     for (let i = 0; i < DIGITS; i++) {
-      nodes.push({ name: `w${c}-${i}`, label: `${colName[c]}: figure wheel for the ${['units', 'tens', 'hundreds', 'thousands', 'ten thousands'][i]}`, info: 'Each figure wheel holds one decimal digit, engraved round its rim.', parts: [part('wheel', 'brass'), part('wheelDigits', 'decal')] });
+      nodes.push({ name: `w${c}-${i}`, label: `${colName[c]}: figure wheel for the ${['units', 'tens', 'hundreds', 'thousands', 'ten thousands'][i]}`, info: 'Each figure wheel holds one decimal digit, engraved round its rim.', parts: [part('wheel', 'darkBrass'), part('wheelDigits', 'decalLight')] });
       if (c < 2) nodes.push({ name: `warn${c}-${i}`, label: 'Carry warning', info: 'Raised when this wheel passes 9 → 0 during an addition; the carry shaft’s arm then carries one into the wheel above.', parts: [part('warn', 'red')] });
     }
     if (c < 2) nodes.push({ name: `shaft${c}`, label: 'Carry shaft', info: 'Its arms are set in a spiral: as it turns, they pass the wheels from the bottom up and make the warned carries one after another.', parts: [part('shaft', 'steel')] });
@@ -210,7 +210,7 @@ export function differenceEngineModel(): ModelDef<DESlice> {
     key: 'difference-engine-slice',
     meshes,
     nodes,
-    camera: { target: [0, 1.6, 0], distance: 13, yaw: 0.3, pitch: 0.25, fov: 0.6, aspect: 1.4 },
+    camera: { target: [0, 1.7, 0], distance: 11.5, yaw: 0.22, pitch: 0.18, fov: 0.6, aspect: 1.4 },
     pose(m, s) {
       fixed(m, iFrame, 0, 0, 0);
       for (let c = 0; c < COLS; c++) {

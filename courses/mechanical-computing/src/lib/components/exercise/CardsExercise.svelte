@@ -8,17 +8,19 @@
   import ExerciseFrame from './ExerciseFrame.svelte';
   import CardEditor from '../engine/CardEditor.svelte';
   import { checkDeck, duration, type DeckTest } from '$lib/mech/analytical';
+  import { DECKS } from '$lib/mech/decks';
 
-  let { spec }: { spec: { id: string; title?: string; prompt?: string; deck?: string; tests: DeckTest[]; limit?: number; why?: string; hints?: string[]; solution?: string; solutionDeck?: string; show?: Record<string, number | string> } } = $props();
+  let { spec }: { spec: { id: string; title?: string; prompt?: string; deck?: string; deckFrom?: string; tests: DeckTest[]; limit?: number; why?: string; hints?: string[]; solution?: string; solutionDeck?: string; show?: Record<string, number | string> } } = $props();
 
   // svelte-ignore state_referenced_locally
-  let value = $state(spec.deck ?? '');
+  const startDeck = spec.deck ?? (spec.deckFrom ? DECKS[spec.deckFrom] : undefined) ?? '';
+  let value = $state(startDeck);
   let result: { ok: boolean; failures: string[]; time: number } | null = $state(null);
   /** The source the result belongs to: an edit after checking invalidates it. */
   let checkedSource = $state('');
 
   onMount(() => {
-    value = progress.draft(spec.id, spec.deck ?? '');
+    value = progress.draft(spec.id, startDeck);
   });
 
   function check() {
@@ -37,7 +39,7 @@
   <CardEditor bind:value {initial} oninput={() => progress.saveDraft(spec.id, value)} />
   <div class="ui actions">
     <button class="check" onclick={check}>Check against {spec.tests.length} {spec.tests.length === 1 ? 'test' : 'tests'}</button>
-    <button class="plain" onclick={() => { value = spec.deck ?? ''; result = null; progress.saveDraft(spec.id, value); }}>Start again</button>
+    <button class="plain" onclick={() => { value = startDeck; result = null; progress.saveDraft(spec.id, value); }}>Start again</button>
   </div>
   <div class="ui" aria-live="polite">
     {#if result && !stale}

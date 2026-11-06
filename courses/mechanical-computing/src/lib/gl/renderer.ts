@@ -10,7 +10,7 @@
  * engineering drawings the machines were built from.
  */
 import { getMesh } from './cache.ts';
-import { lookAt, multiply, perspective, mat4 } from './math.ts';
+import { lookAt, multiply, perspective, mat4, ortho } from './math.ts';
 import type { MaterialName, ModelDef } from './model.ts';
 import type { MeshData } from './mesh.ts';
 import { drawAtlas } from './glyphs.ts';
@@ -22,6 +22,8 @@ interface Material {
   rough: number;
   /** 0 lit, 1 decal (ink from the atlas). */
   kind: 0 | 1;
+  /** Procedural wood grain strength. */
+  grain?: number;
 }
 
 /** Base colours in linear RGB. */
@@ -29,9 +31,9 @@ const MATERIALS: Record<MaterialName, Material> = {
   brass: { color: [0.78, 0.55, 0.22], metal: 1, rough: 0.32, kind: 0 },
   darkBrass: { color: [0.52, 0.34, 0.12], metal: 1, rough: 0.42, kind: 0 },
   steel: { color: [0.62, 0.64, 0.68], metal: 1, rough: 0.28, kind: 0 },
-  iron: { color: [0.11, 0.11, 0.12], metal: 0.6, rough: 0.5, kind: 0 },
-  wood: { color: [0.29, 0.13, 0.05], metal: 0, rough: 0.6, kind: 0 },
-  ivory: { color: [0.86, 0.8, 0.66], metal: 0, rough: 0.45, kind: 0 },
+  iron: { color: [0.16, 0.16, 0.17], metal: 0.65, rough: 0.45, kind: 0 },
+  wood: { color: [0.2, 0.085, 0.032], metal: 0, rough: 0.55, kind: 0, grain: 1 },
+  ivory: { color: [0.72, 0.65, 0.5], metal: 0, rough: 0.4, kind: 0 },
   paper: { color: [0.9, 0.86, 0.76], metal: 0, rough: 0.9, kind: 0 },
   ink: { color: [0.03, 0.03, 0.04], metal: 0, rough: 0.5, kind: 0 },
   red: { color: [0.62, 0.08, 0.05], metal: 0.2, rough: 0.4, kind: 0 },
@@ -55,6 +57,8 @@ layout(location=7) in vec4 aTint;
 uniform mat4 uViewProj;
 uniform vec3 uEye;
 uniform float uOutline;
+uniform mat4 uLightVP;
+out vec4 vLight;
 out vec3 vPos;
 out vec3 vNor;
 out vec2 vUv;
@@ -68,8 +72,27 @@ void main() {
   vNor = n;
   vUv = aUv;
   vTint = aTint;
+  vLight = uLightVP * wp;
   gl_Position = uViewProj * wp;
 }`;
+
+/** Depth from the light, for shadows: the same instanced layout, nothing but position. */
+const DEPTH_VS = /* glsl */ `#version 300 es
+layout(location=0) in vec3 aPos;
+layout(location=3) in vec4 aM0;
+layout(location=4) in vec4 aM1;
+layout(location=5) in vec4 aM2;
+layout(location=6) in vec4 aM3;
+uniform mat4 uLightVP;
+void main() {
+  gl_Position = uLightVP * (mat4(aM0, aM1, aM2, aM3) * vec4(aPos, 1.0));
+}`;
+const DEPTH_FS = /* glsl */ `#version 300 es
+precision mediump float;
+out vec4 frag;
+void main() { frag = vec4(1.0); }`;
+
+const SHADOW_SIZE = 1536;
 
 const FS = /* glsl */ `#version 300 es
 precision highp float;
@@ -77,10 +100,16 @@ in vec3 vPos;
 in vec3 vNor;
 in vec2 vUv;
 in vec4 vTint;
+in vec4 vLight;
+uniform highp sampler2DShadow uShadow;
+uniform int uShadows;
+uniform vec3 uBg;
+uniform vec3 uFloorC; // floor centre x, z and fade radius
 uniform vec3 uColor;
 uniform float uMetal;
 uniform float uRough;
-uniform int uKind;      // 0 lit, 1 decal
+uniform float uGrain;
+uniform int uKind;      // 0 lit, 1 decal, 2 floor
 uniform int uLook;      // 0 brass, 1 drawing fill, 2 outline
 uniform vec3 uEye;
 uniform vec3 uPaper;
@@ -101,8 +130,29 @@ vec3 aces(vec3 x) {
   return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 1.0);
 }
 
+// Soft shadow: 3×3 hardware-filtered taps of the light's depth map.
+float shadowAt() {
+  if (uShadows == 0) return 1.0;
+  vec3 p = vLight.xyz / vLight.w * 0.5 + 0.5;
+  if (p.x < 0.0 || p.x > 1.0 || p.y < 0.0 || p.y > 1.0 || p.z > 1.0) return 1.0;
+  float s = 0.0;
+  vec2 t = vec2(1.6 / ${SHADOW_SIZE}.0);
+  for (int i = -1; i <= 1; i++)
+    for (int j = -1; j <= 1; j++) s += texture(uShadow, vec3(p.xy + vec2(float(i), float(j)) * t, p.z - 0.0012));
+  return s / 9.0;
+}
+
 void main() {
   if (uLook == 2) { frag = vec4(uLine, 1.0); return; }
+  if (uKind == 2) {
+    // The floor: the page colour, darkened by shadow and a little towards the middle, fading out at the edge.
+    float d = length(vPos.xz - uFloorC.xy) / uFloorC.z;
+    float fade = smoothstep(1.0, 0.25, d);
+    float sh = shadowAt();
+    vec3 c = uBg * mix(1.0, (0.955 - 0.03 * (1.0 - d)) * mix(0.66, 1.0, sh), fade);
+    frag = vec4(c, 1.0);
+    return;
+  }
   if (uKind == 1) {
     float a = texture(uAtlas, vUv).a;
     if (a < 0.32) discard;
@@ -121,18 +171,25 @@ void main() {
     return;
   }
   vec3 base = uColor;
-  vec3 l1 = normalize(vec3(0.5, 0.9, 0.6));
+  if (uGrain > 0.0) {
+    // Wood: long rings along the longest axis of the board, gently wobbling.
+    float g = sin(dot(vPos, vec3(0.6, 9.0, 1.4)) * 2.2 + sin(vPos.x * 1.7 + vPos.z * 0.9) * 2.5);
+    float fine = sin(dot(vPos, vec3(2.0, 40.0, 7.0)));
+    base *= 0.82 + 0.16 * g + 0.05 * fine;
+  }
+  vec3 l1 = normalize(vec3(0.45, 1.0, 0.55));
   vec3 l2 = normalize(vec3(-0.7, 0.3, -0.4));
   vec3 h1 = normalize(l1 + v);
   float spec = pow(max(dot(n, h1), 0.0), mix(160.0, 12.0, uRough)) * mix(1.0, 0.25, uRough);
-  float d1 = max(dot(n, l1), 0.0), d2 = max(dot(n, l2), 0.0);
+  float sh = shadowAt();
+  float d1 = max(dot(n, l1), 0.0) * sh, d2 = max(dot(n, l2), 0.0);
   vec3 f0 = mix(vec3(0.04), base, uMetal);
   float fres = pow(1.0 - max(dot(n, v), 0.0), 5.0);
   vec3 F = f0 + (1.0 - f0) * fres;
   vec3 r = reflect(-v, n);
-  vec3 refl = env(r) * F * (1.0 - 0.6 * uRough);
+  vec3 refl = env(r) * F * (1.0 - 0.6 * uRough) * (0.55 + 0.45 * sh);
   vec3 diffuse = base * (1.0 - uMetal) * (0.18 + 1.05 * d1 + 0.35 * d2);
-  vec3 c = diffuse + refl + F * spec * 2.2 * (0.6 + 0.4 * d1);
+  vec3 c = diffuse + refl + F * spec * sh * 2.2 * (0.6 + 0.4 * d1);
   c += vTint.rgb * vTint.a * 0.65;
   frag = vec4(pow(aces(c * 1.05), vec3(1.0 / 2.2)), 1.0);
 }`;
@@ -154,6 +211,8 @@ interface Batch {
   vao: WebGLVertexArrayObject;
   count: number;
   type: number;
+  /** Model-space bounding sphere of the mesh. */
+  bounds: [number, number, number, number];
 }
 
 export type Look = 'brass' | 'drawing';
@@ -165,6 +224,15 @@ export interface Palette {
 }
 
 const FLOATS_PER_INSTANCE = 20;
+
+/** A unit square in the xz plane, facing up (scaled and placed per frame). */
+const FLOOR: MeshData = {
+  positions: new Float32Array([-1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1]),
+  normals: new Float32Array([0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0]),
+  uvs: new Float32Array(8),
+  indices: new Uint32Array([0, 3, 2, 0, 2, 1]),
+  bounds: [0, 0, 0, 1.5],
+};
 
 export class Renderer {
   readonly gl: WebGL2RenderingContext;
@@ -180,6 +248,16 @@ export class Renderer {
   private view = mat4();
   private eye = new Float32Array(3);
   private model: ModelDef<never> | null = null;
+  private depthProg: WebGLProgram;
+  private uDepthVP: WebGLUniformLocation | null;
+  private shadowTex: WebGLTexture;
+  private shadowFb: WebGLFramebuffer;
+  private lightVP = mat4();
+  private lightView = mat4();
+  private lightProj = mat4();
+  /** Scene extent, measured on the first frame: centre, radius and the lowest point. */
+  private extent: { cx: number; cy: number; cz: number; r: number; floor: number } | null = null;
+  private floorBatch: Batch | null = null;
   triangles = 0;
 
   constructor(readonly canvas: HTMLCanvasElement) {
@@ -187,7 +265,24 @@ export class Renderer {
     if (!gl) throw new Error('WebGL2 is not available');
     this.gl = gl;
     this.prog = this.program(VS, FS);
-    for (const name of ['uViewProj', 'uEye', 'uOutline', 'uColor', 'uMetal', 'uRough', 'uKind', 'uLook', 'uPaper', 'uLine', 'uAtlas']) this.u[name] = gl.getUniformLocation(this.prog, name);
+    for (const name of ['uViewProj', 'uEye', 'uOutline', 'uColor', 'uMetal', 'uRough', 'uKind', 'uLook', 'uPaper', 'uLine', 'uAtlas', 'uLightVP', 'uShadow', 'uShadows', 'uBg', 'uFloorC', 'uGrain']) this.u[name] = gl.getUniformLocation(this.prog, name);
+    this.depthProg = this.program(DEPTH_VS, DEPTH_FS);
+    this.uDepthVP = gl.getUniformLocation(this.depthProg, 'uLightVP');
+    this.shadowTex = gl.createTexture()!;
+    gl.bindTexture(gl.TEXTURE_2D, this.shadowTex);
+    gl.texStorage2D(gl.TEXTURE_2D, 1, gl.DEPTH_COMPONENT24, SHADOW_SIZE, SHADOW_SIZE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_COMPARE_MODE, gl.COMPARE_REF_TO_TEXTURE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_COMPARE_FUNC, gl.LEQUAL);
+    this.shadowFb = gl.createFramebuffer()!;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, this.shadowFb);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, this.shadowTex, 0);
+    gl.drawBuffers([gl.NONE]);
+    gl.readBuffer(gl.NONE);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     this.instanceBuf = gl.createBuffer()!;
     this.atlas = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, this.atlas);
@@ -289,10 +384,33 @@ export class Renderer {
         gl.vertexAttribDivisor(3 + a, 1);
       }
       gl.bindVertexArray(null);
-      const b: Batch = { mesh: key, material: MATERIALS[g.material], nodes: g.nodes, first, vao, count: gm.count, type: gm.type };
+      const b: Batch = { mesh: key, material: MATERIALS[g.material], nodes: g.nodes, first, vao, count: gm.count, type: gm.type, bounds: data.bounds };
       first += g.nodes.length;
       return b;
     });
+    // The floor: one more instance, a unit square scaled to the scene each frame.
+    const floorKey = '__floor';
+    const floorMesh = this.meshes.get(floorKey) ?? this.upload(floorKey, FLOOR);
+    const fvao = gl.createVertexArray()!;
+    gl.bindVertexArray(fvao);
+    gl.bindBuffer(gl.ARRAY_BUFFER, floorMesh.vbo);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 32, 0);
+    gl.enableVertexAttribArray(1);
+    gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 32, 12);
+    gl.enableVertexAttribArray(2);
+    gl.vertexAttribPointer(2, 2, gl.FLOAT, false, 32, 24);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, floorMesh.ibo);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.instanceBuf);
+    for (let a = 0; a < 5; a++) {
+      gl.enableVertexAttribArray(3 + a);
+      gl.vertexAttribPointer(3 + a, 4, gl.FLOAT, false, FLOATS_PER_INSTANCE * 4, first * FLOATS_PER_INSTANCE * 4 + a * 16);
+      gl.vertexAttribDivisor(3 + a, 1);
+    }
+    gl.bindVertexArray(null);
+    this.floorBatch = { mesh: floorKey, material: MATERIALS.paper, nodes: [], first, vao: fvao, count: floorMesh.count, type: floorMesh.type, bounds: [0, 0, 0, 1] };
+    this.extent = null;
+    first += 1;
     this.instanceData = new Float32Array(first * FLOATS_PER_INSTANCE);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.instanceBuf);
     gl.bufferData(gl.ARRAY_BUFFER, this.instanceData.byteLength, gl.DYNAMIC_DRAW);
@@ -331,10 +449,48 @@ export class Renderer {
         instances++;
       }
     }
+    if (!this.extent) this.measure(matrices);
+    const ex = this.extent!;
+    // Floor instance: a square of side 6r under the scene.
+    const fs = ex.r * 3;
+    data.fill(0, o, o + FLOATS_PER_INSTANCE);
+    data[o] = fs; data[o + 5] = 1; data[o + 10] = fs; data[o + 15] = 1;
+    data[o + 12] = ex.cx; data[o + 13] = ex.floor; data[o + 14] = ex.cz;
     gl.bindBuffer(gl.ARRAY_BUFFER, this.instanceBuf);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, data);
 
+    let calls = 0;
+    const shadows = look === 'brass';
+    if (shadows) {
+      // Depth from the light into the shadow map (opaque parts only).
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.shadowFb);
+      gl.viewport(0, 0, SHADOW_SIZE, SHADOW_SIZE);
+      gl.clear(gl.DEPTH_BUFFER_BIT);
+      gl.useProgram(this.depthProg);
+      gl.uniformMatrix4fv(this.uDepthVP, false, this.lightVP);
+      gl.enable(gl.POLYGON_OFFSET_FILL);
+      gl.polygonOffset(2, 3);
+      gl.disable(gl.CULL_FACE);
+      for (const b of this.batches) {
+        if (b.material.kind !== 0) continue;
+        gl.bindVertexArray(b.vao);
+        gl.drawElementsInstanced(gl.TRIANGLES, b.count, b.type, 0, b.nodes.length);
+        calls++;
+      }
+      gl.enable(gl.CULL_FACE);
+      gl.disable(gl.POLYGON_OFFSET_FILL);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, w, h);
+    }
+
     gl.useProgram(this.prog);
+    gl.uniformMatrix4fv(this.u.uLightVP!, false, this.lightVP);
+    gl.uniform1i(this.u.uShadows!, shadows ? 1 : 0);
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, this.shadowTex);
+    gl.uniform1i(this.u.uShadow!, 1);
+    gl.uniform3f(this.u.uBg!, pal.bg[0], pal.bg[1], pal.bg[2]);
+    gl.uniform3f(this.u.uFloorC!, ex.cx, ex.cz, fs);
     gl.uniformMatrix4fv(this.u.uViewProj!, false, this.viewProj);
     gl.uniform3fv(this.u.uEye!, this.eye);
     gl.uniform3f(this.u.uPaper!, pal.paper[0], pal.paper[1], pal.paper[2]);
@@ -342,7 +498,6 @@ export class Renderer {
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.atlas);
     gl.uniform1i(this.u.uAtlas!, 0);
-    let calls = 0;
     const pass = (lookId: number, outline: number) => {
       gl.uniform1i(this.u.uLook!, lookId);
       gl.uniform1f(this.u.uOutline!, outline);
@@ -352,6 +507,7 @@ export class Renderer {
         gl.uniform1f(this.u.uMetal!, b.material.metal);
         gl.uniform1f(this.u.uRough!, b.material.rough);
         gl.uniform1i(this.u.uKind!, b.material.kind);
+        gl.uniform1f(this.u.uGrain!, b.material.grain ?? 0);
         gl.bindVertexArray(b.vao);
         gl.drawElementsInstanced(gl.TRIANGLES, b.count, b.type, 0, b.nodes.length);
         calls++;
@@ -365,6 +521,12 @@ export class Renderer {
     } else {
       gl.cullFace(gl.BACK);
       pass(0, 0);
+      // The floor last: it is behind everything, and only covers the background.
+      const fb = this.floorBatch!;
+      gl.uniform1i(this.u.uKind!, 2);
+      gl.bindVertexArray(fb.vao);
+      gl.drawElementsInstanced(gl.TRIANGLES, fb.count, fb.type, 0, 1);
+      calls++;
     }
     gl.bindVertexArray(null);
     const v = (stats.views[viewId] ??= { drawCalls: 0, instances: 0, triangles: 0, frames: 0, cpuMs: 0, scale: 1 });
@@ -374,6 +536,56 @@ export class Renderer {
     v.frames++;
     v.cpuMs = performance.now() - t0;
     v.scale = scale;
+  }
+
+  /** Measure the scene (bounding spheres of every part as posed now) and aim the shadow camera at it. */
+  private measure(matrices: Float32Array): void {
+    let lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+    for (const b of this.batches) {
+      const [bx, by, bz, br] = b.bounds;
+      for (const i of b.nodes) {
+        const o = i * 16;
+        const sc = Math.hypot(matrices[o]!, matrices[o + 1]!, matrices[o + 2]!);
+        if (sc < 1e-6) continue;
+        const x = matrices[o]! * bx + matrices[o + 4]! * by + matrices[o + 8]! * bz + matrices[o + 12]!;
+        const y = matrices[o + 1]! * bx + matrices[o + 5]! * by + matrices[o + 9]! * bz + matrices[o + 13]!;
+        const z = matrices[o + 2]! * bx + matrices[o + 6]! * by + matrices[o + 10]! * bz + matrices[o + 14]!;
+        const r = br * sc;
+        lo = [Math.min(lo[0]!, x - r), Math.min(lo[1]!, y - r), Math.min(lo[2]!, z - r)];
+        hi = [Math.max(hi[0]!, x + r), Math.max(hi[1]!, y + r), Math.max(hi[2]!, z + r)];
+      }
+    }
+    if (!Number.isFinite(lo[0]!)) lo = hi = [0, 0, 0];
+    const cx = (lo[0]! + hi[0]!) / 2, cy = (lo[1]! + hi[1]!) / 2, cz = (lo[2]! + hi[2]!) / 2;
+    const r = Math.max(0.5, Math.hypot(hi[0]! - lo[0]!, hi[1]! - lo[1]!, hi[2]! - lo[2]!) / 2);
+    // Bounding spheres overestimate; nudge the floor a little below the lowest true extent.
+    this.extent = { cx, cy, cz, r, floor: this.lowest(matrices) - 0.02 };
+    const L = [0.45, 1.0, 0.55], ll = Math.hypot(L[0]!, L[1]!, L[2]!);
+    const eye = [cx + (L[0]! / ll) * r * 3, cy + (L[1]! / ll) * r * 3, cz + (L[2]! / ll) * r * 3];
+    lookAt(this.lightView, eye, [cx, cy, cz]);
+    ortho(this.lightProj, -r * 1.15, r * 1.15, -r * 1.15, r * 1.15, r * 0.5, r * 6);
+    multiply(this.lightVP, this.lightProj, this.lightView);
+  }
+
+  /** Lowest y of any vertex as posed now (meshes are cached on the CPU, so this is exact). */
+  private lowest(matrices: Float32Array): number {
+    let min = Infinity;
+    if (!this.model) return 0;
+    const model = this.model;
+    model.nodes.forEach((node, i) => {
+      const o = i * 16;
+      for (const p of node.parts) {
+        const build = model.meshes[p.mesh];
+        if (!build) continue;
+        const mesh = getMesh(`${model.key}:${p.mesh}`, build);
+        const pos = mesh.positions;
+        for (let k = 0; k < pos.length; k += 3) {
+          const y = matrices[o + 1]! * pos[k]! + matrices[o + 5]! * pos[k + 1]! + matrices[o + 9]! * pos[k + 2]! + matrices[o + 13]!;
+          if (y < min) min = y;
+        }
+      }
+    });
+    return Number.isFinite(min) ? min : 0;
   }
 
   /** The view-projection matrix of the last frame (for projecting labels and picking). */

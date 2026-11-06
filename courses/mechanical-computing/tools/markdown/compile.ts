@@ -85,7 +85,7 @@ const EXERCISE_BLOCKS: Record<string, string> = {
 const RAW_FIELDS: Record<string, string[]> = {
   answer: ['answer', 'accept', 'tolerance', 'unit', 'placeholder', 'kind'],
   order: [],
-  cards: ['deck', 'tests', 'solutionDeck', 'limit', 'show'],
+  cards: ['deck', 'deckFrom', 'tests', 'solutionDeck', 'limit', 'show'],
 };
 /** YAML fields of exercise blocks that hold Markdown (rendered at build time). */
 const MARKDOWN_FIELDS = new Set(['ask', 'prompt', 'text', 'solution', 'why', 'explain', 'hint', 'hints', 'lines', 'distractors', 'rubric', 'feedback', 'note', 'success', 'options', 'label']);

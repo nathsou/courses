@@ -111,7 +111,7 @@ export function steppedDrumModel(): ModelDef<DrumView> {
     key: 'stepped-drum',
     meshes,
     nodes,
-    camera: { target: [0, 0.7, 0.4], distance: 11, yaw: 1.05, pitch: 0.38, fov: 0.6, aspect: 1.5 },
+    camera: { target: [0, 0.7, 0.6], distance: 11.5, yaw: 0.72, pitch: 0.36, fov: 0.6, aspect: 1.5 },
     pose(m, v) {
       fixed(m, iFrame!, 0, 0, 0);
       fixed(m, iDrum!, 0, 0, 0, 0, 0, 1, v.crank);
