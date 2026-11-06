@@ -120,8 +120,10 @@ out vec4 frag;
 vec3 env(vec3 r) {
   // Studio: dark floor, warm-grey walls, one broad soft box overhead and a narrow strip light.
   float y = r.y;
-  vec3 c = mix(vec3(0.05, 0.045, 0.04), vec3(0.42, 0.40, 0.37), smoothstep(-0.3, 0.6, y));
+  vec3 c = mix(vec3(0.1, 0.09, 0.08), vec3(0.62, 0.6, 0.56), smoothstep(-0.4, 0.5, y));
   c += vec3(1.7, 1.62, 1.5) * smoothstep(0.72, 0.9, y);
+  // A broad soft box in front (the side cameras look from) and a narrow strip light to one side.
+  c += vec3(1.1, 1.06, 1.0) * smoothstep(0.55, 0.92, dot(r, normalize(vec3(0.25, 0.35, 1.0))));
   c += vec3(0.9) * smoothstep(0.93, 0.99, abs(dot(r, normalize(vec3(-0.8, 0.15, 0.6)))));
   return c;
 }
