@@ -9,7 +9,7 @@
   const clean = (s: string) => (/^\d{1,10}$/.test(s.trim()) ? BigInt(s.trim()) : 0n);
   const t = $derived(carries(digitsOf(clean(a), N), digitsOf(clean(b), N)));
   const rev = <T,>(x: T[]) => [...x].reverse();
-  const presets = [['49999987', '50000013'], ['99999999', '1'], ['12345678', '11111111'], ['45454545', '54545455']];
+  const presets: [string, string][] = [['49999987', '50000013'], ['99999999', '1'], ['12345678', '11111111'], ['45454545', '54545455']];
 </script>
 
 <Widget title="Ripple against anticipation" subtitle="Add two numbers digit by digit. Then compare: a ripple makes the carries one place at a time; the anticipating carriage finds every carry at once from the warnings and the 9s.">

@@ -106,7 +106,7 @@ export function pascalineModel(radices: number[]): ModelDef<PascalineView> {
     key: `pascaline-${radices.join('-')}`,
     meshes,
     nodes,
-    camera: { target: [0, -1.9, 0.4], distance: 9 + n * 1.25, yaw: 0.38, pitch: 0.62, fov: 0.62 },
+    camera: { target: [0, -1.9, 0.4], distance: 9 + n * 1.25, yaw: 0.38, pitch: 0.62, fov: 0.62, aspect: 2.1 },
     pose(m, s) {
       fixed(m, iBase, 0, 0, 0);
       fixed(m, iRod, 0, ROD_Y, ROD_Z);

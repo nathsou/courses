@@ -12,6 +12,7 @@
   import { Renderer, cssColor, type Palette } from './renderer';
   import { acquire, release, touch, type PoolClient } from './pool';
   import { pick, rayFromNdc } from './pick';
+  import { prebuild } from './cache';
   import { look } from '$lib/state/look.svelte';
   import { theme } from '$lib/state/theme.svelte';
   import { clamp } from './math';
@@ -151,7 +152,7 @@
     }
     // On narrow screens, step back so that a wide machine still fits.
     const aspect = canvas ? canvas.clientWidth / Math.max(1, canvas.clientHeight) : 1.6;
-    const d = dist * Math.max(1, Math.pow((model.camera.aspect ?? 1.6) / aspect, 0.85));
+    const d = dist * Math.max(1, (model.camera.aspect ?? 1.6) / aspect);
     const cp = Math.cos(pitch);
     eye[0] = target[0]! + d * cp * Math.sin(yaw);
     eye[1] = target[1]! + d * Math.sin(pitch);
@@ -269,6 +270,16 @@
       { rootMargin: '250px 0px' },
     );
     io.observe(host);
+    // Well before the view is visible, build its meshes in idle time.
+    const early = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        early.disconnect();
+        prebuild(model.key, model.meshes);
+      },
+      { rootMargin: '1500px 0px' },
+    );
+    early.observe(host);
     const ro = new ResizeObserver(() => {
       resize();
       wake();
@@ -278,6 +289,7 @@
     document.addEventListener('visibilitychange', onVis);
     return () => {
       io.disconnect();
+      early.disconnect();
       ro.disconnect();
       document.removeEventListener('visibilitychange', onVis);
       drop();
@@ -288,7 +300,7 @@
 <div class="machine" bind:this={host}>
   <div class="stage" style:height>
     {#key gen}
-      <canvas use:setup tabindex="0" aria-label="{label} (3D view: drag to turn, arrow keys to orbit, + and − to zoom, tap a part to name it)" role="img"></canvas>
+      <canvas use:setup tabindex="0" aria-label="{label} (3D view: drag to turn, arrow keys to orbit, + and − to zoom, tap a part to name it)"></canvas>
     {/key}
     {#if failed}
       <p class="fallback ui">This browser cannot show the 3D model (WebGL2 is unavailable). The readout follows the machine all the same.</p>

@@ -3,7 +3,7 @@
   import Widget from '$lib/components/ui/Widget.svelte';
   import { LANDAUER, SWITCHES } from '$lib/ledger';
 
-  let metric: 'time' | 'energy' | 'size' = $state('time');
+  let metric = $state<'time' | 'energy' | 'size'>('time');
   const UNITS = { time: 's', energy: 'J', size: 'm' } as const;
   const vals = $derived(SWITCHES.map((s) => s[metric]));
   const lo = $derived(Math.floor(Math.log10(Math.min(...vals, metric === 'energy' ? LANDAUER : Infinity))));

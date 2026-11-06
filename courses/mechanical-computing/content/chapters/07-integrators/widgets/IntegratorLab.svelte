@@ -3,6 +3,7 @@
   counter adds up ∫ y dx. The plot underneath shows y against x, with the area under it.
 -->
 <script lang="ts">
+  import { after } from '$lib/util/after';
   import Widget from '$lib/components/ui/Widget.svelte';
   import MachineView from '$lib/gl/MachineView.svelte';
   import { DISC_R, integratorModel, WHEEL_R, type IntegratorView } from '$lib/models/integrator';
@@ -50,7 +51,7 @@
     void rule;
     mv?.wake();
   });
-  const integral = $derived((tick, view.out * WHEEL_R));
+  const integral = $derived(after(tick, view.out * WHEEL_R));
   const W = 300, H = 90;
   const px = (x: number) => 10 + (x / XMAX) * (W - 20);
   const py = (y: number) => H - 8 - (y / YMAX) * (H - 20);
@@ -66,8 +67,8 @@
   <MachineView bind:this={mv} {model} data={view} {animate} label="A disc turned by a crank, a small wheel resting on it, and a counter on the wheel's shaft" height="20rem">
     {#snippet readout()}
       <div class="ro">
-        <div><span class="k">x (disc turns)</span><strong class="num">{((tick, view.x) / (2 * Math.PI)).toFixed(2)}</strong></div>
-        <div><span class="k">y (on the scale)</span><strong class="num">{((tick, view.y) * 2).toFixed(2)}</strong></div>
+        <div><span class="k">x (disc turns)</span><strong class="num">{(after(tick, view.x) / (2 * Math.PI)).toFixed(2)}</strong></div>
+        <div><span class="k">y (on the scale)</span><strong class="num">{(after(tick, view.y) * 2).toFixed(2)}</strong></div>
         <div><span class="k">∫ y dx (counter)</span><strong class="num">{(integral * 2).toFixed(2)}</strong></div>
       </div>
       <svg viewBox="0 0 {W} {H}" class="plot" role="img" aria-label="y against x; the shaded area is what the counter has added up">

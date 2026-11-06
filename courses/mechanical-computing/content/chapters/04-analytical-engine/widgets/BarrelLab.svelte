@@ -1,5 +1,6 @@
 <!-- A barrel of the mill in 3D: step through a microprogram row by row and watch which levers its studs lift. -->
 <script lang="ts">
+  import { after } from '$lib/util/after';
   import Widget from '$lib/components/ui/Widget.svelte';
   import MachineView from '$lib/gl/MachineView.svelte';
   import { barrelModel, leverLift, type BarrelView } from '$lib/models/barrel';
@@ -48,7 +49,7 @@
     row = next;
     mv?.wake();
   }
-  const active = $derived((tick, row, LEVERS.map((_, c) => leverLift(rows, c, row) > 0.5)));
+  const active = $derived(after(tick, row, LEVERS.map((_, c) => leverLift(rows, c, row) > 0.5)));
 </script>
 
 <Widget title="A barrel: the microprogram for {MICROPROGRAMS[program]!.label.toLowerCase()}" subtitle="Each row of studs is one step. Press Step: the barrel turns one row and the studs at the top lift their levers. Tap a lever to name it." onreset={() => { row = 0; target = 0; view.pos = 0; digitsLeft = 3; log = []; mv?.wake(); }}>

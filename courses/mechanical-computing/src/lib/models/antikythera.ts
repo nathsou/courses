@@ -38,7 +38,7 @@ function spokedGear(teeth: number, w: number, mod = M): import('$lib/gl/mesh').M
   // A gear wheel with four cut-out quadrants, as the mechanism's large wheels are.
   const b = new Builder();
   const rr = (mod * teeth) / 2 - 1.3 * mod;
-  extrudeStar(gearOutline(teeth, mod, 3), w, rr - 0.18, b);
+  extrudeStar(gearOutline(teeth, mod, teeth > 100 ? 2 : 3), w, rr - 0.18, b);
   extrudeStar(circleOutline(0.22, 24), w, 0.04, b);
   for (let k = 0; k < 4; k++) {
     const a = (k / 4) * TAU + Math.PI / 4;

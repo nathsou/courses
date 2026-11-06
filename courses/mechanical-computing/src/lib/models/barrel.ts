@@ -39,16 +39,21 @@ export function barrelModel(rows: BarrelRow[], key: string): ModelDef<BarrelView
       const b = new Builder();
       // Drum along x (built along z, then axes swapped below).
       b.append(cylinderZ(R, LEN, 64));
+      // Raised rings between the lever columns, so the stud tracks read clearly.
+      for (let c = 0; c <= COLS; c++) {
+        const x = c === 0 ? -LEN / 2 + 0.15 : c === COLS ? LEN / 2 - 0.15 : (colX(c - 1) + colX(c)) / 2;
+        b.append(cylinderZ(R + 0.04, 0.06, 64), 0, 0, x);
+      }
       rows.forEach((row, r) => {
         // Row r reaches the top (angle π/2 about the drum axis) when the barrel has turned r rows.
         const a = Math.PI / 2 - r * STEP;
         for (const c of row.levers) {
-          const stud = cylinderZ(0.13, 0.32, 12);
+          const stud = cylinderZ(0.17, 0.4, 14);
           const at = b.count;
           b.append(stud);
           // Point the stud radially: rotate its z axis onto the radius at angle a, place it at column c.
           for (let k = at * 3; k < b.p.length; k += 3) {
-            const x = b.p[k]!, y = b.p[k + 1]!, z = b.p[k + 2]! + R + 0.12;
+            const x = b.p[k]!, y = b.p[k + 1]!, z = b.p[k + 2]! + R + 0.16;
             // Local stud axis z → radial (cos a, sin a); x stays along the drum axis.
             const ca = Math.cos(a), sa = Math.sin(a);
             b.p[k] = z * ca - y * sa;
@@ -78,7 +83,7 @@ export function barrelModel(rows: BarrelRow[], key: string): ModelDef<BarrelView
     key,
     meshes,
     nodes,
-    camera: { target: [0, 0.6, -0.6], distance: 11, yaw: 0.55, pitch: 0.5, fov: 0.6, aspect: 1.5 },
+    camera: { target: [0, 0.8, -0.5], distance: 10, yaw: 0.4, pitch: 0.72, fov: 0.6, aspect: 1.5 },
     pose(m, v) {
       fixed(m, ix.frame!, 0, 0, 0);
       // Swap: the drum mesh lies along z; turn it to lie along x, then rotate about x by the barrel position.

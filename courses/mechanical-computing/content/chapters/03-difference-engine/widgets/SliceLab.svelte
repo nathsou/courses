@@ -1,5 +1,6 @@
 <!-- A slice of Difference Engine No. 2 in 3D, tabulating x² + x + 41. -->
 <script lang="ts">
+  import { after } from '$lib/util/after';
   import Widget from '$lib/components/ui/Widget.svelte';
   import MachineView from '$lib/gl/MachineView.svelte';
   import { DESlice, differenceEngineModel } from '$lib/models/differenceEngine';
@@ -29,9 +30,9 @@
     tick++;
     mv?.wake();
   }
-  const vals = $derived((tick, slice.values()));
-  const printed = $derived((tick, [...slice.printed]));
-  const phase = $derived((tick, slice.phaseName));
+  const vals = $derived(after(tick, slice.values()));
+  const printed = $derived(after(tick, [...slice.printed]));
+  const phase = $derived(after(tick, slice.phaseName));
 </script>
 
 <Widget title="Difference Engine No. 2, a slice" subtitle="Three columns of five figure wheels, set up for x² + x + 41. Each turn of the handle makes one cycle: two half-cycles of additions, each followed by its carries." onreset={reset}>

@@ -1,5 +1,6 @@
 <!-- The Pascaline, opened up: dial numbers in, watch the sautoirs carry, and read either row of windows. -->
 <script lang="ts">
+  import { after } from '$lib/util/after';
   import Widget from '$lib/components/ui/Widget.svelte';
   import MachineView from '$lib/gl/MachineView.svelte';
   import { ACCOUNTING, Pascaline, livres } from '$lib/mech/pascaline';
@@ -45,20 +46,20 @@
     changed();
   }
 
-  const digits = $derived((tick, [...machine.digits].reverse()));
-  const comps = $derived((tick, machine.complementDigits().reverse()));
-  const carries = $derived((tick, machine.carries));
+  const digits = $derived(after(tick, [...machine.digits].reverse()));
+  const comps = $derived(after(tick, machine.complementDigits().reverse()));
+  const carries = $derived(after(tick, machine.carries));
   const recent = $derived(
-    (tick,
+    after(tick,
     machine.events
       .slice(-60)
       .filter((e) => e.kind !== 'step')
       .slice(-4)
       .map((e) => (e.kind === 'carry' ? `carry: wheel ${e.from + 1} → wheel ${e.from + 2}` : 'overflow: the carry fell off the last wheel'))),
   );
-  const shown = $derived((tick, row === 'direct' ? machine.value() : machine.complement()));
+  const shown = $derived(after(tick, row === 'direct' ? machine.value() : machine.complement()));
   const placeName = (k: number) => (accounting ? (['deniers', 'sols', 'livres'][k] ?? `${10 ** (k - 2)} livres`) : k === 0 ? 'units' : `${10 ** k}s`);
-  const money = $derived((tick, livres(shown)));
+  const money = $derived(after(tick, livres(shown)));
 
   $effect(() => {
     machine.speed = speed;

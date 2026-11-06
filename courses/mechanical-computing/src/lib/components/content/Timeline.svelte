@@ -12,7 +12,7 @@
     {#each shown as e, i (i)}
       {@const ch = e.chapter ? (findEntry('chapter', e.chapter) ?? findEntry('appendix', e.chapter)) : undefined}
       <li>
-        <span class="year num">{e.year}</span>
+        <span class="year num">{e.year < 0 ? `${-e.year} BC` : e.year}</span>
         <span class="dot" aria-hidden="true"></span>
         <div class="body">
           <div class="title">{e.title}{#if ch?.available} <a class="where" href="{base}{ch.href}">{ch.kind === 'chapter' ? 'Ch.' : 'App.'} {ch.number}</a>{/if}</div>
