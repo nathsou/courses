@@ -38,7 +38,7 @@ export function integratorModel(): ModelDef<IntegratorView> {
     counter: () => disc(0.75, 0.08, 0.1, 48),
     counterDigits: () => faceDigits(Array.from({ length: 10 }, (_, d) => String(d)), 0.56, 0.041, 0.22, Math.PI / 2, -1),
     pointer: () => box(0.08, 0.3, 0.05, 0, 0, 0).done(),
-    carriage: () => merge(box(0.18, 0.75, 0.5, 0, 0.1, 0).done(), box(0.3, 0.1, 0.5, 0, 0.5, 0).done()),
+    carriage: () => merge(box(0.08, 0.7, 0.08, -0.12, 0.15, 0.25).done(), box(0.08, 0.7, 0.08, 0.12, 0.15, 0.25).done(), box(0.34, 0.1, 0.6, 0, 0.5, 0.1).done()),
     rail: () => box(4.8, 0.1, 0.18, 0, 0, 0).done(),
     crank: () => merge(box(1.2, 0.12, 0.2, 0.6, 0, 0).done(), [cylinderY(0.1, 0, 0.5, 12), 1.15, 0, 0]),
     base: () => merge(box(7.4, 0.3, 5.6, 0.8, -1.6, 0).done(), box(0.3, 2.2, 0.3, 3.6, -0.5, 0).done(), box(0.3, 2.2, 0.3, -2.0, -0.5, 1.2).done()),
@@ -76,8 +76,8 @@ export function integratorModel(): ModelDef<IntegratorView> {
       // The wheel's axis is radial (x); it sits at (y, WHEEL_Y, 0) and turns about x.
       onAxis(m, ix.wheel!, Z_TO_X, v.y, WHEEL_Y, 0, v.out);
       onAxis(m, ix.spline!, Z_TO_X, 1.1, WHEEL_Y, 0, v.out);
-      fixed(m, ix.carriage!, v.y, WHEEL_Y - 0.2, 0.55);
-      fixed(m, ix.rail!, 0.9, WHEEL_Y + 0.34, 0.55);
+      fixed(m, ix.carriage!, v.y, WHEEL_Y - 0.2, -0.5);
+      fixed(m, ix.rail!, 0.9, WHEEL_Y + 0.34, -0.5);
       onAxis(m, ix.counter!, Z_TO_X, 3.45, WHEEL_Y, 0, v.out / 10);
       fixed(m, ix.pointer!, 3.52, WHEEL_Y + 0.85, 0);
       fixed(m, ix.scale!, 0, WHEEL_Y + 0.85, 0.8);
