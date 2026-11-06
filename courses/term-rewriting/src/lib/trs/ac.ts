@@ -32,12 +32,12 @@ export function flatten(t: Term, ac: ACSymbols): Term {
   return f(t.name, ...flat);
 }
 
-/** Turn a flattened term back into binary applications (right-nested), for printing. */
+/** Turn a flattened term back into binary applications (left-nested, so that `#infixl` prints it without parentheses). */
 export function unflatten(t: Term, ac: ACSymbols): Term {
   if (t.type === 'var') return t;
   const args = t.args.map((a) => unflatten(a, ac));
   if (!ac.has(t.name) || args.length <= 2) return f(t.name, ...args);
-  return args.slice(0, -1).reduceRight<Term>((acc, a) => f(t.name, a, acc), args.at(-1)!);
+  return args.slice(1).reduce<Term>((acc, a) => f(t.name, acc, a), args[0]!);
 }
 
 export const acEqual = (s: Term, t: Term, ac: ACSymbols): boolean => equal(flatten(s, ac), flatten(t, ac));

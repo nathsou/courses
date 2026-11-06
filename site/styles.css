@@ -1014,6 +1014,19 @@ h1 {
 .fallboard .stave .lines { fill:none; stroke:light-dark(#4a4640,#bdb6a6); stroke-width:1; }
 .fallboard .stave .notes ellipse { fill:light-dark(#1b1a18,#ece6d6); }
 .fallboard .stave .keys path { stroke:light-dark(#8c2a35,#d6b25e); stroke-width:3; stroke-linecap:round; }
+.card.redex {
+  --cbg: light-dark(#f5f4ef, #111819);
+  --cfg: light-dark(#1b1d22, #e9e4d7);
+  --cmute: light-dark(#5f636c, #a19d92);
+  --cac: light-dark(#0f6156, #ecca78);
+  background: var(--cbg);
+}
+.redex .tree { width:200px; height:76px; margin-bottom:14px; display:block; }
+.redex .tree .edge { fill:none; stroke:light-dark(#12695e,#7fd1c0); stroke-width:2; stroke-linecap:round; }
+.redex .tree .arrow { fill:none; stroke:light-dark(#5f636c,#a19d92); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.redex .tree .node { fill:light-dark(#f5f4ef,#111819); stroke:light-dark(#1b1d22,#e9e4d7); stroke-width:1.6; }
+.redex .tree .node.hot { fill:light-dark(#f3d9cc,#4a2c22); stroke:light-dark(#c4572a,#f08a5d); }
+.redex .tree .node.nf { fill:light-dark(#d5ebe6,#1f3d38); stroke:light-dark(#12695e,#7fd1c0); }
 /* 11 · For All Inputs: "The Notary" — certificate paper, a seal, red pencil */
 .notary {
   --cbg: #f6f1e4;

@@ -24,4 +24,7 @@ export const ENGINE_MODULES: EngineModuleInfo[] = [
   { id: 'path-orders/lpo', chapter: 'path-orders', title: 'The lexicographic path order', provides: ['lpo'] },
   { id: 'unification/unify', chapter: 'unification', title: 'Unification', provides: ['unify'] },
   { id: 'critical-pairs/critical-pairs', chapter: 'critical-pairs', title: 'Critical pairs', provides: ['criticalPairs'] },
+  { id: 'knuth-bendix/complete', chapter: 'knuth-bendix', title: 'Knuth–Bendix completion', provides: ['complete'] },
+  { id: 'ac-rewriting/flatten', chapter: 'ac-rewriting', title: 'Flattening and AC-equality', provides: ['flatten', 'acEqual'] },
+  { id: 'e-graphs/union-find', chapter: 'e-graphs', title: 'Union-find', provides: ['UnionFind'] },
 ];

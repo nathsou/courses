@@ -14,7 +14,7 @@
 import type { Program, Rule } from './parse';
 import { apply, f, type Term } from './term';
 import { matchInto } from './match';
-import { builtin } from './rewrite';
+import { builtin, conditionsHold } from './rewrite';
 
 export type Strat =
   | { k: 'id' }
@@ -126,11 +126,21 @@ function applyRule(env: StrategyEnv, name: string | null, t: Term): Term | null 
     if (name !== null && r.label !== name) continue;
     const s = new Map<string, Term>();
     if (!matchInto(r.lhs, t, s)) continue;
+    if (r.conditions?.length && !conditionsHold({ rules: env.rules }, r.conditions, s)) continue;
     tick(env);
     env.log?.push(r.label ?? `rule ${i + 1}`);
-    return apply(s, r.rhs);
+    return evalBuiltins(apply(s, r.rhs));
   }
   return null;
+}
+
+/** Evaluate built-ins (externals such as `@add(2, 3)`) inside a contractum, bottom-up. `if` is left to the rules. */
+function evalBuiltins(t: Term): Term {
+  if (t.type === 'var' || t.args.length === 0) return t;
+  const u = f(t.name, ...t.args.map(evalBuiltins));
+  if (u.name[0] !== '@') return u;
+  const b = builtin(u);
+  return b ? evalBuiltins(b.result) : u;
 }
 
 const mapArgs = (t: Term, g: (a: Term, i: number) => Term | null, mode: 'all' | 'one' | 'some'): Term | null => {

@@ -455,3 +455,28 @@ hirokawa-middeldorp2004:
   year: 2004
   title: Dependency pairs revisited
   venue: RTA 2004, Lecture Notes in Computer Science 3091, 249–268
+benanav1987:
+  authors: Dan Benanav, Deepak Kapur and Paliath Narendran
+  year: 1987
+  title: Complexity of matching problems
+  venue: Journal of Symbolic Computation 3(1–2), 203–216
+stickel1981:
+  authors: Mark E. Stickel
+  year: 1981
+  title: A unification algorithm for associative-commutative functions
+  venue: Journal of the ACM 28(3), 423–434
+detlefs2005:
+  authors: David Detlefs, Greg Nelson and James B. Saxe
+  year: 2005
+  title: 'Simplify: a theorem prover for program checking'
+  venue: Journal of the ACM 52(3), 365–473
+dauchet1989:
+  authors: Max Dauchet
+  year: 1989
+  title: Simulation of Turing machines by a left-linear rewrite rule
+  venue: RTA 1989, Lecture Notes in Computer Science 355, 109–120
+lin-rado1965:
+  authors: Shen Lin and Tibor Radó
+  year: 1965
+  title: Computer studies of Turing machine problems
+  venue: Journal of the ACM 12(2), 196–212

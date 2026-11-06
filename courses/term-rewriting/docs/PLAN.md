@@ -57,17 +57,17 @@ the theory that says when it terminates and when its answers are unique. Rule fi
 | # | Part | Chapter | Builds / flagship |
 |---|---|---|---|
 | 0 | Prologue | Rewriting by hand | Workbench in manual mode; the three threads |
-| 1 | I Terms and rewriting | Terms | `positions`, `at`, `replaceAt` |
+| 1 | I Terms and rewriting | Terms | `positions`, `at`, `replaceAt`; term explorer |
 | 2 | | Substitution and matching | `apply`, `match`; matching stepper |
-| 3 | | Rewriting | `rewriteAt`, `redexes`; reduction graph |
+| 3 | | Rewriting | `rootRewrite`, `allReducts`; reduction graph |
 | 4 | | Abstract reduction | ARS lab; Newman's lemma (proved) |
-| 5 | II Programs and strategies | Strategies | `innermostStep`, `outermostStep`; strategy race |
+| 5 | II Programs and strategies | Strategies | `normalizeInnermost`, `outermostStep`, `normalizeOutermost`; strategy race |
 | 6 | | Programming with rules | `#priority`, externals, laziness; the CAS's first simplifier and `d/dx` |
 | 7 | III Making it fast | Sharing and memoisation | `HashCons`; sharing benchmark |
-| 8 | | Term indexing | discrimination trees |
-| 9 | | Compiling rewrite rules | decision trees; JavaScript backend |
+| 8 | | Term indexing | `DiscriminationTree`; index view |
+| 9 | | Compiling rewrite rules | `treeTests`; decision trees and the JavaScript backend |
 | 10 | IV Termination | Well-founded orders | multiset order (proved); hydra game |
-| 11 | | Polynomial interpretations | interpretation checker |
+| 11 | | Polynomial interpretations | `interpret`; interpretation checker |
 | 12 | | Path orders | `lpo`; proof trees |
 | 13 ◇ | | Why path orders terminate | Higman (proved), Kruskal (sketched); Kruskal's game |
 | 14 ◇ | | Dependency pairs | dependency graph |
@@ -78,8 +78,8 @@ the theory that says when it terminates and when its answers are unique. Rule fi
 | 19 | | Knuth–Bendix completion | `complete`; completion animator |
 | 20 | | Unfailing completion | prover (exponent-2 groups are abelian) |
 | 21 ◇ | | Completion elsewhere | group presentations, congruence closure, Buchberger |
-| 22 | VII Rewriting modulo | Rewriting modulo AC | AC matching |
-| 23 | | E-graphs | `EGraph`; e-graph view |
+| 22 | VII Rewriting modulo | Rewriting modulo AC | `flatten`, `acEqual`; AC matcher |
+| 23 | | E-graphs | `UnionFind`; e-graph view |
 | 24 | | Equality saturation | saturation; peephole optimiser |
 | 25 | VIII Transformation | Strategy combinators | strategy interpreter |
 | 26 | | Program transformation | the toy language's optimiser |
@@ -146,5 +146,10 @@ root: `npm run build`, `npm run audit`, `python3 scripts/check-course-navigation
 
 ## 9. Status (6 November 2026)
 
-All 34 chapters and the four appendices are written. The engine, the workbench, 23 widgets and the *Your engine*
-page are implemented and tested.
+All 34 chapters and the four appendices are written. The engine (58 unit tests), the workbench, 24 widgets and the
+*Your engine* page are implemented; 14 engine modules carry forward, and every code exercise is checked in CI
+(reference passes, starter fails, reference passes on the carried-forward engine). The built course passes the
+collection's audit (41 pages, no issues) and a browser crawl of every page with every workbench tab exercised.
+
+Known limits: the confluence checker ignores rule conditions; the course's unfailing completion computes all critical
+pairs rather than ordered ones; the decision-tree compiler needs left-linear rules.

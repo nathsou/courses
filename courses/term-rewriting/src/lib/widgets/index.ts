@@ -15,7 +15,7 @@ export { default as DependencyGraph } from './DependencyGraph.svelte';
 export { default as CriticalPairs } from './CriticalPairs.svelte';
 export { default as ProofBuilder } from './ProofBuilder.svelte';
 export { default as CompletionAnimator } from './CompletionAnimator.svelte';
-export { default as ACMatcher } from './ACMatcher.svelte';
+export { default as AcMatcher } from './ACMatcher.svelte';
 export { default as EGraphView } from './EGraphView.svelte';
 export { default as LambdaLab } from './LambdaLab.svelte';
 export { default as StateSpace } from './StateSpace.svelte';

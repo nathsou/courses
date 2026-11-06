@@ -93,8 +93,9 @@ const showPair = ([a, b]: Pair, sep: string) => `${show(a)} ${sep} ${show(b)}`;
  * Knuth–Bendix completion (Huet's strategy): orient equations with `gt`, keep the rules
  * inter-reduced, and add critical pairs of each rule once. Fails if an equation cannot be oriented.
  */
-export function complete(equations: readonly (Equation | Pair)[], gt: Order, opts: { maxSteps?: number; maxRules?: number; log?: boolean } = {}): CompletionResult {
-  const { maxSteps = 2000, maxRules = 60, log = true } = opts;
+export function complete(equations: readonly (Equation | Pair)[], gt: Order, opts: { maxSteps?: number; maxRules?: number; log?: boolean; timeMs?: number } = {}): CompletionResult {
+  const { maxSteps = 2000, maxRules = 60, log = true, timeMs = 4000 } = opts;
+  const deadline = Date.now() + timeMs;
   let E: Pair[] = equations.map((e) => (Array.isArray(e) ? [e[0], e[1]] : [e.left, e.right]) as Pair);
   let R: { pair: Pair; marked: boolean }[] = [];
   const steps: CompletionStep[] = [];
@@ -104,7 +105,7 @@ export function complete(equations: readonly (Equation | Pair)[], gt: Order, opt
   const rules = () => R.map((r) => r.pair);
   let count = 0;
   for (;;) {
-    if (++count > maxSteps || R.length > maxRules) return { status: 'gave up', rules: toRules(rules()), steps };
+    if (++count > maxSteps || R.length > maxRules || Date.now() > deadline) return { status: 'gave up', rules: toRules(rules()), steps };
     if (E.length) {
       // Pick the smallest equation.
       E.sort((a, b) => pairSize(a) - pairSize(b));
@@ -232,8 +233,9 @@ export function skolemize(t: Term, names = new Map<string, string>()): Term {
  * equations for ordered rewriting, until the goal's two sides rewrite to the same term.
  * `gt` should be total on ground terms (e.g. LPO with a total precedence that includes the Skolem constants).
  */
-export function prove(axioms: readonly (Equation | Pair)[], goal: Pair, gt: Order, opts: { maxIterations?: number; maxSize?: number } = {}): ProofResult {
-  const { maxIterations = 400, maxSize = 40 } = opts;
+export function prove(axioms: readonly (Equation | Pair)[], goal: Pair, gt: Order, opts: { maxIterations?: number; maxSize?: number; timeMs?: number } = {}): ProofResult {
+  const { maxIterations = 400, maxSize = 40, timeMs = 5000 } = opts;
+  const deadline = Date.now() + timeMs;
   const names = new Map<string, string>();
   const g: Pair = [skolemize(goal[0], names), skolemize(goal[1], names)];
   let R: Pair[] = [];
@@ -242,15 +244,21 @@ export function prove(axioms: readonly (Equation | Pair)[], goal: Pair, gt: Orde
   const known = (p: Pair) => [...R, ...Eq].some((q) => (variant(q[0], p[0]) && variant(q[1], p[1])) || (variant(q[0], p[1]) && variant(q[1], p[0])));
   const goalNow = (): [Term, Term] => [orderedNormalize(R, Eq, gt, g[0]), orderedNormalize(R, Eq, gt, g[1])];
   let iterations = 0;
+  let discarded = false;
   try {
-    while (iterations++ < maxIterations) {
+    while (iterations++ < maxIterations && Date.now() < deadline) {
       const cur = goalNow();
       if (equal(cur[0], cur[1])) return { status: 'proved', goal: cur, rules: toRules(R), equations: Eq, iterations };
-      if (!passive.length) return { status: 'disproved', goal: cur, rules: toRules(R), equations: Eq, iterations };
+      // Saturated: if nothing was discarded, the goal is not a consequence of the axioms.
+      if (!passive.length) return { status: discarded ? 'gave up' : 'disproved', goal: cur, rules: toRules(R), equations: Eq, iterations };
       passive.sort((a, b) => pairSize(a) - pairSize(b));
       const [s0, t0] = passive.shift()!;
       const s = orderedNormalize(R, Eq, gt, s0), t = orderedNormalize(R, Eq, gt, t0);
-      if (equal(s, t) || pairSize([s, t]) > maxSize) continue;
+      if (equal(s, t)) continue;
+      if (pairSize([s, t]) > maxSize) {
+        discarded = true;
+        continue;
+      }
       const p: Pair = canonical(gt(s, t) ? [s, t] : gt(t, s) ? [t, s] : [s, t]);
       if (known(p)) continue;
       const oriented = gt(p[0], p[1]);

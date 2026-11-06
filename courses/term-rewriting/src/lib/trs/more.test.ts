@@ -19,7 +19,7 @@ describe('AC', () => {
   test('flattening decides AC-equality', () => {
     expect(acEqual(term('+(a, +(b, c))'), term('+(+(c, a), b)'), ac)).toBe(true);
     expect(acEqual(term('+(a, b)'), term('*(a, b)'), ac)).toBe(false);
-    expect(show(unflatten(flatten(term('+(c, +(b, a))'), ac), ac))).toBe('+(a, +(b, c))');
+    expect(show(unflatten(flatten(term('+(c, +(b, a))'), ac), ac))).toBe('+(+(a, b), c)');
   });
   test('AC matching finds every split', () => {
     const ms = [...acMatch(flatten(term('+(x, y)'), ac), flatten(term('+(a, +(b, c))'), ac), ac)];

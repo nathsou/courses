@@ -116,7 +116,8 @@ export function builtin(t: Term): { name: string; result: Term } | null {
 
 const CONDITION_FUEL = 10_000;
 
-function conditionsHold(sys: RewriteSystem, conds: readonly Condition[] | undefined, sigma: Map<string, Term>): boolean {
+/** Do a rule's conditions hold for the matched substitution (which they may extend)? */
+export function conditionsHold(sys: RewriteSystem, conds: readonly Condition[] | undefined, sigma: Map<string, Term>): boolean {
   if (!conds || conds.length === 0) return true;
   for (const c of conds) {
     const left = evaluate(sys, apply(sigma, c.left), { fuel: CONDITION_FUEL }).term;

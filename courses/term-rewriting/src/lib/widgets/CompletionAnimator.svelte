@@ -14,10 +14,12 @@
   let k = $state(0);
   let result = $state<CompletionResult | null>(null);
   let fx = $state(new Map());
+  let initE = $state<[Term, Term][]>([]);
   function run() {
     const prog = parseProgram(src);
     fx = prog.fixity as Map<string, never>;
     const pr = precedence(p.split('>').map((x) => x.trim()).filter(Boolean));
+    initE = prog.equations.map((e) => [e.left, e.right] as [Term, Term]);
     result = complete(prog.equations, order === 'kbo' ? kbo({ prec: pr }) : lpo(pr), { maxSteps: 2000 });
     k = 0;
   }
@@ -28,6 +30,7 @@
   });
   const cur = $derived(result && k > 0 ? result.steps[k - 1]! : null);
   const sh = (t: Term) => show(t, fx);
+  const E = $derived(cur ? cur.E : initE);
 </script>
 
 <Widget title="Completion, step by step" subtitle="Orient an equation into a rule, simplify everything with it, compute the new critical pairs, repeat." onreset={() => ((src = equations), (p = prec), (result = null))}>
@@ -47,8 +50,8 @@
     {#if cur}<p class="w-code"><span class="tag">{cur.rule}</span> {cur.note}</p>{/if}
     <div class="cols">
       <div>
-        <p class="w-note">E: equations ({cur?.E.length ?? 0})</p>
-        <ul>{#each (cur?.E ?? []).slice(0, 14) as [a, b], i (i)}<li class="w-code">{sh(a)} = {sh(b)}</li>{/each}{#if (cur?.E.length ?? 0) > 14}<li class="w-note">…</li>{/if}</ul>
+        <p class="w-note">E: equations ({E.length})</p>
+        <ul>{#each E.slice(0, 14) as [a, b], i (i)}<li class="w-code">{sh(a)} = {sh(b)}</li>{/each}{#if E.length > 14}<li class="w-note">…</li>{/if}</ul>
       </div>
       <div>
         <p class="w-note">R: rules ({cur?.R.length ?? 0})</p>

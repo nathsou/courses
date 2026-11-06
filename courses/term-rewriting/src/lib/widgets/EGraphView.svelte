@@ -1,5 +1,6 @@
 <script lang="ts">
   /** An e-graph drawn as e-classes (dashed boxes) holding e-nodes; step equality saturation and extract. */
+  import { untrack } from 'svelte';
   import Widget from '$lib/components/ui/Widget.svelte';
   import { parseProgram, parseTerm } from '$lib/trs/parse';
   import { EGraph, saturate, type SaturationReport } from '$lib/trs/egraph';
@@ -33,7 +34,7 @@
   $effect(() => {
     void src;
     void tSrc;
-    reset();
+    untrack(reset);
   });
   function iterate(n: number) {
     if (!eg) return;
@@ -76,21 +77,23 @@
       rows.set(r, [...(rows.get(r) ?? []), c]);
     }
     const maxH = Math.max(0, ...rows.keys());
-    const boxes: { id: number; x: number; y: number; w: number; nodes: { label: string; x: number; children: number[] }[] }[] = [];
+    const boxes: { id: number; x: number; y: number; w: number; nodes: { label: string; x: number; w: number; children: number[] }[] }[] = [];
     let W = 0;
     for (let r = maxH; r >= 0; r--) {
       let x = 10;
       for (const c of rows.get(r) ?? []) {
+        const start = x;
+        let nx = start + 8;
         const nodes = c.nodes.map((n) => {
           const label = n.op.startsWith('?') ? n.op.slice(1) : n.op;
           const w = Math.max(28, label.length * 8 + 14);
-          const nx = x + 8;
-          x += w + 6;
-          return { label, x: nx + w / 2, w, children: n.children.map((ch) => eg!.find(ch)) };
+          const node = { label, x: nx + w / 2, w, children: n.children.map((ch) => eg!.find(ch)) };
+          nx += w + 6;
+          return node;
         });
-        const w = nodes.reduce((a, n) => a + n.w + 6, 0) + 10;
-        boxes.push({ id: c.id, x: x - w + 2, y: 14 + (maxH - r) * 74, w, nodes });
-        x += 18;
+        const w = nx - start + 2;
+        boxes.push({ id: c.id, x: start, y: 14 + (maxH - r) * 74, w, nodes });
+        x = start + w + 18;
       }
       W = Math.max(W, x);
     }
@@ -122,7 +125,7 @@
           <rect x={b.x} y={b.y} width={b.w} height="40" rx="8" class="cls" class:root={b.id === snap.rootId} />
           <text x={b.x + 4} y={b.y - 3} class="cid">#{b.id}</text>
           {#each b.nodes as n, i (i)}
-            <rect x={n.x - (n.label.length * 8 + 14) / 2} y={b.y + 8} width={Math.max(28, n.label.length * 8 + 14)} height="24" rx="5" class="enode" />
+            <rect x={n.x - n.w / 2} y={b.y + 8} width={n.w} height="24" rx="5" class="enode" />
             <text x={n.x} y={b.y + 24.5} class="lab">{n.label}</text>
           {/each}
         {/each}
