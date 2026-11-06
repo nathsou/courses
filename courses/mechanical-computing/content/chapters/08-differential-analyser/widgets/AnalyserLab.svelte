@@ -77,7 +77,7 @@
           <line x1="0" y1="30" x2="0" y2="80" class="shaft" />
           <g transform="translate({Math.max(-26, Math.min(26, (k === 0 ? (id === 'orbit' ? 1 - (now[2] ?? 0) : -(now[2] ?? 0) - (id === 'damped' ? param * (now[1] ?? 0) : 0)) : (now[1] ?? 0)) * 22))} 4)"><rect x="-3" y="-10" width="6" height="16" rx="2" class="wheel" /></g>
           <text y="-24" text-anchor="middle" class="t">∫</text>
-          <text y="56" text-anchor="middle" class="lab">out: {names[k]}</text>
+          <text x="5" y="62" class="lab">out: {names[k]}</text>
           <g transform="translate(40 -10)"><circle r="7" class="dial" /><line x1="0" y1="0" x2="0" y2="-6" transform="rotate({mark(now[k + 1] ?? 0)})" class="hand" /></g>
         </g>
       {/each}
