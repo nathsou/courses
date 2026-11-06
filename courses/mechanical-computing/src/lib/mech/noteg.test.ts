@@ -8,6 +8,7 @@ test('the corrected Note G deck computes B7 = −1/30', () => {
   const v = Number(formatFixed(r.store.get(24)!, 20).replace('−', '-'));
   expect(v).toBeCloseTo(-1 / 30, 15);
   expect(r.printed).toHaveLength(1);
+  expect(Number(r.printed[0]!.replace('−', '-'))).toBeCloseTo(-1 / 30, 15);
 });
 
 test('as printed (operation 4 reversed) it does not', () => {

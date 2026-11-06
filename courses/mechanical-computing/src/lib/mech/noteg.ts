@@ -57,8 +57,8 @@ function body(printed: boolean, n: number): string {
     '# operations 13–23 again, for B5\n' +
     loop(23, 13) +
     op(24, '-', 24, 13, 24) + // B7 = −(A0 + B1·A1 + B3·A3 + B5·A5)
-    op(25, '+', 1, 3, 3) + // n + 1, ready for the next Bernoulli number
-    'P\n'
+    'P                # print B7\n' +
+    op(25, '+', 1, 3, 3) // n + 1, ready for the next Bernoulli number
   );
 }
 

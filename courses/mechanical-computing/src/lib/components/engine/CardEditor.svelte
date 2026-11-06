@@ -94,7 +94,7 @@
   </div>
 
   {#if view === 'text'}
-    <div class="code">
+    <div class="code" style:height="{rows * 1.23 + 1.1}rem">
       <div class="gutter" bind:this={gutter} aria-hidden="true">
         {#each Array.from({ length: lines }) as _, i (i)}<span class:err={errorLines.has(i + 1)} class:cur={currentLine === i + 1}>{i + 1}</span>{/each}
       </div>
@@ -256,12 +256,14 @@
     border-radius: 2px;
   }
   textarea {
+    height: 100%;
+    overflow-y: auto;
+    resize: none;
     font-family: var(--font-mono);
     font-size: 0.82rem;
     line-height: 1.5;
     padding: 0.5rem 0.6rem;
     border: 0;
-    resize: vertical;
     background: transparent;
     color: var(--ink);
     min-width: 0;

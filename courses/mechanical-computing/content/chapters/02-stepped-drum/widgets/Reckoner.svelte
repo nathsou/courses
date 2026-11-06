@@ -138,7 +138,7 @@
       <button onclick={clearRegs}>Clear</button>
     </div>
     <p class="status">
-      Shift {m.shift} · {after(tick, m.turns)} {m.turns === 1 ? 'turn' : 'turns'}{#if lastCarries.length} · last turn carried from {lastCarries.length} {lastCarries.length === 1 ? 'place' : 'places'}{/if}{#if pending.length} · <strong class="warn">{pending.length} carry {pending.length === 1 ? 'is' : 'carries are'} waiting: press ↑ to complete {pending.length === 1 ? 'it' : 'them'} by hand</strong>{/if}{#if m.wrapped && flavour === 'curta'} · <strong class="warn">the result went through zero</strong>{/if}
+      Shift {m.shift} · {after(tick, m.turns)} {m.turns === 1 ? 'turn' : 'turns'}{#if lastCarries.length}{' '}· last turn carried from {lastCarries.length} {lastCarries.length === 1 ? 'place' : 'places'}{/if}{#if pending.length} · <strong class="warn">{pending.length} carry {pending.length === 1 ? 'is' : 'carries are'} waiting: press ↑ to complete {pending.length === 1 ? 'it' : 'them'} by hand</strong>{/if}{#if m.wrapped && flavour === 'curta'} · <strong class="warn">the result went through zero</strong>{/if}
     </p>
     {#if ok}
       <ul class="checks">{#each ok as c (c.label)}<li class:pass={c.pass}>{c.pass ? '✓' : '○'} {c.label}</li>{/each}</ul>
