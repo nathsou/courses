@@ -1,0 +1,457 @@
+@import '@fontsource-variable/source-serif-4/opsz.css';
+@import '@fontsource-variable/source-serif-4/opsz-italic.css';
+@import '@fontsource-variable/ibm-plex-sans';
+@import '@fontsource-variable/playfair-display';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/600.css';
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   "Cyanotype". By day, a Victorian drawing office: cream paper, blue-black ink and a brass accent. By night,
+   a cyanotype — the blueprint process John Herschel found in 1842, while his friend Babbage was drawing the
+   Analytical Engine — white lines on Prussian blue. Core tokens: --bg --fg --mute --ac --pn; the other
+   names are aliases so that every component re-skins from here. */
+
+:root {
+  color-scheme: light;
+  --font-display: 'Playfair Display Variable', 'Didot', 'Bodoni 72', Georgia, serif;
+  --font-body: 'Source Serif 4 Variable', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'IBM Plex Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --bg: #f4efe2;
+  --fg: #1b2130;
+  --mute: #5a5e6b;
+  --ac: #93641a;
+  --pn: #ebe4d3;
+
+  --page: var(--bg);
+  --surface: #faf7ef;
+  --surface-2: var(--pn);
+  --surface-3: #d9d0bb;
+  --ink: var(--fg);
+  --ink-2: #353b4a;
+  --ink-3: #575c69;
+  --line: #d9d0bb;
+  --line-strong: #b3a88f;
+  --ruling: #d6ccb6;
+  --rule: var(--line);
+  --rule-strong: var(--line-strong);
+  --shadow: 0 1px 2px rgba(27, 33, 48, 0.06), 0 6px 18px -10px rgba(27, 33, 48, 0.22);
+
+  --accent: #1f4f8a;
+  --accent-soft: color-mix(in srgb, #1f4f8a 10%, var(--bg));
+  --accent-ink: #173d6b;
+  --on-accent: #faf7ef;
+  --focus: #1f6fd0;
+  --brass: #93641a;
+  --brass-soft: color-mix(in srgb, #b8862b 18%, var(--bg));
+
+  --ok: #2b6a47;
+  --ok-soft: color-mix(in srgb, #2b6a47 12%, var(--bg));
+  --bad: #a3302a;
+  --bad-soft: color-mix(in srgb, #a3302a 12%, var(--bg));
+  --maybe: #7f5300;
+  --maybe-soft: color-mix(in srgb, #b8862b 18%, var(--bg));
+
+  --fx-red: #a3392f;
+  --fx-blue: #1f4f8a;
+  --fx-yellow: #b8862b;
+  --fx-ink: #1b2130;
+  --fx-cream: #faf7ef;
+  --note: #1f4f8a;
+  --tip: #1f4f8a;
+  --warn: #a3302a;
+  --challenge: #93641a;
+  --history: #7f5300;
+  --history-soft: color-mix(in srgb, #b8862b 14%, var(--bg));
+  --term-hl: rgba(184, 134, 43, 0.22);
+  --term-hl-strong: rgba(184, 134, 43, 0.42);
+
+  --series-1: #1f4f8a;
+  --series-2: #a3392f;
+  --series-3: #b8862b;
+  --series-4: #2b6a47;
+
+  /* Scene colours read by the WebGL renderer (src/lib/gl/palette.ts). */
+  --scene-bg: #efe8d8;
+  --scene-line: #1b2130;
+  --scene-grid: #d9cfb8;
+
+  --chart-surface: var(--surface);
+  --grid: var(--line);
+  --axis: var(--line-strong);
+  --radius: 6px;
+  --radius-sm: 4px;
+  --sidebar-w: 18rem;
+  --main-w: 42rem;
+  --margin-w: 17rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) {
+    color-scheme: dark;
+    --bg: #0d2440;
+    --fg: #eaf1fa;
+    --mute: #a8b9cf;
+    --ac: #e2b964;
+    --pn: #12304f;
+    --surface: #102a49;
+    --surface-3: #1d4067;
+    --ink-2: #d3deec;
+    --ink-3: #a8b9cf;
+    --line: #22466e;
+    --line-strong: #3b6390;
+    --ruling: #22466e;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 22px -12px rgba(0, 0, 0, 0.6);
+    --accent: #9fd0ff;
+    --accent-soft: color-mix(in srgb, #9fd0ff 12%, var(--bg));
+    --accent-ink: #c9e5ff;
+    --on-accent: #0d2440;
+    --focus: #ffd27a;
+    --brass: #e2b964;
+    --brass-soft: color-mix(in srgb, #e2b964 14%, var(--bg));
+    --ok: #86d6a7;
+    --ok-soft: color-mix(in srgb, #4fae7e 18%, var(--bg));
+    --bad: #ff9c8c;
+    --bad-soft: color-mix(in srgb, #e06a5a 18%, var(--bg));
+    --maybe: #f0c26a;
+    --maybe-soft: color-mix(in srgb, #e2b964 16%, var(--bg));
+    --fx-red: #ff9c8c;
+    --fx-blue: #9fd0ff;
+    --fx-yellow: #e2b964;
+    --fx-ink: #0d2440;
+    --fx-cream: #0d2440;
+    --note: #9fd0ff;
+    --tip: #9fd0ff;
+    --warn: #ff9c8c;
+    --challenge: #f0c26a;
+    --history: #f0c26a;
+    --history-soft: color-mix(in srgb, #e2b964 10%, var(--bg));
+    --term-hl: rgba(226, 185, 100, 0.2);
+    --term-hl-strong: rgba(226, 185, 100, 0.38);
+    --series-1: #9fd0ff;
+    --series-2: #ff9c8c;
+    --series-3: #e2b964;
+    --series-4: #86d6a7;
+    --scene-bg: #0b2039;
+    --scene-line: #eaf1fa;
+    --scene-grid: #1b3d63;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0d2440;
+  --fg: #eaf1fa;
+  --mute: #a8b9cf;
+  --ac: #e2b964;
+  --pn: #12304f;
+  --surface: #102a49;
+  --surface-3: #1d4067;
+  --ink-2: #d3deec;
+  --ink-3: #a8b9cf;
+  --line: #22466e;
+  --line-strong: #3b6390;
+  --ruling: #22466e;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 22px -12px rgba(0, 0, 0, 0.6);
+  --accent: #9fd0ff;
+  --accent-soft: color-mix(in srgb, #9fd0ff 12%, var(--bg));
+  --accent-ink: #c9e5ff;
+  --on-accent: #0d2440;
+  --focus: #ffd27a;
+  --brass: #e2b964;
+  --brass-soft: color-mix(in srgb, #e2b964 14%, var(--bg));
+  --ok: #86d6a7;
+  --ok-soft: color-mix(in srgb, #4fae7e 18%, var(--bg));
+  --bad: #ff9c8c;
+  --bad-soft: color-mix(in srgb, #e06a5a 18%, var(--bg));
+  --maybe: #f0c26a;
+  --maybe-soft: color-mix(in srgb, #e2b964 16%, var(--bg));
+  --fx-red: #ff9c8c;
+  --fx-blue: #9fd0ff;
+  --fx-yellow: #e2b964;
+  --fx-ink: #0d2440;
+  --fx-cream: #0d2440;
+  --note: #9fd0ff;
+  --tip: #9fd0ff;
+  --warn: #ff9c8c;
+  --challenge: #f0c26a;
+  --history: #f0c26a;
+  --history-soft: color-mix(in srgb, #e2b964 10%, var(--bg));
+  --term-hl: rgba(226, 185, 100, 0.2);
+  --term-hl-strong: rgba(226, 185, 100, 0.38);
+  --series-1: #9fd0ff;
+  --series-2: #ff9c8c;
+  --series-3: #e2b964;
+  --series-4: #86d6a7;
+  --scene-bg: #0b2039;
+  --scene-line: #eaf1fa;
+  --scene-grid: #1b3d63;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.1875rem;
+  line-height: 1.62;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+  opacity: 0.8;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--term-hl-strong);
+}
+
+.ui {
+  font-family: var(--font-ui);
+}
+
+/* ───────────────────────── Article grid ─────────────────────────
+   main column for prose; `wide` spans into the right margin; `full` spans the viewport.
+   Sidenotes float into the margin on wide screens. */
+
+.article {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(1rem, 1fr)
+    [wide-start main-start] minmax(0, var(--main-w))
+    [main-end] minmax(0, calc(var(--margin-w) + 2.5rem))
+    [wide-end] minmax(1rem, 1fr) [full-end];
+  counter-reset: sidenote;
+}
+.article > * {
+  grid-column: main;
+  min-width: 0;
+}
+.article > .wide {
+  grid-column: wide;
+}
+.article > .full {
+  grid-column: full;
+}
+@media (max-width: 1279px) {
+  .article {
+    grid-template-columns: [full-start] minmax(1rem, 1fr) [wide-start main-start] minmax(0, 46rem) [main-end wide-end] minmax(1rem, 1fr) [full-end];
+  }
+}
+
+/* ───────────────────────── Prose ───────────────────────── */
+
+.article h2,
+.article h3,
+.article h4 {
+  color: var(--ink);
+}
+.article h2 {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: clamp(1.75rem, 3.6vw, 2.3rem);
+  letter-spacing: -0.005em;
+  line-height: 1.12;
+  margin: 4rem 0 1.1rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line-strong);
+}
+/* A short engineer's scale (ruler ticks) sits on the section line. */
+.article h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -6px;
+  width: 3.3rem;
+  height: 6px;
+  background: repeating-linear-gradient(to right, var(--ac) 0 1px, transparent 1px 0.55rem);
+  border-bottom: 1px solid var(--ac);
+}
+.article h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 2.5rem 0 0.6rem;
+}
+.article h4 {
+  font-family: var(--font-ui);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 1.75rem 0 0.4rem;
+}
+.article p,
+.article ul,
+.article ol {
+  margin: 0 0 1.1rem;
+}
+.article li + li {
+  margin-top: 0.3rem;
+}
+.article li > p {
+  margin-bottom: 0.4rem;
+}
+.article strong {
+  font-weight: 700;
+}
+.article hr {
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+  margin: 2.75rem 0;
+}
+.article blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  border-left: 3px solid var(--ruling);
+  color: var(--ink-2);
+  font-style: italic;
+}
+/* Markdown lists only (widget and exercise lists are left alone): accent numerals and small dots. */
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ol {
+  list-style: none;
+  counter-reset: item;
+  padding-left: 2rem;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ol > li {
+  counter-increment: item;
+  position: relative;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ol > li::before {
+  content: counter(item);
+  position: absolute;
+  left: -2rem;
+  width: 1.5rem;
+  text-align: right;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.82em;
+  line-height: inherit;
+  padding-top: 0.12em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ul {
+  list-style: none;
+  padding-left: 1.4rem;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ul > li {
+  position: relative;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ul > li::before {
+  content: '';
+  position: absolute;
+  left: -1.05rem;
+  top: 0.66em;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--ac);
+}
+.article .table-scroll { overflow-x: auto; min-width: 0; }
+.article .table-scroll > table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+.article .table-scroll th,
+.article .table-scroll td {
+  text-align: left;
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid var(--ruling);
+  vertical-align: top;
+}
+.article th {
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line-strong);
+}
+.article :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--surface-2);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+.article img {
+  max-width: 100%;
+  height: auto;
+}
+
+pre.plain {
+  margin: 1.4rem 0;
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+/* Footnotes (GFM). */
+.article .footnotes {
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+
+/* ───────────────────────── Utility ───────────────────────── */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

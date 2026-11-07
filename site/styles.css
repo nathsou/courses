@@ -1014,6 +1014,18 @@ h1 {
 .fallboard .stave .lines { fill:none; stroke:light-dark(#4a4640,#bdb6a6); stroke-width:1; }
 .fallboard .stave .notes ellipse { fill:light-dark(#1b1a18,#ece6d6); }
 .fallboard .stave .keys path { stroke:light-dark(#8c2a35,#d6b25e); stroke-width:3; stroke-linecap:round; }
+/* Mechanical Computing: "Cyanotype" — a drawing office by day, a blueprint by night, brass gears and punched cards. */
+.card.cyanotype {
+  --cbg: light-dark(#f4efe2, #0d2440);
+  --cfg: light-dark(#1b2130, #eaf1fa);
+  --cmute: light-dark(#5a5e6b, #a8b9cf);
+  --cac: light-dark(#1f4f8a, #9fd0ff);
+  background: var(--cbg);
+}
+.cyanotype .gears { width:200px; height:76px; margin-bottom:16px; display:block; }
+.cyanotype .gears circle, .cyanotype .gears path, .cyanotype .gears rect { fill:none; stroke-width:2; stroke-linecap:round; }
+.cyanotype .gears .g1 *, .cyanotype .gears .g2 * { stroke:light-dark(#93641a,#e2b964); }
+.cyanotype .gears .cards * { stroke:light-dark(#1b2130,#eaf1fa); }
 /* 11 · For All Inputs: "The Notary" — certificate paper, a seal, red pencil */
 .notary {
   --cbg: #f6f1e4;

@@ -1,0 +1,117 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug) }
+carry:
+  term: carry
+  definition: The 1 passed to the next place when a digit passes its largest value (9 → 0 in decimal, 1 → 0 in binary).
+  chapter: pascaline
+sautoir:
+  term: sautoir
+  definition: The weighted lever of the Pascaline’s carry, lifted gradually as a wheel turns from 0 to 9 and released at 9 → 0 to push the next wheel on by one.
+  chapter: pascaline
+nines-complement:
+  term: nines’ complement
+  definition: The number obtained by replacing every digit d with 9 − d. Adding it (and 1) subtracts; the Pascaline showed it in its upper row of windows.
+  chapter: pascaline
+tens-complement:
+  term: tens’ complement
+  definition: The nines’ complement plus one. Adding the tens’ complement of b subtracts b; the decimal counterpart of two’s complement.
+  chapter: stepped-drum
+stepped-drum:
+  term: stepped drum
+  definition: A drum with nine teeth of increasing length. A pinion slid to position s meets s of them per turn, so one turn adds s.
+  chapter: stepped-drum
+carriage:
+  term: carriage
+  definition: The part of a calculator holding the result register, shifted one place at a time so that turns add the setting times 1, 10, 100…
+  chapter: stepped-drum
+method-of-differences:
+  term: method of differences
+  definition: Continuing a table of a polynomial by additions alone, keeping one number per order of difference and adding each into the one before it.
+  chapter: difference-engine
+staggered:
+  term: staggered set-up
+  definition: The starting values Difference Engine No. 2 needs because its two half-cycles run the columns out of phase; column i starts with the i-th difference taken at x = −⌊i/2⌋.
+  chapter: difference-engine
+pipelining:
+  term: pipelining
+  definition: Overlapping the stages of successive computations so that several proceed at once, at the price of stages seeing each other’s results at different times.
+  chapter: difference-engine
+store:
+  term: store
+  definition: The Analytical Engine’s memory, columns of figure wheels holding numbers between operations.
+  chapter: analytical-engine
+mill:
+  term: mill
+  definition: The Analytical Engine’s arithmetic unit, where numbers brought from the store are added, subtracted, multiplied and divided.
+  chapter: analytical-engine
+anticipating-carriage:
+  term: anticipating carriage
+  definition: Babbage’s mechanism for making every carry of an addition at once, by finding places that made a carry followed by runs of 9s; carry lookahead.
+  chapter: analytical-engine
+barrel:
+  term: barrel
+  definition: A drum of studs in the Analytical Engine’s mill whose rows set off the steps of an operation; microcode in brass.
+  chapter: analytical-engine
+run-up-lever:
+  term: run-up lever
+  definition: The Analytical Engine’s one-bit flag, set when a result changed sign or overflowed; conditional combinatorial cards read it.
+  chapter: note-g
+combinatorial-card:
+  term: combinatorial card
+  definition: A card that moves the chain of cards forwards or backwards, unconditionally or depending on the run-up lever; loops and branches.
+  chapter: note-g
+bernoulli:
+  term: Bernoulli numbers
+  definition: A sequence of rational numbers (1/6, −1/30, 1/42, −1/30, …) that appears in sums of powers and many series; the subject of Note G.
+  chapter: note-g
+analog:
+  term: analog
+  definition: Holding numbers as continuous physical quantities (angles, lengths, levels) rather than as discrete digits.
+  chapter: antikythera
+pin-and-slot:
+  term: pin-and-slot
+  definition: Two gears on slightly offset axes, a pin on one riding in a slot of the other, so that the second turns at a varying speed; it models the Moon’s anomaly in the Antikythera mechanism.
+  chapter: antikythera
+slide-rule:
+  term: slide rule
+  definition: Two logarithmic scales that slide against each other, so that adding lengths multiplies numbers.
+  chapter: antikythera
+integrator:
+  term: integrator
+  definition: A wheel resting on a turning disc at distance y from its centre, whose rotation is proportional to ∫ y dx.
+  chapter: integrators
+planimeter:
+  term: planimeter
+  definition: An instrument that measures an area by tracing its boundary, with a wheel that rolls only across its arm.
+  chapter: integrators
+torque-amplifier:
+  term: torque amplifier
+  definition: A motor-driven capstan that lets a feeble input control a large torque; it gave the differential analyser’s integrators the gain to drive each other.
+  chapter: differential-analyser
+differential-analyser:
+  term: differential analyser
+  definition: A machine of integrators, gears and adders connected by shafts to solve differential equations; Bush’s of 1931 had six integrators.
+  chapter: differential-analyser
+floating-point:
+  term: floating point
+  definition: Storing a number as a sign, an exponent and a mantissa, ± 1.f × 2^e in binary, so that very large and small numbers share one format.
+  chapter: z1
+full-adder:
+  term: full adder
+  definition: The logic that adds two bits and an incoming carry, producing a sum bit and an outgoing carry.
+  chapter: z1
+gain:
+  term: gain
+  definition: The property of an element whose output is stronger than its input, so that signals can be restored and can drive several other elements.
+  chapter: computing-with-anything
+fan-out:
+  term: fan-out
+  definition: The number of inputs one element’s output can drive.
+  chapter: computing-with-anything
+fluidics:
+  term: fluidics
+  definition: Logic made of jets of air or liquid that switch each other, with no moving parts.
+  chapter: computing-with-anything
+landauer:
+  term: Landauer’s limit
+  definition: The least energy that must be turned into heat to erase one bit of information, kT ln 2, about 3 × 10⁻²¹ J at room temperature.
+  chapter: why-electronic
