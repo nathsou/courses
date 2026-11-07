@@ -1,6 +1,6 @@
-# Normal Forms
+# Term Rewriting Systems
 
-*Term rewriting, from your first rule to completion, e-graphs and the λ-calculus.* An interactive course in 34 chapters
+*From your first rule to completion, e-graphs and the λ-calculus.* An interactive course in 34 chapters
 and four appendices. The reader builds a rewriting engine in TypeScript as they go, and every rule file in the course
 (written in [Girafe](https://github.com/nathsou/girafe) syntax) runs in a workbench in the page.
 

@@ -1,4 +1,4 @@
-name: Normal Forms — checks
+name: Term Rewriting Systems — checks
 
 # Tests, type checks and a build for courses/term-rewriting. (Deployment is in deploy.yml.)
 on:

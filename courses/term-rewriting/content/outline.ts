@@ -29,8 +29,8 @@ export interface OutlinePart {
   chapters: OutlineEntry[];
 }
 
-export const COURSE_TITLE = 'Normal Forms';
-export const COURSE_SUBTITLE = 'Term rewriting, from your first rule to completion, e-graphs and the λ-calculus';
+export const COURSE_TITLE = 'Term Rewriting Systems';
+export const COURSE_SUBTITLE = 'From your first rule to completion, e-graphs and the λ-calculus';
 
 export const THREADS: Record<Exclude<Thread, 'all'>, { name: string; blurb: string }> = {
   cas: { name: 'The algebra system', blurb: 'A small computer-algebra system: simplification, derivatives, normal forms of polynomials and the cheapest equivalent expression.' },

@@ -1,6 +1,6 @@
 # Project notes for Claude
 
-Interactive course "Normal Forms: term rewriting, from your first rule to completion, e-graphs and the λ-calculus".
+Interactive course "Term Rewriting Systems: from your first rule to completion, e-graphs and the λ-calculus".
 Plan, decisions and progress: docs/PLAN.md. Read it first. Lives in `courses/term-rewriting/` of the Interactive Courses monorepo.
 
 - Reader: a programmer with school algebra; four reading paths (engine builder, theory, applied, semantics).

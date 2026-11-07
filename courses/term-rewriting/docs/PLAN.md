@@ -1,9 +1,9 @@
-# Course plan: *Normal Forms*
+# Course plan: *Term Rewriting Systems*
 
 The working plan for the course: decisions, through-lines, curriculum, the engine, interactive components,
 quality gates and status. Update it when a decision changes or a chapter lands.
 
-*Normal Forms* teaches term rewriting from first principles to research tools. The reader writes a complete
+*Term Rewriting Systems* teaches term rewriting from first principles to research tools. The reader writes a complete
 rewriting engine in TypeScript as they go (terms, matching, rewriting, strategies, hash-consing, indexing, decision
 trees, path orders, unification, critical pairs, completion, AC matching, e-graphs, strategy combinators) and learns
 the theory that says when it terminates and when its answers are unique. Rule files are written in Girafe syntax
@@ -22,7 +22,7 @@ the theory that says when it terminates and when its answers are unique. Rule fi
 
 | Topic | Decision | Notes |
 |---|---|---|
-| Title | **Normal Forms**, subtitled *Term rewriting, from your first rule to completion, e-graphs and the λ-calculus* | Slug `term-rewriting`, published at `/term-rewriting/`. |
+| Title | **Term Rewriting Systems**, subtitled *From your first rule to completion, e-graphs and the λ-calculus* (renamed from *Normal Forms* on 7 November 2026) | Slug `term-rewriting`, published at `/term-rewriting/`. |
 | Reader | All four readers above | Reading paths on the home page: engine builder, theory, applied, semantics (`PATHS` in `content/outline.ts`). |
 | Spine | **Theory in textbook order + one growing engine** | Terms, matching, rewriting, abstract reduction, strategies, performance, termination, confluence, completion, rewriting modulo, transformation, semantics, computability. Each part ends with a payoff built on the reader's engine. |
 | Maths and proofs | **Assume little, prove a lot** | Appendix A teaches the background. Theorems carry `status=proved|sketched|stated`; core results are proved in full (Newman's lemma, the critical pair lemma, the multiset order, Higman's lemma, soundness of completion steps); Kruskal's tree theorem is sketched; deep results (Birkhoff, undecidability of termination via Huet–Lankford) are proved or sketched as the chapter says. Long proofs use `::::zoom` (Idea / Sketch / Proof). |

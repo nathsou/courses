@@ -22,7 +22,7 @@ A collection of interactive textbooks. The [course index](site/index.html) links
 | The Prime Staircase: from the sieve to the Riemann Hypothesis | `courses/primes/` | `/primes/` |
 | What Changed? Reactive rendering, from innerHTML to signals | `courses/reactive-rendering/` | `/reactive-rendering/` |
 | Music Theory: at the piano, from the first note to jazz harmony | `courses/music-theory/` | `/music-theory/` |
-| Normal Forms: term rewriting, from your first rule to completion, e-graphs and the λ-calculus | `courses/term-rewriting/` | `/term-rewriting/` |
+| Term Rewriting Systems: from your first rule to completion, e-graphs and the λ-calculus | `courses/term-rewriting/` | `/term-rewriting/` |
 
 Every course has an “All courses” link beside its contents and a compact contents toggle in its own header or drawer handle. Sidebars collapse on desktop and open as drawers on smaller screens; each course remembers its desktop preference. The shared navigation lives in `packages/course-navigation/`.
 

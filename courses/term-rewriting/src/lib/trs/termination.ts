@@ -77,38 +77,65 @@ export function monotonicityProblem(I: Interpretation, sig: ReadonlyMap<string, 
   return null;
 }
 
+/**
+ * Depth-first search over linear interpretations a0 + a1·x1 + … with coefficients in [lo, max]. Coefficients
+ * are assigned one symbol at a time, and each constraint is checked as soon as every symbol it mentions has
+ * been assigned, so most of the search space is pruned early. `accept` is called on complete assignments.
+ */
+function searchLinear<T>(
+  sig: [string, number][],
+  constraints: { rule: Rule; strict: boolean }[],
+  opts: { max: number; limit: number; strictMonotone: boolean },
+  accept: (I: Interpretation) => T | null,
+): T | null {
+  const symsOf = (r: Rule) => new Set([...symbols(r.lhs).keys(), ...symbols(r.rhs).keys()]);
+  const order = sig.map(([s]) => s);
+  const pos = new Map(order.map((s, i) => [s, i]));
+  // Constraint c can be checked once the symbol at index readyAt[c] has been assigned.
+  const readyAt = constraints.map((c) => Math.max(-1, ...[...symsOf(c.rule)].map((s) => pos.get(s) ?? -1)));
+  const I = new Map<string, P.Poly>();
+  let tried = 0;
+  const holds = (c: { rule: Rule; strict: boolean }) => {
+    const d = P.sub(interpret(I, c.rule.lhs), interpret(I, c.rule.rhs));
+    return c.strict ? P.positive(d) : P.nonNegative(d);
+  };
+  const go = (k: number): T | null => {
+    if (tried > opts.limit) return null;
+    if (k === sig.length) {
+      tried++;
+      return accept(I);
+    }
+    const [sym, n] = sig[k]!;
+    const coeffs = new Array(n + 1).fill(0);
+    const assign = (i: number): T | null => {
+      if (i > n) {
+        let p: P.Poly = P.constant(coeffs[0]);
+        for (let j = 1; j <= n; j++) p = P.add(p, P.scale(P.variable(`x${j}`), coeffs[j]));
+        I.set(sym, p);
+        tried++;
+        for (let c = 0; c < constraints.length; c++) if (readyAt[c] === k && !holds(constraints[c]!)) return null;
+        return go(k + 1);
+      }
+      const lo = opts.strictMonotone && i > 0 ? 1 : 0;
+      for (let a = lo; a <= opts.max; a++) {
+        coeffs[i] = a;
+        const r = assign(i + 1);
+        if (r !== null) return r;
+        if (tried > opts.limit) return null;
+      }
+      return null;
+    };
+    const r = assign(0);
+    I.delete(sym);
+    return r;
+  };
+  return go(0);
+}
+
 /** Search linear interpretations a0 + a1·x1 + … with coefficients up to `max`. */
 export function findLinearInterpretation(rules: readonly Rule[], opts: { max?: number; limit?: number; strictMonotone?: boolean } = {}): Interpretation | null {
   const { max = 2, limit = 300_000, strictMonotone = true } = opts;
-  const sig = [...signature(rules)];
-  const slots: { sym: string; i: number }[] = [];
-  for (const [s, n] of sig) for (let i = 0; i <= n; i++) slots.push({ sym: s, i });
-  const values = new Array(slots.length).fill(0);
-  let tried = 0;
-  const build = (): Interpretation => {
-    const m = new Map<string, P.Poly>();
-    slots.forEach(({ sym, i }, k) => {
-      const term = i === 0 ? P.constant(values[k]) : P.scale(P.variable(`x${i}`), values[k]);
-      m.set(sym, P.add(m.get(sym) ?? P.ZERO, term));
-    });
-    return m;
-  };
-  const go = (k: number): Interpretation | null => {
-    if (tried > limit) return null;
-    if (k === slots.length) {
-      tried++;
-      const I = build();
-      return checkInterpretation(I, rules).ok ? I : null;
-    }
-    const lo = strictMonotone && slots[k]!.i > 0 ? 1 : 0;
-    for (let a = lo; a <= max; a++) {
-      values[k] = a;
-      const r = go(k + 1);
-      if (r) return r;
-    }
-    return null;
-  };
-  return go(0);
+  return searchLinear([...signature(rules)], rules.map((rule) => ({ rule, strict: true })), { max, limit, strictMonotone }, (I) => new Map(I));
 }
 
 // ───────────── precedence search ─────────────
@@ -287,37 +314,13 @@ function subtermCriterion(pairs: readonly DependencyPair[], scc: number[]): { re
 /** A reduction pair from linear interpretations: rules ≥, pairs ≥, some pair >. */
 function interpretationProcessor(rules: readonly Rule[], pairs: readonly DependencyPair[], scc: number[], max = 2, limit = 200_000): { removed: number[]; detail: string } | null {
   const pairRules: Rule[] = scc.map((i) => ({ lhs: pairs[i]!.lhs, rhs: pairs[i]!.rhs }));
-  const all = [...rules, ...pairRules];
-  const sig = [...signature(all)];
-  const slots: { sym: string; i: number }[] = [];
-  for (const [s, n] of sig) for (let i = 0; i <= n; i++) slots.push({ sym: s, i });
-  const values = new Array(slots.length).fill(0);
-  let tried = 0;
-  const go = (k: number): { removed: number[]; detail: string } | null => {
-    if (tried > limit) return null;
-    if (k === slots.length) {
-      tried++;
-      const I = new Map<string, P.Poly>();
-      slots.forEach(({ sym, i }, j) => I.set(sym, P.add(I.get(sym) ?? P.ZERO, i === 0 ? P.constant(values[j]) : P.scale(P.variable(`x${i}`), values[j]))));
-      if (!checkInterpretation(I, rules, true).ok) return null;
-      const removed: number[] = [];
-      for (let j = 0; j < pairRules.length; j++) {
-        const d = P.sub(interpret(I, pairRules[j]!.lhs), interpret(I, pairRules[j]!.rhs));
-        if (!P.nonNegative(d)) return null;
-        if (P.positive(d)) removed.push(scc[j]!);
-      }
-      if (!removed.length) return null;
-      return { removed, detail: [...I].map(([s, p]) => `[${s}] = ${P.showPoly(p)}`).join(', ') };
-    }
-    // Rule symbols must be weakly monotone (coefficients ≥ 0); that already holds.
-    for (let a = 0; a <= max; a++) {
-      values[k] = a;
-      const r = go(k + 1);
-      if (r) return r;
-    }
-    return null;
-  };
-  return go(0);
+  const sig = [...signature([...rules, ...pairRules])];
+  const constraints = [...rules, ...pairRules].map((rule) => ({ rule, strict: false }));
+  return searchLinear(sig, constraints, { max, limit, strictMonotone: false }, (I) => {
+    const removed = scc.filter((_, j) => P.positive(P.sub(interpret(I, pairRules[j]!.lhs), interpret(I, pairRules[j]!.rhs))));
+    if (!removed.length) return null;
+    return { removed, detail: [...I].map(([s, p]) => `[${s}] = ${P.showPoly(p)}`).join(', ') };
+  });
 }
 
 /** The dependency-pair method with the estimated graph, the subterm criterion and linear interpretations. */
@@ -390,7 +393,7 @@ export type TerminationProof =
   | { result: 'non-terminating'; loop: Loop }
   | { result: 'unknown' };
 
-/** Try, in order: LPO, KBO, linear interpretations, dependency pairs, and a loop search. */
+/** Try, in order: LPO, KBO and MPO, a short loop search, linear interpretations, dependency pairs, and a longer loop search. */
 export function proveTermination(rules: readonly Rule[]): TerminationProof {
   const bad = rules.find((r) => vars(r.rhs).some((x) => !vars(r.lhs).includes(x)));
   if (bad) {
@@ -400,6 +403,9 @@ export function proveTermination(rules: readonly Rule[]): TerminationProof {
     const p = findPrecedence(rules, kind);
     if (p) return { result: 'terminating', method: kind, precedence: p };
   }
+  // A short loop search is cheap and spares the interpretation searches on looping systems.
+  const quickLoop = findLoop(rules, 3, 500);
+  if (quickLoop) return { result: 'non-terminating', loop: quickLoop };
   const I = findLinearInterpretation(rules, { limit: 100_000 });
   if (I) return { result: 'terminating', method: 'polynomial', interpretation: I };
   const dp = dpProve(rules);
