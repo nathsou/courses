@@ -1,0 +1,149 @@
+# Timeline: { year, title, people, chapter, text (Markdown) }
+- year: -150
+  title: The Antikythera mechanism
+  chapter: antikythera
+  text: A geared astronomical calculator is made in the Greek world, in the second century BC or a little later; it sinks with a ship around 60 BC.
+- year: 1614
+  title: Logarithms
+  people: John Napier
+  chapter: antikythera
+  text: Napier publishes his logarithms, turning multiplication into addition.
+- year: 1623
+  title: The calculating clock
+  people: Wilhelm Schickard
+  chapter: pascaline
+  text: Schickard describes an adding machine with a single-tooth carry in letters to Kepler.
+- year: 1630
+  title: The slide rule
+  people: William Oughtred
+  chapter: antikythera
+  text: Around 1630 Oughtred slides two logarithmic scales against each other.
+- year: 1642
+  title: The Pascaline
+  people: Blaise Pascal
+  chapter: pascaline
+  text: Pascal begins his calculating machine, with a gravity-driven carry, for his father’s tax accounts.
+- year: 1673
+  title: The stepped drum
+  people: Gottfried Wilhelm Leibniz
+  chapter: stepped-drum
+  text: Leibniz shows a model of his calculating machine to the Royal Society; the brass machine follows by 1694.
+- year: 1772
+  title: Euler’s polynomial
+  people: Leonhard Euler
+  chapter: pascaline
+  text: Euler notes that x² + x + 41 is prime for x = 0 to 39.
+- year: 1793
+  title: Prony’s tables
+  people: Gaspard de Prony
+  chapter: difference-engine
+  text: Prony organises the computation of French tables by differences, divided among mathematicians, calculators and computers.
+- year: 1804
+  title: The Jacquard loom
+  people: Joseph Marie Jacquard
+  chapter: analytical-engine
+  text: A loom controlled by a chain of punched cards.
+- year: 1820
+  title: The arithmometer
+  people: Charles Xavier Thomas
+  chapter: stepped-drum
+  text: Thomas patents a stepped-drum calculator; it is made in quantity from 1851.
+- year: 1822
+  title: The first Difference Engine model
+  people: Charles Babbage
+  chapter: difference-engine
+  text: Babbage builds a small working model and asks for government funding.
+- year: 1834
+  title: The Analytical Engine
+  people: Charles Babbage
+  chapter: analytical-engine
+  text: Babbage begins designing a general machine with a store, a mill and punched cards.
+- year: 1843
+  title: Lovelace’s Notes
+  people: Ada Lovelace
+  chapter: note-g
+  text: Lovelace’s translation of Menabrea’s paper, with Notes A–G; Note G holds the program for the Bernoulli numbers.
+- year: 1849
+  title: Difference Engine No. 2 designed
+  people: Charles Babbage
+  chapter: difference-engine
+  text: Babbage completes the drawings for an engine of eight columns of 31 digits, with a printer.
+- year: 1853
+  title: The Scheutz engine
+  people: Georg and Edvard Scheutz
+  chapter: difference-engine
+  text: A Swedish difference engine with a printer is completed.
+- year: 1854
+  title: The polar planimeter
+  people: Jakob Amsler
+  chapter: integrators
+  text: Amsler’s planimeter measures areas by tracing their outlines.
+- year: 1872
+  title: The tide predictor
+  people: William Thomson (Lord Kelvin)
+  chapter: integrators
+  text: Kelvin’s first tide-predicting machine sums tidal constituents with pulleys and a wire.
+- year: 1876
+  title: The disc-globe-cylinder integrator
+  people: James Thomson
+  chapter: integrators
+  text: An integrator with a ball between disc and cylinder, rolling without slipping.
+- year: 1931
+  title: The differential analyser
+  people: Vannevar Bush
+  chapter: differential-analyser
+  text: Bush’s machine of six integrators, with torque amplifiers, solves differential equations at MIT.
+- year: 1934
+  title: The Meccano analyser
+  people: Douglas Hartree and Arthur Porter
+  chapter: differential-analyser
+  text: A working differential analyser built from Meccano at Manchester.
+- year: 1938
+  title: The Z1
+  people: Konrad Zuse
+  chapter: z1
+  text: A mechanical, binary, floating-point, programmable calculator, built in a Berlin flat.
+- year: 1941
+  title: The Z3
+  people: Konrad Zuse
+  chapter: why-electronic
+  text: Zuse’s relay computer, the first working programmable, fully automatic digital computer.
+- year: 1945
+  title: ENIAC
+  people: J. Presper Eckert and John Mauchly
+  chapter: why-electronic
+  text: An electronic computer of about 17 500 valves, built to compute firing tables.
+- year: 1947
+  title: The transistor
+  people: John Bardeen, Walter Brattain and William Shockley
+  chapter: why-electronic
+  text: The point-contact transistor at Bell Labs.
+- year: 1948
+  title: The Curta
+  people: Curt Herzstark
+  chapter: stepped-drum
+  text: The hand-held stepped-drum calculator Herzstark designed in Buchenwald goes into production in Liechtenstein.
+- year: 1949
+  title: The MONIAC
+  people: Bill Phillips
+  chapter: computing-with-anything
+  text: A hydraulic model of a national economy.
+- year: 1959
+  title: Fluidics
+  chapter: computing-with-anything
+  text: Engineers at the Harry Diamond Laboratories show that fluid jets can switch each other.
+- year: 1961
+  title: Landauer’s principle
+  people: Rolf Landauer
+  chapter: why-electronic
+  text: Erasing a bit must cost at least kT ln 2 of energy.
+- year: 1991
+  title: Difference Engine No. 2 built
+  people: Science Museum, London
+  chapter: difference-engine
+  text: The engine’s calculating section is completed from Babbage’s drawings and works to 31 digits; the printer follows in 2000.
+- year: 2006
+  title: The Antikythera mechanism decoded
+  people: Antikythera Mechanism Research Project
+  chapter: antikythera
+  text: X-ray CT reveals the lunar gearing and the pin-and-slot.

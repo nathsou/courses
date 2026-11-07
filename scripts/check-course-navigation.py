@@ -15,7 +15,7 @@ COURSES = ['astrophysics', 'cic', 'proofs-are-programs', 'compiler-backends',
            'incompleteness', 'elements', 'language-models', 'proofs',
            'digital-circuits', 'particle-physics', 'mandarin', 'formal-verification', 'human-evolution',
            'static-analysis', 'primes', 'memory-management', 'reactive-rendering',
-           'music-theory', 'term-rewriting']
+           'music-theory', 'mechanical-computing', 'term-rewriting']
 
 
 with sync_playwright() as pw:
