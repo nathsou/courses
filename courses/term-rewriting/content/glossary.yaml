@@ -1,0 +1,181 @@
+# Glossary: id → { term, definition (Markdown), chapter (slug) }
+ac:
+  term: AC (associative-commutative)
+  definition: 'A binary symbol that is associative and commutative, such as $+$. Rewriting modulo AC treats its arguments as a multiset.'
+  chapter: ac-rewriting
+ars:
+  term: abstract reduction system
+  definition: 'A set with a binary relation $\to$ on it. The properties of rewriting (termination, confluence) are defined for any ARS.'
+  chapter: abstract-reduction
+church-rosser:
+  term: Church–Rosser property
+  definition: 'If $b \leftrightarrow^* c$ then $b$ and $c$ are joinable. Equivalent to confluence.'
+  chapter: abstract-reduction
+completion:
+  term: completion (Knuth–Bendix)
+  definition: 'A procedure that orients equations into rules with a reduction order and adds critical pairs until the rules are convergent, or fails.'
+  chapter: knuth-bendix
+confluent:
+  term: confluent
+  definition: 'Every peak $b \leftarrow^* a \to^* c$ can be joined: $b \to^* d \leftarrow^* c$ for some $d$. Confluent systems give each term at most one normal form.'
+  chapter: abstract-reduction
+constructor:
+  term: constructor
+  definition: 'A symbol that never occurs at the root of a left-hand side; constructor terms are the values of a program.'
+  chapter: programming-with-rules
+convergent:
+  term: convergent
+  definition: 'Terminating and confluent. Every term has a unique normal form, and $s \leftrightarrow^* t$ iff the normal forms agree.'
+  chapter: abstract-reduction
+critical-pair:
+  term: critical pair
+  definition: 'The two results of rewriting the most general term on which two left-hand sides overlap, computed by unification. A system is locally confluent iff all its critical pairs are joinable.'
+  chapter: critical-pairs
+decision-tree:
+  term: decision tree
+  definition: 'A compiled form of the rules for one symbol that tests each position of a term at most once and selects the first matching rule.'
+  chapter: compiling
+defined-symbol:
+  term: defined symbol
+  definition: 'A symbol that occurs at the root of some left-hand side: a function of the program.'
+  chapter: programming-with-rules
+dependency-pair:
+  term: dependency pair
+  definition: 'For a rule $l \to r$ and a defined-rooted subterm $u$ of $r$, the pair $l^\sharp \to u^\sharp$; a system terminates iff it has no infinite chain of dependency pairs.'
+  chapter: dependency-pairs
+discrimination-tree:
+  term: discrimination tree
+  definition: 'A trie of terms read in pre-order, with `*` for variables, used to retrieve the rules that might match a term.'
+  chapter: indexing
+e-graph:
+  term: e-graph
+  definition: 'A data structure of e-classes of e-nodes whose children are e-classes, representing many equal terms compactly and maintaining congruence.'
+  chapter: e-graphs
+embedding:
+  term: homeomorphic embedding
+  definition: '$t$ is embedded in $s$ if $t$ can be obtained from $s$ by deleting nodes. Kruskal’s theorem: every infinite sequence of terms has an earlier term embedded in a later one.'
+  chapter: kruskal
+equality-saturation:
+  term: equality saturation
+  definition: 'Applying all rules everywhere, non-destructively, in an e-graph until saturation or a limit, then extracting the cheapest equal term.'
+  chapter: equality-saturation
+evaluation-context:
+  term: evaluation context
+  definition: 'A term with one hole marking where the next reduction step of a program may happen; contexts encode evaluation order.'
+  chapter: reduction-semantics
+ground:
+  term: ground term
+  definition: 'A term without variables.'
+  chapter: terms
+hash-consing:
+  term: hash-consing
+  definition: 'Building every term through a table so that structurally equal terms are the same object; equality becomes a pointer comparison.'
+  chapter: sharing
+innermost:
+  term: innermost strategy
+  definition: 'Contract a redex that contains no other redex, the leftmost one first: call by value.'
+  chapter: strategies
+instance:
+  term: instance
+  definition: 'A term $l\sigma$ obtained from $l$ by a substitution.'
+  chapter: matching
+kbo:
+  term: Knuth–Bendix order (KBO)
+  definition: 'A reduction order that compares terms first by weight, then by precedence, then lexicographically, with a variable condition.'
+  chapter: path-orders
+left-linear:
+  term: left-linear
+  definition: 'No variable occurs twice in any left-hand side.'
+  chapter: orthogonality
+local-confluence:
+  term: locally confluent
+  definition: 'Every one-step peak $b \leftarrow a \to c$ can be joined.'
+  chapter: abstract-reduction
+lpo:
+  term: lexicographic path order (LPO)
+  definition: 'A simplification order that compares terms by a precedence on their roots and lexicographically on their arguments.'
+  chapter: path-orders
+matching:
+  term: matching
+  definition: 'Finding a substitution $\sigma$ with $l\sigma = t$ for a pattern $l$ and a term $t$.'
+  chapter: matching
+mgu:
+  term: most general unifier
+  definition: 'A unifier of which every other unifier is an instance.'
+  chapter: unification
+multiset-order:
+  term: multiset order
+  definition: 'Compares finite multisets: one element may be replaced by any finite number of smaller ones. Well-founded when the underlying order is.'
+  chapter: well-founded-orders
+newman:
+  term: Newman’s lemma
+  definition: 'A terminating, locally confluent system is confluent.'
+  chapter: abstract-reduction
+normal-form:
+  term: normal form
+  definition: 'A term to which no rule applies.'
+  chapter: rewriting
+orthogonal:
+  term: orthogonal
+  definition: 'Left-linear with no critical pairs. Orthogonal systems are confluent even without termination.'
+  chapter: orthogonality
+outermost:
+  term: outermost strategy
+  definition: 'Contract a redex not contained in another redex, the leftmost one first: call by name.'
+  chapter: strategies
+polynomial-interpretation:
+  term: polynomial interpretation
+  definition: 'An assignment of a polynomial to each symbol, proving termination when every rule’s left side denotes more than its right side for all natural-number values.'
+  chapter: interpretations
+position:
+  term: position
+  definition: 'A sequence of argument indices naming a node of a term; $\varepsilon$ is the root.'
+  chapter: terms
+priority:
+  term: priority rewriting
+  definition: 'Trying rules in order, the first match winning (Girafe’s semantics, `#priority` in the course).'
+  chapter: programming-with-rules
+redex:
+  term: redex
+  definition: 'A subterm that is an instance of a left-hand side, and so can be rewritten.'
+  chapter: rewriting
+reduction-order:
+  term: reduction order
+  definition: 'A well-founded strict order on terms closed under substitutions and contexts. A system terminates iff some reduction order orients all its rules.'
+  chapter: well-founded-orders
+rewriting-logic:
+  term: rewriting logic
+  definition: 'A logic in which equations describe states and rules describe transitions of a concurrent system.'
+  chapter: rewriting-logic
+simplification-order:
+  term: simplification order
+  definition: 'A strict order closed under substitutions and contexts with the subterm property; well-founded over finite signatures.'
+  chapter: path-orders
+strategy:
+  term: strategy
+  definition: 'A rule for choosing which redex to contract; as a combinator language, a partial function from terms to terms built from rules, sequence, choice and traversals.'
+  chapter: strategy-combinators
+substitution:
+  term: substitution
+  definition: 'A map from variables to terms, applied to all variables of a term at once.'
+  chapter: matching
+terminating:
+  term: terminating
+  definition: 'No infinite rewrite sequence exists.'
+  chapter: well-founded-orders
+tree-automaton:
+  term: tree automaton
+  definition: 'A finite automaton that reads a term from the leaves up; it recognises a regular tree language.'
+  chapter: decidable-islands
+unfailing-completion:
+  term: unfailing completion
+  definition: 'Completion that keeps unorientable equations and uses them for ordered rewriting; refutationally complete for equational theorem proving.'
+  chapter: unfailing-completion
+unification:
+  term: unification
+  definition: 'Finding a substitution that makes two terms equal.'
+  chapter: unification
+word-problem:
+  term: word problem
+  definition: 'Deciding whether an equation follows from a set of equations. Undecidable in general; decidable with a convergent system.'
+  chapter: equational-reasoning

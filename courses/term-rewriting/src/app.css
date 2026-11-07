@@ -1,0 +1,780 @@
+@import '@fontsource-variable/source-serif-4/opsz.css';
+@import '@fontsource-variable/source-serif-4/opsz-italic.css';
+@import '@fontsource-variable/ibm-plex-sans';
+@import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/fraunces';
+@import 'katex/dist/katex.min.css';
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   "Redex": squared paper, blue-black ink and a deep teal for rules and normal forms; the redex about to
+   be contracted is the one warm colour on the page. By night: a slate blackboard, chalk-white ink and
+   chalk-yellow accents. Core tokens: --bg --fg --mute --ac --pn, plus --redex and --nf. The older names
+   (--page, --ink, --accent, …) are aliases so every component re-skins from here. */
+
+:root {
+  color-scheme: light;
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Source Serif 4 Variable', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'IBM Plex Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Core palette (light). */
+  --bg: #f5f4ef;
+  --fg: #1b1d22;
+  --mute: #5f636c;
+  --ac: #12695e;
+  --pn: #e8eae4;
+
+  /* Squared-paper rulings. */
+  --ruling: #dfe4e3;
+  --margin-rule: #8fbdb5;
+
+  /* Illustration colours: red, blue, amber. */
+  --fx-red: #c23a24;
+  --fx-blue: #2c5d8c;
+  --fx-yellow: #c9861a;
+  --fx-ink: #1b1d22;
+  --fx-cream: #f8f5ec;
+  --prime: var(--fx-red);
+  --redex: #c4572a;
+  --redex-soft: color-mix(in srgb, #c4572a 16%, var(--bg));
+  --nf: #12695e;
+  --nf-soft: color-mix(in srgb, #157a6d 13%, var(--bg));
+  --composite: #b9b3a3;
+
+  --page: var(--bg);
+  --surface: #fbf9f3;
+  --surface-2: var(--pn);
+  --surface-3: #ddd6c3;
+  --panel: var(--surface);
+  --ink: var(--fg);
+  --ink-2: #3a3d45;
+  --ink-3: #5c606a;
+  --rule: #dcd5c3;
+  --rule-strong: #9f9886;
+  --line: var(--rule);
+  --line-strong: #b7af9b;
+  --border: #cfc7b3;
+  --shadow: 0 1px 2px rgba(27, 29, 34, 0.06), 0 6px 18px -10px rgba(27, 29, 34, 0.18);
+  --shadow-lg: 0 10px 30px -12px rgba(27, 29, 34, 0.35);
+
+  /* Accent as text/links: the teal at ≥ 6:1 on the paper. */
+  --accent: #0f6156;
+  --accent-2: #157a6d;
+  --accent-soft: color-mix(in srgb, #157a6d 11%, var(--bg));
+  --accent-ink: #0a4a42;
+  --on-accent: #fbf8f1;
+  --focus: #2c5d8c;
+
+  /* Exercise feedback: green = accepted, red = wrong, amber = pending. */
+  --ok: #2b6a47;
+  --ok-soft: color-mix(in srgb, #2b6a47 12%, var(--bg));
+  --bad: #a52b19;
+  --bad-soft: color-mix(in srgb, #c23a24 12%, var(--bg));
+  --maybe: #7f5300;
+  --maybe-soft: color-mix(in srgb, #c9861a 18%, var(--bg));
+
+  --byrne-red: var(--fx-red);
+  --byrne-blue: var(--fx-blue);
+  --byrne-yellow: var(--fx-yellow);
+  --byrne-ink: var(--fg);
+
+  --note: #2c5d8c;
+  --tip: #2c5d8c;
+  --warn: #c23a24;
+  --lab: #2c5d8c;
+  --break: #c23a24;
+  --challenge: #c9861a;
+  --history: #7f5300;
+  --history-soft: color-mix(in srgb, #c9861a 14%, var(--bg));
+
+  /* Chart palette. */
+  --series-1: #12695e;
+  --series-2: #c4572a;
+  --series-9: #2c5d8c;
+  --series-3: #c9861a;
+  --series-4: #2b7a5a;
+  --series-5: #9c4f8f;
+  --series-6: #2a8496;
+  --series-7: #5d4fa0;
+  --series-8: #8a6a3a;
+  --chart-surface: var(--surface);
+  --grid: #e3ddcd;
+  --axis: #8f8876;
+  --good: #2b6a47;
+  --critical: #a52b19;
+
+  --term-hl: rgba(201, 134, 26, 0.22);
+  --term-hl-strong: rgba(201, 134, 26, 0.42);
+
+  --code-keyword: #0f6156;
+  --code-string: #2c5d8c;
+  --code-number: #7f5300;
+  --code-comment: #6a6e77;
+  --code-fn: #6a3f8f;
+  --code-type: #1d6f7a;
+  --code-def: #1b1d22;
+  --code-prop: #2c5d8c;
+  --code-punct: #3a3d45;
+
+  --radius: 6px;
+  --radius-sm: 4px;
+  --sidebar-w: 18rem;
+  --main-w: 42rem;
+  --margin-w: 17rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) {
+    color-scheme: dark;
+    --bg: #111819;
+    --fg: #e9e4d7;
+    --mute: #a19d92;
+    --ac: #e9c46a;
+    --pn: #182224;
+
+    --ruling: #1d2a2c;
+    --margin-rule: #6a3a33;
+
+    --fx-red: #ec6b50;
+    --fx-blue: #7ba7d8;
+    --fx-yellow: #f0a24a;
+    --fx-ink: #12161d;
+    --fx-cream: #f3eee2;
+    --prime: #f0a24a;
+    --redex: #f08a5d;
+    --redex-soft: color-mix(in srgb, #f08a5d 18%, var(--bg));
+    --nf: #7fd1c0;
+    --nf-soft: color-mix(in srgb, #5fbfac 16%, var(--bg));
+    --composite: #3d4553;
+
+    --surface: #152022;
+    --surface-3: #262d39;
+    --ink-2: #cdc8bb;
+    --ink-3: #a19d92;
+    --rule: #2a313d;
+    --rule-strong: #4c5566;
+    --line-strong: #444d5c;
+    --border: #384050;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 22px -12px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 12px 34px -12px rgba(0, 0, 0, 0.7);
+
+    --accent: #ecca78;
+    --accent-2: #e9c46a;
+    --accent-soft: color-mix(in srgb, #e9c46a 14%, var(--bg));
+    --accent-ink: #f3dc9e;
+    --on-accent: #12161d;
+    --focus: #7ba7d8;
+
+    --ok: #74c69a;
+    --ok-soft: color-mix(in srgb, #4fae7e 16%, var(--bg));
+    --bad: #ff8a73;
+    --bad-soft: color-mix(in srgb, #ec6b50 15%, var(--bg));
+    --maybe: #f0b45a;
+    --maybe-soft: color-mix(in srgb, #f0a24a 14%, var(--bg));
+
+    --note: #7ba7d8;
+    --tip: #7ba7d8;
+    --warn: #ec6b50;
+    --lab: #7ba7d8;
+    --break: #ec6b50;
+    --challenge: #f0a24a;
+    --history: #f0b45a;
+    --history-soft: color-mix(in srgb, #f0a24a 10%, var(--bg));
+
+    --series-1: #7fd1c0;
+  --series-2: #f08a5d;
+  --series-9: #7ba7d8;
+    --series-3: #f0b45a;
+    --series-4: #5cc08f;
+    --series-5: #d38ac7;
+    --series-6: #55b8c8;
+    --series-7: #a596e6;
+    --series-8: #c9a46a;
+    --chart-surface: var(--surface);
+    --grid: #252c37;
+    --axis: #6d7584;
+    --good: #74c69a;
+    --critical: #ff8a73;
+
+    --term-hl: rgba(240, 162, 74, 0.18);
+    --term-hl-strong: rgba(240, 162, 74, 0.36);
+
+    --code-keyword: #ecca78;
+    --code-string: #7ba7d8;
+    --code-number: #f0b45a;
+    --code-comment: #a19d92;
+    --code-fn: #c6a8f0;
+    --code-type: #62c2cf;
+    --code-def: #e9e4d7;
+    --code-prop: #7ba7d8;
+    --code-punct: #cdc8bb;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #111819;
+  --fg: #e9e4d7;
+  --mute: #a19d92;
+  --ac: #e9c46a;
+  --pn: #182224;
+
+  --ruling: #1d2a2c;
+  --margin-rule: #6a3a33;
+
+  --fx-red: #ec6b50;
+  --fx-blue: #7ba7d8;
+  --fx-yellow: #f0a24a;
+  --fx-ink: #12161d;
+  --fx-cream: #f3eee2;
+  --prime: #f0a24a;
+  --redex: #f08a5d;
+  --redex-soft: color-mix(in srgb, #f08a5d 18%, var(--bg));
+  --nf: #7fd1c0;
+  --nf-soft: color-mix(in srgb, #5fbfac 16%, var(--bg));
+  --composite: #3d4553;
+
+  --surface: #152022;
+  --surface-3: #262d39;
+  --ink-2: #cdc8bb;
+  --ink-3: #a19d92;
+  --rule: #2a313d;
+  --rule-strong: #4c5566;
+  --line-strong: #444d5c;
+  --border: #384050;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 22px -12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 34px -12px rgba(0, 0, 0, 0.7);
+
+  --accent: #ecca78;
+  --accent-2: #e9c46a;
+  --accent-soft: color-mix(in srgb, #e9c46a 14%, var(--bg));
+  --accent-ink: #f3dc9e;
+  --on-accent: #12161d;
+  --focus: #7ba7d8;
+
+  --ok: #74c69a;
+  --ok-soft: color-mix(in srgb, #4fae7e 16%, var(--bg));
+  --bad: #ff8a73;
+  --bad-soft: color-mix(in srgb, #ec6b50 15%, var(--bg));
+  --maybe: #f0b45a;
+  --maybe-soft: color-mix(in srgb, #f0a24a 14%, var(--bg));
+
+  --note: #7ba7d8;
+  --tip: #7ba7d8;
+  --warn: #ec6b50;
+  --lab: #7ba7d8;
+  --break: #ec6b50;
+  --challenge: #f0a24a;
+  --history: #f0b45a;
+  --history-soft: color-mix(in srgb, #f0a24a 10%, var(--bg));
+
+  --series-1: #7fd1c0;
+  --series-2: #f08a5d;
+  --series-9: #7ba7d8;
+  --series-3: #f0b45a;
+  --series-4: #5cc08f;
+  --series-5: #d38ac7;
+  --series-6: #55b8c8;
+  --series-7: #a596e6;
+  --series-8: #c9a46a;
+  --chart-surface: var(--surface);
+  --grid: #252c37;
+  --axis: #6d7584;
+  --good: #74c69a;
+  --critical: #ff8a73;
+
+  --term-hl: rgba(240, 162, 74, 0.18);
+  --term-hl-strong: rgba(240, 162, 74, 0.36);
+
+  --code-keyword: #ecca78;
+  --code-string: #7ba7d8;
+  --code-number: #f0b45a;
+  --code-comment: #a19d92;
+  --code-fn: #c6a8f0;
+  --code-type: #62c2cf;
+  --code-def: #e9e4d7;
+  --code-prop: #7ba7d8;
+  --code-punct: #cdc8bb;
+}
+
+
+/* ───────────────────────── Base ───────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.1875rem;
+  line-height: 1.62;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+  opacity: 0.8;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--term-hl-strong);
+}
+
+.ui {
+  font-family: var(--font-ui);
+}
+
+/* ───────────────────────── Article grid ─────────────────────────
+   main column for prose; `wide` spans into the right margin; `full` spans the viewport.
+   Sidenotes float into the margin on wide screens. */
+
+.article {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(1rem, 1fr)
+    [wide-start main-start] minmax(0, var(--main-w))
+    [main-end] minmax(0, calc(var(--margin-w) + 2.5rem))
+    [wide-end] minmax(1rem, 1fr) [full-end];
+  counter-reset: sidenote;
+}
+.article > *,
+.article > .term-layer > * {
+  grid-column: main;
+  min-width: 0;
+}
+.article > .term-layer {
+  display: contents;
+}
+.article > .wide,
+.article > .term-layer > .wide {
+  grid-column: wide;
+}
+.article > .full,
+.article > .term-layer > .full {
+  grid-column: full;
+}
+@media (max-width: 1279px) {
+  .article {
+    grid-template-columns: [full-start] minmax(1rem, 1fr) [wide-start main-start] minmax(0, 46rem) [main-end wide-end] minmax(1rem, 1fr) [full-end];
+  }
+}
+
+/* ───────────────────────── Prose ───────────────────────── */
+
+.article h2,
+.article h3,
+.article h4 {
+  color: var(--ink);
+}
+.article h2 {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3.4vw, 2.05rem);
+  font-variation-settings: 'SOFT' 30, 'WONK' 0;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+  margin: 4rem 0 1.1rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line-strong);
+}
+/* A short double rule in rubric red sits on the line, like the margin rules of a ledger. */
+.article h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -3px;
+  width: 3rem;
+  height: 5px;
+  border-top: 1.5px solid var(--ac);
+  border-bottom: 1.5px solid var(--ac);
+  background: var(--bg);
+}
+.article h3 {
+  font-family: var(--font-display);
+  font-size: 1.38rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 2.5rem 0 0.6rem;
+}
+.article h4 {
+  font-family: var(--font-ui);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 1.75rem 0 0.4rem;
+}
+.article p,
+.article ul,
+.article ol {
+  margin: 0 0 1.1rem;
+}
+.article li + li {
+  margin-top: 0.3rem;
+}
+.article li > p {
+  margin-bottom: 0.4rem;
+}
+.article strong {
+  font-weight: 700;
+}
+.article hr {
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+  margin: 2.75rem 0;
+}
+.article blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  border-left: 3px solid var(--ruling);
+  color: var(--ink-2);
+  font-style: italic;
+}
+/* Ledger lists (markdown lists only, so widget and exercise lists are left alone):
+   rubric-red numerals, small red dots for bullets. */
+:is(.article, .article > .term-layer, .thm > .body, .proof > .body, .callout > .body, .details > .body, .level) > ol {
+  list-style: none;
+  counter-reset: item;
+  padding-left: 2rem;
+}
+:is(.article, .article > .term-layer, .thm > .body, .proof > .body, .callout > .body, .details > .body, .level) > ol > li {
+  counter-increment: item;
+  position: relative;
+}
+:is(.article, .article > .term-layer, .thm > .body, .proof > .body, .callout > .body, .details > .body, .level) > ol > li::before {
+  content: counter(item);
+  position: absolute;
+  left: -2rem;
+  width: 1.5rem;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.8em;
+  line-height: inherit;
+  padding-top: 0.12em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+:is(.article, .article > .term-layer, .thm > .body, .proof > .body, .callout > .body, .details > .body, .level) > ul {
+  list-style: none;
+  padding-left: 1.4rem;
+}
+:is(.article, .article > .term-layer, .thm > .body, .proof > .body, .callout > .body, .details > .body, .level) > ul > li {
+  position: relative;
+}
+:is(.article, .article > .term-layer, .thm > .body, .proof > .body, .callout > .body, .details > .body, .level) > ul > li::before {
+  content: '';
+  position: absolute;
+  left: -1.05rem;
+  top: 0.66em;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--ac);
+}
+.article .table-scroll { overflow-x: auto; min-width: 0; }
+.article .table-scroll > table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+.article .table-scroll th,
+.article .table-scroll td {
+  text-align: left;
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid var(--ruling);
+  vertical-align: top;
+}
+.article .table-scroll td:has(> code:only-child) {
+  font-family: var(--font-mono);
+}
+.article th {
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line-strong);
+}
+.article :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--surface-2);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+.article img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Code blocks (Shiki dual theme). */
+figure.code-block {
+  margin: 1.5rem 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+figure.code-block figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  padding: 0.45rem 1rem;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+figure.code-block pre {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  background: transparent !important;
+}
+/* Static Girafe listings. */
+.girafe .g-com {
+  color: var(--code-comment);
+  font-style: italic;
+}
+.girafe .g-prag,
+.girafe .g-ext {
+  color: var(--code-fn);
+}
+.girafe .g-op,
+.girafe .g-kw {
+  color: var(--code-keyword);
+  font-weight: 600;
+}
+.girafe .g-var {
+  color: var(--code-prop);
+  font-style: italic;
+}
+.girafe .g-num {
+  color: var(--code-number);
+}
+.girafe .g-sym {
+  color: var(--code-type);
+}
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+}
+:root[data-theme='dark'] .shiki,
+:root[data-theme='dark'] .shiki span {
+  color: var(--shiki-dark);
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) .shiki,
+  :root:where(:not([data-theme='light'])) .shiki span {
+    color: var(--shiki-dark);
+  }
+}
+
+/* Maths. */
+.math-display {
+  display: block;
+  margin: 1.1rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+.katex {
+  font-size: 1.08em;
+}
+.math-display .katex {
+  font-size: 1.2em;
+}
+.math-display > .katex-display {
+  margin: 0;
+}
+[data-term] {
+  border-radius: 2px;
+  cursor: help;
+  transition: background-color 120ms ease;
+  box-shadow: inset 0 -2px 0 0 var(--fx-yellow);
+}
+[data-term]:hover,
+[data-term]:focus-visible,
+[data-term].term-active {
+  background: var(--term-hl-strong);
+  box-shadow: none;
+}
+[data-term]:focus-visible {
+  outline-offset: 1px;
+}
+/* KaTeX lays out sub/superscripts with empty positioning spans that sit on top of the glyphs;
+   let pointer events fall through them so hoverable terms can be hit. */
+.katex:has([data-term]) .vlist-t,
+.katex:has([data-term]) .vlist-r,
+.katex:has([data-term]) .vlist,
+.katex:has([data-term]) .vlist > span {
+  pointer-events: none;
+}
+.katex [data-term],
+.katex [data-term] * {
+  pointer-events: auto;
+}
+
+/* Footnotes (GFM). */
+.article .footnotes {
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+
+/* ───────────────────────── Utility ───────────────────────── */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ───────── Widget controls (shared by the widgets in src/lib/widgets) ───────── */
+.w-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+  align-items: center;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+}
+.w-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ink-2);
+  min-width: 0;
+}
+.w-row label.grow {
+  flex: 1 1 14rem;
+}
+.w-input {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  padding: 0.28rem 0.45rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--page);
+  color: var(--ink);
+  min-width: 0;
+  flex: 1;
+}
+textarea.w-input {
+  width: 100%;
+  resize: vertical;
+  line-height: 1.5;
+}
+.w-btn {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  border: 1px solid var(--line-strong);
+  background: var(--page);
+  color: var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 0.28rem 0.7rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.w-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.w-btn.primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.w-note {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--mute);
+  margin: 0.3rem 0;
+}
+.w-ok {
+  color: var(--ok);
+}
+.w-bad {
+  color: var(--bad);
+}
+.w-code {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+.w-table {
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  width: 100%;
+}
+.w-table th,
+.w-table td {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.3rem 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+.w-table th {
+  color: var(--ink-2);
+  font-weight: 600;
+}
+.w-table td.num,
+.w-table th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.w-scroll {
+  overflow-x: auto;
+}

@@ -111,6 +111,13 @@ const courses = [
       BASE_PATH: `${base}/music-theory`,
       NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
     }),
+  },  {
+    // Term Rewriting Systems: the same single-package SvelteKit setup.
+    name: 'term-rewriting',
+    env: (base) => ({
+      BASE_PATH: `${base}/term-rewriting`,
+      NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
+    }),
   },
   {
     // Mechanical Computing: the same single-package SvelteKit setup.
