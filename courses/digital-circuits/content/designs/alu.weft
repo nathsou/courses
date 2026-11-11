@@ -1,0 +1,29 @@
+/// The arithmetic and logic unit of the RV32I core: `f3` selects the operation, as in the instruction
+/// encoding; `is_reg && ir30` turns addition into subtraction, and `ir30` makes `>>` arithmetic.
+module alu(
+    in  rs1_value: uint<32>,
+    in  b: uint<32>,
+    in  f3: uint<3>,
+    in  is_reg: bool,
+    in  ir30: bool,
+    out result: uint<32>,
+) {
+    let shift = b[4:0];
+    let subtract = is_reg && ir30;
+    // a - b is a + ~b + 1: one adder does both.
+    let addend: uint<32> = if subtract { ~b } else { b };
+    let sum = rs1_value +% addend +% (if subtract { 1 } else { 0 });
+    let less_unsigned = rs1_value < b;
+    let less_signed = rs1_value.as_sint() < b.as_sint();
+    let shifted_right = if ir30 { (rs1_value.as_sint() >> shift).bits() } else { rs1_value >> shift };
+    result = match f3 {
+        0 => sum,
+        1 => rs1_value << shift,
+        2 => less_signed.bits(),
+        3 => less_unsigned.bits(),
+        4 => rs1_value ^ b,
+        5 => shifted_right,
+        6 => rs1_value | b,
+        7 => rs1_value & b,
+    };
+}

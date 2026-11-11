@@ -1,0 +1,80 @@
+/**
+ * The editor's look: the design tokens of app.css (panel colours, `--code-*` for tokens, `--font-mono`),
+ * so it follows the light and dark themes with no separate palette. Token classes are put on the text by
+ * `tokens.ts`; the same tokens colour the static code blocks (`../highlight.ts`).
+ */
+import { EditorView } from '@codemirror/view';
+
+export const weftTheme = EditorView.theme({
+  '&': {
+    color: 'var(--code-def, var(--fg))',
+    backgroundColor: 'var(--pn)',
+    fontFamily: 'var(--font-mono)',
+    fontSize: '0.84rem',
+    borderRadius: '6px',
+    border: '1px solid var(--line)',
+    height: '100%',
+  },
+  '&.cm-focused': { outline: '2px solid var(--focus)', outlineOffset: '1px' },
+  '.cm-scroller': { fontFamily: 'inherit', lineHeight: '1.62', overflow: 'auto' },
+  '.cm-content': { padding: '0.7rem 0', caretColor: 'var(--fg)' },
+  '.cm-line': { padding: '0 0.9rem 0 0.6rem' },
+  '.cm-cursor, .cm-dropCursor': { borderLeftColor: 'var(--fg)', borderLeftWidth: '2px' },
+  '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': { background: 'var(--term-hl-strong)' },
+  '.cm-activeLine': { backgroundColor: 'color-mix(in srgb, var(--panel) 60%, transparent)' },
+  '.cm-gutters': { backgroundColor: 'transparent', color: 'var(--mute)', border: 'none', borderRight: '1px solid var(--line)', fontFamily: 'inherit' },
+  '.cm-lineNumbers .cm-gutterElement': { padding: '0 0.55rem 0 0.7rem', minWidth: '2.2rem', fontSize: '0.74rem' },
+  '.cm-activeLineGutter': { backgroundColor: 'transparent', color: 'var(--fg)' },
+  '.cm-matchingBracket': { backgroundColor: 'var(--copper-soft)', outline: '1px solid var(--copper)', color: 'inherit' },
+  '.cm-nonmatchingBracket': { backgroundColor: 'var(--bad-soft)', outline: '1px solid var(--bad)' },
+  '.cm-selectionMatch': { backgroundColor: 'var(--copper-soft)' },
+  // Tokens (src/lib/weft/highlight.ts, TOKEN_COLOUR).
+  '.cm-weft-keyword': { color: 'var(--code-keyword)' },
+  '.cm-weft-type, .cm-weft-port': { color: 'var(--code-type)' },
+  '.cm-weft-number, .cm-weft-domain': { color: 'var(--code-number)' },
+  '.cm-weft-string, .cm-weft-attr': { color: 'var(--code-string)' },
+  '.cm-weft-comment': { color: 'var(--code-comment)', fontStyle: 'italic' },
+  '.cm-weft-doc': { color: 'var(--code-comment)', fontStyle: 'italic', fontWeight: '500' },
+  '.cm-weft-operator': { color: 'var(--code-punct)' },
+  '.cm-weft-function': { color: 'var(--code-fn)' },
+  '.cm-weft-register': { color: 'var(--code-fn)', fontWeight: '500' },
+  // Cross-probing: the source of the gates under the pointer.
+  '.cm-weft-probe': { backgroundColor: 'var(--term-hl-strong)', borderRadius: '2px', boxShadow: '0 0 0 1px var(--sig-high)' },
+  // Diagnostics.
+  '.cm-lintRange-error': { backgroundImage: 'none', textDecoration: 'underline wavy var(--bad)', textUnderlineOffset: '3px' },
+  '.cm-lintRange-warning': { backgroundImage: 'none', textDecoration: 'underline wavy var(--maybe)', textUnderlineOffset: '3px' },
+  '.cm-lintRange-info, .cm-lintRange-hint': { backgroundImage: 'none', textDecoration: 'underline dotted var(--sig-current)', textUnderlineOffset: '3px' },
+  '.cm-lintRange-active': { backgroundColor: 'var(--bad-soft)' },
+  '.cm-lint-marker': { width: '0.8em', height: '0.8em' },
+  '.cm-gutter-lint': { width: '1em' },
+  // Tooltips and menus.
+  '.cm-tooltip': {
+    backgroundColor: 'var(--panel)',
+    color: 'var(--fg)',
+    border: '1.5px solid var(--fg)',
+    borderRadius: '5px',
+    boxShadow: '3px 3px 0 color-mix(in srgb, var(--fg) 18%, transparent)',
+    fontFamily: 'var(--font-ui)',
+    fontSize: '0.8rem',
+    overflow: 'hidden',
+  },
+  '.cm-tooltip.cm-tooltip-autocomplete > ul': { fontFamily: 'var(--font-mono)', fontSize: '0.8rem', maxHeight: '14em' },
+  '.cm-tooltip-autocomplete ul li[aria-selected]': { backgroundColor: 'var(--copper-soft)', color: 'var(--fg)' },
+  '.cm-completionDetail': { color: 'var(--mute)', fontStyle: 'normal', marginLeft: '0.7em' },
+  '.cm-completionIcon': { opacity: '0.7' },
+  '.cm-completionInfo': { fontFamily: 'var(--font-ui)', padding: '0.4rem 0.6rem', maxWidth: '20rem' },
+  '.cm-tooltip-lint': { fontFamily: 'var(--font-ui)' },
+  '.cm-diagnostic': { padding: '0.35rem 0.7rem', borderLeft: '4px solid var(--mute)' },
+  '.cm-diagnostic-error': { borderLeftColor: 'var(--bad)' },
+  '.cm-diagnostic-warning': { borderLeftColor: 'var(--maybe)' },
+  '.cm-panels': { backgroundColor: 'var(--panel)', color: 'var(--fg)', fontFamily: 'var(--font-ui)' },
+  '.cm-panels-bottom': { borderTop: '1px solid var(--line)' },
+  '.cm-searchMatch': { backgroundColor: 'var(--maybe-soft)', outline: '1px solid var(--maybe)' },
+  '.cm-searchMatch-selected': { backgroundColor: 'var(--term-hl-strong)' },
+  // The hover card.
+  '.weft-hover': { padding: '0.45rem 0.7rem 0.5rem', maxWidth: '26rem', display: 'grid', gap: '0.25rem' },
+  '.weft-hover code': { fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: 'var(--fg)', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' },
+  '.weft-hover .what': { fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--mute)' },
+  '.weft-hover .doc': { color: 'var(--ink-2)', lineHeight: '1.4' },
+  '.weft-hover pre': { margin: '0', fontFamily: 'var(--font-mono)', fontSize: '0.76rem', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', color: 'var(--fg)' },
+});

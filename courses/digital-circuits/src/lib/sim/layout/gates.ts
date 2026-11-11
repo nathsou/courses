@@ -23,8 +23,8 @@
  *    `layout.test.ts` checks the connectivity of every drawing against the netlist.)
  * 6. **Clocks** are drawn as net labels rather than wires: every clock pin gets a flag named after the port.
  */
-import type { Circuit, FlatElement, FlatNetlist, PinDef, Placed, Wire } from '../../sim/netlist/types';
-import { boundsOf, getDef, pinsOf } from '../../sim/netlist/catalog';
+import type { Circuit, FlatElement, FlatNetlist, PinDef, Placed, Wire } from '../netlist/types';
+import { boundsOf, getDef, pinsOf } from '../netlist/catalog';
 import { textWidth } from '../../bench/geometry';
 
 export class LayoutError extends Error {}

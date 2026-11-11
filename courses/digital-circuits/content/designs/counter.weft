@@ -1,0 +1,18 @@
+/// A 4-bit counter with enable and synchronous clear.
+module counter(
+    in  clk: clock,
+    in  enable: bool,
+    in  clear: bool,
+    out count: uint<4>,
+    out wrapped: bool,
+) {
+    reg value: uint<4> = 0;
+
+    if clear {
+        value := 0;
+    } else if enable {
+        value := value +% 1;
+    }
+    count = value;
+    wrapped = enable && value == 15;
+}

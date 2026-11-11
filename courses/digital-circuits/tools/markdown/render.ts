@@ -3,7 +3,7 @@
  */
 import katex from 'katex';
 import { bundledLanguages, createHighlighter, type Highlighter, type ThemeRegistration } from 'shiki';
-import { dclHighlighter } from './dcl.ts';
+import { highlightWeftHtml } from '../../src/lib/weft/highlight.ts';
 
 /**
  * Macros available in every equation.
@@ -70,8 +70,9 @@ const THEME_DARK = benchTheme('bench-dark', 'dark', { fg: '#e2e8ef', bg: '#111a2
 let highlighter: Promise<Highlighter> | undefined;
 
 export async function highlight(code: string, lang: string | null | undefined): Promise<string> {
-  // DCL is highlighted by the compiler's own lexer, not by a TextMate grammar (HDL.md, Highlighting).
-  if (lang === 'dcl') return (await dclHighlighter())(code);
+  // Weft (and the IR text and pin files of synth's flow) are highlighted as synth's own tools do, not by a
+  // TextMate grammar (src/lib/weft/highlight.ts).
+  if (lang === 'weft' || lang === 'rtl' || lang === 'gates' || lang === 'netlist' || lang === 'pcf') return highlightWeftHtml(code, lang);
   highlighter ??= createHighlighter({ themes: [THEME_LIGHT, THEME_DARK], langs: [] });
   const h = await highlighter;
   // Load any bundled grammar (including aliases) instead of silently losing highlighting.

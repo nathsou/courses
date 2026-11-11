@@ -4,3 +4,7 @@ dist
 
 # Real Yosys and nextpnr logs used as test fixtures.
 !tools/validate/testdata/*.log
+
+# The synth toolchain, compiled to WebAssembly from the commit in synth.json (npm run synth).
+static/synth/
+.cache/
