@@ -19,7 +19,7 @@
  *
  * - `set a = e, b = e;` drives inputs (the logic settles at once). `step;` and `step n;` run clock cycles.
  *   `expect e;` checks a condition on the design's signals: its ports, and its registers and wires by name
- *   (`value`, `uart.state`).
+ *   (`value`, `uart.state`), or one bit of one (`count[3]`).
  * - `for i in a..b { … }` (or `a..=b`) repeats statements with `i` bound to each value.
  * - Expressions: integers (`42`, `0x2A`, `0b101`, `-3`), `true`, `false`, names, `( )`, and the operators
  *   `! ~ - * + - << >> & ^ | == != < <= > >= && ||` with Weft's precedence. Values are exact integers
@@ -364,7 +364,8 @@ function unroll(test: TestCase, ports: TbPort[]) {
         cycle += n;
         traceRead(n === 1 ? 'step' : `step ${n}`, s.line);
       } else if (s.k === 'expect') {
-        const names = [...signalsOf(s.e, env, new Set())];
+        // `count[1]` reads `count` and takes a bit of it.
+        const names = [...new Set([...signalsOf(s.e, env, new Set())].map((n) => n.replace(/\[\d+\]$/, '')))];
         ops.push({ read: names });
         checks.push({ read: reads++, e: s.e, env: new Map(env), text: s.text, line: s.line, cycle });
       } else {
@@ -382,6 +383,13 @@ function unroll(test: TestCase, ports: TbPort[]) {
   };
   walk(test.body);
   return { ops, checks, rows };
+}
+
+/** A signal's value by name, or one bit of it for `name[k]`. */
+function bitOf(vals: Record<string, bigint>, name: string): bigint {
+  const m = /^(.*)\[(\d+)\]$/.exec(name);
+  if (!m) return vals[name] ?? 0n;
+  return ((vals[m[1]!] ?? 0n) >> BigInt(m[2]!)) & 1n;
 }
 
 /** Reads a value as an exact integer, by the signal's width and signedness. */
@@ -421,7 +429,7 @@ export async function runTests(synth: Synth, files: SourceFile[], top: string | 
         const read = r.reads[c.read];
         if (!read) break;
         const vals = values(read);
-        const pass = evaluate(c.e, c.env, (n) => vals[n] ?? 0n) !== 0n;
+        const pass = evaluate(c.e, c.env, (n) => bitOf(vals, n)) !== 0n;
         checked.push({ text: c.text, line: c.line, cycle: c.cycle, pass, values: vals });
       }
       const trace: TraceRow[] = [];

@@ -1,0 +1,24 @@
+test "ADD R1, R2 asks for exactly three transfers after the fetch" {
+    set stage = 3, ir = 0x86, taken = false;
+    expect oe_rd && ld_a && !oe_rs && !last;
+    set stage = 4;
+    expect oe_rs && ld_b && !oe_rd;
+    set stage = 5;
+    expect oe_alu && we_r && ld_flags && last && alu_op == 0;
+    set stage = 6;
+    expect !oe_alu && !we_r && !last;
+}
+
+test "a jump loads the PC only if it is taken" {
+    set stage = 4, ir = 0xf3, taken = true;
+    expect pc_ld && !pc_inc && oe_mem;
+    set taken = false;
+    expect !pc_ld && pc_inc;
+}
+
+test "every fetch is the same, whatever IR holds" {
+    set stage = 0, ir = 0xff, taken = true;
+    expect oe_pc && ld_mar && !oe_mem;
+    set ir = 0x00, stage = 1;
+    expect oe_mem && ld_ir && pc_inc;
+}

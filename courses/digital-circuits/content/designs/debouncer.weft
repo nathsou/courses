@@ -1,0 +1,19 @@
+/// Cleans up a bouncing push button or switch. The input is synchronised first; the output then changes
+/// only after the input has held its new value for STABLE clock cycles in a row.
+module debouncer<STABLE: int = 4>(in raw: bool @async, out clean: bool) {
+    let level = sync(raw);
+    reg state: bool = false;
+    reg count: index<STABLE> = 0;
+    let differs = level != state;
+    let settled = count == STABLE - 1;
+
+    if !differs || settled {
+        count := 0;
+    } else {
+        count := count +% 1;
+    }
+    if differs && settled {
+        state := level;
+    }
+    clean = state;
+}

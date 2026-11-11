@@ -33,6 +33,7 @@ test "holds while disabled" {
     expect digit == 9 && !carry;
     step 5;
     expect value == 9;   // the register, by name
+    expect digit[0] && !digit[1] && digit[3];
 }
 `;
 

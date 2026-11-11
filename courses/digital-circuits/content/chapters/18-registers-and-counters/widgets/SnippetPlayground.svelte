@@ -1,13 +1,13 @@
 <!--
-  A DCL playground that starts from a program kept in snippets.ts (so that the tests can run it):
+  A Weft playground that starts from a program kept in snippets.ts (so that the tests can run it):
 
-    ::snippet-playground{id="fix-the-test" n="18.5" caption="…"}
+    ::snippet-playground{id="fix-the-test" n="…" caption="…"}
 
-  It is the shared playground (`$lib/widgets/dcl/DclPlayground.svelte`): an editor that checks as you type, a
-  simulator, the gates, and the file's tests.
+  It is the shared playground (`$lib/widgets/weft/WeftPlayground.svelte`): an editor that checks as you type,
+  a simulator, the gates synth makes, and the program's tests.
 -->
 <script lang="ts">
-  import DclPlayground from '$lib/widgets/dcl/DclPlayground.svelte';
+  import WeftPlayground from '$lib/widgets/weft/WeftPlayground.svelte';
   import { SNIPPETS } from './snippets';
 
   let {
@@ -18,6 +18,7 @@
     n,
     tests = true,
     circuit = true,
+    cost = false,
     tab,
   }: {
     id: string;
@@ -27,6 +28,7 @@
     n?: string | number;
     tests?: boolean;
     circuit?: boolean;
+    cost?: boolean;
     tab?: string;
   } = $props();
 
@@ -34,7 +36,7 @@
 </script>
 
 {#if snippet}
-  <DclPlayground code={snippet.code} top={snippet.top} title={title ?? snippet.title} {subtitle} {caption} {n} {tests} {circuit} {tab} />
+  <WeftPlayground code={snippet.code} tests={snippet.tests} top={snippet.top} title={title ?? snippet.title} {subtitle} {caption} {n} showTests={tests} {circuit} {cost} {tab} />
 {:else}
   <p role="alert">Unknown snippet “{id}”.</p>
 {/if}

@@ -1,7 +1,7 @@
 ---
 number: 19
 title: State machines
-summary: A drawing of bubbles and arrows becomes flip-flops and gates. Moore and Mealy machines, the three ways to number the states, and the same machine written as a match in DCL.
+summary: A drawing of bubbles and arrows becomes flip-flops and gates. Moore and Mealy machines, the three ways to number the states, and the same machine written as a match in Weft.
 duration: About 2 hours
 prerequisites: [registers-and-counters]
 ---
@@ -134,7 +134,7 @@ A D flip-flop with enable loads D only when EN is 1; otherwise it keeps its valu
 
 ## The FSM designer
 
-The designer draws what you have done by hand. It takes a machine as bubbles and arrows, and gives back everything the chapter has described: the state table, the minimised equations, the circuit, the cost of each encoding and the code in DCL. Everything you can do with the mouse you can do with the buttons and forms as well (Tab to a bubble, and the arrow keys move it), so use whichever you prefer.
+The designer draws what you have done by hand. It takes a machine as bubbles and arrows, and gives back everything the chapter has described: the state table, the minimised equations, the circuit, the cost of each encoding and the code in Weft. Everything you can do with the mouse you can do with the buttons and forms as well (Tab to a bubble, and the arrow keys move it), so use whichever you prefer.
 
 ::fsm-designer{n="19.4" caption="Choose one of the machines, or Blank, and change it. States tab: add, rename, reorder, delete. Arrows tab: add an arrow with the form, or click one bubble and then another. Ports tab: add inputs and outputs. Flip the input switches and press Clock edge; the logic is checked against the diagram at every edge."}
 
@@ -182,37 +182,43 @@ Four states need two flip-flops, and two flip-flops can hold four values, so not
 
 Proving that a machine never enters one of those codes, whatever its inputs, is the job of a model checker. [Chapter 23 of *For All Inputs*](/../formal-verification/chapters/inductive-invariants/) shows k-induction, a method invented for verifying hardware, and why the states a design never reaches are exactly what make such proofs hard.
 
-## The same machine in DCL
+## The same machine in Weft
 
-Writing a machine as a set of gates is a way of *drawing* it. In DCL, the course's hardware language, you write it the way the diagram reads: an enum of states, a register that holds one, and a `match` that says where each state goes next.
+Writing a machine as a set of gates is a way of *drawing* it. In Weft, the hardware language that the rest of the course uses (Chapter 29 is about it), you write it the way the diagram reads: an enum of states, a register that holds one, and a `match` that says where each state goes next.
 
-```dcl
+```weft
 enum Light { Red, RedAmber, Green, Amber }
 
-module TrafficLight(clk: clock, tick: bit) -> (red: bit, amber: bit, green: bit) {
-  reg state: Light = Light.Red
+module traffic_light(
+    in  clk: clock,
+    in  tick: bool,
+    out red: bool,
+    out amber: bool,
+    out green: bool,
+) {
+    reg state: Light = .Red;
 
-  next state = if !tick { state } else {
-    match state {
-      Light.Red => Light.RedAmber,
-      Light.RedAmber => Light.Green,
-      Light.Green => Light.Amber,
-      Light.Amber => Light.Red,
+    if tick {
+        state := match state {
+            .Red => .RedAmber,
+            .RedAmber => .Green,
+            .Green => .Amber,
+            .Amber => .Red,
+        };
     }
-  }
-  red = state == Light.Red || state == Light.RedAmber
-  amber = state == Light.RedAmber || state == Light.Amber
-  green = state == Light.Green
+    red = state == .Red || state == .RedAmber;
+    amber = state == .RedAmber || state == .Amber;
+    green = state == .Green;
 }
 ```
 
-Nothing in it mentions a code. The compiler chooses one, binary by default, and it reads the source in the same order as the diagram: `reg state` is the flip-flops, `next state = …` is the next-state logic, and the three lines below are the output logic. A `match` compiles to *one* multiplexer, evaluating every arm in parallel, as the note above said; and the compiler checks that the arms cover every state, so a forgotten arrow is a compile error, not a machine that hangs.
+Nothing in it mentions a code. The compiler chooses one, and it reads the source in the same order as the diagram: `reg state` is the flip-flops, `state := …` is the next-state logic, and the three lines below are the output logic. The `match` is all the arms at once, as the note above said: hardware builds every arm, every cycle, and the state picks the answer. The compiler checks that the arms cover every state, so a forgotten arrow is a compile error, not a machine that hangs. And `if tick { … }` around it costs no gates at all: a register that is not assigned keeps its value, so on a cycle without a tick the state stays where it is, and synth gives `tick` to the flip-flops' enable inputs.
 
-To change the encoding you change one word. Put `@onehot` or `@gray` in front of the enum and the compiler makes four flip-flops or a Gray-coded pair; the machine does not change. In the playground, press *Step clock* with `tick` at 1 and watch the lights walk the sequence, then add the attribute and open the Circuit tab.
+To choose the encoding yourself, give the enum its codes. `enum Light: uint<4> { Red = 0b0001, RedAmber = 0b0010, Green = 0b0100, Amber = 0b1000 }` is one-hot, and the compiler makes four flip-flops; the machine does not change. In the playground, press *Step clock* with `tick` at 1 and watch the lights walk the sequence, then change the enum and open the Circuit tab.
 
-::dcl-playground{src="designs/traffic-light.dcl" top="TrafficLight" n="19.5" tab="run" caption="Hold tick at 1 and press Step clock: red, red with amber, green, amber, red. Put @onehot in front of the enum, open the Circuit tab and count the flip-flops. Then run the tests, and break one by swapping two arms of the match."}
+::weft-playground{src="designs/traffic-light.weft" n="19.5" tab="run" caption="Hold tick at 1 and press Step clock: red, red with amber, green, amber, red. Give the enum the one-hot codes of the text, open the Circuit tab and count the flip-flops. Then run the tests, and break one by swapping two arms of the match."}
 
-The designer's **DCL tab** writes this code for any machine you draw, in the encoding you have chosen. Its `Compile it` button hands the text to the real compiler and reports the flip-flops and gates that come out. The count will be higher than the minimised one in the Cost tab: the compiler does not minimise, it turns each `match` into decoders and AND–OR gates, and leaves shrinking the logic to whatever comes next (for a GAL in Chapter 26, the fitter that uses the same minimiser as this chapter).
+The designer's **Weft tab** writes this code for any machine you draw, in the encoding you have chosen (binary leaves the codes to the compiler; Gray and one-hot write them into the enum). Its `Compile it` button hands the text to synth and reports the flip-flops, the AND gates of its optimised network and the 4-input LUTs of an iCE40 FPGA that come out. synth does not use the two-level minimiser of the Cost tab: it optimises the whole machine as a network of AND gates, then cuts that into LUTs (Chapter 30). For the presets, its LUT count lands within one or two of the Cost tab's estimate.
 
 ## A machine with a datapath
 

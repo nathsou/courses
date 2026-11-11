@@ -1,12 +1,13 @@
 /**
- * A bouncing push button, and the DCL standard library's `Debouncer` cleaning it up.
+ * A bouncing push button, and the course's Weft `debouncer` cleaning it up.
  *
  * The button is a list of samples every 0.1 ms: it rests low, is pressed, bounces for a few milliseconds, is
- * released and bounces again. The design under test is the real `Debouncer<WINDOW>` of `src/lib/hdl/std/debouncer.dcl`,
- * compiled by the DCL front end and run on the RTL simulator, sampling the button at a 1 kHz clock: the output
- * changes only after the input has held its new value for WINDOW clock cycles (milliseconds) in a row.
+ * released and bounces again. The design is `content/designs/debouncer.weft`, sampling the button at a 1 kHz
+ * clock: the output changes only after the input has held its new value for WINDOW clock cycles
+ * (milliseconds) in a row. The figure runs `debounce` below, a cycle-by-cycle model of that module, so that it
+ * can redraw at once as the sliders move; `bounce.test.ts` runs the Weft module itself on synth's simulator
+ * over many buttons and windows and checks that the two agree at every cycle.
  */
-import { check, createRtlSim, elaborate } from '$lib/hdl';
 
 /** Samples per millisecond in the button's waveform. */
 export const RES = 10;
@@ -75,29 +76,33 @@ export interface Cleaned {
   clean: Uint8Array;
 }
 
-const sources = new Map<number, ReturnType<typeof compile>>();
-function compile(window: number) {
-  const r = check(`module Top(clk: clock, raw: bit) -> (clean: bit) {\n  inst d: Debouncer<${window}>(clk: clk, raw: raw)\n  clean = d.clean\n}`);
-  if (r.diagnostics.some((d) => d.severity === 'error')) throw new Error('Debouncer did not compile');
-  return r.program;
-}
-
-/** Run `Debouncer<window>` over a button, one clock edge per millisecond. */
+/**
+ * `debouncer<STABLE: window>` over a button, one clock edge per millisecond: the two flip-flops of `sync`, then
+ * a register that takes a new level once it has differed from it for `window` cycles in a row.
+ */
 export function debounce(b: Button, window: number): Cleaned {
   const w = Math.max(2, Math.min(64, Math.round(window)));
-  let prog = sources.get(w);
-  if (!prog) sources.set(w, (prog = compile(w)));
-  const sim = createRtlSim(elaborate(prog, 'Top'));
   const n = b.length;
   const sampled = new Uint8Array(n);
   const synced = new Uint8Array(n);
   const clean = new Uint8Array(n);
+  let s1 = 0;
+  let s2 = 0;
+  let state = 0;
+  let count = 0;
   for (let ms = 0; ms < n; ms++) {
     sampled[ms] = b.raw[ms * RES]!;
-    sim.set('raw', sampled[ms]!);
-    synced[ms] = sim.get('d.level');
-    clean[ms] = sim.get('clean');
-    sim.step();
+    synced[ms] = s2;
+    clean[ms] = state;
+    // The clock edge: every register takes its next value from the values before it.
+    const differs = s2 !== state;
+    const settled = count === w - 1;
+    const nextCount = !differs || settled ? 0 : (count + 1) % w;
+    const nextState = differs && settled ? s2 : state;
+    s2 = s1;
+    s1 = sampled[ms]!;
+    count = nextCount;
+    state = nextState;
   }
   return { sampled, synced, clean };
 }

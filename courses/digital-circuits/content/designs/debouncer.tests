@@ -1,0 +1,22 @@
+test "ignores bounces shorter than the window" {
+    for i in 0..3 {
+        set raw = true;
+        step 2;
+        set raw = false;
+        step 2;
+    }
+    step 10;
+    expect !clean;
+}
+
+test "follows a steady input after the window" {
+    set raw = true;
+    // Two cycles through the synchroniser, then four stable cycles.
+    step 5;
+    expect !clean;
+    step;
+    expect clean;
+    set raw = false;
+    step 6;
+    expect !clean;
+}

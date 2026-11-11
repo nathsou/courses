@@ -65,17 +65,17 @@ The payoff is immediate. Wire Q̄ back to D again, as in the race, but with a fl
 
 Where the latch produced 500 MHz of nonsense, the flip-flop gives exactly one change per clock. Chapter 18 chains such toggles into counters.
 
-### In DCL, a flip-flop is one line
+### In Weft, a flip-flop is one line
 
-From here on the course writes hardware in DCL as well as drawing it. In DCL a flip-flop is a `reg`, and `next` is the value that will be there after the next rising edge: the D input.
+From here on the course writes hardware in text as well as drawing it, in **Weft**, the language of synth, the open FPGA toolchain that the course runs in your browser (Chapter 29 is about the language). In Weft a flip-flop is a `reg`, and `:=` gives the value that will be there after the next rising edge: the D input.
 
-::snippet-playground{id="toggle" n="17.5" tab="run" caption="The toggle flip-flop of Figure 17.4 as a DCL module. Press Step clock and watch q alternate; open the Circuit tab to find the single flip-flop and the inverter, and press Run tests. Notice what the module does not mention: which clock edge, how long the data must be stable, or how fast the gates are. DCL describes what happens at each tick, and leaves the physics to the chip."}
+::snippet-playground{id="toggle" n="17.5" tab="run" caption="The toggle flip-flop of Figure 17.4 as a Weft module. Press Step clock and watch q alternate; open the Circuit tab to find the single flip-flop and the inverter, and run the tests on the Tests tab. Notice what the module does not mention: how long the data must be stable, or how fast the gates are. Weft describes what happens at each tick, and leaves the physics to the chip."}
 
 Look at what the language will *not* let you write. There is no `latch`, and if you try to make one out of a loop, the compiler stops you with the very error Chapter 16 would have predicted.
 
-::snippet-playground{id="latch" n="17.6" tab="code" circuit=false tests=false caption="Try to hold a value without a register: the output feeds its own definition. The compiler reports a combinational loop and says to use `reg`. A design that cannot contain a transparent latch cannot contain the race of Figure 17.2. If you would rather have the latch, Chapter 16 shows how to build one from gates."}
+::snippet-playground{id="latch" n="17.6" tab="code" circuit=false tests=false caption="Try to hold a value without a register: the output feeds its own definition. synth reports that held depends on itself and says to break the cycle with a register. A design that cannot contain a transparent latch cannot contain the race of Figure 17.2. If you would rather have the latch, Chapter 16 shows how to build one from gates."}
 
-DCL goes further. A `clock` can only be passed from a port to a register: it cannot be computed, inverted or ANDed with anything, so a gated clock (the source of endless trouble in real designs) cannot be written down. Every register in a module is on one clock and changes at the same instant, just like the master–slave pair. The rest of the chapter is about the physical conditions under which that idealisation is true.
+Weft goes further. A `clock` comes from a port (or from a PLL, Chapter 31): it cannot be computed, inverted or ANDed with anything, so a gated clock (the source of endless trouble in real designs) cannot be written down. The registers of a clock domain all change at the same instant, just like the master–slave pair, and a value that crosses from one domain to another, or comes in from a pin, has to go through a synchroniser first: the compiler checks. That is the subject of a later section. The rest of the chapter is about the physical conditions under which that idealisation is true.
 
 ## The contract: set-up, hold and clock to Q
 
@@ -234,13 +234,13 @@ The most familiar asynchronous input is a push button.
 
 A mechanical switch does not close cleanly. The contacts touch, spring apart and touch again, for a millisecond or so and occasionally for tens of milliseconds, and a fast circuit sees each touch as a press.:cite[ganssle-debounce] Wired straight to a flip-flop that toggles, one press toggles it an unpredictable number of times.
 
-There are two cures. An analogue one puts a resistor and capacitor in front of a Schmitt trigger (Chapter 4): the capacitor smooths over the chatter and the two thresholds give a single clean edge. The digital one, which needs no extra parts if there is a clock, is to wait: accept a new level only after the input has held it for longer than the longest bounce. That is what DCL's standard-library `Debouncer` does.
+There are two cures. An analogue one puts a resistor and capacitor in front of a Schmitt trigger (Chapter 4): the capacitor smooths over the chatter and the two thresholds give a single clean edge. The digital one, which needs no extra parts if there is a clock, is to wait: accept a new level only after the input has held it for longer than the longest bounce. That is what the course's Weft `debouncer` does (`content/designs/debouncer.weft`): it synchronises the button with Weft's `sync`, then counts how long the synchronised level has differed from its output.
 
 ::debounce-lab{n="17.12" caption="A push button pressed at 8 ms and released at 36 ms, with 4 ms of contact chatter after each. The debouncer's window is a number of 1 ms clock cycles. Drag the window below the bounce, to about 2 ms, and press again a few times: sometimes a quiet moment inside the chatter counts as a steady value and an extra edge gets through. Then lengthen the window past the bounce, and the clean output is one press and one release."}
 
 Here is the module, written in three ways: as plain code, as a diagram (a synchroniser feeding a counter), and as a working design. It uses the debouncer to make a push button toggle a lamp: the circuit of the *Build it for real* lab.
 
-::snippet-playground{id="press-toggle" n="17.13" tab="run" caption="A debounced push button toggling a lamp. Set button to 1 and Step clock 12 times: the lamp turns on, once. The tests chatter the button, then press and release it; open the Circuit tab to find the synchroniser, the counter that measures the window, and the edge detector. The window here is four cycles."}
+::snippet-playground{id="press-toggle" n="17.13" tab="run" caption="A debounced push button toggling a lamp. Set button to 1 and Step clock 12 times: the lamp turns on, once. The tests chatter the button, then press and release it; open the Circuit tab to find the synchroniser's two flip-flops, the counter that measures the window, the register that holds the clean level, and the edge detector (Weft's rising) that turns a press into one pulse. The window here is four cycles."}
 
 :::hood[How a flip-flop knows it was given too little time]
 Chapter 16 showed how the digital engine makes a latch metastable: Q goes to X and a wake-up is scheduled after a random time of mean τ (`goMetastable`, then `wake`). The flip-flop uses the same two functions, and adds the part that this chapter is about, deciding *when*. It remembers the time of its clock's last rising edge and the time its data inputs last changed, and compares them with `setup` and `hold` whenever either moves (`src/lib/sim/digital/models/sequential.ts`). When a data input changes, it checks the hold time against the last edge:

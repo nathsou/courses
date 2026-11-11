@@ -1,0 +1,13 @@
+/// The step counter: it counts on the clock and starts again after the last step of an instruction.
+module octet_sequencer(in clk: clock, in last: bool, in halt: bool, out stage: uint<3>) {
+    reg count: uint<3> = 0;
+
+    if halt {
+        // Hold: no assignment, and a register keeps its value.
+    } else if last {
+        count := 0;
+    } else {
+        count := count +% 1;
+    }
+    stage = count;
+}

@@ -1,0 +1,35 @@
+test "adds and sets the carry and overflow flags" {
+    set a = 0x7f, b = 0x01, op = 0;
+    expect y == 0x80 && n && v && !c && !z;
+    set a = 0xff;
+    expect y == 0 && z && c && !v;
+}
+
+test "subtracts, and C is the borrow" {
+    set a = 3, b = 5, op = 1;
+    expect y == 0xfe && c && n && !v;
+    set a = 5;
+    expect y == 0 && z && !c;
+    set a = 0x80, b = 1;
+    expect y == 0x7f && v && !c;
+}
+
+test "logic clears C and V; shift right puts the bit shifted out in C" {
+    set a = 0xf0, b = 0x3c, op = 2;
+    expect y == 0x30 && !c && !v;
+    set op = 3;
+    expect y == 0xfc;
+    set op = 4;
+    expect y == 0xcc;
+    set op = 7;
+    expect y == 0x0f && !n;
+    set a = 0x03, op = 6;
+    expect y == 0x01 && c && !n;
+}
+
+test "SHL is ADD with both inputs the same, INC is ADD with a 1" {
+    set a = 0x96, b = 0x96, op = 0;
+    expect y == 0x2c && c && v;
+    set a = 0x7f, b = 1;
+    expect y == 0x80 && v && !c;
+}

@@ -1,7 +1,8 @@
 import { describe, expect, test } from 'vitest';
-import { check, elaborate, createRtlSim } from '$lib/hdl';
+import { analyze, format, tbRun, tbStart, tbStop } from '$lib/synth/api';
+import { nodeSynth } from '$lib/synth/node';
 import { allInputs, mealyToMoore, step, type Fsm } from './fsm';
-import { toDcl, moduleName } from './dcl';
+import { toWeft, moduleName, portName } from './weft';
 import { DETECTOR, PRESETS, TRAFFIC_LIGHT, VENDING } from './presets';
 import { codeText, compareEncodings, encode, evalLogic, synthesise, verify, type Encoding } from './synth';
 import { toSnake } from './fsm';
@@ -113,55 +114,58 @@ describe('state assignment', () => {
   });
 });
 
-describe('the DCL text', () => {
-  test('module names', () => {
-    expect(moduleName('UART receiver (control)')).toBe('UartReceiverControl');
-    expect(moduleName('Sequence detector 1011')).toBe('SequenceDetector1011');
-    expect(moduleName('1 bit')).toBe('M1Bit');
+describe('the Weft text', () => {
+  const synth = nodeSynth();
+  test('module and port names', () => {
+    expect(moduleName('UART receiver (control)')).toBe('uart_receiver_control');
+    expect(moduleName('Sequence detector 1011')).toBe('sequence_detector_1011');
+    expect(moduleName('1 bit')).toBe('m1_bit');
+    expect(portName('in')).toBe('in_');
+    expect(portName('dataReady')).toBe('data_ready');
   });
   for (const p of PRESETS) {
     for (const e of ENC) {
-      test(`${p.id} / ${e}: compiles without diagnostics and matches the diagram cycle by cycle`, () => {
-        const code = toDcl(p.fsm, e);
-        const r = check(code, { file: 'fsm.dcl' });
-        expect(r.diagnostics.map((d) => d.message)).toEqual([]);
-        const sim = createRtlSim(elaborate(r.program, moduleName(p.fsm.title)));
-        let s = p.fsm.states[0]!.name;
-        const ins = p.fsm.inputs.map(toSnake);
-        const outs = p.fsm.outputs.map(toSnake);
-        for (const v of stream(ins.length, 300, 11)) {
-          ins.forEach((n, i) => sim.set(n, v[i]!));
-          const want = step(p.fsm, s, v);
-          expect(outs.map((o) => sim.get(o)).join('')).toBe(want.out);
-          sim.step();
-          s = want.next;
-        }
+      test(`${p.id} / ${e}: compiles without diagnostics, in synth's format, and matches the diagram cycle by cycle`, async () => {
+        const code = toWeft(p.fsm, e);
+        const files = [{ name: 'fsm.weft', text: code }];
+        const a = await analyze(synth, files);
+        expect(a.diagnostics.map((d) => d.rendered)).toEqual([]);
+        expect(await format(synth, code)).toBe(code);
+        const s = await tbStart(synth, { files, top: moduleName(p.fsm.title) });
+        if (!s.ok) throw new Error(s.error);
+        const ins = p.fsm.inputs.map(portName);
+        const outs = p.fsm.outputs.map(portName);
+        const vecs = stream(ins.length, 300, 11);
+        const r = await tbRun(synth, s.id, vecs.flatMap((v) => [{ set: Object.fromEntries(ins.map((n, i) => [n, v[i]!])) }, { read: outs }, { step: 1 }]));
+        await tbStop(synth, s.id);
+        expect(r.ok, r.error).toBe(true);
+        let st = p.fsm.states[0]!.name;
+        vecs.forEach((v, k) => {
+          const want = step(p.fsm, st, v);
+          expect(outs.map((o) => r.reads[k]!.values![o]).join(''), `cycle ${k}`).toBe(want.out);
+          st = want.next;
+        });
       });
     }
   }
-  test('every input combination is exercised for the vending machine', () => {
-    const code = toDcl(VENDING, 'binary');
-    const r = check(code);
-    const sim = createRtlSim(elaborate(r.program, 'VendingMachine'));
+  test('every input combination is exercised for the vending machine', async () => {
+    const files = [{ name: 'fsm.weft', text: toWeft(VENDING, 'binary') }];
+    const s = await tbStart(synth, { files, top: 'vending_machine' });
+    if (!s.ok) throw new Error(s.error);
     for (const st of VENDING.states) {
       for (const v of allInputs(2)) {
-        sim.reset();
         // Walk to the state, then compare one cycle.
         const path = { Empty: [], Has5: [[1, 0]], Has10: [[0, 1]] }[st.name]!;
-        for (const w of path) {
-          sim.set('five', w[0]!);
-          sim.set('ten', w[1]!);
-          sim.step();
-        }
-        sim.set('five', v[0]!);
-        sim.set('ten', v[1]!);
-        expect(String(sim.get('dispense'))).toBe(step(VENDING, st.name, v).out);
+        const ops = [{ restart: true as const }, ...path.flatMap((w) => [{ set: { five: w[0]!, ten: w[1]! } }, { step: 1 }]), { set: { five: v[0]!, ten: v[1]! } }, { read: ['dispense'] }];
+        const r = await tbRun(synth, s.id, ops);
+        expect(String(r.reads[0]!.values!.dispense)).toBe(step(VENDING, st.name, v).out);
       }
     }
+    await tbStop(synth, s.id);
   });
-  test('the attribute chooses the encoding', () => {
-    expect(toDcl(TRAFFIC_LIGHT, 'binary')).not.toMatch(/@/);
-    expect(toDcl(TRAFFIC_LIGHT, 'gray')).toMatch(/^@gray enum State/m);
-    expect(toDcl(TRAFFIC_LIGHT, 'onehot')).toMatch(/^@onehot enum State/m);
+  test('the enum states the encoding', () => {
+    expect(toWeft(TRAFFIC_LIGHT, 'binary')).toMatch(/^enum State \{ Red, RedAmber, Green, Amber \}$/m);
+    expect(toWeft(TRAFFIC_LIGHT, 'gray')).toMatch(/^enum State: uint<2> \{ Red = 0b00, RedAmber = 0b01, Green = 0b11, Amber = 0b10 \}$/m);
+    expect(toWeft(TRAFFIC_LIGHT, 'onehot')).toMatch(/^enum State: uint<4> \{ Red = 0b0001, RedAmber = 0b0010, Green = 0b0100, Amber = 0b1000 \}$/m);
   });
 });
