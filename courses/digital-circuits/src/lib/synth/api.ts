@@ -220,6 +220,8 @@ export interface TbPort {
   width: number;
   signed: boolean;
   clock: boolean;
+  /** A clock the testbench elaboration added (a Weft top without a clock port). */
+  added?: boolean;
 }
 
 export interface TbStarted {
@@ -228,6 +230,8 @@ export interface TbStarted {
   ports: TbPort[];
   clocks: string[];
   memories: { name: string; width: number; depth: number; start: number }[];
+  /** Whether the design has registers or memories. */
+  state: boolean;
   signals?: { name: string; width: number; signed: boolean }[];
   warnings: string[];
   diagnostics: Diagnostic[];
@@ -243,6 +247,7 @@ export interface TbFailed {
 export type TbValue = number | string;
 
 export type TbOp =
+  | { restart: true }
   | { set: Record<string, TbValue | boolean> }
   | { step: number; clock?: string; trace?: string[] }
   | { read: string[] }

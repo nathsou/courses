@@ -1,8 +1,10 @@
 /**
- * The diagnostics tour: broken programs, the message the DCL checker really produces for each, and a fixed
- * version. The messages are rendered here, by the compiler, when the figure opens; nothing is typed in by hand.
+ * The diagnostics tour: broken Weft programs, the message synth prints for each, and a fixed version. The
+ * messages are synth's own: `tour.test.ts` compiles every program with the pinned synth and compares its
+ * output with `tour-messages.json`, which the figure shows (so it needs no compiler to render). Run the test
+ * with UPDATE_TOUR=1 to rewrite the file after changing a program or pinning another synth.
  */
-import { check, renderDiagnostic, type Diagnostic } from '$lib/hdl';
+import messages from './tour-messages.json';
 
 export interface TourStop {
   id: string;
@@ -12,229 +14,231 @@ export interface TourStop {
   fixed: string;
   /** The hardware bug the check prevents, and what a looser language does instead. */
   why: string;
+  /** Checked as the top module of a chip (inputs from pins), not as a module driven by a testbench. */
+  chip?: boolean;
 }
 
 export const STOPS: TourStop[] = [
   {
     id: 'width',
-    title: 'A 12-bit value added to a 32-bit one',
-    broken: `module Pc(clk: clock, imm: bits<12>) -> (out: bits<32>) {
-  reg pc: bits<32> = 0
-  next pc = pc + imm
-  out = pc
+    title: 'A sum that does not fit',
+    broken: `module counter(in clk: clock, out q: uint<4>) {
+    reg count: uint<4> = 0;
+    count := count + 1;
+    q = count;
 }
 `,
-    fixed: `module Pc(clk: clock, imm: bits<12>) -> (out: bits<32>) {
-  reg pc: bits<32> = 0
-  next pc = pc + sext(imm, 32)
-  out = pc
+    fixed: `module counter(in clk: clock, out q: uint<4>) {
+    reg count: uint<4> = 0;
+    count := count +% 1;
+    q = count;
 }
 `,
-    why: 'Verilog would quietly pad the short operand with zeros. A branch offset that should go back 4 bytes would go forward 4092. In DCL you must say which extension you mean.',
+    why: 'In Weft, `count + 1` is the exact sum: 0 to 16, which needs five bits. Verilog would drop the fifth bit without a word. Here you choose: `+%` if wrapping round from 15 to 0 is what you mean (a counter), or a wider register if it is not (a sum that must not overflow).',
   },
   {
     id: 'literal',
     title: 'A constant too big for its wires',
-    broken: `module Mask(a: bits<4>) -> (y: bits<4>) {
-  y = a & 0x1f
+    broken: `module mask(in a: uint<4>, out y: uint<4>) {
+    y = 20;
 }
 `,
-    fixed: `module Mask(a: bits<4>) -> (y: bits<4>) {
-  y = a & 0xf
+    fixed: `module mask(in a: uint<4>, out y: uint<4>) {
+    y = a & 0xF;
 }
 `,
-    why: 'A constant that does not fit is nearly always a typo or a wrong width. A looser language drops the top bit and carries on, and the mask no longer masks what you meant.',
+    why: 'Four wires hold 0 to 15. A constant that does not fit is nearly always a typo or a wrong width; a looser language keeps the low bits and carries on.',
   },
   {
-    id: 'signed',
-    title: 'Signed plus unsigned',
-    broken: `module Mix(a: signed<8>, b: bits<8>) -> (y: signed<8>) {
-  y = a + b
+    id: 'latch',
+    title: 'An output not driven on every path',
+    broken: `module pick(in sel: bool, in a: uint<8>, out y: uint<8>) {
+    if sel {
+        y = a;
+    }
 }
 `,
-    fixed: `module Mix(a: signed<8>, b: bits<8>) -> (y: signed<8>) {
-  y = a + signed(b)
+    fixed: `module pick(in sel: bool, in a: uint<8>, out y: uint<8>) {
+    y = 0;
+    if sel {
+        y = a;
+    }
 }
 `,
-    why: 'The same 8 wires mean 200 or −56, depending on the type. Mixing them in one expression is where C-style rules turn a comparison upside down. Converting costs no hardware, so there is no excuse for doing it silently.',
+    why: 'What should `y` be when `sel` is false? In Verilog the answer is "whatever it was", and to remember it the synthesiser builds a latch, a memory nobody asked for and whose timing is hard to check. A Weft wire must be driven on every path; the fix gives it a default, which the `if` overrides.',
   },
   {
-    id: 'missing-next',
-    title: 'A register that never changes',
-    broken: `module Toggle(clk: clock, en: bit) -> (q: bit) {
-  reg state: bit = 0
-  q = state
+    id: 'match',
+    title: 'A state the machine forgets',
+    broken: `enum State { Idle, Run, Done }
+
+module fsm(in clk: clock, in go: bool, out busy: bool) {
+    reg state: State = .Idle;
+    match state {
+        .Idle => if go { state := .Run; }
+        .Run => state := .Done;
+    }
+    busy = state == .Run;
 }
 `,
-    fixed: `module Toggle(clk: clock, en: bit) -> (q: bit) {
-  reg state: bit = 0
-  next state = if en { !state } else { state }
-  q = state
+    fixed: `enum State { Idle, Run, Done }
+
+module fsm(in clk: clock, in go: bool, out busy: bool) {
+    reg state: State = .Idle;
+    match state {
+        .Idle => if go { state := .Run; }
+        .Run => state := .Done;
+        .Done => state := .Idle;
+    }
+    busy = state == .Run;
 }
 `,
-    why: 'A flip-flop whose input nobody drew. Looser languages let it through (perhaps with a warning), and the flip-flop sits at its power-up value for ever.',
+    why: 'Here the omission is harmless-looking: `Done` simply holds. But a forgotten state is how a machine gets stuck forever in a state you never thought about. A `match` must cover every value, so you are made to think about each one.',
   },
   {
-    id: 'unassigned',
-    title: 'An output nobody drives',
-    broken: `module Compare(a: bit, b: bit) -> (both: bit, either: bit) {
-  both = a && b
+    id: 'index',
+    title: 'An index that can run off the end',
+    broken: `module digits(in d: uint<4>, out segments: uint<7>) {
+    let table: [uint<7>; 10] = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F];
+    segments = table[d];
 }
 `,
-    fixed: `module Compare(a: bit, b: bit) -> (both: bit, either: bit) {
-  both = a && b
-  either = a || b
+    fixed: `module digits(in d: uint<4>, out segments: uint<7>) {
+    let table: [uint<7>; 10] = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F];
+    segments = if d < 10 { table[d] } else { 0 };
 }
 `,
-    why: 'An unconnected output is a floating wire: high-impedance in a simulator, a random voltage on a chip. Here it is an error before the design leaves your editor.',
+    why: 'Four bits can say 15, and the table has ten entries. In Verilog, entry 12 is `x`, unknown, and what the chip does with it nobody knows. Weft knows the range of every value; inside `if d < 10` it knows that `d` is at most 9, so the read is safe.',
   },
   {
-    id: 'double',
-    title: 'Two drivers for one wire',
-    broken: `module Both(a: bit, b: bit) -> (y: bit) {
-  y = a && b
-  y = a || b
+    id: 'condition',
+    title: 'A number used as a condition',
+    broken: `module zero(in x: uint<8>, out is_zero: bool) {
+    is_zero = if x { false } else { true };
 }
 `,
-    fixed: `module Both(a: bit, b: bit) -> (y: bit) {
-  y = if a { b } else { 1 }
+    fixed: `module zero(in x: uint<8>, out is_zero: bool) {
+    is_zero = x == 0;
 }
 `,
-    why: 'Chapter 10’s contention: two gates fighting over one wire. Inside a DCL design there is no such thing, because every wire has exactly one driver, and you combine values with `if` or `match`.',
+    why: 'In C, any number is a condition, and in Verilog `if (x)` asks whether any bit is set. In Weft a condition is a `bool`, so you write which question you mean: `x != 0`, `x.any()`, `x[0]`.',
   },
   {
-    id: 'no-else',
-    title: 'An `if` with no `else`',
-    broken: `module Hold(a: bit, data: bits<4>) -> (y: bits<4>) {
-  y = if a { data }
+    id: 'precedence',
+    title: 'AND and OR without brackets',
+    broken: `module alarm(in door: bool, in window: bool, in armed: bool, out ring: bool) {
+    ring = armed && door || window;
 }
 `,
-    fixed: `module Hold(a: bit, data: bits<4>) -> (y: bits<4>) {
-  y = if a { data } else { 0 }
+    fixed: `module alarm(in door: bool, in window: bool, in armed: bool, out ring: bool) {
+    ring = armed && (door || window);
 }
 `,
-    why: 'In Verilog, an `if` without an `else` in combinational code means “otherwise keep the old value”, so the tool builds a latch you never asked for. DCL does not have to guess: a value is always defined.',
-  },
-  {
-    id: 'match-incomplete',
-    title: 'A `match` that misses cases',
-    broken: `module Alu(f3: bits<3>) -> (result: bits<8>) {
-  result = match f3 {
-    0 => 1,
-    1 => 2,
-    2 => 3,
-    3 => 4,
-    4 => 5,
-  }
-}
-`,
-    fixed: `module Alu(f3: bits<3>) -> (result: bits<8>) {
-  result = match f3 {
-    0 => 1,
-    1 => 2,
-    2 => 3,
-    3 => 4,
-    4 => 5,
-    _ => 0,
-  }
-}
-`,
-    why: 'Three of the eight selector values would have no answer. A `case` without a `default` in Verilog is another way to grow a latch. The checker lists exactly the values that are missing.',
+    why: 'C binds `&&` tighter than `||`, so this rings for an open window even when the alarm is off, which is probably not what was meant. Weft refuses to guess: mixing them needs brackets, and the brackets say which you meant.',
   },
   {
     id: 'loop',
-    title: 'A loop with no register in it',
-    broken: `module Latch(s: bit, r: bit) -> (q: bit) {
-  let q_i: bit = !(s && q_n)
-  let q_n: bit = !(r && q_i)
-  q = q_i
+    title: 'Two gates feeding each other',
+    broken: `module latch(in s: bool, in r: bool, out q: bool) {
+    let q_n = !(r || q_i);
+    let q_i = !(s || q_n);
+    q = q_i;
 }
 `,
-    fixed: `module SetReset(clk: clock, s: bit, r: bit) -> (q: bit) {
-  reg state: bit = 0
-
-  next state = if r { 0 } else if s { 1 } else { state }
-  q = state
+    fixed: `module latch(in clk: clock, in s: bool, in r: bool, out q: bool) {
+    reg q_i: bool = false;
+    if s {
+        q_i := true;
+    } else if r {
+        q_i := false;
+    }
+    q = q_i;
 }
 `,
-    why: 'This is the cross-coupled pair of Chapter 16, and it works as a latch on a bench. It has no clock, so no timing analysis can vouch for it, and DCL leaves it out of the language. The registered version is what you write instead.',
+    why: 'Two NOR gates feeding each other are the SR latch of Chapter 16: they remember, but they also race, glitch and go metastable, and no timing tool can check them. A Weft design is synchronous: memory is a `reg`, and a loop of gates without a register in it is an error that lists the loop.',
   },
   {
     id: 'clock',
-    title: 'A clock used as data',
-    broken: `module Gated(clk: clock, en: bit) -> (q: bit) {
-  reg r: bit = 0
-  let gated: bit = clk & en
-  next r = !r
-  q = r
+    title: 'A clock made from logic',
+    broken: `module gated(in clk: clock, in en: bool, in d: uint<8>, out q: uint<8>) {
+    domain slow { clock: clk && en }
+    reg r: uint<8> @slow = 0;
+    r := d;
+    q = r;
 }
 `,
-    fixed: `module Gated(clk: clock, en: bit) -> (q: bit) {
-  reg r: bit = 0
-  next r = if en { !r } else { r }
-  q = r
+    fixed: `module gated(in clk: clock, in en: bool, in d: uint<8>, out q: uint<8>) {
+    reg r: uint<8> = 0;
+    if en {
+        r := d;
+    }
+    q = r;
 }
 `,
-    why: 'A gate on a clock line can glitch, and a glitch on a clock is a stray clock edge. FPGAs route clocks on their own network, which logic cannot enter. The safe pattern, an enable, is the only one that can be written.',
+    why: 'Gating a clock with an AND gate saves a multiplexer and costs a glitch on the clock whenever `en` changes while it is high: an extra edge, and registers loading at random. Clocks cannot be computed in Weft. The fix is a clock enable: the register holds unless `en` is set, and synthesis uses the flip-flop’s enable input.',
   },
   {
-    id: 'domain',
-    title: 'A register read across clock domains',
-    broken: `module Cross(clk_a: clock, clk_b: clock) -> (y: bit) {
-  reg x: bit = 0 on clk_a
-  reg z: bit = 0 on clk_b
-  next x = !x
-  next z = x
-  y = z
+    id: 'reset',
+    title: 'A register with no starting value',
+    broken: `module acc(in clk: clock, in x: uint<8>, out total: uint<8>) {
+    reg sum: uint<8>;
+    sum := sum +% x;
+    total = sum;
 }
 `,
-    fixed: `module Cross(clk_a: clock, clk_b: clock) -> (y: bit) {
-  reg x: bit = 0 on clk_a
-  next x = !x
-  inst sync: Synchronizer(clk: clk_b, d: x)
-  y = sync.q
+    fixed: `module acc(in clk: clock, in x: uint<8>, out total: uint<8>) {
+    reg sum: uint<8> = 0;
+    sum := sum +% x;
+    total = sum;
 }
 `,
-    why: 'A value that changes just before the other clock’s edge breaks setup and hold (Chapter 17) and can leave the flip-flop metastable (Chapter 16). The standard library’s `Synchronizer` is the accepted fix.',
+    why: 'A flip-flop powers up as something. If the source does not say what, simulation says `x` and the chip says whatever it likes, and the two disagree. Every Weft register states its reset value (`= 0`) or its power-on value (`init 0`).',
   },
   {
-    id: 'unconnected',
-    title: 'An input left unconnected',
-    broken: `module Inner(a: bit, b: bit) -> (y: bit) {
-  y = a && b
-}
-
-module Outer(a: bit) -> (y: bit) {
-  inst gate: Inner(a: a)
-  y = gate.y
+    id: 'assign',
+    title: 'A wire assigned like a register',
+    broken: `module delay(in clk: clock, in d: bool, out q: bool) {
+    q := d;
 }
 `,
-    fixed: `module Inner(a: bit, b: bit) -> (y: bit) {
-  y = a && b
-}
-
-module Outer(a: bit) -> (y: bit) {
-  inst gate: Inner(a: a, b: 1)
-  y = gate.y
+    fixed: `module delay(in clk: clock, in d: bool, out q: bool) {
+    reg r: bool = false;
+    r := d;
+    q = r;
 }
 `,
-    why: 'An input pin with nothing on it floats (Chapter 10, “An input nobody drives”), and the gate above it computes garbage. In Verilog a forgotten port connection is legal; here it is an error.',
+    why: 'In Verilog, whether a signal becomes a flip-flop depends on how it is assigned, and `=` and `<=` in the wrong places give a simulation that does not match the chip. In Weft a register is declared with `reg`: `:=` is its next value, `=` drives a wire, and swapping them is an error.',
+  },
+  {
+    id: 'async',
+    title: 'A button wired straight into a flip-flop',
+    chip: true,
+    broken: `module top(in clk: clock, in btn: bool, out led: bool) {
+    reg on: bool = false;
+    if btn {
+        on := !on;
+    }
+    led = on;
+}
+`,
+    fixed: `module top(in clk: clock, in btn: bool, out led: bool) {
+    let pressed = rising(sync(btn));
+    reg on: bool = false;
+    if pressed {
+        on := !on;
+    }
+    led = on;
+}
+`,
+    why: 'A pin can change at any moment, including the picosecond before a clock edge, and then the flip-flop goes metastable (Chapter 17). Weft treats the inputs of the top module as asynchronous and refuses to let one reach a register until it has been through `sync`, the two-flip-flop synchroniser. (The fix also catches the press once, with `rising`, instead of toggling at every edge while it is held.)',
   },
 ];
 
-export interface Diagnosis {
-  /** The compiler's messages, as `renderDiagnostic` prints them, separated by a blank line. */
+export interface Message {
+  /** synth's diagnostics, as it prints them. */
   text: string;
-  codes: string[];
   errors: number;
 }
 
-export function diagnose(source: string, file = 'broken.dcl'): Diagnosis {
-  const { diagnostics } = check(source, { file });
-  const shown: Diagnostic[] = diagnostics.filter((d) => d.span.file === file);
-  return {
-    text: shown.map((d) => renderDiagnostic(source, d)).join('\n\n'),
-    codes: shown.map((d) => d.code),
-    errors: shown.filter((d) => d.severity === 'error').length,
-  };
-}
+/** synth's messages for each stop (broken and fixed), as recorded by `tour.test.ts`. */
+export const MESSAGES = messages as Record<string, { broken: Message; fixed: Message }>;

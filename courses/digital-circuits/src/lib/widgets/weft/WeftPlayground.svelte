@@ -18,8 +18,9 @@
   import type { GateNetlist } from '$lib/weft/gates';
   import type { TestRun } from '$lib/weft/testbench';
   import type { Circuit } from '$lib/sim/netlist/types';
-  import type { Synth } from '$lib/synth/api';
+  import type { Stage, Synth } from '$lib/synth/api';
   import CircuitView from './CircuitView.svelte';
+  import CostPanel from './CostPanel.svelte';
   import Problems from './Problems.svelte';
   import SimPanel from './SimPanel.svelte';
   import Tabs from './Tabs.svelte';
@@ -39,6 +40,7 @@
     n,
     showTests = true,
     circuit: withCircuit = true,
+    cost: withCost = false,
     maxLines = 30,
     tab: initialTab,
   }: {
@@ -58,6 +60,8 @@
     showTests?: boolean;
     /** Show the Circuit tab. */
     circuit?: boolean;
+    /** Show the Cost tab: what synth made of the design at each step. */
+    cost?: boolean;
     maxLines?: number;
     /** The tab shown first on a narrow screen: code, run, circuit or tests. */
     tab?: string;
@@ -83,6 +87,7 @@
   let circuit: { circuit: Circuit; gates: GateNetlist } | undefined = $state.raw();
   let circuitError = $state('');
   let building = $state(false);
+  let stages: Stage[] | undefined = $state.raw();
 
   const withTests = $derived(showTests && (testCode.trim().length > 0 || originalTests.length > 0));
   const lane = (name: 'sim' | 'run') => import('$lib/synth/client').then((m): Synth => m.synthOn(name));
@@ -94,13 +99,15 @@
 
   let circuitFor = '';
   async function buildCircuit(text: string) {
-    if (!withCircuit || circuitFor === text) return;
+    if ((!withCircuit && !withCost) || circuitFor === text) return;
     circuitFor = text;
     building = true;
     try {
       const [{ run }, { gatesFromGraph }, { layoutNetlist }, synth] = await Promise.all([import('$lib/synth/api'), import('$lib/weft/gates'), import('$lib/sim/layout/gates'), lane('run')]);
       const r = await run(synth, { files: [{ name: file, text }], top, stop: 'synth', testbench: true });
       if (circuitFor !== text) return;
+      stages = r.ok ? r.stages : undefined;
+      if (!withCircuit) return;
       const g = r.stages.find((s) => s.id === 'gates_optimised')?.graph;
       if (!r.ok || !g) {
         circuitError = r.ok ? 'synth made no gates of this design.' : '';
@@ -185,6 +192,7 @@
     { id: 'code', label: 'Code', narrowOnly: true, badge: errors ? String(errors) : undefined },
     { id: 'run', label: 'Simulate' },
     { id: 'circuit', label: 'Circuit', hidden: !withCircuit },
+    { id: 'cost', label: 'Cost', hidden: !withCost },
     { id: 'tests', label: 'Tests', hidden: !withTests },
   ]);
   const problems = $derived(analysis?.diagnostics.length ?? 0);
@@ -250,6 +258,12 @@
         {:else}
           <p class="note ui">{circuitError || (pending || building ? 'Building the circuit…' : 'Fix the errors in the source to see its circuit.')}</p>
         {/if}
+      </div>
+    {/if}
+
+    {#if withCost}
+      <div class="pane pane-cost" id="{uid}-tab-panel-cost" role="tabpanel" aria-labelledby="{uid}-tab-cost">
+        <CostPanel {stages} pending={pending || building} />
       </div>
     {/if}
 
@@ -330,7 +344,8 @@
   .pg[data-tab='code'] .pane-code,
   .pg[data-tab='run'] .pane-run,
   .pg[data-tab='circuit'] .pane-circuit,
-  .pg[data-tab='tests'] .pane-tests {
+  .pg[data-tab='tests'] .pane-tests,
+  .pg[data-tab='cost'] .pane-cost {
     display: grid;
     align-content: start;
   }
@@ -411,6 +426,7 @@
     }
     .pane-run,
     .pane-circuit,
+    .pane-cost,
     .pane-tests {
       grid-column: 2;
       grid-row: 2;

@@ -1,30 +1,44 @@
+/** The if-versus-match figure shows synth's own measurements (`ifmatch-measured.json`; UPDATE_IFMATCH=1 rewrites it). */
+import { readFileSync, writeFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { check } from '$lib/hdl';
-import { SELECTOR_BITS, measure, pickSource } from './widgets/ifmatch';
+import { format, run } from '$lib/synth/api';
+import { nodeSynth } from '$lib/synth/node';
+import { SELECTOR_BITS, STYLES, andDepth, key, pickSource, type Measure } from './widgets/ifmatch';
 
-describe('if chain against match', () => {
-  it('generates DCL that compiles for every size and style', () => {
-    for (const n of SELECTOR_BITS) {
-      for (const style of ['if', 'match'] as const) {
-        const { diagnostics } = check(pickSource(style, n));
-        expect(diagnostics.filter((d) => d.severity === 'error'), `${style} ${n}`).toEqual([]);
+const synth = nodeSynth();
+const file = new URL('./widgets/ifmatch-measured.json', import.meta.url);
+
+describe('if chain, match and priority chain on synth', () => {
+  it('measures what the figure shows', async () => {
+    const out: Record<string, Measure> = {};
+    for (const style of STYLES) {
+      for (const k of SELECTOR_BITS) {
+        const source = pickSource(style, k);
+        expect(await format(synth, source), `${style} ${k} is formatted`).toBe(source);
+        const r = await run(synth, { files: [{ name: 'pick.weft', text: source }], stop: 'synth', testbench: true });
+        expect(r.ok, r.error).toBe(true);
+        const st = (id: string) => r.stages.find((s) => s.id === id)!;
+        out[key(style, k)] = {
+          style,
+          arms: 2 ** k,
+          muxes: st('elaborated').stats.Mux ?? 0,
+          ands: st('gates_optimised').stats.AND ?? 0,
+          depthWritten: andDepth(st('gates_lowered').graph!),
+          depthOptimised: andDepth(st('gates_optimised').graph!),
+          luts: st('mapped').stats.SB_LUT4 ?? 0,
+        };
       }
     }
+    if (process.env.UPDATE_IFMATCH) writeFileSync(file, `${JSON.stringify(out, null, 2)}\n`);
+    else expect(JSON.parse(readFileSync(file, 'utf8'))).toEqual(out);
   });
 
-  it('builds a chain of N−1 multiplexers per bit for an if, and no multiplexers for a match', () => {
+  it('a chain on one selector and a match end up the same; a priority chain does not', () => {
+    const m = JSON.parse(readFileSync(file, 'utf8')) as Record<string, Measure>;
     for (const k of SELECTOR_BITS) {
-      const n = 2 ** k;
-      expect(measure('if', k).muxes).toBe((n - 1) * 8);
-      expect(measure('match', k).muxes).toBe(0);
+      expect(m[key('if', k)]!.depthOptimised).toBe(m[key('match', k)]!.depthOptimised);
+      expect(m[key('if', k)]!.luts).toBe(m[key('match', k)]!.luts);
     }
-  });
-
-  it('makes the if chain deeper than the match for eight arms, and the chain grows with the arms', () => {
-    const chain8 = measure('if', 3);
-    const parallel8 = measure('match', 3);
-    expect(chain8.depth).toBeGreaterThan(parallel8.depth);
-    expect(chain8.gateEquivalents).toBeGreaterThan(parallel8.gateEquivalents);
-    expect(measure('if', 4).depth).toBeGreaterThan(measure('if', 2).depth);
+    expect(m[key('priority', 4)]!.depthOptimised).toBeGreaterThan(2 * m[key('match', 4)]!.depthOptimised);
   });
 });

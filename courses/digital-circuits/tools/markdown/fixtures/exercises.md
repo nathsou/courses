@@ -179,29 +179,29 @@ The five hardware kinds: `hdl`, `fit`, `decode`, `route` and `place`. Each `solu
 ```hdl
 id: fixture/majority
 title: A majority gate
-top: Majority
-prompt: Write a module whose output `y` is 1 when at least two of `a`, `b` and `c` are 1.
+top: majority
+prompt: Write a module whose output `y` is true when at least two of `a`, `b` and `c` are true.
 hints:
-  - 'Two of three: `a & b`, `a & c` or `b & c`.'
-explain: A sum of the three pairs, which is the carry out of a full adder.
+  - 'Two of three: `a && b`, `a && c` or `b && c`.'
+explain: An OR of the three pairs, which is the carry out of a full adder.
 start: |
-  module Majority(a: bit, b: bit, c: bit) -> (y: bit) {
-    y = 0
+  module majority(in a: bool, in b: bool, in c: bool, out y: bool) {
+      y = false;
   }
 reference: |
-  module Majority(a: bit, b: bit, c: bit) -> (y: bit) {
-    y = a & b | a & c | b & c
+  module majority(in a: bool, in b: bool, in c: bool, out y: bool) {
+      y = (a && b) || (a && c) || (b && c);
   }
 tests: |
   test "two of three" {
-    let m = sim Majority(a: 1, b: 1, c: 0)
-    expect m.y == 1
-    m.b = 0
-    expect m.y == 0
+      set a = true, b = true, c = false;
+      expect y;
+      set b = false;
+      expect !y;
   }
 solution: |
-  module Majority(a: bit, b: bit, c: bit) -> (y: bit) {
-    y = a & b | a & c | b & c
+  module majority(in a: bool, in b: bool, in c: bool, out y: bool) {
+      y = (a && b) || (a && c) || (b && c);
   }
 ```
 

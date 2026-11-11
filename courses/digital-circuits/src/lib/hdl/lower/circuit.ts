@@ -7,7 +7,7 @@
  * (`connect()` numbers its nets differently), which `createGateSim(lowered, flatten(circuit))` runs.
  */
 import type { RtlDesign, RtlModule } from '../rtl';
-import { layoutNetlist, LayoutError, type LayoutOptions, type LayoutResult } from './layout';
+import { layoutNetlist, LayoutError, type LayoutOptions, type LayoutResult } from '../../sim/layout/gates';
 import { lowerToNetlist } from './index';
 import type { Lowered, LowerOptions } from './types';
 

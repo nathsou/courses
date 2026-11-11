@@ -18,7 +18,7 @@
   function wave(t: TestResult) {
     const end = t.failed ? t.trace.findLastIndex((r) => r.line <= t.failed!.line && r.cycle <= t.failed!.cycle) + 1 : t.trace.length;
     const rows = t.trace.slice(Math.max(0, end - 12), Math.max(end, 1));
-    const ports = t.ports.filter((p) => !p.clock);
+    const ports = t.ports.filter((p) => !p.clock && !p.added);
     return {
       cycles: rows.map((r) => r.cycle),
       signals: ports.map((p) => ({ name: p.name, width: p.width, values: rows.map((r) => r.values[p.name] ?? 0n) })),

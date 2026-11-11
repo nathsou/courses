@@ -27,12 +27,14 @@ export interface Token {
   kind: HighlightKind;
 }
 
-export type SourceLang = 'weft' | 'rtl' | 'gates' | 'netlist' | 'pcf';
+/** `tests` is the course's test language for Weft designs (`testbench.ts`). */
+export type SourceLang = 'weft' | 'rtl' | 'gates' | 'netlist' | 'pcf' | 'tests';
 
 export const WEFT_KEYWORDS = new Set(['module', 'extern', 'fn', 'struct', 'enum', 'const', 'let', 'var', 'wire', 'reg', 'mem', 'inst', 'domain', 'default', 'if', 'else', 'match', 'for', 'in', 'out', 'inout', 'init', 'type', 'async', 'assert', 'true', 'false', 'undef']);
 export const WEFT_TYPES = new Set(['bool', 'uint', 'sint', 'index', 'clock', 'int', 'string']);
 export const WEFT_BUILTINS = new Set(['concat', 'from_bits', 'unsafe_cross', 'hex_file', 'bin_file', 'clog2', 'bits_for', 'min', 'max', 'sync', 'reset_sync', 'power_on_reset', 'rising', 'falling', 'divider', 'count_ones', 'onehot_to_index', 'priority', 'synth_pll']);
 const PCF_KEYWORDS = new Set(['set_io', 'set_frequency', '-nowarn', '-pullup', '-pullup_resistor']);
+const TEST_KEYWORDS = new Set(['test', 'set', 'step', 'expect', 'for', 'in', 'true', 'false']);
 
 const IR_STMT = new Set(['module', 'input', 'output', 'inout', 'wire', 'connect', 'inst', 'cell', 'memory', 'init', 'write']);
 const IR_KW = new Set(['signed', 'posedge', 'negedge', 'offset']);
@@ -166,7 +168,7 @@ export function tokenize(text: string, lang: SourceLang = 'weft', semantic?: Map
   while (i < n) {
     const c = text.charAt(i);
     const two = text.slice(i, i + 2);
-    if ((lang !== 'pcf' && two === '//') || (lang === 'pcf' && c === '#')) {
+    if ((lang !== 'pcf' && two === '//') || ((lang === 'pcf' || lang === 'tests') && c === '#')) {
       let j = text.indexOf('\n', i);
       if (j < 0) j = n;
       push(i, j, lang === 'weft' && text.startsWith('///', i) ? 'doc' : 'comment');
@@ -217,6 +219,8 @@ export function tokenize(text: string, lang: SourceLang = 'weft', semantic?: Map
         else if (prevWord === 'fn') kind = 'function';
         else if (text.charAt(i - 1) === '.' && /[A-Z]/.test(c)) kind = 'attr';
         else if (WEFT_BUILTINS.has(w) || /^\s*(<[^;{}]*>)?\s*\(/.test(text.slice(j, j + 40))) kind = /^[A-Z]/.test(w) ? 'type' : 'function';
+      } else if (lang === 'tests') {
+        if (TEST_KEYWORDS.has(w)) kind = 'keyword';
       } else if (PCF_KEYWORDS.has(w)) kind = 'keyword';
       if (kind) push(i, j, kind);
       prevWord = w;

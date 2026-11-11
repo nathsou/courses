@@ -342,7 +342,7 @@ function unroll(test: TestCase, ports: TbPort[]) {
   const ops: TbOp[] = [];
   const checks: Check[] = [];
   const rows: { read: number; after: string; line: number }[] = [];
-  const portNames = ports.filter((p) => !p.clock).map((p) => p.name);
+  const portNames = ports.filter((p) => !p.clock && !p.added).map((p) => p.name);
   let reads = 0;
   let cycle = 0;
   const env: Env = new Map();

@@ -12,6 +12,7 @@ import { checkAsm, type AsmInput } from './asm/run';
 import { expectedValue, type MeasureInput } from './measure/probe';
 import { checkMeasurement } from '$lib/sim/check';
 import { checkHdl, type HdlInput } from './hdl/check';
+import { nodeSynth } from '$lib/synth/node';
 import { checkFit, checkFitSource, pinsOf, type FitInput } from './fit/check';
 import { blankPla } from '$lib/studio/adapters/pla';
 import { artifactOf, checkDecode, deviceTruth, type DecodeInput } from './decode/model';
@@ -74,16 +75,17 @@ describe('fixture exercises', () => {
 
 /** The promises of the hardware exercises: each solution passes, each start fails (and compiles, where it is code). */
 function hdlTests(input: HdlInput) {
-  test(`${input.id}: the solution passes, the starting code compiles and fails`, () => {
+  test(`${input.id}: the solution passes, the starting code compiles and fails`, async () => {
     expect(input.solution, 'exercises need a solution').toBeDefined();
-    const r = checkHdl(input, input.solution!);
+    const synth = nodeSynth();
+    const r = await checkHdl(synth, input, input.solution!);
     expect(r.diagnostics.filter((d) => d.severity === 'error').map((d) => d.message)).toEqual([]);
     expect(r.problems).toEqual([]);
     expect(r.tests.filter((t) => !t.passed)).toEqual([]);
     expect(r.equivalence?.rows ?? []).toEqual([]);
     expect(r.pass).toBe(true);
-    if (input.reference) expect(checkHdl(input, input.reference).pass, 'the reference passes its own exercise').toBe(true);
-    const start = checkHdl(input, input.start);
+    if (input.reference) expect((await checkHdl(synth, input, input.reference)).pass, 'the reference passes its own exercise').toBe(true);
+    const start = await checkHdl(synth, input, input.start);
     expect(start.diagnostics.filter((d) => d.severity === 'error').map((d) => d.message), 'the starting code compiles').toEqual([]);
     expect(start.problems).toEqual([]);
     expect(start.pass).toBe(false);

@@ -72,7 +72,7 @@ let highlighter: Promise<Highlighter> | undefined;
 export async function highlight(code: string, lang: string | null | undefined): Promise<string> {
   // Weft (and the IR text and pin files of synth's flow) are highlighted as synth's own tools do, not by a
   // TextMate grammar (src/lib/weft/highlight.ts).
-  if (lang === 'weft' || lang === 'rtl' || lang === 'gates' || lang === 'netlist' || lang === 'pcf') return highlightWeftHtml(code, lang);
+  if (lang === 'weft' || lang === 'tests' || lang === 'rtl' || lang === 'gates' || lang === 'netlist' || lang === 'pcf') return highlightWeftHtml(code, lang);
   highlighter ??= createHighlighter({ themes: [THEME_LIGHT, THEME_DARK], langs: [] });
   const h = await highlighter;
   // Load any bundled grammar (including aliases) instead of silently losing highlighting.

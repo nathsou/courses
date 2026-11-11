@@ -79,7 +79,7 @@ export class TbDriver {
     }
     this.id = s.id;
     const view = (p: TbPort): PortView => ({ name: p.name, width: p.width, clock: p.clock, signed: p.signed });
-    this.inputs = s.ports.filter((p) => p.dir === 'in').map(view);
+    this.inputs = s.ports.filter((p) => p.dir === 'in' && !(p.added && !s.state)).map((p) => (p.added ? { ...view(p), clock: true } : view(p)));
     this.outputs = s.ports.filter((p) => p.dir === 'out').map(view);
     const sigs = new Map((s.signals ?? []).map((x) => [x.name, x]));
     const portNames = new Set(s.ports.map((p) => p.name));
