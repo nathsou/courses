@@ -1,0 +1,24 @@
+{
+  "capacity": 7680,
+  "rams": 32,
+  "fits": {
+    "octet": {
+      "cells": 539,
+      "flipFlopCells": 155,
+      "rams": 2,
+      "mhz": 80.6
+    },
+    "rv32-flip-flops": {
+      "cells": 3568,
+      "flipFlopCells": 1100,
+      "rams": 0,
+      "mhz": 42
+    },
+    "rv32-block-ram": {
+      "cells": 1467,
+      "flipFlopCells": 108,
+      "rams": 4,
+      "mhz": 59.5
+    }
+  }
+}

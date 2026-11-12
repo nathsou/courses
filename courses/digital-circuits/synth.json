@@ -1,6 +1,6 @@
 {
   "repo": "https://github.com/nathsou/synth.git",
-  "commit": "080869c10f64f76d138bce3b4158b19992c2cd5e",
+  "commit": "b71b7df29302059b2982ac8c65063e1d463d5741",
   "crate": "synth-playground",
   "wasm": "synth_playground.wasm"
 }

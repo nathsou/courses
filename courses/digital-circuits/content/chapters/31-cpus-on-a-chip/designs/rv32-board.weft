@@ -1,0 +1,83 @@
+// The RV32I core of content/designs/rv32i.weft on the board. The core has no memory of its own: it is handed the
+// instruction at its program counter and the word that a load asks for, so this wrapper supplies both.
+//
+// The instructions are a ROM made of logic (a constant table indexed by the word number), and the devices sit
+// where the reference interpreter puts them, at the top of the address space: LEDS 0xFFFFFF08, SWITCHES
+// 0xFFFFFF0C, BUTTONS 0xFFFFFF10 and HEX 0xFFFFFF14. Loads from anywhere else read 0, and stores there are dropped.
+// Only word stores to the devices are modelled. The left two digits show the program counter.
+
+/// A hexadecimal digit as seven segments (bit 0 is segment a).
+fn hex_digit(value: uint<4>) -> uint<7> {
+    match value {
+        0x0 => 0x3f,
+        0x1 => 0x06,
+        0x2 => 0x5b,
+        0x3 => 0x4f,
+        0x4 => 0x66,
+        0x5 => 0x6d,
+        0x6 => 0x7d,
+        0x7 => 0x07,
+        0x8 => 0x7f,
+        0x9 => 0x6f,
+        0xa => 0x77,
+        0xb => 0x7c,
+        0xc => 0x39,
+        0xd => 0x5e,
+        0xe => 0x79,
+        0xf => 0x71,
+    }
+}
+
+/// The RV32I core on the board.
+module rv32_board<REGISTERS_IN_BRAM: bool = false>(
+    in  clk: clock,
+    in  btn: uint<4> @async,
+    in  sw: uint<8> @async,
+    out led: uint<8>,
+    out seg0: uint<7>,
+    out seg1: uint<7>,
+    out seg2: uint<7>,
+    out seg3: uint<7>,
+    out trap: uint<2>,
+) {
+    // The buttons and switches are asynchronous: two flip-flops each (Chapter 17).
+    reg inputs_meta: uint<12> = 0;
+    reg inputs: uint<12> = 0;
+    inputs_meta := unsafe_cross(concat(btn, sw));
+    inputs := inputs_meta;
+
+    reg leds: uint<8> = 0;
+    reg hex: uint<16> = 0;
+
+    let rom = rom_words();
+    inst core = rv32i<REGISTERS_IN_BRAM: REGISTERS_IN_BRAM>(clk: clk, instruction: rom[core.pc_out[7:2]], memory_value: read_value);
+
+    let address = core.memory_address;
+    let is_device = address[31:8] == 0xffffff;
+    let read_value: uint<32> = if is_device {
+        match address[7:0] {
+            0x08 => uint<32>(leds),
+            0x0c => uint<32>(inputs[7:0]),
+            0x10 => uint<32>(inputs[11:8]),
+            0x14 => uint<32>(hex),
+            _ => 0,
+        }
+    } else {
+        0
+    };
+    let device_write = core.memory_write && is_device && core.memory_width == 2;
+    if device_write && address[7:0] == 0x08 { leds := core.memory_data[7:0]; }
+    if device_write && address[7:0] == 0x14 { hex := core.memory_data[15:0]; }
+
+    led = leds;
+    seg0 = hex_digit(hex[3:0]);
+    seg1 = hex_digit(hex[7:4]);
+    seg2 = hex_digit(core.pc_out[3:0]);
+    seg3 = hex_digit(core.pc_out[7:4]);
+    trap = core.trap_code;
+}
+
+/// The program: one instruction per word, from address 0. A word that is not listed is 0, an illegal instruction.
+fn rom_words() -> [uint<32>; 64] {
+    [0; 64]
+}

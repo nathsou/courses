@@ -331,6 +331,22 @@ export function tbStart(
   return s.call('tb_start', { ...req, params }) as Promise<TbStarted | TbFailed>;
 }
 
+/** A block RAM's new contents: its bottom tile, the width of its words (its read mode) and its words from 0. */
+export interface BramContents {
+  x: number;
+  y: number;
+  width: 16 | 8 | 4 | 2;
+  words: number[];
+}
+
+/**
+ * Rewrites the initial contents of block RAMs in a bitstream (base64), and nothing else, as IceStorm's `icebram`
+ * does: the new bitstream, and how many bits changed.
+ */
+export function bramLoad(s: Synth, bitstream: string, rams: BramContents[]): Promise<{ ok: true; bin: string; changed: number } | { ok: false; error: string }> {
+  return s.call('bram_load', { bitstream, rams }) as Promise<{ ok: true; bin: string; changed: number } | { ok: false; error: string }>;
+}
+
 export function tbRun(s: Synth, id: number, ops: TbOp[]): Promise<TbRan> {
   return s.call('tb_run', { id, ops }) as Promise<TbRan>;
 }

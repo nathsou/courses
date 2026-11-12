@@ -8,6 +8,8 @@
   const packed = $derived(result.stages.find((s) => s.id === 'packed')?.stats ?? {});
   const placeLine = $derived(result.log.find((l) => l.startsWith('placement:')));
   const routeLine = $derived(result.log.find((l) => l.startsWith('routing:')));
+  /** A placement that did not route, and was placed again. */
+  const retry = $derived(result.log.find((l) => l.startsWith('routing congestion not resolved')));
   const total = $derived(result.times.reduce((s, [, ms]) => s + ms, 0));
 </script>
 
@@ -16,6 +18,7 @@
   <ol class="rest">
     <li><h5>Packed into logic cells</h5><p><b>{packed.ICESTORM_LC ?? 0}</b> logic cells, <b>{packed.SB_IO ?? 0}</b> pads{#if packed.SB_GB}, <b>{packed.SB_GB}</b> global buffers{/if}{#if packed.ICESTORM_RAM}, <b>{packed.ICESTORM_RAM}</b> block RAMs{/if}</p></li>
     {#if placeLine}<li><h5>Placed</h5><p>{placeLine.replace(/^placement: /, '')}</p></li>{/if}
+    {#if retry}<li><h5>Placed again</h5><p>The first placement did not route: {retry.replace(/^routing congestion not resolved: /, '').replace(/;.*?placing again/, ', so synth placed again')}.</p></li>{/if}
     {#if routeLine}<li><h5>Routed</h5><p>{routeLine.replace(/^routing: /, '')}</p></li>{/if}
     {#if result.timing?.clocks.length}
       {@const c = result.timing.clocks[0]!}

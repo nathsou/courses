@@ -19,6 +19,9 @@ import raw from '$lib/synth/ice40-delays.json';
 export interface Ice40Delays {
   lut: number;
   lut_in3: number;
+  carry: number;
+  clk_to_q: number;
+  setup: number;
   odrv4: number;
   odrv12: number;
   sp12to4: number;

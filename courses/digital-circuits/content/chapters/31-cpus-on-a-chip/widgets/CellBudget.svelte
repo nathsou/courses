@@ -1,32 +1,37 @@
 <!--
-  Where the cells go: Octet, and the RV32I core with its register file in flip-flops and in block RAM, as bars on one scale
-  (the numbers are in budget.ts, and the tests that measure them). Hover or focus a segment for its size.
+  Where the cells go: Octet, and the RV32I core with its register file in flip-flops and in block RAM, as bars on one
+  scale, the whole iCE40 HX8K (the numbers are synth's, recorded in budget.json by budget.test.ts). Each bar is split
+  into the cells whose flip-flop is used and the cells that are logic only. Hover or focus a segment for its size.
 
-    ::cell-budget{n="31.6" caption="…"}
+    ::cell-budget{n="31.3" caption="…"}
 -->
 <script lang="ts">
   import Widget from '$lib/components/ui/Widget.svelte';
-  import { FITS, type Fit } from './budget';
+  import { BUDGET, FIT_TITLES, type FitId } from './budget';
 
   let { n, caption }: { n?: string | number; caption?: string } = $props();
 
-  const scale = 4800;
+  const scale = BUDGET.capacity;
   const fmt = (v: number) => v.toLocaleString('en-GB');
   let hot = $state<{ fit: string; i: number } | null>(null);
-  const tone = ['var(--sig-high)', 'var(--copper)', 'var(--line-strong)'];
+  const tone = ['var(--sig-high)', 'var(--copper)'];
   const width = (cells: number) => `${(100 * cells) / scale}%`;
-  const detail = (f: Fit) => `${f.title}: ${fmt(f.total)} cells of ${fmt(f.capacity)} on the ${f.device}, ${fmt(f.flipFlops)} flip-flops, ${f.blockRams} block RAMs, ${f.fmaxMHz.toFixed(1)} MHz, ${f.seconds.toFixed(1)} s to fit`;
+  const fits = (Object.keys(BUDGET.fits) as FitId[]).map((id) => {
+    const f = BUDGET.fits[id];
+    return { id, title: FIT_TITLES[id], ...f, segments: [{ label: 'cells with a flip-flop', cells: f.flipFlopCells }, { label: 'logic only', cells: f.cells - f.flipFlopCells }] };
+  });
+  const detail = (f: (typeof fits)[number]) => `${f.title}: ${fmt(f.cells)} of the HX8K’s ${fmt(scale)} logic cells, ${fmt(f.flipFlopCells)} of them with their flip-flop, ${f.rams} block RAMs, ${f.mhz.toFixed(1)} MHz`;
 </script>
 
-<Widget {n} title="The cell budget" subtitle="logic cells, on one scale" {caption} kind="Fit results">
+<Widget {n} title="The cell budget" subtitle="logic cells of an iCE40 HX8K, on one scale" {caption} kind="Fit results">
   <div class="cb ui">
-    {#each FITS as f (f.id)}
+    {#each fits as f (f.id)}
       <section aria-label={detail(f)}>
         <header>
           <h4>{f.title}</h4>
-          <span class="dev">{f.device}</span>
+          <span class="dev">{((100 * f.cells) / scale).toFixed(0)} % of the chip</span>
         </header>
-        <div class="track" style:--cap={width(f.capacity)}>
+        <div class="track">
           {#each f.segments as s, i (s.label)}
             <button
               type="button"
@@ -41,10 +46,9 @@
               onblur={() => (hot = null)}
             ></button>
           {/each}
-          {#if f.capacity < scale}<span class="cap" title="The vFPGA-M has {fmt(f.capacity)} logic cells"></span>{/if}
         </div>
         <p class="line">
-          <b>{fmt(f.total)}</b> cells{f.capacity < scale ? ` of ${fmt(f.capacity)}` : ''} · {fmt(f.flipFlops)} flip-flops · {f.blockRams} block RAM{f.blockRams === 1 ? '' : 's'} · <b>{f.fmaxMHz.toFixed(1)} MHz</b> · {f.seconds.toFixed(1)} s of CPU to fit
+          <b>{fmt(f.cells)}</b> cells · {f.rams} block RAM{f.rams === 1 ? '' : 's'} of {BUDGET.rams} · <b>{f.mhz.toFixed(1)} MHz</b>
         </p>
         <p class="key">
           {#each f.segments as s, i (s.label)}
@@ -53,7 +57,7 @@
         </p>
       </section>
     {/each}
-    <p class="scale">Full width = {fmt(scale)} cells. The mark on Octet’s bar is the whole vFPGA-M (1,152 cells); the vFPGA-L (8,192) is off the scale.</p>
+    <p class="scale">Full width = the whole HX8K, {fmt(scale)} logic cells.</p>
   </div>
 </Widget>
 
@@ -105,13 +109,6 @@
     outline: 2px solid var(--fg);
     outline-offset: 1px;
     z-index: 1;
-  }
-  .cap {
-    position: absolute;
-    top: -3px;
-    bottom: -3px;
-    left: var(--cap);
-    border-left: 2px dashed var(--fg);
   }
   .line,
   .key {
