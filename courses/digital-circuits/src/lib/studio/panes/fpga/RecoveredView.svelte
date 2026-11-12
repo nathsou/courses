@@ -6,7 +6,7 @@
 <script lang="ts">
   import type { VFpgaDevice } from '../../../pld/devices/vfpga';
   import { layoutRecovered, recover } from '../../fpga/hand';
-  import { hex4 } from '../../fpga/lut';
+  import { hex4 } from '$lib/widgets/lut/lut';
   import type { FpgaSession } from '../../fpga/session.svelte';
 
   let { session, device, bits }: { session: FpgaSession; device: VFpgaDevice; bits: Uint8Array } = $props();

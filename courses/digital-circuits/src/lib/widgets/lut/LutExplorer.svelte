@@ -7,7 +7,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import Widget from '../../components/ui/Widget.svelte';
-  import { LutExpressionError, hex4, lutExpression, lutRow, muxTree, truthFromExpression } from '../fpga/lut';
+  import { LutExpressionError, hex4, lutExpression, lutRow, muxTree, truthFromExpression } from './lut';
 
   let { title, caption, n, truth: initial = 0x6666 }: { title?: string; caption?: string; n?: string | number; truth?: number } = $props();
 

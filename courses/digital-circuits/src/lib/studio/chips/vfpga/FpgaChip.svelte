@@ -13,7 +13,7 @@
   import { render, moduleColour } from '../../fpga/draw';
   import { TILE, cellAt, cellRect, center, dieGeom, fitRect, lutBitAt, neighbourTile, pinAt, switchBoxRect, tileAt, tileRect, toWorld, visibleRect, wireAt, zoomAt, zoomFor, zoomLevel, type View } from '../../fpga/geometry';
   import { placeFrame } from '../../fpga/replay';
-  import { hex4 } from '../../fpga/lut';
+  import { hex4 } from '$lib/widgets/lut/lut';
   import type { FpgaSession } from '../../fpga/session.svelte';
   import type { FpgaRef } from '../../fpga/types';
   import Icon from '../../../components/ui/Icon.svelte';

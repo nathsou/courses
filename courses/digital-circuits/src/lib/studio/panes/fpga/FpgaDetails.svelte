@@ -5,7 +5,7 @@
 -->
 <script lang="ts">
   import { NK } from '../../../pld/devices/vfpga';
-  import { lutExpression, hex4 } from '../../fpga/lut';
+  import { lutExpression, hex4 } from '$lib/widgets/lut/lut';
   import type { FpgaSession } from '../../fpga/session.svelte';
 
   let { session }: { session: FpgaSession } = $props();

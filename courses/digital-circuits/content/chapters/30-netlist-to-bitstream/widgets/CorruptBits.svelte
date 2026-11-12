@@ -9,7 +9,7 @@
   import Widget from '$lib/components/ui/Widget.svelte';
   import Button from '$lib/components/ui/Button.svelte';
   import Segmented from '$lib/components/ui/Segmented.svelte';
-  import { lutExpression } from '$lib/studio/fpga/lut';
+  import { lutExpression } from '$lib/widgets/lut/lut';
   import { run, setup, type Run, type Setup, type Stimulus } from './corrupt';
 
   let { n, caption }: { n?: string | number; caption?: string } = $props();

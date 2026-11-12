@@ -7,7 +7,7 @@ import { getVFpga, type VFpgaDevice } from '$lib/pld/devices/vfpga';
 import { FabricConfig, padOffset, readLc, readSelect } from '$lib/pld/devices/vfpga-config';
 import { attachTestbench, decodeBitstream } from '$lib/pld/fpga/decode';
 import { createDigitalEngine } from '$lib/sim/digital';
-import { truthFromExpression } from '$lib/studio/fpga/lut';
+import { truthFromExpression } from '$lib/widgets/lut/lut';
 
 export interface CellSpec {
   /** Tile column and row of the logic tile, and the cell in it (0 to 7). */

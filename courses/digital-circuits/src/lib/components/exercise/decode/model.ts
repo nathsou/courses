@@ -15,7 +15,7 @@ import type { GalChip } from '$lib/studio/adapters/gal';
 import type { PlaChip } from '$lib/studio/adapters/pla';
 import type { PromChip } from '$lib/studio/adapters/prom';
 import { recover } from '$lib/studio/fpga/hand';
-import { hex4 } from '$lib/studio/fpga/lut';
+import { hex4 } from '$lib/widgets/lut/lut';
 import { buildFabric, configuredCells, device, simulateFabric, type FabricSpec } from '../fabric';
 
 export type DecodeDevice = 'prom' | 'pla' | 'gal22v10' | 'fpga';

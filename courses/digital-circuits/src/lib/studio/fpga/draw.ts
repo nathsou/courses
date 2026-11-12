@@ -18,7 +18,7 @@ import { mix, withAlpha, type Signals } from '../../theme/signals';
 import { moduleHue, tileModule, tileUse, type ChipModel } from './chipmodel';
 import type { FabricSim } from './fabric-sim';
 import { TILE, cellRect, dieGeom, intersects, lutBitRect, nodeAnchors, tileRect, tilesIn, switchBoxRect, visibleRect, wireSegment, zoomLevel, type Pt, type Rect, type View } from './geometry';
-import { hex4, muxTree } from './lut';
+import { hex4, muxTree } from '$lib/widgets/lut/lut';
 import type { PlaceFrame } from './replay';
 import type { FpgaPlacement, FpgaProbe } from './types';
 

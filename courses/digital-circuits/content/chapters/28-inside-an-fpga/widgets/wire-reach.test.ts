@@ -1,54 +1,41 @@
+import { readFileSync, writeFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
-import { estimateDelay } from '$lib/pld/fpga/place';
-import { fastest, hopDelay } from './wire-reach';
+import { nodeSynth } from '$lib/synth/node';
+import { DELAYS, fastest } from './wire-reach';
 
-describe('crossing a row of tiles (Figure 28.3)', () => {
-  test('the delay of one hop is a multiplexer plus a wire: 0.3, 0.5 and 0.9 ns', () => {
-    expect([1, 4, 12].map((s) => +hopDelay(s as 1 | 4 | 12).toFixed(3))).toEqual([0.3, 0.5, 0.9]);
+const file = new URL('./ice40-delays.json', import.meta.url);
+
+describe('crossing a row of iCE40 tiles (Figure 28.3)', () => {
+  test('the delays are synth’s, for the HX1K (UPDATE_DELAYS=1 records them)', async () => {
+    const d = (await nodeSynth().call('delays', { part: 'hx1k' })) as Record<string, unknown>;
+    const keep = Object.fromEntries(['lut', 'lut_in3', 'carry', 'clk_to_q', 'setup', 'odrv4', 'odrv12', 'sp12to4', 'local', 'inmux', 'span4_h', 'span12_h'].map((k) => {
+      const v = d[k];
+      return [k, Array.isArray(v) ? v.map((x) => Math.round(x as number)) : Math.round(v as number)];
+    }));
+    if (process.env.UPDATE_DELAYS) writeFileSync(file, `${JSON.stringify(keep, null, 2)}\n`);
+    else expect(JSON.parse(readFileSync(file, 'utf8'))).toEqual(keep);
   });
 
-  test('the next tile is one span-1 hop and one connection-box multiplexer: 0.4 ns', () => {
-    const r = fastest(1, 'one');
-    expect(r.hops.map((h) => h.span)).toEqual([1]);
-    expect(r.delay).toBeCloseTo(0.4, 9);
-    expect(r.muxes).toBe(2);
+  test('the next tile is a neighbour link: a local track and the cell input, about 0.6 ns', () => {
+    const r = fastest(1, 'neighbour');
+    expect(r.hops.map((h) => h.wire)).toEqual(['neighbour']);
+    expect(r.delay).toBeCloseTo((DELAYS.local + DELAYS.inmux) / 1000, 9);
   });
 
-  test('twelve tiles: twelve hops of span 1 (3.7 ns), or one span-12 wire (1.0 ns)', () => {
-    expect(fastest(12, 'one').delay).toBeCloseTo(3.7, 9);
-    expect(fastest(12, 'all').delay).toBeCloseTo(1.0, 9);
-    expect(fastest(12, 'all').hops).toHaveLength(1);
+  test('a long row: repeaters in every tile are slow, span wires fast', () => {
+    const n = fastest(24, 'neighbour');
+    const f = fastest(24, 'four');
+    const a = fastest(24, 'all');
+    expect(n.hops).toHaveLength(24);
+    expect(f.delay).toBeLessThan(n.delay / 3);
+    expect(a.delay).toBeLessThan(f.delay);
+    expect(a.hops.map((h) => h.wire)).toEqual(['span12', 'span12']);
   });
 
-  test('thirty tiles: 9.1 ns with span-1 wires alone, 3.0 ns with the full mix', () => {
-    expect(fastest(30, 'one').delay).toBeCloseTo(9.1, 9);
-    expect(fastest(30, 'one-four').delay).toBeCloseTo(0.1 + 7 * 0.5 + 2 * 0.3, 9);
-    const all = fastest(30, 'all');
-    expect(all.delay).toBeCloseTo(3.0, 9);
-    expect(all.hops.map((h) => h.span).sort((a, b) => a - b)).toEqual([1, 1, 4, 12, 12]);
-  });
-
-  test('a wire may overshoot and come back when that is faster: eleven tiles by span 12 then span 1 back', () => {
-    const r = fastest(11, 'all');
-    expect(r.delay).toBeCloseTo(0.1 + 0.9 + 0.3, 9);
-    expect(r.hops.map((h) => h.to)).toEqual([12, 11]);
-  });
-
-  test('never slower than the placer’s greedy estimate, and equal to it for the round distances', () => {
+  test('never slower with more kinds of wire, at every distance', () => {
     for (let d = 1; d < 36; d++) {
-      const f = fastest(d, 'all').delay;
-      expect(f).toBeLessThanOrEqual(estimateDelay(d, 0) + 1e-9);
-    }
-    for (const d of [1, 4, 8, 12, 16, 24]) expect(fastest(d, 'all').delay).toBeCloseTo(estimateDelay(d, 0), 9);
-  });
-
-  test('more kinds of wire never hurt', () => {
-    for (let d = 1; d < 36; d++) {
-      const a = fastest(d, 'one').delay;
-      const b = fastest(d, 'one-four').delay;
-      const c = fastest(d, 'all').delay;
-      expect(b).toBeLessThanOrEqual(a + 1e-9);
-      expect(c).toBeLessThanOrEqual(b + 1e-9);
+      expect(fastest(d, 'four').delay).toBeLessThanOrEqual(fastest(d, 'neighbour').delay + 1e-9);
+      expect(fastest(d, 'all').delay).toBeLessThanOrEqual(fastest(d, 'four').delay + 1e-9);
     }
   });
 });

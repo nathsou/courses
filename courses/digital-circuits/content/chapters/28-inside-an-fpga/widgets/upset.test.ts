@@ -1,64 +1,42 @@
-import { describe, expect, test, vi } from 'vitest';
-import { frameOf } from '$lib/studio/fpga/bitlayout';
-import { census, device, loaderVerdict, ray, reference, strike } from './upset';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { describe, expect, it } from 'vitest';
+import { nodeSynth } from '$lib/synth/node';
+import { buildXor, CENSUS, EXPECTED, meaning, outputs, type Census } from './upset';
 
-vi.setConfig({ testTimeout: 120_000 });
+const synth = nodeSynth();
+const file = new URL('./upset-census.json', import.meta.url);
 
-describe('a cosmic ray in the XOR design (Figure 28.6)', () => {
-  const dev = device();
-  const bits = reference();
-
-  test('the device has 1,772 configuration bits in 4 frames, and the design sets 19 of them', () => {
-    expect(dev.totalBits).toBe(1772);
-    expect(dev.frames).toHaveLength(4);
-    expect(bits.reduce((a, b) => a + b, 0)).toBe(19);
-  });
-
-  test('a flipped bit in an unused tile does nothing', () => {
-    const s = strike(bits, 1700);
-    expect(s.harmless).toBe(true);
-    expect(s.check.ok).toBe(true);
-  });
-
-  test('flipping a bit of the XOR table changes the function, and the text says which row', () => {
-    const lut = [...bits.keys()].find((i) => {
-      const d = strike(bits, i);
-      return d.what.category === 'lut' && !d.harmless;
-    })!;
-    const s = strike(bits, lut);
-    expect(s.harmless).toBe(false);
-    expect(s.what.text).toMatch(/^LUT bit \d+ of logic cell/);
-  });
-
-  test('census: 42 of the 1,772 bits break the design: 16 LUT bits, 22 routing selects, 3 pad bits and 1 cell flag', () => {
-    const c = census(bits, dev);
-    expect(c.total).toBe(1772);
-    expect(c.critical).toHaveLength(42);
-    const by = Object.fromEntries(c.byCategory.map((r) => [r.category, [r.bits, r.critical]]));
-    expect(by.lut).toEqual([512, 16]);
-    expect(by.mux).toEqual([928, 22]);
-    expect(by['lc-flag']![1]).toBe(1);
-    expect(by.pad![1]).toBe(3);
-    expect(by.clock![1]).toBe(0);
-    expect(c.byCategory.reduce((a, r) => a + r.bits, 0)).toBe(1772);
-    expect(((100 * 42) / 1772).toFixed(1)).toBe('2.4');
-  });
-
-  test('all 16 bits of the LUT matter, although only two of its inputs are wired', () => {
-    // The unwired inputs float, so the tool repeats the table (0x6666): a single flipped bit makes the output unknown for one input pair.
-    const c = census(bits, dev);
-    const lutBits = c.critical.filter((i) => strike(bits, i).what.category === 'lut');
-    expect(lutBits).toHaveLength(16);
-  });
-
-  test('a flip in the file is caught by the frame CRC; the loader names the frame', () => {
-    for (const i of [3, 1700, 1771]) expect(loaderVerdict(bits, i)).toBe(`frame ${frameOf(dev, i)} is corrupt (CRC mismatch)`);
-    expect(frameOf(dev, 3)).toBe(0);
-  });
-
-  test('random rays are reproducible', () => {
-    expect(ray(0, 1772)).toBe(ray(0, 1772));
-    expect(ray(3, 1772)).not.toBe(ray(4, 1772));
-    for (let i = 0; i < 20; i++) expect(ray(i, 1772)).toBeLessThan(1772);
+describe('configuration upsets on an iCE40 (Figure 28.5)', () => {
+  it('the XOR gate works from its bitstream, and a census of its tiles finds the critical bits', async () => {
+    const built = await buildXor(synth);
+    expect(built.tiles.map((t) => t.kind).sort()).toEqual(['I/O', 'I/O', 'I/O', 'logic']);
+    expect(await outputs(synth, built, [])).toBe(EXPECTED);
+    if (process.env.UPDATE_UPSET) {
+      const critical: Census['critical'] = [];
+      for (const t of built.tiles) for (let i = 0; i < 16 * t.w; i++) if ((await outputs(synth, built, [[t.x, t.y, i]])) !== EXPECTED) critical.push([t.x, t.y, i]);
+      writeFileSync(file, `${JSON.stringify({ total: built.total, critical })}\n`);
+      return;
+    }
+    const rec = JSON.parse(readFileSync(file, 'utf8')) as Census;
+    expect(rec.total).toBe(built.total);
+    // Every recorded critical bit breaks the gate, and a sample of the others does not.
+    for (const c of rec.critical) expect(await outputs(synth, built, [c]), String(c)).not.toBe(EXPECTED);
+    const crit = new Set(rec.critical.map((c) => c.join(',')));
+    let checked = 0;
+    for (const t of built.tiles) {
+      for (let i = 7; i < 16 * t.w && checked < 120; i += 37) {
+        if (crit.has(`${t.x},${t.y},${i}`)) continue;
+        expect(await outputs(synth, built, [[t.x, t.y, i]]), `${t.x},${t.y},${i}`).toBe(EXPECTED);
+        checked++;
+      }
+    }
+    // The bits of the logic cell are read back as its LUT; most bits do not matter.
+    const lc = built.result.chip!.cells.find((c) => c.bel === 'lc')!;
+    const lut = built.result.bitstream!.tiles.find((t) => t.x === lc.x && t.y === lc.y)!;
+    const lutBits = lut.f.find((f) => f.n.startsWith('logic cell'))!.b;
+    for (const b of lutBits) expect(meaning(built.result.bitstream!, lut.x, lut.y, b).kind).toBe('cell');
+    expect(rec.critical.length).toBeGreaterThan(10);
+    expect(rec.critical.length / rec.total).toBeLessThan(0.1);
+    expect(CENSUS.critical.length).toBe(rec.critical.length);
   });
 });

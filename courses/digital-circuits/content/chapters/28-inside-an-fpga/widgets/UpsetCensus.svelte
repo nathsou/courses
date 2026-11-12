@@ -1,376 +1,188 @@
 <!--
-  A cosmic ray in the configuration memory. The 1,772 bits of a configured vFPGA-S (the XOR of Figure 28.5) are drawn
-  as a grid. Strike a bit, at random or by number or by clicking it, and the decoded bits are simulated again. The
-  census flips every bit in turn and marks the ones that break the circuit.
+  A cosmic ray in the configuration memory of an iCE40. synth builds an XOR gate (one logic cell, three pads)
+  for an HX1K; strike a bit of the tiles it uses and synth decodes the flipped bitstream back into cells and runs
+  them for the four input pairs. The census, which flips every bit of those tiles in turn, was run with synth
+  and recorded (upset.test.ts checks it); Show the census marks the bits that break the gate.
 
-    ::upset-census{n="28.6" caption="…"}
+    ::upset-census{n="28.5" caption="…"}
 -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import Widget from '$lib/components/ui/Widget.svelte';
   import Button from '$lib/components/ui/Button.svelte';
-  import Segmented from '$lib/components/ui/Segmented.svelte';
-  import { checkGoal, XOR_GOAL } from '$lib/studio/fpga/hand';
-  import { describeBit } from '$lib/pld/devices/vfpga-config';
-  import { onThemeChange, readSignals, type Signals } from '$lib/theme/signals';
-  import { census, device, loaderVerdict, ray, reference, strike, type Census } from './upset';
+  import { buildXor, CENSUS, EXPECTED, meaning, outputs, ray, type BitMeaning, type Built } from './upset';
 
   let { n, caption }: { n?: string | number; caption?: string } = $props();
 
-  const dev = device();
-  const ref = reference();
-  const TOTAL = dev.totalBits;
-
-  let bits = $state(ref.slice());
-  let flipped = $state<number[]>([]);
+  let built = $state.raw<Built | undefined>();
+  let error = $state('');
   let rays = $state(0);
-  let last = $state<{ index: number; text: string; harmless: boolean; file?: string } | null>(null);
-  let where = $state<'memory' | 'file'>('memory');
-  let cen = $state<Census | null>(null);
-  let running = $state(false);
-  let progress = $state(0);
-  let hover = $state<number | null>(null);
-  let bitNumber = $state('0');
+  let broken = $state(0);
+  let busy = $state(false);
+  let showCensus = $state(false);
+  let last = $state<{ at: [number, number, number]; what: BitMeaning; got: string } | undefined>();
+  let synth: import('$lib/synth/api').Synth | undefined;
 
-  const now = $derived(checkGoal(dev, bits, XOR_GOAL));
-  const critical = $derived(new Set(cen?.critical ?? []));
+  const critical = new Set(CENSUS.critical.map((c) => c.join(',')));
+  const KIND: Record<string, string> = { cell: 'a bit of the logic cell (its LUT)', route: 'a routing switch', buf: 'a buffer onto a cell or pad input', io: 'a pad setting', none: 'a bit the design leaves at 0' };
 
-  function hit(index: number) {
-    if (index < 0 || index >= TOTAL || !Number.isInteger(index)) return;
-    rays++;
-    const s = strike(bits, index, dev);
-    if (where === 'file') {
-      const v = loaderVerdict(bits, index, dev);
-      last = { index, text: s.what.text, harmless: s.harmless, file: v ?? 'the loader accepts the file' };
-      return;
+  onMount(async () => {
+    try {
+      const { synthOn } = await import('$lib/synth/client');
+      synth = synthOn('sim');
+      built = await buildXor(synthOn('run'));
+    } catch (e) {
+      error = e instanceof Error ? e.message : String(e);
     }
-    const next = bits.slice();
-    next[index] = next[index] ? 0 : 1;
-    bits = next;
-    flipped = flipped.includes(index) ? flipped.filter((i) => i !== index) : [...flipped, index];
-    last = { index, text: s.what.text, harmless: s.harmless };
-  }
-  const random = () => hit(ray(rays, TOTAL));
-  function scrub() {
-    bits = ref.slice();
-    flipped = [];
-    last = null;
-  }
-  function reset() {
-    scrub();
-    rays = 0;
-    cen = null;
-    progress = 0;
-    running = false;
-  }
-
-  let stop = false;
-  async function runCensus() {
-    if (running) return;
-    running = true;
-    stop = false;
-    progress = 0;
-    let c: Census = { total: TOTAL, critical: [], byCategory: [] };
-    const CHUNK = 60;
-    for (let i = 0; i < TOTAL && !stop; i += CHUNK) {
-      c = census(ref, dev, i, Math.min(TOTAL, i + CHUNK), c);
-      progress = Math.min(TOTAL, i + CHUNK) / TOTAL;
-      cen = { ...c, critical: [...c.critical], byCategory: c.byCategory.map((r) => ({ ...r })) };
-      await new Promise((r) => setTimeout(r, 0));
-    }
-    running = false;
-  }
-
-  // ── The grid ───────────────────────────────────────────────────────
-  const CELL = 6;
-  const GAP = 1;
-  let box: HTMLDivElement | undefined = $state();
-  let canvas: HTMLCanvasElement | undefined = $state();
-  let width = $state(340);
-  const cols = $derived(Math.max(16, Math.floor((width + GAP) / (CELL + GAP))));
-  const rows = $derived(Math.ceil(TOTAL / cols));
-  const heightPx = $derived(rows * (CELL + GAP) - GAP);
-  let sig: Signals | undefined;
-  let themeTick = $state(0);
-
-  const cat = new Uint8Array(TOTAL);
-  const CATS = ['lut', 'lc-flag', 'clock', 'pad', 'mux', 'bram', 'bram-init'] as const;
-  for (let i = 0; i < TOTAL; i++) cat[i] = CATS.indexOf(describeBit(dev, i).category);
-
-  function draw() {
-    void themeTick;
-    if (!canvas) return;
-    const dpr = typeof devicePixelRatio === 'number' ? devicePixelRatio : 1;
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(heightPx * dpr);
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    sig = readSignals(canvas);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, width, heightPx);
-    const colour = [sig.copper, sig.high, sig.current, sig.phosphor, sig.fg, sig.low, sig.low];
-    const set = new Set(flipped);
-    for (let i = 0; i < TOTAL; i++) {
-      const x = (i % cols) * (CELL + GAP);
-      const y = Math.floor(i / cols) * (CELL + GAP);
-      ctx.globalAlpha = 1;
-      if (bits[i]) {
-        ctx.fillStyle = colour[cat[i]!]!;
-        ctx.globalAlpha = cat[i] === 4 ? 0.7 : 1;
-        ctx.fillRect(x, y, CELL, CELL);
-      } else {
-        ctx.fillStyle = sig.line;
-        ctx.globalAlpha = 0.55;
-        ctx.fillRect(x, y, CELL, CELL);
-      }
-      ctx.globalAlpha = 1;
-      if (critical.has(i)) {
-        ctx.fillStyle = sig.x;
-        ctx.fillRect(x + 1.5, y + 1.5, CELL - 3, CELL - 3);
-      }
-      if (set.has(i) || i === hover) {
-        ctx.lineWidth = 1.5;
-        ctx.strokeStyle = set.has(i) ? sig.x : sig.fg;
-        ctx.strokeRect(x - 0.5, y - 0.5, CELL + 1, CELL + 1);
-      }
-    }
-  }
-  $effect(() => {
-    void bits;
-    void flipped;
-    void critical;
-    void hover;
-    void cols;
-    void themeTick;
-    void heightPx;
-    draw();
   });
 
-  const at = (ev: PointerEvent | MouseEvent): number => {
-    const r = canvas!.getBoundingClientRect();
-    const x = Math.floor(((ev.clientX - r.left) * (width / r.width)) / (CELL + GAP));
-    const y = Math.floor(((ev.clientY - r.top) * (heightPx / r.height)) / (CELL + GAP));
-    const i = y * cols + x;
-    return x >= 0 && x < cols && y >= 0 && i < TOTAL ? i : -1;
-  };
-  const hoverText = $derived(hover !== null ? describeBit(dev, hover, bits).text : '');
+  async function strike(at = built && ray(rays, built)) {
+    if (!built || !synth || !at || busy) return;
+    busy = true;
+    try {
+      const got = await outputs(synth, built, [at]);
+      rays++;
+      if (got !== EXPECTED) broken++;
+      last = { at, what: meaning(built.result.bitstream!, at[0], at[1], at[2]), got };
+    } finally {
+      busy = false;
+    }
+  }
 
-  onMount(() => {
-    const ro = new ResizeObserver(([e]) => {
-      if (e) width = Math.max(120, Math.floor(e.contentRect.width));
-    });
-    if (box) ro.observe(box);
-    const off = onThemeChange(() => themeTick++);
-    return () => {
-      stop = true;
-      ro.disconnect();
-      off();
-    };
-  });
-  const pct = (k: number) => ((100 * k) / TOTAL).toFixed(1);
+  const isSet = (x: number, y: number, i: number) => !!built?.result.bitstream?.tiles.find((t) => t.x === x && t.y === y)?.set.includes(i);
+  const table = (s: string) => ['00', '01', '10', '11'].map((ab, i) => `${ab}→${s[i] ?? '?'}`).join(' ');
 </script>
 
-<Widget {n} title="A cosmic ray" subtitle="One flipped bit of the configuration memory" {caption} kind="Fault injection" onreset={reset}>
+<Widget {n} title="A cosmic ray in the configuration" subtitle="An XOR gate on an iCE40 HX1K, and one flipped bit at a time" {caption} onreset={() => ((rays = 0), (broken = 0), (last = undefined), (showCensus = false))}>
   {#snippet controls()}
-    <Segmented label="Where the ray hits" value={where} onchange={(v) => (where = v)} options={[{ value: 'memory', label: 'The memory', title: 'A bit of the configuration SRAM flips after loading' }, { value: 'file', label: 'The file', title: 'A bit of the bitstream file flips before loading' }]} size="sm" />
-    <Button size="sm" onclick={random}>Strike at random</Button>
-    <Button size="sm" onclick={scrub} disabled={flipped.length === 0}>Scrub</Button>
-    <Button size="sm" onclick={runCensus} disabled={running}>{running ? `Census… ${Math.round(progress * 100)} %` : cen && cen.total && progress >= 1 ? 'Run the census again' : 'Run the census'}</Button>
+    <div class="ctl ui">
+      <Button size="sm" onclick={() => strike()} disabled={!built || busy}>{busy ? 'Simulating…' : 'Strike at random'}</Button>
+      <Button size="sm" onclick={() => (showCensus = !showCensus)} disabled={!built}>{showCensus ? 'Hide the census' : 'Show the census'}</Button>
+      <span class="count">rays: <b>{rays}</b>, circuit broken by <b>{broken}</b></span>
+    </div>
   {/snippet}
 
-  <div class="uc">
-    <div class="verdict ui" class:bad={!now.ok} role="status">
-      <b>{now.ok ? 'Still an XOR gate' : 'Broken'}</b>
-      <span>after {rays} ray{rays === 1 ? '' : 's'}; {flipped.length} bit{flipped.length === 1 ? '' : 's'} of the memory flipped{now.ok ? '' : `; ${now.problems[0] ?? 'P2 no longer follows P0 xor P1'}`}</span>
-    </div>
-
-    <div class="gridbox" bind:this={box}>
-      <canvas
-        bind:this={canvas}
-        style:width="100%"
-        style:height="{heightPx}px"
-        role="img"
-        aria-label="The {TOTAL} configuration bits of the vFPGA-S, {bits.reduce((a, b) => a + b, 0)} of them set. Use the buttons or the bit number to strike one."
-        onpointermove={(ev) => (hover = at(ev) >= 0 ? at(ev) : null)}
-        onpointerleave={() => (hover = null)}
-        onclick={(ev) => {
-          const i = at(ev);
-          if (i >= 0) hit(i);
-        }}
-      ></canvas>
-    </div>
-    <p class="hover ui" aria-live="polite">{hoverText || 'Point at a bit to see what it controls; click it to flip it.'}</p>
-
-    <form
-      class="num ui"
-      onsubmit={(ev) => {
-        ev.preventDefault();
-        hit(Number(bitNumber));
-      }}
-    >
-      <label>Bit <input type="number" min="0" max={TOTAL - 1} step="1" bind:value={bitNumber} /></label>
-      <Button size="sm" type="submit">Flip it</Button>
-      <span class="key ui" aria-hidden="true">
-        <i style="background: var(--copper)"></i>LUT <i style="background: var(--sig-high)"></i>flags <i style="background: var(--sig-current)"></i>clock <i style="background: var(--phosphor)"></i>pad <i style="background: var(--fg); opacity: 0.7"></i>routing <i class="crit"></i>critical
-      </span>
-    </form>
-
-    {#if last}
-      <div class="last ui" class:bad={!last.harmless}>
-        <b>Bit {last.index}</b>: {last.text}
-        <span class="fx">{last.harmless ? 'Alone, this flip does not change what the circuit does.' : 'Alone, this flip breaks the circuit.'}</span>
-        {#if last.file}<span class="fx"><b>The loader:</b> {last.file}.</span>{/if}
+  <div class="up">
+    {#if error}
+      <p class="err ui">{error}</p>
+    {:else if !built}
+      <p class="note ui">synth is building the XOR gate…</p>
+    {:else}
+      <p class="note ui">The gate uses {built.tiles.length} tiles: {built.tiles.map((t) => `${t.kind} (${t.x}, ${t.y})`).join(', ')}, {built.total.toLocaleString('en-GB')} configuration bits in all, of which {built.tiles.reduce((s, t) => s + (built!.result.bitstream!.tiles.find((u) => u.x === t.x && u.y === t.y)?.set.length ?? 0), 0)} are set. Click a bit to strike it.</p>
+      <div class="tiles">
+        {#each built.tiles as t (`${t.x},${t.y}`)}
+          <figure>
+            <figcaption class="ui">{t.kind} tile ({t.x}, {t.y})</figcaption>
+            <div class="grid" style:--w={t.w}>
+              {#each Array.from({ length: 16 * t.w }, (_, i) => i) as i (i)}
+                <button
+                  type="button"
+                  class="bit"
+                  class:set={isSet(t.x, t.y, i)}
+                  class:crit={showCensus && critical.has(`${t.x},${t.y},${i}`)}
+                  class:hit={last && last.at[0] === t.x && last.at[1] === t.y && last.at[2] === i}
+                  aria-label="Strike bit {i} of tile ({t.x}, {t.y})"
+                  onclick={() => strike([t.x, t.y, i])}
+                ></button>
+              {/each}
+            </div>
+          </figure>
+        {/each}
       </div>
-    {/if}
-
-    {#if cen && cen.byCategory.length}
-      <table class="tab ui" aria-label="Census of single-bit upsets">
-        <thead><tr><th>Kind of bit</th><th>Bits</th><th>Critical</th><th></th></tr></thead>
-        <tbody>
-          {#each cen.byCategory as r (r.category)}
-            <tr><th scope="row">{r.label}</th><td>{r.bits}</td><td class:bad={r.critical > 0}>{r.critical}</td><td class="bar"><span style:width="{(100 * r.critical) / Math.max(1, r.bits)}%"></span></td></tr>
-          {/each}
-          <tr class="sum"><th scope="row">All</th><td>{cen.byCategory.reduce((a, r) => a + r.bits, 0)}</td><td>{cen.critical.length}</td><td class="pc">{pct(cen.critical.length)} %</td></tr>
-        </tbody>
-      </table>
+      <div class="out ui" aria-live="polite">
+        {#if last}
+          <p>Bit B{Math.floor(last.at[2] / (built.tiles.find((t) => t.x === last!.at[0] && t.y === last!.at[1])?.w ?? 1))}[{last.at[2] % (built.tiles.find((t) => t.x === last!.at[0] && t.y === last!.at[1])?.w ?? 1)}] of tile ({last.at[0]}, {last.at[1]}) flipped from {last.what.set ? 1 : 0} to {last.what.set ? 0 : 1}: {KIND[last.what.kind] ?? last.what.kind}{last.what.kind !== 'none' ? `, ${last.what.name}` : ''}.</p>
+          <p class:bad={last.got !== EXPECTED} class:good={last.got === EXPECTED}>{last.got === EXPECTED ? 'Harmless' : 'Broken'}: a b → y is {table(last.got)} (an XOR gives {table(EXPECTED)}).</p>
+        {:else}
+          <p>Strike a bit: synth decodes the flipped bitstream into cells and runs them for the four input pairs.</p>
+        {/if}
+        {#if showCensus}
+          <p>The census flipped all {CENSUS.total.toLocaleString('en-GB')} bits of these tiles, one at a time: <b>{CENSUS.critical.length}</b> of them ({((100 * CENSUS.critical.length) / CENSUS.total).toFixed(1)} %), outlined in red, break the gate.</p>
+        {/if}
+      </div>
     {/if}
   </div>
 </Widget>
 
 <style>
-  .uc {
+  .up {
     display: grid;
     gap: 0.6rem;
     padding: 0.8rem 1rem 1rem;
   }
-  .verdict {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.2rem 0.7rem;
-    font-size: 0.84rem;
-    padding: 0.45rem 0.7rem;
-    border-radius: 6px;
-    border-left: 3px solid var(--ok);
-    background: var(--ok-soft);
-    color: var(--ink-2);
-  }
-  .verdict.bad {
-    border-color: var(--bad);
-    background: var(--bad-soft);
-  }
-  .verdict b {
-    color: var(--fg);
-  }
-  .gridbox {
-    min-width: 0;
-  }
-  canvas {
-    display: block;
-    cursor: crosshair;
-    background: var(--panel);
-  }
-  .hover {
-    margin: 0;
-    min-height: 2.6em;
-    font-size: 0.8rem;
-    color: var(--mute);
-  }
-  .num {
+  .ctl {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem 0.8rem;
+    gap: 0.5rem;
+  }
+  .count {
     font-size: 0.8rem;
     color: var(--ink-2);
   }
-  .num input {
-    width: 5.5rem;
-    font: inherit;
-    font-family: var(--font-mono);
-    padding: 0.2rem 0.4rem;
-    border: 1px solid var(--line-strong);
-    border-radius: 5px;
-    background: var(--panel);
-    color: var(--fg);
+  .note,
+  .err {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--ink-2);
   }
-  .key {
-    color: var(--mute);
+  .err {
+    color: var(--bad);
+  }
+  .tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+  figure {
+    margin: 0;
+  }
+  figcaption {
     font-size: 0.72rem;
-  }
-  .key i {
-    display: inline-block;
-    width: 0.6rem;
-    height: 0.6rem;
-    margin: 0 0.25rem 0 0.6rem;
-    vertical-align: -1px;
-  }
-  .key i.crit {
-    background: var(--sig-x);
-    border-radius: 1px;
-  }
-  .last {
-    font-size: 0.84rem;
-    padding: 0.5rem 0.7rem;
-    border-radius: 6px;
-    border-left: 3px solid var(--ok);
-    background: var(--ok-soft);
-    color: var(--ink-2);
-  }
-  .last.bad {
-    border-color: var(--bad);
-    background: var(--bad-soft);
-  }
-  .fx {
-    display: block;
-    margin-top: 0.2rem;
-  }
-  .tab {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.8rem;
-  }
-  .tab th,
-  .tab td {
-    padding: 0.2rem 0.5rem 0.2rem 0;
-    text-align: right;
-    font-family: var(--font-mono);
-  }
-  .tab thead th {
     color: var(--mute);
-    font-weight: 500;
-    font-family: var(--font-ui);
+    margin-bottom: 0.2rem;
   }
-  .tab thead th:first-child {
-    text-align: left;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--w), 8px);
+    gap: 1px;
   }
-  .tab tbody th {
-    text-align: left;
-    font-weight: 500;
-    font-family: var(--font-ui);
-    color: var(--ink-2);
+  .bit {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 1px;
+    background: var(--surface-2, var(--line));
+    cursor: pointer;
   }
-  .tab td.bad {
+  .bit.set {
+    background: var(--accent);
+  }
+  .bit.crit {
+    outline: 1.5px solid var(--bad);
+    outline-offset: 0;
+  }
+  .bit.hit {
+    background: var(--sig-high);
+    outline: 2px solid var(--focus);
+  }
+  .bit:focus-visible {
+    outline: 2px solid var(--focus);
+  }
+  .out p {
+    margin: 0.2rem 0;
+    font-size: 0.84rem;
+  }
+  .good {
+    color: var(--ok);
+  }
+  .bad {
     color: var(--bad);
     font-weight: 600;
   }
-  .tab .bar {
-    width: 30%;
-    padding-right: 0;
-  }
-  .tab .bar span {
-    display: block;
-    height: 0.55rem;
-    background: var(--bad);
-    border-radius: 2px;
-    min-width: 0;
-  }
-  .tab .sum th,
-  .tab .sum td {
-    border-top: 1px solid var(--line);
-    color: var(--fg);
-  }
-  .pc {
-    text-align: left !important;
-    color: var(--mute);
+  b {
+    font-family: var(--font-mono);
   }
 </style>

@@ -9,7 +9,7 @@ import { getVFpga, NK, type VFpgaDevice } from '../../pld/devices/vfpga';
 import { FabricConfig, padOffset, readSelect, type LcConfig } from '../../pld/devices/vfpga-config';
 import { createDigitalEngine } from '../../sim/digital';
 import { attachTestbench, decodeBitstream } from '../../pld/fpga/decode';
-import { dependsOn, lutExpression, LUT_NAMES } from './lut';
+import { dependsOn, lutExpression, LUT_NAMES } from '$lib/widgets/lut/lut';
 
 export interface MuxChoice {
   /** The select code that picks it (input k − 1 has code k). */

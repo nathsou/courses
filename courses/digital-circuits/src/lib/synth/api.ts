@@ -107,6 +107,13 @@ export interface ChipCell {
   pins: [string, number, boolean, string][];
   pin?: string;
   lut?: number;
+  /** An iCE40 logic cell: the tile bit (row × width + column) of each entry of its truth table, entry 0 first. */
+  lut_bits?: number[];
+  /** The tile bits that enable its carry and its flip-flop. */
+  carry_bit?: number;
+  dff_bit?: number;
+  /** The net on each physical LUT input I0…I3 (null when unconnected: such an input reads 0). */
+  lut_inputs?: (string | null)[];
 }
 
 export interface ChipNet {

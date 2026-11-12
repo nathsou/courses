@@ -6,7 +6,7 @@
 <script lang="ts">
   import { NK } from '../../../pld/devices/vfpga';
   import { describeBit, padOffset, readLc } from '../../../pld/devices/vfpga-config';
-  import { LUT_NAMES, LutExpressionError, hex4, lutExpression, truthFromExpression } from '../../fpga/lut';
+  import { LUT_NAMES, LutExpressionError, hex4, lutExpression, truthFromExpression } from '$lib/widgets/lut/lut';
   import type { FpgaSession } from '../../fpga/session.svelte';
   import Icon from '../../../components/ui/Icon.svelte';
   import RecoveredView from './RecoveredView.svelte';

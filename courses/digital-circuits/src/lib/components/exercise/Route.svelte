@@ -26,7 +26,7 @@
   import '$lib/studio/studio.css';
   import FpgaChip from '$lib/studio/chips/vfpga/FpgaChip.svelte';
   import { FpgaSession } from '$lib/studio/fpga/session.svelte';
-  import { lutExpression } from '$lib/studio/fpga/lut';
+  import { lutExpression } from '$lib/widgets/lut/lut';
   import { progress } from '$lib/state/progress.svelte';
   import { device as makeDevice, lockedIntact, lutOf, nodeLabel, nodeOf, traceDriver } from './fabric';
   import { checkRoute, netStatus, solutionBits, startBits, type RouteInput, type RouteOutcome } from './route/model';

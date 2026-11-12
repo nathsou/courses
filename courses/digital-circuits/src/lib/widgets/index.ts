@@ -30,6 +30,6 @@ export { default as FpgaByHand } from '../studio/widgets/FpgaByHand.svelte';
 /** The placement and routing traces replayed on the chip view: `::place-route-replay{design="alu"}`. */
 export { default as PlaceRouteReplay } from '../studio/widgets/PlaceRouteReplay.svelte';
 /** A single LUT4: 16 bits and the multiplexer tree; type a function or click bits: `::lut-explorer{}`. */
-export { default as LutExplorer } from '../studio/widgets/LutExplorer.svelte';
+export { default as LutExplorer } from './lut/LutExplorer.svelte';
 /** The live figure a history card's "Run the original" button opens: `::::run-original{title="<card title>"}` around a `::circuit`. */
 export { default as RunOriginal } from './RunOriginal.svelte';
