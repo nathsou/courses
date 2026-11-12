@@ -191,6 +191,30 @@ export interface RunResult {
   /** The bitstream, base64. */
   bin?: string;
   bin_name?: string;
+  /** How placement and routing went (with `trace: true`). */
+  trace?: FlowTrace;
+}
+
+/** A temperature step of the annealer; `xy[k]` is chip cell k's position, in the snapshots that keep it. */
+export interface PlaceStep {
+  step: number;
+  temperature: number;
+  cost: number;
+  accepted: number;
+  range: number;
+  xy?: [number, number][];
+}
+
+/** An iteration of the router: the nets it routed, and the routing nodes still used by more than one net. */
+export interface RouteStep {
+  iteration: number;
+  nets: number;
+  overused: number;
+}
+
+export interface FlowTrace {
+  place: PlaceStep[];
+  route: RouteStep[];
 }
 
 export interface RunRequest {
@@ -212,6 +236,8 @@ export interface RunRequest {
   clock_hz?: number;
   /** Elaborate the top as a testbench drives it: inputs synchronous to its clock (for drawing a module). */
   testbench?: boolean;
+  /** Return the placer's and router's traces (`RunResult.trace`). */
+  trace?: boolean;
 }
 
 export interface TbPort {
@@ -284,6 +310,15 @@ export function run(s: Synth, req: RunRequest): Promise<RunResult> {
 export function tbStart(
   s: Synth,
   req: { files: SourceFile[]; top?: string; params?: Record<string, number | string | boolean>; signals?: boolean },
+): Promise<TbStarted | TbFailed>;
+/** A session on what an iCE40 bitstream implements, decoded back to its cells (with bits flipped first). */
+export function tbStart(
+  s: Synth,
+  req: { bitstream: string; part: string; package: string; pins: string; flips?: [number, number, number][]; signals?: boolean },
+): Promise<TbStarted | TbFailed>;
+export function tbStart(
+  s: Synth,
+  req: { files?: SourceFile[]; top?: string; params?: Record<string, number | string | boolean>; signals?: boolean; bitstream?: string },
 ): Promise<TbStarted | TbFailed> {
   const params = req.params ? Object.fromEntries(Object.entries(req.params).map(([k, v]) => [k, String(v)])) : undefined;
   return s.call('tb_start', { ...req, params }) as Promise<TbStarted | TbFailed>;

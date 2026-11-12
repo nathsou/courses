@@ -23,8 +23,8 @@ export { default as JtagTap } from '../studio/widgets/JtagTap.svelte';
 
 // ── The virtual FPGA in the Device Studio (src/lib/studio/fpga, panes/fpga, chips/vfpga) ─────────
 
-/** A compact FPGA Studio: `::fpga-studio{size="M" design="alu" views="source,chip,logic,report"}` (views: source, chip, logic, bits, report, replay, board, hand). */
-export { default as FpgaStudio } from '../studio/widgets/FpgaStudio.svelte';
+/** A design through synth's whole flow to an iCE40: `::fpga-studio{design="counter" views="source,steps,chip,timing,bits,board,place,route"}`. */
+export { default as FpgaStudio } from '../studio/ice40/Ice40Studio.svelte';
 /** vFPGA-S by hand, against a goal (XOR two pins), with the logic recovered from the bits: `::fpga-by-hand{}`. */
 export { default as FpgaByHand } from '../studio/widgets/FpgaByHand.svelte';
 /** The placement and routing traces replayed on the chip view: `::place-route-replay{design="alu"}`. */

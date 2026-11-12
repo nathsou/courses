@@ -64,7 +64,9 @@ export function request<T = unknown>(name: Lane, method: string, body: unknown, 
   const id = nextId++;
   return new Promise<T>((resolve, reject) => {
     l.pending.set(id, { resolve: resolve as (v: unknown) => void, reject, progress });
-    l.worker.postMessage({ id, method, body });
+    // Requests are JSON for synth anyway; going through JSON here also unwraps reactive state proxies,
+    // which a worker cannot receive.
+    l.worker.postMessage({ id, method, body: JSON.parse(JSON.stringify(body ?? {})) });
   });
 }
 

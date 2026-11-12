@@ -4,6 +4,7 @@
 -->
 <script lang="ts">
   import WeftPlayground from '$lib/widgets/weft/WeftPlayground.svelte';
+  import Ice40Studio from '$lib/studio/ice40/Ice40Studio.svelte';
 
   const half = 'module half_adder(in a: bool, in b: bool, out sum: bool, out carry: bool) {\n    sum = a ^ b;\n    carry = a && b;\n}\n';
 </script>
@@ -11,6 +12,10 @@
 <article class="lab">
   <h1>Weft lab</h1>
   <p class="lede">The Weft widgets, for design review. Not linked from the course.</p>
+
+  <h2>FPGA studio</h2>
+  <Ice40Studio design="counter" views="source,steps,chip,timing,bits,board,place,route" n="30.1" />
+  <Ice40Studio design="alu" views="steps,chip,timing,place,route" tab="chip" n="30.2" />
 
   <h2>Playground</h2>
   <WeftPlayground src="designs/counter.weft" n="29.1" />
