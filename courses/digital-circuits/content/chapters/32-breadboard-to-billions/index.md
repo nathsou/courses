@@ -26,7 +26,7 @@ The figure below has twenty real processors, from the 4004 to a chip the size of
 
 ::scaling-explorer{n="32.1" caption="Twenty processors on logarithmic axes. Click a point, or use the arrow keys, to see its numbers and sources. Show the doubling line for transistors, then try the other metrics: the clock and the power per square centimetre both change their behaviour in 2004 (switch on Split at 2004). Switch on Octet and RV32I to see where the course’s own designs fall."}
 
-On a logarithmic axis a constant doubling time is a straight line, and the transistor counts follow one closely: a fit through all twenty chips doubles every 2.0 years, with r² = 0.98. This is :term[Moore’s law]{id=moores-law}, and the history card below tells how it began. Octet’s 24,856 transistors are what that line reached in 1978; its logic without the RAM, 12,568, is 1976. The RV32I core of Chapter 31, counted as gates, has about 84,000 transistors, which is 1982: about the size of a Motorola 68000 (68,000), the processor of the first Macintosh.
+On a logarithmic axis a constant doubling time is a straight line, and the transistor counts follow one closely: a fit through all twenty chips doubles every 2.0 years, with r² = 0.98. This is :term[Moore’s law]{id=moores-law}, and the history card below tells how it began. Octet’s 24,856 transistors are what that line reached in 1978; its logic without the RAM, 12,568, is 1976. The RV32I core of Chapter 31, counted as gates, has about 57,000 transistors, which is 1981: a little smaller than a Motorola 68000 (68,000), the processor of the first Macintosh.
 
 :::details[Where every number of Figure 32.1 comes from]
 The figure’s numbers are the launch figures of each chip; the sources are, one by one:
@@ -97,7 +97,7 @@ case 'ram':
   return 6 * (1 << bits('addrBits', 4)) * bits('dataBits', 8);   // six-transistor cells
 ```
 
-`costOfFlat` adds them up over the flattened netlist: 3,599 elements, gates and tri-state buffers and one RAM. The RAM is 256 × 8 × 6 = 12,288 transistors, half of the total; the CPU proper is 12,568. The test of this chapter rebuilds the CPU and checks both numbers, so that they cannot drift from the circuit. For the RV32I core the count is applied to the and-inverter graph of Chapter 30: 10,420 AND nodes at 6 transistors each and 1,089 flip-flops at 20 make about 84,000.
+`costOfFlat` adds them up over the flattened netlist: 3,599 elements, gates and tri-state buffers and one RAM. The RAM is 256 × 8 × 6 = 12,288 transistors, half of the total; the CPU proper is 12,568. The test of this chapter rebuilds the CPU and checks both numbers, so that they cannot drift from the circuit. For the RV32I core the count is applied to the and-inverter graph of Chapter 30, as synth optimises it: 5,785 AND nodes at 6 transistors each and 1,100 flip-flops at 20 make about 57,000.
 :::
 
 ## How a chip is made
@@ -163,14 +163,14 @@ The last chapters of Part VI followed a design from a description to the bits of
 
 | Stage | FPGA (Chapter 30) | ASIC (standard cells) |
 |---|---|---|
-| Describe | RTL in DCL (or Verilog, VHDL) | the same RTL |
+| Describe | RTL in Weft (or Verilog, VHDL) | the same RTL |
 | Synthesise | to an and-inverter graph, then :term[technology mapping]{id=technology-mapping} to 4-input LUTs | to the same graph, then mapped to a **library** of cells: NAND, NOR, XOR, flip-flops and hundreds more, each with its area and delay |
 | Place | LUTs into the fixed tiles of the chip, by :term[simulated annealing]{id=simulated-annealing} | cells into **rows** across a die of chosen size, macros such as RAMs first |
 | Clock | dedicated networks and PLLs, already on the chip | a clock tree must be **designed** to reach every flip-flop together |
 | Route | choose among the switches of wires that already exist (:term[PathFinder]{id=pathfinder}) | draw the wires on ten or more layers of metal |
 | Time | one set of delays; report the fmax | many **corners** (fast and slow silicon, high and low voltage, hot and cold) at once |
 | Check | that the design fits | that the layout obeys the design rules (DRC) and is the circuit that was synthesised (LVS) |
-| Output | a :term[bitstream]{id=bitstream}: 832,592 bits for the vFPGA-L | GDSII: the shapes of every layer of every mask |
+| Output | a :term[bitstream]{id=bitstream}: 135,096 bytes for an iCE40 HX8K | GDSII: the shapes of every layer of every mask |
 | After | load it in a second; load another tomorrow | :term[tape-out]{id=tape-out}, masks, weeks in a fab, packaging, test |
 
 A :term[standard cell]{id=standard-cell} is the ASIC’s counterpart of a LUT. It is a small layout of one function, a NAND, a flip-flop, all of the same height so that they slot into rows and share power rails along the row (Chapter 9’s transistors, drawn once by hand and reused millions of times).:cite[weste-harris2011] The synthesiser has the same job as in Chapter 30, choosing which cells cover the graph, with an area and a delay in place of a LUT’s depth.
@@ -223,7 +223,7 @@ For most of the history of chips, everything on the last page of this chapter’
 
 **Shared wafers.** The economics of Mead and Conway’s MPC79, forty years on, is a :term[shuttle]{id=shuttle}, and the friendliest of them is Tiny Tapeout: each design takes a small tile, hundreds of tiles share one chip, and the cost of the masks is divided by all of them. A recent shuttle carried 316 designs.:cite[tinytapeout]:cite[tinytapeout-ttsky25b] Matt Venn, who started Tiny Tapeout, also teaches a course that walks a small design from an HDL to a chip on a shared wafer.:cite[zero-to-asic]
 
-The path from DCL is short to describe. Rewrite the module in Verilog, or use a tool such as Amaranth or Chisel that produces it,:cite[amaranth]:cite[chisel] run the open flow with the SKY130 kit, and submit the result to a shuttle. A real chip arrives some months later, and in the middle of it is a design that started as text you wrote yourself.
+The path from Weft is short to describe. Have synth write the module as Verilog (`synth elab --verilog`), or use a tool such as Amaranth or Chisel that produces it,:cite[amaranth]:cite[chisel] run the open flow with the SKY130 kit, and submit the result to a shuttle. A real chip arrives some months later, and in the middle of it is a design that started as text you wrote yourself.
 
 ## Build it for real
 
@@ -248,7 +248,7 @@ You now have the whole picture at one small scale, and the next step is to go de
 
 **From the beginning, again.** Nisan and Schocken’s *The Elements of Computing Systems* (Nand2Tetris) builds a computer, an assembler, a compiler and an operating system, from one NAND gate up.:cite[nisan-schocken2021] Charles Petzold’s *Code* tells the story as a narrative,:cite[petzold2022] and Ben Eater’s videos build an 8-bit computer on breadboards, chip by chip.:cite[eater8bit]
 
-**Boards and tools.** A cheap iCE40 board such as the iCEBreaker, with Yosys, nextpnr and Project IceStorm, runs everything in Chapter 31 for real.:cite[icebreaker]:cite[shah2019]:cite[icestorm-eetimes] Verilator turns Verilog into fast simulations,:cite[verilator] and a project that outgrows DCL will want one of the languages of Chapter 29 and the open flows above.
+**Boards and tools.** A cheap iCE40 board such as the Nandland Go Board or the Alchitry Cu, with synth, runs everything in Chapters 28 to 31 for real, and the iCEBreaker with Yosys, nextpnr and Project IceStorm runs the PicoSoC of Chapter 31.:cite[icebreaker]:cite[shah2019]:cite[icestorm-eetimes] Verilator turns Verilog into fast simulations,:cite[verilator] and a project that outgrows Weft and synth will want one of the languages of Chapter 29 and the open flows above.
 
 ## The whole stack
 

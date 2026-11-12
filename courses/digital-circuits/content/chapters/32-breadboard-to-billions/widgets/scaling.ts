@@ -80,8 +80,11 @@ export const OCTET_RAM_TRANSISTORS = 256 * 8 * 6;
 /** The gate-level simulation of Chapter 22 runs with 1 ns gates and works with a half period of 40 ns. */
 export const OCTET_CLOCK_MHZ = 12.5;
 
-/** The RV32I core of Chapter 31, `content/designs/rv32i.dcl`, through the FPGA flow on vFPGA-L (a snapshot, 2026-09-30). */
-export const RV32I_SNAPSHOT = { ands: 10420, flipFlops: 1089, cells: 4537, cellsOnDevice: 8192, fmaxMHz: 11.9 };
+/**
+ * The RV32I core of Chapter 31 (`content/designs/rv32i.weft`, registers in flip-flops, on its board) through synth on
+ * an iCE40 HX8K: AND nodes and flip-flops after optimisation, logic cells, and the clock (checked by scaling.test.ts).
+ */
+export const RV32I_SNAPSHOT = { ands: 5785, flipFlops: 1100, cells: 3568, cellsOnDevice: 7680, fmaxMHz: 42.0 };
 
 /** The cost model of `src/lib/sim/check/cost.ts`: an AND2 is 6 transistors, a D flip-flop 20. */
 export function gateTransistors(ands: number, flipFlops: number): number {
@@ -99,10 +102,10 @@ export const YOURS: Yours[] = [
   },
   {
     id: 'rv32i',
-    name: 'RV32I core (as gates, and on vFPGA-L)',
+    name: 'RV32I core (as gates, and on an iCE40)',
     transistors: gateTransistors(RV32I_SNAPSHOT.ands, RV32I_SNAPSHOT.flipFlops),
     clockMHz: RV32I_SNAPSHOT.fmaxMHz,
-    how: 'The synthesised and-inverter graph counted at 6 transistors an AND and 20 a flip-flop; the clock is the fmax that the course’s timing analysis reports on vFPGA-L.',
+    how: 'synth’s optimised and-inverter graph counted at 6 transistors an AND and 20 a flip-flop; the clock is the fmax that synth reports on an iCE40 HX8K.',
     where: 'cpus-on-a-chip',
   },
 ];

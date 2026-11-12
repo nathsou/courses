@@ -1,7 +1,7 @@
 /**
  * `npm run validate:rv32i`: riscv-arch-test (github.com/riscv-non-isa/riscv-arch-test) against the course's RV32I
- * machines: the reference interpreter (`src/lib/sim/cpu/rv32i/machine.ts`) and the DCL core
- * (`content/designs/rv32i.dcl`) on the RTL simulator.
+ * machines: the reference interpreter (`src/lib/sim/cpu/rv32i/machine.ts`) and the Weft core
+ * (`content/designs/rv32i.weft`) in synth's simulator.
  *
  * `RISCV_ARCH_TEST` names a checkout. Its `*.elf` files (the RV32I tests, compiled for a target whose
  * `RVMODEL_HALT` writes to `tohost`, such as the `spike` target of the checkout) are loaded, run until they write
@@ -21,9 +21,7 @@
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, statSync, lstatSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { check } from '../../src/lib/hdl/check';
-import { elaborate } from '../../src/lib/hdl/elaborate';
-import { createRtlSim } from '../../src/lib/hdl/rtlsim';
+import { loadSynth } from '../../src/lib/synth/node';
 import { Rv32Machine } from '../../src/lib/sim/cpu/rv32i/machine';
 import { COURSE_ROOT, consoleLogger, realRunner, skipMessage, which, type Logger, type Runner } from './common';
 import { parseElf32, type Elf32 } from './elf';
@@ -87,27 +85,28 @@ export function runInterpreter(t: LoadedTest, maxSteps: number): MachineRun {
   return { count: m.steps, error: `no write to tohost in ${maxSteps} instructions` };
 }
 
-/** The elaborated DCL core, loaded once. */
-let coreDesign: ReturnType<typeof elaborate> | undefined;
-export function coreSource(): string {
-  return readFileSync(path.join(COURSE_ROOT, 'content/designs/rv32i.dcl'), 'utf8');
-}
-function core(): ReturnType<typeof elaborate> {
-  if (!coreDesign) {
-    const r = check(coreSource(), { file: 'rv32i.dcl' });
-    coreDesign = elaborate(r.program, 'riscv32');
-  }
-  return coreDesign;
+/** The Weft core and the files it needs: the ALU and the register file. */
+export function coreFiles(): { name: string; text: string }[] {
+  return ['alu.weft', 'regfile.weft', 'rv32i.weft'].map((name) => ({ name, text: readFileSync(path.join(COURSE_ROOT, 'content/designs', name), 'utf8') }));
 }
 
-/** The DCL core on the RTL simulator, with the memory model of rv32i.test.ts: fetch and data words are provided combinationally. */
+type Value = number | string;
+const num = (v: Value | undefined): number => (typeof v === 'string' ? Number(BigInt(v)) : (v ?? 0));
+
+/** The Weft core in synth's simulator, with the memory model of rv32i.test.ts: fetch and data words are provided combinationally. */
 export function runCore(t: LoadedTest, maxCycles: number): MachineRun {
-  const sim = createRtlSim(core());
+  if (t.entry !== 0) return { count: 0, error: `the Weft core starts at address 0 and this program's entry is at 0x${t.entry.toString(16)} (after rebasing)` };
+  const synth = loadSynth();
+  const started = synth.call('tb_start', { files: coreFiles(), top: 'rv32i' }) as { ok: boolean; id: number; error?: string };
+  if (!started.ok) return { count: 0, error: `the core does not compile: ${started.error}` };
+  const outputs = ['pc_out', 'memory_address', 'memory_write', 'memory_data', 'memory_width', 'trap_code'];
+  const tb = (ops: unknown[]) => {
+    const r = synth.call('tb_run', { id: started.id, ops }) as { ok: boolean; error?: string; reads: { values: Record<string, Value> }[] };
+    if (!r.ok) throw new Error(r.error ?? 'the simulation failed');
+    return r.reads.at(-1)?.values ?? {};
+  };
   const mem = t.memory.slice();
-  const s = (n: string) => sim.signal(n);
-  const p = { pc: s('pc_out'), address: s('memory_address'), write: s('memory_write'), data: s('memory_data'), width: s('memory_width'), instruction: s('instruction'), value: s('memory_value'), trap: s('trap_code') };
   const load = (a: number) => word(mem, a >>> 0);
-  // The reset vector: the core starts at 0; a program whose entry is elsewhere gets a jump there.
   const store = (a: number, v: number, width: number) => {
     const n = width === 0 ? 1 : width === 1 ? 2 : 4;
     for (let b = 0; b < n; b++) {
@@ -115,22 +114,25 @@ export function runCore(t: LoadedTest, maxCycles: number): MachineRun {
       if (at < mem.length) mem[at] = (v >>> (8 * b)) & 0xff;
     }
   };
-  let cycles = 0;
-  if (t.entry !== 0) return { count: 0, error: `the DCL core starts at address 0 and this program's entry is at 0x${t.entry.toString(16)} (after rebasing)` };
-  while (cycles < maxCycles) {
-    const trap = p.trap.get();
-    if (trap) return { count: cycles, error: `trap code ${trap} (${['', 'illegal instruction', 'ecall', 'ebreak'][trap]}) at pc 0x${(p.pc.get() >>> 0).toString(16)}` };
-    const addr = p.address.get();
-    if (p.write.get()) {
-      store(addr, p.data.get(), p.width.get());
-      if (t.tohost !== undefined && word(mem, t.tohost) !== 0) return { count: cycles, signature: signatureOf(t, mem) };
+  try {
+    let out = tb([{ read: outputs }]);
+    let cycles = 0;
+    while (cycles < maxCycles) {
+      const trap = num(out.trap_code);
+      const pc = num(out.pc_out) >>> 0;
+      if (trap) return { count: cycles, error: `trap code ${trap} (${['', 'illegal instruction', 'ecall', 'ebreak'][trap]}) at pc 0x${pc.toString(16)}` };
+      const addr = num(out.memory_address) >>> 0;
+      if (num(out.memory_write)) {
+        store(addr, num(out.memory_data) >>> 0, num(out.memory_width));
+        if (t.tohost !== undefined && word(mem, t.tohost) !== 0) return { count: cycles, signature: signatureOf(t, mem) };
+      }
+      out = tb([{ set: { instruction: load(pc), memory_value: load(addr) } }, { step: 1 }, { read: outputs }]);
+      cycles++;
     }
-    p.instruction.set(load(p.pc.get()));
-    p.value.set(load(addr));
-    sim.step();
-    cycles++;
+    return { count: cycles, error: `no write to tohost in ${maxCycles} cycles` };
+  } finally {
+    synth.call('tb_stop', { id: started.id });
   }
-  return { count: cycles, error: `no write to tohost in ${maxCycles} cycles` };
 }
 
 export interface ArchTest {
@@ -242,13 +244,13 @@ export function judgeTest(
   let coreRun: MachineRun | undefined;
   if (options.core) {
     coreRun = runners.core(loaded, options.maxSteps * 2);
-    if (coreRun.error) problems.push(`DCL core: ${coreRun.error}`);
+    if (coreRun.error) problems.push(`Weft core: ${coreRun.error}`);
     else if (reference) {
       const d = compareSignatures(coreRun.signature!, reference, true);
-      if (d) problems.push(`DCL core signature differs from the reference: ${d}`);
+      if (d) problems.push(`Weft core signature differs from the reference: ${d}`);
     } else if (interp.signature) {
       const d = compareSignatures(coreRun.signature!, interp.signature);
-      if (d) problems.push(`DCL core signature differs from the interpreter's: ${d}`);
+      if (d) problems.push(`Weft core signature differs from the interpreter's: ${d}`);
     }
   }
   return { name: t.name, status: problems.length ? 'fail' : 'pass', problems, note: reference ? undefined : 'no reference_output: machines compared with each other' };

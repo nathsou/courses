@@ -2,7 +2,7 @@
 /**
  * Entry point of the validation scripts (docs/AUTHORING.md, *Validation*):
  *
- *   node scripts/validate.mjs gal | yosys | rv32i [arguments…]
+ *   node scripts/validate.mjs gal | rv32i [arguments…]
  *
  * They run outside CI against external tools. Each says `skipped: <tool> not found — …` and exits 0 when its
  * tool is missing, and exits 1 on a real mismatch. The logic is TypeScript in `tools/validate/`, loaded here
@@ -13,7 +13,7 @@ import { createServer } from 'vite';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const [name, ...args] = process.argv.slice(2);
-const scripts = { gal: 'gal', yosys: 'yosys', rv32i: 'rv32i' };
+const scripts = { gal: 'gal', rv32i: 'rv32i' };
 if (!name || !(name in scripts)) {
   console.error(`usage: node scripts/validate.mjs ${Object.keys(scripts).join(' | ')} [arguments…]`);
   process.exit(2);

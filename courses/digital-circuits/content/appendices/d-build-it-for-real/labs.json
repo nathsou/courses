@@ -244,8 +244,8 @@
     "n": 1,
     "heading": "build-it-for-real",
     "headingText": "Build it for real",
-    "parts": "an iCE40 board (an iCEstick, an iCEBreaker or any board with an iCE40 HX1K, HX8K or UP5K), a USB cable, the open-source tools Yosys, nextpnr-ice40 and Project IceStorm",
-    "lead": "Blink an LED on the iCE40, and then find your LUT in its bitstream."
+    "parts": "an iCE40 board (the Nandland Go Board, an iCEstick, an Alchitry Cu or any board with an iCE40 HX1K or HX8K), a USB cable, synth and openFPGALoader",
+    "lead": "Blink the LEDs of an iCE40, and then find a LUT in its bitstream."
   },
   {
     "chapter": "describing-hardware",
@@ -253,23 +253,23 @@
     "heading": "build-it-for-real",
     "headingText": "Build it for real",
     "parts": "iCE40 FPGA board (optional)",
-    "lead": "There is nothing to wire up in this chapter: the compiler and simulator run in your browser, and the Circuit tabs are the gates it built."
+    "lead": "There is nothing to wire up in this chapter: synth runs in your browser, and the Circuit tabs are the gates it built."
   },
   {
     "chapter": "netlist-to-bitstream",
     "n": 1,
     "heading": "build-it-for-real",
     "headingText": "Build it for real",
-    "parts": "an iCE40 board (an iCEstick or any board with an iCE40 HX1K, HX8K or UP5K), a USB cable, the open-source tools Yosys, nextpnr-ice40 and Project IceStorm",
-    "lead": "The same counter, on an iCE40, through the open-source flow, and a comparison with what you saw."
+    "parts": "an iCE40 board (the Nandland Go Board, or an iCEstick, an Alchitry Cu or another board synth knows), a USB cable, synth and openFPGALoader",
+    "lead": "The same counter, on a real iCE40, through synth on the command line, and a comparison with what you saw."
   },
   {
     "chapter": "cpus-on-a-chip",
     "n": 1,
     "heading": "build-it-for-real",
     "headingText": "Build it for real",
-    "parts": "an iCE40 board (an iCEBreaker is ideal: an UP5K with a USB–UART bridge on the board), a USB cable, the open-source tools Yosys, nextpnr-ice40 and Project IceStorm, a RISC-V compiler (riscv32-unknown-elf-gcc)",
-    "lead": "Put a RISC-V CPU on a real FPGA and talk to it over a serial port."
+    "parts": "an iCE40 board (the Nandland Go Board for Octet; an iCEBreaker, with an UP5K and a USB–UART bridge, for the RISC-V core), a USB cable, synth and openFPGALoader; for the RISC-V core, the open-source tools Yosys, nextpnr-ice40 and Project IceStorm, and a RISC-V compiler (riscv32-unknown-elf-gcc)",
+    "lead": "First Octet on a real chip with synth; then a RISC-V CPU that you can talk to over a serial port."
   },
   {
     "chapter": "breadboard-to-billions",

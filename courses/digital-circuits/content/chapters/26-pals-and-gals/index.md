@@ -134,7 +134,7 @@ The array rows are 5,808 fuses, of which a small design connects a few dozen, as
 
 ## The flagship: fit a design
 
-Everything in this chapter is in the Studio. Below is a GAL22V10 with a traffic-light controller in the source pane: the state machine of Chapter 19, whose two-bit state is held in the registered outputs Q1 and Q0, with six lamps decoded from it and an asynchronous reset. (Chapter 19 develops the design; here we only fit it.) The equations use the syntax the Studio accepts, `&`, `|`, `!` and `^`, with `.R` for a registered output. DCL, the course’s hardware language, arrives in Chapter 29 and replaces them.
+Everything in this chapter is in the Studio. Below is a GAL22V10 with a traffic-light controller in the source pane: the state machine of Chapter 19, whose two-bit state is held in the registered outputs Q1 and Q0, with six lamps decoded from it and an asynchronous reset. (Chapter 19 develops the design; here we only fit it.) The equations use the syntax the Studio accepts, `&`, `|`, `!` and `^`, with `.R` for a registered output. Weft, the hardware language of the synth toolchain, arrives in Chapter 29 and replaces them.
 
 ::device-studio{device="gal22v10" example="traffic-light" views="source,chip,logic,bits,report" n="26.3" caption="Edit an equation and the fuse map follows. In the chip view, hover a fuse to see the input and the product term it joins, and a macrocell to see its configuration. Scroll or use the + and − buttons to zoom the chip, and drag to move it. The bits view lists all 5,892 fuses, and the report shows utilisation and the polarity the fitter chose. Download the JEDEC file (or the galette .pld) from the toolbar. The example picker is in the Source tab."}
 

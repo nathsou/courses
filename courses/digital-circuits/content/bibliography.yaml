@@ -1277,7 +1277,7 @@ ds1040:
   title: iCE40 LP/HX family data sheet (DS1040)
   venue: Lattice Semiconductor
   url: https://www.latticesemi.com/~/media/latticesemi/documents/datasheets/ice/ice40lphxfamilydatasheet.pdf
-  note: The logic cell, the routing and the block RAM of the iCE40 LP and HX families, on which the vFPGA is modelled.
+  note: The logic cell, the routing and the block RAM of the iCE40 LP and HX families, the chips of Chapters 28 to 31.
 seu-scrubbing:
   authors: K. W. Gear, J. A. Maestro, et al.
   year: 2022

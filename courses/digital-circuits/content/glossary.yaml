@@ -420,7 +420,7 @@ register-transfer-level:
   chapter: describing-hardware
 ssa:
   term: static single assignment (SSA)
-  definition: A form of program in which every value is defined exactly once. A DCL module is written in this form; the φ-function that SSA uses to join two definitions is a multiplexer in hardware.
+  definition: A form of program in which every value is defined exactly once. A Weft module is close to this form: a `let` is defined once, and a signal is driven by one set of assignments; the φ-function that SSA uses to join two definitions is a multiplexer in hardware.
   chapter: describing-hardware
 nand:
   term: NAND
@@ -1204,7 +1204,7 @@ hard-core:
   chapter: cpus-on-a-chip
 block-ram:
   term: block RAM
-  definition: A memory built into an FPGA as a dedicated block, not made of logic cells. It reads and writes at clock edges and holds thousands of bits (4,096 in the vFPGA). A `mem` in DCL is mapped to it, while a `reg` array is made of flip-flops.
+  definition: A memory built into an FPGA as a dedicated block, not made of logic cells. It reads and writes at clock edges and holds thousands of bits (4,096 in the iCE40). A Weft `mem` read through a register is mapped to it, while a memory read combinationally, or a `reg` array, is made of flip-flops.
   chapter: cpus-on-a-chip
 synchronous-read:
   term: synchronous read

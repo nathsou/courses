@@ -1,5 +1,5 @@
 /**
- * Shared pieces of the validation scripts (`npm run validate:gal`, `validate:yosys`, `validate:rv32i`). They
+ * Shared pieces of the validation scripts (`npm run validate:gal`, `validate:rv32i`). They
  * run outside CI, against tools that are not part of the course: each script looks its tool up, says
  * `skipped: <tool> not found — install … or set …` and exits 0 when it is missing, and exits 1 on a real
  * mismatch (see docs/AUTHORING.md, *Validation*).

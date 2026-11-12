@@ -1,6 +1,6 @@
 /**
  * The programs of the chapter's boards: the two written for it (`programs/*.asm`), and the course's own, which need
- * only the devices the DCL Octet has (LEDS, SWITCHES, BUTTONS, HEX, CONSOLE, RANDOM).
+ * only the devices the Weft Octet has (LEDS, SWITCHES, BUTTONS, HEX, CONSOLE, RANDOM).
  */
 import { octetProgram } from '$lib/sim/cpu/octet';
 import walk from '../programs/walk.asm?raw';

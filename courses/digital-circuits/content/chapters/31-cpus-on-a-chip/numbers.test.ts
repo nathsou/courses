@@ -86,6 +86,8 @@ describe('the RV32I core (Figure 31.3 and the text around it)', () => {
     expect(2 * 32 * 31).toBe(1984);
     expect(stats(ram.result, 'mapped').SB_LUT4).toBe(1290);
     expect(stats(ff.result, 'mapped').SB_LUT4).toBe(2398);
+    // Chapter 32 counts the flip-flop core as gates: 5,785 AND nodes after optimisation.
+    expect(stats(ff.result, 'gates_optimised').AND).toBe(5785);
     // The first placement of the flip-flop core did not route, and synth placed again.
     expect(ff.result.log.some((l) => l.startsWith('routing congestion not resolved'))).toBe(true);
   });

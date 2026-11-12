@@ -97,7 +97,7 @@ export const LAYERS: Layer[] = [
   {
     id: 'hdl',
     name: 'Hardware language',
-    made: 'The same circuits as text, in DCL',
+    made: 'The same circuits as text, in Weft',
     idea: 'Code that describes a circuit instead of steps, which a tool can check, simulate and synthesise.',
     chapters: ['describing-hardware'],
   },

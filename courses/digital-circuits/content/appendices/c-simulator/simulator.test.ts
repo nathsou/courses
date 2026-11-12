@@ -26,7 +26,6 @@ import { DRAFT_KEY, decodeShare, encodeShare } from '$lib/bench/share';
 import { MAX_ANALYSER_CHANNELS, MAX_SCOPE_CHANNELS } from '$lib/bench/instruments/kinds';
 import { MAX_SPEED, MIN_SPEED, defaultSpeed } from '$lib/bench/editor/sim';
 import { PARTS } from '$lib/partsbin';
-import { ALL_CODES } from '../f-dcl/widgets/diagnostics';
 import ledDirect from './circuits/led-direct.json';
 import metastable from './circuits/metastable.json';
 import nandDial from './circuits/nand-dial.json';
@@ -91,10 +90,11 @@ describe('paths named in the appendix', () => {
     for (const [, where] of rows) {
       const tokens = [...where!.matchAll(/`([^`]+)`/g)].map((m) => m[1]!);
       const first = tokens[0]!;
-      expect(first.startsWith('src/'), first).toBe(true);
+      const rootFile = (t: string) => t.startsWith('scripts/') || t === 'synth.json';
+      expect(first.startsWith('src/') || rootFile(first), first).toBe(true);
       const base = first.endsWith('/') || first.includes('*') ? first.replace(/[^/]*\*.*$/, '') : dirname(first) + '/';
       for (const t of tokens) {
-        const full = t.startsWith('src/') || t.startsWith('docs/') ? t : base + t;
+        const full = t.startsWith('src/') || t.startsWith('docs/') || rootFile(t) ? t : base + t;
         expect(exists(full), full).toBe(true);
       }
     }
@@ -552,31 +552,24 @@ describe('the parts bin and the checkers', () => {
   });
 });
 
-describe('the DCL toolchain and the programmable-logic flows', () => {
-  it('has 57 diagnostics', () => {
-    expect(ALL_CODES.length).toBe(57);
-    expect(md).toContain('57 kinds of diagnostic');
-  });
-
-  it('the RTL simulator, the lowering and the flow have the properties of the text', () => {
-    expect(src('src/lib/hdl/rtlsim.ts')).toContain('new Function');
-    expect(src('src/lib/hdl/lower/index.ts')).toMatch(/c\.depth \* c\.width > 262144/);
-    expect(md).toContain('262,144 bits');
-    expect(src('src/lib/pld/fpga/synth.ts')).toMatch(/balancePasses \?\? 2/);
-    expect(src('src/lib/pld/fpga/map.ts')).toMatch(/at most\s+\*?\*?k = 4 leaves|k = 4/);
-    expect(src('src/lib/pld/twolevel/minimise.ts')).toMatch(/exactMaxVars \?\? 8/);
-    expect(src('src/lib/pld/devices/vfpga-arch.ts')).toMatch(/LCS_PER_TILE = 8/);
-    expect(src('src/lib/pld/cpld/jtag.ts')).toMatch(/16-state/);
-  });
-
-  it('names the interchange writer and the validation scripts that exist', () => {
-    expect(existsSync(join(root, 'src/lib/pld/interchange/yosys.ts'))).toBe(true);
+describe('Weft, synth and the programmable-logic flows', () => {
+  it('synth is pinned by commit and built by the script the text names', () => {
+    const pin = JSON.parse(readFileSync(join(root, 'synth.json'), 'utf8')) as { commit: string; crate: string };
+    expect(pin.commit).toMatch(/^[0-9a-f]{40}$/);
+    expect(pin.crate).toBe('synth-playground');
+    expect(existsSync(join(root, 'scripts/synth.mjs'))).toBe(true);
     const scripts = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).scripts as Record<string, string>;
-    for (const s of ['validate:yosys', 'validate:gal', 'validate:rv32i']) {
+    for (const s of ['synth', 'validate:gal', 'validate:rv32i']) {
       expect(scripts[s]).toBeTruthy();
-      expect(md).toContain(s);
+      expect(md).toContain(s === 'synth' ? 'npm run synth' : s);
     }
-    expect(md).toContain('src/lib/pld/interchange/');
+    expect(scripts['validate:yosys']).toBeUndefined();
+  });
+
+  it('the methods the text names are synth’s, and the minimiser has the limit of the text', () => {
+    for (const m of ['analyze', 'format', 'run', 'tb_start', 'tb_run', 'bram_load']) expect(src('src/lib/synth/api.ts')).toContain(`'${m}'`);
+    expect(src('src/lib/pld/twolevel/minimise.ts')).toMatch(/exactMaxVars \?\? 8/);
+    expect(src('src/lib/pld/cpld/jtag.ts')).toMatch(/16-state/);
   });
 });
 
