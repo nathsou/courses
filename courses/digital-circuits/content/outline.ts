@@ -106,7 +106,7 @@ export const PARTS: OutlinePart[] = [
       { slug: 'inside-an-fpga', number: '28', title: 'Inside an FPGA', summary: 'LUTs, logic cells, routing, configuration memory and hard blocks, on a real iCE40, with a logic cell programmed by hand.', flagship: 'Program a logic cell', year: 1985, event: 'The Xilinx XC2064', milestone: 'M7' },
       { slug: 'describing-hardware', number: '29', title: 'Describing hardware', summary: 'Weft, the hardware language of the synth toolchain: types, registers, instances, state machines and clock domains.', flagship: 'Weft playground', year: 1984, event: 'Verilog', milestone: 'M6' },
       { slug: 'netlist-to-bitstream', number: '30', title: 'From netlist to bitstream', summary: 'Synthesis, LUT mapping, placement, routing, timing and the bitstream, stage by stage.', flagship: 'Toolchain replay', year: 1983, event: 'Simulated annealing', milestone: 'M7' },
-      { slug: 'cpus-on-a-chip', number: '31', title: 'CPUs on a chip', summary: 'Octet and an RV32I core, placed, routed and running on a virtual FPGA — and a real one.', flagship: 'Device Studio', year: 2015, event: 'Project IceStorm', milestone: 'M7' },
+      { slug: 'cpus-on-a-chip', number: '31', title: 'CPUs on a chip', summary: 'Octet and an RV32I core in Weft, placed and routed by synth on an iCE40, and running from their bits.', flagship: 'Octet on the iCE40', year: 2015, event: 'Project IceStorm', milestone: 'M7' },
     ],
   },
   {
@@ -125,7 +125,7 @@ export const APPENDICES: OutlineEntry[] = [
   { slug: 'simulator', number: 'C', title: 'The simulator and toolchain', summary: 'What the engines model, and what they do not.', milestone: 'M8' },
   { slug: 'build-it-for-real', number: 'D', title: 'Build it for real', summary: 'Kit list, safety, breadboard basics and each chapter’s lab.', milestone: 'M8' },
   { slug: 'octet', number: 'E', title: 'Octet reference card', summary: 'ISA, encoding and memory map of the course CPU.', milestone: 'M5' },
-  { slug: 'dcl', number: 'F', title: 'DCL reference', summary: 'Syntax, types, built-ins and standard library of the course’s hardware language.', milestone: 'M7' },
-  { slug: 'datasheets', number: 'G', title: 'Virtual device datasheets', summary: 'vPROM, vPLA, GAL22V10, vCPLD-32, vFPGA and the virtual board.', milestone: 'M7' },
+  { slug: 'dcl', number: 'F', title: 'Weft reference', summary: 'Syntax, types, arithmetic, registers, memories, clock domains and standard library of Weft, the course’s hardware language.', milestone: 'M7' },
+  { slug: 'datasheets', number: 'G', title: 'Device datasheets', summary: 'vPROM, vPLA, GAL22V10, vCPLD-32, the iCE40 HX1K and HX8K, and the boards.', milestone: 'M7' },
   { slug: 'glossary-timeline', number: 'H', title: 'Glossary, timeline and bibliography', summary: 'Every term, date and source in the course.', milestone: 'M8' },
 ];

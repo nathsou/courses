@@ -15,14 +15,14 @@ import * as C from '$lib/pld/devices/vcpld32-arch';
 import { VCpld32 } from '$lib/pld/devices/vcpld32';
 import { BSR_LENGTH, ERASE_CYCLES, IDCODE_MANUFACTURER, IDCODE_PART, IDCODE_VALUE, IDCODE_VERSION, INSTRUCTIONS, IR_LENGTH, PROGRAM_CYCLES, ROW_REGISTER_LENGTH, TAP_STATES } from '$lib/pld/cpld/jtag';
 import { TIMING } from '$lib/pld/cpld/timing';
-import { LC, encodeBitstream, parseBitstream, readSelect, BitstreamError } from '$lib/pld/devices/vfpga-config';
-import { getVFpga } from '$lib/pld/devices/vfpga';
-import { BRAM_BITS, BRAM_WIDTHS, LCS_PER_TILE, LC_BITS, LUT_INPUTS, VFPGA_DELAYS, VFPGA_SPECS, type VFpgaSize } from '$lib/pld/devices/vfpga-arch';
 import { PROM_MAX_ADDRESS, PROM_MAX_WIDTH } from '$lib/studio/adapters/prom';
 import { EXAMPLES } from '$lib/studio/examples';
-import { fpgaExample } from '$lib/studio/fpga/examples';
-import { HEX_SEGMENTS, bindBoard } from '$lib/studio/fpga/board';
-import { createRtlSim, check, elaborate, loadStd } from '$lib/hdl';
+import { nodeSynth } from '$lib/synth/node';
+import { run } from '$lib/synth/api';
+import DELAYS from '$lib/synth/ice40-delays.json';
+import { tileKind } from '$lib/studio/ice40/chipdraw';
+import { BOARDS } from '$lib/studio/ice40/boards';
+import { STUDIO_DESIGNS } from '$lib/studio/ice40/designs';
 import { galPins, cpldSymbol, plaSymbol, promSymbol } from './widgets/pinouts';
 
 const md = readFileSync(new URL('./index.md', import.meta.url), 'utf8').replace(/ /g, ' ');
@@ -435,184 +435,83 @@ describe('vCPLD-32', () => {
   });
 });
 
-describe('the vFPGAs', () => {
-  const t = table('### Sizes', 0, '## vFPGA-S, vFPGA-M and vFPGA-L');
-  const col = (size: VFpgaSize) => ({ S: 0, M: 1, L: 2 })[size];
+describe('the iCE40 HX1K and HX8K', async () => {
+  const synth = nodeSynth();
+  const one = { files: [{ name: 'one.weft', text: 'module one(in a: bool, out y: bool) {\n    y = !a;\n}\n' }], pins: '' };
+  const hx1k = await run(synth, { ...one, part: 'hx1k', package: 'vq100' });
+  const hx8k = await run(synth, { ...one, part: 'hx8k', package: 'ct256' });
+  const cb132 = await run(synth, { ...one, part: 'hx8k', package: 'cb132' });
+  const t = table('### Sizes', 0, '## iCE40 HX1K and HX8K');
+  const kinds = (r: typeof hx1k) => {
+    const c = r.chip!;
+    const k: Record<string, number> = {};
+    for (let y = 0; y < c.gh; y++) for (let x = 0; x < c.gw; x++) k[tileKind(c, x, y)] = (k[tileKind(c, x, y)] ?? 0) + 1;
+    return k;
+  };
 
-  for (const size of ['S', 'M', 'L'] as const) {
-    it(`vFPGA-${size} has the numbers of the table`, () => {
-      const d = getVFpga(size);
-      const s = VFPGA_SPECS[size];
-      const c = col(size);
+  it('has the sizes of the table, read from synth’s chip database', () => {
+    for (const [c, r] of [[0, hx1k], [1, hx8k]] as const) {
       const v = (label: string) => cell(t, label, c);
-      expect(v('Interior tiles (columns × rows)')).toBe(`${s.cols} × ${s.rows}`);
-      expect(v('Tiles with the I/O ring')).toBe(`${d.width} × ${d.height}`);
-      expect(d.width).toBe(s.cols + 2);
-      expect(d.height).toBe(s.rows + 2);
-      expect(num(v('Logic tiles'))).toBe(d.counts.logicTiles);
-      expect(num(v('Logic cells'))).toBe(d.counts.lcs);
-      expect(d.counts.lcs).toBe(d.counts.logicTiles * LCS_PER_TILE);
-      expect(num(v('Block RAM tiles'))).toBe(d.counts.brams);
-      expect(num(v('Block RAM (Kbit)'))).toBe((d.counts.brams * BRAM_BITS) / 1024);
-      expect(v('Block RAM columns (interior x)')).toBe(s.bramCols.length ? s.bramCols.join(' and ') : 'none');
-      expect(num(v('Pads'))).toBe(d.counts.pads);
-      expect(num(v('Pads per I/O tile'))).toBe(s.padsPerTile);
-      expect(num(v('Global clocks'))).toBe(s.globals);
-      expect(num(v('Clock select bits per tile'))).toBe(d.clkBits);
-      expect(v('Wires per direction and tile: span 1, 4, 12')).toBe(`${s.tracks.s1}, ${s.tracks.s4}, ${s.tracks.s12}`);
-      expect(v('Connection box: wires and local outputs a pin can select')).toBe(`${s.cbWires} and ${s.cbLocal}`);
-      expect(num(v('Routing nodes'))).toBe(d.counts.nodes);
-      expect(num(v('Routing multiplexer inputs (edges)'))).toBe(d.counts.edges);
-      expect(num(v('Configuration bits'))).toBe(d.totalBits);
-      expect(d.counts.bits).toBe(d.totalBits);
-      expect(num(v('Configuration frames (one per tile column)'))).toBe(d.frames.length);
-      expect(d.frames.length).toBe(d.width);
-      expect(d.frames.reduce((a, f) => a + f.length, 0)).toBe(d.totalBits);
-    });
-  }
-
-  it('lists the block RAM tiles in the columns it says, and none in the S', () => {
-    for (const size of ['S', 'M', 'L'] as const) {
-      const d = getVFpga(size);
-      const s = VFPGA_SPECS[size];
-      const cols = new Set<number>();
-      for (let x = 0; x < d.width; x++) for (let y = 0; y < d.height; y++) if (d.tileKind[d.tid(x, y)] === 3) cols.add(x);
-      expect([...cols].sort((a, b) => a - b)).toEqual(s.bramCols);
+      const chip = r.chip!;
+      expect(v('Tiles, with the I/O ring (columns × rows)')).toBe(`${chip.gw} × ${chip.gh}`);
+      expect(num(v('Logic tiles'))).toBe(kinds(r).logic);
+      expect(num(v('Logic cells'))).toBe(chip.usage.lc_total);
+      expect(chip.usage.lc_total).toBe(8 * kinds(r).logic!);
+      expect(num(v('Block RAMs (4 Kbit each)'))).toBe(chip.usage.ram_total);
+      expect(num(v('Block RAM (Kbit)'))).toBe(chip.usage.ram_total * 4);
+      expect(num(v('Configuration bits in the tiles'))).toBe(r.bitstream!.tile_bits);
+      expect(num(v('Bitstream file (bytes, as synth and icepack write it)'))).toBe(r.bitstream!.bytes);
     }
+    expect(cell(t, 'User pads in the course’s packages', 0)).toBe(`${hx1k.chip!.usage.io_total} (VQ100)`);
+    expect(cell(t, 'User pads in the course’s packages', 1)).toBe(`${hx8k.chip!.usage.io_total} (CT256), ${cb132.chip!.usage.io_total} (CB132)`);
   });
 
-  it('has the logic cell of the table', () => {
-    const lc = table('### The logic cell', 0, '## vFPGA-S, vFPGA-M and vFPGA-L');
-    expect(LC_BITS).toBe(25);
-    expect(LUT_INPUTS).toBe(4);
-    expect(LC).toEqual({ LUT: 0, I3_CARRY: 16, CARRY_CHAIN: 17, CARRY_CONST: 18, FF: 19, CE_EN: 20, SR_EN: 21, SR_VAL: 22, SR_ASYNC: 23, INIT: 24 });
-    const bits = new Map<string, string>([...lc.entries()].map(([k, v]) => [v[0]!.replace(/`/g, ''), k]));
-    expect(bits.get('lut')).toBe('0–15');
-    expect(bits.get('i3_carry')).toBe('16');
-    expect(bits.get('carry_chain')).toBe('17');
-    expect(bits.get('carry_const')).toBe('18');
-    expect(bits.get('ff')).toBe('19');
-    expect(bits.get('ce_en')).toBe('20');
-    expect(bits.get('sr_en')).toBe('21');
-    expect(bits.get('sr_val')).toBe('22');
-    expect(bits.get('sr_async')).toBe('23');
-    expect(bits.get('init')).toBe('24');
-    expect(md).toContain('25 configuration bits: a 16-bit LUT and nine flags');
+  it('has eight global networks: eight column-buffer bits in a logic tile of the buffer rows', () => {
+    const colbuf = hx1k.bitstream!.tiles.find((x) => x.t === 'logic' && x.f.some((f) => f.n.startsWith('ColBufCtrl')))!;
+    expect(new Set(colbuf.f.filter((f) => f.n.startsWith('ColBufCtrl')).map((f) => f.n)).size).toBe(8);
   });
 
-  it('has the block RAM of the text', () => {
-    const t2 = table('### Block RAM', 0, '## vFPGA-S, vFPGA-M and vFPGA-L');
-    expect(BRAM_BITS).toBe(4096);
-    expect([...BRAM_WIDTHS]).toEqual([16, 8, 4, 2]);
-    BRAM_WIDTHS.forEach((w, mode) => expect(cell(t2, String(mode))).toBe(`${fmt(BRAM_BITS / w)} × ${w}`));
+  it('has the logic cell of the table: 20 bits, the LUT’s 16 and the flags at 8, 9, 18 and 19', async () => {
+    const r = await run(synth, { ...one, part: 'hx1k', package: 'vq100' });
+    const lc = r.chip!.cells.find((c) => c.bel === 'lc')!;
+    expect(lc.lut_bits).toHaveLength(16);
+    // The flags sit between the table's bits: the carry and flip-flop enables are two of the four.
+    expect(lc.lut_bits).not.toContain(lc.carry_bit);
+    expect(lc.lut_bits).not.toContain(lc.dff_bit);
+    const logic = r.bitstream!.tiles.find((x) => x.t === 'logic')!;
+    expect(logic.w).toBe(54);
+    expect(16 * 54).toBe(864);
   });
 
-  it('has the timing of the table', () => {
-    const t3 = table('### Timing model', 0, '## vFPGA-S, vFPGA-M and vFPGA-L');
-    const ns = (label: string) => Number(/^([\d.]+) ns/.exec(cell(t3, label))![1]);
-    const D = VFPGA_DELAYS;
-    expect(ns('LUT, any input to output')).toBe(D.lut);
-    expect(ns('Flip-flop, clock to Q')).toBe(D.ffClkToQ);
-    expect(ns('Flip-flop set-up (D, CE, SR)')).toBe(D.ffSetup);
-    expect(ns('Flip-flop hold')).toBe(D.ffHold);
-    expect(ns('Routing multiplexer (switch box or connection box)')).toBe(D.switch);
-    expect(ns('Wire segment, span 1')).toBe(D.span1);
-    expect(ns('Wire segment, span 4')).toBe(D.span4);
-    expect(ns('Wire segment, span 12')).toBe(D.span12);
-    expect(ns('Carry, carry-in to carry-out')).toBe(D.carryIn);
-    expect(ns('Carry, operand pins I1, I2 to carry-out')).toBe(D.carryData);
-    expect(ns('Input pad buffer')).toBe(D.padIn);
-    expect(ns('Output pad buffer')).toBe(D.padOut);
-    expect(ns('Block RAM, clock to data out')).toBe(D.bramClkToQ);
-    expect(ns('Block RAM, read address to data (asynchronous read)')).toBe(D.bramAsync);
-    expect(ns('Block RAM set-up')).toBe(D.bramSetup);
-    expect(ns('Global clock network')).toBe(D.gclk);
-    expect(t3.size).toBe(16);
-  });
-
-  it('numbers its pads round the ring and feeds the global clocks from the ones the table lists', () => {
-    const t4 = table('### I/O and clocks', 0, '## vFPGA-S, vFPGA-M and vFPGA-L');
-    for (const size of ['S', 'M', 'L'] as const) {
-      const d = getVFpga(size);
-      expect(cell(t4, `vFPGA-${size}`)).toBe(d.gbPads.map((p) => d.pads[p]!.name).join(', '));
-      expect(d.pads[0]!.name).toBe('P0');
-      // The first pads are along the top row, left to right.
-      expect(d.pads[0]!.y).toBe(d.height - 1);
-      expect(d.pads[0]!.x).toBeLessThan(d.pads[d.spec.padsPerTile]!.x);
-    }
-  });
-
-  it('gives a routing multiplexer ⌈log₂(n + 1)⌉ bits, and reads code 0 as nothing selected', () => {
-    const d = getVFpga('S');
-    let checked = 0;
-    for (let n = 0; n < d.nodeCount && checked < 200; n++) {
-      const fanIn = d.inStart[n + 1]! - d.inStart[n]!;
-      if (!fanIn) continue;
-      expect(d.cfgWidth[n]).toBe(Math.ceil(Math.log2(fanIn + 1)));
-      const bits = new Uint8Array(d.totalBits);
-      expect(readSelect(d, bits, n).input).toBe(-1);
-      checked++;
-    }
-    expect(checked).toBeGreaterThan(50);
-  });
-
-  it('writes the bitstream file of the text', () => {
-    const d = getVFpga('S');
-    const bits = new Uint8Array(d.totalBits);
-    bits[10] = 1;
-    bits[d.totalBits - 1] = 1;
-    const file = encodeBitstream(d, bits);
-    expect(new TextDecoder().decode(file.subarray(0, 4))).toBe('VFPG');
-    expect(file[4]).toBe(1);
-    expect(file[5]).toBe('vFPGA-S'.length);
-    expect(new TextDecoder().decode(file.subarray(6, 6 + file[5]!))).toBe('vFPGA-S');
-    const dv = new DataView(file.buffer, file.byteOffset);
-    expect(dv.getUint32(6 + file[5]!, true)).toBe(d.totalBits);
-    expect(dv.getUint16(10 + file[5]!, true)).toBe(d.frames.length);
-    expect(parseBitstream(file, d)).toEqual(bits);
-    const broken = file.slice();
-    broken[30] = broken[30]! ^ 1;
-    expect(() => parseBitstream(broken, d)).toThrow(BitstreamError);
-    expect(() => parseBitstream(file, getVFpga('M'))).toThrow(/for vFPGA-S, not vFPGA-M/);
+  it('has the timing of the table: synth’s delays for the HX parts', () => {
+    const rows = table('### Timing model', 0, '## iCE40 HX1K and HX8K');
+    const ns = (ps: number) => `${(Math.round(ps / 10) / 100).toFixed(2)} ns`;
+    const at = (label: string) => cell(rows, label, 0);
+    expect(at('LUT, any input to output')).toBe(ns(DELAYS.lut));
+    expect(at('LUT, input I3 when it comes from the carry')).toBe(ns(DELAYS.lut_in3));
+    expect(at('Carry, carry in to carry out')).toBe(ns(DELAYS.carry));
+    expect(at('Flip-flop, clock to output')).toBe(ns(DELAYS.clk_to_q));
+    expect(at('Flip-flop set-up')).toBe(ns(DELAYS.setup));
+    expect(at('Output driver onto a span-4 wire, onto a span-12')).toBe(`${ns(DELAYS.odrv4)}, ${ns(DELAYS.odrv12)}`);
+    expect(at('Span-4 wire, over its four tiles')).toBe(ns(DELAYS.span4_h[4]!));
+    expect(at('Span-12 wire, over its twelve tiles')).toBe(ns(DELAYS.span12_h[12]!));
+    expect(at('Span-12 to span-4')).toBe(ns(DELAYS.sp12to4));
+    expect(at('Local track')).toBe(ns(DELAYS.local));
+    expect(at('Cell input multiplexer')).toBe(ns(DELAYS.inmux));
   });
 });
 
-describe('the virtual board', () => {
-  it('has the resources of the table', () => {
-    const t = table('## The virtual board', 0, '## The virtual board');
-    expect([...t.keys()]).toEqual(['Clock', 'Reset button, active high', 'Push buttons', 'Switches', 'LEDs', 'Seven-segment digits, digit 0 on the right', 'Multiplexed display']);
-    const port = (name: string, dir: 'in' | 'out', width: number, clock = false) => ({ name, dir, width, clock });
-    const ok = bindBoard([port('clk', 'in', 1, true), port('rst', 'in', 1), port('btn', 'in', 4), port('sw', 'in', 8), port('led', 'out', 8), port('seg0', 'out', 7), port('seg1', 'out', 8)]);
-    expect(ok.errors).toEqual([]);
-    expect(ok.bound.length).toBe(1 + 1 + 4 + 8 + 8 + 7 + 8);
-    expect(bindBoard([port('seg', 'out', 8), port('an', 'out', 4)]).errors).toEqual([]);
-  });
-
-  it('has the clock rates and the half period of the text', () => {
-    const panel = source('studio/panes/fpga/BoardPanel.svelte');
-    const rates = [...panel.matchAll(/\{ v: (\d+), label: '([^']+)' \}/g)].map((m) => [Number(m[1]), m[2]!]);
-    expect(rates).toEqual([[1, '1 Hz'], [4, '4 Hz'], [16, '16 Hz'], [64, '64 Hz'], [256, '256 Hz'], [1000, '1 kHz'], [0, 'max']]);
-    expect(md).toContain('1, 4, 16, 64, 256 Hz, 1 kHz, or as fast as the simulation goes');
-    expect(source('studio/fpga/fabric-sim.ts')).toContain('this.half = Math.max(100, 3 * (opts.periodNs ?? 0)) * 1e-9;');
-    expect(md).toContain('half period of at least 100 ns and at least three times the design’s critical path');
-  });
-
-  it('has the segment patterns of the SevenSeg module and the digits 0 to F', () => {
-    expect(HEX_SEGMENTS.length).toBe(16);
-    expect(HEX_SEGMENTS[8]).toBe(0x7f);
-    expect(HEX_SEGMENTS[0]).toBe(0x3f);
-    const std = loadStd().find((f) => f.modules.includes('SevenSeg'))!;
-    const sim = createRtlSim(elaborate(check(std.source, { file: std.file }).program, 'SevenSeg'));
-    for (let v = 0; v < 16; v++) {
-      sim.set('value', v);
-      expect(sim.get('segments'), `digit ${v.toString(16)}`).toBe(HEX_SEGMENTS[v]);
+describe('the boards', () => {
+  it('have the clocks, LEDs and pin names of the table', () => {
+    const rows = table('## The boards', 0, '## The boards');
+    const at = (label: string, c: number) => cell(rows, label, c);
+    for (const [c, b] of [[0, BOARDS['go-board']], [1, BOARDS['alchitry-cu']]] as const) {
+      expect(at('Clock', c)).toBe(`${b.clockHz / 1e6} MHz, on \`clk\``);
+      expect(at('LEDs', c)).toBe(`${b.leds}, on \`led[0]\` to \`led[${b.leds - 1}]\``);
+      for (const name of ['sw1', 'btn', 'rx', 'tx', 'clk']) expect(b.pcf).toMatch(new RegExp(`^set_io ${name.replace('[', '\\[')} `, 'm'));
     }
-  });
-
-  it('is not the board of the plan: no matrix, console or memory subsystem', () => {
-    const board = source('studio/fpga/board.ts');
-    for (const word of ['matrix', 'uart', 'console', 'timer']) expect(board.toLowerCase()).not.toContain(word);
-    expect(md).toContain('8 × 8 LED matrix, a text console and a memory subsystem');
+    expect(at('FPGA', 0)).toBe('iCE40 HX1K, VQ100');
+    expect(at('FPGA', 1)).toBe('iCE40 HX8K, CB132');
   });
 });
 
@@ -641,9 +540,6 @@ describe('the Studio links', () => {
     }
     const fpga = [...md.matchAll(/^::fpga-studio\{([^}]*)\}/gm)].map((m) => m[1]!);
     expect(fpga.length).toBe(1);
-    for (const l of fpga) {
-      expect(fpgaExample(/design="([^"]+)"/.exec(l)![1])).toBeDefined();
-      expect(['S', 'M', 'L']).toContain(/size="([^"]+)"/.exec(l)![1]);
-    }
+    for (const l of fpga) expect(STUDIO_DESIGNS[/design="([^"]+)"/.exec(l)![1]!]).toBeDefined();
   });
 });

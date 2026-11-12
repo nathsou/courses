@@ -1334,6 +1334,13 @@ cong1994:
   venue: IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems 13(1), 1–12
   url: https://vast.cs.ucla.edu/publications/flowmap-optimal-technology-mapping-algorithm-delay-optimization-lookup-table-based-fpga
   note: The first delay-optimal LUT mapping algorithm, polynomial in time, using a maximum-flow computation. 1995 best paper award of the IEEE Circuits and Systems Society.
+synth-weft:
+  authors: The synth authors
+  year: 2026
+  title: 'Weft: language specification (docs/WEFT.md of synth)'
+  venue: synth, an open-source FPGA toolchain
+  url: https://github.com/nathsou/synth/blob/main/docs/WEFT.md
+  note: The specification of the hardware language of the course, with its grammar, its semantics and its standard library.
 mishchenko2007:
   authors: Alan Mishchenko, Sungmin Cho, Satrajit Chatterjee and Robert Brayton
   year: 2007

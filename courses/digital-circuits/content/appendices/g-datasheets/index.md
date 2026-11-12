@@ -1,20 +1,20 @@
 ---
 number: G
-title: Virtual device datasheets
-summary: "One datasheet for every virtual device of Part VI, in the style of the originals: features, block diagram, pins, fuse or configuration layout, timing and programming, with the numbers of the models themselves."
+title: Device datasheets
+summary: "One datasheet for every device of Part VI, in the style of the originals: the virtual vPROM, vPLA and vCPLD-32, the GAL22V10, and the real iCE40 HX1K and HX8K with the boards the course builds for."
 duration: Look things up
 prerequisites: []
 ---
 
-A datasheet is the page a manufacturer writes so that you can use a chip without asking anyone. This appendix has one for each virtual device of [Part VI](/chapters/programmable-logic/): the vPROM, the vPLA, the GAL22V10, the vCPLD-32, the three vFPGAs, and the virtual board they sit on. They follow the layout of the real ones (features, block diagram, pins, programming, timing), and every number in them is read from the models. The tables that quote the code are checked by tests against the code, and so are the drawings, which are drawn from the models rather than beside them.
+A datasheet is the page a manufacturer writes so that you can use a chip without asking anyone. This appendix has one for each virtual device of [Part VI](/chapters/programmable-logic/): the vPROM, the vPLA, the GAL22V10 and the vCPLD-32, which are models of the course, and the iCE40 HX1K and HX8K, which are real chips, with the two boards the course builds for. They follow the layout of the real ones (features, block diagram, pins, programming, timing), and every number in them is read from the models, or from synth’s database of the iCE40. The tables that quote the code are checked by tests against the code, and so are the drawings, which are drawn from the models rather than beside them.
 
 Three things that a real datasheet would have are missing, on purpose, and the datasheets say so where it matters.
 
 - **Electrical ratings.** The models are logic: 0, 1, X and Z. A virtual chip has no supply current, no output drive strength and no maximum voltage; the parts with ratings that can be exceeded are the analog engine’s (Appendix C).
-- **Delays, for the fuse devices.** The vPROM, vPLA and GAL22V10 evaluate at zero delay. The vCPLD-32 and the vFPGAs have timing models, and the tables give them.
-- **A package, for all but the GAL.** Only the GAL22V10 is a real part with pins in a numbered package. The others have named signals, drawn as a functional symbol.
+- **Delays, for the fuse devices.** The vPROM, vPLA and GAL22V10 evaluate at zero delay. The vCPLD-32 and the iCE40 have timing models, and the tables give them.
+- **A package, for the virtual parts.** The vPROM, vPLA and vCPLD-32 have named signals, drawn as a functional symbol. The GAL22V10 and the iCE40 are real parts; for the iCE40’s packages and pins, see Lattice’s datasheet.
 
-Every device has a **Device Studio** link: the datasheet tells you what a bit does, the Studio lets you set one and watch.
+Every device has a studio link: the datasheet tells you what a bit does, the studio lets you set one and watch.
 
 ## vPROM
 
@@ -347,67 +347,51 @@ The port has four pins: **TCK** (clock), **TMS** (mode select), **TDI** (data in
 
 ::device-studio{device="cpld32" example="counter" views="source,chip,bits,jtag" n="G.13" caption="The vCPLD-32 in the Device Studio, running a 4-bit counter. The JTAG view drives the port by hand or plays a whole programming sequence, clock by clock."}
 
-## vFPGA-S, vFPGA-M and vFPGA-L
+## iCE40 HX1K and HX8K
 
-*A family of three virtual FPGAs modelled on the Lattice iCE40: its logic cell, its span-4 and span-12 wires, its block RAM and its global clocks, scaled down so that a whole device can be simulated, drawn and, for the S, configured by hand.*
+*Two members of the Lattice iCE40 HX family, the real FPGAs of Chapters 28 to 31. This is not Lattice’s datasheet:cite[ds1040] but the parts of it the course uses, with the numbers of synth’s chip database, which is built from Project IceStorm’s documentation of the bitstream:cite[prjicestorm] and checked by the tests of this appendix.*
 
 ### Features
 
-- A grid of **tiles**, ringed by I/O tiles. A **logic tile** holds 8 logic cells; a **block RAM tile** holds one 4-Kbit dual-port RAM; an **I/O tile** holds pads.
-- Each **logic cell** is a 4-input LUT with a D flip-flop, a bypass multiplexer that picks the LUT or the flip-flop for the cell’s output, and carry logic.
-- **Routing made of unidirectional, single-driver multiplexers**, as in modern FPGAs: every configuration decodes to a legal netlist, and contention cannot happen.
-- Wires of span 1, 4 and 12 tiles (the S has only span 1).
-- Global clock networks, each fed by a dedicated pad; every logic tile picks one, and its polarity.
-- Configuration in **frames**, one for each tile column. The device is simulated from its decoded bitstream, not from the design that produced it.
+- A grid of **tiles**, ringed by I/O tiles. A **logic tile** holds 8 logic cells; two **block RAM tiles**, one above the other, hold one 4-Kbit RAM; an **I/O tile** holds two pads.
+- Each **logic cell** is a 4-input LUT, a D flip-flop with optional enable and set or reset, and carry logic, with a dedicated carry chain up the column.
+- Routing of **neighbour links**, **span-4** and **span-12** wires, and in each logic tile 32 **local tracks** in front of the cells’ input multiplexers. Buffers drive a wire from a choice of sources; routing switches join span wires in both directions.
+- Eight **global networks** for clocks and other busy nets, fed by dedicated pads or from the fabric.
+- **SRAM configuration**, loaded at power-up from flash or over SPI, in four banks, and checked by a CRC.
 
-::floor-plan{n="G.14" caption="The three floorplans to scale. The S is small enough to configure every bit by hand. The M has 12 × 12 logic tiles and two block RAM columns. The L has 32 × 32 logic tiles and two block RAM columns, and was sized so that a design of about 4,000 cells, the size of the RV32I core, uses half of it: at 4,608 cells the router could not finish such a design in reasonable time."}
+::floor-plan{n="G.14" caption="The two dies to scale, as synth reads them from its chip database. The HX1K has 160 logic tiles and two columns of block RAM; the HX8K has 960 logic tiles, also with two RAM columns. The I/O tiles ring both."}
 
 ### Sizes
 
-| | vFPGA-S | vFPGA-M | vFPGA-L |
-|---|---|---|---|
-| Interior tiles (columns × rows) | 2 × 2 | 14 × 12 | 34 × 32 |
-| Tiles with the I/O ring | 4 × 4 | 16 × 14 | 36 × 34 |
-| Logic tiles | 4 | 144 | 1,024 |
-| Logic cells | 32 | 1,152 | 8,192 |
-| Block RAM tiles | 0 | 24 | 64 |
-| Block RAM columns (interior x) | none | 4 and 11 | 9 and 26 |
-| Block RAM (Kbit) | 0 | 96 | 256 |
-| Pads | 16 | 208 | 528 |
-| Pads per I/O tile | 2 | 4 | 4 |
-| Global clocks | 4 | 8 | 8 |
-| Clock select bits per tile | 2 | 3 | 3 |
-| Wires per direction and tile: span 1, 4, 12 | 4, 0, 0 | 4, 4, 2 | 4, 4, 2 |
-| Connection box: wires and local outputs a pin can select | 8 and 4 | 27 and 4 | 27 and 4 |
-| Routing nodes | 332 | 13,976 | 90,296 |
-| Routing multiplexer inputs (edges) | 2,436 | 243,720 | 1,663,664 |
-| Configuration bits | 1,772 | 182,920 | 832,592 |
-| Configuration frames (one per tile column) | 4 | 16 | 36 |
+| | iCE40 HX1K | iCE40 HX8K |
+|---|---|---|
+| Tiles, with the I/O ring (columns × rows) | 14 × 18 | 34 × 34 |
+| Logic tiles | 160 | 960 |
+| Logic cells | 1,280 | 7,680 |
+| Block RAMs (4 Kbit each) | 16 | 32 |
+| Block RAM (Kbit) | 64 | 128 |
+| User pads in the course’s packages | 72 (VQ100) | 206 (CT256), 95 (CB132) |
+| Global networks | 8 | 8 |
+| Configuration bits in the tiles | 175,872 | 909,312 |
+| Bitstream file (bytes, as synth and `icepack` write it) | 32,216 | 135,096 |
 
 ### The logic cell
 
-A logic cell has 25 configuration bits: a 16-bit LUT and nine flags.
+A logic cell has 20 configuration bits in its tile: the 16 bits of its truth table and four flags.
 
 | Bits | Field | Meaning |
 |---|---|---|
-| 0–15 | `lut` | truth table: bit *r* is the output when I0 + 2·I1 + 4·I2 + 8·I3 = *r* |
-| 16 | `i3_carry` | LUT input I3 comes from the carry input instead of the routing pin |
-| 17 | `carry_chain` | the carry input is the previous cell’s carry output (otherwise the constant `carry_const`) |
-| 18 | `carry_const` | the constant carry input when `carry_chain` is 0 |
-| 19 | `ff` | the cell’s output is the flip-flop (bypass multiplexer); otherwise the LUT |
-| 20 | `ce_en` | the flip-flop loads only while the tile’s clock-enable pin is 1 |
-| 21 | `sr_en` | the tile’s set/reset pin resets or sets the flip-flop |
-| 22 | `sr_val` | the value the set/reset forces: 0 resets, 1 sets |
-| 23 | `sr_async` | set/reset acts at once; otherwise at the next clock edge, and then it has priority over the enable |
-| 24 | `init` | power-up value of the flip-flop |
+| 16 of them, in the order of the tile’s wiring | LUT | truth table: entry *r* is the output when I0 + 2·I1 + 4·I2 + 8·I3 = *r* |
+| 8 | CarryEnable | the cell’s carry logic is in use: the carry out is MAJ(I1, I2, carry in) |
+| 9 | DffEnable | the cell’s output is the flip-flop; otherwise the LUT |
+| 18 | Set_NoReset | the tile’s set/reset pin sets the flip-flop to 1 rather than resetting it |
+| 19 | AsyncSetReset | the set or reset acts at once, rather than at the next clock edge |
 
-The carry output of a cell is always MAJ(I1, I2, carry input), as the iCE40’s SB_CARRY. The chain runs through the cells of a column, cell 0 to 7 and then into cell 0 of the tile above; it is a dedicated wire, not part of the routing graph.
-
-A logic tile shares one clock (chosen from the global networks by `clk_sel`, with `clk_neg` selecting the falling edge), one clock-enable pin and one set/reset pin among its 8 cells.
+An input that nothing drives reads 0, so a LUT that uses two of its inputs reads only four entries of its table (Chapter 28). The eight cells of a tile share one clock (with a tile bit, `NegClk`, for the falling edge), one clock-enable and one set/reset; a carry chain runs from cell 0 to cell 7 of a tile and into cell 0 of the tile above. A cell’s inputs are interchangeable, except those that the carry logic uses, so the router may move a connection to another input and permute the truth table to match.
 
 ### Block RAM
 
-A block RAM tile holds 4,096 bits with one read port and one write port. The width is chosen by a 2-bit `mode`:
+A block RAM, `SB_RAM40_4K`, holds 4,096 bits, with one read port and one write port, each with its own clock. Its read and write widths are set in its configuration:
 
 | Mode | Organisation |
 |---|---|
@@ -416,95 +400,53 @@ A block RAM tile holds 4,096 bits with one read port and one write port. The wid
 | 2 | 1,024 × 4 |
 | 3 | 2,048 × 2 |
 
-The tile’s pins are RADDR0–10, WADDR0–10, WDATA0–15, RE and WE (40 in all), with 16 data outputs. Reads are synchronous by default (data one clock cycle after the address; on the same edge, the read gets the old word), or asynchronous when the `async` bit is set. The read and write clocks are each chosen from the global networks. The initial contents are 4,096 bits of the configuration.
+Reads are synchronous: the word appears after the clock edge that takes the address, and a read in the cycle of a write to the same word gets the old word. The initial contents are part of the bitstream; in its 8-, 4- and 2-bit modes the bits of a word are spread over the block, and in every mode the four low bits of each group of sixteen are stored in reverse, which synth’s `bram_load` and IceStorm’s `icebram` take care of (Chapter 31).
 
 ### Routing
 
-Every non-empty tile *starts* wires in each of the four directions. A wire has a span of 1, 4 or 12 tiles and one driver: the **switch-box** multiplexer of its starting tile. It can be tapped only at its far end (the iCE40’s wires can be tapped along their length; leaving that out keeps the graph small), and exists only if its far end is on the die. The multiplexer of a wire starting at tile *T* can select:
-
-- the wires of the same direction that *arrive* at *T* (straight on, one for each span);
-- the wires arriving from the two perpendicular directions (a turn, one for each span, on a neighbouring track so that tracks mix);
-- four of the tile’s own outputs: logic cell outputs, block RAM data outputs or pad inputs.
-
-The **connection box**, the multiplexer in front of a tile pin (a LUT input, clock enable, set/reset, a RAM pin or a pad output), selects among a fixed subset of the wires arriving at the tile, plus four local outputs. In the vFPGA-M and L a pin can pick 27 of the 40 wires that arrive at its tile. With 16 of the 40, a design of 740 cells (64 % of the M) sometimes did not route at all, and the RV32I core did not route on the L however long the router negotiated: once the packer fills tiles densely, the wires a pin can see are all taken by other nets. The configuration memory does not grow, since 27 wires and 4 local outputs still fit the 5 select bits.
-
-A multiplexer with *n* inputs has ⌈log₂(*n* + 1)⌉ configuration bits. **Code 0 means nothing is selected** (the net is undriven, Z in the simulation); code *k* above 0 selects input *k* − 1; codes above *n* are reserved and also read as nothing.
-
-The four inputs of an ordinary LUT are interchangeable, so a connection to such a cell may end at any of its four pins; the toolchain permutes the truth table to match.
-
-### I/O and clocks
-
-Pads are named P0, P1 and so on in ring order: along the top row from left to right, down the right column, along the bottom row from right to left, and up the left column. Each I/O tile has two configuration bits per pad: `output` (the pad drives the outside) and `pullup`. The global clock networks are fed by dedicated pads, spread along the top row:
-
-| | Pads that feed the global clocks |
-|---|---|
-| vFPGA-S | P0, P1, P2, P3 |
-| vFPGA-M | P0, P7, P14, P21, P28, P35, P42, P49 |
-| vFPGA-L | P0, P17, P34, P51, P68, P85, P102, P119 |
-
-Clock networks are ideal: every flip-flop sees the edge at the same time, and they are not part of the routing.
+A logic cell’s output reaches the local tracks of the eight tiles around its own; to go further it takes a **span-4** wire, which crosses four tiles, or a **span-12**, which crosses twelve, through an output driver. A span-12 can feed a span-4. At the destination, a **local track** picks one of the wires nearby, and each cell input has a multiplexer that picks one of its tile’s local tracks. Every configuration bit of a tile that is not a logic cell’s or the tile’s own controls belongs to a buffer or a switch of this routing: about three quarters of the 864 bits of a logic tile (16 rows of 54).
 
 ### Timing model
 
-One table of delays is used everywhere: by the router as node costs, by static timing analysis, and by the fabric simulator as element delays, so the three agree. Every routing multiplexer a signal passes adds its switch delay, and a wire node adds its segment’s delay on top.
+The delays synth uses for the HX parts, from Project IceStorm’s timing database (the router uses them as costs, and timing analysis to find the critical path); Chapter 28 combines them into Figure 28.3.
 
 | Element | Delay |
 |---|---|
-| LUT, any input to output | 0.5 ns |
-| Flip-flop, clock to Q | 0.3 ns |
-| Flip-flop set-up (D, CE, SR) | 0.2 ns |
-| Flip-flop hold | 0.05 ns (reported; the fabric simulator does not check it) |
-| Routing multiplexer (switch box or connection box) | 0.1 ns |
-| Wire segment, span 1 | 0.2 ns |
-| Wire segment, span 4 | 0.4 ns |
-| Wire segment, span 12 | 0.8 ns |
-| Carry, carry-in to carry-out | 0.1 ns |
-| Carry, operand pins I1, I2 to carry-out | 0.3 ns |
-| Input pad buffer | 0.5 ns |
-| Output pad buffer | 0.8 ns |
-| Block RAM, clock to data out | 1.2 ns |
-| Block RAM, read address to data (asynchronous read) | 1.5 ns |
-| Block RAM set-up | 0.4 ns |
-| Global clock network | 0 ns |
+| LUT, any input to output | 0.45 ns |
+| LUT, input I3 when it comes from the carry | 0.32 ns |
+| Carry, carry in to carry out | 0.13 ns |
+| Flip-flop, clock to output | 0.54 ns |
+| Flip-flop set-up | 0.47 ns |
+| Output driver onto a span-4 wire, onto a span-12 | 0.37 ns, 0.54 ns |
+| Span-4 wire, over its four tiles | 0.32 ns |
+| Span-12 wire, over its twelve tiles | 0.54 ns |
+| Span-12 to span-4 | 0.45 ns |
+| Local track | 0.33 ns |
+| Cell input multiplexer | 0.26 ns |
 
-The **critical path** is the slowest path from a start (a register output, an input pad, a RAM output) to an end (a register input, an output pad, a RAM input); the clock period cannot be shorter than it, and *f*max = 1000 / period, in MHz.
+The **critical path** is the slowest path from a start (a flip-flop, an input pad, a RAM output) to an end (a flip-flop, an output pad, a RAM input); the clock period cannot be shorter than it, and *f*max = 1000 / period, in MHz. synth reports it cell by cell, with the delay of each step.
 
 ### The bitstream file
 
-A configuration is a flat array of bits, organised in frames: one for each tile column, holding its tiles from y = 0 upwards. A tile holds, in order:
-
-- a **logic tile**: `clk_sel`, `clk_neg`, its 8 logic cells of 25 bits, then the select fields of its multiplexers in node order (connection-box multiplexers first, then switch-box multiplexers);
-- an **I/O tile**: two bits for each pad, then its multiplexers;
-- a **block RAM tile**: `mode` (2 bits), `async` (1), the read and write clock selects, the 4,096 bits of initial contents, then its multiplexers.
-
-The file is a header (the magic `VFPG`, the version 1, the device name, the total number of bits and the number of frames, the numbers in little-endian order), then for each frame its length in bits, its bits packed least significant bit first, and a CRC-32 of the packed bytes; and a final CRC-32 of everything before it. A file whose checksum does not match, or that is for another device, is refused.
-
-### Differences from the iCE40
-
-Wires can only be tapped at their end; there are no local-track stages, so a connection box selects straight from wires; an I/O tile has 4 pads (2 in the S), a logic tile has one clock that comes from a global network only; the block RAM occupies one tile; and the sizes are much smaller.
+The configuration memory is four banks, one for each quarter of the die. The file is a short program for the chip’s loader: a preamble, the commands that choose a bank and give its rows of bits, the contents of the block RAMs in the same way, and a CRC-16 over the whole, which the chip checks before it starts. It is byte for byte what Project IceStorm’s `icepack` writes, so the bitstreams of the figures program real boards.
 
 ::block-diagram{device="fpga" n="G.15" caption="The die and one logic tile. Everything shaded in copper is configuration memory."}
 
-::fpga-studio{size="S" design="counter" views="source,chip,bits,hand" n="G.16" caption="The vFPGA-S in the FPGA Studio. It is small enough to fit a 4-bit counter with room to spare: open the Bits view to see every configuration bit and what it controls, and the By hand view to set them yourself."}
+::fpga-studio{design="counter" views="chip,bits,steps" n="G.16" caption="The 4-bit counter on the Go Board’s HX1K, in the FPGA studio. Open Bits to see the configuration bits of every tile it uses, and click a cell on the chip to read its table and its flip-flop."}
 
-## The virtual board
+## The boards
 
-The vFPGA sits on a virtual development board. A `top` module is bound to the board by port name and type (Appendix F lists the names), and the device that runs is the **decoded bitstream**, not the source: a second copy of the design on the RTL simulator, fed the same inputs, checks it cycle by cycle.
+The figures build for two boards, with synth’s pin files for them:
 
-::board-diagram{part="board" n="G.17" caption="The board’s resources. A port of the top module with the right name and width is wired to it; any other input gets a switch of its own and any other output an LED."}
-
-| Resource | Port | Type |
+| | Nandland Go Board | Alchitry Cu |
 |---|---|---|
-| Clock | `clk` | `clock` |
-| Reset button, active high | `rst` or `reset` | `bit` |
-| Push buttons | `btn` | `bits<4>` |
-| Switches | `sw` | `bits<8>` |
-| LEDs | `led` | `bits<8>` |
-| Seven-segment digits, digit 0 on the right | `seg0` to `seg3` | `bits<7>` or `bits<8>` |
-| Multiplexed display | `seg` and `an` | `bits<7>` or `bits<8>`, and `bits<4>` |
+| FPGA | iCE40 HX1K, VQ100 | iCE40 HX8K, CB132 |
+| Clock | 25 MHz, on `clk` | 100 MHz, on `clk` |
+| LEDs | 4, on `led[0]` to `led[3]` | 8, on `led[0]` to `led[7]` |
+| A button | `sw1` (also named `btn`) | `sw1` (also named `btn`) |
+| Serial port to the computer | `rx` and `tx` | `rx` and `tx` |
+| With synth | `synth build … --board go-board`, `synth prog --board go-board` | `--board alchitry-cu` |
 
-The clock has a step button, a run button, and a rate: 1, 4, 16, 64, 256 Hz, 1 kHz, or as fast as the simulation goes. Between edges the fabric is given a half period of at least 100 ns and at least three times the design’s critical path, so the outputs always settle. A segment is lit by a 1; bit 0 of a digit is segment a and bit 6 is segment g, and bit 7, if the port has it, is the decimal point. For a multiplexed display, digit *i* shows the segments of `seg` at the moments when bit *i* of `an` is 1, and keeps its last pattern between them.
+A top module whose ports have those names is wired to the board; any other port must be constrained in a file of your own, `set_io name pin`. In the browser, the boards of Chapters 28 to 31 drive the pins of the chip decoded from its bitstream; Chapter 31’s board, for the two CPUs, has eight LEDs, eight switches, four buttons and four seven-segment digits, on the pins the placer chose. A segment is lit by a 1, bit 0 is segment a and bit 6 is segment g:
 
-::board-diagram{part="segments" n="G.18" caption="The patterns of the sixteen hexadecimal digits, as the SevenSeg module of the standard library and the board’s decoder write them."}
-
-**What the board does not have.** The plan for the course describes an 8 × 8 LED matrix, a text console and a memory subsystem with memory-mapped peripherals on the board. None of them is in the board of this version: a design that needs a display uses the digits, and one that needs a text output uses the LEDs; a design that needs memory has its own block RAM.
+::board-diagram{part="segments" n="G.17" caption="The patterns of the sixteen hexadecimal digits, as Octet’s and the RV32I board’s `digit` functions write them."}
