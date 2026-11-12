@@ -1,4 +1,4 @@
-/** The device adapters, by id. A new device (the vFPGA) adds its adapter here or registers it at run time. */
+/** The device adapters, by id. A new device adds its adapter here or registers it at run time. */
 import type { DeviceAdapter } from '../types';
 import { promAdapter } from './prom';
 import { plaAdapter } from './pla';

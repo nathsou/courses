@@ -174,7 +174,7 @@ solution: |
 
 ## Hardware exercises
 
-The five hardware kinds: `hdl`, `fit`, `decode`, `route` and `place`. Each `solution` passes its checker and each `start` fails it.
+The three hardware kinds: `hdl`, `fit` and `decode`. Each `solution` passes its checker and each `start` fails it.
 
 ```hdl
 id: fixture/majority
@@ -269,7 +269,7 @@ source: |
   1 1 1 1 | 1 0 0 1
 inputs: [A1, A0, B1, B0]
 outputs: [P3, P2, P1, P0]
-answers: [expression, table, dcl]
+answers: [expression, table]
 solution: |
   P0 = A0 & B0
   P1 = A1 & B0 ^ A0 & B1
@@ -277,52 +277,3 @@ solution: |
   P3 = A1 & A0 & B1 & B0
 ```
 
-```route
-id: fixture/route-xor
-title: Wire an XOR
-prompt: The cell `LC(1,2,0)` computes `I0 ^ I1`. Route P0 and P1 to it and its output to P8.
-hints:
-  - 'Start at the sink `LC(1,2,0).I0` and ask what drives it.'
-fabric:
-  pads: { P0: in, P1: in, P8: out }
-  cells:
-    - { at: [1, 2, 0], lut: "I0 ^ I1" }
-nets:
-  - { name: a, from: P0, to: ["LC(1,2,0).I0"] }
-  - { name: b, from: P1, to: ["LC(1,2,0).I1"] }
-  - { name: c, from: "LC(1,2,0)", to: [P8] }
-outputs: { P8: "P0 ^ P1" }
-solution:
-  - [P0, "LC(1,2,0).I0"]
-  - [P1, "LC(1,2,0).I1"]
-  - ["LC(1,2,0)", P8]
-```
-
-```place
-id: fixture/place
-title: Beat the annealer
-seed: 5
-prompt: Place the blocks of this small design on the die so that the wirelength cost is lower than the annealer's on seed 5.
-design: |
-  module Lfsr(clk: clock, en: bit, load: bit, seed: bits<4>) -> (q: bits<4>, par: bit, hit: bit) {
-    reg r: bits<12> = 1
-    let fb: bit = r[11] ^ r[10] ^ r[9] ^ r[3]
-    next r = if load { concat(seed, r[7:0]) } else if en { concat(r[10:0], fb) } else { r }
-    q = r[11:8]
-    par = r[0] ^ r[1] ^ r[2] ^ r[3] ^ r[4] ^ r[5] ^ r[6] ^ r[7]
-    hit = r[11:4] == 0xA5
-  }
-pins: { "seed[0]": P12, "seed[2]": P14, "q[0]": P4, "q[2]": P6 }
-solution:
-  tile 0: "2,2"
-  tile 1: "1,1"
-  tile 2: "2,1"
-  en: P5
-  load: P13
-  seed[1]: P9
-  seed[3]: P8
-  q[1]: P2
-  q[3]: P3
-  par: P10
-  hit: P7
-```

@@ -88,7 +88,7 @@ describe('the hdl exercise', () => {
   test('the solution passes, the start does not', async () => {
     const good = await checkHdl(synth, input, input.solution);
     expect(good.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
-    expect(good.pass, JSON.stringify(good.tests.filter((t) => !t.pass))).toBe(true);
+    expect(good.pass, JSON.stringify(good.tests.filter((t) => !t.passed))).toBe(true);
     expect((await checkHdl(synth, input, input.start)).pass).toBe(false);
   });
 });

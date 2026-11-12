@@ -114,7 +114,7 @@ describe('the machines', () => {
     expect(r.signature).toEqual(EXPECTED);
   });
 
-  it('the Weft core, in synth's simulator, produces the same signature', () => {
+  it('the Weft core, in synth’s simulator, produces the same signature', () => {
     const r = runCore(t, 20_000);
     expect(r.error).toBeUndefined();
     expect(r.signature).toEqual(EXPECTED);

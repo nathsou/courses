@@ -420,7 +420,7 @@ register-transfer-level:
   chapter: describing-hardware
 ssa:
   term: static single assignment (SSA)
-  definition: A form of program in which every value is defined exactly once. A Weft module is close to this form: a `let` is defined once, and a signal is driven by one set of assignments; the φ-function that SSA uses to join two definitions is a multiplexer in hardware.
+  definition: A form of program in which every value is defined exactly once. A Weft module is close to this form, since a `let` is defined once and a signal is driven by one set of assignments; the φ-function that SSA uses to join two definitions is a multiplexer in hardware.
   chapter: describing-hardware
 nand:
   term: NAND

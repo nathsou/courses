@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { artifactOf, checkDecode, dclTemplate, deviceTruth, truthTable, type DecodeInput } from './model';
+import { artifactOf, checkDecode, deviceTruth, truthTable, type DecodeInput } from './model';
 
 const pla: DecodeInput = {
   id: 't/pla',
@@ -21,21 +21,6 @@ const prom: DecodeInput = {
   source: 'A1 A0 B1 B0 | P3 P2 P1 P0\n' + Array.from({ length: 16 }, (_, m) => `${[...(m >> 2).toString(2).padStart(2, '0')].join(' ')} ${[...(m & 3).toString(2).padStart(2, '0')].join(' ')} | ${[...((m >> 2) * (m & 3)).toString(2).padStart(4, '0')].join(' ')}`).join('\n') + '\n',
   inputs: ['A1', 'A0', 'B1', 'B0'],
   outputs: ['P3', 'P2', 'P1', 'P0'],
-};
-const fpga: DecodeInput = {
-  id: 't/fpga',
-  device: 'fpga',
-  inputs: ['P0', 'P1', 'P2'],
-  outputs: ['P8', 'P9'],
-  bitstream: {
-    pads: { P0: 'in', P1: 'in', P2: 'in', P8: 'out', P9: 'out' },
-    cells: [
-      { at: [1, 2, 0], lut: 'I0 ^ I1' },
-      { at: [1, 2, 1], lut: 'I0 ^ I1' },
-      { at: [2, 2, 0], lut: 'I0 & I1 | I0 & I2 | I1 & I2' },
-    ],
-    routes: [['P0', 'LC(1,2,0).I0'], ['P1', 'LC(1,2,0).I1'], ['LC(1,2,0)', 'LC(1,2,1).I0'], ['P2', 'LC(1,2,1).I1'], ['LC(1,2,1)', 'P8'], ['P0', 'LC(2,2,0).I0'], ['P1', 'LC(2,2,0).I1'], ['P2', 'LC(2,2,0).I2'], ['LC(2,2,0)', 'P9']],
-  },
 };
 
 describe('what the reader sees', () => {
@@ -60,19 +45,12 @@ describe('what the reader sees', () => {
     expect(a.listings.find((l) => l.title.startsWith('Macrocell'))!.rows).toEqual([['19', '1', '1', 'active high, combinational'], ['18', '0', '1', 'active low, combinational']]);
     expect(a.listings[0]!.rows).toContainEqual(['19', 'Y', 'output']);
   });
-  test('a bitstream: the cells in use, their LUTs, and what drives them', () => {
-    const a = artifactOf(fpga);
-    const cells = a.listings.find((l) => l.title === 'Logic cells in use')!;
-    expect(cells.rows.map((r) => [r[0], r[2]])).toEqual([['LC(1,2,0)', '0x6666'], ['LC(1,2,1)', '0x6666'], ['LC(2,2,0)', '0xe8e8']]);
-    const routing = a.listings.find((l) => l.title.startsWith('Routing'))!;
-    expect(routing.rows).toContainEqual(['LC(1,2,1).I0', 'LC(1,2,0)']);
-  });
+
 });
 
 describe('the device, not the source, is the truth', () => {
   test('truth tables come from running the configured device', () => {
     expect(deviceTruth(pla)).toEqual([[0, 0], [0, 0], [1, 0], [1, 1], [0, 0], [1, 0], [0, 1], [0, 1]]);
-    expect(truthTable(fpga)).toEqual({ P8: [0, 1, 1, 0, 1, 0, 0, 1], P9: [0, 0, 0, 1, 0, 1, 1, 1] });
   });
 });
 
@@ -97,18 +75,9 @@ describe('checking an answer', () => {
     expect(checkDecode(pla, { mode: 'table', table: t }).pass).toBe(true);
     expect(checkDecode(pla, { mode: 'table', table: { ...t, X: t.X!.map((v) => (1 - v) as 0 | 1) } }).pass).toBe(false);
   });
-  test('a DCL module named Decoded, with lower-case bit ports, is run against the device', () => {
-    expect(dclTemplate(pla)).toBe('module Decoded(a: bit, b: bit, c: bit) -> (x: bit, y: bit) {\n  x = 0\n  y = 0\n}\n');
-    const good = 'module Decoded(a: bit, b: bit, c: bit) -> (x: bit, y: bit) {\n  x = !a & b | a & !b & c\n  y = b & (a | c)\n}\n';
-    expect(checkDecode(pla, { mode: 'dcl', text: good }).pass).toBe(true);
-    expect(checkDecode(pla, { mode: 'dcl', text: dclTemplate(pla) }).pass).toBe(false);
-    expect(checkDecode(pla, { mode: 'dcl', text: good.replace('Decoded', 'Other') }).problems[0]).toMatch(/Name the module `Decoded`/);
-    expect(checkDecode(pla, { mode: 'dcl', text: good.replace('c: bit', 'c: bits<2>') }).pass).toBe(false);
-  });
-  test('the same holds for the GAL and the bitstream', () => {
+
+  test('the same holds for the GAL', () => {
     expect(checkDecode(gal, { mode: 'expression', text: 'Y = A & !B | C & D\nZ = !(A & B & C)' }).pass).toBe(true);
     expect(checkDecode(gal, { mode: 'expression', text: 'Y = A & !B | C & D\nZ = A & B & C' }).pass).toBe(false);
-    expect(checkDecode(fpga, { mode: 'expression', text: 'P8 = P0 ^ P1 ^ P2\nP9 = P0 & P1 | P0 & P2 | P1 & P2' }).pass).toBe(true);
-    expect(checkDecode(fpga, { mode: 'expression', text: 'P8 = P0 ^ P1\nP9 = P0 & P1' }).pass).toBe(false);
   });
 });

@@ -1,5 +1,5 @@
 /**
- * The circuit model shared by every engine, the bench, the Device Studio and DCL.
+ * The circuit model shared by every engine, the bench, the Device Studio and the gate view of Weft designs.
  *
  * Two forms:
  *  - a **Circuit** is what people draw: placed components and wires on a grid, possibly using

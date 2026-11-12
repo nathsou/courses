@@ -1,5 +1,5 @@
 /**
- * Random Octet programs for differential testing: a gate-level (bench or DCL) Octet and the
+ * Random Octet programs for differential testing: a gate-level (bench or Weft) Octet and the
  * reference interpreter run the same random program, and their final states must agree
  * (`compareStates`).
  *

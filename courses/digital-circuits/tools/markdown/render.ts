@@ -40,7 +40,7 @@ export function termRefs(tex: string): string[] {
  * "Bench" code themes: the same token roles as GitHub's (keyword, string, number, comment, function,
  * type), coloured to sit on the code panel (--pn in app.css: notebook paper / night-lab blue-black).
  * Every role keeps its own hue and at least 4.5:1 contrast on the panel in both themes; the values match
- * the --code-* tokens in app.css so other highlighters (the DCL lexer) can use the same colours.
+ * the --code-* tokens in app.css so other highlighters (the Weft highlighter) can use the same colours.
  */
 function benchTheme(name: string, type: 'light' | 'dark', c: Record<'fg' | 'bg' | 'keyword' | 'string' | 'number' | 'comment' | 'fn' | 'type' | 'prop' | 'punct', string>): ThemeRegistration {
   return {

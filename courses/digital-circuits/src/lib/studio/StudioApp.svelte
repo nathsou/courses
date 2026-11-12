@@ -6,7 +6,7 @@
 <script lang="ts">
   import './studio.css';
   import { untrack } from 'svelte';
-  import { FPGA_DEVICE, type Studio } from './studio.svelte';
+  import type { Studio } from './studio.svelte';
   import { listAdapters } from './adapters';
   import { getChip } from './registry';
   import './devices';
@@ -81,13 +81,12 @@
   });
 
   const adapters = listAdapters();
-  const deviceOptions = [...adapters.map((a) => ({ value: a.id, label: a.short })), { value: FPGA_DEVICE, label: 'FPGA', title: 'The virtual FPGA: vFPGA-S, -M and -L' }];
+  const deviceOptions = [...adapters.map((a) => ({ value: a.id, label: a.short }))];
   let deviceChoice = $state(untrack(() => studio.deviceId));
   $effect(() => {
     deviceChoice = studio.deviceId;
   });
-  const isFpga = $derived(studio.deviceId === FPGA_DEVICE);
-  const files = $derived(isFpga ? [] : (fit?.files ?? []));
+  const files = $derived(fit?.files ?? []);
   function pickDevice(v: string) {
     studio.load({ device: v });
   }
@@ -130,9 +129,9 @@
     {#if picker}
       <Segmented size="sm" label="Device" options={deviceOptions} bind:value={deviceChoice} onchange={pickDevice} />
     {:else}
-      <span class="dev">{isFpga ? 'vFPGA' : studio.adapter?.name}</span>
+      <span class="dev">{studio.adapter?.name}</span>
     {/if}
-    {#if canHand && !isFpga}
+    {#if canHand}
       <Segmented
         size="sm"
         label="Programming mode"
@@ -144,14 +143,14 @@
         onchange={setMode}
       />
     {/if}
-    {#if canProgram && studio.source.trim() && !isFpga}
+    {#if canProgram && studio.source.trim()}
       <button type="button" class="tb" onclick={program} disabled={studio.programming} title="Blow the fuses of the source's design, one pulse at a time"><Icon name="bolt" size={13} /> Program</button>
     {/if}
     {#if studio.handEdited && studio.editable}
       <button type="button" class="tb" onclick={() => studio.resetDevice()}><Icon name="reset" size={13} /> New part</button>
     {/if}
     <span class="grow"></span>
-    {#if fit && !isFpga}<span class="summary" title={fit.title}>{fit.summary}</span>{/if}
+    {#if fit}<span class="summary" title={fit.title}>{fit.summary}</span>{/if}
     {#each files as f (f.name)}
       <button type="button" class="tb" onclick={() => download(f)} title="Download {f.name}"><Icon name="download" size={13} /> {f.label}</button>
     {/each}
@@ -160,11 +159,6 @@
     {/if}
   </div>
 
-  {#if isFpga}
-    {#await import('./panes/fpga/FpgaHost.svelte') then m}
-      <m.default {studio} {views} {compact} />
-    {/await}
-  {:else}
   {#if tabs.length > 1}
     <div class="tabs ui" role="tablist" aria-label="Panes">
       {#each tabs as t (t.id)}
@@ -236,5 +230,4 @@
       </div>
     {/if}
   </div>
-  {/if}
 </div>

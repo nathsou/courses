@@ -11,8 +11,7 @@
   /** Segments a (bit 0) to g (bit 6) of the digits 0 to F. */
   const HEX_SEGMENTS: readonly number[] = [0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f, 0x77, 0x7c, 0x39, 0x5e, 0x79, 0x71];
 
-  let { part = 'segments', n, caption }: { part?: 'segments'; n?: string | number; caption?: string } = $props();
-  void part;
+  let { n, caption }: { part?: 'segments'; n?: string | number; caption?: string } = $props();
 
   const hex = (v: number) => `0x${v.toString(16).padStart(2, '0')}`;
 </script>

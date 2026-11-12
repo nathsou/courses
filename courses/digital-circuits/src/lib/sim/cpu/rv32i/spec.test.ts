@@ -276,7 +276,7 @@ describe('decoding', () => {
   });
 
   test('cycle model', () => {
-    // The DCL core: fetch and execute for every instruction; a trap only its fetch cycle.
+    // The Weft core: fetch and execute for every instruction; a trap only its fetch cycle.
     expect(RV32_TIMING).toEqual({ instruction: 2, trap: 1 });
     for (const m of ['add', 'addi', 'lui', 'lw', 'lbu', 'sw', 'sb', 'jal', 'jalr', 'fence']) expect(cyclesOf(m), m).toBe(2);
     expect(cyclesOf('beq', false)).toBe(2);

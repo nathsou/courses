@@ -1,7 +1,7 @@
 /**
  * Symbol registry: which Svelte component draws each component type.
  *
- * Later milestones add their own symbols (FPGA primitives, DCL cells) with registerSymbol(). Types
+ * Later milestones add their own symbols (FPGA primitives) with registerSymbol(). Types
  * without a symbol (sequential parts, blocks, subcircuits "sub:…" and "part:…", anything unknown)
  * are drawn by the generic Block.
  */

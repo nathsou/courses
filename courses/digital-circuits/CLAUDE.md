@@ -1,7 +1,7 @@
 # Project notes for Claude
 
 Interactive course "Digital Circuits: from a battery and a switch to a CPU on a chip". Plan, decisions and
-progress: docs/PLAN.md; the hardware language DCL: docs/HDL.md. Read both first. Lives in
+progress: docs/PLAN.md; the hardware language Weft and the synth toolchain: docs/WEFT.md. Read both first. Lives in
 `courses/digital-circuits/` of the Interactive Courses monorepo.
 
 - Single npm package: SvelteKit 2 + Svelte 5 (runes) static site, TypeScript 6. Output in `dist/`.
@@ -16,7 +16,16 @@ progress: docs/PLAN.md; the hardware language DCL: docs/HDL.md. Read both first.
   `:::challenge`, …), `:::history{year title people}`, `:::bio{name born died}`, `:::details[…]`,
   `:::figure{caption}`, `::::hints` + `:::hint[…]`, `:::equation` with a ```terms block,
   `::widget-name{props}` (resolved to `./widgets/WidgetName.svelte` or an export of `src/lib/widgets/index.ts`),
-  `:sidenote[…]`, `:cite[key]`, `:term[word]{id=…}`. Exercises are fenced YAML blocks (`quiz`, `parsons`, `bug`, `build`, `debug`, `golf`, `measure`, `asm`, `hdl`, `fit`, `decode`, `route`, `place`; see docs/AUTHORING.md).
+  `:sidenote[…]`, `:cite[key]`, `:term[word]{id=…}`. Exercises are fenced YAML blocks (`quiz`, `parsons`, `bug`, `build`, `debug`, `golf`, `measure`, `asm`, `hdl`, `fit`, `decode`; see docs/AUTHORING.md).
+
+## synth and Weft (src/lib/synth, src/lib/weft)
+
+- The hardware language is **Weft** and the FPGA toolchain is **synth** (a separate Rust project), compiled
+  to WebAssembly from the commit pinned in `synth.json`. `npm run synth` builds it into `static/synth/`
+  (needs Rust and the `wasm32-unknown-unknown` target; `SYNTH_DIR=…` builds a local checkout). Tests, `dev`
+  and `build` refuse to start without it. Details: docs/WEFT.md.
+- `src/lib/synth/api.ts` is the typed interface (analyze, format, run, testbench sessions, bram_load); pages
+  call it through workers (`client.ts`), tests through `node.ts`.
 
 ## The simulator (src/lib/sim)
 

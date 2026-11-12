@@ -1,25 +1,20 @@
 /**
  * A `decode` exercise: a configuration the reader cannot see the source of, and a function to work out. The
- * configuration is made from hidden source text (or a hidden vFPGA-S design) with the course's own fitters; what the
+ * configuration is made from hidden source text with the course's own fitters; what the
  * reader sees is its raw data: a PROM's words, a PLA's two fuse planes, a GAL22V10's JEDEC rows, or the cells and
- * routing of a small bitstream. The answer is an expression, a truth table or a DCL module, and it is checked by
+ * routing of a small bitstream. The answer is an expression or a truth table, and it is checked by
  * equivalence with what the *device* does (the Studio's runner on the configured device, or the fabric simulator
  * on the decoded bitstream), never by comparing with the hidden source. Pure TypeScript.
  */
-import { createRtlSim, check, elaborate } from '$lib/hdl';
-import { hasErrors } from '$lib/hdl/diagnostics';
 import { FUSE_COUNT, toFuseMap, OLMC_PINS } from '$lib/pld/devices/gal22v10';
 import { evalExpr, exprVars, parseEquations, type Equation } from '$lib/pld/twolevel/expr';
 import { getAdapter } from '$lib/studio/adapters';
 import type { GalChip } from '$lib/studio/adapters/gal';
 import type { PlaChip } from '$lib/studio/adapters/pla';
 import type { PromChip } from '$lib/studio/adapters/prom';
-import { recover } from '$lib/studio/fpga/hand';
-import { hex4 } from '$lib/widgets/lut/lut';
-import { buildFabric, configuredCells, device, simulateFabric, type FabricSpec } from '../fabric';
 
-export type DecodeDevice = 'prom' | 'pla' | 'gal22v10' | 'fpga';
-export type AnswerMode = 'expression' | 'table' | 'dcl';
+export type DecodeDevice = 'prom' | 'pla' | 'gal22v10';
+export type AnswerMode = 'expression' | 'table';
 
 export interface DecodeInput {
   id: string;
@@ -30,8 +25,6 @@ export interface DecodeInput {
   device: DecodeDevice;
   /** The hidden design the configuration is made from (PROM, PLA, GAL). */
   source?: string;
-  /** The hidden vFPGA-S design (device `fpga`). */
-  bitstream?: FabricSpec;
   /** The names of the inputs and outputs the answer is about (pins, pads), in truth-table order. */
   inputs: string[];
   outputs: string[];
@@ -39,7 +32,6 @@ export interface DecodeInput {
   answers?: AnswerMode[];
   /** What to show of the configuration (GAL: the output pins whose rows are listed; default: all in use). */
   show?: { pins?: number[] };
-  /** Names the reader's answer must use for the inputs, when different from `inputs` (DCL modules use these as port names). */
   solution?: string;
 }
 
@@ -92,7 +84,6 @@ function programmed(input: DecodeInput) {
 }
 
 export function artifactOf(input: DecodeInput): Artifact {
-  if (input.device === 'fpga') return fpgaArtifact(input);
   const fit = programmed(input);
   if (input.device === 'prom') {
     const prom = (fit.chip as PromChip).prom;
@@ -199,49 +190,6 @@ function galArtifact(input: DecodeInput, chip: GalChip): Artifact {
   };
 }
 
-function fpgaArtifact(input: DecodeInput): Artifact {
-  if (!input.bitstream) throw new DecodeError('decode: an fpga exercise needs a bitstream');
-  const dev = device();
-  const bits = buildFabric(input.bitstream).bits;
-  const rec = recover(dev, bits);
-  const cells = configuredCells(dev, bits);
-  const listings: Listing[] = [
-    {
-      title: 'Logic cells in use',
-      caption: 'The 16 bits of a cell’s LUT, as the bitstream holds them. Bit r is the output when I0 + 2·I1 + 4·I2 + 8·I3 = r, so the first bit is the output for inputs 0000 and the last for 1111 (Chapter 28).',
-      head: ['cell', 'LUT bits, 15 down to 0', 'as hex', 'flip-flop'],
-      rows: cells.map((c) => [c.name, chunk((c.lut & 0xffff).toString(2).padStart(16, '0'), 4), hex4(c.lut), c.ff ? 'used' : 'no']),
-    },
-    {
-      title: 'Routing multiplexers that are set',
-      caption: 'Each line is one cell input and what the routing delivers to it: the multiplexers on the way (Chapter 28) have been followed for you, back to a pad or to a cell’s output.',
-      head: ['input or pad', 'is driven by'],
-      rows: rec.nodes
-        .filter((n) => n.kind === 'lut')
-        .flatMap((n) =>
-          n.used.map((p): string[] => {
-            const d = n.inputs[p]!;
-            const from = d < 0 ? '(nothing)' : rec.nodes[d]!.label;
-            return [`${n.label}.I${p}`, from];
-          }),
-        ),
-    },
-    {
-      title: 'Pads',
-      head: ['pad', 'set as', 'driven by'],
-      rows: rec.nodes
-        .filter((n) => n.kind === 'pad-out')
-        .map((n) => [n.label, 'output', n.inputs[0]! >= 0 ? rec.nodes[n.inputs[0]!]!.label : '(nothing)'])
-        .concat(rec.nodes.filter((n) => n.kind === 'pad-in').map((n) => [n.label, 'input', '(the outside world)'])),
-    },
-  ];
-  return {
-    title: 'A vFPGA-S bitstream, region by region',
-    legend: ['Only what is set is listed. A cell with its flip-flop unused passes the LUT’s output straight through.'],
-    grids: [],
-    listings,
-  };
-}
 
 // ── What the device does ─────────────────────────────────────────────────────────
 
@@ -251,12 +199,6 @@ export type Bit = 0 | 1;
 export function deviceTruth(input: DecodeInput): Bit[][] {
   const n = input.inputs.length;
   const rows: Bit[][] = [];
-  if (input.device === 'fpga') {
-    const bits = buildFabric(input.bitstream ?? {}).bits;
-    const sim = simulateFabric(device(), bits, input.inputs, input.outputs);
-    if (sim.problems.length) throw new DecodeError(`decode: the hidden bitstream does not work: ${sim.problems.join('; ')}`);
-    return sim.rows.map((r) => r.map((l): Bit => (l === '1' ? 1 : 0)));
-  }
   const fit = programmed(input);
   const runner = fit.runner();
   for (let v = 0; v < 1 << n; v++) {
@@ -282,17 +224,9 @@ export interface DecodeOutcome {
   compared: number;
 }
 
-/** The port a DCL answer uses for a pin or pad: its name in lower case (`A` is `a`, `P0` is `p0`). */
-export const portName = (n: string): string => n.toLowerCase();
-
-/** The module the DCL answer starts from. */
-export function dclTemplate(input: DecodeInput): string {
-  return `module Decoded(${input.inputs.map((i) => `${portName(i)}: bit`).join(', ')}) -> (${input.outputs.map((o) => `${portName(o)}: bit`).join(', ')}) {\n${input.outputs.map((o) => `  ${portName(o)} = 0`).join('\n')}\n}\n`;
-}
-
 export interface Answer {
   mode: AnswerMode;
-  /** Expression mode: equations, one per line (`Y = A & !B`). DCL mode: the module. */
+  /** Expression mode: equations, one per line (`Y = A & !B`). */
   text?: string;
   /** Table mode: per output, a value for every input vector (null: not filled in). */
   table?: Record<string, (Bit | null)[]>;
@@ -331,8 +265,8 @@ export function checkDecode(input: DecodeInput, answer: Answer, truth: Bit[][] =
     return compare(input, truth, (v) => input.outputs.map((o) => String(t[o]![v])));
   }
   const text = (answer.text ?? '').trim();
-  if (!text) return fail(answer.mode === 'dcl' ? 'Write the module first.' : 'Write an equation for each output first.');
-  if (answer.mode === 'expression') {
+  if (!text) return fail('Write an equation for each output first.');
+  {
     let eqs: Equation[];
     try {
       eqs = parseEquations(text);
@@ -352,23 +286,6 @@ export function checkDecode(input: DecodeInput, answer: Answer, truth: Bit[][] =
       return input.outputs.map((o) => String(evalExpr(by.get(o)!.expr, val)));
     });
   }
-  // DCL: a module named Decoded with a bit input per input and a bit output per output.
-  const { diagnostics, program } = check(text, { file: 'decoded.dcl' });
-  if (hasErrors(diagnostics)) return fail(...diagnostics.filter((d) => d.severity === 'error').map((d) => `${d.message} (line ${d.span.line})`));
-  if (!program.modules.has('Decoded')) return fail('Name the module `Decoded`.');
-  let sim;
-  try {
-    sim = createRtlSim(elaborate(program, 'Decoded'), 'Decoded');
-  } catch (e) {
-    return fail(e instanceof Error ? e.message : String(e));
-  }
-  const missing = [...input.inputs.filter((i) => !sim.module.inputs.some((p) => p.name === portName(i))).map((i) => `input ${portName(i)}`), ...input.outputs.filter((o) => !sim.module.outputs.some((p) => p.name === portName(o))).map((o) => `output ${portName(o)}`)];
-  if (missing.length) return fail(`The module needs ${missing.join(', ')} (each a \`bit\`).`);
-  if (sim.module.inputs.some((p) => p.clock)) return fail('The function has no clock: write a module without registers.');
-  return compare(input, truth, (v) => {
-    input.inputs.forEach((name, i) => sim.set(portName(name), (v >> (n - 1 - i)) & 1));
-    return input.outputs.map((o) => sim.getBig(portName(o)).toString());
-  });
 }
 
 /** Expected values for a table answer, so the component can show them after "Show a solution". */

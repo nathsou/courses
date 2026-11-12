@@ -105,9 +105,6 @@
   li.ok {
     border-left-color: var(--ok);
   }
-  li.skip {
-    border-left-color: var(--mute);
-  }
   .head {
     display: flex;
     align-items: baseline;
@@ -166,23 +163,5 @@
   .wv {
     overflow-x: auto;
     padding: 0.2rem 0;
-  }
-  details {
-    margin-top: 0.4rem;
-    font-size: 0.8rem;
-  }
-  summary {
-    cursor: pointer;
-    color: var(--mute);
-  }
-  pre {
-    margin: 0.3rem 0 0;
-    padding: 0.5rem 0.7rem;
-    overflow-x: auto;
-    background: var(--pn);
-    border-radius: 5px;
-    font-family: var(--font-mono);
-    font-size: 0.74rem;
-    line-height: 1.45;
   }
 </style>

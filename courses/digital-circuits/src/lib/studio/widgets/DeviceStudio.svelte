@@ -3,7 +3,7 @@
 
     ::device-studio{device="gal22v10" example="traffic-light" views="source,chip,logic"}
 
-  `device`: prom, pla, gal22v10, cpld32 or fpga (the virtual FPGA: its examples are counter, traffic-light, hex-counter, alu, regfile, rv32i). `example`: an example id of that device (the first one by default).
+  `device`: prom, pla, gal22v10 or cpld32 (the iCE40 has its own studio, `::fpga-studio`). `example`: an example id of that device (the first one by default).
   `views`: any of source, chip, logic, bits, report, jtag. "Open in the Studio" carries the design (and any
   edits to the source) to the full workspace.
 -->
@@ -14,7 +14,6 @@
   import { Studio } from '../studio.svelte';
   import StudioApp from '../StudioApp.svelte';
   import { getAdapter } from '../adapters';
-  import { fpgaExample } from '../fpga/examples';
 
   let {
     device = 'gal22v10',
@@ -30,8 +29,8 @@
   const studio = new Studio({ device: untrack(() => device), example: untrack(() => example), blank: untrack(() => blank) });
   const list = $derived(views.split(',').map((v) => v.trim()).filter(Boolean));
   const href = $derived(`${base}/studio/${studio.hash()}`);
-  const name = $derived(studio.deviceId === 'fpga' ? 'vFPGA' : (getAdapter(studio.deviceId)?.name ?? 'Device'));
-  const subject = $derived(studio.deviceId === 'fpga' ? (fpgaExample(studio.exampleId)?.title ?? 'your design') : (studio.fit?.title ?? 'Device Studio'));
+  const name = $derived(getAdapter(studio.deviceId)?.name ?? 'Device');
+  const subject = $derived(studio.fit?.title ?? 'Device Studio');
   onMount(() => () => studio.destroy());
 </script>
 

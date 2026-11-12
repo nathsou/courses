@@ -1,8 +1,15 @@
 # Course plan — *Digital Circuits*
 
 The living plan for the course: agreed decisions, curriculum, simulator and component inventory, and
-milestones. Update it when decisions change or chapters land. The course's HDL is specified in
-[HDL.md](HDL.md).
+milestones. Update it when decisions change or chapters land. The course's hardware language and FPGA
+toolchain are described in [WEFT.md](WEFT.md).
+
+> **Update (2026-11).** The course's own HDL (DCL) and its virtual FPGA (vFPGA-S, M and L, with a TypeScript
+> toolchain) have been replaced by **Weft** and **synth**: Weft is synth's hardware language, and synth's iCE40
+> flow, compiled to WebAssembly, runs in the browser. Chapters 28 to 31 now use a real chip, the Lattice
+> iCE40 (HX1K on the Nandland Go Board, HX8K), and every bitstream a figure shows would program a real board.
+> The decisions below are updated; sections further down that describe DCL or the vFPGA are kept as the
+> history of the plan, and docs/WEFT.md, Appendix C and Appendix F describe what exists.
 
 The course starts from a battery and a switch. It builds a working 8-bit CPU from parts the reader has
 built and verified themselves, and then puts that CPU on a programmable chip. The chip is first a virtual
@@ -15,12 +22,12 @@ Everything on screen runs on a simulator and a toolchain written for the course.
 |---|---|---|
 | Title | **Digital Circuits** | Slug `digital-circuits`, published at `/digital-circuits/`. |
 | Reader | **Software engineers** with no electronics background | Algebra and exponentials in the main text; calculus and linear algebra only in optional *Deeper* boxes and in *Under the hood*. |
-| Aim | Understand how a computer works from electrons up, **build a working CPU** and **put it on a programmable chip** | Part V assembles a CPU from the reader's own parts bin. Part VI maps it, and an RV32I core, onto a virtual FPGA. |
+| Aim | Understand how a computer works from electrons up, **build a working CPU** and **put it on a programmable chip** | Part V assembles a CPU from the reader's own parts bin. Part VI maps it, and an RV32I core, onto a real FPGA, the iCE40, through synth. |
 | Analog scope | As much analog as digital needs, and no more | Ohm, Kirchhoff, RC timing, inductors only for relays, diodes, transistors as switches and as amplifiers (gain). No filters, op-amp circuits, AC power or radio. |
 | Simulation | Our own engine in TypeScript, at three levels (analog, switch, logic) over one netlist model | No third-party simulator. See *The simulator*. |
 | Programmable logic | **Part VI**: ROMs and PLAs, PALs and GALs, CPLDs, FPGAs, the HDL and the toolchain. Each has **virtual devices that are programmed interactively** | The Device Studio shows the logic view and the chip view side by side, linked element by element. Devices are simulated from their configuration bits. |
-| HDL | **DCL** (working name): a course-specific HDL with modern syntax, no semicolons and strict typing | Spec in [HDL.md](HDL.md). It replaces Verilog everywhere in the course. Verilog and VHDL appear only in history cards and one *In industry* callout. |
-| Compiler and toolchain | **TypeScript**, like the rest of the course | Rust/WASM was considered and rejected (HDL.md, *Implementation language*). The hot kernels can move to Rust/WASM if the M7 benchmark requires it. |
+| HDL | **Weft**, the hardware language of synth: modern syntax, exact arithmetic, strict typing and checked clock domains | Specified in synth's docs/WEFT.md; the course's notes in [WEFT.md](WEFT.md); Appendix F is the reference. (DCL, the course's own HDL, was replaced in 2026-11.) |
+| Compiler and toolchain | **synth**, in Rust, compiled to WebAssembly and pinned by commit (`synth.json`) | Replaced the course's TypeScript compiler and vFPGA flow in 2026-11: one real toolchain for the figures and for the reader's own board. |
 | Real hardware | Optional **Build it for real** track: a lab per chapter, a kit list and breadboard layouts | Low voltage only (5 V USB supply or 9 V battery). Part VI adds a GAL programmed with a universal programmer and an iCE40 board with the open toolchain. The CPUs run on the FPGA, not on breadboards. |
 | Site | SvelteKit 2 + Svelte 5, `adapter-static`, the Markdown-with-directives compiler copied from Proofcraft | Single npm package (not a pnpm workspace). Output in `dist/`, base path from `BASE_PATH`. |
 | TypeScript version | **TS 6**, as in Proofcraft and Language Models | `svelte-check` needs the TypeScript JS API, which TS 7 does not have. |
@@ -138,7 +145,7 @@ Standards per chapter:
 
 ### Part VI — Programmable logic
 
-The devices are described in *Programmable logic* below, the HDL in [HDL.md](HDL.md).
+The devices are described in *Programmable logic* below, the HDL in [WEFT.md](WEFT.md).
 
 | # | Chapter | Key ideas | Flagship interactive | Virtual devices |
 |---|---|---|---|---|
@@ -259,7 +266,7 @@ each gate becomes its CMOS transistor network (switch level), and each transisto
   - directed and random stimulus beyond that.
 - **Timing:** the measured waveform is compared with the specified one, within tolerances.
 - **Analog labs:** the measured value must fall within a tolerance.
-- **DCL exercises:** hidden `test` blocks, plus equivalence with the reference design (HDL.md, *Tests*).
+- **DCL exercises:** hidden `test` blocks, plus equivalence with the reference design (WEFT.md, *Tests in the course*).
 
 ### Performance targets (measured with benchmarks from M0, and in M7 for Part VI)
 
@@ -379,7 +386,7 @@ chapters.
 ### The toolchain (`src/lib/pld`, `src/lib/hdl`)
 
 - **DCL front end:** parser, type checker, elaboration, RTL simulator, and lowering to the bit-level
-  netlist (see [HDL.md](HDL.md)).
+  netlist (see [WEFT.md](WEFT.md)).
 - **Two-level logic (PROM, PLA, GAL):**
   - Espresso-style heuristic minimisation, with the exact Quine–McCluskey of Chapter 12 for small functions;
   - the PAL/GAL fitter: product-term limits, output polarity, macrocell modes;
@@ -450,7 +457,7 @@ interesting programs, and built only from parts-bin parts.
 
 - **Design:** a multi-cycle RV32I core written in DCL. Fetch and execute alternate; the register file is
   made of flip-flops; decoding and arithmetic map to LUT4s. It starts from the sample written during
-  planning, which becomes `content/designs/rv32i.dcl` (see HDL.md, *A first look*).
+  planning, which becomes `content/designs/rv32i.dcl` (now `content/designs/rv32i.weft`).
 - **Board:** it connects to the virtual board's memory subsystem (instruction port, data port,
   memory-mapped peripherals). Illegal instructions, `ECALL` and `EBREAK` are reported on the board.
 - **Programs:** a small RV32I assembler in the course, and the same demos as Octet, so the two CPUs can be
@@ -622,7 +629,7 @@ keeps each course self-contained).
 
 ```
 courses/digital-circuits/
-  docs/PLAN.md, docs/HDL.md
+  docs/PLAN.md, docs/WEFT.md
   content/            outline.ts; chapters/<nn>-<slug>/{index.md, widgets/*.svelte, circuits/*.json, designs/*.dcl};
                       designs/ (Octet and RV32I in DCL); parts.ts (parts-bin specs and reference implementations);
                       YAML glossary, timeline, bibliography
@@ -747,7 +754,7 @@ courses/digital-circuits/
   - The FPGA flow: synthesis, mapping, packing, placement, routing, timing, bitstream.
   - Chapters 28–31; Octet and RV32I in DCL; `route` and `place` exercises.
   - The interchange netlist and the iCE40 labs; validation scripts.
-  - **Benchmark gate** for the TypeScript kernels (HDL.md, *Implementation language*).
+  - **Benchmark gate** for the TypeScript kernels (the original DCL plan; obsolete since synth).
   - Appendices F and G.
 - [x] **M8 — Epilogue and finish.**
   - Chapter 32; appendices C, D and H (timeline deck); breadboard illustrations.

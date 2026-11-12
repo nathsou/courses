@@ -114,7 +114,7 @@ const models = new Map<string, ModelRegistration>();
 
 /**
  * Register the digital model of a component type. Later milestones add models this way (parts-bin
- * cells, DCL-lowered primitives, FPGA fabric). Registering a type again replaces its model.
+ * cells, gates of Weft designs). Registering a type again replaces its model.
  */
 export function registerDigitalModel(type: string, factory: DigitalModelFactory, options?: Omit<ModelRegistration, 'factory'>): void {
   models.set(type, { factory, ...options });

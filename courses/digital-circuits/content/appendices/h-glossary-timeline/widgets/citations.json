@@ -213,7 +213,8 @@
   "real-gates"
  ],
  "ds1040": [
-  "inside-an-fpga"
+  "inside-an-fpga",
+  "appendix:datasheets"
  ],
  "eater8bit": [
   "breadboard-to-billions"
@@ -497,6 +498,10 @@
  "microchip-atf1502": [
   "cplds"
  ],
+ "mishchenko2007": [
+  "netlist-to-bitstream",
+  "appendix:simulator"
+ ],
  "moore1956": [
   "state-machines"
  ],
@@ -638,7 +643,9 @@
   "cplds"
  ],
  "prjicestorm": [
-  "inside-an-fpga"
+  "inside-an-fpga",
+  "appendix:simulator",
+  "appendix:datasheets"
  ],
  "putnam2014": [
   "cpus-on-a-chip"
@@ -740,6 +747,9 @@
  "sutter2005": [
   "real-gates",
   "breadboard-to-billions"
+ ],
+ "synth-weft": [
+  "appendix:dcl"
  ],
  "sze2007": [
   "press-a-key",

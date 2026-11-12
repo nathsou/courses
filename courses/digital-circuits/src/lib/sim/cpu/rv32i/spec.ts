@@ -36,14 +36,14 @@
  *
  * ## Timing model
  *
- * The reference core (`content/designs/rv32i.dcl`, Chapter 31) takes two clock cycles for every
+ * The reference core (`content/designs/rv32i.weft`, Chapter 31) takes two clock cycles for every
  * instruction: one to fetch it, one to execute it. Loads, stores, jumps and taken branches are no
  * slower, because the core's memory answers within the cycle (its `memory_value` input follows
  * `memory_address` at once, as in the course's boards) and its adder computes the next PC in the same
  * cycle as everything else. A trap (`ecall`, `ebreak`, an illegal instruction) is reported in the
  * execute cycle and the core stops there, so the trapping instruction has cost only its fetch cycle.
  * `RV32_TIMING` lists these numbers; the interpreter counts them so that ISA-level and gate-level runs
- * can be compared cycle for cycle (`src/lib/hdl/rv32i.test.ts` does, on the RTL simulator).
+ * can be compared cycle for cycle (Chapter 31's `rv32-board.test.ts` does, in synth's simulator).
  */
 
 export const REGISTER_NAMES = [
@@ -405,7 +405,7 @@ export function immJ(w: number): number {
 
 /**
  * Clock cycles of the reference core: fetch, then execute, for every instruction. A model of the
- * DCL core of Chapter 31, checked against it on the RTL simulator.
+ * Weft core of Chapter 31, checked against it in synth's simulator.
  */
 export const RV32_TIMING = {
   /** Every instruction: one cycle to fetch, one to execute (loads, stores, jumps and branches too). */
