@@ -1334,6 +1334,12 @@ cong1994:
   venue: IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems 13(1), 1–12
   url: https://vast.cs.ucla.edu/publications/flowmap-optimal-technology-mapping-algorithm-delay-optimization-lookup-table-based-fpga
   note: The first delay-optimal LUT mapping algorithm, polynomial in time, using a maximum-flow computation. 1995 best paper award of the IEEE Circuits and Systems Society.
+mishchenko2007:
+  authors: Alan Mishchenko, Sungmin Cho, Satrajit Chatterjee and Robert Brayton
+  year: 2007
+  title: 'Combinational and sequential mapping with priority cuts'
+  venue: IEEE/ACM International Conference on Computer-Aided Design (ICCAD), 354–361
+  note: Keeps only a few of the best cuts of every node, which makes LUT mapping fast enough for large designs with almost no loss; the mapper of ABC, and the plan synth’s mapper follows.
 mcmurchie1995:
   authors: Larry McMurchie and Carl Ebeling
   year: 1995

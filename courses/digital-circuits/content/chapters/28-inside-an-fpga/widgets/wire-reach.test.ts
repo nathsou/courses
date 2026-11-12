@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { nodeSynth } from '$lib/synth/node';
 import { DELAYS, fastest } from './wire-reach';
 
-const file = new URL('./ice40-delays.json', import.meta.url);
+const file = new URL('../../../../src/lib/synth/ice40-delays.json', import.meta.url);
 
 describe('crossing a row of iCE40 tiles (Figure 28.3)', () => {
   test('the delays are synth’s, for the HX1K (UPDATE_DELAYS=1 records them)', async () => {

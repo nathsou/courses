@@ -1,7 +1,7 @@
 /**
  * Wires of different lengths on an iCE40: the fastest way from a logic cell's output to a cell `distance`
  * tiles along the same row, with the delays of the timing model synth uses (the IceStorm timing database,
- * recorded in `ice40-delays.json` and checked against synth by `wire-reach.test.ts`).
+ * recorded in `src/lib/synth/ice40-delays.json` and checked against synth by `wire-reach.test.ts`).
  *
  * - A cell's output reaches the neighbouring tiles' local tracks directly, but no further: to go one tile at a
  *   time, every tile on the way needs a LUT that passes the signal on (a *repeater*).
@@ -14,7 +14,7 @@
  *
  * Delays are in nanoseconds.
  */
-import raw from './ice40-delays.json';
+import raw from '$lib/synth/ice40-delays.json';
 
 export interface Ice40Delays {
   lut: number;

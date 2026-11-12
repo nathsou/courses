@@ -134,7 +134,7 @@ describe('the bits', () => {
 });
 
 describe('the counter in the studio (Figure 28.7)', () => {
-  test('6 of 1,280 cells in two tiles, 6 pads; 706 bits set, 108 in its tiles, 8 in nearly every other logic tile', async () => {
+  test('6 of 1,280 cells in two tiles, 6 pads; 706 bits set, 108 in its tiles, 8 in each logic tile of four rows', async () => {
     const d = STUDIO_DESIGNS.counter!;
     const r = await implement(synth, studioFiles(d), { target: d.target, top: d.top });
     const lcs = r.chip!.cells.filter((c) => c.bel === 'lc');
@@ -149,9 +149,11 @@ describe('the counter in the studio (Figure 28.7)', () => {
     expect(bs.set_bits).toBe(706);
     expect(bs.tile_bits).toBe(175_872);
     expect(bs.tiles.filter((t) => tiles.has(`${t.x},${t.y}`)).reduce((s, t) => s + t.set.length, 0)).toBe(108);
-    const others = bs.tiles.filter((t) => t.t === 'logic' && !tiles.has(`${t.x},${t.y}`));
-    expect(others.filter((t) => t.set.length === 8).length).toBeGreaterThan(others.length - 3);
-    expect(others[0]!.f.filter((f) => f.n.startsWith('ColBufCtrl'))).toHaveLength(8);
+    // Every logic tile of rows 4, 5, 12 and 13 holds eight column-buffer bits.
+    const colbuf = bs.tiles.filter((t) => t.t === 'logic' && t.f.some((f) => f.n.startsWith('ColBufCtrl')));
+    expect([...new Set(colbuf.map((t) => t.y))].sort((a, b) => a - b)).toEqual([4, 5, 12, 13]);
+    expect(colbuf).toHaveLength(40);
+    for (const t of colbuf) expect(t.f.filter((f) => f.n.startsWith('ColBufCtrl')).flatMap((f) => f.b)).toHaveLength(8);
   });
 
   test('the real lab: synth’s starter design for the Go Board is 27 logic cells with 24 carry cells', async () => {
