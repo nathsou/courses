@@ -109,7 +109,7 @@ success: 'Every precondition you wrote is a fact the compiler must establish bef
 
 ## Arrays
 
-Memory is a function from addresses to values that a program updates one cell at a time. The **theory of arrays** captures exactly that, with two operations: *read*(a, i), the value of array a at index i, and *write*(a, i, v), the array that is like a except that index i now holds v. John McCarthy stated the axioms in 1962, in his program for a mathematical theory of computation:cite[mccarthy1962]
+Memory is a function from addresses to values that a program updates one cell at a time. The **theory of arrays** captures exactly that, with two operations: *read*(a, i), the value of array a at index i, and *write*(a, i, v), the array that is like a except that index i now holds v. John McCarthy stated the axioms in 1962, in his programme for a mathematical science of computation.:cite[mccarthy1962]
 
 $$
 \mathit{read}(\mathit{write}(a, i, v), j) \;=\; \begin{cases} v & \text{if } i = j \\ \mathit{read}(a, j) & \text{otherwise} \end{cases}

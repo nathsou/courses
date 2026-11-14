@@ -33,7 +33,7 @@ options:
   - text: About a hundred.
     why: 'The bug is not rare among *large* arrays. But an array of 16 elements has indices below 16, so `lo + hi` stays below 32 and an `i8` cannot overflow.'
   - text: About a million.
-    why: 'No number of tests is enough: with arrays of at most 16 elements, `lo + hi` is at most 30, well below 127.'
+    why: 'No number of tests is enough: with arrays of at most 16 elements, `lo + hi` is at most 31, well below 127.'
   - text: It never finds it.
     correct: true
     why: 'The failing inputs all have 65 elements or more. A tester that never generates them can run forever. Java''s testers were in the same position: their arrays never had a billion elements.'

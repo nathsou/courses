@@ -216,7 +216,7 @@ So far the processes have shared memory. [Chapter 4](/chapters/messages-and-fail
 
 ## Further reading
 
-- Lamport's 1977 paper introduces safety and liveness informally; Alpern and Schneider's three pages make them precise.:cite[lamport1977,alpern1985]
+- Lamport's 1977 paper introduces safety and liveness informally; Alpern and Schneider's short paper makes them precise.:cite[lamport1977,alpern1985]
 - Pnueli's paper is the origin of temporal logic in computer science.:cite[pnueli1977]
 - Vardi and Wolper's paper explains why automata are the right tool for LTL model checking.:cite[vardi1986]
 - Mike Jones's page relays Glenn Reeves's account of the Pathfinder resets, and is short and vivid.:cite[jones1997]

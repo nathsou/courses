@@ -7,7 +7,7 @@ duration: About 1 hour 15 minutes
 
 In 1978 Roger Needham and Michael Schroeder published protocols by which two computers on a network, each with its own encryption keys, could convince each other of who they were.:cite[needham1978] One of them, the *public-key* protocol, uses three messages. It became a textbook example, and it was analysed with a special-purpose logic of authentication without the flaw being noticed.:cite[burrows1990]
 
-In 1995 Gavin Lowe, then at Oxford, modelled the protocol in CSP and ran it through the model checker FDR with a small, precisely defined attacker. The checker produced an attack: a run in which an intruder makes Bob believe he is talking to Alice when Alice never spoke to Bob at all.:cite[lowe1995,lowe1996] The attack needs no broken cryptography and only one honest session. It had been there for seventeen years.
+In 1995 Gavin Lowe, then at Oxford, modelled the protocol in CSP and ran it through the model checker FDR with a small, precisely defined attacker. The checker produced an attack: a run in which an intruder makes Bob believe he is talking to Alice when Alice never spoke to Bob at all.:cite[lowe1995,lowe1996] The attack needs no broken cryptography, and only one session of each honest participant. It had been there for seventeen years.
 
 ::museum{exhibit=needham-schroeder-1995}
 

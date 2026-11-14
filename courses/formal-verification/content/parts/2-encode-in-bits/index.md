@@ -15,7 +15,7 @@ In 1847 George Boole, a self-taught mathematician who ran a school in Lincoln, p
 
 The first programs that decided propositional formulas were written as parts of theorem provers for first-order logic. In 1960 Martin Davis and Hilary Putnam described a procedure that eliminated variables one at a time by combining clauses.:cite[davis1960] It used too much memory, and in 1962 Davis, George Logemann and Donald Loveland replaced elimination by **search**: pick a variable, try a value, simplify, and backtrack on failure.:cite[davis1962] Their procedure, **DPLL**, is still the skeleton of every complete SAT solver. In 1965 J. Alan Robinson's **resolution** principle gave theorem proving its basic inference rule: from *A ∨ x* and *B ∨ ¬x*, conclude *A ∨ B*.:cite[robinson1965] Resolution is also the language in which solvers write their proofs (Chapter 8).
 
-Two years later the Soviet logician G. S. Tseitin showed how to convert any formula into clauses without the exponential blow-up of the textbook method, by naming each subformula with a fresh variable.:cite[tseitin1968] Chapter 6 uses his transformation on every encoding.
+Three years later the Soviet logician G. S. Tseitin showed how to convert any formula into clauses without the exponential blow-up of the textbook method, by naming each subformula with a fresh variable.:cite[tseitin1968] Chapter 6 uses his transformation on every encoding.
 
 ## Hopeless
 

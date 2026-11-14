@@ -13,7 +13,7 @@ A compiler that wants to keep a value in a register, reuse a computation or remo
 
 ## A theory of approximation
 
-Patrick and Radhia Cousot saw that Kildall's iteration was an instance of something general. In their 1977 paper, any analysis is an approximation of the program's exact semantics: a set of abstract values, a correspondence with sets of concrete states, abstract operations that over-approximate the concrete ones, and a fixpoint computed in finite time, with **widening** to force convergence and **narrowing** to recover precision.:cite[cousot1977] Soundness is then a theorem, not a hope: every concrete behaviour is accounted for in the abstract result. A year later Cousot and Nicolas Halbwachs added the first relational domain, convex polyhedra, which can discover linear relations among variables.:cite[cousot1978]
+Patrick and Radhia Cousot saw that Kildall's iteration was an instance of something general. In their 1977 paper, any analysis is an approximation of the program's exact semantics: a set of abstract values, a correspondence with sets of concrete states, abstract operations that over-approximate the concrete ones, and a fixpoint computed in finite time, with **widening** to force convergence and **narrowing** to recover precision.:cite[cousot1977] Soundness is then a theorem, not a hope: every concrete behaviour is accounted for in the abstract result. A year later Cousot and Nicolas Halbwachs added a relational domain, convex polyhedra, which can discover linear relations among variables.:cite[cousot1978]
 
 ## After Ariane 501
 

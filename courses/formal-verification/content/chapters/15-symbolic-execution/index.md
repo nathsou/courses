@@ -128,7 +128,7 @@ fn score(a: int, b: int, c: int, d: int) -> int {
 
 Sixteen paths for four branches, and the tests are what you would expect: one per combination of signs. Add a fifth `if` in the editor and there are 32. This is **path explosion**, and it is the central problem of symbolic execution. Real tools fight it. KLEE, for example, uses search heuristics to choose which path to extend next, and caches and simplifies its solver queries.:cite[cadar2008]
 
-Merging is worth a second look. If the two paths of an `if` are merged at the join, a variable gets an *if-then-else* value (*s = if a > 0 then 1 else 0*) and one formula covers both paths. The number of formulas stays linear in the size of the program; the formulas grow instead. Part IV's verifier does exactly this, and chapter 17 shows the price.
+Another defence is to merge paths. If the two paths of an `if` are merged at the join, a variable gets an *if-then-else* value (*s = if a > 0 then 1 else 0*) and one formula covers both paths. The number of formulas stays linear in the size of the program; the formulas grow instead. Part IV's verifier does exactly this, and chapter 17 shows the price.
 
 ```quiz
 q: 'A function has 30 if statements in sequence, each testing a different input. A symbolic executor that does not merge paths needs how many solver queries to explore it completely, roughly?'
