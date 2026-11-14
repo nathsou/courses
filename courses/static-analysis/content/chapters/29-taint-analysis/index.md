@@ -220,7 +220,7 @@ answer:
     };
 ```
 
-Compare the rule with S2077 on the visible fixture. If `db` came from one of the libraries S2077 knows (say `const db = mysql.createConnection(…)`; in the fixture it is a global, and S2077, which matches fully qualified names, would stay silent), S2077 would report four of the six queries: every one built by concatenation, including `'SELECT * FROM ' + table`, whose pieces are constants, and the `ORDER BY` query, whose column was validated. The taint rule reports one, the one that receives a request parameter through `byName`, and it can say where the data came from. In the hidden fixture, `notAHandler` is never called from a handler, so its parameter is not tainted: whether that is right depends on who calls it, which is the analysis's model of entry points at work.
+Compare the rule with S2077 on the visible fixture. If `db` came from one of the libraries S2077 knows (say `const db = mysql.createConnection(…)`; in the fixture it is a global, and S2077, which matches fully qualified names, would stay silent), S2077 would report four of the five queries: every one built by concatenation, including `'SELECT * FROM ' + table`, whose pieces are constants, and the `ORDER BY` query, whose column was validated. The taint rule reports one, the one that receives a request parameter through `byName`, and it can say where the data came from. In the hidden fixture, `notAHandler` is never called from a handler, so its parameter is not tainted: whether that is right depends on who calls it, which is the analysis's model of entry points at work.
 
 ## What taint analysis cannot see
 

@@ -414,7 +414,7 @@ Single-write tracking is **flow-insensitive**: it ignores the order of statement
 - `const { url } = req.body`: for destructuring, `writeExpr` is the whole right-hand side, `req.body`, not the property.
 - `const options = {}; options.rejectUnauthorized = false;`: the variable is written once, but the object is changed afterwards. Single-write tracking follows names, not objects, and sees an empty object.
 
-The first three can make a rule report something that is not there; the last can make it miss something that is. In practice the shortcut is good enough because code that defines a value and uses it nearby is mostly written with `const`. Chapter 15 replaces it, where it matters, with reaching definitions, which knows the order of statements; Part VI's points-to analysis follows objects as well as names.
+The first four can make a rule report something that is not there; the last can make it miss something that is. In practice the shortcut is good enough because code that defines a value and uses it nearby is mostly written with `const`. Chapter 15 replaces it, where it matters, with reaching definitions, which knows the order of statements; Part VI's points-to analysis follows objects as well as names.
 
 ```quiz
 q: "With `function connect(port = 443) { let host; if (port === 80) { host = 'plain'; } else { host = 'secure'; } return open(host, port); }`, what does `getValueOfExpression(context, hostArgument, 'Literal')` return for the `host` in `open(host, port)`?"

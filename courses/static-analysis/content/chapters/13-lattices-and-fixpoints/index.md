@@ -66,7 +66,7 @@ Recomputing every equation until nothing changes is correct but wasteful: after 
 
 The order in which nodes are taken does not change the result, only the number of steps. For a forward analysis, **reverse postorder** (a node before its successors, except along back edges) is a good initial order: each node is visited after its predecessors, and only loops make the algorithm revisit nodes.
 
-Step through constant propagation on the function below. Each box is a node of the function's control-flow graph, built statement by statement; the fact under it is its `OUT`. Watch `y` and `n` become ⊤ when the loop's back edge brings their new values to the loop's head, while `x` stays `1` and `z` becomes `11`.
+Step through constant propagation on the function below. Each box is a node of the function's control-flow graph, built statement by statement; the fact under it is its `OUT`. Watch `y` become ⊤ when the loop's back edge brings its new value to the loop's head (`n`, a parameter, is ⊤ from the start), while `x` stays `1` and `z` becomes `11`.
 
 :::fixpoint-stepper{n="13.2" analysis="constants"}
 ```js
