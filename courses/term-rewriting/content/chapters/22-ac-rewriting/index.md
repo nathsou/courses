@@ -44,7 +44,7 @@ Matching modulo AC is where things get interesting. The pattern $x + y$ matches 
 
 ::ac-matcher
 
-One more twist is needed for rewriting: the rule $x + 0 \to x$ should rewrite the sum $a + 0 + b$, even though the pattern $x + 0$ has only two summands. Peterson and Stickel handle this with **extension**: a left-hand side $l$ with an AC root $f$ also matches part of a sum, and the leftover summands are carried along, as if the rule were $l + z \to r + z$ for a fresh $z$. Tick the *extension* box in the matcher to see it.
+One more twist is needed for rewriting. The rule $x + 0 \to x$ already rewrites the sum $a + 0 + b$, because $x$ can take the sub-multiset $a + b$. But a rule such as `N(a) + N(b) -> N(@add(a, b))` should rewrite `N(1) + X + N(2)` too, and its pattern has exactly two summands, neither of which can absorb the `X`. Peterson and Stickel handle this with **extension**: a left-hand side $l$ with an AC root $f$ also matches part of a sum, and the leftover summands are carried along, as if the rule were $l + z \to r + z$ for a fresh $z$. Tick the *extension* box in the matcher to see it.
 
 AC matching is a search problem, and it is genuinely hard.
 

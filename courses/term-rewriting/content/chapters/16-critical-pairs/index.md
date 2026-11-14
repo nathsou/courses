@@ -66,7 +66,7 @@ The lemma is in Knuth and Bendix's 1970 paper for the case they needed;:cite[knu
 A terminating system is confluent if and only if all its critical pairs are joinable. For a finite terminating system this is decidable: compute the finitely many critical pairs, normalise both sides of each (normalisation terminates), and compare.
 :::
 
-Without termination the criterion fails in both directions. The system `F(x) -> A`, `F(x) -> B` would be caught (its critical pair `<A, B>` does not join), but a non-terminating system can have all critical pairs joinable and still not be confluent (Exercise 3), and Chapter 17 shows systems with no critical pairs at all that are confluent although they do not terminate.
+Without termination only half of the criterion survives. A critical pair that does not join still refutes confluence: the system `F(x) -> A`, `F(x) -> B` is caught by its critical pair `<A, B>`. But joinable critical pairs no longer prove anything: a non-terminating system can have all its critical pairs joinable and still not be confluent (Exercise 3). Chapter 17 shows what can replace termination: left-linear systems with no critical pairs at all are confluent even when they do not terminate.
 
 ## Is the algebra system confluent?
 

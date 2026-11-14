@@ -63,7 +63,7 @@ Edit the term to `(S(0) + 0) + (0 + S(0))`, or add the rule `x + 0 -> x` and wat
 
 ::reduction-graph{rules="F(x) -> G(x, x)\nA -> B\nG(A, B) -> C" term="F(A)" title="Two normal forms"}
 
-`F(A)` has two normal forms here, `C` and `G(B, B)`: the order of steps decides the answer. And here is a term with no normal form at all, but which reaches one if you are careful:
+`F(A)` has two normal forms here, `C` and `G(B, B)`: the order of steps decides the answer. And here is a term that can be rewritten for ever, but which reaches a normal form if you are careful:
 
 ::reduction-graph{rules="F(x, B) -> B\nA -> A\nC -> B" term="F(A, C)" title="Choose well, or loop"}
 

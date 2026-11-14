@@ -32,7 +32,7 @@ Monotonicity is essential. With $[F](x) = 0$, every term `F(…)` denotes $0$, a
 
 ## Polynomials
 
-Dallas Lankford proposed taking each $[f]$ to be a **polynomial** with natural-number coefficients.:cite[lankford1979] Such a polynomial is strictly monotone in $x_i$ exactly when $x_i$ actually occurs in it. Take Peano addition:
+Dallas Lankford proposed taking each $[f]$ to be a **polynomial** with natural-number coefficients.:cite[lankford1979] Such a polynomial is strictly monotone in $x_i$ as soon as it contains a monomial in $x_i$ alone, such as $x_i$ or $x_i^2$. (A mixed monomial is not enough on its own: $x_1 x_2$ does not grow with $x_1$ when $x_2 = 0$.) Take Peano addition:
 
 $$[0] = 1, \qquad [S](x) = x + 1, \qquad [+](x, y) = 2x + y.$$
 

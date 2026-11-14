@@ -66,7 +66,7 @@ $$
 \end{aligned}
 $$
 
-The interpretation of `Minus` ignores its second argument entirely, which a strictly monotone interpretation could not do: that is the extra freedom dependency pairs buy. The widget above finds both arguments automatically.
+(The two `Quot` rules must weakly decrease as well; $[\mathtt{Quot}](x, y) = x$ takes care of them, and the usable-rules refinement below removes the obligation altogether.) The interpretation of `Minus` ignores its second argument entirely, which a strictly monotone interpretation could not do: that is the extra freedom dependency pairs buy. The widget above finds both arguments automatically.
 
 Refinements abound. **Usable rules** restrict the rules that must weakly decrease to those that can actually be used to rewrite the arguments in a given cycle; **argument filters** drop arguments before comparing with a path order; and the whole method is organised as the **dependency pair framework**, in which a termination problem is a set of pairs plus rules, and many **processors** (graph decomposition, the subterm criterion, reduction pairs, narrowing, …) each turn a problem into simpler ones. Every competitive termination prover today, including AProVE and TTT2,:cite[giesl2017,korp2009] is built on this framework, and the annual Termination Competition runs them on the Termination Problems Data Base, a collection of thousands of systems.:cite[tpdb]
 

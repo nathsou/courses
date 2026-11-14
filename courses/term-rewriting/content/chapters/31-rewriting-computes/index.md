@@ -68,7 +68,7 @@ The instance in the widget is from Sipser's textbook and has the solution 2, 1, 
 Post's correspondence problem is undecidable.
 :::
 
-Post proved it in 1946 by reduction from the word problem.:cite[post1946] The search button explores sequences up to a bounded length, and can find solutions; it can never conclude that none exists, and no algorithm can, in general.
+Post proved it in 1946, by reduction from a decision problem about his own "normal systems".:cite[post1946] The search button explores sequences up to a bounded length, and can find solutions; it can never conclude that none exists, and no algorithm can, in general.
 
 ## Termination and confluence are undecidable
 
@@ -118,7 +118,7 @@ tests: |
   test('rules are tried in order', () => {
     expect(normalString([['aa', ''], ['a', 'b']], 'aaa')).toBe('b');
   });
-  test('binary counting down', () => {
+  test('erasing a unary number', () => {
     // unary to nothing: each "1" removes itself when followed by the end marker
     expect(normalString([['1#', '#']], '111#')).toBe('#');
   });

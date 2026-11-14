@@ -88,7 +88,7 @@ I(x * y) -> I(y) * I(x)
 ? a * b == b * a
 ```
 
-A query of the form `? s == t` asks whether the two sides have the same normal form. The first two are identities of group theory; the third is not (groups need not be commutative), and the two sides stay different. Here `I(x)` is $x^{-1}$ and `E` is $e$; `a` and `b` are variables, so each answer holds for all values of them. This is the third thread: an equational theorem prover, built in Part VI.
+A query of the form `? s == t` asks whether the two sides have the same normal form. The first two are identities of group theory; the third is not (groups need not be commutative), and the two sides stay different. Here `I(x)` is $x^{-1}$ and `E` is $e$; `a` and `b` are variables, so each answer holds for all values of them. This is the second thread: an equational theorem prover, built in Part VI.
 
 :::key
 Three problems, one mechanism: find a subterm that matches the left-hand side of a rule, replace it by the corresponding right-hand side, repeat until no rule applies.

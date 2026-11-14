@@ -89,7 +89,7 @@ x * (I(x) * z) -> z
 I(x * y) -> I(y) * I(x)
 ? I(a) * (a * b) == b
 ? (a * b) * I(b) == a
-? I(I(a) * b) * I(b * a) == E
+? I(I(a) * b) * I(I(b) * a) == E
 ? a * b == b * a
 ```
 

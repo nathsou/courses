@@ -34,7 +34,7 @@ options:
   - text: '`F(x, y)`'
     why: 'It goes the other way: `F(x, G(x))` is an instance of `F(x, y)` (take y ↦ G(x)), but no substitution turns `G(x)` into the variable `y`.'
   - text: '`F(G(x), x)`'
-    why: 'The first argument would force x ↦ G(x) and the second x ↦ x, which disagree.'
+    why: 'The first argument would force x ↦ G(x), and then the second argument would be `G(G(x))`, not `x`: no substitution turns `G(x)` into a variable.'
 ```
 
 ## The matching problem
