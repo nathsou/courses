@@ -325,7 +325,7 @@ A record of $N$ samples yields the **discrete Fourier transform** $X_k = \sum_{n
 
 A record sampled at <Var name="fs" value={44100} min={10} max={200000} log step={1} /> samples per second can represent frequencies up to <Out name="nyq" />. CD audio samples at 44.1 kHz because human hearing stops around 20 kHz.
 
-<Aside>**Aliases in the sky.** A telescope that observes once per night samples at 1 cycle/day. A planet with a 0.5-day period then looks identical to one with a 1-day or 2-day period (the ±1 cycle/day aliases). Several published exoplanet periods have turned out to be aliases of the true one.</Aside>
+<Aside>**Aliases in the sky.** A telescope that observes once per night samples at 1 cycle/day. A signal at frequency $f$ then looks identical to one at $f \pm 1$ cycle/day: a 3-day period (1/3 cycle/day) is indistinguishable from a 1.5-day one (2/3 cycle/day) or a 0.75-day one (4/3 cycle/day). Several published exoplanet periods have turned out to be aliases of the true one: 55 Cancri e was first reported with a 2.8-day period, but its true period is 0.74 days, one cycle per day away.</Aside>
 
 ### The fast Fourier transform
 
