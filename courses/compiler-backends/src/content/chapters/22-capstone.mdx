@@ -32,7 +32,7 @@ The emulator counts every instruction it executes, so we can measure what the pa
 
 The numbers are more interesting than a table of steady improvements:
 
-- **mem2reg is the big win** — 1.4–1.6× fewer instructions — everywhere except `fib`. In `fib`, the value `n` must survive a recursive call no matter what. At -O0 it lives in a stack slot; at -O1 it lives in a callee-saved register, which the prologue saves and the epilogue restores. Both cost one store and one load per call.
+- **mem2reg is the big win** — 1.5–1.6× fewer instructions — everywhere except `fib`. In `fib`, the value `n` must survive a recursive call no matter what. At -O0 it lives in a stack slot; at -O1 it lives in a callee-saved register, which the prologue saves and the epilogue restores. Both cost one store and one load per call.
 - **-O2 is not always better than -O1.** CSE and if-conversion help the sieve and the sort, but not the Collatz loop. Optimisations are heuristics, and every production compiler has benchmarks that regress.
 - **Linear scan costs 5–23%** here, mostly in extra moves around loops, where its interval approximation is weakest.
 - **Five registers made `fib` faster.** With no callee-saved registers available, the allocator spills `n` instead. The spill code runs only where it is needed, whereas the -O2 prologue saves `s1` and `s2` even on the leaf path (`n < 2`), which half of all calls take. This is exactly the waste that *shrink-wrapping* (Chapter 14) removes.
