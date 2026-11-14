@@ -10,13 +10,13 @@ builds:
   - A Goodhart simulation
 ---
 
-CourseGPT cannot do much harm: it writes children’s stories, badly. But everything in this book scales. The same training that makes it continue a story makes a large model continue any text, including instructions for things we would rather it did not help with; the same fine-tuning that teaches it a format can teach it anything; and the same tool use that lets it call a calculator lets an agent send email and run code. **Safety** is the study of how such systems fail to do what we intend, and of how to find and prevent those failures.
+CourseGPT cannot do much harm: it writes children’s stories, badly. But everything in this course scales. The same training that makes it continue a story makes a large model continue any text, including instructions for things we would rather it did not help with; the same fine-tuning that teaches it a format can teach it anything; and the same tool use that lets it call a calculator lets an agent send email and run code. **Safety** is the study of how such systems fail to do what we intend, and of how to find and prevent those failures.
 
 This chapter is necessarily partial. It covers failures that can be demonstrated and measured at our scale, and points to the wider field.
 
 ## The objective is not the intention
 
-Every model in this book optimised a number: cross-entropy, a reward model’s score, the fraction of correct answers. Chapter 21 showed that optimising a learned reward hard enough finds its errors — Goodhart’s law. This is the general pattern of **specification gaming**: a system does what it was scored on rather than what was meant, like the simulated boat-racing agent that learned to circle forever collecting bonus points instead of finishing the race :cite[krakovna2020] :cite[amodei2016].
+Every model in this course optimised a number: cross-entropy, a reward model’s score, the fraction of correct answers. Chapter 21 showed that optimising a learned reward hard enough finds its errors — Goodhart’s law. This is the general pattern of **specification gaming**: a system does what it was scored on rather than what was meant, like the simulated boat-racing agent that learned to circle forever collecting bonus points instead of finishing the race :cite[krakovna2020] :cite[amodei2016].
 
 Whether harder optimisation hurts depends on the kind of error in the proxy. When the errors are small and spread evenly, choosing the candidates the proxy rates highest still picks good ones. When a few errors are enormous — a reward model that wildly overrates some strange output — strong optimisation finds exactly those.
 

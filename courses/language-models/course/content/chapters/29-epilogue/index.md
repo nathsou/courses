@@ -1,14 +1,14 @@
 ---
 number: 29
 title: Epilogue
-summary: From 30 million parameters to the frontier. What we built, what changes with scale and what does not, what this book left out, and where to go next.
+summary: From 30 million parameters to the frontier. What we built, what changes with scale and what does not, what this course left out, and where to go next.
 duration: About 30 minutes
 prerequisites: [what-is-a-language-model]
 builds:
   - A sense of scale
 ---
 
-The book began with counting characters. Chapter 1 measured the entropy of English letters; Chapter 2 predicted the next character from the last few, and measured how surprised the prediction was. Everything since has been a better answer to that same question — what comes next, and how sure are we? — and a better way of paying for the answer.
+The course began with counting characters. Chapter 1 measured the entropy of English letters; Chapter 2 predicted the next character from the last few, and measured how surprised the prediction was. Everything since has been a better answer to that same question — what comes next, and how sure are we? — and a better way of paying for the answer.
 
 ## What we built
 
@@ -24,13 +24,13 @@ In **Part I** text became numbers: bytes, characters, and the tokens of byte-pai
 **Estimate before running.** Training time in days is approximately 6 × parameters × tokens ÷ (peak FLOPs per second × utilisation × 86,400). In the calculator, halve utilisation and predict the change: the run takes twice as long. Treat the result as a budget estimate, not a promise of measured throughput.
 :::
 
-Frontier models are 10,000 times larger than CourseGPT and train on 10,000 times more tokens: roughly 10⁸ times the compute. Almost everything in this book carries across that gap unchanged. The loss is the same cross-entropy, the architecture is the same stack of attention and MLP blocks, with Chapter 18’s refinements, and the optimisers, the schedules, the KV cache and the sampling methods are the ones we wrote. What changes is what the models can do. At our scale, a model learns grammar, names that persist through a story, and simple cause and effect; at 10⁸ times the compute, the same objective yields models that write working programs, explain their reasoning, and pass professional examinations. That is the observation that has driven the field since GPT-2 :cite[radford2019], and the reason Sutton’s “bitter lesson” — that general methods which scale with compute win over hand-built knowledge — has been quoted so often :cite[sutton2019].
+Frontier models are 10,000 times larger than CourseGPT and train on 10,000 times more tokens: roughly 10⁸ times the compute. Almost everything in this course carries across that gap unchanged. The loss is the same cross-entropy, the architecture is the same stack of attention and MLP blocks, with Chapter 18’s refinements, and the optimisers, the schedules, the KV cache and the sampling methods are the ones we wrote. What changes is what the models can do. At our scale, a model learns grammar, names that persist through a story, and simple cause and effect; at 10⁸ times the compute, the same objective yields models that write working programs, explain their reasoning, and pass professional examinations. That is the observation that has driven the field since GPT-2 :cite[radford2019], and the reason Sutton’s “bitter lesson” — that general methods which scale with compute win over hand-built knowledge — has been quoted so often :cite[sutton2019].
 
 Some things do change qualitatively. **Data** becomes the central problem: finding, filtering and deduplicating tens of trillions of tokens of text worth learning from, and deciding their mixture :cite[penedo2024]. **Engineering** becomes most of the work: Chapter 27’s parallelism, and the reliability of thousands of GPUs. **Post-training** grows from a small fine-tuning step into a large programme of its own — instruction data, preferences, and reinforcement learning on problems with checkable answers (Chapters 20–22). And **evaluation** and **safety** become harder, because the models are more capable than the tests (Chapters 25 and 28).
 
-## What this book left out
+## What this course left out
 
-A book has to stop somewhere. Some of what we did not cover:
+A course has to stop somewhere. Some of what we did not cover:
 
 - **Other architectures.** State-space models such as Mamba :cite[gu2023mamba] replace attention with a recurrence that can be computed in parallel during training, returning, in a new form, to Chapter 9’s compressed state; hybrids mix them with attention layers. Diffusion language models generate all positions at once and refine them.
 - **Long context.** Extending a model from thousands to millions of tokens of context: position interpolation, efficient attention and the training data needed to use long context well.
@@ -45,11 +45,11 @@ These are research questions, open to anyone who can train and measure a model. 
 
 ## Where to go next
 
-- **Build larger.** The labs in this book run on one GPU. Train a model on a general web corpus such as FineWeb-Edu :cite[penedo2024] at the Chinchilla-optimal size for your budget (Chapter 17), and evaluate it with Chapter 25’s methods.
-- **Read the papers.** Appendix J lists every paper cited in the book, with a timeline. The technical reports of open models — Llama, DeepSeek, OLMo, Qwen — describe the whole pipeline in detail.
-- **Take part.** Open-source projects in training (nanoGPT and its descendants), inference (llama.cpp, vLLM) and interpretability welcome contributions, and many of this book’s challenges are small research projects.
+- **Build larger.** The labs in this course run on one GPU. Train a model on a general web corpus such as FineWeb-Edu :cite[penedo2024] at the Chinchilla-optimal size for your budget (Chapter 17), and evaluate it with Chapter 25’s methods.
+- **Read the papers.** Appendix J lists every paper cited in the course, with a timeline. The technical reports of open models — Llama, DeepSeek, OLMo, Qwen — describe the whole pipeline in detail.
+- **Take part.** Open-source projects in training (nanoGPT and its descendants), inference (llama.cpp, vLLM) and interpretability welcome contributions, and many of this course’s challenges are small research projects.
 
-Thank you for reading, and for building. The best way to understand a language model is still the one this book took: make one.
+Thank you for reading, and for building. The best way to understand a language model is still the one this course took: make one.
 
 ## Check your understanding
 

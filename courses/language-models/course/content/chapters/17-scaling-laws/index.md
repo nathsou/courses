@@ -1,7 +1,7 @@
 ---
 number: 17
 title: Scaling laws
-summary: A language model's loss falls as a smooth power law in its size, its data and its compute, over many orders of magnitude. We meet the laws of Kaplan and Chinchilla, measure our own with sixteen small GPTs, use it to predict CourseGPT's loss before looking, and ask what the laws leave out — the cost of using a model, limited data, and abilities that loss does not show.
+summary: A language model's loss falls as a smooth power law in its size, its data and its compute, over many orders of magnitude. We meet the laws of Kaplan and Chinchilla, measure our own with seventeen small GPTs, use it to predict CourseGPT's loss before looking, and ask what the laws leave out — the cost of using a model, limited data, and abilities that loss does not show.
 duration: About 2 hours
 prerequisites: [scaling-up, optimisation]
 builds:

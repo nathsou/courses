@@ -11,7 +11,7 @@ builds:
   - The first model to beat Kneser–Ney decisively
 ---
 
-Chapter 10’s attention-only model could look anywhere in its context, yet it scored worse than a bigram-sized MLP. Attention on its own only *moves* information around: every output is a weighted average of value vectors. There is no step at which a position *thinks* about what it has gathered, and a stack of such layers does not train well.
+Chapter 10’s attention-only model could look anywhere in its context, yet it scored worse than Chapter 7’s MLP. Attention on its own only *moves* information around: every output is a weighted average of value vectors. There is no step at which a position *thinks* about what it has gathered, and a stack of such layers does not train well.
 
 The **Transformer** :cite[vaswani2017] fixes this with three additions, arranged around one idea. The idea is a **residual stream**: a vector at every position that flows up through the network, which each layer reads from and adds to. The additions are:
 

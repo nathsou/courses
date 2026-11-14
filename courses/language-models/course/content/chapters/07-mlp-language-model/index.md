@@ -34,7 +34,7 @@ Cx:
   effect: Two tokens with nearby embeddings produce similar predictions wherever they appear — exactly the generalisation an n-gram table lacks.
 dd:
   label: "$d$ — embedding dimension"
-  what: The length of each embedding vector (16 in our browser model; 384 in CourseGPT; several thousand in frontier models).
+  what: The length of each embedding vector (16 in our browser model; 512 in CourseGPT; several thousand in frontier models).
   effect: Too small and distinct tokens are forced together; too large and the embedding table dominates the parameter count for little benefit.
 ```
 

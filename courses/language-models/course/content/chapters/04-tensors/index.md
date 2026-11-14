@@ -21,10 +21,10 @@ A tensor has a **shape**: the size of each of its dimensions (also called *axes*
 
 | Symbol | Axis | CourseGPT |
 |---|---|---|
-| $B$ | batch — independent sequences processed together | 32–64 |
-| $T$ | time — positions in a sequence (the context length) | 256 |
-| $C$ | channels — the width of each position’s vector | 384 |
-| $H$ | attention heads | 6 |
+| $B$ | batch — independent sequences processed together | 32 |
+| $T$ | time — positions in a sequence (the context length) | 512 |
+| $C$ | channels — the width of each position’s vector | 512 |
+| $H$ | attention heads | 8 |
 | $V$ | vocabulary size | 8,192 |
 
 A batch of token ids has shape $(B, T)$. After the embedding layer (Chapter 7) it becomes $(B, T, C)$, one vector per position. The final layer produces **logits** of shape $(B, T, V)$, a score for every vocabulary item at every position. Memory is the product of the dimensions times four bytes (for 32-bit floats):
@@ -46,12 +46,12 @@ Ts:
   label: "$T$ — sequence length"
   what: The number of positions (tokens) in each sequence — the context window.
   effect: Most activations grow linearly with $T$, but attention scores grow with $T^2$ — the main obstacle to long contexts (Chapters 10 and 16).
-  param: { key: shape.T, min: 16, max: 4096, step: 16, value: 256, log: true }
+  param: { key: shape.T, min: 16, max: 4096, step: 16, value: 512, log: true }
 Cs:
   label: "$C$ — model width"
   what: The length of the vector that represents each position inside the model (also called $d_{\text{model}}$).
   effect: Wider models are more expressive; parameter count grows roughly as $C^2$.
-  param: { key: shape.C, min: 64, max: 4096, step: 64, value: 384, log: true }
+  param: { key: shape.C, min: 64, max: 4096, step: 64, value: 512, log: true }
 ```
 
 ::shape-calculator

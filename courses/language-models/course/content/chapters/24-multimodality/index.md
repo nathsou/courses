@@ -9,7 +9,7 @@ builds:
   - The CLIP loss
 ---
 
-Everything in this book has been text. The Transformer, though, does not care what its tokens stand for. It takes a sequence of vectors and returns a sequence of vectors, and the only place the word “language” appears is in the embedding table at the bottom and the unembedding at the top. Replace them, and the same machine reads images, sound or anything else that can be cut into a sequence.
+Everything in this course has been text. The Transformer, though, does not care what its tokens stand for. It takes a sequence of vectors and returns a sequence of vectors, and the only place the word “language” appears is in the embedding table at the bottom and the unembedding at the top. Replace them, and the same machine reads images, sound or anything else that can be cut into a sequence.
 
 This chapter is a survey. CourseGPT stays text-only — training a vision model worth the name needs data and compute beyond this course’s budget — but the pieces are small enough to build, and the ideas are the ones behind every model that looks at pictures.
 

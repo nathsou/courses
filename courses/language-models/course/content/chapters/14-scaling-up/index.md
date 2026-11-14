@@ -142,7 +142,7 @@ The attention matrices are also a time problem. Computing $QK^\top$ takes one ma
 
 ### Softmax in one pass
 
-The fix is to never form the matrix. For one query, attention is $o = \sum_i p_i v_i$ with $p_i = e^{s_i} / \sum_j e^{s_j}$. The difficulty is that the normaliser $\sum_j e^{s_j}$ — and, for numerical stability, the maximum score (Chapter 5) — depend on *all* the scores, so it seems we need them all before computing anything.
+The fix is to never form the matrix. For one query, attention is $o = \sum_i p_i v_i$ with $p_i = e^{s_i} / \sum_j e^{s_j}$. The difficulty is that the normaliser $\sum_j e^{s_j}$ — and, for numerical stability, the maximum score (Chapter 4) — depend on *all* the scores, so it seems we need them all before computing anything.
 
 We do not. Process the keys in blocks, and keep three running quantities: the maximum score so far $m$, the sum of exponentials so far $\ell$ (relative to $m$), and the unnormalised output so far $\mathbf{a}$. When a new block arrives with scores $s_i$:
 

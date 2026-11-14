@@ -76,7 +76,7 @@ sig:
 nn:
   label: "$n$ — the number of samples averaged"
   what: For a minibatch loss, the number of tokens in the batch.
-  effect: Quadrupling the batch halves the noise in the loss and its gradient. That is why noise falls only slowly with batch size, and why very large batches give diminishing returns (Chapter 17).
+  effect: Quadrupling the batch halves the noise in the loss and its gradient. That is why noise falls only slowly with batch size, and why very large batches give diminishing returns (Chapter 12).
 ```
 
 The same formula appears throughout the course. It governs the noise of minibatch gradients (Chapter 5) and the error bars on a benchmark score measured on $n$ questions (Chapter 25). It also explains why initialisation divides weights by $\sqrt{\text{fan-in}}$ (Chapter 7): a sum of $n$ independent terms has a standard deviation $\sqrt n$ times one term’s.
