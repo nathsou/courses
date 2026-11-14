@@ -168,7 +168,7 @@ A capacitor charged to *V* stores energy, and since the water picture makes it e
 
 $$E = \tfrac{1}{2}\,C\,V^2.$$
 
-Notice the square: double the voltage and the energy is four times bigger. Our 1000 µF at 5 V holds ½ × 0.001 × 25 = 12.5 mJ, which would lift a gram by about 1.3 cm; at 50 V it holds 1.25 J. That is why the big smoothing capacitor in a power supply is labelled with a maximum voltage, and why one charged to mains voltage can hurt.
+Notice the square: double the voltage and the energy is four times bigger. Our 1000 µF at 5 V holds ½ × 0.001 × 25 = 12.5 mJ, which would lift a gram by about 1.3 m; at 50 V it holds 1.25 J. That is why the big smoothing capacitor in a power supply is labelled with a maximum voltage, and why one charged to mains voltage can hurt.
 
 There is a second fact that surprises people. Charging a capacitor from a battery of voltage *V* takes a total charge *CV* from the battery, and the battery delivers energy *Q V* = *CV*², which is *twice* what the capacitor stores. The other half, ½*CV*², is turned into heat, and it makes no difference what the resistance is: a large resistor takes a long time and dissipates the same half as a small one does in a moment. (The analog engine’s tests check the energy balance numerically: half stored, half heat.) A wire charged and discharged by a gate therefore costs *CV*² of the supply’s energy in every full cycle, whatever the wire’s resistance, and this will matter at 100 million cycles a second.
 
@@ -189,7 +189,7 @@ So a gate driving a 5 cm trace and two other gates sees about 5 + 7 = 12 pF; cal
 Watch the figure while you change the numbers. The metrics under the scope follow from the rules of the last sections:
 
 - **Delay.** The next gate sees the edge at 50 %, after 0.69 τ = 0.35 ns for our 0.5 ns. Add that to every wire in a path and you have the reason that a processor’s clock cannot be arbitrarily fast.
-- **Speed limit.** The wire must settle within each half period, which needs about 5 τ: a period of 10 τ, or a clock of 200 MHz for our wire. Try a 1 kΩ output into 1 nF (a heavily loaded net) and the same rule says 1 MHz.
+- **Speed limit.** The wire must settle within each half period, which needs about 5 τ: a period of 10 τ, or a clock of 200 MHz for our wire. Try a 1 kΩ output into 1 nF (a heavily loaded net) and the same rule says 100 kHz.
 - **Power.** Each full cycle costs *CV*², which for 10 pF at 5 V is 250 pJ. At 100 MHz that is 250 pJ × 10⁸ = **25 mW for a single wire**. A chip has tens of millions of wires and billions of transistor gates, which is where its watts come from, and it is why every generation of chips lowers its supply voltage (the *V*² term) and shrinks its wires (the *C* term). The formula *P* = *C V*² *f* is the first thing a chip designer computes.
 
 :::key

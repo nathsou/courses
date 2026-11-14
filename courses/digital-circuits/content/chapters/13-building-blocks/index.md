@@ -193,7 +193,7 @@ To light one digit you must choose one of ten cathodes: a *decoder* with ten one
 
 The idea of drawing digits from bars is older than electronics. A patent filed by Frank W. Wood in 1908 already built numerals from lamps behind slotted shapes, with the aim of using as few lamps for each character as possible.:cite[wood1908] What is new is that, once each bar is one output of a logic circuit, a display is a truth table with seven output columns.
 
-**Every segment is a Boolean function of four variables**, and Chapter 12’s tools apply. Take segment e, the bottom left bar. Which digits light it? In hexadecimal, 0, 2, 6, 8, A, b, C, E and F. Write it as a 16-row table, find the minimal sum of products, and you have its equation.
+**Every segment is a Boolean function of four variables**, and Chapter 12’s tools apply. Take segment e, the bottom left bar. Which digits light it? In hexadecimal, 0, 2, 6, 8, A, b, C, d, E and F. Write it as a 16-row table, find the minimal sum of products, and you have its equation.
 
 ```quiz
 q: 'A decimal clock only ever shows the digits 0 to 9, so the six input codes 1010 to 1111 never occur, and the decoder is free to do anything with them: they are don’t-cares (Chapter 12 used that freedom to shrink segment a). Compared with a decoder that must also draw the letters A to F, how much smaller are the minimal equations of the seven segments, all together?'
@@ -214,7 +214,7 @@ Now for the flagship. Use the keypad, the four bit switches or the counter to fe
 :::lab[Read the equations]
 1. In **Hex** mode press 8. All seven segments light. Now press 0: every segment but g is on. Click segment g in *Equations* view: it is lit for 2, 3, 4, 5, 6, 8, 9, A, b, d, E, F, and dark for 0, 1, 7 and C.
 2. Choose segment **c**: in hex mode its formula has five terms and ten literals, in decimal mode only three, `¬D1 + D0 + D2`. Read it as words: the bottom right bar is lit unless D1 is 1 while D0 and D2 are both 0, and the only *decimal* digit like that is 2. (The bar is missing from a 2, as you can see on the display.)
-3. Choose segment **e**. In hex mode it needs four terms and eight literals, `¬D2·¬D0 + D1·¬D0 + D3·D1 + D3·D2`. Switch to decimal: the last two terms disappear, because they only matter for A, b, E and F, and the formula is `¬D2·¬D0 + D1·¬D0`. Look at the chips to see which digits light the bar.
+3. Choose segment **e**. In hex mode it needs four terms and eight literals, `¬D2·¬D0 + D1·¬D0 + D3·D1 + D3·D2`. Switch to decimal: the last two terms disappear, because they only matter for b, C, d and F, and the formula is `¬D2·¬D0 + D1·¬D0`. Look at the chips to see which digits light the bar.
 4. In decimal mode press A, b, C, d, E and F. The decoder was free to do anything with these codes, and what it does is a curiosity, not a glyph: the equations were never asked to draw a letter.
 :::
 

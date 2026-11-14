@@ -185,7 +185,7 @@ and so on. Every carry is now a sum of products of the g’s, the p’s and the 
 
 Around this unit an adder needs one XOR and one AND per column to make p and g, and one XOR per column for the sum bit p ⊕ carry: 8 + 14 + 4 = 26 gates for four bits, against 20 for four full adders. That is the price of speed. (A chip that does this job, the 74182, is called a look-ahead carry generator.)
 
-There is a catch, and the figure shows it. The wide ANDs grow with the position: the carry into column 15 would need an AND of 16 inputs and an OR of 17, and real gates have at most a handful. Designers therefore combine the (g, p) pairs of neighbouring groups in a **tree**: two groups with (G, P) and (G′, P′) merge into one whose generate is G + P·G′ (the upper group generates, or it propagates a carry that the lower group generated) and whose propagate is P·P′. A tree of such merges gives every carry after about log<sub>2</sub> *n* levels of them, instead of *n*. Doubling the word adds *one level*, two gate delays, instead of doubling the delay.
+There is a catch, and the figure shows it. The wide ANDs grow with the position: the carry into column 15 would need an AND of 16 inputs and an OR of 16, and real gates have at most a handful. Designers therefore combine the (g, p) pairs of neighbouring groups in a **tree**: two groups with (G, P) and (G′, P′) merge into one whose generate is G + P·G′ (the upper group generates, or it propagates a carry that the lower group generated) and whose propagate is P·P′. A tree of such merges gives every carry after about log<sub>2</sub> *n* levels of them, instead of *n*. Doubling the word adds *one level*, two gate delays, instead of doubling the delay.
 
 Which brings us to the race. Both adders below are built gate by gate on the digital engine, with a 1 ns delay for each gate, and both are given the same two numbers. The waveforms are the sum outputs, recorded change by change; drag the time slider (or press Play) to see the sum at any moment. Red marks an output that shows the wrong value.
 
@@ -362,7 +362,7 @@ solution: 14-arithmetic/exercises/fa-nand.json
 ```
 
 :::challenge[How slow is a 64-bit ripple adder?]
-With 1 ns gates, the worst-case delay of an *n*-bit ripple adder in this chapter’s gates is 2*n* − 1 ns. What clock frequency does that allow for *n* = 64, if nothing else is slow? (127 ns is about 7.9 MHz.) Now suppose the gates were 100 times faster, like the ones in a modern chip (10 ps). Compute the same quantity for a lookahead adder whose delay is 2 log<sub>2</sub> *n* + 2 gates, and compare. Then explain why processors combine both ideas, with lookahead inside each group of four bits and a ripple, or another lookahead, between the groups. (The chip in the next section does this.)
+With 1 ns gates, the worst-case delay of an *n*-bit ripple adder in this chapter’s gates is 2*n* − 1 ns. What clock frequency does that allow for *n* = 64, if nothing else is slow? (127 ns is about 7.9 MHz.) Now suppose the gates were 100 times faster, like the ones in a modern chip (10 ps). Compute the same quantity for a lookahead adder whose delay is 2 log<sub>2</sub> *n* + 1 gates, and compare. Then explain why processors combine both ideas, with lookahead inside each group of four bits and a ripple, or another lookahead, between the groups. (The chip in the next section does this.)
 :::
 
 ## Build it for real

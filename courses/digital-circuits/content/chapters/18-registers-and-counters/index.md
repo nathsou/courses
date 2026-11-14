@@ -42,7 +42,7 @@ In software, a variable keeps its value until you assign to it. In hardware noth
 
 ## Counting by halves: the ripple counter
 
-Take the toggle flip-flop of Chapter 17, which changes state on every rising edge of its clock and so runs at half the clock's frequency. Now clock a second toggle flip-flop from the *output* of the first: it toggles once for every two edges of the original clock, so it runs at a quarter. A third runs at an eighth, and so on. Read the outputs together as a binary number, with the last stage as the least significant bit: the row counts.
+Take the toggle flip-flop of Chapter 17, which changes state on every rising edge of its clock and so runs at half the clock's frequency. Now clock a second toggle flip-flop from the *output* of the first: it toggles once for every two edges of the original clock, so it runs at a quarter. A third runs at an eighth, and so on. Read the outputs together as a binary number, with the first stage as the least significant bit: the row counts.
 
 The stage has to toggle when the previous output *falls*, not when it rises. The previous output falls exactly when a carry is due: in binary, adding one to …0111 turns all the ones to zeros and the first zero to a one, and each bit that falls is the signal for the next bit to flip. With a D flip-flop with Q̄ fed back to D, the clock of the next stage is the previous stage's Q̄, which rises exactly when Q falls.
 
