@@ -167,7 +167,7 @@ describe('the bill of materials', () => {
   test('a quantity is the most that any single lab needs', () => {
     expect(line('led').all).toBe(8); // Chapters 18, 20, 23, 24 and 26 each put eight LEDs on a row
     expect(line('r-330').all).toBe(8);
-    expect(line('r-10k').all).toBe(8); // Chapters 14, 23 and 24 (eight pull-downs, or eight ladder resistors)
+    expect(line('r-10k').all).toBe(8); // Chapters 14 and 23 (eight pull-downs)
     expect(line('dip').all).toBe(8);
     expect(line('hc595').all).toBe(2); // Chapter 25's Arduino EEPROM programmer
     expect(line('hc283').all).toBe(2); // Chapter 14's 8-bit adder
