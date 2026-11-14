@@ -77,7 +77,7 @@ items:
 
 Paper dictionaries cannot sort characters alphabetically, so they group them by a shared component, the **radical** (部首 bùshǒu), usually the meaning part you met in the last lesson. There are about 200, but a couple of dozen cover most common characters.
 
-Learning the main radicals pays off twice: they tell you roughly what a character is about, and they turn complicated characters into a few familiar chunks. 谢 (thank) is not fifteen random strokes: it is 讠 speech + 身 body + 寸 inch.
+Learning the main radicals pays off twice: they tell you roughly what a character is about, and they turn complicated characters into a few familiar chunks. 谢 (thank) is not twelve random strokes: it is 讠 speech + 身 body + 寸 inch.
 
 ::radical-explorer
 
