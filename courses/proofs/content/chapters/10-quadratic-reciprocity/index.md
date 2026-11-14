@@ -1,7 +1,7 @@
 ---
 number: 10
 title: Quadratic reciprocity
-summary: When is a number a perfect square modulo a prime? Euler guessed a law linking the questions “is p a square mod q?” and “is q a square mod p?”. Gauss proved it at nineteen and called it the golden theorem. We prove it by counting points in a rectangle.
+summary: When is a number a perfect square modulo a prime? Euler guessed a law linking the questions “is p a square mod q?” and “is q a square mod p?”. Gauss proved it at eighteen and called it the golden theorem. We prove it by counting points in a rectangle.
 duration: About 3 hours
 prerequisites: [fermats-little-theorem, two-squares]
 theorems: [Euler’s criterion, Gauss’s lemma, The law of quadratic reciprocity]
@@ -189,7 +189,7 @@ solution: |
 ```
 
 ```quiz
-q: 'Both $19$ and $23$ are $\equiv 3 \pmod 4$. If $\left(\frac{19}{23}\right) = 1$, what is $\left(\frac{23}{19}\right)$?'
+q: 'Both $19$ and $23$ are $\equiv 3 \pmod 4$, and $\left(\frac{23}{19}\right) = \left(\frac{4}{19}\right) = 1$. What is $\left(\frac{19}{23}\right)$?'
 options:
   - text: '$+1$'
     why: Reciprocity flips the sign when both primes are $3 \bmod 4$.

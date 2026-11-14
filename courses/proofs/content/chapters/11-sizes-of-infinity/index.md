@@ -4,7 +4,7 @@ title: Sizes of infinity
 summary: Are there more fractions than whole numbers? More real numbers than fractions? Georg Cantor answered with bijections and a diagonal, discovered that there are infinitely many sizes of infinity, and paid a heavy price for it.
 duration: About 2½ hours
 prerequisites: [for-all-there-exists, unique-factorisation]
-theorems: [ℚ is countable, ℝ is uncountable (Cantor, 1891), Cantor’s theorem, The Schröder–Bernstein theorem]
+theorems: [ℚ is countable, "ℝ is uncountable (Cantor, 1891)", Cantor’s theorem, The Schröder–Bernstein theorem]
 techniques: [bijection, diagonal argument, proof by contradiction, construction]
 ---
 
@@ -61,7 +61,7 @@ Look at the sequence the tree produces: $1, \frac12, 2, \frac13, \frac32, \frac2
 
 ## The reals are not
 
-On 29 November 1873 Cantor wrote to Dedekind with a question he could not answer: can the real numbers be listed? Nine days later he sent a proof that they cannot. The argument he is famous for, from 1891, is simpler still.:cite[cantor1891]
+On 29 November 1873 Cantor wrote to Dedekind with a question he could not answer: can the real numbers be listed? Just over a week later he sent a proof that they cannot. The argument he is famous for, from 1891, is simpler still.:cite[cantor1891]
 
 :::theorem{name="Uncountability of the reals" who="Georg Cantor" year="1874; 1891"}
 The real numbers between $0$ and $1$ cannot be listed: for every sequence $x_1, x_2, x_3, \ldots$ of real numbers there is a real number in $(0, 1)$ that is not in the sequence.
@@ -174,7 +174,7 @@ Is there an infinity strictly between $|\mathbb{N}|$ and $|\mathbb{R}|$? Cantor 
 :::
 
 :::bio{name="Georg Cantor" born=1845 died=1918 place="St Petersburg and Halle"}
-Cantor spent his career at the small university of Halle, never getting the Berlin post he wanted. His theory of infinite sets met hostility from powerful mathematicians — above all Leopold Kronecker, who rejected any mathematics not built from the whole numbers in finitely many steps — and from theologians and philosophers. He suffered repeated episodes of severe depression and died in a sanatorium in Halle. Recognition came in his lifetime, but late: by 1926 Hilbert was declaring that “no one shall expel us from the paradise that Cantor has created”. Set theory became the common language of mathematics, and the diagonal argument one of its most powerful tools.
+Cantor spent his career at the small university of Halle, never getting the Berlin post he wanted. His theory of infinite sets met hostility from powerful mathematicians — above all Leopold Kronecker, who rejected any mathematics not built from the whole numbers in finitely many steps — and from theologians and philosophers. He suffered repeated episodes of severe depression and died in a sanatorium in Halle. Recognition came late in his lifetime and kept growing after it: in 1926 Hilbert declared that “no one shall expel us from the paradise that Cantor has created”. Set theory became the common language of mathematics, and the diagonal argument one of its most powerful tools.
 :::
 
 ## Exercises

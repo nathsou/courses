@@ -4,7 +4,7 @@ title: Infinite series
 summary: Adding infinitely many numbers. Zeno’s paradox, Oresme’s medieval proof that 1 + ½ + ⅓ + ⋯ is infinite, Euler’s audacious solution of the Basel problem, a proof that holds up — and a series whose sum depends on the order of its terms.
 duration: About 3 hours
 prerequisites: [epsilon-delta, induction]
-theorems: [The harmonic series diverges (Oresme, c. 1350), 1 + 1/4 + 1/9 + ⋯ = π²/6 (Euler, 1734), Riemann’s rearrangement theorem]
+theorems: ["The harmonic series diverges (Oresme, c. 1350)", "1 + 1/4 + 1/9 + ⋯ = π²/6 (Euler, 1734)", Riemann’s rearrangement theorem]
 techniques: [partial sums, comparison, grouping, telescoping, squeezing]
 ---
 
@@ -73,7 +73,7 @@ solution: '$\frac1{n^2} < \frac1{n(n-1)} = \frac{n - (n-1)}{n(n-1)} = \frac1{n-1
 
 In 1650 the Italian mathematician Pietro Mengoli asked for the exact value of
 $$1 + \frac14 + \frac19 + \frac1{16} + \cdots$$
-Jacob Bernoulli of Basel publicised the problem in 1689, admitting defeat: “If anyone finds and communicates to us that which has thus far eluded our efforts, great will be our gratitude.” The value is about $1.6449$, and for forty years the best mathematicians in Europe could not identify it. In 1734 the 28-year-old Leonhard Euler, a former student of Jacob's brother Johann, did.
+Jacob Bernoulli of Basel publicised the problem in 1689, admitting defeat: “If anyone finds and communicates to us that which has thus far eluded our efforts, great will be our gratitude.” The value is about $1.6449$, and for forty years the best mathematicians in Europe could not identify it. In 1734 the 27-year-old Leonhard Euler, a former student of Jacob's brother Johann, did.
 
 :::theorem{name="The Basel problem" who="Leonhard Euler" year=1734}
 $$\sum_{n=1}^\infty \frac1{n^2} = \frac{\pi^2}{6} .$$

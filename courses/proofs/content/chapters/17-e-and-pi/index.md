@@ -4,8 +4,8 @@ title: e and π are irrational
 summary: The two most famous constants of analysis are not fractions. Fourier’s five-line proof for e, Niven’s one-page proof for π, and Liouville’s explicit construction of a number that is not a root of any polynomial.
 duration: About 2½ hours
 prerequisites: [infinite-series, fundamental-theorem]
-theorems: [e is irrational (Fourier, 1815), π is irrational (Lambert, 1761; Niven, 1947), Liouville’s theorem and Liouville numbers (1844)]
-techniques: [contradiction via an integer in (0, 1), estimates, auxiliary functions, the mean value theorem]
+theorems: ["e is irrational (Fourier, 1815)", "π is irrational (Lambert, 1761; Niven, 1947)", Liouville’s theorem and Liouville numbers (1844)]
+techniques: ["contradiction via an integer in (0, 1)", estimates, auxiliary functions, the mean value theorem]
 ---
 
 In Chapter 3 we proved that $\sqrt 2$ is irrational using nothing but whole numbers: if $\sqrt2 = p/q$, then $p^2 = 2q^2$, and parity does the rest. The numbers $e$ and $\pi$ are not defined by equations with whole-number coefficients. They are defined by limits — $\pi$ as a ratio of lengths, $e$ as a limit of compound interest — and a proof of their irrationality must use analysis.

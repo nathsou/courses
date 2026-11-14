@@ -4,7 +4,7 @@ title: Pigeonholes
 summary: If there are more pigeons than holes, some hole holds two. From this triviality come Dirichlet’s theorem on approximating irrationals by fractions, the Erdős–Szekeres theorem on monotone subsequences, and the birth of Ramsey theory at a party of six.
 duration: About 2 hours
 prerequisites: [infinitely-many-primes]
-theorems: [Dirichlet’s approximation theorem (1842), The Erdős–Szekeres theorem (1935), R(3, 3) = 6]
+theorems: [Dirichlet’s approximation theorem (1842), The Erdős–Szekeres theorem (1935), "R(3, 3) = 6"]
 techniques: [pigeonhole principle, choosing the right holes, counting]
 ---
 
