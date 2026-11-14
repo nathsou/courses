@@ -88,8 +88,8 @@ A few kinds of box recur throughout. You have just met a **simulation**. Each ch
 
 Sometimes the course asks you to commit to a guess before it shows the answer. Research on learning is consistent here: a wrong prediction you have committed to teaches more than a right answer you only read. Try this one.
 
-<Predict question="On a logarithmic scale from the Planck length (10⁻³⁵ m) to the observable universe (10²⁷ m), where does a human (≈ 1.7 m) sit?" choices={['Near the small end', 'Roughly in the middle', 'Near the large end']} answer={2}>
-Near the large end. $\log_{10}(1.7) \approx 0.2$, so we sit about 35 decades above the Planck length and 27 below the size of the universe: 56% of the way up. That puts us nearer the large end than the middle. The *geometric* midpoint of the Planck length and the universe is about 10⁻⁴ m, the width of a hair. Physics below the proton (10⁻¹⁵ m) is sparsely populated: it is the domain of particle physics, and the gap from 10⁻¹⁸ m down to the Planck length is almost entirely unexplored.
+<Predict question="On a logarithmic scale from the Planck length (10⁻³⁵ m) to the observable universe (10²⁷ m), where does a human (≈ 1.7 m) sit?" choices={['Near the small end', 'Roughly in the middle', 'Near the large end']} answer={1}>
+Roughly in the middle, a little towards the large end. $\log_{10}(1.7) \approx 0.2$, so we sit about 35 decades above the Planck length and 27 below the size of the universe: 56% of the way up. The *geometric* midpoint of the Planck length and the universe is about 10⁻⁴ m, the width of a hair. Physics below the proton (10⁻¹⁵ m) is sparsely populated: it is the domain of particle physics, and the gap from 10⁻¹⁸ m down to the Planck length is almost entirely unexplored.
 </Predict>
 
 Two more boxes. A **key equation** box holds a result worth remembering, with a legend for its symbols. **Back-of-the-envelope** boxes (marked ≈) do a Fermi estimate: an answer good to a factor of a few, reached in a few lines. And each flagship simulation comes with an **under-the-hood** box that explains its algorithm and numerics with real code, because these simulations are part of the lesson. Constants such as <C k="G" /> and <C k="pc" /> show their value, unit and a note when you hover them. **Equations are hoverable too.** Hover (or tap) any symbol in a boxed equation, such as the <span data-term="plx">$p$</span> in the parallax formula below, and a note tells you what it is and *why it is there*: what happens to the answer if it doubles. Every copy of that symbol on the page lights up at the same time.
@@ -106,7 +106,7 @@ $$
 
 Masses cover an even wider range, from the electron ($9.1\times10^{-31}$ kg) to the ordinary matter in the observable universe (about $1.5\times10^{53}$ kg, or roughly $10^{80}$ protons): 83 orders of magnitude. Times run from the Planck time ($5.4\times10^{-44}$ s) through the $10^{-23}$ s it takes light to cross a proton, up to the age of the universe, $4.35\times10^{17}$ s = 13.8 Gyr. That is another 61 orders.
 
-On a linear axis almost none of this fits. If the Sun were a grapefruit in New York, the Earth would be a grain of salt 15 m away, and the nearest star another grapefruit in Hawaii. The only honest way to plot the universe is on a **logarithmic** axis, where every step is a *factor* of ten.
+On a linear axis almost none of this fits. If the Sun were a grapefruit in New York, the Earth would be a grain of salt 15 m away, and the nearest star another grapefruit in California. The only honest way to plot the universe is on a **logarithmic** axis, where every step is a *factor* of ten.
 
 <Sim name="scales-ruler" size="wide" minHeight={300}>
 **The universe on a log ruler.** Every gridline is a factor of 10. Hover a tick for the details, drag to pan, and scroll or pinch to zoom into a few decades. Switch between sizes, masses and times. Notice the clumps: atoms and nuclei, planets and stars, galaxies and clusters. Between them lie long empty stretches of the ruler, and much of physics explains why the clumps sit where they do.
@@ -192,7 +192,7 @@ By the 1800s astronomers could measure brightness with instruments, and they not
 </History>
 
 <Sim name="scales-magnitudes" size="wide" minHeight={300}>
-**The magnitude scale.** Pick two stars and read off how much brighter one is than the other: $10^{0.4\,\Delta m}$. How much brighter is Sirius than Polaris? Now compare their *absolute* magnitudes, which reverses the verdict: Polaris is a supergiant about 20 times as luminous as Sirius, and 50 times farther away. Use "Move A to" to carry a star to another distance and watch the distance modulus change.
+**The magnitude scale.** Pick two stars and read off how much brighter one is than the other: $10^{0.4\,\Delta m}$. How much brighter is Sirius than Polaris? Now compare their *absolute* magnitudes, which reverses the verdict: Polaris is a supergiant about 100 times as luminous as Sirius, and 50 times farther away. Use "Move A to" to carry a star to another distance and watch the distance modulus change.
 </Sim>
 
 ### Natural units and code units
@@ -272,7 +272,7 @@ That is Kepler's third law, with no mechanics at all. The full calculation in [C
 
 <Tiers>
 <Fragment slot="l1">
-**The free-fall time.** Take a ball of gas with nothing holding it up and let go. How long does it take to collapse? Only two things matter: gravity and how densely packed the gas is. Remarkably, the size does not matter at all. Dense things collapse fast and thin things collapse slowly. The Sun, with nothing to support it, would fall in on itself in about **30 minutes**. A cold interstellar cloud, a hundred billion billion times thinner, takes about **100,000 years**, which is why stars form slowly (Chapter 7).
+**The free-fall time.** Take a ball of gas with nothing holding it up and let go. How long does it take to collapse? Only two things matter: gravity and how densely packed the gas is. Remarkably, the size does not matter at all. Dense things collapse fast and thin things collapse slowly. The Sun, with nothing to support it, would fall in on itself in about **30 minutes**. A dense core in an interstellar cloud, a million million million times thinner, takes about **100,000 years**, which is why stars form slowly (Chapter 7).
 </Fragment>
 <Fragment slot="l2">
 **The free-fall time.** A uniform cloud of density $\rho$ with no pressure collapses under its own gravity. The only quantities available are $G$ and $\rho$, and $G\rho$ has dimensions $\mathsf T^{-2}$. So
@@ -281,7 +281,7 @@ That is Kepler's third law, with no mechanics at all. The full calculation in [C
 $$
 \term{tff}{t_\text{ff}} \sim \frac{1}{\sqrt{\term{G}{G}\term{rho}{\rho}}}, \qquad \text{exactly: } \term{tff}{t_\text{ff}} = \sqrt{\frac{3\pi}{32\,\term{G}{G}\term{rho}{\rho}}}
 $$
-<Fragment slot="where"><span data-term="rho">$\rho$</span> is the mean density and $G$ the gravitational constant. The result does not depend on the size or the mass, only on the density. The same timescale sets how fast a star responds to a disturbance, how long a molecular cloud takes to collapse into stars (Chapter 7), and even how a star pulsates. For the Sun ($\bar\rho = 1.41$ g cm⁻³) it is about 30 minutes. For a molecular cloud core ($10^{-19}$ kg m⁻³) it is about $10^5$ years.</Fragment>
+<Fragment slot="where"><span data-term="rho">$\rho$</span> is the mean density and $G$ the gravitational constant. The result does not depend on the size or the mass, only on the density. The same timescale sets how fast a star responds to a disturbance, how long a molecular cloud takes to collapse into stars (Chapter 7), and even how a star pulsates. For the Sun ($\bar\rho = 1.41$ g cm⁻³) it is about 30 minutes. For a dense molecular cloud core ($10^{-15}$ kg m⁻³) it is about $10^5$ years.</Fragment>
 </KeyEq>
 </Fragment>
 </Tiers>

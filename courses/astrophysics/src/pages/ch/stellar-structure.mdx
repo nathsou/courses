@@ -150,7 +150,7 @@ $$
 Plugging in $M_\odot$, $R_\odot$ and $\mu\approx0.6$ for ionised solar-composition gas:
 
 $$
-P_c \sim \frac{GM_\odot^2}{R_\odot^4} = \frac{(6.67\times10^{-11})(2\times10^{30})^2}{(7\times10^{8})^4} \approx 1\times10^{14}\ \text{Pa},
+P_c \sim \frac{GM_\odot^2}{R_\odot^4} = \frac{(6.67\times10^{-11})(2\times10^{30})^2}{(7\times10^{8})^4} \approx 1\times10^{15}\ \text{Pa},
 $$
 
 $$
@@ -158,7 +158,7 @@ T_c \sim \frac{GM_\odot m_p}{k_B R_\odot} = \frac{(6.67\times10^{-11})(2\times10
 $$
 </Fermi>
 
-The temperature estimate lands within a factor of two of the real answer (the Sun's actual central temperature is $1.57\times10^7$ K; a careful polytropic model gets closer still — see the flagship simulation below). The pressure estimate is low by about two orders of magnitude, because a real star's density is far more centrally concentrated than the uniform sphere this Fermi estimate assumes — exactly the effect the concentration ratio $\rho_c/\bar\rho$ captures later in this chapter. That two-line argument, using *nothing but Newtonian gravity, a guess at the equation of state, and the size of the Sun*, gets you to "ten million kelvin," which is the whole reason nuclear fusion is even possible in stars. It is one of the great one-liners in physics.
+The temperature estimate lands within a factor of two of the real answer (the Sun's actual central temperature is $1.57\times10^7$ K; a careful polytropic model gets closer still — see the flagship simulation below). The pressure estimate is low by more than an order of magnitude (the real central pressure is about $2.5\times10^{16}$ Pa), because a real star's density is far more centrally concentrated than the uniform sphere this Fermi estimate assumes — exactly the effect the concentration ratio $\rho_c/\bar\rho$ captures later in this chapter. That two-line argument, using *nothing but Newtonian gravity, a guess at the equation of state, and the size of the Sun*, gets you to "ten million kelvin," which is the whole reason nuclear fusion is even possible in stars. It is one of the great one-liners in physics.
 
 <Aside>**Try it yourself.** With $M=<Var name="Mfermi" value={1} min={0.1} max={50} log />\,M_\odot$ and $R=<Var name="Rfermi" value={1} min={0.05} max={20} log />\,R_\odot$: $P_c\sim$ <Out name="Pc_fermi" />, $T_c\sim$ <Out name="Tc_fermi" />. Push $M$ up and $R$ down together (a compact, high-mass object) and watch $T_c$ climb — this is exactly the mechanism that makes contracting protostars, and later red-giant cores, get hot enough to ignite new fusion reactions.</Aside>
 
@@ -258,7 +258,7 @@ For the Sun, $t_\text{KH}\approx 3\times10^7$ years — about **30 million years
 
 In 1862, William Thomson — later Lord Kelvin, already famous for the second law of thermodynamics and the Atlantic telegraph — applied exactly the argument above to the Sun and got tens of millions of years. He used it as a weapon: Charles Darwin's 1859 theory of evolution by natural selection needed geological ages of *hundreds of millions* of years to work, and Kelvin insisted physics simply forbade the Sun (and hence a habitable Earth) from being that old. Darwin, already criticised for it, had dropped his one specific age estimate (some 300 million years to erode the Weald of southern England) from *On the Origin of Species*, and later called Kelvin's arguments one of his "sorest troubles."
 
-Kelvin was not being obstinate for its own sake: no energy source other than gravity was known in the 1860s, and $t_\text{KH}$ genuinely is the honest upper limit gravity alone allows. The debate ran for decades (Kelvin's ally Charles Darwin's own son George refined the contraction argument further), and both sides had real physics on their side of an incomplete picture. It was radioactivity — discovered in 1896, after Kelvin's calculation — that broke the impasse twice over: it gave the Earth an internal heat source Kelvin hadn't accounted for, dating rocks directly to billions of years, and (via Eddington and others, decades later) pointed toward nuclear reactions as the Sun's actual power source.
+Kelvin was not being obstinate for its own sake: no energy source other than gravity was known in the 1860s, and $t_\text{KH}$ genuinely is the honest upper limit gravity alone allows. The debate ran for decades (Charles Darwin's own son George, working on the tidal history of the Moon, produced ages that seemed to fit Kelvin's), and both sides had real physics on their side of an incomplete picture. It was radioactivity — discovered in 1896, after Kelvin's calculation — that broke the impasse twice over: it gave the Earth an internal heat source Kelvin hadn't accounted for, dating rocks directly to billions of years, and (via Eddington and others, decades later) pointed toward nuclear reactions as the Sun's actual power source.
 </History>
 
 ### The nuclear timescale
@@ -269,7 +269,7 @@ $$
 t_\text{nuc} \sim \frac{0.007\times X_\text{eff}\,Mc^2}{L}.
 $$
 
-For the Sun, $t_\text{nuc}\approx10^{10}$ years — **ten billion years**, of which about 4.6 billion have elapsed. The hierarchy $t_\text{dyn} \ll t_\text{KH} \ll t_\text{nuc}$ (roughly half an hour, thirty million years and ten billion years, for the Sun) is why stellar structure calculations can treat hydrostatic and thermal equilibrium as *exact* at any instant: the star restores mechanical balance millions of times faster than it evolves thermally, and evolves thermally hundreds of times faster than it burns through its fuel.
+For the Sun, $t_\text{nuc}\approx10^{10}$ years — **ten billion years**, of which about 4.6 billion have elapsed. The hierarchy $t_\text{dyn} \ll t_\text{KH} \ll t_\text{nuc}$ (roughly half an hour, thirty million years and ten billion years, for the Sun) is why stellar structure calculations can treat hydrostatic and thermal equilibrium as *exact* at any instant: the star restores mechanical balance hundreds of billions of times faster than it evolves thermally, and evolves thermally hundreds of times faster than it burns through its fuel.
 
 <Sim name="stellar-structure-timescales" minHeight={380}>
 **Three clocks, one star.** Drag the mass slider and watch all three timescales move at once, using the main-sequence scalings $R\propto M^{0.8}$, $L\propto M^{3.5}$. Massive stars have *shorter* nuclear lifetimes despite more fuel, because luminosity wins the race — the reason O and B stars live for millions, not billions, of years.
@@ -481,7 +481,7 @@ function seriesStart(n: number, xi: number): [theta: number, phi: number] {
 
 **2. Fixed-step RK4** then carries the solution outward from that starting point. A step of $h=2\times10^{-3}$ in $\xi$ gives better than 5-digit agreement with the analytic $n=0,1,5$ solutions across the whole profile — plenty for a live sim, and cheap enough (a few thousand steps) to re-run every time the slider moves.
 
-**3. Finding the surface.** $\theta$ crosses zero somewhere between two RK4 samples; rather than shrinking the step size near the crossing (which would slow every run down to guard against a rare case), we take one linear interpolation between the last two $(\xi,\theta)$ pairs — accurate to $O(h^2)$, which is smaller than the RK4 truncation error itself.
+**3. Finding the surface.** $\theta$ crosses zero somewhere between two RK4 samples; rather than shrinking the step size near the crossing (which would slow every run down to guard against a rare case), we take one linear interpolation between the last two $(\xi,\theta)$ pairs. That is only accurate to $O(h^2)$, worse in principle than RK4 itself, but with $h=2\times10^{-3}$ it puts $\xi_1$ within about $10^{-6}$ of the true value, far below anything the plot can show.
 
 **4. Stiffness as $n\to5$.** Near $n=5$, $\theta$ approaches zero more and more slowly (the true $n=5$ solution never reaches it), so the surface-finding logic needs a large `xiMax` cutoff and must report "truncated" rather than silently returning a wrong $\xi_1$ — the sim's readout for $\xi_1$ does exactly that above $n\approx4.9$.
 

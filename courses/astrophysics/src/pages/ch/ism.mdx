@@ -44,7 +44,7 @@ import Portrait from '../../components/Portrait.astro';
 **The Rho Ophiuchi cloud complex, JWST, 2023.** About 390 light-years away, this is the nearest active star-forming region to Earth — roughly 50 young stars are embedded in the dusty gas, some still firing off jets (the red arcs). Everything in this chapter — the cold dense gas, the dust that glows orange in infrared light, the young hot stars starting to carve out cavities — is on display in a single frame.
 </Photo>
 
-Space, even inside a galaxy, is a much better vacuum than anything built on Earth. The best laboratory vacuum chambers reach roughly $10^{-13}$ mbar, corresponding to about $3\times10^6$ particles per cm³. A "typical" patch of the interstellar medium (ISM) — the gas and dust filling the space between stars in the Milky Way — has around $n\sim1$ particle per cm³: a *million* times emptier than that. And "typical" hides enormous range: dense molecular cloud cores reach $n\sim10^4$–$10^6\,\mathrm{cm^{-3}}$, while the hot gas blown out by supernovae can be as sparse as $n\sim10^{-3}\,\mathrm{cm^{-3}}$.
+Space, even inside a galaxy, is a much better vacuum than anything built on Earth. A good ultra-high-vacuum chamber reaches roughly $10^{-10}$ mbar, corresponding to about $3\times10^6$ particles per cm³. A "typical" patch of the interstellar medium (ISM) — the gas and dust filling the space between stars in the Milky Way — has around $n\sim1$ particle per cm³: a *million* times emptier than that. And "typical" hides enormous range: dense molecular cloud cores reach $n\sim10^4$–$10^6\,\mathrm{cm^{-3}}$, while the hot gas blown out by supernovae can be as sparse as $n\sim10^{-3}\,\mathrm{cm^{-3}}$.
 
 Despite being extremely dilute, the ISM is not a footnote. It makes up 10–15% of the Milky Way's baryonic (ordinary, non-dark) mass in the disk, it is the raw material every star and planet condenses from (the subject of [Chapter 7](/ch/star-formation/) and [Chapter 8](/ch/planet-formation/)), and it is where the heavy elements manufactured in stars ([Chapter 12](/ch/fusion/)) and scattered by supernovae ([Chapter 16](/ch/stellar-death/)) get mixed back in, ready to be recycled into the next generation.
 
@@ -92,7 +92,7 @@ Take a 100 pc cube of the Milky Way disk near the Sun, with an average $n\approx
 $$
 M \approx n\, m_p \,(100\,\mathrm{pc})^3 = 1\times1.67\times10^{-24}\,\mathrm{g\,cm^{-3}}\times(3.1\times10^{20}\,\mathrm{cm})^3 \approx 5\times10^{37}\,\mathrm{g} \approx 2.5\times10^4\,M_\odot.
 $$
-That is a respectable star cluster's worth of mass, sitting almost entirely as gas nobody would notice by eye. Multiply by the disk's ~$10^4$ such cubes and you get the Galaxy's ISM mass, of order a few $\times10^9\,M_\odot$ — a few percent of the stellar mass.
+That is a respectable star cluster's worth of mass, sitting almost entirely as gas nobody would notice by eye. Multiply by the disk's ~$10^5$ such cubes and you get the Galaxy's ISM mass, of order a few $\times10^9\,M_\odot$ — about a tenth of the stellar mass.
 </Fermi>
 
 <Level min={3} title="Why pressure, and not density or temperature, equalises">
@@ -248,7 +248,7 @@ $$
 
 ## Molecular clouds and the tracers of a mostly-invisible medium
 
-Hydrogen atoms are terrible at forming H₂ in the gas phase — the reaction $\mathrm{H}+\mathrm{H}\to\mathrm{H_2}$ releases energy that a two-body collision has nowhere to put, so it essentially never happens directly. Dust grains solve the problem: two H atoms stick to a grain surface, meet by random walk across it, bond, and the grain itself absorbs the recoil energy as heat before releasing the finished H₂ molecule. **Every H₂ molecule in the universe owes its existence to a dust grain acting as a catalyst and a third body simultaneously.**
+Hydrogen atoms are terrible at forming H₂ in the gas phase — the reaction $\mathrm{H}+\mathrm{H}\to\mathrm{H_2}$ releases energy that a two-body collision has nowhere to put, so it essentially never happens directly. Dust grains solve the problem: two H atoms stick to a grain surface, meet by random walk across it, bond, and the grain itself absorbs the recoil energy as heat before releasing the finished H₂ molecule. **Almost every H₂ molecule in a galaxy like ours owes its existence to a dust grain acting as a catalyst and a third body simultaneously.** (In the dust-free early universe, H₂ formed slowly through a detour via the H⁻ ion, and that trickle mattered for the first stars.)
 
 Once enough H₂ (and dust) accumulates to shield the cloud interior from dissociating UV photons, a rich molecular chemistry follows, and molecular clouds — the coldest, densest phase, and the exclusive nurseries of new stars (next chapter) — take shape. But H₂ itself is a poor observational tracer: it is a symmetric molecule with no permanent dipole moment, so it has no easily excited rotational transitions at the low temperatures typical of clouds. Astronomers instead track molecular gas indirectly:
 
@@ -281,7 +281,7 @@ The 21 cm line comes from a hyperfine flip: the electron and proton spins in a h
 $$
 h\nu = \Delta E \approx \mu_p B_e \sim 6\times10^{-6}\,\mathrm{eV} \ \Rightarrow\ \nu=\Delta E/h\approx1420\,\mathrm{MHz}\ (\lambda\approx21\,\mathrm{cm}),
 $$
-where $B_e$ is the magnetic field the proton feels from the electron's spin at the Bohr radius, of order a few tesla. This transition is "forbidden" (magnetic dipole, not electric dipole) and correspondingly slow — the spontaneous decay rate is only $A\approx2.9\times10^{-15}\,\mathrm{s^{-1}}$, an average wait of **11 million years** per atom. Yet it dominates radio astronomy because there is so much atomic hydrogen, everywhere, all the time: even with such a low per-atom rate, a sightline through the Galaxy's disk crosses enough hydrogen atoms that the aggregate emission is easily detected with a modest radio telescope. Rare events, multiplied by huge numbers, are how a great deal of astronomy works.
+where $B_e$ is the magnetic field the proton feels from the electron's spin, of order tens of tesla. This transition is "forbidden" (magnetic dipole, not electric dipole) and correspondingly slow — the spontaneous decay rate is only $A\approx2.9\times10^{-15}\,\mathrm{s^{-1}}$, an average wait of **11 million years** per atom. Yet it dominates radio astronomy because there is so much atomic hydrogen, everywhere, all the time: even with such a low per-atom rate, a sightline through the Galaxy's disk crosses enough hydrogen atoms that the aggregate emission is easily detected with a modest radio telescope. Rare events, multiplied by huge numbers, are how a great deal of astronomy works.
 </Fermi>
 
 ## Supernova remnants, superbubbles and the galactic ecosystem

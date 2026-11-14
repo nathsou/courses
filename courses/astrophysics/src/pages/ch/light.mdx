@@ -87,7 +87,7 @@ Earth's atmosphere is a good filter for exactly one purpose — keeping us alive
 <Aside>**In the real universe…** this is not a historical curiosity. JWST observes at 0.6–28 μm specifically because that infrared range is where the reionisation-era galaxies, cool substellar objects, and dust-enshrouded star formation that ground telescopes cannot reach are brightest — redshifted starlight and thermal dust emission both peak there. Chandra and XMM-Newton do the same job for the X-ray sky (hot accretion flows, X-ray binaries, cluster gas); both are necessarily space telescopes.</Aside>
 
 <Photo src="/img/light/cosmic-cliffs-nircam.jpg" alt="A glowing amber-and-blue landscape of dust resembling craggy cliffs, with a diffuse blue star-forming region above and pinpoint stars scattered across the frame" credit="NASA, ESA, CSA, and STScI" license="CC BY 4.0" href="https://esawebb.org/images/weic2205a/" size="wide" aspect="1728 / 1000">
-**The "Cosmic Cliffs" in Carina, seen only because JWST looks in the infrared.** This is the edge of NGC 3324, a young star-forming region. Infrared light passes through the dust that would hide these embedded, still-forming stars from a visible-light telescope — and every wavelength shown here is blocked by Earth's atmosphere, which is why NIRCam flies a million miles from the ground.
+**The "Cosmic Cliffs" in Carina, seen only because JWST looks in the infrared.** This is the edge of NGC 3324, a young star-forming region. Infrared light passes through the dust that would hide these embedded, still-forming stars from a visible-light telescope — and from the ground much of this wavelength range is absorbed by the atmosphere and the rest is swamped by the warm sky's own infrared glow, which is why NIRCam flies a million miles from the ground.
 </Photo>
 
 That is the whole reason an X-ray, UV, or far-infrared telescope has to launch on a rocket rather than sit on a mountain: it isn't about being "above the weather", it's about being above gases whose molecular and electronic transitions happen to sit exactly in the band you want to observe.
@@ -203,10 +203,10 @@ The formula worked, but Planck didn't yet know *why*. Over the next weeks he sea
 </History>
 
 <Fermi title="How wrong is the ultraviolet catastrophe, quantitatively?">
-Integrate the classical energy density $u_\nu^{\rm RJ} = (4\pi/c)B_\nu^{\rm RJ} \propto \nu^2$ from some UV cutoff $\nu_{\rm min}$ to $\infty$: it's already infinite. Even integrating the other way, from $0$ to a cutoff $\nu_{\rm min}$, gives a *finite* but already-large number that grows without bound as $\nu_{\rm min}\to 0$ is relaxed the other direction — the point is there is no natural stopping scale in the classical formula at all. Planck's law provides exactly that scale, $\nu \sim k_BT/h$, self-consistently set by the temperature. At $T = 300$ K, $k_BT/h \approx 6\times10^{12}$ Hz (far infrared) — wavelengths shorter than about 10 μm are exponentially suppressed rather than classically overcounted.
+The classical energy density $u_\nu^{\rm RJ} = (4\pi/c)B_\nu^{\rm RJ} \propto \nu^2$, integrated from 0 up to some cutoff $\nu_{\rm max}$, grows as $\nu_{\rm max}^3$ and diverges as the cutoff is removed: there is no natural stopping scale in the classical formula at all. Planck's law provides exactly that scale, $\nu \sim k_BT/h$, set by the temperature. At $T = 300$ K, $k_BT/h \approx 6\times10^{12}$ Hz, a wavelength of 50 μm, and by the time $h\nu$ reaches about $5k_BT$ (wavelengths near 10 μm) the occupation of the modes is falling exponentially, where the classical formula would have kept counting them at full weight.
 </Fermi>
 
-<Predict question="If you cool a cavity to absolute zero, what happens to the classical (Rayleigh–Jeans) prediction for its total radiated power?" choices={['Goes to zero, same as Planck', 'Stays infinite regardless of T', 'Becomes negative']} answer={1}>
+<Predict question="If you cool a cavity to just 1 K, what happens to the classical (Rayleigh–Jeans) prediction for its total radiated power?" choices={['Goes to zero, same as Planck', 'Stays infinite regardless of T', 'Becomes negative']} answer={1}>
 Rayleigh–Jeans integrated over all frequencies is $\int_0^\infty (2\nu^2/c^2)k_BT\,d\nu$, which diverges for *any* $T>0$. The mode-counting is temperature-independent; only Bose–Einstein occupancy introduces the exponential cutoff that makes the total finite and, crucially, makes it scale sensibly as $T^4$ (next section).
 </Predict>
 
@@ -236,7 +236,7 @@ A star's <Var name="Twien" value={5772} min={100} max={100000} log /> K blackbod
 <History title="A law found before the function it came from" year="1893">
 <Portrait src="/img/people/wien.jpg" name="Wilhelm Wien" years="1864–1928" credit="Wikimedia Commons" license="Public domain" href="https://commons.wikimedia.org/wiki/File:Wilhelm_Wien.jpg" />
 
-Wilhelm Wien found the displacement law seven years before Planck's full spectral formula existed, by a clever thermodynamic argument (adiabatic compression of radiation in a cavity, plus Doppler shifting) that fixed *how* the peak wavelength must scale with temperature without deriving the complete curve. He also proposed a full spectral formula in 1896 that fit the high-frequency data of the day beautifully — the "Wien approximation" you can overlay in the flagship sim — but it failed for long wavelengths, the gap that later pushed Planck toward the full quantum formula. Wien won the 1911 Nobel Prize in Physics for the displacement law alone, two years before Planck's more fundamental work was similarly recognised in 1918.
+Wilhelm Wien found the displacement law seven years before Planck's full spectral formula existed, by a clever thermodynamic argument (adiabatic compression of radiation in a cavity, plus Doppler shifting) that fixed *how* the peak wavelength must scale with temperature without deriving the complete curve. He also proposed a full spectral formula in 1896 that fit the high-frequency data of the day beautifully — the "Wien approximation" you can overlay in the flagship sim — but it failed for long wavelengths, the gap that later pushed Planck toward the full quantum formula. Wien won the 1911 Nobel Prize in Physics for the displacement law alone, seven years before Planck's more fundamental work was similarly recognised in 1918.
 </History>
 
 ### The total: Stefan–Boltzmann law
@@ -245,7 +245,7 @@ Wilhelm Wien found the displacement law seven years before Planck's full spectra
 Integrate $B_\lambda$ over all wavelengths and all outward directions of a hemisphere (an extra factor of $\pi$, not $4\pi$ — for a surface, contributions only leave into the outward $2\pi$ steradians, weighted by $\cos\theta$, which integrates to $\pi$) to get the total power emitted per unit area:
 
 $$
-F = \pi\int_0^\infty B_\lambda\,d\lambda = \frac{2\pi h c^2}{15}\left(\frac{k_B}{hc}\right)^4 T^4 \int_0^\infty \frac{x^3}{e^x-1}\,dx, \qquad x \equiv \frac{hc}{\lambda k_BT}.
+F = \pi\int_0^\infty B_\lambda\,d\lambda = 2\pi h c^2\left(\frac{k_B}{hc}\right)^4 T^4 \int_0^\infty \frac{x^3}{e^x-1}\,dx, \qquad x \equiv \frac{hc}{\lambda k_BT}.
 $$
 
 The dimensionless integral is a classic: $\int_0^\infty x^3/(e^x-1)\,dx = \Gamma(4)\zeta(4) = 6\cdot\frac{\pi^4}{90} = \frac{\pi^4}{15}$ (expand $1/(e^x-1)$ as a geometric series $\sum_{n\ge1}e^{-nx}$, integrate term-by-term with $\int_0^\infty x^3e^{-nx}dx = 6/n^4$, and sum $\sum 1/n^4 = \pi^4/90$ — we'll skip the tedious convergence bookkeeping; a refresher on integrals and series is in [Appendix A4](/ch/primer-calculus/)). Substituting collapses all the constants into one.
@@ -288,10 +288,10 @@ $L \propto T^4$, so $\Delta L/L \approx 4\,\Delta T/T = 4\%$. Small temperature 
 
 ## The flagship: exploring the Planck spectrum
 
-Everything above — Wien's peak, the $B_\nu$/$B_\lambda$ distinction, Rayleigh–Jeans and Wien's high-frequency limit, the Stefan–Boltzmann total, and the perceived colour — lives in one function of two variables, $\lambda$ and $T$. The simulation below lets you drive $T$ across nine decades, from the CMB to an accretion disk's inner edge, and watch every one of those quantities move together.
+Everything above — Wien's peak, the $B_\nu$/$B_\lambda$ distinction, Rayleigh–Jeans and Wien's high-frequency limit, the Stefan–Boltzmann total, and the perceived colour — lives in one function of two variables, $\lambda$ and $T$. The simulation below lets you drive $T$ across nearly six decades, from the CMB to an accretion disk's inner edge, and watch every one of those quantities move together.
 
-<Predict question="As you heat a blackbody from red-hot to white-hot to blue-hot, does the visible-light *fraction* of its total power output increase monotonically?" choices={['Yes, monotonically', 'No — it peaks around 10,000 K and then falls', 'No — it is constant']} answer={1}>
-It rises as the Wien peak sweeps into the visible band (roughly 4,000–10,000 K puts $\lambda_{\rm peak}$ near 380–780 nm), but for hotter stars the peak sweeps on into the UV and beyond, and the visible band only catches the Rayleigh–Jeans tail — an ever-smaller *fraction* of an ever-larger total. An O star radiates most of its light where your eye cannot see it at all.
+<Predict question="As you heat a blackbody from red-hot to white-hot to blue-hot, does the visible-light *fraction* of its total power output increase monotonically?" choices={['Yes, monotonically', 'No — it peaks around 7,000 K and then falls', 'No — it is constant']} answer={1}>
+It rises as the Wien peak sweeps into the visible band (roughly 3,700–7,600 K puts $\lambda_{\rm peak}$ between 780 and 380 nm), reaching a maximum of about half the total power near 7,000 K, but for hotter stars the peak sweeps on into the UV and beyond, and the visible band only catches the Rayleigh–Jeans tail — an ever-smaller *fraction* of an ever-larger total. An O star radiates most of its light where your eye cannot see it at all.
 </Predict>
 
 <Sim name="light-planck" size="wide" minHeight={480}>

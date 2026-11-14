@@ -47,7 +47,7 @@ import Portrait from '../../components/Portrait.astro';
 
 In [Chapter 6](/ch/ism/) we met the interstellar medium as a set of phases in rough pressure balance: hot ionised bubbles at a million kelvin, warm neutral gas at 8,000 K, cold neutral clouds at 80 K. Stars form in none of these. They form in the coldest, densest phase of all, **molecular clouds**, where hydrogen has paired up into H₂, dust shields the interior from starlight, and the temperature drops to 10–20 K.
 
-A typical *giant molecular cloud* (GMC) in the Milky Way has a mass of $10^4$–$10^6$ M☉, a size of 10–100 pc and a mean density of about 100 H₂ molecules per cm³. That sounds dense only by interstellar standards. It is a better vacuum than any laboratory on Earth, about $10^{-20}$ g cm⁻³. The Sun's mean density is $1.4$ g cm⁻³. So forming a star means compressing gas by a factor of roughly $10^{20}$. This chapter is about how gravity does that, what fights back, and why it happens in some places and not others.
+A typical *giant molecular cloud* (GMC) in the Milky Way has a mass of $10^4$–$10^6$ M☉, a size of 10–100 pc and a mean density of about 100 H₂ molecules per cm³. That sounds dense only by interstellar standards. It is a better vacuum than any laboratory on Earth, about $5\times10^{-22}$ g cm⁻³. The Sun's mean density is $1.4$ g cm⁻³. So forming a star means compressing gas by a factor of roughly $10^{21}$. This chapter is about how gravity does that, what fights back, and why it happens in some places and not others.
 
 <Aside>**Seeing the invisible.** Cold H₂ has no permanent dipole and barely radiates at 10 K. Astronomers trace it with carbon monoxide instead: the CO $J = 1\to0$ line at 2.6 mm, calibrated with an "X-factor" of about $2\times10^{20}$ H₂ per unit CO intensity. Dust thermal emission in the far-infrared and dust extinction of background stars give independent mass estimates.</Aside>
 
@@ -196,7 +196,7 @@ Unsupported turbulence decays in about one crossing time, which is comparable to
 <Tiers>
 <Fragment slot="l1">
 
-Clouds are also threaded by weak magnetic fields, about a millionth the strength of a fridge magnet but spread over parsecs. The gas is slightly electrically charged, so it and the field are stuck together: squeeze the gas and you squeeze the field, which pushes back like a spring. The contest is decided by **how much mass hangs on each field line**. If there is too little, the field can hold the cloud up forever; if there is enough, gravity wins. Most dense cores observed turn out to be about twice over the line: magnetic fields slow collapse but do not stop it.
+Clouds are also threaded by weak magnetic fields, less than a millionth the strength of a fridge magnet but spread over parsecs. The gas is slightly electrically charged, so it and the field are stuck together: squeeze the gas and you squeeze the field, which pushes back like a spring. The contest is decided by **how much mass hangs on each field line**. If there is too little, the field can hold the cloud up forever; if there is enough, gravity wins. Most dense cores observed turn out to be about twice over the line: magnetic fields slow collapse but do not stop it.
 
 </Fragment>
 <Fragment slot="l2">
@@ -336,7 +336,7 @@ A collapsing core follows a well-defined sequence first computed by Richard Lars
 3. **Second collapse.** At about 2,000 K, molecular hydrogen starts to dissociate. Each H₂ molecule absorbs 4.5 eV to break apart, a huge energy sink, so the effective $\gamma$ drops below 4/3, pressure can no longer keep up with gravity, and the core collapses again, dynamically.
 4. **The second (stellar) core.** Once the hydrogen is dissociated and ionised, collapse stops at stellar densities: a protostar of a few $R_\odot$ and $\sim10^{-3}$ M☉ is born, buried in the envelope it will grow from.
 
-<Aside>**Why the second collapse must happen.** Dissociating all the hydrogen in 1 M☉ costs about $4.5\text{ eV}\times N_{H_2}\approx 4\times10^{39}$ J. Equating this to the gravitational energy $GM^2/R$ gives $R\approx 100\ R_\odot$: the protostar has to shrink until its binding energy pays for the chemistry.</Aside>
+<Aside>**Why the second collapse must happen.** Dissociating all the hydrogen in 1 M☉ costs about $4.5\text{ eV}\times N_{H_2}\approx 4\times10^{38}$ J, and ionising it costs another 13.6 eV per atom, about $2.6\times10^{39}$ J. Equating the total, $\sim3\times10^{39}$ J, to the gravitational energy $GM^2/R$ gives $R\approx 100\ R_\odot$: the protostar has to shrink until its binding energy pays for the chemistry.</Aside>
 
 ### Accretion, disks and jets
 
@@ -396,7 +396,7 @@ In the 1950s, models of contracting young stars assumed they were radiative insi
 
 ### Why star formation is inefficient
 
-The Fermi estimate showed star formation runs at ~1% per free-fall time; integrated over a cloud's life, only 1–10% of a GMC's mass ends up in stars (the **star-formation efficiency**). Dense cluster-forming clumps reach 10–30%. The prime suspect is **feedback**: once massive stars form, their ultraviolet light ionises and heats the surrounding gas to 10⁴ K (raising the Jeans mass a million-fold), their radiation pressure and winds blow bubbles, protostellar jets stir the gas, and after 3–10 Myr the first supernovae go off. Clouds are dispersed within a few free-fall times, as observed: in nearby galaxies, PHANGS surveys with ALMA, HST and JWST find that young clusters clear out their parent clouds in only 1–5 Myr.
+The Fermi estimate showed star formation runs at ~1% per free-fall time; integrated over a cloud's life, only 1–10% of a GMC's mass ends up in stars (the **star-formation efficiency**). Dense cluster-forming clumps reach 10–30%. The prime suspect is **feedback**: once massive stars form, their ultraviolet light ionises and heats the surrounding gas to 10⁴ K (raising the Jeans mass about a hundred thousand-fold), their radiation pressure and winds blow bubbles, protostellar jets stir the gas, and after 3–10 Myr the first supernovae go off. Clouds are dispersed within a few free-fall times, as observed: in nearby galaxies, PHANGS surveys with ALMA, HST and JWST find that young clusters clear out their parent clouds in only 1–5 Myr.
 
 ### The Kennicutt–Schmidt law
 
