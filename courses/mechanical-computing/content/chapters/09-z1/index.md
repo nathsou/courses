@@ -90,7 +90,7 @@ id: z1/binary-add
 title: Add in binary
 prompt: 'Add the binary numbers 1011 and 0111. Give the result in binary.'
 answer: ['10010', '0b10010']
-why: '1011 is 11 and 0111 is 7: 11 + 7 = 18 = 10010. Every column except the leftmost produced a carry.'
+why: '1011 is 11 and 0111 is 7: 11 + 7 = 18 = 10010. All four columns produced a carry, the last one into a fifth place.'
 ```
 
 ## Floating point
@@ -128,7 +128,7 @@ Zuse's surviving drawings of the Z1 were incomplete, and the 1980s reconstructio
 :::
 
 :::ledger{machine="Zuse Z1"}
-**Built:** 1936–1938, Berlin; destroyed 1943; reconstructed 1989. **Holds:** 16 words (64 in the reconstruction) of binary floating point. **Does:** +, −, ×, ÷, square root, decimal input and output, from a program on punched film with no branches. **Speed:** the reconstruction runs at one cycle per second; a multiplication takes several seconds. **Parts:** thousands of sheet-steel plates and pins. **Failure modes:** plates catching and jamming; the mechanism was never reliable, which is why the Z3 used relays.
+**Built:** 1936–1938, Berlin; destroyed 1943; reconstructed 1989. **Holds:** 16 words (64 in the reconstruction) of binary floating point. **Does:** +, −, ×, ÷, decimal input and output, from a program on punched film with no branches. **Speed:** the reconstruction runs at one cycle per second; a multiplication takes several seconds. **Parts:** thousands of sheet-steel plates and pins. **Failure modes:** plates catching and jamming; the mechanism was never reliable, which is why the Z3 used relays.
 :::
 
 ## Summary
