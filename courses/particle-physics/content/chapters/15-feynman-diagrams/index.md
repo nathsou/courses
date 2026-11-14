@@ -79,12 +79,12 @@ n:
   label: 'n, the number of external lines'
   what: The number of particles, incoming and outgoing, in the process.
   why: A tree diagram of n external lines has exactly n − 2 vertices with cubic couplings, however it is drawn.
-  effect: Adding a final-state particle adds one power of the coupling to the amplitude, so the rate loses one power of α.
+  effect: Adding a final-state particle adds one power of the coupling to the amplitude, so the rate carries one more power of α and is smaller by about that factor.
 L:
   label: 'L, the number of loops'
   what: The number of independent closed circuits in the diagram. A tree has L = 0; a box diagram has L = 1.
   why: A loop is a line that returns to itself, through extra vertices. Each closed circuit needs two more vertices than the tree has.
-  effect: Every loop costs two more powers of the coupling in the amplitude, so one more power of α in the rate.
+  effect: 'Every loop costs two more powers of the coupling in the amplitude, one more power of α. The leading correction to the rate is the interference of the loop diagram with the tree, which has one more power of α than the tree alone; the loop diagram squared has two more.'
 ```
 :::
 
@@ -108,7 +108,7 @@ A **tree** diagram has no closed circuit. It is the leading term in the series f
 
 The library enumerates one-loop diagrams of small processes, and this is what it finds for the process of Figure 15.1.
 
-::diagram-gallery{process="e+ e- > mu+ mu-" forces="qed" loops n="15.2" caption="All the one-loop diagrams of e⁺e⁻ → μ⁺μ⁻ in the library, without corrections on the external legs: two vertex corrections, two boxes and ten bubbles in the photon line (a loop of each charged fermion, and the W). Each is of order α⁴ in the rate: two more powers of α than the tree. Their sum is what the theory predicts for the next correction; the bubbles give the running of α in Chapter 16, and the vertex corrections are what give the electron its anomalous magnetic moment."}
+::diagram-gallery{process="e+ e- > mu+ mu-" forces="qed" loops n="15.2" caption="All the one-loop diagrams of e⁺e⁻ → μ⁺μ⁻ in the library, without corrections on the external legs: two vertex corrections, two boxes and ten bubbles in the photon line (a loop of each charged fermion, and the W). Each has four vertices, two more than the tree, so its amplitude has one more power of α: its interference with the tree is a correction of order α³ to the rate, and its own square is of order α⁴. Their sum is what the theory predicts for the next correction; the bubbles give the running of α in Chapter 16, and the vertex corrections are what give the electron its anomalous magnetic moment."}
 
 The three kinds have names that recur through the course.
 
@@ -212,7 +212,7 @@ The programs that do this at CERN are **matrix-element generators**: **MadGraph*
 :::history{year=1948 title="Feynman's diagrams at the Pocono conference" people="Richard Feynman, Julian Schwinger" source="Sources: Schweber, QED and the Men Who Made It (1994); Feynman (1949)."}
 By 1947 the problem was clear. Quantum electrodynamics gave finite answers at the lowest order and infinite ones at the next. In June 1947 the Shelter Island conference heard of the measured Lamb shift (Chapter 16) and started the work that let the infinities be absorbed into the mass and charge of the electron. Julian Schwinger and, independently in Japan, Sin-Itiro Tomonaga had found a way of doing this that kept the equations consistent with relativity at every step. It was a formidable formalism, worked out with operators.
 
-At the conference at the Pocono Manor Inn in Pennsylvania, from 30 March to 1 April 1948, Schwinger gave a long lecture on his method, and Richard Feynman presented a different one, in which the terms of the series were pictured as paths and the lines drawn as diagrams. By the accounts of participants, collected in Schweber's history, the audience found Feynman's talk hard to follow and objected to it: Bohr, in particular, thought that the picture of particle paths contradicted the uncertainty principle. The accounts differ in detail; the talk is generally described as a failure.:cite[p4-schweber1994] The diagrams reached print in two papers by Feynman in 1949, *The theory of positrons* and *Space-time approach to quantum electrodynamics*.:cite[p4-feynman1949a,p4-feynman1949b]
+At the conference at the Pocono Manor Inn in Pennsylvania, from 30 March to 2 April 1948, Schwinger gave a long lecture on his method, and Richard Feynman presented a different one, in which the terms of the series were pictured as paths and the lines drawn as diagrams. By the accounts of participants, collected in Schweber's history, the audience found Feynman's talk hard to follow and objected to it: Bohr, in particular, thought that the picture of particle paths contradicted the uncertainty principle. The accounts differ in detail; the talk is generally described as a failure.:cite[p4-schweber1994] The diagrams reached print in two papers by Feynman in 1949, *The theory of positrons* and *Space-time approach to quantum electrodynamics*.:cite[p4-feynman1949a,p4-feynman1949b]
 :::
 
 :::history{year=1949 title="Dyson shows that the three theories are one" people="Freeman Dyson, Richard Feynman, Julian Schwinger, Sin-Itiro Tomonaga" source="Sources: Dyson (1949); Nobel Foundation (1965)."}

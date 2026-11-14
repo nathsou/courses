@@ -105,19 +105,19 @@ The question is sharper than it sounds, because of how a scalar particle's mass 
 
 $$\delta m_H^2 \approx -\frac{3\,y_t^2}{8\pi^2}\,\Lambda^2 .$$
 
-If $\Lambda$ is the Planck mass, the correction is about $5.6 \times 10^{36}$ GeV², whereas the Higgs mass squared is $m_H^2 = 1.6 \times 10^4$ GeV². The measured number is the difference of a "bare" term and this correction, and the two must cancel to thirty-two decimal places.
+If $\Lambda$ is the Planck mass, the correction is about $5.4 \times 10^{36}$ GeV², whereas the Higgs mass squared is $m_H^2 = 1.6 \times 10^4$ GeV². The measured number is the difference of a "bare" term and this correction, and the two must cancel to thirty-two decimal places.
 
 ```fermi
 id: hierarchy-digits
 title: How precisely must two numbers cancel?
 prompt: 'Take the top-quark correction δm² = 3 y_t² Λ² / (8π²), with y_t = √2 m_t / v = 0.99 (m_t = 172.6 GeV, v = 246.2 GeV) and Λ = 1.2 × 10¹⁹ GeV (the Planck mass). The Higgs boson has m_H = 125.2 GeV. By what factor is the correction larger than m_H²?'
-answer: 3.5e32
+answer: 3.4e32
 unit: ''
 factor: 3
 hints:
-  - 'δm² = 3 × 0.98 / (8π² = 78.96) × (1.2 × 10¹⁹)² GeV² ≈ 0.037 × 1.5 × 10³⁸ GeV².'
+  - 'δm² = 3 × 0.98 / (8π² = 78.96) × (1.2 × 10¹⁹)² GeV² ≈ 0.037 × 1.44 × 10³⁸ GeV².'
   - 'm_H² = 125.2² ≈ 1.57 × 10⁴ GeV². Divide.'
-explain: 'The coefficient is 3 × 0.98 / 78.96 = 0.037. Λ² = 1.5 × 10³⁸ GeV², so the correction is 5.6 × 10³⁶ GeV². The Higgs mass squared is 1.57 × 10⁴ GeV². The ratio is 3.5 × 10³²: the bare parameter and the loop correction have to cancel to about 32 digits to leave the observed Higgs mass. That is not a contradiction, because the bare parameter is not observable. It is a coincidence that would require an explanation, and the explanations on offer (a symmetry that protects the mass, a lower cut-off, a landscape of universes) have all been looked for or are untestable.'
+explain: 'The coefficient is 3 × 0.98 / 78.96 = 0.037. Λ² = 1.44 × 10³⁸ GeV², so the correction is 5.4 × 10³⁶ GeV². The Higgs mass squared is 1.57 × 10⁴ GeV². The ratio is 3.4 × 10³²: the bare parameter and the loop correction have to cancel to about 32 digits to leave the observed Higgs mass. That is not a contradiction, because the bare parameter is not observable. It is a coincidence that would require an explanation, and the explanations on offer (a symmetry that protects the mass, a lower cut-off, a landscape of universes) have all been looked for or are untestable.'
 ```
 
 This is a :term[naturalness]{id=naturalness} argument. It does not say that the Standard Model is wrong. It says that if the theory is valid up to very high energies, the Higgs mass is a fine-tuned accident, and physicists generally prefer an explanation. The favourite one was that new particles appear near the TeV scale, whose own loops cancel the top quark's: this is the reason that the LHC was expected to find something beyond the Higgs boson. Supersymmetry is the best-developed such proposal.
@@ -256,7 +256,7 @@ factor: 3
 hints:
   - 'Moles of water: 22.5 × 10⁹ g / 18 g/mol = 1.25 × 10⁹ mol. Multiply by Avogadro and by 10 protons per molecule.'
   - 'Divide by the lifetime, 10³⁴ years.'
-explain: '22.5 × 10⁹ g / 18 g/mol = 1.25 × 10⁹ mol of water, which is 7.5 × 10³² molecules and 7.5 × 10³³ protons. With a mean life of 10³⁴ years the rate is 7.5 × 10³³ / 10³⁴ = 0.75 decays per year. So a tank of this size watching for a couple of decades can test lifetimes of order 10³⁴ to 10³⁵ years, a thousand million billion times the age of the universe, because the tank has so many protons. (Only decays to detectable final states and with the right kinematics count, and the detection efficiency is below one; the quoted limit takes these into account.)'
+explain: '22.5 × 10⁹ g / 18 g/mol = 1.25 × 10⁹ mol of water, which is 7.5 × 10³² molecules and 7.5 × 10³³ protons. With a mean life of 10³⁴ years the rate is 7.5 × 10³³ / 10³⁴ = 0.75 decays per year. So a tank of this size watching for a couple of decades can test lifetimes of order 10³⁴ to 10³⁵ years, some 10²⁴ times the age of the universe, because the tank has so many protons. (Only decays to detectable final states and with the right kinematics count, and the detection efficiency is below one; the quoted limit takes these into account.)'
 ```
 
 ## Gravity
@@ -308,7 +308,7 @@ The question that every part of this chapter ends with is the same: where to loo
 - **A new collider.** The proposal furthest advanced at CERN is the Future Circular Collider: an electron–positron collider in a new tunnel of about 91 km, as a "Higgs and electroweak factory" (measuring the Higgs boson and the Z, W and top quark far more precisely than before), and later, in the same tunnel, a proton collider at a much higher energy. A feasibility study was completed in 2025, and on 22 May 2026 the CERN Council adopted an update of the European Strategy for Particle Physics that names the electron–positron stage as the preferred next flagship project; its construction depends on funding decisions that have not been taken.:cite[eustrategy] Other options under study elsewhere include linear electron–positron colliders and a muon collider.
 - **Experiments that are not colliders.** Neutrino beams and detectors (Chapter 31), underground dark-matter detectors, precision measurements such as the electric dipole moment of the neutron and the g − 2 of the muon, searches for rare decays, and observations of the sky. Several of the strongest limits in this chapter came from them.
 
-Nobody knows which of these will see something first. The Standard Model has been tested so far, and for so long, that a new particle at a scale the LHC can reach would no longer be a surprise only to those who had stopped believing the argument for it. The honest summary is the one in the table at the start of the chapter: there are things the theory leaves out, and no unambiguous sign of what lies beyond.
+Nobody knows which of these will see something first. The Standard Model has been tested so far, and for so long, that a new particle within the LHC's reach would now surprise most physicists, including many who once expected one. The honest summary is the one in the table at the start of the chapter: there are things the theory leaves out, and no unambiguous sign of what lies beyond.
 
 ## Under the hood, and in the experiments
 

@@ -232,7 +232,7 @@ Real air showers are simulated with **CORSIKA** (COsmic Ray SImulations for KAsc
 
 ## What the sky taught
 
-The sky gave the physicists of the 1930s and 1940s what the accelerators of the time could not: the positron, the muon, the pion, and in the next chapter the first strange particles. It also gave them a pair of puzzles that took decades to resolve. The muon looks like a heavy electron and is useless to the nucleus. The pion is Yukawa's meson, and its decay to a muon is a weak process, far slower than anything strong (Chapter 22). The next particles that cosmic rays delivered were stranger: they were made in strong interactions, in a hundred-billionth of a second or less, and then lived a hundred billion times longer than the strong force would allow. A conservation law that nobody had thought of explains it, and it is the subject of Chapter 11.
+The sky gave the physicists of the 1930s and 1940s what the accelerators of the time could not: the positron, the muon, the pion, and in the next chapter the first strange particles. It also gave them a pair of puzzles that took decades to resolve. The muon looks like a heavy electron and is useless to the nucleus. The pion is Yukawa's meson, and its decay to a muon is a weak process, far slower than anything strong (Chapter 22). The next particles that cosmic rays delivered were stranger: they were made in strong interactions, which take about 10⁻²³ seconds, and then lived ten trillion times longer than the strong force would allow. A conservation law that nobody had thought of explains it, and it is the subject of Chapter 11.
 
 ## What comes next
 

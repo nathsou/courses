@@ -43,7 +43,7 @@ mu:
 ```
 :::
 
-The rule "the error on a count of $N$ is $\sqrt N$" comes from the equality of the mean and the variance. It is an approximation that is good for large counts. For small ones it is bad: the distribution of 3.5 expected events is not symmetric, it cannot go below zero, and the probability of 9 or more is nearly four times larger than a Gaussian with the same mean and width would say. Particle physics is full of small counts, so this matters.
+The rule "the error on a count of $N$ is $\sqrt N$" comes from the equality of the mean and the variance. It is an approximation that is good for large counts. For small ones it is bad: the distribution of 3.5 expected events is not symmetric, it cannot go below zero, and the probability of 9 or more is about six times larger than a Gaussian with the same mean and width would say. Particle physics is full of small counts, so this matters.
 
 The Poisson distribution also has a derivation that is worth knowing because it says when it applies. Divide a time interval into $M$ small pieces, each of which contains an event with a small probability $\mu/M$, independently of all the others. The number of pieces with an event is binomial. Let $M$ grow and the binomial distribution converges to the Poisson. A proton–proton collision that makes a Higgs boson is exactly this kind of event: each of the $10^{9}$ collisions is an independent chance of a probability of about $10^{-9}$.
 
@@ -239,7 +239,7 @@ p:
   label: 'p, the p-value'
   what: The probability, calculated under the hypothesis that there is only background, of an outcome at least as extreme as the one observed. For a counting experiment, the chance of $n_{\mathrm{obs}}$ or more events.
   why: It measures how surprising the data are if there is nothing new. A small value makes the no-signal hypothesis hard to believe.
-  effect: For b = 3.5 and 9 events, p = 0.0099. For the same b and 15 events, p = 1.5 × 10⁻⁵.
+  effect: For b = 3.5 and 9 events, p = 0.0099. For the same b and 15 events, p = 4.3 × 10⁻⁶.
 Z:
   label: 'Z, the significance'
   what: "A re-expression of p in units of standard deviations: the number of σ for which a Gaussian has a one-sided upper tail of p."
@@ -417,7 +417,7 @@ sigmu:
   label: 'σ_μ, the uncertainty on the signal strength'
   what: The standard deviation of the measured ratio μ of the observed signal to the expected one, for a counting experiment.
   why: It says how well the size of the signal is known. A discovery needs μ to be several σ_μ from zero.
-  effect: With s = 50 and b = 200 and no systematic, σ_μ = 0.32. With a 10 % systematic on b, it is 0.46.
+  effect: With s = 50 and b = 200 and no systematic, σ_μ = 0.32. With a 10 % systematic on b, it is 0.51.
 delta:
   label: 'δ, the relative systematic uncertainty on b'
   what: "The fractional uncertainty on the expected background: 0.1 for 10 %."

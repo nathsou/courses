@@ -7,7 +7,7 @@ export { default as PotentialSlice } from '$lib/sims/part7/PotentialSlice.svelte
 export { default as RateLadder } from '$lib/sims/part7/RateLadder.svelte';
 /** Chapter 27: the 4 µs Level-1 pipeline and its stages: `::l1-pipeline{n="27.2" caption="…"}`. */
 export { default as L1Pipeline } from '$lib/sims/part7/L1Pipeline.svelte';
-/** Chapter 27: real dimuon data with cuts on the two muons' pT, showing the trigger thresholds and the hump: `::dimuon-thresholds{n="27.3" caption="…"}`. */
+/** Chapter 27: real dimuon data with cuts on the two muons' pT, showing the trigger thresholds and the hump: `::dimuon-thresholds{n="27.4" caption="…"}`. */
 export { default as DimuonThresholds } from '$lib/sims/part7/DimuonThresholds.svelte';
 
 /** Chapter 28: CLs upper limits for a counting experiment, with CLs+b alone and the expected limit bands: `::limit-explorer{n="28.6" caption="…"}`. */

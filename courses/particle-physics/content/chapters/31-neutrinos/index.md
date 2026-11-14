@@ -116,7 +116,7 @@ Three properties of the formula decide how every experiment is built.
 
 ::two-flavour{n="31.1" caption="The two-flavour formula, drawn by the library's function through the hook oscillations.probability. Drag Δm² and the energy: the pattern in L stretches or shrinks and the height stays at sin²2θ. Use the reference curve to check the scaling prediction below."}
 
-### You write: the oscillation probability
+### Predict: how the pattern scales
 
 :::note
 **Move the first maximum.** Use the oscillation plot to predict what happens when the neutrino energy doubles at fixed mass splitting: the distance to the first maximum doubles. Setting the mixing angle to zero removes oscillations rather than changing their period.
@@ -282,7 +282,7 @@ The lab below computes the full $3 \times 3$ probabilities by propagating the ne
 
 Three things to try in it show what the next experiments are after.
 
-- **CP violation.** For the 295 km preset set the initial flavour to $\nu_\mu$ and look at the probability to become $\nu_e$. Now switch to antineutrinos. The difference between the two is the CP violation, and it is proportional to $\sin\delta$ times the :term[Jarlskog invariant]{id=jarlskog-invariant} $J = c_{12}s_{12}c_{23}s_{23}c_{13}^2 s_{13}\sin\delta$, which has a maximum of about 0.033. The quarks' $J$ (Chapter 24) is about $3 \times 10^{-5}$. In the lepton sector CP violation could be a thousand times larger than it is in the quark sector. Whether it is, nobody yet knows.
+- **CP violation.** For the 295 km preset set the initial flavour to $\nu_\mu$ and look at the probability to become $\nu_e$. Now switch to antineutrinos. The difference between the two is the CP violation, and it is proportional to the :term[Jarlskog invariant]{id=jarlskog-invariant} $J = c_{12}s_{12}c_{23}s_{23}c_{13}^2 s_{13}\sin\delta$, which has a maximum (at $\sin\delta = \pm1$) of about 0.033. The quarks' $J$ (Chapter 24) is about $3 \times 10^{-5}$. In the lepton sector CP violation could be a thousand times larger than it is in the quark sector. Whether it is, nobody yet knows.
 - **Matter.** For the longer baselines turn matter on. Electron neutrinos feel the same MSW potential as in the Sun, and the sign of the effect is opposite for antineutrinos. It also depends on a thing that vacuum oscillations cannot decide.
 - **The mass ordering.** Switch between "normal" and "inverted".
 
@@ -316,7 +316,7 @@ If neutrinoless double-beta decay is seen, neutrinos are Majorana particles and 
 
 ### Why so light?
 
-For a Dirac neutrino the Higgs mechanism of Chapter 26 gives a mass through a Yukawa coupling $y$, with $m = yv/\sqrt{2}$ and $v = 246$ GeV. For $m = 0.05$ eV this needs $y \approx 3 \times 10^{-13}$. The electron's coupling is $3 \times 10^{-6}$, and the top quark's is about 1. A coupling a million times smaller than the electron's is not forbidden. It does ask for an explanation.
+For a Dirac neutrino the Higgs mechanism of Chapter 26 gives a mass through a Yukawa coupling $y$, with $m = yv/\sqrt{2}$ and $v = 246$ GeV. For $m = 0.05$ eV this needs $y \approx 3 \times 10^{-13}$. The electron's coupling is $3 \times 10^{-6}$, and the top quark's is about 1. A coupling ten million times smaller than the electron's is not forbidden. It does ask for an explanation.
 
 The most popular one needs the neutrino to be a Majorana particle. In the :term[seesaw]{id=seesaw-mechanism} mechanism a very heavy partner of mass $M$ (a right-handed neutrino, which has no weak interaction at all) mixes with the light one, and the light neutrino's mass is
 

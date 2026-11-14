@@ -171,7 +171,7 @@ unit: ''
 tolerance: 0.01
 hints:
   - The number of generators of SU(n) is n² − 1.
-explain: 'There is one gauge boson per generator, and SU(n) has n² − 1 of them: 15 for n = 4. The same rule gives 3 for SU(2) and 8 for SU(3). A group of n × n matrices has n² complex entries, the unitarity condition removes n², and the determinant condition one more.'
+explain: 'There is one gauge boson per generator, and SU(n) has n² − 1 of them: 15 for n = 4. The same rule gives 3 for SU(2) and 8 for SU(3). An n × n complex matrix has 2n² real parameters; the unitarity condition removes n² of them, and the determinant condition one more.'
 ```
 
 ```quiz

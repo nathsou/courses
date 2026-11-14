@@ -20,7 +20,7 @@ If the carrier of the charged weak current is a particle $W$ of mass $m_W$ coupl
 
 $$\frac{G_F}{\sqrt2} = \frac{g^2}{8\,m_W^2}.$$
 
-That is Fermi's theory, derived as an approximation. For a coupling $g$ of about the strength of electromagnetism's, and $G_F^{-1/2} = 293$ GeV, the mass comes out near 80 GeV. The range of such a force is $\hbar c/m_W = 0.1973\ \text{GeV·fm}/80.4\ \text{GeV} = 2.5\times10^{-3}$ fm, or $2.5\times10^{-18}$ m, several hundred times smaller than a proton. The weak interaction is not feeble in itself; at distances comparable to its range it is about as strong as electromagnetism. It looks feeble at the distances of ordinary decays because the amplitude is suppressed by $(E/m_W)^2$ and the rate by the fourth power of that.
+That is Fermi's theory, derived as an approximation. For a coupling $g$ of about the strength of electromagnetism's, and $G_F^{-1/2} = 293$ GeV, the mass comes out near 80 GeV. The range of such a force is $\hbar c/m_W = 0.1973\ \text{GeV·fm}/80.4\ \text{GeV} = 2.5\times10^{-3}$ fm, or $2.5\times10^{-18}$ m, several hundred times smaller than a proton. The weak interaction is not feeble in itself; at distances comparable to its range it is about as strong as electromagnetism. It looks feeble at the distances of ordinary decays because the amplitude is suppressed by $(E/m_W)^2$ and the rate by the square of that.
 
 The charged carriers are two particles, $W^+$ and $W^-$. They are what turns a down-type quark into an up-type one and a charged lepton into its neutrino.
 
@@ -201,7 +201,7 @@ The lepton's transverse momentum has a peak at $m_W/2$ and an edge beyond it, an
 
 ### Write it yourself
 
-Two small functions turn what a detector sees into the W's signature. The reference ones are in `hep/reco` and `hep/kinematics`; the figure above uses yours once they pass.
+Two small functions turn what a detector sees into the W's signature: the missing transverse momentum and the transverse mass. The reference ones are in `hep/reco` and `hep/kinematics`. The first is supplied; the second is the exercise below, and the figure above uses yours once it passes.
 
 :::note
 **Account for transverse momentum.** If the measured objects sum to (+20, −15) GeV in the transverse plane, the missing vector is (−20, +15) GeV. Explain why adding the same construction along the beam would not identify a neutrino: the incoming partons’ longitudinal momenta are unknown.
@@ -426,7 +426,7 @@ export function breitWigner(r: Rng, mass: number, width: number, lo = -Infinity,
 
 One uniform number gives one mass. Truncation costs nothing: no rejected draws. A real Breit–Wigner has such heavy tails that it has no mean and no variance, so the cut matters: the 91 GeV peak's tails reach down to the continuum of Figure 23.1. In the matrix-element generator the same mapping is used inside the integration (a change of variable that makes the integrand flat in the Breit–Wigner variable), which is why the resonance is sampled well however narrow it is.
 
-The missing momentum is as simple as it sounds. Here is the library's reference for the function you wrote:
+The missing momentum is as simple as it sounds. Here is the library's reference for it:
 
 ```ts
 export function missingPt(objects: P4[]): { x: number; y: number } {

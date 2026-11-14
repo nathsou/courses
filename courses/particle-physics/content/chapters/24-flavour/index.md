@@ -212,7 +212,7 @@ The fifth power of the mass makes heavy quarks decay fast, and the factor $|V_{c
 ```fermi
 id: b-lifetime
 title: The b lifetime from the muon formula
-prompt: 'Scale the muon decay width Γ = G_F² m⁵/(192π³) to the b quark: replace m_μ by m_b = 4.18 GeV, multiply by |V_cb|² = 0.0018 and by N = 5 for the number of decay channels (counting the colours of the quark pairs), and ignore the suppression from the mass of the charm quark in the final state. What lifetime does this give? (G_F = 1.166 × 10⁻⁵ GeV⁻², ħ = 6.58 × 10⁻²⁵ GeV·s.)'
+prompt: 'Scale the muon decay width Γ = G_F² m⁵/(192π³) to the b quark: replace m_μ by m_b = 4.18 GeV, multiply by |V_cb|² = 0.0018 and by N = 5 for the number of light decay channels (an electron or a muon with its neutrino, and a ū d pair in each of three colours; the heavier τν and c̄ s channels are left out), and ignore the suppression from the mass of the charm quark in the final state. What lifetime does this give? (G_F = 1.166 × 10⁻⁵ GeV⁻², ħ = 6.58 × 10⁻²⁵ GeV·s.)'
 answer: 2.5e-12
 unit: s
 factor: 2

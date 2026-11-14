@@ -153,7 +153,7 @@ Define $W^\pm = (W^1 \mp i W^2)/\sqrt2$ and $Z = (gW^3 - g'B)/\sqrt{g^2+g'^2}$. 
 The same expression contains the Higgs boson's couplings to the W and Z. Expanding $(v+h)^2 = v^2 + 2vh + h^2$, the term linear in $h$ is $\frac{g^2 v}{4} h\,W^+W^- \cdot 2$ in the normalisation above, that is $\frac{2m_W^2}{v}\,h\,W^+_\mu W^{-\mu}$, and $\frac{m_Z^2}{v}\,h\,Z_\mu Z^\mu$ for the Z. The coupling of the Higgs boson to a gauge boson is proportional to the **square** of that boson's mass, divided by $v$.
 :::
 
-A quick check that the numbers are not arbitrary. The code in the library computes the electromagnetic coupling at the Z mass, $\alpha(m_Z) = 1/128.96$, so $e = \sqrt{4\pi\alpha} = 0.3134$, and the effective weak mixing angle $\sin^2\theta_W = 0.2315$. Then $g = e/\sin\theta_W = 0.649$ and $m_W = g v/2 = 79.9$ GeV, against the measured 80.37 GeV: a difference of 0.6 %. Nothing has been fitted. The remaining difference is the size of the loop corrections that Chapter 23 described, and its precise value is one of the most sensitive tests of the whole framework.
+A quick check that the numbers are not arbitrary. The code in the library computes the electromagnetic coupling at the Z mass, $\alpha(m_Z) = 1/128.96$, so $e = \sqrt{4\pi\alpha} = 0.3122$, and the effective weak mixing angle $\sin^2\theta_W = 0.2315$. Then $g = e/\sin\theta_W = 0.649$ and $m_W = g v/2 = 79.9$ GeV, against the measured 80.37 GeV: a difference of 0.6 %. Nothing has been fitted. The remaining difference is the size of the loop corrections that Chapter 23 described, and its precise value is one of the most sensitive tests of the whole framework.
 
 ```numeric
 id: g-from-mw
@@ -164,7 +164,7 @@ unit: ''
 tolerance: 0.005
 hints:
   - Solve for g, g = 2 mW / v.
-explain: 'g = 2 × 80.369 / 246.22 = 0.6528. Dividing e = 0.3134 by this gives sin θW = 0.480, so sin²θW = 0.230 from the mass alone, close to the value measured at the Z pole.'
+explain: 'g = 2 × 80.369 / 246.22 = 0.6528. Dividing e = 0.3122 by this gives sin θW = 0.478, so sin²θW = 0.229 from the mass alone, close to the value measured at the Z pole.'
 ```
 
 ### Why the W needs the Higgs: a hint from unitarity
