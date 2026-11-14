@@ -61,7 +61,7 @@ a number G. H. Hardy called the largest that had ever served a definite purpose 
 | Year | Who | First sign change below |
 | --- | --- | --- |
 | 1966 | Lehman | $1.65 \times 10^{1165}$ |
-| 1987 | te Riele | $6.66 \times 10^{370}$ |
+| 1987 | te Riele | $6.69 \times 10^{370}$ |
 | 2000 | Bays and Hudson | near $1.398 \times 10^{316}$ |
 | 2010 | Saouter and Demichel | near $1.3972 \times 10^{316}$ |
 

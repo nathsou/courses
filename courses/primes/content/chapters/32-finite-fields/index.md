@@ -24,7 +24,7 @@ $$I_n = \frac1n\sum_{d \mid n}\mu(d)\,q^{n/d} = \frac{q^n}{n} + O\!\left(\frac{q
 :::proof
 Every monic polynomial of degree $n$ factors uniquely into monic irreducibles, so comparing the coefficients of $u^n$ in $\prod_P(1 - u^{\deg P})^{-1} = \sum_n q^nu^n$, after taking logarithmic derivatives and multiplying by $u$, gives
 $$\sum_{d \mid n}d\,I_d = q^n$$
-(the left side counts pairs $(P, k)$ with $k\deg P = n$, weighted by $\deg P$). By Möbius inversion (Chapter 19), $nI_n = \sum_{d \mid n}\mu(d)q^{n/d}$. The term $d = 1$ gives $q^n$; every other term has $d \ge 2$, so $|q^{n/d}| \le q^{n/2}$, and there are at most $n$ of them, giving an error $O(q^{n/2})$.
+(the left side counts pairs $(P, k)$ with $k\deg P = n$, weighted by $\deg P$). By Möbius inversion (Chapter 19), $nI_n = \sum_{d \mid n}\mu(d)q^{n/d}$. The term $d = 1$ gives $q^n$. The term $d = 2$, if present, is at most $q^{n/2}$, and the remaining terms, fewer than $n$ of them, are each at most $q^{n/3}$. So $nI_n = q^n + O(q^{n/2})$, and dividing by $n$ gives the error term.
 :::
 
 With $X = q^n$ playing the role of $x$ and $n = \log_qX$ the role of $\log x$, this says $I_n = \frac{X}{\log_qX} + O\!\left(\frac{\sqrt X}{\log_qX}\right)$: the PNT with a square-root error, the analogue of the Riemann Hypothesis, with a two-line proof.

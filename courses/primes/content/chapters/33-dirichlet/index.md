@@ -4,7 +4,7 @@ title: Primes in arithmetic progressions
 summary: "Dirichlet’s theorem, proved in full: if gcd(a, q) = 1 there are infinitely many primes p ≡ a (mod q). Characters filter the residue classes, L-functions carry the Euler product, and everything rests on L(1, χ) ≠ 0, proved separately for complex and for real characters."
 duration: About 1½ hours
 prerequisites: [euler-product, littlewood]
-theorems: [Dirichlet’s theorem, L(1, χ) ≠ 0, The prime number theorem for arithmetic progressions (stated), Linnik’s theorem (stated)]
+theorems: [Dirichlet’s theorem, "L(1, χ) ≠ 0", The prime number theorem for arithmetic progressions (stated), Linnik’s theorem (stated)]
 techniques: [Dirichlet characters, L-functions, orthogonality, Landau’s theorem]
 ---
 
