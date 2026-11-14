@@ -27,8 +27,8 @@ import Portrait from '../../components/Portrait.astro';
   y: ['Dimensionless radius r / 2Rd', 'Freeman\'s formula depends only on this ratio, which is why the Bessel-function shape is universal across disk galaxies of different sizes.'],
   I0: ['Modified Bessel function I0(y)', 'Grows exponentially; captures the near-field pull of the disk close to a given radius.'],
   K0: ['Modified Bessel function K0(y)', 'Diverges logarithmically at y = 0 and decays exponentially at large y; captures the far-field falloff.'],
-  rho0: ['Halo central density', 'Density of the assumed dark-matter distribution at its scale radius, a free parameter fit to the rotation curve.'],
-  rs: ['Halo scale radius', 'Radius where the NFW density profile\'s log-slope steepens from −1 to −3.'],
+  rho0: ['Halo characteristic density', 'The density scale of the assumed dark-matter profile (for NFW, four times the density at the scale radius), a free parameter fit to the rotation curve.'],
+  rs: ['Halo scale radius', 'Where the NFW density profile\'s log-slope is −2, halfway between its inner −1 and outer −3.'],
   sigma: ['Velocity dispersion', 'The spread (standard deviation) of galaxy velocities in a cluster, the cluster analogue of a rotation speed.'],
   a0: ['MOND acceleration scale', 'The empirical constant ≈ 1.2×10⁻¹⁰ m/s² below which Milgrom\'s modified dynamics departs from Newton.'],
   R0: ['Sun\'s galactocentric radius', 'Our distance from the Galactic Centre, about 8.2 kpc — the ruler for every Milky Way measurement made from inside the disk.'],
@@ -71,10 +71,10 @@ A century later, Jacobus Kapteyn refined the statistics into the "Kapteyn Univer
 
 <Tiers>
 <Fragment slot="l1">
-Globular clusters — dense spherical swarms of hundreds of thousands of old stars — sit mostly *above and below* the dusty disk, so their light reaches us largely undimmed. Harlow Shapley measured their distances using pulsating stars inside them as standard candles (Ch. 14) and found they were arranged in a huge sphere centred not on the Sun, but on a point roughly 8 kiloparsecs away, in the direction of Sagittarius. That point is the true Galactic Centre. We are not at the centre of the Galaxy — we are out in its suburbs, about two-thirds of the way to the edge.
+Globular clusters — dense spherical swarms of hundreds of thousands of old stars — sit mostly *above and below* the dusty disk, so their light reaches us largely undimmed. Harlow Shapley measured their distances using pulsating stars inside them as standard candles (Ch. 15) and found they were arranged in a huge sphere centred not on the Sun, but on a point roughly 8 kiloparsecs away, in the direction of Sagittarius. That point is the true Galactic Centre. We are not at the centre of the Galaxy — we are out in its suburbs, roughly halfway from the centre to the edge of the disk.
 </Fragment>
 <Fragment slot="l2">
-Globular clusters lie mostly out of the dusty plane, so Shapley could measure their distances (via RR Lyrae and Cepheid variables, see Ch. 14) without the extinction problem that fooled Kapteyn. Their 3-D distribution traces a roughly spherical halo centred far from the Sun. Shapley's 1918 result placed the Galactic Centre about 8–15 kpc away (his early distance scale was too large by roughly a factor of 2–3, but the qualitative shift was correct): the Sun is not central.
+Globular clusters lie mostly out of the dusty plane, so Shapley could measure their distances (via RR Lyrae and Cepheid variables, see Ch. 15) without the extinction problem that fooled Kapteyn. Their 3-D distribution traces a roughly spherical halo centred far from the Sun. Shapley's 1918 result placed the Galactic Centre about 8–15 kpc away (his early distance scale was too large by roughly a factor of 2–3, but the qualitative shift was correct): the Sun is not central.
 </Fragment>
 <Fragment slot="l3">
 Globular clusters populate the stellar halo with a roughly $\rho \propto r^{-3.5}$ density profile and negligible dust extinction along most lines of sight to them. Shapley (1918) fit their sky distribution and distances (from RR Lyrae/Cepheid period–luminosity relations) to a spherical system and located its centroid about 8–15 kpc from the Sun toward Sagittarius — his absolute distance scale was later corrected down (a systematic calibration error in the period–luminosity zero point), but the displacement of the centroid from the Sun, the qualitative result, survived intact. It reoriented Galactic astronomy the way Copernicus reoriented the Solar System.
@@ -101,7 +101,7 @@ The debate was settled three years later, not by argument but by a single photog
 
 <Tiers>
 <Fragment slot="l1">
-Cepheid variable stars pulse with a period that reveals their true brightness (Ch. 14). Compare true brightness to how dim the star looks from Earth, and you get the distance — the same "standard candle" trick used everywhere in this course. Hubble found one in Andromeda and got a distance of roughly 900,000 light-years (the modern value, with better calibration, is about 2.5 million). Either number is far outside even the *largest* estimates of the Milky Way's size. Andromeda had to be its own galaxy.
+Cepheid variable stars pulse with a period that reveals their true brightness (Ch. 15). Compare true brightness to how dim the star looks from Earth, and you get the distance — the same "standard candle" trick used everywhere in this course. Hubble found one in Andromeda and got a distance of roughly 900,000 light-years (the modern value, with better calibration, is about 2.5 million). Either number is far outside even the *largest* estimates of the Milky Way's size. Andromeda had to be its own galaxy.
 </Fragment>
 <Fragment slot="l3">
 The Cepheid period–luminosity relation gives an absolute magnitude from the pulsation period; comparing to the apparent magnitude gives a distance modulus. Hubble's 1923–1925 Cepheid in M31 gave $d \sim 285\,\text{kpc}$ by his calibration (a systematic Cepheid zero-point error, corrected decades later, means the modern distance is $\sim 770\,\text{kpc}$) — either value placed Andromeda far outside any contemporary estimate of the Milky Way's extent, resolving the Great Debate decisively in Curtis's favour on the "island universes" question, even though Shapley's own displacement of the Sun from the Galactic Centre also stood.
@@ -129,7 +129,7 @@ Gaia's astrometry (positions, proper motions, distances via parallax, for ~2 bil
 - **Thick disk**: $h_z \approx 1$ kpc, older and more metal-poor, lags the thin disk's rotation by tens of km/s.
 - **Bulge/bar**: the inner few kpc form an X-shaped, boxy/peanut bulge produced by disk instability, seen end-on as a bar roughly 25° from the Sun–Centre line.
 - **Stellar halo**: $\rho \propto r^{-3}$ to $r^{-3.5}$, extends to $\gtrsim 100$ kpc, includes ~150 globular clusters and streams of disrupted satellites.
-- **Satellites**: LMC (M ≈ 1–2×10¹⁰ M☉, 50 kpc), SMC (60 kpc), and the Sagittarius Dwarf, whose tidal stream wraps the sky and is still forming as its host is disrupted.
+- **Satellites**: LMC (M ≈ 1–2×10¹¹ M☉ including its dark halo, 50 kpc), SMC (60 kpc), and the Sagittarius Dwarf, whose tidal stream wraps the sky and is still forming as its host is disrupted.
 </Fragment>
 <Fragment slot="l3">
 Structural decomposition uses Gaia DR3 astrometry (parallaxes to ~10 kpc at high precision, proper motions and, for a growing subsample, radial velocities) fit to multi-component density and kinematic models:
@@ -160,19 +160,19 @@ These findings turn galactic structure from a static map into a movie of ongoing
 
 <Tiers>
 <Fragment slot="l1">
-The Sun, and everything in the Solar System, is itself orbiting the Galactic Centre — at roughly 230 km/s, once every 230 million years. Dinosaurs went extinct about one-quarter of a galactic year ago.
+The Sun, and everything in the Solar System, is itself orbiting the Galactic Centre — at roughly 230 km/s, once every 220 million years or so. The dinosaurs died out less than a third of a galactic year ago.
 </Fragment>
 <Fragment slot="l2">
-The Sun orbits the Galactic Centre at <span data-term="R0">$R_0$</span> ≈ 8.2 kpc with speed <span data-term="vc">$v_c$</span> ≈ 230 km/s, giving an orbital period of about 230 million years (one "galactic year"). Its orbit is close to circular but not exact: it oscillates gently above and below the midplane with a period of ~70 Myr, currently sitting just north of it.
+The Sun orbits the Galactic Centre at <span data-term="R0">$R_0$</span> ≈ 8.2 kpc with speed <span data-term="vc">$v_c$</span> ≈ 230 km/s, giving an orbital period of about 220 million years (one "galactic year"). Its orbit is close to circular but not exact: it oscillates gently above and below the midplane with a period of ~70 Myr, currently sitting just north of it.
 </Fragment>
 <Fragment slot="l3">
-The Sun's local standard of rest moves at $(U,V,W) \approx$ small deviations from a circular orbit at $R_0 \approx 8.2$ kpc, $v_c \approx 230$ km/s (both measured via Sgr A*'s proper motion and stellar orbits, see below, plus maser and Cepheid parallaxes). Its vertical oscillation about the midplane, driven by the disk's restoring gravity, has a period $\sim 70$ Myr and amplitude $\sim 70$ pc — small compared to the thin disk's own scale height.
+The *local standard of rest* is a circular orbit at $R_0 \approx 8.2$ kpc with $v_c \approx 230$ km/s; the Sun moves relative to it by only $(U,V,W) \approx (11, 12, 7)$ km/s (both measured via Sgr A*'s proper motion and stellar orbits, see below, plus maser and Cepheid parallaxes). Its vertical oscillation about the midplane, driven by the disk's restoring gravity, has a period $\sim 70$ Myr and amplitude $\sim 70$ pc — small compared to the thin disk's own scale height.
 </Fragment>
 </Tiers>
 
 A Sun at <Var name="R0" value={8.2} min={5} max={12} step={0.1} /> kpc moving at <Var name="v0" value={230} min={150} max={300} step={5} /> km/s completes one orbit every <Out name="Tsun" />.
 
-<Aside>**How we know both numbers precisely.** Reflex motion of Sgr A* against background quasars gives the Sun's *transverse* speed around the centre directly; combined with the geometric distance to Sgr A* from stellar orbits (Ch. 19's [black hole](/ch/black-holes/) chapter), this pins down $R_0$ and $v_c$ almost independently of any rotation-curve model.</Aside>
+<Aside>**How we know both numbers precisely.** The apparent motion of Sgr A* against background quasars is a reflection of our own orbit, so it gives the Sun's *angular* speed around the centre directly; multiplied by the geometric distance to Sgr A* from stellar orbits (Ch. 19's [black hole](/ch/black-holes/) chapter), it gives the speed. Together these pin down $R_0$ and $v_c$ almost independently of any rotation-curve model.</Aside>
 
 ## Sgr A\* and the anchor at the centre
 
@@ -207,7 +207,7 @@ For a spherically symmetric mass distribution, Gauss's law for gravity (the shel
 
 <Tiers>
 <Fragment slot="l1">
-Neutral hydrogen gas fills the disk and glows faintly at a radio wavelength of 21 cm. Its Doppler shift along any line of sight tells you how fast the gas is moving toward or away from us. There's a clever trick for turning that into a rotation curve without knowing distances to individual clouds: along any line of sight that crosses the inner Galaxy, the gas closest to the centre — the "tangent point" — is moving directly along the line of sight (neither toward nor away in any transverse sense), so it produces the single most extreme Doppler shift on that line of sight. That extreme velocity, plus simple geometry, gives you the rotation speed at a radius you know exactly.
+Neutral hydrogen gas fills the disk and glows faintly at a radio wavelength of 21 cm. Its Doppler shift along any line of sight tells you how fast the gas is moving toward or away from us. There's a clever trick for turning that into a rotation curve without knowing distances to individual clouds: along any line of sight that crosses the inner Galaxy, the gas closest to the centre — the "tangent point" — is moving straight along the line of sight, so its whole orbital speed shows up as Doppler shift and it has the most extreme velocity anywhere on that sightline. That extreme velocity, plus simple geometry, gives you the rotation speed at a radius you know exactly.
 </Fragment>
 <Fragment slot="l2">
 Along a line of sight at galactic longitude $l$ (with $|l| < 90°$, looking into the inner Galaxy), the point of closest approach to the centre lies at radius $R_\text{tan} = R_0 \sin l$ — pure geometry, since the line of sight is tangent to a circle of that radius. At that point, the gas's entire orbital velocity projects onto the line of sight, producing the largest (or smallest) line-of-sight velocity anywhere along that sightline: the **terminal velocity** $v_\text{term}$. A short geometric argument (below) turns $v_\text{term}$ directly into $v_c(R_\text{tan})$.
@@ -264,7 +264,7 @@ A flat $v_c(r) = \text{const}$ in $v_c^2 = GM(\!<\!r)/r$ requires $M(\!<\!r) \pr
 <History title="Rubin, Ford, and a discovery decades in the making" year="1970s">
 <Portrait src="/img/people/rubin-vera.jpg" name="Vera Rubin" years="1928–2016" credit="NASA" license="Public domain" href="https://commons.wikimedia.org/wiki/File:Vera_Rubin.jpg" />
 
-Vera Rubin was repeatedly discouraged from pursuing astronomy — Princeton's graduate program did not accept women when she applied, and a Ph.D. abstract of hers on cosmology was, notoriously, prevented from being formally presented at an AAS meeting. She persisted, and with instrument-builder Kent Ford she carried out precise spectroscopy of spiral galaxy rotation through the late 1960s and 1970s. The flat rotation curves that resulted were not entirely new — Horace Babcock's 1939 thesis on Andromeda, and later Bosma's 21 cm surveys, hinted at the same thing — but Rubin and Ford's systematic, high-precision dataset across dozens of galaxies made the anomaly impossible to dismiss as a measurement fluke. Rubin herself was cautious about the interpretation for years; she is now, posthumously, one of the discovery's most closely associated names — and the Vera C. Rubin Observatory (formerly LSST) carries her name into the survey that will map cosmic structure shaped by the same missing mass.
+Vera Rubin was repeatedly discouraged from pursuing astronomy — Princeton's graduate program did not accept women when she applied, and when she presented her master's work on large-scale motions of galaxies at a 1950 AAS meeting it was received with open hostility and then rejected by the journals. She persisted, and with instrument-builder Kent Ford she carried out precise spectroscopy of spiral galaxy rotation through the late 1960s and 1970s. The flat rotation curves that resulted were not entirely new — Horace Babcock's 1939 thesis on Andromeda, and later Bosma's 21 cm surveys, hinted at the same thing — but Rubin and Ford's systematic, high-precision dataset across dozens of galaxies made the anomaly impossible to dismiss as a measurement fluke. Rubin herself was cautious about the interpretation for years; she is now, posthumously, one of the discovery's most closely associated names — and the Vera C. Rubin Observatory (formerly LSST) carries her name into the survey that will map cosmic structure shaped by the same missing mass.
 </History>
 
 <Sim name="milky-way-rotation" size="wide" minHeight={620}>
@@ -312,7 +312,7 @@ For a razor-thin disk with $\Sigma(r) = \Sigma_0 e^{-r/R_d}$, Poisson's equation
 $$
 \term{vc}{v_c}^2(r) = 4\pi G\,\term{Sigma0}{\Sigma_0}\,\term{Rd}{R_d}\,\term{y}{y}^2\big[\term{I0}{I_0}(y)\term{K0}{K_0}(y) - I_1(y)K_1(y)\big], \qquad y \equiv \frac{r}{2R_d}
 $$
-<Fragment slot="where">$I_n$ and $K_n$ are modified Bessel functions of the first and second kind. The curve rises from zero, peaks around $r \approx 2.2\,R_d$, and falls slowly beyond — it never turns fully Keplerian at any finite radius you'd sample in a real disk, which is itself part of why "flat forever" is not, by itself, absolute proof of dark matter without also constraining the halo independently.</Fragment>
+<Fragment slot="where">$I_n$ and $K_n$ are modified Bessel functions of the first and second kind. The curve rises from zero, peaks around $r \approx 2.2\,R_d$, and falls slowly beyond, approaching the Keplerian $r^{-1/2}$ decline only several scale lengths out. A disk alone therefore cannot keep a rotation curve flat to 20 kpc and more.</Fragment>
 </KeyEq>
 
 <Level min={3} title="Why Bessel functions, briefly">
@@ -423,7 +423,7 @@ The leading candidates, roughly in order of historical popularity:
 - **Sterile neutrinos**: a hypothetical fourth neutrino species that doesn't feel the weak force (hence "sterile"), which could be produced in the right abundance in the early universe and would show up in X-ray telescopes as a faint decay line — tentative claims of such a line remain disputed.
 </Fragment>
 <Fragment slot="l3">
-Direct-detection null results now constrain the spin-independent WIMP–nucleon cross-section below $\sim 10^{-47}\,\text{cm}^2$ for masses near 30 GeV/$c^2$ (LZ 2022–2024, XENONnT), well into the "neutrino fog" where solar and atmospheric neutrino backgrounds start to mimic a WIMP signal — a fundamental sensitivity floor for this detection technique, not merely an engineering one. Axion haloscopes (ADMX and successors) have excluded significant portions of the QCD axion's predicted coupling–mass band in the μeV range. PBH constraints combine microlensing (EROS, OGLE, Subaru HSC) across sub-solar masses with LIGO-Virgo-KAGRA's O4 merger catalogue, which constrains any PBH contribution near stellar masses via the observed merger rate and mass/spin distribution. None of this rules out particle dark matter; it substantially narrows where it can hide.
+Direct-detection null results now constrain the spin-independent WIMP–nucleon cross-section below $\sim 10^{-47}\,\text{cm}^2$ for masses near 30 GeV/$c^2$ (LZ 2022–2024, XENONnT), approaching the "neutrino fog" where solar and atmospheric neutrino backgrounds start to mimic a WIMP signal — a fundamental sensitivity floor for this detection technique, not merely an engineering one. Axion haloscopes (ADMX and successors) have excluded significant portions of the QCD axion's predicted coupling–mass band in the μeV range. PBH constraints combine microlensing (EROS, OGLE, Subaru HSC) across sub-solar masses with LIGO-Virgo-KAGRA's O4 merger catalogue, which constrains any PBH contribution near stellar masses via the observed merger rate and mass/spin distribution. None of this rules out particle dark matter; it substantially narrows where it can hide.
 </Fragment>
 </Tiers>
 
@@ -474,7 +474,7 @@ $$
 M(\!<\!R) = \frac{v_c^2 R}{G} \approx \frac{(230\,\text{km/s})^2 (50\,\text{kpc})}{4.30\times10^{-6}\,\text{kpc}\,(\text{km/s})^2 M_\odot^{-1}} \approx 6\times10^{11}\,M_\odot,
 $$
 
-and integrating a bit further with a slowly falling (rather than perfectly flat) profile gets you to the commonly quoted total Galaxy mass, $\sim 1$–$1.5\times10^{12}\,M_\odot$ within the virial radius (~250–300 kpc), of which the visible stars and gas are only a few percent. The escape speed from the Sun's location, $v_\text{esc} \approx \sqrt{2}\,v_c$ for a flat rotation curve extended to large radius (a rough approximation; the real value from detailed mass models is closer to 550 km/s), is comfortably above any star's typical orbital speed — which is exactly why "hypervelocity stars," flung out by close encounters with Sgr A\*, are rare and dramatic events rather than routine.
+and integrating a bit further with a slowly falling (rather than perfectly flat) profile gets you to the commonly quoted total Galaxy mass, $\sim 1$–$1.5\times10^{12}\,M_\odot$ within the virial radius (~250–300 kpc), of which the visible stars and gas are only a few percent. The escape speed from the Sun's location would be $\sqrt{2}\,v_c \approx 330$ km/s if all the mass sat inside the Sun's orbit; the extended halo deepens the well, and for a flat curve out to a radius $r_\text{max}$ it becomes $v_c\sqrt{2[1+\ln(r_\text{max}/R_0)]}$, about 550–600 km/s, in line with detailed mass models. That is comfortably above any star's typical orbital speed — which is exactly why "hypervelocity stars," flung out by close encounters with Sgr A\*, are rare and dramatic events rather than routine.
 </Fermi>
 
 A Galaxy of mass <Var name="Mgal" value={1.3} min={0.5} max={2} step={0.05} /> ×10¹² M☉ has an escape speed from the Sun's radius of roughly <Out name="vesc" />.

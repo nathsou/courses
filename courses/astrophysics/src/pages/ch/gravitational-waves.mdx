@@ -91,7 +91,7 @@ where $\Box = -\partial_t^2/c^2 + \nabla^2$ is the wave operator and $T_{\mu\nu}
 <History title="Do gravitational waves exist?" year="1916–1957">
 <Portrait src="/img/people/einstein.jpg" name="Albert Einstein" years="1879–1955" credit="Ferdinand Schmutzer, 1921" license="Public domain" href="https://commons.wikimedia.org/wiki/File:Einstein_1921_by_F_Schmutzer_-_restoration.jpg" />
 
-Einstein predicted gravitational waves in 1916, months after finishing general relativity, and got the formula for their power wrong by a factor of two; he corrected it in 1918, giving the quadrupole formula we still use. Then he spent two decades unsure whether the waves were real or an artefact of his coordinates. Arthur Eddington quipped that some kinds of wave in the theory travelled "with the speed of thought", because a change of coordinates could make them go at any speed.
+Einstein predicted gravitational waves in 1916, months after finishing general relativity, but that first paper contained a calculational error. His 1918 follow-up gave the quadrupole formula we still use, apart from a factor of two that Eddington corrected in 1922. Then he spent two decades unsure whether the waves were real or an artefact of his coordinates. Arthur Eddington quipped that some kinds of wave in the theory travelled "with the speed of thought", because a change of coordinates could make them go at any speed.
 
 In 1936 Einstein and his assistant Nathan Rosen sent *Physical Review* a paper claiming gravitational waves did not exist. The anonymous referee, Howard Robertson, pointed out that their troublesome singularity was just a badly chosen coordinate system. Einstein, unused to anonymous peer review, withdrew the paper in indignation and never published in that journal again, but the version that finally appeared quietly reversed the conclusion.
 
@@ -309,11 +309,11 @@ Inverting gives the time left before merger, $t_c - t = \tfrac{5}{256}(\pi f)^{-
 
 <Aside>Drag the orange numbers. Set $\mathcal M = 1.19$ and $f = 10$ Hz for a neutron-star pair entering LIGO's band: about 17 minutes and ~16,000 cycles. Set $\mathcal M = 4\times10^5$ and $f = 10^{-4}$ Hz for a supermassive pair in LISA's band.</Aside>
 
-At 30 Hz a GW150914-like binary has only 0.2 s left. A neutron-star pair at the same frequency has almost a minute, and thousands of cycles: the more cycles, the more precisely the phase pins down the parameters.
+At 30 Hz a GW150914-like binary has only about 0.3 s left. A neutron-star pair at the same frequency has almost a minute, and thousands of cycles: the more cycles, the more precisely the phase pins down the parameters.
 
 ### Merger and ringdown
 
-The quadrupole formula assumes slow motion and weak fields. Both fail at the end. Around the innermost stable circular orbit ($a \approx 6GM/c^2$ for a test particle, [Chapter 19](/ch/black-holes/)) the orbit stops being an orbit and the holes **plunge**. From there on only numerical relativity, solving the full Einstein equations on supercomputers (a problem cracked in 2005 by Frans Pretorius and, weeks later, by the Brownsville and NASA Goddard groups), gives the waveform. In practice, analyses use waveform families (effective-one-body, phenomenological, NR surrogates) calibrated to hundreds of such simulations.
+The quadrupole formula assumes slow motion and weak fields. Both fail at the end. Around the innermost stable circular orbit ($a \approx 6GM/c^2$ for a test particle, [Chapter 19](/ch/black-holes/)) the orbit stops being an orbit and the holes **plunge**. From there on only numerical relativity, solving the full Einstein equations on supercomputers (a problem cracked in 2005 by Frans Pretorius and, a few months later, by the Brownsville and NASA Goddard groups), gives the waveform. In practice, analyses use waveform families (effective-one-body, phenomenological, NR surrogates) calibrated to hundreds of such simulations.
 
 Qualitatively: the frequency and amplitude peak as the horizons merge into a single, distorted, spinning black hole. That remnant then sheds its lumps by ringing like a struck bell. The ringing is a set of **quasinormal modes**: damped sinusoids whose frequencies and damping times depend *only* on the final mass and spin (the no-hair theorem made audible). For the dominant mode of a remnant with spin $\chi \approx 0.7$,
 
@@ -402,7 +402,7 @@ In 1972 Rainer Weiss at MIT, preparing a course on general relativity, worked ou
 
 ### GW150914
 
-On 14 September 2015, two days into the first observing run and before it had officially started, both Advanced LIGO detectors recorded a 0.2-second chirp sweeping from 35 to 250 Hz, with peak strain $1.0\times10^{-21}$. Hanford and Livingston saw it 7 milliseconds apart, consistent with a wave crossing 3000 km at $c$. The signal matched two black holes of $36$ and $29\,M_\odot$ merging 1.3 billion light-years away (440 Mpc) into a $62\,M_\odot$ remnant with spin 0.67. It was the first direct detection of gravitational waves, the first observation of a binary black hole, and the first proof that stellar-mass black holes this heavy exist. Weiss, Barish and Thorne shared the 2017 Nobel Prize.
+On 14 September 2015, during an engineering run four days before the first observing run officially began, both Advanced LIGO detectors recorded a 0.2-second chirp sweeping from 35 to 250 Hz, with peak strain $1.0\times10^{-21}$. Hanford and Livingston saw it 7 milliseconds apart, consistent with a wave crossing 3000 km at $c$. The signal matched two black holes of $36$ and $29\,M_\odot$ merging 1.3 billion light-years away (410 Mpc) into a $62\,M_\odot$ remnant with spin 0.67. It was the first direct detection of gravitational waves, the first observation of a binary black hole, and the first proof that stellar-mass black holes this heavy exist. Weiss, Barish and Thorne shared the 2017 Nobel Prize.
 
 You can check the chirp mass yourself from the key equation: at $f \approx 75$ Hz the frequency was rising at roughly 1100 Hz/s, and $\mathcal M = (c^3/G)\left[\tfrac{5}{96}\pi^{-8/3}f^{-11/3}\dot f\right]^{3/5} \approx 30\,M_\odot$, within the uncertainties of eyeballing the plot. That alone ruled out anything but black holes: two neutron stars could not reach such a mass, and the orbit closed to within 350 km.
 

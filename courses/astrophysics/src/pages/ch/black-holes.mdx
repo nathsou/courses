@@ -115,7 +115,7 @@ $$
 <Fragment slot="where"><span data-term="rs">$r_s$</span> is the radius of the event horizon of a non-rotating black hole of mass <span data-term="M">$M$</span>. $G$ is <C k="G" /> and $c$ is <C k="c" />. It scales **linearly** with mass, so the mean density inside the horizon scales as $M^{-2}$.</Fragment>
 </KeyEq>
 
-<Aside>**Scale check.** Squeezed to its Schwarzschild radius, the Earth would be a black hole 9 mm across, about the size of a marble. The Sun would be 5.9 km across.</Aside>
+<Aside>**Scale check.** Squeezed to its Schwarzschild radius, the Earth would be a black hole 18 mm across, about the size of a marble. The Sun would be 5.9 km across.</Aside>
 
 A black hole of <Var name="Mbh" value={10} min={1e-9} max={1e11} log /> M☉ has $r_s =$ <Out name="rs" />, and a mean density inside the horizon of <Out name="rho" />. For a 10 M☉ stellar remnant, that density is far above nuclear density ($2\times10^{17}$ kg/m³). Drag the mass up to the $6.5\times10^9$ M☉ of M87\*. Its "density" is then less than that of air. Supermassive black holes do not need extreme densities to form, only a lot of mass in one place.
 
@@ -465,7 +465,7 @@ A bright quasar has $L \sim 10^{40}$ W, about $2.6\times10^{13}\,L_\odot$. With 
 
 $$\dot M = \frac{L}{\eta c^2} = \frac{10^{40}}{0.1\times 9\times10^{16}} \approx 1.1\times10^{24}\ \text{kg/s} \approx 18\ \text{M}_\odot/\text{yr}.$$
 
-That is a few Suns per year. The upper limit is the **Eddington luminosity** (Chapter 23). There, radiation pressure on electrons balances gravity on protons: $L_\text{Edd} = 4\pi GMm_pc/\sigma_T \approx 1.3\times10^{31}\,(M/\text{M}_\odot)$ W. So $10^{40}$ W needs $M \gtrsim 10^9$ M☉. The e-folding time for growth at the Eddington limit (the Salpeter time) is $t = \eta\,\sigma_T c/(4\pi G m_p (1 - \eta)) \approx 50$ Myr. Growing a $10^9$ M☉ hole from a 100 M☉ seed takes $\ln(10^7)\approx 16$ e-foldings, about 800 Myr. That is uncomfortably close to the ages of the most distant quasars JWST sees, which is why "heavy seeds" are a hot topic.
+That is nearly twenty Suns per year. The upper limit is the **Eddington luminosity** (Chapter 23). There, radiation pressure on electrons balances gravity on protons: $L_\text{Edd} = 4\pi GMm_pc/\sigma_T \approx 1.3\times10^{31}\,(M/\text{M}_\odot)$ W. So $10^{40}$ W needs $M \gtrsim 10^9$ M☉. The e-folding time for growth at the Eddington limit (the Salpeter time) is $t = \eta\,\sigma_T c/(4\pi G m_p (1 - \eta)) \approx 50$ Myr. Growing a $10^9$ M☉ hole from a 100 M☉ seed takes $\ln(10^7)\approx 16$ e-foldings, about 800 Myr. That is uncomfortably close to the ages of the most distant quasars JWST sees, which is why "heavy seeds" are a hot topic.
 </Fermi>
 
 Real accretion flows are messier than the thin disk in the simulation. At low accretion rates (Sgr A\* today, M87\*) the gas cannot cool. It stays hot, puffed up and optically thin, and much of its energy is swallowed or blown out in winds and jets instead of being radiated. At rates near Eddington, radiation pressure puffs the disk up instead. The thin-disk model describes the middle ground, which includes most bright X-ray binaries and quasars.
@@ -550,7 +550,7 @@ For 1 M☉, $r_s = 3$ km gives $T \sim 6.6\times10^{-34}\times 3\times10^8 / (3\
 The luminosity follows from Stefan–Boltzmann: $L \sim \sigma T^4 \cdot 4\pi r_s^2 \propto M^{-2}$. Energy budget $Mc^2$ divided by $L$ gives a lifetime $t \propto M^3$. Plugging in numbers, $t \approx 2\times10^{67}$ yr for 1 M☉.
 </Fermi>
 
-A black hole of <Var name="Mh" value={1e12} min={1e5} max={1e32} log /> kg has $r_s =$ <Out name="rsh" />, a Hawking temperature of <Out name="TH" />, and would evaporate in about <Out name="tev" />. A primordial black hole born in the early universe with about $2\times10^{11}$ kg would be finishing its evaporation today, in a final burst of gamma rays. None has been seen, which limits how common such holes can be. Around $10^{17}$–$10^{22}$ kg (asteroid masses), primordial black holes are still allowed to make up all of the dark matter ([Chapter 21](/ch/milky-way/)).
+A black hole of <Var name="Mh" value={1e12} min={1e5} max={1e32} log /> kg has $r_s =$ <Out name="rsh" />, a Hawking temperature of <Out name="TH" />, and would evaporate in about <Out name="tev" />. A primordial black hole born in the early universe with about $2\times10^{11}$ kg would be finishing its evaporation today, in a final burst of gamma rays. None has been seen, which limits how common such holes can be. Around $10^{14}$–$10^{20}$ kg (asteroid masses), primordial black holes are still allowed to make up all of the dark matter ([Chapter 21](/ch/milky-way/)).
 
 <Aside>**The information paradox.** If a black hole evaporates into purely thermal radiation, what happened to the information about what fell in? Quantum mechanics says information cannot be destroyed. Recent "island" calculations (2019 onwards) reproduce the Page curve expected if information comes out, but how it gets out is still debated.</Aside>
 
