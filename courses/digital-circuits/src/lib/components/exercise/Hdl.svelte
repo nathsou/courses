@@ -1,20 +1,20 @@
 <!--
-  An ```hdl block: write DCL to a specification in the course's editor (diagnostics as you type), and press Check.
-  The design is run against hidden `test` blocks and compared with a hidden reference design on the RTL simulator:
-  every input combination when the inputs are few enough, then random ones; a clocked design from power-up on every
-  short input sequence and on random ones. A mismatch comes back as a table of inputs, expected outputs and what
-  your design gave.
+  An ```hdl block: write Weft to a specification in the course's editor (synth's diagnostics as you type), and
+  press Check. synth compiles the design, the hidden tests run on synth's simulator, and the design is compared
+  with a hidden reference: every input combination when the inputs are few enough, then random ones; a clocked
+  design from power-up on every short input sequence and on random ones. A mismatch comes back as a table of
+  inputs, expected outputs and what your design gave.
 
     id: ch29/priority-encoder
-    top: PriorityEncoder
+    top: priority_encoder
     start: |
-      module PriorityEncoder(req: bits<4>) -> (valid: bit, index: bits<2>) { … }
+      module priority_encoder(in req: uint<8>, out valid: bool, out highest: uint<3>) { … }
     reference: |
-      module PriorityEncoder(…) { … }
+      module priority_encoder(…) { … }
     tests: |
       test "highest wins" { … }
     solution: |
-      module PriorityEncoder(…) { … }
+      module priority_encoder(…) { … }
 
   See check.ts for the fields and the checker.
 -->
@@ -25,13 +25,11 @@
   import Mismatch from './parts/Mismatch.svelte';
   import Verdict from './parts/Verdict.svelte';
   import './parts/exercise.css';
-  import DclEditor from '$lib/hdl/editor/DclEditor.svelte';
-  import Problems from '$lib/widgets/dcl/Problems.svelte';
-  import TestsPanel from '$lib/widgets/dcl/TestsPanel.svelte';
-  import { highlightDclHtml } from '$lib/hdl/editor/highlightHtml';
-  import type { Analysis, TestOutcome } from '$lib/hdl/editor/analysis';
-  import type { Analyzer } from '$lib/hdl/editor/client';
-  import type { FormatOutcome } from '$lib/hdl/editor';
+  import WeftEditor from '$lib/weft/WeftEditor.svelte';
+  import Problems from '$lib/widgets/weft/Problems.svelte';
+  import { highlightWeftHtml } from '$lib/weft/highlight';
+  import type { WeftAnalysis } from '$lib/weft/analysis';
+  import type { FormatOutcome } from '$lib/weft/editor/index';
   import { progress } from '$lib/state/progress.svelte';
   import type { HdlInput, HdlOutcome } from './hdl/check';
 
@@ -39,18 +37,14 @@
 
   const uid = $props.id();
   let code = $state(untrack(() => progress.draft<string>(spec.id, spec.start)));
-  let analysis: Analysis | undefined = $state.raw();
+  let analysis: WeftAnalysis | undefined = $state.raw();
   let pending = $state(true);
-  let editor: DclEditor | undefined = $state();
+  let editor: WeftEditor | undefined = $state();
   let outcome = $state.raw<HdlOutcome | null>(null);
   let stale = $state(false);
   let checking = $state(false);
   let status = $state('');
   let showSolution = $state(false);
-  let tests: TestOutcome[] | undefined = $state.raw();
-  let testing = $state(false);
-  let analyzer: Analyzer | undefined;
-  let analyzerReady: Promise<Analyzer> | undefined;
   let saveTimer: ReturnType<typeof setTimeout> | undefined;
   let statusTimer: ReturnType<typeof setTimeout> | undefined;
 
@@ -60,22 +54,12 @@
     return () => {
       clearTimeout(saveTimer);
       clearTimeout(statusTimer);
-      void analyzer;
     };
   });
 
-  function getAnalyzer(): Promise<Analyzer> {
-    analyzerReady ??= import('$lib/hdl/editor/client').then((m) => (analyzer = m.getAnalyzer()));
-    return analyzerReady;
-  }
-  async function analyze(text: string): Promise<Analysis | undefined> {
-    pending = true;
-    return (await getAnalyzer()).run({ source: text, file: `${spec.top}.dcl`, top: spec.top }, uid);
-  }
-  function onanalysis(a: Analysis) {
+  function onanalysis(a: WeftAnalysis) {
     pending = false;
     analysis = a;
-    tests = undefined;
   }
   $effect(() => {
     // Every edit: remember it, and mark the verdict as out of date.
@@ -98,54 +82,46 @@
   function reveal(offset: number) {
     queueMicrotask(() => editor?.reveal(offset));
   }
-  async function runTests() {
-    testing = true;
-    const a = await (await getAnalyzer()).run({ source: code, file: `${spec.top}.dcl`, top: spec.top, tests: true }, `${uid}-tests`);
-    testing = false;
-    tests = a?.testOutcomes ?? [];
-  }
   async function check() {
     checking = true;
     progress.saveDraft(spec.id, code);
-    // Let the button paint first: the check runs on the page's thread.
-    await new Promise((r) => setTimeout(r, 0));
-    const { checkHdl } = await import('./hdl/check');
-    outcome = checkHdl(spec, code);
-    stale = false;
-    checking = false;
-    if (outcome.pass) progress.markSolved(spec.id);
+    try {
+      const [{ checkHdl }, { synthOn }] = await Promise.all([import('./hdl/check'), import('$lib/synth/client')]);
+      outcome = await checkHdl(synthOn('sim'), spec, code);
+      stale = false;
+      if (outcome.pass) progress.markSolved(spec.id);
+    } catch (e) {
+      outcome = { pass: false, diagnostics: [], problems: [`The check could not run: ${e instanceof Error ? e.message : String(e)}`], tests: [], source: code };
+    } finally {
+      checking = false;
+    }
   }
 
-  const errors = $derived(analysis?.diagnostics.filter((d) => d.severity === 'error').length ?? 0);
   const eq = $derived(outcome?.equivalence);
-  const solutionHtml = $derived(spec.solution ? highlightDclHtml(spec.solution) : '');
+  const solutionHtml = $derived(spec.solution ? highlightWeftHtml(spec.solution) : '');
 </script>
 
 <ExerciseFrame id={spec.id} kind="HDL" title={spec.title} prompt={spec.prompt} hints={spec.hints ?? []}>
   <div class="hdl">
-    <DclEditor
+    <WeftEditor
       bind:this={editor}
       bind:doc={code}
-      {analyze}
+      file="{spec.top}.weft"
+      top={spec.top}
       {onanalysis}
       {onformat}
       minLines={spec.height ?? 8}
       maxLines={Math.max(spec.height ?? 14, 14)}
-      label="DCL source: module {spec.top}"
+      label="Weft source: module {spec.top}"
     />
     <Problems {analysis} {pending} onreveal={reveal} />
 
     <div class="ex-bar ui">
       <button type="button" class="check" onclick={check} disabled={checking}><Icon name="check" size={15} /> {checking ? 'Checking…' : 'Check'}</button>
-      <button type="button" onclick={runTests} disabled={testing || errors > 0}>Run my tests</button>
-      <button type="button" onclick={() => onformat(editor?.format() ?? 'error')} title="Format the code (Shift+Alt+F)">Format</button>
+      <button type="button" onclick={() => editor?.format()} title="Format the code as synth fmt does (Shift+Alt+F)">Format</button>
       <button type="button" onclick={() => (code = spec.start)} disabled={code === spec.start}>Start again</button>
       <span class="ex-note status" role="status" aria-live="polite">{status}</span>
     </div>
-
-    {#if tests || testing}
-      <TestsPanel outcomes={tests} running={testing} onreveal={reveal} />
-    {/if}
 
     <div class="out ui" id="{uid}-out">
       {#if outcome}
@@ -154,7 +130,7 @@
           {#if stale}<span class="ex-note"> (you have edited it since)</span>{/if}
         </Verdict>
         {#each outcome.diagnostics.filter((d) => d.severity === 'error') as d, i (i)}
-          <p class="ex-bad">line {d.span.line}: {d.message}</p>
+          <p class="ex-bad">{d.at ? `line ${d.at.line}: ` : ''}{d.message}</p>
         {/each}
         {#each outcome.problems as p (p)}<p class="ex-bad">{p}</p>{/each}
         {#if outcome.tests.length}

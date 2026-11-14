@@ -1,0 +1,24 @@
+/// The Chapter 19 traffic light, with the British sequence.
+enum Light { Red, RedAmber, Green, Amber }
+
+module traffic_light(
+    in  clk: clock,
+    in  tick: bool,
+    out red: bool,
+    out amber: bool,
+    out green: bool,
+) {
+    reg state: Light = .Red;
+
+    if tick {
+        state := match state {
+            .Red => .RedAmber,
+            .RedAmber => .Green,
+            .Green => .Amber,
+            .Amber => .Red,
+        };
+    }
+    red = state == .Red || state == .RedAmber;
+    amber = state == .RedAmber || state == .Amber;
+    green = state == .Green;
+}

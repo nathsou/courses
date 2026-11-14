@@ -47,7 +47,7 @@ describe('cycles per instruction', () => {
     expect([sort.rv32.bytes, sort.rv32.instructions, sort.rv32.cycles]).toEqual([68, 317, 634]);
     // RV32I's fixed 32-bit instructions cost code size; its wider registers and compare-and-branch cost fewer instructions.
     for (const r of rows) {
-      expect(r.rv32.cpi).toBe(2); // fetch and execute: every instruction of the DCL core takes two cycles
+      expect(r.rv32.cpi).toBe(2); // fetch and execute: every instruction of the Weft core takes two cycles
       expect(r.rv32.cycles).toBe(2 * r.rv32.instructions);
       expect(r.octet.cpi).toBeGreaterThan(4.9);
     }

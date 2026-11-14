@@ -62,19 +62,14 @@ describe('the arithmetic of the exercises', () => {
     expect(1000 / after).toBeCloseTo(312.5, 9);
   });
 
-  test('the counter’s critical path: 0.3 + 0.1 + 0.5 + 0.1 + 0.5 + 0.4 + 0.8 = 2.7 ns, 370 MHz', () => {
-    const p = 0.3 + 0.1 + 0.5 + 0.1 + 0.5 + 0.4 + 0.8;
-    expect(p).toBeCloseTo(2.7, 9);
-    expect(Math.round(1000 / p)).toBe(370);
+  test('PathFinder’s sharing factor in synth: 0.5, then × 1.6 each iteration, about 34 by the tenth', () => {
+    expect([0, 1, 2].map((i) => +(0.5 * 1.6 ** i).toFixed(2))).toEqual([0.5, 0.8, 1.28]);
+    expect(Math.round(0.5 * 1.6 ** 9)).toBe(34);
   });
 
-  test('PathFinder’s sharing factor: 0.5 × 1.4^15 = 78 at the sixteenth iteration', () => {
-    expect(0.5 * 1.4 ** 15).toBeCloseTo(77.8, 0);
-    expect([0, 1, 2, 3].map((i) => +(0.5 * 1.4 ** i).toFixed(2))).toEqual([0.5, 0.7, 0.98, 1.37]);
-  });
-
-  test('a prescaler of 22 bits at 12 MHz ticks every 0.35 s, and a 24-bit counter’s top bit blinks at 0.7 Hz', () => {
-    expect(+((2 ** 22) / 12e6).toFixed(2)).toBe(0.35);
-    expect(+(12e6 / 2 ** 24).toFixed(1)).toBe(0.7);
+  test('a divider of 23 bits at 25 MHz ticks about three times a second; 175,872 bits are 21,984 bytes', () => {
+    expect(Math.round(25e6 / 2 ** 23)).toBe(3);
+    expect(175_872 / 8).toBe(21_984);
+    expect(16 * 4096 / 8).toBe(8192);
   });
 });

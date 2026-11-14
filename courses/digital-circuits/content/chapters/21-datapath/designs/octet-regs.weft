@@ -1,0 +1,19 @@
+/// Octet's register file: four bytes, one write port and two read ports that are always on.
+module octet_regs(
+    in  clk: clock,
+    in  write: bool,
+    in  dst: uint<2>,
+    in  data: uint<8>,
+    in  ra: uint<2>,
+    in  rb: uint<2>,
+    out qa: uint<8>,
+    out qb: uint<8>,
+) {
+    reg r: [uint<8>; 4] = [0; 4];
+
+    qa = r[ra];
+    qb = r[rb];
+    if write {
+        r[dst] := data;
+    }
+}

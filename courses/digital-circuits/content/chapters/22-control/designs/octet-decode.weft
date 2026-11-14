@@ -1,0 +1,110 @@
+/// Octet's hardwired control logic: which control lines are on in stage `stage` of the instruction in `ir`.
+/// Steps 0 and 1 fetch, step 2 decodes, steps 3 to 7 are the instruction's own micro-steps.
+module octet_decode(
+    in  stage: uint<3>,
+    in  ir: uint<8>,
+    in  taken: bool,
+    out oe_rd: bool,
+    out oe_rs: bool,
+    out oe_pc: bool,
+    out oe_sp: bool,
+    out oe_alu: bool,
+    out oe_mem: bool,
+    out oe_t: bool,
+    out ld_mar: bool,
+    out ld_ir: bool,
+    out ld_a: bool,
+    out ld_b: bool,
+    out ld_t: bool,
+    out we_r: bool,
+    out ld_flags: bool,
+    out pc_ld: bool,
+    out pc_inc: bool,
+    out sp_inc: bool,
+    out sp_dec: bool,
+    out mem_wr: bool,
+    out alu_op: uint<3>,
+    out bsel_a: bool,
+    out bsel_1: bool,
+    out halt: bool,
+    out last: bool,
+) {
+    // One signal per instruction, from the bits of IR (the "AND gates" of the hardwired unit).
+    let op = ir[7:4];
+    let sub = ir[1:0];
+    let hlt = op == 0;
+    let mov = op == 1;
+    let ldi = op == 2;
+    let ld = op == 3;
+    let st = op == 4;
+    let ldr = op == 5;
+    let str = op == 6;
+    let push = op == 7 && sub == 0;
+    let pop = op == 7 && sub == 1;
+    let call = op == 7 && sub == 2;
+    let ret = op == 7 && sub == 3;
+    let alu2 = op >= 8 && op <= 12;
+    let cmp = op == 13;
+    let shl = op == 14 && sub == 0;
+    let shr = op == 14 && sub == 1;
+    let not = op == 14 && sub == 2;
+    let inc = op == 14 && sub == 3;
+    let unary = op == 14;
+    let jcc = op == 15;
+
+    // One signal per step.
+    let f0 = stage == 0;
+    let f1 = stage == 1;
+    let x1 = stage == 3;
+    let x2 = stage == 4;
+    let x3 = stage == 5;
+    let x4 = stage == 6;
+    let x5 = stage == 7;
+
+    // Each line is an OR of (instruction AND step) terms.
+    oe_pc = f0 || (x1 && (ldi || ld || st || call || jcc)) || (x4 && call);
+    oe_mem = f1 || (x2 && (ldi || ld || st || call || ldr || pop || ret || jcc)) || (x3 && ld);
+    oe_rd = (x1 && (str || alu2 || cmp || unary)) || (x3 && (st || push));
+    oe_rs = (x1 && (mov || ldr)) || (x2 && (str || alu2 || cmp));
+    oe_sp = (x1 && (pop || ret)) || (x2 && push) || (x3 && call);
+    oe_alu = (x3 && alu2) || (x2 && unary);
+    oe_t = x5 && call;
+    ld_mar = f0
+        || (x1 && (ld || st || ldi || ldr || str || pop || call || ret || jcc))
+        || (x2 && (ld || st || push))
+        || (x3 && call);
+    ld_ir = f1;
+    ld_a = x1 && (alu2 || cmp || unary);
+    ld_b = x2 && (alu2 || cmp);
+    ld_t = x2 && call;
+    we_r = (x1 && mov) || (x2 && (ldi || ldr || pop || unary)) || (x3 && (ld || alu2));
+    ld_flags = (x3 && (alu2 || cmp)) || (x2 && unary);
+    pc_ld = (x5 && call) || (x2 && ret) || (x2 && jcc && taken);
+    pc_inc = f1 || (x2 && (ldi || ld || st || call)) || (x2 && jcc && !taken);
+    sp_inc = x2 && (pop || ret);
+    sp_dec = (x1 && (push || call));
+    mem_wr = (x3 && (st || push)) || (x2 && str) || (x4 && call);
+    halt = hlt && x1;
+    last = (x1 && mov)
+        || (x2 && (ldi || ldr || str || pop || ret || jcc || unary))
+        || (x3 && (ld || st || push || alu2 || cmp))
+        || (x5 && call);
+
+    // The ALU's operation is the opcode minus 8 for ADD to XOR, and is only asked for while the ALU is in use.
+    let in_alu = (x3 && (alu2 || cmp)) || (x2 && unary);
+    alu_op = if !in_alu {
+        0
+    } else if alu2 {
+        op[2:0]
+    } else if cmp {
+        1
+    } else if shr {
+        6
+    } else if not {
+        7
+    } else {
+        0
+    };
+    bsel_a = in_alu && shl;
+    bsel_1 = in_alu && inc;
+}

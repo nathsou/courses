@@ -1,0 +1,7 @@
+/// The counter of Chapter 29 on a board: the button enables it, and the LEDs show the count.
+module top(in clk: clock, in btn: bool, out led: uint<4>) {
+    // A button is asynchronous: two flip-flops before it reaches the counter.
+    let enable = sync(btn);
+    inst c = counter(clk: clk, enable: enable, clear: false);
+    led = c.count;
+}

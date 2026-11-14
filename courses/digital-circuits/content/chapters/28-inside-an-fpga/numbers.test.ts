@@ -1,122 +1,166 @@
-import { readFileSync } from 'node:fs';
 import { describe, expect, test, vi } from 'vitest';
-import { check, elaborate } from '$lib/hdl';
-import { getVFpga } from '$lib/pld/devices/vfpga';
-import { LCS_PER_TILE, LC_BITS, VFPGA_DELAYS as D } from '$lib/pld/devices/vfpga-arch';
-import { fromRtl, runFlow } from '$lib/pld/fpga';
-import { fpgaExample } from '$lib/studio/fpga/examples';
-import { xorSolution } from '$lib/studio/fpga/hand';
-import { runFpgaFlow } from '$lib/studio/fpga/result';
-import { segmentAt } from '$lib/studio/fpga/bitlayout';
-import { TILE_LOGIC } from '$lib/pld/devices/vfpga';
+import { nodeSynth } from '$lib/synth/node';
+import type { RunResult } from '$lib/synth/api';
+import { implement } from '$lib/studio/ice40/run';
+import { HX8K_CT256, STUDIO_DESIGNS, studioFiles } from '$lib/studio/ice40/designs';
+import { designSource } from '$lib/widgets/weft/designs';
+import { DELAYS, fastest } from './widgets/wire-reach';
+import { buildXor, CENSUS } from './widgets/upset';
+import { handCell } from './widgets/byhand';
 
-/** The numbers Chapter 28 quotes about the vFPGA and the tools, checked against the code that produces them. */
-vi.setConfig({ testTimeout: 180_000 });
-const design = (src: string, top: string) => elaborate(check(src, { file: `${top}.dcl` }).program, top);
+/** The numbers Chapter 28 quotes about the iCE40 and synth's flow, checked against synth. */
+vi.setConfig({ testTimeout: 300_000 });
+const synth = nodeSynth();
 
-describe('the three devices', () => {
-  test('sizes: 32, 1,152 and 8,192 cells; 4, 16 and 36 frames; 1,772, 182,920 and 832,592 bits', () => {
-    const [s, m, l] = (['S', 'M', 'L'] as const).map((z) => getVFpga(z));
-    expect([s!.counts.lcs, m!.counts.lcs, l!.counts.lcs]).toEqual([32, 1152, 8192]);
-    expect([s!.frames.length, m!.frames.length, l!.frames.length]).toEqual([4, 16, 36]);
-    expect([s!.totalBits, m!.totalBits, l!.totalBits]).toEqual([1772, 182920, 832592]);
-    expect([s!.counts.brams, m!.counts.brams, l!.counts.brams]).toEqual([0, 24, 64]);
+/** The critical path of the first clock, split into the time spent reaching cell inputs (routing) and in cells. */
+function split(r: RunResult): { period: number; wires: number } {
+  const c = r.timing!.clocks[0]!;
+  let wires = 0;
+  let prev = 0;
+  for (const s of c.path) {
+    if (!/^(O|COUT|Q|LO)$/.test(s.pin)) wires += s.t - prev;
+    prev = s.t;
+  }
+  return { period: c.period_ns, wires };
+}
+
+const one = (name: string, text: string) => [{ name, text }];
+
+describe('the logic cell and its timing', () => {
+  test('a LUT takes 0.45 ns, a carry 0.13 ns from cell to cell, and a 32-bit chain about 4.6 ns', () => {
+    expect(DELAYS.lut / 1000).toBeCloseTo(0.45, 2);
+    expect(DELAYS.carry / 1000).toBeCloseTo(0.13, 2);
+    // 32 LUTs and the shortest wire to the next tile, against the carry chain.
+    expect(Math.round(32 * (DELAYS.lut / 1000 + fastest(1, 'neighbour').delay))).toBe(33);
   });
 
-  test('a cell has 25 bits: 16 for the table and 9 flags', () => {
-    expect(LC_BITS).toBe(25);
-    expect(LC_BITS - 16).toBe(9);
+  test('a 32-bit adder is 32 logic cells on one chain; registered at both ends, 156 MHz', async () => {
+    const comb = await implement(synth, one('add.weft', 'module add(in a: uint<32>, in b: uint<32>, out s: uint<32>) {\n    s = a +% b;\n}\n'), { target: HX8K_CT256 });
+    expect(comb.chip!.usage.lc).toBe(32);
+    const reg = await implement(
+      synth,
+      one('add.weft', 'module add_reg(in clk: clock, in a: uint<32> @clk, in b: uint<32> @clk, out s: uint<32>) {\n    reg ra: uint<32> = 0;\n    reg rb: uint<32> = 0;\n    reg rs: uint<32> = 0;\n    ra := a;\n    rb := b;\n    rs := ra +% rb;\n    s = rs;\n}\n'),
+      { target: HX8K_CT256 },
+    );
+    const c = reg.timing!.clocks[0]!;
+    expect(c.period_ns).toBeCloseTo(6.4, 1);
+    expect(Math.round(c.fmax_mhz)).toBe(156);
+    const carry = c.path.filter((s) => s.pin === 'CIN');
+    expect(carry.length).toBeGreaterThanOrEqual(30);
+    expect(carry.at(-1)!.t - c.path[1]!.t).toBeCloseTo(4.6, 0);
+  });
+});
+
+describe('the wires (Figure 28.3 and its quiz)', () => {
+  test('across 30 tiles: 26.8 ns by neighbours, 5.0 with span 4, 4.8 with span 12; 11 tiles 4.3 ns, 12 tiles 1.7', () => {
+    expect(fastest(1, 'neighbour').delay).toBeCloseTo(0.6, 1);
+    expect(fastest(4, 'four').delay).toBeCloseTo(1.3, 1);
+    expect(fastest(12, 'all').delay).toBeCloseTo(1.7, 1);
+    const at30 = (['neighbour', 'four', 'all'] as const).map((s) => fastest(30, s));
+    expect(at30.map((r) => r.hops.length)).toEqual([30, 9, 5]);
+    expect(at30.map((r) => +r.delay.toFixed(1))).toEqual([26.8, 5.0, 4.8]);
+    expect(+fastest(11, 'all').delay.toFixed(1)).toBe(4.3);
   });
 
-  test('a logic tile of M and L has 486 bits: 128 table, 72 flag, 4 clock and 282 routing (58 %)', () => {
-    for (const z of ['M', 'L'] as const) {
-      const d = getVFpga(z);
-      const t = [...Array(d.width * d.height).keys()].find((i) => d.tileKind[i] === TILE_LOGIC)!;
-      expect(d.tileCfgBits[t]).toBe(486);
-      const x = d.tileX(t);
-      const y = d.tileY(t);
-      let lut = 0;
-      let flag = 0;
-      let clock = 0;
-      let mux = 0;
-      for (let b = d.tileCfgOffset[t]!; b < d.tileCfgOffset[t]! + 486; b++) {
-        const seg = segmentAt(d, b)!;
-        expect([seg.x, seg.y]).toEqual([x, y]);
-        if (seg.cat === 'lut') lut++;
-        else if (seg.cat === 'flag') flag++;
-        else if (seg.cat === 'clock') clock++;
-        else if (seg.cat === 'mux') mux++;
-      }
-      expect([lut, flag, clock, mux]).toEqual([LCS_PER_TILE * 16, LCS_PER_TILE * 9, 4, 282]);
-      expect(Math.round((100 * mux) / 486)).toBe(58);
+  test('the registered ALU on an HX8K: about 10 ns, a little under half of it in the routing', async () => {
+    const wrap = `${designSource('alu')!}
+module alu_reg(in clk: clock, in a: uint<32> @clk, in b: uint<32> @clk, in f3: uint<3> @clk, in is_reg: bool @clk, in ir30: bool @clk, out y: uint<32>) {
+    reg ra: uint<32> = 0;
+    reg rb: uint<32> = 0;
+    reg rf: uint<3> = 0;
+    reg rr: bool = false;
+    reg ri: bool = false;
+    reg ry: uint<32> = 0;
+    ra := a;
+    rb := b;
+    rf := f3;
+    rr := is_reg;
+    ri := ir30;
+    let u = alu(rs1_value: ra, b: rb, f3: rf, is_reg: rr, ir30: ri);
+    ry := u;
+    y = ry;
+}
+`;
+    const r = await implement(synth, one('alu.weft', wrap), { target: HX8K_CT256, top: 'alu_reg' });
+    expect(r.ok).toBe(true);
+    const { period, wires } = split(r);
+    expect(period).toBeGreaterThan(9);
+    expect(period).toBeLessThan(11);
+    expect(wires).toBeCloseTo(4.4, 0);
+    expect(wires / period).toBeGreaterThan(0.35);
+    expect(wires / period).toBeLessThan(0.5);
+  });
+});
+
+describe('the bits', () => {
+  test('a logic tile is 16 rows of 54 bits; the HX1K has 175,872 in its tiles, and synth’s files are 32,216 and 135,096 bytes', async () => {
+    const x = await buildXor(synth);
+    const bs = x.result.bitstream!;
+    expect(bs.tiles.find((t) => t.t === 'logic')!.w).toBe(54);
+    expect(bs.tile_bits).toBe(175_872);
+    expect(bs.bytes).toBe(32_216);
+    expect(x.result.chip!.usage.lc_total).toBe(1280);
+    const big = await implement(synth, one('xor.weft', 'module xor_gate(in a: bool, in b: bool, out y: bool) {\n    y = a ^ b;\n}\n'), { target: HX8K_CT256 });
+    expect(big.bitstream!.bytes).toBe(135_096);
+    expect(big.chip!.usage.lc_total).toBe(7680);
+  });
+
+  test('the census: 52 of 1,728 bits; 20 set bits of routing and pads, 4 table entries, the flip-flop flag and 27 bits left at 0', async () => {
+    const hc = handCell(await buildXor(synth));
+    expect(CENSUS.total).toBe(1728);
+    expect(CENSUS.critical).toHaveLength(52);
+    const bs = hc.built.result.bitstream!;
+    const at = (x: number, y: number) => bs.tiles.find((t) => t.x === x && t.y === y)!;
+    let table = 0, flag = 0, set = 0, unset = 0;
+    for (const [x, y, b] of CENSUS.critical) {
+      const inCell = x === hc.tile.x && y === hc.tile.y;
+      if (inCell && hc.cell.lut_bits!.includes(b)) table++;
+      else if (inCell && b === hc.cell.dff_bit) flag++;
+      else if (at(x, y).set.includes(b)) set++;
+      else unset++;
     }
+    expect([set, table, flag, unset]).toEqual([20, 4, 1, 27]);
+    expect(Math.round((100 * 52) / 1728)).toBe(3);
+    // Only the four entries with the unconnected inputs at 0 are critical.
+    expect(hc.inputs.filter((p) => p === null)).toHaveLength(2);
   });
 
-  test('the delay model: a mux 0.1 ns, wires 0.2, 0.4 and 0.8 ns; carry 0.1 ns per cell, a LUT 0.5 ns', () => {
-    expect([D.switch, D.span1, D.span4, D.span12]).toEqual([0.1, 0.2, 0.4, 0.8]);
-    expect([D.carryIn, D.lut]).toEqual([0.1, 0.5]);
-    // 32 stages of a LUT and the shortest wire to the next tile, against 32 carry steps.
-    expect(+(32 * (D.lut + D.switch + D.span1 + D.switch)).toFixed(1)).toBe(28.8 + 0.0);
-    expect(+(31 * D.carryIn + D.carryData).toFixed(1)).toBe(3.4);
-  });
-
-  test('a multiplexer with n inputs has ceil(log2(n + 1)) select bits: 20 inputs take 5', () => {
-    expect(Math.ceil(Math.log2(20 + 1))).toBe(5);
-    const m = getVFpga('M');
-    const widths = new Set<number>();
-    for (let n = 0; n < m.nodeCount; n++) if (m.cfgWidth[n]! > 0) widths.add(m.cfgWidth[n]!);
-    expect([...widths].sort((a, b) => a - b)).toContain(5);
+  test('a 16-bit multiplier (the low half) is 295 logic cells, nearly a quarter of an HX1K', async () => {
+    const r = await implement(synth, one('mul.weft', 'module mul(in a: uint<16>, in b: uint<16>, out p: uint<16>) {\n    p = a *% b;\n}\n'), { target: HX8K_CT256 });
+    expect(r.chip!.usage.lc).toBe(295);
+    expect(295 / 1280).toBeGreaterThan(0.2);
+    expect(295 / 1280).toBeLessThan(0.25);
   });
 });
 
-describe('the XOR by hand (Figure 28.6)', () => {
-  test('the worked solution sets 19 of the 1,772 bits, eight of them in the LUT (0x6666)', () => {
-    const d = getVFpga('S');
-    const bits = xorSolution(d);
-    expect(bits.reduce((a, b) => a + b, 0)).toBe(19);
-    let lut = 0;
-    for (let i = 0; i < bits.length; i++) if (bits[i] && segmentAt(d, i)?.cat === 'lut') lut++;
-    expect(lut).toBe(8);
-  });
-});
-
-describe('the counter in the Studio (Figure 28.7)', () => {
-  test('six of the 32 cells, one of 4 tiles, 8 pads, four flip-flops, about 110 bits set', () => {
-    const r = runFpgaFlow(design(fpgaExample('counter')!.source, 'Counter'), { device: 'S' });
-    const u = r.report.utilisation;
-    expect([u.cells.used, u.cells.total, u.tiles.used, u.tiles.total, u.pads.used, u.flipFlops]).toEqual([6, 32, 1, 4, 8, 4]);
-    const set = r.bits.reduce((a, b) => a + b, 0);
-    expect(set).toBeGreaterThan(100);
-    expect(set).toBeLessThan(120);
-  });
-});
-
-describe('what the tools build (the text of Chapters 28 and 30)', () => {
-  const src = (name: string) => readFileSync(new URL(`../../designs/${name}.dcl`, import.meta.url), 'utf8');
-
-  test('a 32-bit adder is 32 cells on one carry chain, about 8 ns pad to pad', () => {
-    const f = runFlow(fromRtl(design('module Add(a: bits<32>, b: bits<32>) -> (s: bits<32>) {\n  s = a + b\n}\n', 'Add')), {});
-    expect(f.report.utilisation.cells.used).toBe(32);
-    expect(f.report.utilisation.carryCells).toBe(32);
-    expect(f.report.timing.periodNs).toBeGreaterThan(7);
-    expect(f.report.timing.periodNs).toBeLessThan(10);
+describe('the counter in the studio (Figure 28.7)', () => {
+  test('6 of 1,280 cells in two tiles, 6 pads; 706 bits set, 108 in its tiles, 8 in each logic tile of four rows', async () => {
+    const d = STUDIO_DESIGNS.counter!;
+    const r = await implement(synth, studioFiles(d), { target: d.target, top: d.top });
+    const lcs = r.chip!.cells.filter((c) => c.bel === 'lc');
+    expect([r.chip!.usage.lc, r.chip!.usage.lc_total, r.chip!.usage.io, r.chip!.usage.io_total]).toEqual([6, 1280, 6, 72]);
+    const tiles = new Set(lcs.map((c) => `${c.x},${c.y}`));
+    expect(tiles.size).toBe(2);
+    const enabled = lcs.filter((c) => new Map(c.info).get('flip-flop')?.includes('clock enable'));
+    expect(enabled).toHaveLength(4);
+    expect(new Set(enabled.map((c) => `${c.x},${c.y}`)).size).toBe(1);
+    expect(lcs.map((c) => new Map(c.info).get('LUT'))).toContain("16'h00FF");
+    const bs = r.bitstream!;
+    expect(bs.set_bits).toBe(706);
+    expect(bs.tile_bits).toBe(175_872);
+    expect(bs.tiles.filter((t) => tiles.has(`${t.x},${t.y}`)).reduce((s, t) => s + t.set.length, 0)).toBe(108);
+    // Every logic tile of rows 4, 5, 12 and 13 holds eight column-buffer bits.
+    const colbuf = bs.tiles.filter((t) => t.t === 'logic' && t.f.some((f) => f.n.startsWith('ColBufCtrl')));
+    expect([...new Set(colbuf.map((t) => t.y))].sort((a, b) => a - b)).toEqual([4, 5, 12, 13]);
+    expect(colbuf).toHaveLength(40);
+    for (const t of colbuf) expect(t.f.filter((f) => f.n.startsWith('ColBufCtrl')).flatMap((f) => f.b)).toHaveLength(8);
   });
 
-  test('a 16-bit multiplier (the low half of the product) takes 261 cells on the vFPGA-M', () => {
-    const f = runFlow(fromRtl(design('module Mul(a: bits<16>, b: bits<16>) -> (p: bits<16>) {\n  p = a * b\n}\n', 'Mul')), {});
-    expect(f.device.name).toBe('vFPGA-M');
-    expect(f.report.utilisation.cells.used).toBe(261);
-    expect(f.report.utilisation.cells.used / 1152).toBeGreaterThan(0.2);
-  });
-
-  test('the ALU on vFPGA-M: about half of the critical path is in nets (the text quotes the exact split; see the note in the chapter test of Chapter 30)', () => {
-    // The packer, placer and router are still being tuned, so the exact figures (34.7 ns, 17.9 ns of nets, in the text)
-    // move with them: what this test holds is the claim, that wires are about half of the path.
-    const r = runFpgaFlow(design(src('alu'), 'Alu'));
-    expect(r.deviceName).toBe('vFPGA-M');
-    const nets = r.critical.steps.filter((s) => s.kind === 'net').reduce((a, s) => a + s.delay, 0);
-    const share = nets / r.report.timing.periodNs;
-    expect(share).toBeGreaterThan(0.4);
-    expect(share).toBeLessThan(0.65);
+  test('the real lab: synth’s starter design for the Go Board is 27 logic cells with 24 carry cells', async () => {
+    const top = 'module top<CLK_HZ: int = 25_000_000, W: int = bits_for(CLK_HZ) + 1>(\n    in  clk: clock,\n    out led: uint<4>,\n) {\n    reg count: uint<W> = 0;\n    count := count +% 1;\n    led = count[W - 1:W - 4];\n}\n';
+    const r = await implement(synth, one('top.weft', top), { target: 'go-board', top: 'top' });
+    expect(r.ok).toBe(true);
+    expect(r.chip!.usage.lc).toBe(27);
+    expect(r.timing!.clocks[0]!.fmax_mhz).toBeGreaterThan(150);
   });
 });

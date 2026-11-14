@@ -1,79 +1,101 @@
 /**
- * DCL programs that Chapter 17's playgrounds start from. They live here, not in the Markdown, so that the tests
- * can run them. (`::snippet-playground{id="…"}` looks them up.)
+ * Weft programs that Chapter 17's playgrounds start from, with their tests (the course's test language,
+ * `$lib/weft/testbench.ts`). They live here, not in the Markdown, so that `snippets.test.ts` can run them.
+ * (`::snippet-playground{id="…"}` looks them up.) A snippet with `rejected` is meant not to compile.
  */
 export interface Snippet {
   title: string;
-  /** The module to simulate. */
-  top: string;
+  /** The module to simulate (default: the only one). */
+  top?: string;
   code: string;
+  tests?: string;
+  /** The program shows something Weft refuses: synth must report an error. */
+  rejected?: boolean;
 }
 
 export const SNIPPETS: Record<string, Snippet> = {
   toggle: {
-    title: 'A flip-flop in DCL',
-    top: 'Toggle',
+    title: 'A flip-flop in Weft',
     code: `/// Divides the clock by two: q changes at every rising edge.
-module Toggle(clk: clock) -> (q: bit) {
-  reg state: bit = 0
+module toggle(in clk: clock, out q: bool) {
+    reg state: bool = false;
 
-  next state = !state
-  q = state
+    state := !state;
+    q = state;
 }
-
-test "q flips at every clock edge" {
-  let t = sim Toggle()
-  expect t.q == 0
-  step
-  expect t.q == 1
-  step
-  expect t.q == 0
-  step 5
-  expect t.q == 1
+`,
+    tests: `test "q flips at every clock edge" {
+    expect !q;
+    step;
+    expect q;
+    step;
+    expect !q;
+    step 5;
+    expect q;
 }
 `,
   },
   latch: {
     title: 'Trying to write a latch',
-    top: 'Latch',
-    code: `/// A transparent latch: q follows d while en is 1, and keeps its value while en is 0.
-module Latch(en: bit, d: bit) -> (q: bit) {
-  let held: bit = if en { d } else { held }
-  q = held
+    rejected: true,
+    code: `/// A transparent latch: q follows d while en is true, and keeps its value while en is false.
+module latch(in en: bool, in d: bool, out q: bool) {
+    let held = if en { d } else { held };
+    q = held;
 }
 `,
   },
   'press-toggle': {
     title: 'A button that toggles a lamp',
-    top: 'PressToToggle',
-    code: `/// A push button that flips a lamp: every press, however much it bounces, flips it once.
-module PressToToggle(clk: clock, button: bit) -> (lamp: bit) {
-  inst clean: Debouncer<4>(clk: clk, raw: button)
-  inst press: EdgeDetect(clk: clk, d: clean.clean)
-  reg lit: bit = 0
+    code: `/// Cleans up a bouncing push button or switch. The input is synchronised first; the output then changes
+/// only after the input has held its new value for STABLE clock cycles in a row.
+module debouncer<STABLE: int = 4>(in raw: bool @async, out clean: bool) {
+    let level = sync(raw);
+    reg state: bool = false;
+    reg count: index<STABLE> = 0;
+    let differs = level != state;
+    let settled = count == STABLE - 1;
 
-  next lit = if press.rise { !lit } else { lit }
-  lamp = lit
+    if !differs || settled {
+        count := 0;
+    } else {
+        count := count +% 1;
+    }
+    if differs && settled {
+        state := level;
+    }
+    clean = state;
 }
 
-test "one press flips the lamp once, however much the button chatters" {
-  let t = sim PressToToggle(button: 0)
-  step 4
-  for i in 0..3 {
-    t.button = 1
-    step
-    t.button = 0
-    step
-  }
-  t.button = 1
-  step 12
-  expect t.lamp == 1
-  t.button = 0
-  step 12
-  expect t.lamp == 1
-  t.button = 1
-  step 12
-  expect t.lamp == 0
+/// A push button that flips a lamp: every press, however much it bounces, flips it once.
+module press_to_toggle(in clk: clock, in button: bool, out lamp: bool) {
+    let clean = debouncer<STABLE: 4>(raw: button);
+    let press = rising(clean);
+    reg lit: bool = false;
+
+    if press {
+        lit := !lit;
+    }
+    lamp = lit;
+}
+`,
+    tests: `test "one press flips the lamp once, however much the button chatters" {
+    step 4;
+    for i in 0..3 {
+        set button = true;
+        step;
+        set button = false;
+        step;
+    }
+    set button = true;
+    step 12;
+    expect lamp;
+    set button = false;
+    step 12;
+    expect lamp;
+    set button = true;
+    step 12;
+    expect !lamp;
 }
 `,
   },

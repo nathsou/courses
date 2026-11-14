@@ -21,7 +21,7 @@ describe('a bouncing button', () => {
   });
 });
 
-describe('the Debouncer of the standard library', () => {
+describe('the debouncer', () => {
   test('a window longer than the bounce gives one clean press and one clean release', () => {
     for (let seed = 1; seed <= 10; seed++) {
       const b = button(seed, 4);
@@ -51,5 +51,29 @@ describe('the Debouncer of the standard library', () => {
 describe('segments', () => {
   test('merge equal neighbours and cover the whole list', () => {
     expect(segsOf([0, 0, 1, 1, 1, 0], 0.5)).toEqual([[0, 1, 0], [1, 2.5, 1], [2.5, 3, 0]]);
+  });
+});
+
+describe('the model agrees with the Weft debouncer on synth', () => {
+  test('at every cycle, for many buttons and windows', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { nodeSynth } = await import('$lib/synth/node');
+    const { tbRun, tbStart, tbStop } = await import('$lib/synth/api');
+    const synth = nodeSynth();
+    const text = readFileSync(new URL('../../../designs/debouncer.weft', import.meta.url), 'utf8');
+    for (const window of [2, 3, 5, 8]) {
+      const s = await tbStart(synth, { files: [{ name: 'debouncer.weft', text }], params: { STABLE: window } });
+      if (!s.ok) throw new Error(s.error);
+      for (const seed of [1, 2, 3, 7]) {
+        const b = button(seed, 4);
+        const c = debounce(b, window);
+        const ops = [{ restart: true as const }, ...Array.from(c.sampled).flatMap((v) => [{ set: { raw: v } }, { read: ['clean', 'level'] }, { step: 1 }])];
+        const r = await tbRun(synth, s.id, ops);
+        expect(r.ok, r.error).toBe(true);
+        expect(r.reads.map((x) => x.values!.clean), `window ${window}, seed ${seed}`).toEqual(Array.from(c.clean));
+        expect(r.reads.map((x) => x.values!.level), `window ${window}, seed ${seed}`).toEqual(Array.from(c.synced));
+      }
+      await tbStop(synth, s.id);
+    }
   });
 });

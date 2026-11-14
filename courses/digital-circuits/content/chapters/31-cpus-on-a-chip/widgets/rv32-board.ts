@@ -1,17 +1,23 @@
 /**
- * The RV32I core on the board: the reference core (`content/designs/rv32i.dcl`) with the wrapper of
- * `designs/rv32-board.dcl` around it, and a program in the wrapper's instruction ROM.
+ * The RV32I core on the board: the core of `content/designs/rv32i.weft` (with the ALU of alu.weft and the register
+ * file of regfile.weft) inside the wrapper of `designs/rv32-board.weft`, with a program in the wrapper's ROM.
+ * `REGISTERS_IN_BRAM` chooses the register file: flip-flops, or a block RAM read during the fetch.
  */
-import rv32iSource from '../../../designs/rv32i.dcl?raw';
-import wrapperSource from '../designs/rv32-board.dcl?raw';
+import type { SourceFile } from '$lib/synth/api';
 import type { Rv32Program } from '$lib/sim/cpu/rv32i';
+import aluSource from '../../../designs/alu.weft?raw';
+import regfileSource from '../../../designs/regfile.weft?raw';
+import rv32iSource from '../../../designs/rv32i.weft?raw';
+import wrapperSource from '../designs/rv32-board.weft?raw';
 
 export { rv32iSource, wrapperSource };
 
 /** The instruction ROM has one word per value of pc[7:2]: 64 words. */
 export const RV32_ROM_WORDS = 64;
 
-const ROM = /^\/\/\/ The program: [^\n]*\nfn program\(word: bits<6>\) -> bits<32> \{\n[\s\S]*?\n\}\n/m;
+export type Registers = 'flip-flops' | 'block RAM';
+
+const ROM_AT = /^\/\/\/ The program: one instruction per word/m;
 
 /** The words of an assembled program (little-endian, as the core reads them). */
 export function programWords(program: Rv32Program | ArrayLike<number>): number[] {
@@ -21,48 +27,31 @@ export function programWords(program: Rv32Program | ArrayLike<number>): number[]
   return words;
 }
 
-/** The wrapper with a program as its ROM (one `match` arm for every non-zero word). */
-export function withRom(wrapper: string, words: number[]): string {
+/** `rom_words()` as Weft: the program's words, four to a line, and zeros (illegal instructions) after them. */
+export function romFunction(words: number[]): string {
   if (words.length > RV32_ROM_WORDS) throw new Error(`the ROM holds ${RV32_ROM_WORDS} words, the program has ${words.length}`);
-  const arms = words.map((w, i) => (w === 0 ? '' : `    ${i} => 0x${w.toString(16).padStart(8, '0')},\n`)).join('');
-  const rom = `/// The program: one instruction per word, from address 0. A word that is not listed is 0, an illegal instruction.\nfn program(word: bits<6>) -> bits<32> {\n  match word {\n    _ => 0,\n${arms}  }\n}\n`;
-  if (!ROM.test(wrapper)) throw new Error('rv32-board.dcl has no `fn program` to replace');
-  return wrapper.replace(ROM, rom);
+  const all = Array.from({ length: RV32_ROM_WORDS }, (_, i) => words[i] ?? 0);
+  const rows: string[] = [];
+  for (let i = 0; i < all.length; i += 4) rows.push('        ' + all.slice(i, i + 4).map((w) => '0x' + w.toString(16).padStart(8, '0')).join(', ') + ',');
+  return `/// The program: one instruction per word, from address 0. A word that is not listed is 0, an illegal instruction.\nfn rom_words() -> [uint<32>; 64] {\n    [\n${rows.join('\n')}\n    ]\n}\n`;
 }
 
-/** The core's source without its `top` (a design has one), then the wrapper, which is the design's top. */
-export function rv32BoardSource(program: Rv32Program | ArrayLike<number>, registers: 'flip-flops' | 'block RAM' = 'flip-flops'): string {
-  const plain = rv32iSource.replace('top module riscv32(', 'module riscv32(');
-  const core = registers === 'block RAM' ? withBlockRamRegisters(plain) : plain;
-  return `${core}\n${withRom(wrapperSource, programWords(program))}`;
+/** The wrapper with a program as its ROM. */
+export function withRom(wrapper: string, words: number[]): string {
+  const at = wrapper.search(ROM_AT);
+  if (at < 0) throw new Error('rv32-board.weft has no `rom_words()` to replace');
+  return wrapper.slice(0, at) + romFunction(words);
 }
 
-/** The register file of the core, as the reference design writes it: 32 registers of flip-flops. */
-const FLIP_FLOP_REGFILE = /^module RegFile\([\s\S]*?\n\}\n/m;
-
-const BLOCK_RAM_REGFILE = `module RegFile(
-  clk: clock,
-  rs1_address: bits<5>,
-  rs2_address: bits<5>,
-  rd_address: bits<5>,
-  rd_write: bit,
-  rd_value: bits<32>,
-) -> (rs1_value: bits<32>, rs2_value: bits<32>) {
-  mem x: [bits<32>; 32] = [0; 32]
-  x.write(rd_address, rd_value, rd_write && rd_address != 0)
-  rs1_value = x.read(rs1_address)
-  rs2_value = x.read(rs2_address)
+/** The files of the design: the ALU, the register file, the core and the wrapper with the program in its ROM. */
+export function rv32BoardFiles(program: Rv32Program | ArrayLike<number>): SourceFile[] {
+  return [
+    { name: 'alu.weft', text: aluSource },
+    { name: 'regfile.weft', text: regfileSource },
+    { name: 'rv32i.weft', text: rv32iSource },
+    { name: 'rv32-board.weft', text: withRom(wrapperSource, programWords(program)) },
+  ];
 }
-`;
 
-/**
- * The core with its register file in block RAM. A block RAM answers one cycle after it is given an address, so the
- * registers are read in the fetch cycle, from the instruction that is arriving, and are ready in the execute
- * cycle: the source's `ir[19:15]` and `ir[24:20]` become `instruction[19:15]` and `instruction[24:20]`.
- */
-export function withBlockRamRegisters(core: string): string {
-  const a = 'let rs1_address: bits<5> = ir[19:15]';
-  const b = 'let rs2_address: bits<5> = ir[24:20]';
-  if (!FLIP_FLOP_REGFILE.test(core) || !core.includes(a) || !core.includes(b)) throw new Error('rv32i.dcl is not in the shape that withBlockRamRegisters expects');
-  return core.replace(FLIP_FLOP_REGFILE, BLOCK_RAM_REGFILE).replace(a, 'let rs1_address: bits<5> = instruction[19:15]').replace(b, 'let rs2_address: bits<5> = instruction[24:20]');
-}
+/** The parameters of the top module for a register file. */
+export const rv32Params = (registers: Registers) => ({ REGISTERS_IN_BRAM: registers === 'block RAM' });

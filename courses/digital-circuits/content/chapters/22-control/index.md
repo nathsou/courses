@@ -70,29 +70,29 @@ The multiplexer is not a design decision, it is a consequence of the encoding: b
 4. Find the condition that reads N ⊕ V (JLT, 1010) and set N = 1, V = 1. Why is it false? (A negative result that overflowed was really positive.)
 :::
 
-The whole of it fits in one screen of DCL. Here are the instructions, the steps, and a few of the lines of Octet’s hardwired decoder, as the DCL of Chapter 29 would write it. The full module, with all 24 lines, its tests and the step counter, is in this chapter’s `designs` folder:
+The whole of it fits in one screen of Weft. Here are the instructions, the steps, and a few of the lines of Octet’s hardwired decoder, as Chapter 29 would write them. The full module, with all 24 lines, its tests and the step counter, is in this chapter’s `designs` folder:
 
-```dcl
+```weft
 // One signal per instruction, from the bits of IR (the "AND gates" of the hardwired unit).
-let op: bits<4> = ir[7:4]
-let sub: bits<2> = ir[1:0]
-let push: bit = op == 7 && sub == 0
-let call: bit = op == 7 && sub == 2
-let alu2: bit = op >= 8 && op <= 12
-let jcc: bit = op == 15
+let op = ir[7:4];
+let sub = ir[1:0];
+let push = op == 7 && sub == 0;
+let call = op == 7 && sub == 2;
+let alu2 = op >= 8 && op <= 12;
+let jcc = op == 15;
 
 // One signal per step.
-let f0: bit = stage == 0
-let x1: bit = stage == 3
-let x5: bit = stage == 7
+let f0 = stage == 0;
+let x1 = stage == 3;
+let x5 = stage == 7;
 
 // Each line is an OR of (instruction AND step) terms.
-oe_pc = f0 || (x1 && (ldi || ld || st || call || jcc)) || (x4 && call)
-pc_ld = (x5 && call) || (x2 && ret) || (x2 && jcc && taken)
-mem_wr = (x3 && (st || push)) || (x2 && str) || (x4 && call)
+oe_pc = f0 || (x1 && (ldi || ld || st || call || jcc)) || (x4 && call);
+pc_ld = (x5 && call) || (x2 && ret) || (x2 && jcc && taken);
+mem_wr = (x3 && (st || push)) || (x2 && str) || (x4 && call);
 ```
 
-Look at `pc_ld`: it is the circuit of Figure 22.1, in one line. The chapter’s tests compile this module, run its own tests, and then check it exhaustively: in each of the 8 steps, for each of the 256 first bytes, with the jump taken or not, all 24 lines equal what the microprogram says. That is 4,096 cases. (It also checks the seven tri-state drivers can never be asked for two at a time, because the same instruction cannot drive the bus from two places in the same step: *no term has two OE lines*.)
+Look at `pc_ld`: it is the circuit of Figure 22.1, in one line. The chapter’s tests compile this module with synth, run its tests, and then check it exhaustively on synth's simulator: in each of the 8 steps, for each of the 256 first bytes, with the jump taken or not, all 24 lines equal what the microprogram says. That is 4,096 cases. (It also checks the seven tri-state drivers can never be asked for two at a time, because the same instruction cannot drive the bus from two places in the same step: *no term has two OE lines*.)
 
 ```build
 id: control/condition

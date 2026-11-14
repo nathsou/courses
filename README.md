@@ -52,8 +52,11 @@ npm ci --prefix courses/music-theory
 npm ci --prefix courses/mechanical-computing
 npm ci --prefix courses/term-rewriting
 pnpm --dir courses/language-models install --frozen-lockfile
+npm run synth --prefix courses/digital-circuits
 npm run build
 ```
+
+Digital Circuits runs synth, an FPGA toolchain written in Rust, compiled to WebAssembly from the commit pinned in `courses/digital-circuits/synth.json`. `npm run synth` builds it, and needs [Rust](https://rustup.rs) with the WebAssembly target (`rustup target add wasm32-unknown-unknown`) and git.
 
 The build creates `dist/index.html` and the twenty course directories in `dist/`. The CIC course and Proofs Are Programs share their language implementation, `packages/kernel/`. For a local preview, serve `dist/` as the web root, for example with `python3 -m http.server 8000 -d dist`.
 

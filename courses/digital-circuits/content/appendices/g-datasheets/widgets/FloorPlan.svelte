@@ -1,61 +1,81 @@
 <!--
-  The three vFPGA floorplans to scale, from the device model (`getVFpga`): the I/O ring, the logic tiles and the block
-  RAM columns.
+  The two iCE40 dies of the course to scale, as synth's chip database has them: the I/O ring, the logic tiles and
+  the block RAM columns (a block RAM is two tiles high). synth builds a one-gate design for each part when the
+  figure appears, and the drawing is its die.
 
-    ::floor-plan{}
+    ::floor-plan{n="G.14" caption="…"}
 -->
 <script lang="ts">
-  import '../../a-reference/widgets/appendix.css';
+  import { onMount } from 'svelte';
   import Widget from '$lib/components/ui/Widget.svelte';
-  import { TILE_BRAM, TILE_IO, TILE_LOGIC, getVFpga } from '$lib/pld/devices/vfpga';
-  import type { VFpgaSize } from '$lib/pld/devices/vfpga-arch';
+  import type { Chip } from '$lib/synth/api';
+  import { run } from '$lib/synth/api';
+  import { tileKind } from '$lib/studio/ice40/chipdraw';
 
   let { n, caption }: { n?: string | number; caption?: string } = $props();
 
-  const SIZES: { size: VFpgaSize; px: number }[] = [
-    { size: 'S', px: 34 },
-    { size: 'M', px: 13 },
-    { size: 'L', px: 8 },
-  ];
-  const plans = SIZES.map(({ size, px }) => {
-    const d = getVFpga(size);
-    const tiles: { x: number; y: number; kind: number }[] = [];
-    for (let x = 0; x < d.width; x++) for (let y = 0; y < d.height; y++) tiles.push({ x, y: d.height - 1 - y, kind: d.tileKind[d.tid(x, y)]! });
-    return { size, px, d, tiles, text: `vFPGA-${size}: ${d.width} by ${d.height} tiles, ${d.counts.logicTiles} logic tiles (${d.counts.lcs} cells), ${d.counts.brams} block RAMs, ${d.counts.pads} pads` };
+  const PARTS = [
+    { part: 'hx1k', package: 'vq100', name: 'iCE40 HX1K', px: 16 },
+    { part: 'hx8k', package: 'ct256', name: 'iCE40 HX8K', px: 8 },
+  ] as const;
+  let chips = $state.raw<(Chip | undefined)[]>([]);
+  let error = $state('');
+
+  onMount(async () => {
+    try {
+      const { synthOn } = await import('$lib/synth/client');
+      const synth = synthOn('run');
+      const out: Chip[] = [];
+      for (const p of PARTS) {
+        const r = await run(synth, { files: [{ name: 'one.weft', text: 'module one(in a: bool, out y: bool) {\n    y = !a;\n}\n' }], part: p.part, package: p.package, pins: '' });
+        if (!r.chip) throw new Error(r.error ?? 'synth failed');
+        out.push(r.chip);
+      }
+      chips = out;
+    } catch (e) {
+      error = e instanceof Error ? e.message : String(e);
+    }
   });
+
+  function tiles(c: Chip) {
+    const out: { x: number; y: number; kind: string }[] = [];
+    for (let y = 0; y < c.gh; y++) for (let x = 0; x < c.gw; x++) out.push({ x, y: c.gh - 1 - y, kind: tileKind(c, x, y) });
+    return out;
+  }
+  const count = (c: Chip, k: string) => tiles(c).filter((t) => t.kind.startsWith(k)).length;
 </script>
 
-<Widget title="vFPGA floorplans" {n} kind="Diagram" live={false} {caption}>
+<Widget title="iCE40 floorplans" {n} kind="Diagram" live={false} {caption}>
   {#snippet controls()}
     <ul class="legend" aria-label="Key">
       <li><span class="k logic"></span>logic tile (8 cells)</li>
-      <li><span class="k ram"></span>block RAM tile (4 Kbit)</li>
+      <li><span class="k ram"></span>block RAM tile (a block is two tiles, 4 Kbit)</li>
       <li><span class="k io"></span>I/O tile (pads)</li>
     </ul>
   {/snippet}
   <div class="plans">
-    {#each plans as p (p.size)}
-      <figure>
-        <svg viewBox="0 0 {p.d.width * p.px} {p.d.height * p.px}" width={p.d.width * p.px} height={p.d.height * p.px} role="img" aria-label={p.text}>
-          {#each p.tiles as t (`${t.x},${t.y}`)}
-            {#if t.kind !== 0}
-              <rect
-                class="tile {t.kind === TILE_LOGIC ? 'logic' : t.kind === TILE_BRAM ? 'ram' : t.kind === TILE_IO ? 'io' : ''}"
-                x={t.x * p.px + 0.5}
-                y={t.y * p.px + 0.5}
-                width={p.px - 1}
-                height={p.px - 1}
-                rx={p.px > 20 ? 3 : 1}
-              />
-            {/if}
-          {/each}
-        </svg>
-        <figcaption>
-          <strong>vFPGA-{p.size}</strong>
-          <span>{p.d.width} × {p.d.height} tiles</span>
-        </figcaption>
-      </figure>
-    {/each}
+    {#if error}
+      <p class="ui">{error}</p>
+    {:else if !chips.length}
+      <p class="ui">synth is reading the two dies…</p>
+    {:else}
+      {#each PARTS as p, i (p.part)}
+        {@const c = chips[i]!}
+        <figure>
+          <svg viewBox="0 0 {c.gw * p.px} {c.gh * p.px}" width={c.gw * p.px} height={c.gh * p.px} role="img" aria-label="{p.name}: {c.gw} by {c.gh} tiles, {count(c, 'logic')} logic tiles ({c.usage.lc_total} cells), {c.usage.ram_total} block RAMs">
+            {#each tiles(c) as t (`${t.x},${t.y}`)}
+              {#if t.kind !== 'corner'}
+                <rect class="tile {t.kind === 'logic' ? 'logic' : t.kind === 'io' ? 'io' : 'ram'}" x={t.x * p.px + 0.5} y={t.y * p.px + 0.5} width={p.px - 1} height={p.px - 1} rx={p.px > 12 ? 2 : 1} />
+              {/if}
+            {/each}
+          </svg>
+          <figcaption>
+            <strong>{p.name}</strong>
+            <span>{c.gw} × {c.gh} tiles, {c.usage.lc_total.toLocaleString('en-GB')} logic cells</span>
+          </figcaption>
+        </figure>
+      {/each}
+    {/if}
   </div>
 </Widget>
 

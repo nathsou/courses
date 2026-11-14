@@ -1,157 +1,135 @@
-import { readFileSync } from 'node:fs';
 import { describe, expect, test, vi } from 'vitest';
-import { check, elaborate } from '$lib/hdl';
-import { lowerToNetlist } from '$lib/hdl/lower';
-import { fromRtl, runFlow } from '$lib/pld/fpga';
-import { fpgaExample } from '$lib/studio/fpga/examples';
-import { runFpgaFlow } from '$lib/studio/fpga/result';
+import { nodeSynth } from '$lib/synth/node';
+import type { RunResult } from '$lib/synth/api';
+import { implement } from '$lib/studio/ice40/run';
+import { HX8K_CT256, STUDIO_DESIGNS, studioFiles } from '$lib/studio/ice40/designs';
+import { designSource } from '$lib/widgets/weft/designs';
 import { galAdapter } from '$lib/studio/adapters/gal';
 import { cpldAdapter } from '$lib/studio/adapters/cpld';
+import { setup } from './widgets/corrupt';
 
 /**
- * The numbers Chapter 30 quotes about the flow, checked against the code that produces them.
- *
- * The stages up to and including LUT mapping are deterministic functions of the design and their numbers are checked
- * exactly. Packing, placement, routing and timing are being tuned by the owner of the toolchain, and the figures in
- * the text (marked below) move with them, so those tests hold the *claims* the text makes, with margins; when the
- * toolchain changes for good, re-measure and update the figures in the text (they are all in one place each).
+ * The numbers Chapter 30 quotes about synth's flow, checked against synth. synth is pinned (synth.json), and with a
+ * fixed seed every stage is deterministic, so the figures are checked exactly; when the pin moves, re-measure and
+ * update the text.
  */
 vi.setConfig({ testTimeout: 300_000 });
-const design = (src: string, top: string) => elaborate(check(src, { file: `${top}.dcl` }).program, top);
-const src = (name: string) => readFileSync(new URL(`../../designs/${name}.dcl`, import.meta.url), 'utf8');
+const synth = nodeSynth();
+const HX1K = { name: 'iCE40 HX1K, VQ100 package', part: 'hx1k', package: 'vq100', pcf: '' };
+const stats = (r: RunResult, id: string) => r.stages.find((s) => s.id === id)!.stats;
+const line = (r: RunResult, start: string) => r.log.find((l) => l.startsWith(start)) ?? '';
 
-describe('the counter (Figure 30.1)', () => {
-  const rtl = design(fpgaExample('counter')!.source, 'Counter');
-  const r = runFpgaFlow(rtl);
+describe('the counter on the Go Board (Figure 30.1)', async () => {
+  const d = STUDIO_DESIGNS.counter!;
+  const r = await implement(synth, studioFiles(d), { target: d.target, top: d.top, trace: true });
 
-  test('17 gates and four flip-flops in the netlist of Chapter 29', () => {
-    const low = lowerToNetlist(rtl, undefined, { io: true });
-    expect(low.stats.gates).toBe(17);
-    expect(low.stats.flipFlops).toBe(4);
+  test('seven word-level cells; a carry chain lowered and taken back off; 9 AND gates and 6 flip-flops', () => {
+    expect(stats(r, 'elaborated')).toEqual({ Add: 1, And: 1, Dff: 2, Mux: 2, Not: 1 });
+    expect(stats(r, 'gates_lowered')).toMatchObject({ AND: 0, FF: 6, 'carry chains': 1 });
+    expect(stats(r, 'gates_optimised')).toMatchObject({ AND: 9, FF: 6, 'carry chains': 0 });
+    expect(r.log.some((l) => l.includes('carry chains mapped to LUTs'))).toBe(true);
   });
 
-  test('synthesis: 14 AND nodes, 13 after balancing, depth 4', () => {
-    const f = runFlow(fromRtl(rtl), {});
-    expect(f.synthTrace.passes.map((p) => [p.name, p.ands, p.depth])).toEqual([
-      ['front end', 14, 4],
-      ['sweep and rewrite', 14, 4],
-      ['balance 1', 14, 4],
-      ['balance 2', 13, 4],
-    ]);
+  test('4 LUTs, 4 SB_DFFE and 2 SB_DFF; 6 logic cells and 6 pads; 8 nets, routed in one iteration with 45 wires', () => {
+    expect(stats(r, 'mapped')).toMatchObject({ SB_LUT4: 4, SB_DFFE: 4, SB_DFF: 2 });
+    expect(stats(r, 'packed')).toEqual({ ICESTORM_LC: 6, SB_IO: 6 });
+    expect(r.chip!.nets).toHaveLength(8);
+    expect(line(r, 'routing:')).toBe('routing: 8 nets, 45 wires used, 1 iterations');
+    expect(r.trace!.route).toHaveLength(1);
+    expect(line(r, 'placement:')).toMatch(/in 57 temperature steps$/);
+    expect(r.log).toContain('6 LUTs with permuted inputs');
   });
 
-  test('mapping: 5 LUTs, 2 levels (the optimum), then 6 cells: four flip-flops with their LUTs and two plain LUTs', () => {
-    expect(r.report.sizes).toMatchObject({ andNodes: 13, aigDepth: 4, luts: 5, lutDepth: 2, optimalDepth: 2 });
-    expect(r.cells.map((c) => c.kind).sort()).toEqual(['ff', 'ff', 'ff', 'ff', 'lut', 'lut']);
+  test('timing: 1.94 ns, 514 MHz, from a synchroniser flip-flop (0.64 ns) to the clock enable of the counter’s tile', () => {
+    const c = r.timing!.clocks[0]!;
+    expect(line(r, 'clock clk:')).toMatch(/^clock clk: 1.94 ns/);
+    expect(Math.round(c.fmax_mhz)).toBe(514);
+    expect(c.path.map((s) => s.pin)).toEqual(['O', 'CEN']);
+    expect(c.path[0]!.t).toBeCloseTo(0.64, 2);
+    expect(c.path[0]!.cell).toMatch(/^enable/);
   });
 
-  test('the enable and the clear are pins of the flip-flops, not LUT inputs', () => {
-    const f = runFlow(fromRtl(rtl), {});
-    const ff = f.netlist.lcs.filter((l) => l.ff);
-    expect(ff).toHaveLength(4);
-    const name = (n: number) => f.netlist.nets[n]!.name;
-    for (const l of ff) {
-      expect(name(l.ff!.ce)).toBe('enable');
-      expect(name(l.ff!.sr)).toBe('clear');
-      expect(l.inputs.map(name)).not.toContain('clear');
-    }
+  test('the file is 32,216 bytes; 706 of 175,872 bits are set', () => {
+    expect(r.bitstream!.bytes).toBe(32_216);
+    expect([r.bitstream!.set_bits, r.bitstream!.tile_bits]).toEqual([706, 175_872]);
   });
 
-  test('one tile, 8 routed nets, a bitstream file of 277 bytes (fixed by the layout) with about 110 of 1,772 bits set', () => {
-    expect(r.report.utilisation.tiles.used).toBe(1);
-    expect(r.report.sizes.nets).toBe(8);
-    expect(r.bitstream.length).toBe(277);
-    const set = r.bits.reduce((a, b) => a + b, 0);
-    expect(set).toBeGreaterThan(100);
-    expect(set).toBeLessThan(120);
-    expect(r.bits.length).toBe(1772);
-  });
-
-  test('timing: under 3 ns, over 300 MHz; the path is one or two LUTs between pins or flip-flops', () => {
-    expect(r.report.timing.periodNs).toBeGreaterThan(1.5);
-    expect(r.report.timing.periodNs).toBeLessThan(3);
-    expect(r.report.timing.fmaxMHz).toBeGreaterThan(300);
-    const luts = r.critical.steps.filter((s) => s.kind === 'cell' && s.name.endsWith('LUT')).length;
-    expect(luts).toBeGreaterThanOrEqual(1);
-    expect(luts).toBeLessThanOrEqual(2);
-  });
-
-  test('placement improves on the random start, and routing is done in a few iterations', () => {
-    expect(r.place.steps.length).toBeGreaterThan(50);
-    expect(r.place.bb).toBeLessThan(r.place.initial.bb);
-    expect(r.route.iterations.length).toBeLessThanOrEqual(5);
-    expect(r.route.success).toBe(true);
+  test('over five seeds the counter runs at about 390 to 590 MHz', async () => {
+    const f: number[] = [];
+    for (const seed of [1, 2, 3, 4, 5]) f.push((await implement(synth, studioFiles(d), { target: d.target, top: d.top, seed })).timing!.clocks[0]!.fmax_mhz);
+    expect(Math.round(Math.min(...f) / 10) * 10).toBe(390);
+    expect(Math.round(Math.max(...f) / 10) * 10).toBe(590);
   });
 });
 
-describe('the mapper on bigger designs', () => {
-  test('a 32-bit adder: 279 AND nodes; with the carry chain 32 cells; without it 71 LUTs 21 levels deep', () => {
-    const rtl = design('module Add(a: bits<32>, b: bits<32>) -> (s: bits<32>) {\n  s = a + b\n}\n', 'Add');
-    const on = runFlow(fromRtl(rtl), {});
-    const off = runFlow(fromRtl(rtl), { carry: false });
-    expect(on.report.sizes.andNodes).toBe(279);
-    expect(on.report.utilisation.cells.used).toBe(32);
-    expect(on.report.utilisation.carryCells).toBe(32);
-    expect(off.report.utilisation.cells.used).toBe(71);
-    expect(off.report.sizes.lutDepth).toBe(21);
-    // The delays move with the placer and router; the claim is the ratio (about 8 ns against nearly 24 ns in the text).
-    expect(off.report.timing.periodNs).toBeGreaterThan(2 * on.report.timing.periodNs);
-    expect(on.report.timing.periodNs).toBeGreaterThan(7);
-    expect(on.report.timing.periodNs).toBeLessThan(10);
-    expect(off.report.timing.periodNs).toBeGreaterThan(20);
-    expect(off.report.timing.periodNs).toBeLessThan(28);
+describe('the ALU (synthesis, mapping, packing, placement, routing)', async () => {
+  const a = STUDIO_DESIGNS.alu!;
+  const r = await implement(synth, studioFiles(a), { target: a.target, top: a.top, trace: true });
+
+  test('1,770 AND nodes lowered, 1,526 optimised; 559 structural choices', () => {
+    expect(stats(r, 'gates_lowered').AND).toBe(1770);
+    expect(stats(r, 'gates_optimised').AND).toBe(1526);
+    expect(r.log.some((l) => l.startsWith('559 structural choices'))).toBe(true);
   });
 
-  test('the ALU: 2,114 AND nodes, 2,027 after balancing, depth 81 to 79; 645 LUTs 25 levels deep (the optimum); 679 cells, 34 of them carry cells', () => {
-    const f = runFlow(fromRtl(design(src('alu'), 'Alu')), {});
-    const p = f.synthTrace.passes;
-    expect([p[0]!.ands, p[0]!.depth]).toEqual([2114, 81]);
-    expect([p.at(-1)!.ands, p.at(-1)!.depth]).toEqual([2027, 79]);
-    expect(f.report.sizes).toMatchObject({ luts: 645, lutDepth: 25, optimalDepth: 25 });
-    expect(f.report.utilisation.cells.used).toBe(679);
-    expect(f.report.utilisation.carryCells).toBe(34);
+  test('mapping: 563 LUTs first, 523 after recovery at the same depth; 588 SB_LUT4 and 95 SB_CARRY; 653 cells (64 only carry)', () => {
+    expect(r.log.some((l) => l.startsWith('first mapping: 563 LUTs'))).toBe(true);
+    const mapped = r.log.find((l) => l.startsWith('mapped in'))!;
+    expect(mapped).toMatch(/523 LUTs/);
+    expect(r.log.filter((l) => l.startsWith('remapping round'))).toHaveLength(5);
+    expect(stats(r, 'mapped')).toMatchObject({ SB_LUT4: 588, SB_CARRY: 95 });
+    expect(r.chip!.usage.lc).toBe(653);
+    expect(r.log).toContain('64 logic cells used for carry only');
+    expect(new Set(r.chip!.cells.filter((c) => c.bel === 'lc').map((c) => `${c.x},${c.y}`)).size).toBe(104);
+    expect(r.log).toContain('500 LUTs with permuted inputs');
   });
 
-  test('the hexadecimal counter of the board: 83 cells, 16 of them flip-flops, on the vFPGA-M', () => {
-    const r = runFpgaFlow(design(fpgaExample('hex-counter')!.source, 'HexCounter'));
-    expect(r.deviceName).toBe('vFPGA-M');
-    expect(r.report.utilisation.cells.used).toBe(83);
-    expect(r.report.utilisation.flipFlops).toBe(16);
+  test('placement: 557 units, wirelength 20,383 to 4,689 in 81 temperature steps', () => {
+    expect(line(r, 'placement:')).toBe('placement: 557 units, 753 nets, wirelength 20383 -> 4689 in 81 temperature steps');
+    expect(r.trace!.place).toHaveLength(81);
+  });
+
+  test('routing: 696 nets, overused nodes 232, 94, 12, 0; rerouted nets 696, 288, 108, 18', () => {
+    expect(r.trace!.route.map((x) => x.overused)).toEqual([232, 94, 12, 0]);
+    expect(r.trace!.route.map((x) => x.nets)).toEqual([696, 288, 108, 18]);
+    expect(Math.round((100 * 232) / 6973)).toBe(3);
+    expect(line(r, 'routing:')).toBe('routing: 696 nets, 6973 wires used, 4 iterations');
+  });
+
+  test('two more seeds: wirelengths 4,668 and 4,933', async () => {
+    const w: string[] = [];
+    for (const seed of [2, 3]) w.push(line(await implement(synth, studioFiles(a), { target: a.target, top: a.top, seed }), 'placement:'));
+    expect(w.map((l) => l.match(/-> (\d+)/)![1])).toEqual(['4668', '4933']);
   });
 });
 
-describe('placement, routing and timing of the ALU (the figures in the text move with the toolchain)', () => {
-  const r = runFpgaFlow(design(src('alu'), 'Alu'));
-
-  test('it fits the vFPGA-M, packed in fewer tiles than cells allow, and routes', () => {
-    expect(r.deviceName).toBe('vFPGA-M');
-    expect(r.report.utilisation.tiles.used * 8).toBeGreaterThanOrEqual(679);
-    expect(r.route.success).toBe(true);
+describe('the mapper on small functions and wider counters', () => {
+  test('an 8-input parity is 21 AND nodes and 3 LUTs, three levels deep as a chain', async () => {
+    const r = await implement(synth, [{ name: 'p.weft', text: 'module parity(in a: bool, in b: bool, in c: bool, in d: bool, in e: bool, in f: bool, in g: bool, in h: bool, out y: bool) {\n    y = a ^ b ^ c ^ d ^ e ^ f ^ g ^ h;\n}\n' }], { target: HX1K });
+    expect(stats(r, 'gates_optimised').AND).toBe(21);
+    expect(r.log.find((l) => l.startsWith('mapped in'))).toMatch(/3 LUTs, delay 3\.00 LUT levels/);
   });
 
-  test('the annealer shortens the wirelength by well over a third, and the timing cost by an order of magnitude', () => {
-    expect(r.place.bb).toBeLessThan(0.65 * r.place.initial.bb);
-    expect(r.place.timing).toBeLessThan(0.15 * r.place.initial.timing);
-    expect(r.place.steps.length).toBeGreaterThan(100);
+  test('a 16-bit counter with an enable is 17 logic cells, with 14 carry cells', async () => {
+    const r = await implement(synth, [{ name: 'c.weft', text: 'module c16(in clk: clock, in enable: bool @clk, out count: uint<16>) {\n    reg value: uint<16> = 0;\n    if enable { value := value +% 1; }\n    count = value;\n}\n' }], { target: HX1K });
+    expect(r.chip!.usage.lc).toBe(17);
+    expect(stats(r, 'mapped').SB_CARRY).toBe(14);
+    expect(Math.floor(1280 / 17)).toBeGreaterThanOrEqual(70);
   });
 
-  test('the placer’s estimate of the critical path is within 10 % of the timing analysis after routing', () => {
-    expect(Math.abs(r.place.estPeriod - r.report.timing.periodNs) / r.report.timing.periodNs).toBeLessThan(0.1);
+  test('the counter with enable and clear on a bare HX1K: 8 logic cells in two tiles, 796 bits set', async () => {
+    const s = await setup(synth);
+    expect(s.result.chip!.usage.lc).toBe(8);
+    expect(new Set(s.cells.map((c) => `${c.x},${c.y}`)).size).toBe(2);
+    expect(s.result.bitstream!.set_bits).toBe(796);
   });
 
-  test('PathFinder starts with hundreds of overused nodes and ends with none, and the count falls', () => {
-    const o = r.route.iterations.map((i) => i.overused);
-    expect(o[0]).toBeGreaterThan(200);
-    expect(o.at(-1)).toBe(0);
-    expect(o[Math.floor(o.length / 2)]!).toBeLessThan(o[0]!);
-    expect(r.route.iterations.map((i) => i.presFac).every((v, i, a) => i === 0 || Math.abs(v / a[i - 1]! - 1.4) < 1e-6)).toBe(true);
-    expect(r.route.iterations[0]!.presFac).toBe(0.5);
-  });
-
-  test('about half of the critical path is nets', () => {
-    const nets = r.critical.steps.filter((s) => s.kind === 'net').reduce((a, s) => a + s.delay, 0);
-    expect(nets / r.report.timing.periodNs).toBeGreaterThan(0.4);
-    expect(nets / r.report.timing.periodNs).toBeLessThan(0.65);
+  test('the real lab: the counter with a 23-bit divider on the Go Board is about 36 cells at around 180 MHz', async () => {
+    const top = 'module top(in clk: clock, out led: uint<4>) {\n    reg div: uint<23> = 0;\n    div := div +% 1;\n    inst c = counter(clk: clk, enable: div == 0, clear: false);\n    led = c.count;\n}\n';
+    const r = await implement(synth, [{ name: 'counter.weft', text: designSource('counter')! }, { name: 'top.weft', text: top }], { target: 'go-board', top: 'top' });
+    expect(r.ok).toBe(true);
+    expect(Math.abs(r.chip!.usage.lc - 36)).toBeLessThanOrEqual(2);
+    expect(Math.abs(r.timing!.clocks[0]!.fmax_mhz - 180)).toBeLessThan(25);
   });
 });
 

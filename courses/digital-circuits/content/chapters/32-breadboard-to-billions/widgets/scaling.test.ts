@@ -1,3 +1,4 @@
+import { BUDGET } from '../../31-cpus-on-a-chip/widgets/budget';
 import { readFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
 import YAML from 'yaml';
@@ -147,12 +148,15 @@ describe('the course’s designs on the same axes', () => {
   test('the RV32I estimate follows the cost model: 6 an AND, 20 a flip-flop', () => {
     expect(gateTransistors(10, 2)).toBe(100);
     const est = gateTransistors(RV32I_SNAPSHOT.ands, RV32I_SNAPSHOT.flipFlops);
-    expect(est).toBeGreaterThan(68000);
-    expect(est).toBeLessThan(100000);
+    expect(est).toBeGreaterThan(50000);
+    expect(est).toBeLessThan(68000);
     expect(YOURS.find((y) => y.id === 'rv32i')!.transistors).toBe(est);
     expect(RV32I_SNAPSHOT.cells).toBeLessThan(RV32I_SNAPSHOT.cellsOnDevice);
+    // The fit is Chapter 31's, recorded there and checked against synth.
+    const fit = BUDGET.fits['rv32-flip-flops'];
+    expect([RV32I_SNAPSHOT.cells, RV32I_SNAPSHOT.flipFlops, RV32I_SNAPSHOT.fmaxMHz, RV32I_SNAPSHOT.cellsOnDevice]).toEqual([fit.cells, fit.flipFlopCells, fit.mhz, BUDGET.capacity]);
   });
-  test('Octet is as big as a mid-1970s to late-1970s chip by the fitted trend; the RV32I core is a 68000', () => {
+  test('Octet is as big as a mid-1970s to late-1970s chip by the fitted trend; the RV32I core is a little smaller than a 68000', () => {
     const f = fitTrend(points('transistors'));
     const octet = yearWhen(f, OCTET_TRANSISTORS);
     expect(octet).toBeGreaterThan(1976);
@@ -163,17 +167,14 @@ describe('the course’s designs on the same axes', () => {
     const rv = yearWhen(f, YOURS[1]!.transistors);
     expect(rv).toBeGreaterThan(1979);
     expect(rv).toBeLessThan(1984);
-    // ...and against actual chips: more than a 6502 and an 8086, fewer than an 80286.
+    // ...and against actual chips: more than a 6502, fewer than an 8086; the RV32I core between an 8086 and a 68000.
     expect(OCTET_LOGIC_TRANSISTORS).toBeGreaterThan(CHIPS.find((c) => c.id === '6502')!.transistors);
     expect(OCTET_TRANSISTORS).toBeLessThan(CHIPS.find((c) => c.id === '8086')!.transistors);
-    expect(YOURS[1]!.transistors).toBeGreaterThan(CHIPS.find((c) => c.id === '68000')!.transistors);
-    expect(YOURS[1]!.transistors).toBeLessThan(CHIPS.find((c) => c.id === '80286')!.transistors);
+    expect(YOURS[1]!.transistors).toBeGreaterThan(CHIPS.find((c) => c.id === '8086')!.transistors);
+    expect(YOURS[1]!.transistors).toBeLessThan(CHIPS.find((c) => c.id === '68000')!.transistors);
   });
-  test('clocks: both designs run at about 12 MHz, a 300th of a modern chip’s clock', () => {
-    for (const y of YOURS) {
-      expect(y.clockMHz).toBeGreaterThan(10);
-      expect(y.clockMHz).toBeLessThan(13);
-    }
+  test('clocks: Octet’s simulation at 12.5 MHz, the RV32I core at 42 MHz on an iCE40, a hundredth or less of a modern chip’s clock', () => {
+    expect(YOURS.map((y) => y.clockMHz)).toEqual([12.5, 42]);
     expect(3800 / YOURS[0]!.clockMHz).toBeGreaterThan(250);
   });
 });

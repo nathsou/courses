@@ -12,7 +12,7 @@
  *                                   └─► runner()   the device simulated from its bits (evaluate / clock)
  *
  * The chip view is a Svelte component registered next to the adapter (`registry.ts`); it receives
- * {@link ChipProps}. A future device (the vFPGA, a DCL front end) plugs in by implementing
+ * {@link ChipProps}. A future device plugs in by implementing
  * DeviceAdapter and registering a chip component; the Studio itself never names a device.
  *
  * Cross-probing: the panes share one selection (a {@link Ref}). `DeviceFit.resolve(ref)` expands it to a

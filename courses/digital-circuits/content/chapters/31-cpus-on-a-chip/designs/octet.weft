@@ -1,0 +1,239 @@
+// Octet on a chip: the datapath of Chapter 21 and the hardwired control unit of Chapter 22, written as text.
+// The ALU (`octet_alu`, Chapter 21) and the control logic (`octet_decode`, Chapter 22) are the modules of those
+// chapters, unchanged, in their own files; this file is the rest of the machine.
+//
+// The memory is a block RAM, so the program is the RAM's initial contents: `program()` at the end of the file.
+// The devices are the board's: 0xF8 LEDS, 0xF9 SWITCHES, 0xFA BUTTONS, 0xFB HEX, 0xFC CONSOLE (write only) and
+// 0xFD RANDOM. The other device addresses read 0 and ignore writes.
+
+/// Gate a byte with an enable: the AND that stands in for a tri-state driver.
+fn drive(enable: bool, x: uint<8>) -> uint<8> {
+    if enable { x } else { 0 }
+}
+
+/// A hexadecimal digit as seven segments (bit 0 is segment a).
+fn digit(value: uint<4>) -> uint<7> {
+    match value {
+        0x0 => 0x3f,
+        0x1 => 0x06,
+        0x2 => 0x5b,
+        0x3 => 0x4f,
+        0x4 => 0x66,
+        0x5 => 0x6d,
+        0x6 => 0x7d,
+        0x7 => 0x07,
+        0x8 => 0x7f,
+        0x9 => 0x6f,
+        0xa => 0x77,
+        0xb => 0x7c,
+        0xc => 0x39,
+        0xd => 0x5e,
+        0xe => 0x79,
+        0xf => 0x71,
+    }
+}
+
+/// Octet, on the board: `sw` and `btn` are the switches and buttons, `led` the LEDs. The left two digits show
+/// the program counter, the right two the HEX register. `console` is the byte of the last write to CONSOLE.
+module octet(
+    in  clk: clock,
+    in  rst_button: bool @async,
+    in  btn: uint<4> @async,
+    in  sw: uint<8> @async,
+    out led: uint<8>,
+    out seg0: uint<7>,
+    out seg1: uint<7>,
+    out seg2: uint<7>,
+    out seg3: uint<7>,
+    out halted: bool,
+    out console: uint<8>,
+    out console_write: bool,
+) {
+    // The board's buttons and switches are asynchronous: two flip-flops each before the machine sees them
+    // (Chapter 17). Each switch and button is a signal of its own, so synchronising the bits separately is right.
+    let rst = sync(rst_button);
+    reg inputs_meta: uint<12> = 0;
+    reg inputs: uint<12> = 0;
+    inputs_meta := unsafe_cross(concat(btn, sw));
+    inputs := inputs_meta;
+    let switches = inputs[7:0];
+    let buttons = inputs[11:8];
+
+    // The programmer's registers, and the datapath's own.
+    reg pc: uint<8> = 0;
+    reg sp: uint<8> = 0xf0;
+    reg r: [uint<8>; 4] = [0; 4];
+    reg z: bool = false;
+    reg c: bool = false;
+    reg n: bool = false;
+    reg v: bool = false;
+    reg ir: uint<8> = 0;
+    reg mar: uint<8> = 0;
+    reg a: uint<8> = 0;
+    reg b: uint<8> = 0;
+    reg t: uint<8> = 0;
+    reg stage: uint<3> = 0;
+
+    // The devices.
+    reg leds: uint<8> = 0;
+    reg hex: uint<8> = 0;
+    reg lfsr: uint<8> = 1;
+    reg said: uint<8> = 0;
+    reg said_now: bool = false;
+
+    let rd = ir[3:2];
+    let rs = ir[1:0];
+
+    // The jump condition: three bits of the instruction choose one of eight tests, the fourth inverts it.
+    let holds: bool = match ir[3:1] {
+        0 => true,
+        1 => z,
+        2 => c,
+        3 => n,
+        4 => v,
+        5 => n != v,
+        6 => c || z,
+        7 => z || n != v,
+    };
+    inst control = octet_decode(stage: stage, ir: ir, taken: holds != ir[0]);
+
+    // The ALU: B, or A for SHL, or the constant 1 for INC.
+    inst alu = octet_alu(a: a, b: if control.bsel_1 { 1 } else if control.bsel_a { a } else { b }, op: control.alu_op);
+
+    // The bus without the memory: one AND per driver, and an OR that merges them (the control unit turns on at
+    // most one).
+    let bus_without_memory: uint<8> = drive(control.oe_rd, r[rd])
+        | drive(control.oe_rs, r[rs])
+        | drive(control.oe_pc, pc)
+        | drive(control.oe_sp, sp)
+        | drive(control.oe_alu, alu.y)
+        | drive(control.oe_t, t);
+
+    // Memory: a block RAM, which answers one cycle after it is given an address. So it is given the address that
+    // MAR is about to have, and the byte arrives in the cycle in which Chapter 22's memory would have shown it.
+    mem ram: [uint<8>; 256] init program();
+    let address = if control.ld_mar { bus_without_memory } else { mar };
+    reg ram_byte: uint<8> = 0;
+    ram_byte := ram[address];
+    // LD and ST load MAR from memory (MAR <- M[MAR]) and then read at that address. A second read port, addressed
+    // by the first port's output, has that byte ready in the next cycle.
+    reg ram_indirect: uint<8> = 0;
+    ram_indirect := ram[ram_byte];
+    reg indirect: bool = false;
+    indirect := control.ld_mar && control.oe_mem;
+
+    let is_device = mar[7:4] == 0xf;
+    let lfsr_step: uint<8> = if lfsr[0] { (lfsr >> 1) ^ 0xb8 } else { lfsr >> 1 };
+    let device_out: uint<8> = match mar[3:0] {
+        8 => leds,
+        9 => switches,
+        10 => uint<8>(buttons),
+        11 => hex,
+        13 => lfsr_step,
+        _ => 0,
+    };
+    let mem_value: uint<8> = if is_device { device_out } else if indirect { ram_indirect } else { ram_byte };
+    let bus: uint<8> = bus_without_memory | drive(control.oe_mem, mem_value);
+    if control.mem_wr && !is_device && !rst {
+        ram[mar] := bus;
+    }
+
+    // The registers: what each becomes at the next clock edge.
+    if rst {
+        pc := 0;
+    } else if control.pc_ld {
+        pc := bus;
+    } else if control.pc_inc {
+        pc := pc +% 1;
+    }
+    if rst {
+        sp := 0xf0;
+    } else if control.sp_inc {
+        sp := sp +% 1;
+    } else if control.sp_dec {
+        sp := sp -% 1;
+    }
+    for i in 0..4 {
+        if rst {
+            r[i] := 0;
+        } else if control.we_r && rd == i {
+            r[i] := bus;
+        }
+    }
+    if rst {
+        z := false;
+        c := false;
+        n := false;
+        v := false;
+    } else if control.ld_flags {
+        z := alu.z;
+        c := alu.c;
+        n := alu.n;
+        v := alu.v;
+    }
+    if control.ld_ir { ir := bus; }
+    if control.ld_mar { mar := bus; }
+    if control.ld_a { a := bus; }
+    if control.ld_b { b := bus; }
+    if control.ld_t { t := bus; }
+    // The step counter: back to 0 after an instruction's last step, and stopped by HLT.
+    if rst || (control.last && !control.halt) {
+        stage := 0;
+    } else if !control.halt {
+        stage := stage +% 1;
+    }
+
+    // Writes to the devices, and the read of RANDOM that steps its generator.
+    let write_device = control.mem_wr && is_device;
+    let read_random = control.oe_mem && is_device && mar[3:0] == 13;
+    if rst {
+        leds := 0;
+    } else if write_device && mar[3:0] == 8 {
+        leds := bus;
+    }
+    if rst {
+        hex := 0;
+    } else if write_device && mar[3:0] == 11 {
+        hex := bus;
+    }
+    if rst {
+        lfsr := 1;
+    } else if write_device && mar[3:0] == 13 && bus != 0 {
+        lfsr := bus;
+    } else if read_random {
+        lfsr := lfsr_step;
+    }
+    if write_device && mar[3:0] == 12 { said := bus; }
+    said_now := write_device && mar[3:0] == 12;
+
+    led = leds;
+    seg0 = digit(hex[3:0]);
+    seg1 = digit(hex[7:4]);
+    seg2 = digit(pc[3:0]);
+    seg3 = digit(pc[7:4]);
+    halted = control.halt;
+    console = said;
+    console_write = said_now;
+}
+
+/// The RAM's initial contents: the program, as the assembler made it.
+fn program() -> [uint<8>; 256] {
+    [
+        0x24, 0x00, 0x20, 0x01, 0x72, 0x14, 0xe0, 0xf5, 0x04, 0x20, 0x40, 0x72, 0x14, 0xe1, 0xf5, 0x0b,
+        0x20, 0x02, 0xf0, 0x04, 0x40, 0xf8, 0xe7, 0x44, 0xfb, 0x28, 0xf8, 0xeb, 0xf3, 0x1b, 0x73, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    ]
+}

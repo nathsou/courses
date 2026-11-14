@@ -1,0 +1,122 @@
+{
+  "width": {
+    "broken": {
+      "text": "error: `count + 1` does not fit register `count` (uint<4>)\n --> width.weft:3:14\n  |\n3 |     count := count + 1;\n  |              ^^^^^^^^^ has values 1..=16\n  = help: to wrap around, use `+%`: `count +% 1`\n  = help: to keep the low 4 bits, write `(count + 1).trunc(4)`\nnote: uint<4> holds 0..=15",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "literal": {
+    "broken": {
+      "text": "error: 20 does not fit output `y` (uint<4>)\n --> literal.weft:2:9\n  |\n2 |     y = 20;\n  |         ^^ uint<4> holds 0..=15",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "latch": {
+    "broken": {
+      "text": "error: output `y` is not assigned on every path\n --> latch.weft:1:42\n  |\n1 | module pick(in sel: bool, in a: uint<8>, out y: uint<8>) {\n  |                                          ^^^^^^^^^^^^^^ a combinational signal needs a value in every case\n2 |     if sel {\n  |        --- not assigned when `sel` is false\n  = help: assign a default first (`y = ...;`) and override it where needed\nnote: in Verilog this would infer a latch",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "match": {
+    "broken": {
+      "text": "error: `match` does not handle variant `.Done`\n --> match.weft:5:11\n  |\n5 |     match state {\n  |           ^^^^^ `state` is a `State`\n  |\n1 | enum State { Idle, Run, Done }\n  |      ----- `State` is defined here\n  = help: add an arm for `.Done` (or `_ => ...`)",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "index": {
+    "broken": {
+      "text": "error: index `d` may be out of range: `table` has 10 entries\n --> index.weft:3:22\n  |\n3 |     segments = table[d];\n  |                      ^ values 0..=15, but valid indices are 0..=9\n  = help: use an `index<10>` value, which is always in range\n  = help: or guard the access: `if d < 10 { ... }`",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "condition": {
+    "broken": {
+      "text": "error: expected `bool` for the condition, found uint<8>\n --> condition.weft:2:18\n  |\n2 |     is_zero = if x { false } else { true };\n  |                  ^ integer\n  = help: integers are not conditions: compare explicitly, for example `x != 0`",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "precedence": {
+    "broken": {
+      "text": "error: `&&` and `||` are mixed without parentheses\n --> precedence.weft:2:26\n  |\n2 |     ring = armed && door || window;\n  |                          ^^ ambiguous to a reader\n  |            ------------- this part needs parentheses\n  = help: group explicitly, for example `(a && b) || c`",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "loop": {
+    "broken": {
+      "text": "error: `q_n` depends on itself\n --> loop.weft:2:9\n  |\n2 |     let q_n = !(r || q_i);\n  |         ^^^ used in its own definition\n  = help: break the cycle with a register, or declare a `wire` and drive it separately",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "clock": {
+    "broken": {
+      "text": "error: a clock cannot be used as a value\n --> clock.weft:2:26\n  |\n2 |     domain slow { clock: clk && en }\n  |                          ^^^ clock\n  = help: clocks only drive registers; to react to a slow rate, use a clock enable (`if tick { ... }`)",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "reset": {
+    "broken": {
+      "text": "error: register `sum` needs a reset or power-on value\n --> reset.weft:2:21\n  |\n2 |     reg sum: uint<8>;\n  |                     ^ expected `=` or `init`\n  = help: `reg sum: ... = 0;` resets to 0 (and starts at 0)\n  = help: `reg sum: ... init 0;` starts at 0 and is not affected by reset",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "assign": {
+    "broken": {
+      "text": "error: `q` is combinational: assign it with `=`\n --> assign.weft:2:5\n  |\n2 |     q := d;\n  |     ^^^^^^^ `:=` sets a register's next value\n  |\n1 | module delay(in clk: clock, in d: bool, out q: bool) {\n  |                                         ----------- declared here\n  = help: write `q = ...;`, or declare it with `reg` to make it a register",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  },
+  "async": {
+    "broken": {
+      "text": "error: an asynchronous value reaches register `on` (in domain `clk`)\n --> async.weft:3:8\n  |\n3 |     if btn {\n  |        ^^^ `btn` (an asynchronous top-level input)\n4 |         on := !on;\n  |               --- sampled here\n  = help: synchronize a single bit first: `sync(btn)`\n  = help: or, if the board drives it synchronously to the clock, declare it `in btn: ... @clk`\nnote: sampling an asynchronous signal directly can make flip-flops metastable",
+      "errors": 1
+    },
+    "fixed": {
+      "text": "",
+      "errors": 0
+    }
+  }
+}

@@ -3,7 +3,7 @@
  */
 import katex from 'katex';
 import { bundledLanguages, createHighlighter, type Highlighter, type ThemeRegistration } from 'shiki';
-import { dclHighlighter } from './dcl.ts';
+import { highlightWeftHtml } from '../../src/lib/weft/highlight.ts';
 
 /**
  * Macros available in every equation.
@@ -40,7 +40,7 @@ export function termRefs(tex: string): string[] {
  * "Bench" code themes: the same token roles as GitHub's (keyword, string, number, comment, function,
  * type), coloured to sit on the code panel (--pn in app.css: notebook paper / night-lab blue-black).
  * Every role keeps its own hue and at least 4.5:1 contrast on the panel in both themes; the values match
- * the --code-* tokens in app.css so other highlighters (the DCL lexer) can use the same colours.
+ * the --code-* tokens in app.css so other highlighters (the Weft highlighter) can use the same colours.
  */
 function benchTheme(name: string, type: 'light' | 'dark', c: Record<'fg' | 'bg' | 'keyword' | 'string' | 'number' | 'comment' | 'fn' | 'type' | 'prop' | 'punct', string>): ThemeRegistration {
   return {
@@ -70,8 +70,9 @@ const THEME_DARK = benchTheme('bench-dark', 'dark', { fg: '#e2e8ef', bg: '#111a2
 let highlighter: Promise<Highlighter> | undefined;
 
 export async function highlight(code: string, lang: string | null | undefined): Promise<string> {
-  // DCL is highlighted by the compiler's own lexer, not by a TextMate grammar (HDL.md, Highlighting).
-  if (lang === 'dcl') return (await dclHighlighter())(code);
+  // Weft (and the IR text and pin files of synth's flow) are highlighted as synth's own tools do, not by a
+  // TextMate grammar (src/lib/weft/highlight.ts).
+  if (lang === 'weft' || lang === 'tests' || lang === 'rtl' || lang === 'gates' || lang === 'netlist' || lang === 'pcf') return highlightWeftHtml(code, lang);
   highlighter ??= createHighlighter({ themes: [THEME_LIGHT, THEME_DARK], langs: [] });
   const h = await highlighter;
   // Load any bundled grammar (including aliases) instead of silently losing highlighting.

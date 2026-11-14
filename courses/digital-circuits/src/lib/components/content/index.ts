@@ -30,5 +30,3 @@ export { default as Asm } from '../exercise/Asm.svelte';
 export { default as Hdl } from '../exercise/Hdl.svelte';
 export { default as Fit } from '../exercise/Fit.svelte';
 export { default as Decode } from '../exercise/Decode.svelte';
-export { default as Route } from '../exercise/Route.svelte';
-export { default as Place } from '../exercise/Place.svelte';

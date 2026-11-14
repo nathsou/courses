@@ -1,0 +1,21 @@
+test "writes and reads every register" {
+    set rd_write = true;
+    for i in 0..32 {
+        set rd_address = i, rd_value = i * 3 + 1;
+        step;
+    }
+    set rd_write = false;
+    for i in 1..32 {
+        set rs1_address = i, rs2_address = 32 - i;
+        expect rs1_value == i * 3 + 1;
+        expect rs2_value == (32 - i) * 3 + 1;
+    }
+    set rs1_address = 0;
+    expect rs1_value == 0;
+}
+
+test "x0 ignores writes" {
+    set rd_write = true, rd_value = 99;
+    step;
+    expect rs1_value == 0;
+}

@@ -1,5 +1,5 @@
 /**
- * Random RV32I programs for differential testing: the DCL core (or any other implementation) and the
+ * Random RV32I programs for differential testing: the Weft core (or any other implementation) and the
  * reference interpreter run the same random program, and their final states must agree
  * (`compareStates`).
  *

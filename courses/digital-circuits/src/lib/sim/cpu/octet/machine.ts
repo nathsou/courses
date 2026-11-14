@@ -465,7 +465,7 @@ export interface CompareOptions {
 }
 
 /**
- * Compare two Octet states (for differential testing of a gate-level or DCL CPU against the
+ * Compare two Octet states (for differential testing of a gate-level or Weft CPU against the
  * interpreter). Returns human-readable differences; an empty list means the states agree.
  */
 export function compareStates(a: OctetState, b: OctetState, options: CompareOptions = {}): string[] {

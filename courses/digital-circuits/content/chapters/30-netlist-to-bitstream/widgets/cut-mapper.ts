@@ -1,16 +1,17 @@
 /**
- * From an and-inverter graph to lookup tables, on graphs small enough to draw: the course's own balancer
- * (`rebuild`) and LUT mapper (`mapLuts`), and an enumeration of every cut of a node so the reader can see what the
- * mapper chose between.
+ * From an and-inverter graph to lookup tables, on graphs small enough to draw: a small balancer (`rebuild`) and LUT
+ * mapper (`mapLuts`, in `./mapper`) that follow the plan of synth's (priority cuts, depth first, then area flow and
+ * exact area: synth's crates/synth-logic/src/lutmap.rs), and an enumeration of every cut of a node so the reader
+ * can see what the mapper chose between.
  *
  * A **cut** of a node is a set of at most K nodes (its leaves) that every path from the inputs to the node passes
  * through; the node is then a function of the leaves alone, and a K-input LUT holding that function can replace
  * everything between them. The mapper labels each node with the fewest LUT levels it can be reached in
  * (`label`), and covers the graph from the outputs.
  */
-import { Aig, rebuild } from '$lib/pld/fpga/aig';
-import { dominates, mergeCuts, type Cut } from '$lib/pld/fpga/cuts';
-import { mapLuts, type MapResult } from '$lib/pld/fpga/map';
+import { Aig, rebuild } from './mapper/aig';
+import { dominates, mergeCuts, type Cut } from './mapper/cuts';
+import { mapLuts, type MapResult } from './mapper/map';
 
 export interface Preset {
   id: string;

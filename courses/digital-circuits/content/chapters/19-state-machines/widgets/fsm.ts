@@ -121,8 +121,12 @@ export interface Problem {
   text: string;
 }
 
-/** DCL words that cannot be port or state names. */
-const RESERVED = new Set(['module', 'top', 'fn', 'struct', 'enum', 'type', 'const', 'let', 'reg', 'mem', 'next', 'inst', 'for', 'in', 'if', 'else', 'match', 'on', 'test', 'sim', 'step', 'expect', 'print', 'bit', 'bits', 'signed', 'clock', 'int', 'clk', 'state', 'State']);
+/** Weft words (and the names the generated module uses) that cannot be port or state names. */
+const RESERVED = new Set([
+  'async', 'bool', 'clock', 'const', 'default', 'domain', 'else', 'enum', 'extern', 'false', 'fn', 'for', 'if', 'in', 'index', 'init', 'inout', 'inst', 'int', 'let',
+  'match', 'mem', 'module', 'out', 'reg', 'sint', 'string', 'struct', 'true', 'type', 'uint', 'undef', 'var', 'wire', 'concat', 'from_bits', 'unsafe_cross', 'hex_file',
+  'bin_file', 'clog2', 'bits_for', 'min', 'max', 'assert', 'sync', 'rising', 'falling', 'divider', 'clk', 'state', 'State',
+]);
 
 /** A state name as an enum variant: the first letter capitalised. */
 export const cap = (s: string): string => (s ? s[0]!.toUpperCase() + s.slice(1) : s);

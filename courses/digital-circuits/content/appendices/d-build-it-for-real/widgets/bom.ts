@@ -122,7 +122,7 @@ export const ROWS: Row[] = [
   { id: 'atf22v10', group: 'pld', name: 'ATF22V10C GAL', detail: '24-pin DIP', test: /ATF22V10/ },
   { id: 'atf1502', group: 'pld', name: 'ATF1502AS CPLD', detail: 'the -7AX44 (TQFP-44) or the -10JU44 (PLCC-44)', test: /ATF1502AS/ },
   { id: 'cpld-board', group: 'pld', name: '44-pin breakout board or socket adapter', detail: 'for TQFP or PLCC; or a ready-made ATF1502 dev board', test: /44-pin breakout board/ },
-  { id: 'ice40', group: 'pld', name: 'iCE40 board', detail: 'an iCEstick, an iCEBreaker or any board with an iCE40 HX1K, HX8K or UP5K', test: /iCE40 (?:FPGA )?board/ },
+  { id: 'ice40', group: 'pld', name: 'iCE40 board', detail: 'the Nandland Go Board (HX1K) for Chapters 28 to 31; an iCEBreaker (UP5K) for the PicoSoC of Chapter 31', test: /iCE40 (?:FPGA )?board/ },
 
   // Boards
   { id: 'arduino', group: 'board', name: 'Arduino Uno or Nano', detail: 'or any 5 V board', test: /Arduino/ },
@@ -157,6 +157,8 @@ export const ROWS: Row[] = [
   { id: 'programmer', group: 'tool', name: 'Universal device programmer', detail: 'TL866 class, with the adapter for 24-pin PLDs', test: /universal programmer/ },
   { id: 'ft232h', group: 'tool', name: 'FT232H USB breakout board', detail: 'the JTAG adapter', test: /FT232H/ },
   { id: 'usb-cable', group: 'tool', name: 'USB cable for the FPGA board', test: /USB cable/ },
+  { id: 'synth', group: 'tool', name: 'synth', detail: 'free software: the toolchain of Chapters 28 to 31, which builds and programs iCE40 boards', test: /\bsynth\b/, software: true },
+  { id: 'openfpgaloader', group: 'tool', name: 'openFPGALoader', detail: 'free software, which `synth prog` runs', test: /openFPGALoader/, software: true },
   { id: 'yosys', group: 'tool', name: 'Yosys', detail: 'free software', test: /Yosys/, software: true },
   { id: 'nextpnr', group: 'tool', name: 'nextpnr-ice40', detail: 'free software', test: /nextpnr/, software: true },
   { id: 'icestorm', group: 'tool', name: 'Project IceStorm', detail: 'free software', test: /IceStorm/, software: true },

@@ -114,7 +114,7 @@ describe('the machines', () => {
     expect(r.signature).toEqual(EXPECTED);
   });
 
-  it('the DCL core, on the RTL simulator, produces the same signature', () => {
+  it('the Weft core, in synth’s simulator, produces the same signature', () => {
     const r = runCore(t, 20_000);
     expect(r.error).toBeUndefined();
     expect(r.signature).toEqual(EXPECTED);
@@ -149,7 +149,7 @@ describe('judging a test', () => {
     const r = judgeTest(test, elfOf(), opts, bad);
     expect(r.status).toBe('fail');
     expect(r.problems.join('\n')).toMatch(/interpreter signature differs from the reference: word 2: got 00000050, expected 00000051/);
-    expect(r.problems.join('\n')).toMatch(/DCL core signature differs from the reference: word 2/);
+    expect(r.problems.join('\n')).toMatch(/Weft core signature differs from the reference: word 2/);
   });
 
   it('compares the machines with each other when there is no reference, and notices a difference', () => {
@@ -158,7 +158,7 @@ describe('judging a test', () => {
       interpreter: (t, n) => ({ ...runInterpreter(t, n), signature: [9, 9, 9, 9, 9, 9] }),
       core: runCore,
     });
-    expect(r.problems.join('')).toMatch(/DCL core signature differs from the interpreter's: word 0/);
+    expect(r.problems.join('')).toMatch(/Weft core signature differs from the interpreter's: word 0/);
   });
 
   it('skips the core on request and fails on an unreadable file', () => {

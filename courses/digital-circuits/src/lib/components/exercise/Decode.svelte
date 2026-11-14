@@ -1,7 +1,7 @@
 <!--
   A ```decode block: a configuration the reader cannot see the source of (a PROM's fuse map, a PLA's two planes, a
-  GAL22V10's JEDEC rows, or the cells and routing of a small vFPGA-S bitstream) and a question: what does it compute?
-  The answer is an expression, a truth table or a DCL module, and Check compares it with what the configured device
+  GAL22V10's JEDEC rows) and a question: what does it compute?
+  The answer is an expression or a truth table, and Check compares it with what the configured device
   does, on every input combination.
 
     id: ch25/read-the-planes
@@ -23,9 +23,8 @@
   import Mismatch from './parts/Mismatch.svelte';
   import Verdict from './parts/Verdict.svelte';
   import './parts/exercise.css';
-  import DclEditor from '$lib/hdl/editor/DclEditor.svelte';
   import { progress } from '$lib/state/progress.svelte';
-  import { artifactOf, checkDecode, dclTemplate, type Answer, type AnswerMode, type Artifact, type Bit, type DecodeInput, type DecodeOutcome } from './decode/model';
+  import { artifactOf, checkDecode, type Answer, type AnswerMode, type Artifact, type Bit, type DecodeInput, type DecodeOutcome } from './decode/model';
 
   let { spec }: { spec: DecodeInput } = $props();
 
@@ -37,13 +36,11 @@
   interface Draft {
     mode: AnswerMode;
     text: string;
-    dcl: string;
     table: Record<string, (Bit | null)[]>;
   }
   const fresh = (): Draft => ({
     mode: untrack(() => modes)[0]!,
     text: untrack(() => spec.outputs.map((o) => `${o} = `).join('\n')),
-    dcl: untrack(() => dclTemplate(spec)),
     table: untrack(() => Object.fromEntries(spec.outputs.map((o) => [o, Array.from({ length: 1 << spec.inputs.length }, () => null)]))),
   });
   let draft = $state<Draft>(untrack(() => ({ ...fresh(), ...progress.draft<Partial<Draft>>(spec.id, {}) })));
@@ -70,7 +67,7 @@
   $effect(() => {
     const snapshot = $state.snapshot(draft);
     // Changing the form of the answer is not changing the answer.
-    const key = JSON.stringify([snapshot.text, snapshot.dcl, snapshot.table]);
+    const key = JSON.stringify([snapshot.text, snapshot.table]);
     untrack(() => {
       if (key !== lastKey) stale = true;
       lastKey = key;
@@ -80,7 +77,7 @@
   });
 
   function check() {
-    const answer: Answer = { mode: draft.mode, text: draft.mode === 'dcl' ? draft.dcl : draft.text, table: draft.table };
+    const answer: Answer = { mode: draft.mode, text: draft.text, table: draft.table };
     outcome = checkDecode(spec, answer);
     stale = false;
     if (outcome.pass) progress.markSolved(spec.id);
@@ -99,7 +96,7 @@
     draft.mode = modes[j]!;
     tabButtons[j]?.focus();
   }
-  const label: Record<AnswerMode, string> = { expression: 'Expression', table: 'Truth table', dcl: 'DCL module' };
+  const label: Record<AnswerMode, string> = { expression: 'Expression', table: 'Truth table' };
 </script>
 
 <ExerciseFrame id={spec.id} kind="Decode" title={spec.title} prompt={spec.prompt} hints={spec.hints ?? []}>
@@ -197,9 +194,6 @@
               </tbody>
             </table>
           </div>
-        {:else}
-          <p class="ex-note">Write a module named <code>Decoded</code> with these ports (every one a <code>bit</code>, the names in lower case). It is run against the device for every input combination.</p>
-          <DclEditor bind:doc={draft.dcl} minLines={5} maxLines={14} label="DCL module Decoded" />
         {/if}
       </div>
     </section>

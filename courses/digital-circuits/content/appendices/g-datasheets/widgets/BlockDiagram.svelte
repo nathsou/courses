@@ -11,11 +11,12 @@
   import { VPLA_SIZE } from '$lib/pld/devices/pla';
   import { COLUMNS, FUSE_COUNT, ROWS } from '$lib/pld/devices/gal22v10';
   import { FB_INPUTS, FUNCTION_BLOCKS, LITERAL_COLUMNS, MACROCELLS_PER_FB, TERMS_PER_FB, IO_PINS } from '$lib/pld/devices/vcpld32-arch';
-  import { LCS_PER_TILE } from '$lib/pld/devices/vfpga-arch';
+  /** Logic cells in an iCE40 logic tile. */
+  const LCS_PER_TILE = 8;
 
   let { device = 'gal22v10', n, caption }: { device?: 'prom' | 'pla' | 'gal22v10' | 'cpld32' | 'fpga'; n?: string | number; caption?: string } = $props();
 
-  const titles = { prom: 'vPROM block diagram', pla: 'vPLA block diagram', gal22v10: 'GAL22V10 block diagram', cpld32: 'vCPLD-32 block diagram', fpga: 'vFPGA block diagram' } as const;
+  const titles = { prom: 'vPROM block diagram', pla: 'vPLA block diagram', gal22v10: 'GAL22V10 block diagram', cpld32: 'vCPLD-32 block diagram', fpga: 'iCE40 block diagram' } as const;
 
   const words = 2 ** VPROM_ADDRESS_BITS;
 </script>
@@ -192,7 +193,7 @@
         <text class="sub" x="360" y="426" text-anchor="middle">JTAG port (TCK, TMS, TDI, TDO): programs the 9,024 configuration bits, and scans the pins</text>
       </svg>
     {:else}
-      <svg viewBox="0 0 720 380" role="img" aria-label="vFPGA: a grid of tiles ringed by I/O tiles; each logic tile has {LCS_PER_TILE} logic cells, a connection box in front of its inputs and a switch box driving its wires">
+      <svg viewBox="0 0 720 380" role="img" aria-label="iCE40: a grid of tiles ringed by I/O tiles; each logic tile has {LCS_PER_TILE} logic cells, a connection box in front of its inputs and a switch box driving its wires">
         <rect class="box" x="10" y="20" width="230" height="230" rx="4" />
         {#each Array.from({ length: 8 }, (_, i) => i) as x (x)}
           {#each Array.from({ length: 8 }, (_, j) => j) as y (y)}
@@ -204,15 +205,15 @@
           {/each}
         {/each}
         <text class="sub" x="125" y="270" text-anchor="middle">the die: I/O ring, logic tiles,</text>
-        <text class="sub" x="125" y="284" text-anchor="middle">block RAM columns (M and L)</text>
+        <text class="sub" x="125" y="284" text-anchor="middle">two block RAM columns</text>
         <!-- tile detail -->
         <path class="wire" d="M240 135 L280 135" />
         <rect class="box" x="280" y="20" width="430" height="300" rx="4" />
         <text class="lab" x="495" y="44" text-anchor="middle">One logic tile</text>
         <rect class="box prog" x="296" y="70" width="90" height="220" rx="3" />
-        <text class="sub" x="341" y="150" text-anchor="middle">connection</text>
-        <text class="sub" x="341" y="166" text-anchor="middle">box</text>
-        <text class="sub" x="341" y="182" text-anchor="middle">(pins ← wires)</text>
+        <text class="sub" x="341" y="150" text-anchor="middle">local tracks</text>
+        <text class="sub" x="341" y="166" text-anchor="middle">and input</text>
+        <text class="sub" x="341" y="182" text-anchor="middle">multiplexers</text>
         <rect class="box" x="416" y="70" width="140" height="220" rx="3" />
         <text class="lab" x="486" y="90" text-anchor="middle">{LCS_PER_TILE} logic cells</text>
         {#each [0, 1, 2] as k (k)}
@@ -231,7 +232,7 @@
         <text class="sub" x="641" y="182" text-anchor="middle">and outputs)</text>
         <path class="wire" d="M641 70 V56 H300 V70" />
         <text class="sub" x="470" y="72" text-anchor="middle" style="display:none">wires</text>
-        <text class="sub" x="495" y="340" text-anchor="middle">Wires of span 1, 4 and 12 tiles, driven by one multiplexer each</text>
+        <text class="sub" x="495" y="340" text-anchor="middle">Neighbour links, and wires of span 4 and 12 tiles, joined by buffers and switches</text>
         <text class="sub" x="495" y="360" text-anchor="middle">Everything shaded is configuration memory.</text>
       </svg>
     {/if}

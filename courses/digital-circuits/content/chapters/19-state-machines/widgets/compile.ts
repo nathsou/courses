@@ -1,32 +1,29 @@
 /**
- * What the DCL compiler makes of the generated text: the flip-flops, gates and depth of the netlist it lowers to
- * (`lowerToNetlist`). It does not minimise (it turns a `match` into a decoder and AND–OR gates, as the manual
- * says); the two-level minimiser of `synth.ts` and the fitters of Chapter 26 do that.
+ * What synth makes of the generated text: the flip-flops, the AND gates of its optimised gate network and
+ * the iCE40 LUTs (synth: crates/synth-playground, `run` stopped after synthesis). Unlike the two-level
+ * minimiser of `synth.ts`, synth optimises the whole machine as a multi-level network and maps it to LUTs.
  */
-import { check, elaborate } from '$lib/hdl';
-import { lowerToNetlist } from '$lib/hdl/lower';
-import { moduleName } from './dcl';
+import type { Synth } from '$lib/synth/api';
+import { run } from '$lib/synth/api';
+import { moduleName } from './weft';
 import type { Fsm } from './fsm';
 
 export interface CompileResult {
   ok: boolean;
   problems: string[];
   flipFlops: number;
-  gates: number;
-  /** Two-input gate equivalents. */
-  gateEquivalents: number;
-  depth: number;
+  /** AND gates after synth's optimisation (inverters are free in an and-inverter graph). */
+  ands: number;
+  /** iCE40 4-input LUTs after mapping. */
+  luts: number;
 }
 
-export function compileStats(code: string, fsm: Fsm): CompileResult {
-  const r = check(code, { file: 'fsm.dcl' });
-  const errors = r.diagnostics.filter((d) => d.severity === 'error').map((d) => d.message);
-  if (errors.length) return { ok: false, problems: errors, flipFlops: 0, gates: 0, gateEquivalents: 0, depth: 0 };
-  try {
-    const low = lowerToNetlist(elaborate(r.program, moduleName(fsm.title)), undefined, { muxes: 'gates' });
-    const s = low.stats;
-    return { ok: true, problems: [], flipFlops: s.flipFlops, gates: s.gates, gateEquivalents: s.gateEquivalents, depth: s.depth };
-  } catch (e) {
-    return { ok: false, problems: [e instanceof Error ? e.message : String(e)], flipFlops: 0, gates: 0, gateEquivalents: 0, depth: 0 };
+export async function compileStats(synth: Synth, code: string, fsm: Fsm): Promise<CompileResult> {
+  const r = await run(synth, { files: [{ name: 'fsm.weft', text: code }], top: moduleName(fsm.title), stop: 'synth', testbench: true });
+  if (!r.ok) {
+    const errors = r.diagnostics.filter((d) => d.severity === 'error').map((d) => d.message);
+    return { ok: false, problems: errors.length ? errors : [r.error ?? 'synth failed'], flipFlops: 0, ands: 0, luts: 0 };
   }
+  const st = (id: string) => r.stages.find((s) => s.id === id)?.stats ?? {};
+  return { ok: true, problems: [], flipFlops: st('gates_optimised').FF ?? 0, ands: st('gates_optimised').AND ?? 0, luts: st('mapped').SB_LUT4 ?? 0 };
 }

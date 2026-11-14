@@ -573,7 +573,7 @@ describe('timing, running, tracing and snapshots', () => {
     };
     expect(cycles('add a0, a0, a0')).toBe(2);
     expect(cycles('lui a0, 1')).toBe(2);
-    // The DCL core takes two cycles for every instruction, loads, stores, jumps and taken branches included.
+    // The Weft core takes two cycles for every instruction, loads, stores, jumps and taken branches included.
     expect(cycles('lw a0, 0(zero)')).toBe(2);
     expect(cycles('sw a0, 0x100(zero)')).toBe(2);
     expect(cycles('beq a0, a0, . + 8')).toBe(2);

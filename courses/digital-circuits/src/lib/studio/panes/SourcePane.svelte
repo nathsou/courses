@@ -1,7 +1,7 @@
 <!--
   The source pane: a text editor with line numbers and error markers, an example picker, and the Fit button.
   The editor is a plain textarea that grows to its content inside one scrolling box, so the gutter and the
-  highlight layer scroll with it and need no synchronising. A design language other than equations (DCL)
+  highlight layer scroll with it and need no synchronising. A design language other than equations
   plugs in as another adapter: this pane only edits text and shows the adapter's errors.
 -->
 <script lang="ts">

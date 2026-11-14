@@ -1,74 +1,32 @@
 /**
- * What the three fits of the chapter cost, and where the cells go: the data of the "cell budget" figure. The numbers are
- * measured by `octet-fpga.test.ts` and `rv32-fpga.test.ts`, which fail when the flow's results move away from them.
+ * What the chapter's three fits cost on an iCE40 HX8K (7,680 logic cells, 32 block RAMs): Octet, and the RV32I core
+ * with its register file in flip-flops and in block RAM. The numbers are recorded in `budget.json` by
+ * `budget.test.ts`, which fits the three designs with synth and fails when they move (UPDATE_BUDGET=1 records
+ * them again).
  */
-export interface Segment {
-  label: string;
+import recorded from './budget.json';
+
+export type FitId = 'octet' | 'rv32-flip-flops' | 'rv32-block-ram';
+
+export interface FitNumbers {
+  /** Logic cells in use. */
   cells: number;
+  /** Of which, cells whose flip-flop is used. */
+  flipFlopCells: number;
+  rams: number;
+  mhz: number;
 }
 
-export interface Fit {
-  id: string;
-  title: string;
-  device: 'vFPGA-M' | 'vFPGA-L';
-  /** Logic cells on the device. */
+export interface Budget {
   capacity: number;
-  total: number;
-  flipFlops: number;
-  blockRams: number;
-  fmaxMHz: number;
-  /** CPU seconds for the whole flow. */
-  seconds: number;
-  segments: Segment[];
+  rams: number;
+  fits: Record<FitId, FitNumbers>;
 }
 
-export const FITS: Fit[] = [
-  {
-    id: 'octet',
-    title: 'Octet',
-    device: 'vFPGA-M',
-    capacity: 1152,
-    total: 541,
-    flipFlops: 129,
-    blockRams: 2,
-    fmaxMHz: 43.3,
-    seconds: 7.4,
-    segments: [
-      { label: 'ALU', cells: 97 },
-      { label: 'control', cells: 94 },
-      { label: 'registers, bus, memory glue, devices', cells: 350 },
-    ],
-  },
-  {
-    id: 'rv32-flops',
-    title: 'RV32I, registers in flip-flops',
-    device: 'vFPGA-L',
-    capacity: 8192,
-    total: 4735,
-    flipFlops: 1113,
-    blockRams: 0,
-    fmaxMHz: 12.9,
-    seconds: 31.3,
-    segments: [
-      { label: 'register file', cells: 3201 },
-      { label: 'ALU', cells: 749 },
-      { label: 'decode, program counter, ROM, devices', cells: 785 },
-    ],
-  },
-  {
-    id: 'rv32-ram',
-    title: 'RV32I, registers in block RAM',
-    device: 'vFPGA-L',
-    capacity: 8192,
-    total: 1476,
-    flipFlops: 89,
-    blockRams: 4,
-    fmaxMHz: 20.0,
-    seconds: 5.8,
-    segments: [
-      { label: 'register file', cells: 9 },
-      { label: 'ALU', cells: 667 },
-      { label: 'decode, program counter, ROM, devices', cells: 800 },
-    ],
-  },
-];
+export const BUDGET = recorded as Budget;
+
+export const FIT_TITLES: Record<FitId, string> = {
+  octet: 'Octet',
+  'rv32-flip-flops': 'RV32I, registers in flip-flops',
+  'rv32-block-ram': 'RV32I, registers in block RAM',
+};

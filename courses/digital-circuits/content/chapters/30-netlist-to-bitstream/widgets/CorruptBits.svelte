@@ -1,126 +1,140 @@
 <!--
-  Run the chip from its bits. The 4-bit counter of Chapter 29, fitted on the vFPGA-S, runs as its decoded bitstream
-  beside the RTL simulator. Flip bits of the six LUTs' truth tables and see whether the two still agree.
+  Run the chip from its bits. synth builds the 4-bit counter of Chapter 29 for an iCE40 HX1K; the decoded bitstream
+  runs beside the RTL simulator, both in synth. Flip bits of the logic cells' truth tables and see whether the two
+  still agree.
 
-    ::corrupt-bits{n="30.7" caption="…"}
+    ::corrupt-bits{n="30.6" caption="…"}
 -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import Widget from '$lib/components/ui/Widget.svelte';
   import Button from '$lib/components/ui/Button.svelte';
   import Segmented from '$lib/components/ui/Segmented.svelte';
-  import { lutExpression } from '$lib/studio/fpga/lut';
-  import { run, setup, type Run, type Setup, type Stimulus } from './corrupt';
+  import { lutExpression } from '$lib/widgets/lut/lut';
+  import type { Synth } from '$lib/synth/api';
+  import { compare, flipsFor, onChip, reachable, rtl, setup, type Comparison, type LutCell, type Setup, type Stimulus, type Trace } from './corrupt';
 
   let { n, caption }: { n?: string | number; caption?: string } = $props();
 
+  const CYCLES = 20;
   let s = $state.raw<Setup | null>(null);
-  let bits = $state.raw<Uint8Array | null>(null);
-  let flipped = $state<number[]>([]);
+  let tables = $state.raw<Map<number, number>>(new Map());
   let stimulus = $state<Stimulus>('held');
   let error = $state('');
-  const CYCLES = 20;
+  let reference = $state.raw<Trace | null>(null);
+  let chip = $state.raw<Trace | null>(null);
+  let running = $state(false);
+  let synth: Synth | undefined;
+  let ticket = 0;
 
-  onMount(() => {
+  onMount(async () => {
     try {
-      const x = setup();
-      s = x;
-      bits = x.result.bits.slice();
+      const { synthOn } = await import('$lib/synth/client');
+      synth = synthOn('sim');
+      s = await setup(synthOn('run'));
+      tables = new Map(s.cells.map((c) => [c.index, c.table]));
     } catch (e) {
       error = e instanceof Error ? e.message : String(e);
     }
   });
 
-  const result = $derived.by<Run | null>(() => {
-    if (!s || !bits) return null;
-    try {
-      return run(s, bits, CYCLES, stimulus);
-    } catch (e) {
-      error = e instanceof Error ? e.message : String(e);
-      return null;
-    }
+  // Run the source and the chip whenever the bits or the stimulus change; only the latest answer is kept.
+  $effect(() => {
+    const t = tables;
+    const st = stimulus;
+    if (!s || !synth) return;
+    const mine = ++ticket;
+    running = true;
+    const timer = setTimeout(async () => {
+      try {
+        const [a, b] = await Promise.all([rtl(synth!, st, CYCLES), onChip(synth!, s!, flipsFor(s!, t), st, CYCLES)]);
+        if (mine === ticket) ((reference = a), (chip = b));
+      } catch (e) {
+        if (mine === ticket) error = e instanceof Error ? e.message : String(e);
+      } finally {
+        if (mine === ticket) running = false;
+      }
+    }, 100);
+    return () => clearTimeout(timer);
   });
 
-  function flip(index: number) {
-    if (!bits) return;
-    const b = bits.slice();
-    b[index] = b[index] ? 0 : 1;
-    bits = b;
-    flipped = flipped.includes(index) ? flipped.filter((i) => i !== index) : [...flipped, index];
+  const result = $derived<Comparison | null>(reference && chip ? compare(reference, chip) : null);
+  const flipped = $derived(s ? flipsFor(s, tables).length : 0);
+
+  const table = (c: LutCell) => tables.get(c.index) ?? c.table;
+  function flip(c: LutCell, r: number) {
+    tables = new Map(tables).set(c.index, table(c) ^ (1 << r));
   }
-  function invert(offset: number) {
-    if (!bits) return;
-    const b = bits.slice();
-    const hit = [...flipped];
-    for (let i = 0; i < 16; i++) {
-      b[offset + i] = b[offset + i] ? 0 : 1;
-      const k = hit.indexOf(offset + i);
-      if (k >= 0) hit.splice(k, 1);
-      else hit.push(offset + i);
-    }
-    bits = b;
-    flipped = hit;
+  function invert(c: LutCell) {
+    tables = new Map(tables).set(c.index, table(c) ^ 0xffff);
   }
   function restore() {
-    if (s) bits = s.result.bits.slice();
-    flipped = [];
+    if (s) tables = new Map(s.cells.map((c) => [c.index, c.table]));
   }
-  const hex = (v: number | 'x') => (v === 'x' ? 'x' : v.toString(16));
-  const table = (offset: number): number => {
-    let t = 0;
-    for (let i = 0; i < 16; i++) t |= (bits![offset + i]! & 1) << i;
-    return t;
-  };
+  /** What the cell computes, with its unconnected inputs at 0. */
+  function expression(c: LutCell): string {
+    const t = table(c);
+    let seen = 0;
+    for (let r = 0; r < 16; r++) {
+      const read = c.inputs.reduce((acc, p, k) => (p === null ? acc & ~(1 << k) : acc), r);
+      if ((t >> read) & 1) seen |= 1 << r;
+    }
+    return lutExpression(seen, c.inputs.map((p, k) => p ?? `I${k}`));
+  }
+  const hex = (v: number) => v.toString(16);
 </script>
 
-<Widget {n} title="Corrupt the bitstream" subtitle="The chip runs its bits, not your source" {caption} kind="Fabric vs RTL" onreset={restore}>
+<Widget {n} title="Corrupt the bitstream" subtitle="The chip runs its bits, not your source" {caption} kind="Chip vs RTL" onreset={() => (restore(), (stimulus = 'held'))}>
   {#snippet controls()}
     <Segmented label="Stimulus" value={stimulus} onchange={(v) => (stimulus = v)} options={[{ value: 'held', label: 'Enable held high' }, { value: 'varied', label: 'Enable low every third cycle' }]} size="sm" />
-    <Button size="sm" onclick={restore} disabled={flipped.length === 0}>Restore the bits</Button>
+    <Button size="sm" onclick={restore} disabled={flipped === 0}>Restore the bits</Button>
   {/snippet}
 
   <div class="cb">
     {#if error}
       <p class="err ui" role="alert">{error}</p>
-    {:else if !s || !bits}
-      <p class="wait ui">The counter is being fitted on the vFPGA-S (about 50 ms). Its six logic cells will appear here, each with the 16 bits of its lookup table, and the chip will run beside the RTL simulator.</p>
+    {:else if !s}
+      <p class="wait ui">synth is building the counter for an iCE40 HX1K. Its logic cells will appear here, each with the 16 bits of its lookup table, and the chip will run beside the RTL simulator.</p>
     {:else}
-      <p class="lead ui">The two rows show the count after each clock, on the RTL simulator and on the chip decoded from the bits. Each box under them is one logic cell of the fitted counter, and each square one bit of its truth table (row number in the corner): click a bit to flip it.</p>
-      {#if result}
+      <p class="lead ui">The two rows show the count after each clock (<code>clear</code> low), on the RTL simulator and on the chip decoded from the bits. Each box under them is one logic cell of the counter as synth built it, and each square one bit of its truth table (entry number in the corner; faded entries are never read, because an unconnected input reads 0): click a bit to flip it.</p>
+      {#if reference && chip && result}
         <div class="runs" aria-label="The count after each clock, on the RTL simulator and on the chip">
-          <div class="row"><span class="rl ui">RTL</span>{#each result.rtl as v, i (i)}<span class="v">{hex(v)}</span>{/each}</div>
-          <div class="row"><span class="rl ui">chip</span>{#each result.fabric as v, i (i)}<span class="v" class:bad={v !== result.rtl[i]}>{hex(v)}</span>{/each}</div>
+          <div class="row"><span class="rl ui">RTL</span>{#each reference.count as v, i (i)}<span class="v">{hex(v)}</span>{/each}</div>
+          <div class="row"><span class="rl ui">chip</span>{#each chip.count as v, i (i)}<span class="v" class:bad={v !== reference.count[i] || chip.wrapped[i] !== reference.wrapped[i]}>{hex(v)}</span>{/each}</div>
         </div>
-        <div class="verdict ui" class:bad={result.firstMismatch > 0} role="status">
-          {#if result.firstMismatch}
-            <b>Mismatch</b> on {result.mismatched.join(', ')}, first at clock {result.firstMismatch}: the device and the source disagree.
+        <div class="verdict ui" class:bad={result.first > 0} role="status">
+          {#if running}
+            synth is running the source and the chip…
+          {:else if result.first}
+            <b>Mismatch</b> on {result.outputs.join(' and ')}, first at clock {result.first}: the chip and the source disagree.
           {:else}
-            <b>The device agrees with the RTL simulator</b> ({result.checked} output bits checked after each of {CYCLES} clocks){flipped.length ? ', although you flipped ' + flipped.length + ' bit' + (flipped.length === 1 ? '' : 's') + ': nothing in this run reached them' : ''}.
+            <b>The chip agrees with the RTL simulator</b> (count and wrapped after each of {CYCLES} clocks){flipped ? `, although you flipped ${flipped} bit${flipped === 1 ? '' : 's'}: nothing in this run read them` : ''}.
           {/if}
         </div>
       {/if}
       <div class="cells">
-        {#each s.cells as c (c.label)}
+        {#each s.cells as c (c.index)}
           <div class="cell">
-            <div class="ch ui"><b>{c.label}</b><span>tile ({c.x}, {c.y}) cell {c.k}</span></div>
+            <div class="ch ui"><b>{c.label}</b><span>tile ({c.x}, {c.y}) cell {c.z}{c.ff ? ', flip-flop' : ''}{c.drives.length ? ` → ${c.drives.join(', ')}` : ''}</span></div>
+            <div class="ins ui">{#each c.inputs as p, k (k)}<span>I{k}: {p ?? '–'}</span>{/each}</div>
             <div class="grid" role="group" aria-label="Truth table of {c.label}">
               {#each Array.from({ length: 16 }, (_, r) => r) as r (r)}
-                {@const idx = c.offset + r}
+                {@const one = (table(c) >> r) & 1}
                 <button
                   type="button"
-                  class:one={bits[idx] === 1}
-                  class:hit={flipped.includes(idx)}
-                  aria-pressed={bits[idx] === 1}
-                  aria-label="{c.label} table bit {r}, now {bits[idx]}"
-                  onclick={() => flip(idx)}
-                ><i>{r}</i>{bits[idx]}</button>
+                  class:one={one === 1}
+                  class:hit={((table(c) ^ c.table) >> r) & 1}
+                  class:unread={!reachable(c, r)}
+                  aria-pressed={one === 1}
+                  aria-label="{c.label} table entry {r}, now {one}{reachable(c, r) ? '' : ' (never read)'}"
+                  onclick={() => flip(c, r)}
+                ><i>{r}</i>{one}</button>
               {/each}
             </div>
-            <div class="fn ui"><code>{lutExpression(table(c.offset))}</code> <button type="button" class="inv" onclick={() => invert(c.offset)} title="Flip all 16 bits of this table">Invert</button></div>
+            <div class="fn ui"><code>{expression(c)}</code> <button type="button" class="inv" onclick={() => invert(c)} title="Flip all 16 bits of this table">Invert</button></div>
           </div>
         {/each}
       </div>
-
     {/if}
   </div>
 </Widget>
@@ -142,7 +156,7 @@
   }
   .cells {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(7.4rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
     gap: 0.6rem;
   }
   .cell {
@@ -152,6 +166,8 @@
     background: var(--panel);
     display: grid;
     gap: 0.3rem;
+    min-width: 0;
+    align-content: start;
   }
   .ch {
     display: flex;
@@ -168,13 +184,14 @@
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 2px;
   }
   .grid button {
     position: relative;
     aspect-ratio: 1;
     min-height: 1.5rem;
+    min-width: 0;
     border: 1px solid var(--line-strong);
     border-radius: 3px;
     background: var(--pn);
@@ -191,6 +208,17 @@
   .grid button.hit {
     outline: 2px solid var(--bad);
     outline-offset: 1px;
+  }
+  .grid button.unread {
+    opacity: 0.4;
+  }
+  .ins {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    color: var(--mute);
+    overflow-wrap: anywhere;
   }
   .grid i {
     position: absolute;

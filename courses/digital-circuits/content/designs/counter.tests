@@ -1,0 +1,18 @@
+test "wraps after sixteen steps" {
+    set enable = true, clear = false;
+    step 15;
+    expect count == 15 && wrapped;
+    step;
+    expect count == 0;
+}
+
+test "holds when disabled and clears" {
+    set enable = true;
+    step 5;
+    set enable = false;
+    step 3;
+    expect count == 5 && !wrapped;
+    set clear = true;
+    step;
+    expect count == 0;
+}

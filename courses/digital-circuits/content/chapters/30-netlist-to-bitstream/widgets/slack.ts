@@ -1,11 +1,15 @@
 /**
- * A timing graph small enough to see whole, analysed by the course's own static timing analysis (`analyse` in
- * `src/lib/pld/fpga/sta.ts`, the code that produces the report of Figure 30.1). The design is two flip-flops feeding
- * four LUTs that feed two flip-flops; the delays of the cells are the vFPGA's published ones, and the delays of the
- * nets are the reader's to change.
+ * A timing graph small enough to see whole, analysed by a static timing analysis of a few dozen lines (`./sta.ts`,
+ * the same two sweeps as synth's). The design is two flip-flops feeding four LUTs that feed two flip-flops; the
+ * delays of the cells are those of an iCE40 HX in synth's timing model, rounded to 10 ps, and the delays of the nets
+ * are the reader's to change.
  */
-import { VFPGA_DELAYS as D } from '$lib/pld/devices/vfpga-arch';
-import { analyse, type TimingEdge, type TimingGraph, type TimingResult } from '$lib/pld/fpga/sta';
+import delays from '$lib/synth/ice40-delays.json';
+import { analyse, type TimingEdge, type TimingGraph, type TimingResult } from './sta';
+
+/** The cells' delays, ns: an iCE40 HX's LUT, and its flip-flop's clock-to-output and set-up times (synth's timing model). */
+const ns = (ps: number) => Math.round(ps / 10) / 100;
+export const D = { lut: ns(delays.lut), ffClkToQ: ns(delays.clk_to_q), ffSetup: ns(delays.setup) };
 
 export interface Net {
   id: string;

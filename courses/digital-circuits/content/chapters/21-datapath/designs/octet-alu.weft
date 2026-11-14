@@ -1,0 +1,36 @@
+/// Octet's ALU and flag logic. `op` is the ALU code (0 add, 1 subtract, 2 and, 3 or, 4 xor, 6 shift right, 7 not),
+/// and `b` is already the ALU's second input: B, or A for SHL, or the constant 1 for INC.
+module octet_alu(
+    in  a: uint<8>,
+    in  b: uint<8>,
+    in  op: uint<3>,
+    out y: uint<8>,
+    out z: bool,
+    out c: bool,
+    out n: bool,
+    out v: bool,
+) {
+    let subtract = op == 1;
+    let arithmetic = op == 0 || op == 1;
+    let addend: uint<8> = if subtract { ~b } else { b };
+    // The exact sum, 0 to 511: nine bits, and bit 8 is the carry out.
+    let wide = a + addend + (if subtract { 1 } else { 0 });
+    let sum = wide[7:0];
+
+    let result: uint<8> = match op {
+        0 | 1 => sum,
+        2 => a & b,
+        3 => a | b,
+        4 => a ^ b,
+        6 => a >> 1,
+        7 => ~a,
+        _ => 0,
+    };
+    y = result;
+    z = result == 0;
+    n = result[7];
+    // C is the carry out of an addition, the borrow (its inverse) after a subtraction, and the bit shifted out by SHR.
+    c = if arithmetic { wide[8] ^ subtract } else if op == 6 { a[0] } else { false };
+    // V: both operands (B inverted for a subtraction) have the same sign, and the result has the other one.
+    v = arithmetic && a[7] == (b[7] ^ subtract) && result[7] != a[7];
+}

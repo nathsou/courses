@@ -1,6 +1,6 @@
 /**
  * The RV32I reference interpreter: executes one instruction per `step()`, counting the clock cycles
- * of the reference core, two per instruction (`RV32_TIMING` in `spec.ts`). It is the specification the DCL
+ * of the reference core, two per instruction (`RV32_TIMING` in `spec.ts`). It is the specification the Weft
  * core is tested against, and the engine behind the ISA-level turbo mode.
  *
  * Memory is RAM at 0 (64 KiB by default) and the board's I/O block at 0xFFFF_FF00 (see `board.ts`).
@@ -545,7 +545,7 @@ export interface Rv32CompareOptions {
 }
 
 /**
- * Compare two RV32I states (for differential testing of the DCL core, or another implementation,
+ * Compare two RV32I states (for differential testing of the Weft core, or another implementation,
  * against the interpreter). Returns human-readable differences; an empty list means they agree.
  */
 export function compareStates(a: Rv32State, b: Rv32State, options: Rv32CompareOptions = {}): string[] {

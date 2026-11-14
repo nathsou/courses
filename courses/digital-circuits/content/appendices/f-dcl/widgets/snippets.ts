@@ -1,122 +1,103 @@
 /**
- * DCL programs that Appendix F's playgrounds start from. They live here, not in the Markdown, so that the
- * tests can run them (`::snippet-playground{id="…"}` looks them up).
+ * The programs of Appendix F's playgrounds, the same as the blocks on the page (a test checks that they are), with
+ * their tests. (`::snippet-playground{id="…"}` looks them up.)
  */
 export interface Snippet {
   title: string;
-  /** The module to simulate. */
-  top: string;
+  top?: string;
   code: string;
+  tests?: string;
+  solution?: string;
 }
 
 export const SNIPPETS: Record<string, Snippet> = {
-  glance: {
-    title: 'A counter with enable and clear',
-    top: 'Counter',
-    code: `/// A 4-bit counter with enable and synchronous clear.
-module Counter(clk: clock, enable: bit, clear: bit) -> (count: bits<4>, wrapped: bit) {
-  reg value: bits<4> = 0
+  glance: { title: 'A module at a glance', code: `/// A 4-bit counter with enable and synchronous clear.
+module counter(
+    in  clk: clock,
+    in  enable: bool,
+    in  clear: bool,
+    out count: uint<4>,
+    out wrapped: bool,
+) {
+    reg value: uint<4> = 0;
 
-  next value = if clear { 0 } else if enable { value + 1 } else { value }
-  count = value
-  wrapped = enable && value == 15
+    if clear {
+        value := 0;
+    } else if enable {
+        value := value +% 1;
+    }
+    count = value;
+    wrapped = enable && value == 15;
 }
-
-test "wraps after sixteen steps" {
-  let c = sim Counter(enable: 1, clear: 0)
-  step 15
-  expect c.count == 15 && c.wrapped
-  step
-  expect c.count == 0
+`, tests: `test "counts while enabled, and clear wins" {
+    set enable = true, clear = false;
+    step 3;
+    expect count == 3;
+    set clear = true;
+    step;
+    expect count == 0;
 }
-
-test "clear beats enable" {
-  let c = sim Counter(enable: 1, clear: 0)
-  step 5
-  c.clear = 1
-  step
-  expect c.count == 0
+` },
+  memory: { title: 'A register file in block RAM', code: `/// A register file: two read ports, one write port. The reads are registered, so this is block RAM.
+module regs(
+    in  clk: clock,
+    in  write: bool,
+    in  waddr: uint<5>,
+    in  wdata: uint<32>,
+    in  raddr: uint<5>,
+    out rdata: uint<32>,
+) {
+    mem x: [uint<32>; 32] init [0; 32];
+    reg q: uint<32> = 0;
+    q := x[raddr];
+    if write {
+        x[waddr] := wdata;
+    }
+    rdata = q;
 }
-`,
-  },
-  memory: {
-    title: 'A register file: one write port, two read ports',
-    top: 'RegFile',
-    code: `/// Eight words of eight bits. A read returns the word one clock cycle after its address.
-module RegFile(
-  clk: clock,
-  wa: bits<3>,
-  wd: bits<8>,
-  we: bit,
-  ra: bits<3>,
-  rb: bits<3>,
-) -> (a: bits<8>, b: bits<8>) {
-  mem regs: [bits<8>; 8]
-
-  regs.write(wa, wd, we)
-  a = regs.read(ra)
-  b = regs.read(rb)
-}
-
-test "two reads at once, one cycle after the address" {
-  let r = sim RegFile(wa: 1, wd: 11, we: 1, ra: 0, rb: 0)
-  step
-  r.wa = 2
-  r.wd = 22
-  step
-  r.we = 0
-  r.ra = 1
-  r.rb = 2
-  expect r.a == 0
-  step
-  expect r.a == 11 && r.b == 22
+`, tests: `test "a word written is read a cycle after its address" {
+    set write = true, waddr = 3, wdata = 33;
+    step;
+    set write = false, raddr = 3;
+    step;
+    expect rdata == 33;
 }
 
 test "a read in the cycle of a write sees the old word" {
-  let r = sim RegFile(wa: 3, wd: 33, we: 1, ra: 3, rb: 3)
-  step
-  expect r.a == 0
-  step
-  expect r.a == 33
+    set write = true, waddr = 5, wdata = 7, raddr = 5;
+    step;
+    expect rdata == 0;
+    step;
+    expect rdata == 7;
 }
-`,
-  },
-  'std-debounce': {
-    title: 'A button through the standard library',
-    top: 'Button',
-    code: `/// A push button, cleaned up: \`held\` follows the button once it has been steady for four cycles,
-/// and \`press\` pulses for one cycle at the moment it does.
-module Button(clk: clock, raw: bit) -> (press: bit, held: bit) {
-  inst db: Debouncer<4>(clk: clk, raw: raw)
-  inst edge: EdgeDetect(clk: clk, d: db.clean)
-  press = edge.rise
-  held = db.clean
+` },
+  'std-presses': { title: 'Counting presses', code: `/// Counts the presses of a button: synchronised, then a pulse on each rising edge.
+module press_counter(in clk: clock, in btn: bool, out presses: uint<8>) {
+    let pressed = rising(sync(btn));
+    reg count: uint<8> = 0;
+    if pressed {
+        count := count +% 1;
+    }
+    presses = count;
 }
-
-test "a steady press gives exactly one pulse" {
-  let b = sim Button(raw: 1)
-  let pulses: bits<8> = 0
-  for i in 0..20 {
-    pulses = if b.press { pulses + 1 } else { pulses }
-    step
-  }
-  expect pulses == 1
-  expect b.held
+`, tests: `test "a press is counted three cycles after the button goes down" {
+    set btn = true;
+    step 2;
+    expect presses == 0;
+    step;
+    expect presses == 1;
+    step 5;
+    expect presses == 1;
 }
 
-test "bounces shorter than the window are ignored" {
-  let b = sim Button(raw: 0)
-  let pulses: bits<8> = 0
-  for i in 0..3 {
-    b.raw = 1
-    step 2
-    b.raw = 0
-    step 2
-  }
-  step 10
-  expect !b.held
-  expect pulses == 0
+test "two presses, two counts" {
+    set btn = true;
+    step 4;
+    set btn = false;
+    step 4;
+    set btn = true;
+    step 4;
+    expect presses == 2;
 }
-`,
-  },
+` },
 };

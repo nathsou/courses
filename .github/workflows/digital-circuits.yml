@@ -29,6 +29,16 @@ jobs:
           cache: npm
           cache-dependency-path: courses/digital-circuits/package-lock.json
       - run: npm ci
+      # synth, the Weft compiler and iCE40 toolchain, built to WebAssembly from the commit pinned in synth.json.
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: actions/cache@v4
+        with:
+          path: courses/digital-circuits/static/synth
+          key: synth-wasm-${{ hashFiles('courses/digital-circuits/synth.json', 'courses/digital-circuits/scripts/synth.mjs') }}
+      - name: Build synth to WebAssembly
+        run: npm run synth -- --check || npm run synth
       - name: Simulator, toolchain and content tests
         run: npm test
       - name: Type-check (svelte-check)

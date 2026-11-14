@@ -1,0 +1,17 @@
+test "follows the British sequence" {
+    set tick = true;
+    expect red && !amber && !green;
+    step;
+    expect red && amber && !green;
+    step;
+    expect !red && !amber && green;
+    step;
+    expect !red && amber && !green;
+    step;
+    expect red && !amber && !green;
+}
+
+test "waits for the tick" {
+    step 10;
+    expect red && !amber;
+}

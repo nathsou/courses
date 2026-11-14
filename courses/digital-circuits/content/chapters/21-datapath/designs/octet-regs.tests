@@ -1,0 +1,17 @@
+test "a write shows at both read ports after the clock edge" {
+    set write = true, dst = 2, data = 0x5a, ra = 2, rb = 3;
+    expect qa == 0;
+    step;
+    expect qa == 0x5a && qb == 0;
+    set write = false, dst = 3, data = 0xff;
+    step;
+    expect qb == 0;
+}
+
+test "writing one register leaves the others alone" {
+    set write = true, dst = 0, data = 1, ra = 0, rb = 1;
+    step;
+    set dst = 1, data = 2;
+    step;
+    expect qa == 1 && qb == 2;
+}

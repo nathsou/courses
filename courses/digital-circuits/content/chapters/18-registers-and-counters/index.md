@@ -32,9 +32,9 @@ How do you make a flip-flop keep its value? Not by stopping its clock, though th
 
 ::circuit{src="18-registers-and-counters/circuits/register4.json" title="A register with a load enable" n="18.1" speed=1e-6 caption="Set D3 to D0 with the switches and press CLK (the round button). Nothing happens while EN is 0; the output Q keeps its old value however D changes. Set EN to 1, press CLK, and Q takes D. Each bit is a multiplexer (choosing between the data and the flip-flop's own Q) in front of a D flip-flop."}
 
-In DCL the same idea is a single line, because the language makes holding explicit: a register that is not given a new value is an error, so “keep the old one” must be written down as `next value = value`.
+In Weft the same idea is a few lines, and the hold is the part you do not write: a register that is not given a new value in a cycle keeps the one it has, so `value := d;` inside `if load { … }` is the whole register.
 
-::snippet-playground{id="register" n="18.2" tab="run" caption="A byte of storage in DCL. Set d to a value, set load to 1 and press Step clock: q takes it. Set load back to 0, change d and step again: q keeps the old value. Open the Circuit tab: eight flip-flops, each fed by a multiplexer whose other input is its own output, exactly the structure of Figure 18.1."}
+::snippet-playground{id="register" n="18.2" tab="run" caption="A byte of storage in Weft. Set d to a value, set load to true and press Step clock: q takes it. Set load back to false, change d and step again: q keeps the old value. Open the Circuit tab: eight flip-flops and nothing else. synth saw that the multiplexer of Figure 18.1 (data, or the flip-flop's own Q) is exactly what a flip-flop with an enable input does, and used the enable: EN on each flip-flop is load."}
 
 :::programmer[A register is a variable]
 In software, a variable keeps its value until you assign to it. In hardware nothing is “kept”: a flip-flop reloads something at every tick, and “keeping” means reloading itself. That is why `if load { d } else { value }` is not an optimisation to write, but the only thing a register can mean. It is also why a register is drawn with an enable: an assignment statement in a program that only runs `if (load)` becomes a multiplexer here.
@@ -89,17 +89,17 @@ Both counters divide the frequency in the same way, so the choice is about *when
 
 The speed limits differ, too. The synchronous counter must obey the same rule as every synchronous circuit (Chapter 17): the clock period must be at least t<sub>cq</sub> + t<sub>pd</sub> + t<sub>su</sub>, where t<sub>pd</sub> is the delay of the AND and XOR in front of the flip-flop. The ripple counter's *clock* can run much faster, because nothing but one flip-flop's toggle has to fit in a period, but its *answer* takes n × t<sub>cq</sub> to be right.
 
-### The same counter in DCL
+### The same counter in Weft
 
-Here is the synchronous counter as DCL sees it: one register, and `+ 1`.
+Here is the synchronous counter as Weft writes it: one register, and `+% 1`, “add one, wrapping round”.
 
-::snippet-playground{id="counter" n="18.6" tab="circuit" caption="A 4-bit counter with an enable. Press Step clock with enable set to 1 and watch count go up; then open the Circuit tab. The compiler has built four flip-flops, three XORs, two ANDs and an inverter, which is the incrementer of Figure 18.4, and four multiplexers for the enable, as in Figure 18.1. Press Run tests: the second test checks that each bit runs at half the speed of the one below."}
+::snippet-playground{id="counter" n="18.6" tab="circuit" caption="A 4-bit counter with an enable. Press Step clock with enable set to true and watch count go up; then open the Circuit tab. synth built four flip-flops with enable, fed by the incrementer of Figure 18.4 written in AND gates and inverters (nine ANDs: an XOR is three of them), and gave the enable to the flip-flops. Run the tests: the second checks that each bit runs at half the speed of the one below."}
 
-Notice that the DCL counter came out synchronous without being asked. It could not have come out as a ripple counter, because a ripple counter clocks one register from another register's output, and DCL will not let you.
+Notice that the Weft counter came out synchronous without being asked. It could not have come out as a ripple counter, because a ripple counter clocks one register from another register's output, and Weft will not let you.
 
-::snippet-playground{id="ripple" n="18.7" tab="code" circuit=false tests=false caption="Try to give the register b the clock a. The compiler refuses, and says that a is not a clock input of the module. A clock can only come from a port; it cannot be computed. The ripple counter is a legitimate circuit, and it is the reason that the rule exists: every register that changes at a clock edge, changes together."}
+::snippet-playground{id="ripple" n="18.7" tab="code" circuit=false tests=false caption="Try to give the register b a clock domain of its own, clocked by a. synth refuses: a is not a clock, and clocks cannot be computed from logic, so use a clock enable instead. The ripple counter is a legitimate circuit, and it is the reason that the rule exists: every register of a clock domain changes at the same edge."}
 
-This is the rule of Chapter 17 seen from the language side: DCL cannot express a gated clock, a divided clock or a ripple, so the design that follows the rules is the only one you can write. When you need a slower rhythm, you do what the synchronous counter does: keep the fast clock and use an *enable* that is high one cycle in N. The `tick-gen` exercise of Chapter 29 is exactly that.
+This is the rule of Chapter 17 seen from the language side: Weft cannot express a gated clock, a divided clock or a ripple, so the design that follows the rules is the only one you can write. When you need a slower rhythm, you do what the synchronous counter does: keep the fast clock and use an *enable* that is high one cycle in N. The `tick-gen` exercise of Chapter 29 is exactly that.
 
 :::hood[How the simulator counts]
 The counter chip in the parts bin is *behaviour*, not gates. Its model in the digital engine (`src/lib/sim/digital/models/blocks.ts`) holds the count as an integer and adds one at each clock edge:
@@ -141,7 +141,7 @@ Two things make shift registers useful.
 
 A shift register also shows why hold time is not a formality. Every D input is connected straight to the previous Q, with *no gates at all* between them, so the data launched at an edge arrives at the next flip-flop after only a clock-to-Q delay. The edge must have finished being looked at (the hold time) before the new data arrives: t<sub>cq</sub> must be longer than t<sub>h</sub>, plus any clock skew. Flip-flops are designed with a hold time shorter than their clock-to-Q for exactly this reason. Chapter 17's *Break the clock* shows the failure: no gates, and a clock that reaches the second flip-flop 2 ns late.
 
-::snippet-playground{id="shift" n="18.9" tab="run" caption="A byte-wide shift register in DCL: concat puts the new bit below the seven old ones. Set si to 1 and press Step clock, then set it to 0, and so on: q fills up from the right. Open the Circuit tab: eight flip-flops in a chain, and no gates at all."}
+::snippet-playground{id="shift" n="18.9" tab="run" caption="A byte-wide shift register in Weft: concat puts the new bit below the seven old ones. Set si to true and press Step clock, then set it to false, and so on: q fills up from the right. Open the Circuit tab: eight flip-flops in a chain, and no gates at all."}
 
 ## The LFSR: a counter that counts in a strange order
 
@@ -169,7 +169,7 @@ The mathematics of these sequences was worked out in the 1950s and 1960s, in the
 The sharp autocorrelation is what GPS uses. The civilian C/A code of each satellite is a *Gold code*, named for Robert Gold, who described the family in 1967:cite[gold1967]: the XOR of the outputs of two 10-stage LFSRs, 1 023 chips long, sent at 1.023 million chips a second.:cite[is-gps-200]
 :::
 
-::snippet-playground{id="lfsr" n="18.11" tab="run" caption="The 8-bit LFSR of the parts bin in DCL. The feedback is one line, three XORs. Press Step clock and watch q wander; press Run tests: the test steps 254 times and checks that q is never 00000001 or zero on the way, and is 00000001 again at the 255th step."}
+::snippet-playground{id="lfsr" n="18.11" tab="run" caption="The 8-bit LFSR of the parts bin in Weft. The feedback is one line, three XORs. Press Step clock and watch q wander; run the tests on the Tests tab: the test steps 254 times and checks that q is never 00000001 or zero on the way, and is 00000001 again at the 255th step."}
 
 ## Exercises
 

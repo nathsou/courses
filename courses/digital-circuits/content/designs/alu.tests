@@ -1,0 +1,33 @@
+test "adds and subtracts" {
+    set rs1_value = 7, b = 5, f3 = 0, is_reg = true, ir30 = false;
+    expect result == 12;
+    set ir30 = true;
+    expect result == 2;
+    set b = 9;
+    expect result == 0xffff_fffe;
+}
+
+test "compares signed and unsigned" {
+    set rs1_value = 0xffff_ffff, b = 1, f3 = 2, is_reg = true;
+    expect result == 1;
+    set f3 = 3;
+    expect result == 0;
+}
+
+test "shifts" {
+    set rs1_value = 0x8000_0010, b = 4, f3 = 5;
+    expect result == 0x0800_0001;
+    set ir30 = true;
+    expect result == 0xf800_0001;
+    set f3 = 1;
+    expect result == 0x0000_0100;
+}
+
+test "logic" {
+    set rs1_value = 0b1100, b = 0b1010, f3 = 4, is_reg = true;
+    expect result == 0b0110;
+    set f3 = 6;
+    expect result == 0b1110;
+    set f3 = 7;
+    expect result == 0b1000;
+}

@@ -1,10 +1,10 @@
 <!--
   The FSM designer. Draw a state machine as a bubble diagram (or load one), choose Moore or Mealy and a state
   encoding, and get the logic: the next-state and output equations, the gate count of each encoding, the
-  machine clocked with input switches, and the equivalent DCL (an enum and a `match`).
+  machine clocked with input switches, and the equivalent Weft (an enum and a `match`).
 
   Everything can be done without dragging: buttons and forms add, rename, reorder and delete states and
-  arrows; a bubble takes the arrow keys to move it. The logic lives in fsm.ts, synth.ts, dcl.ts, layout.ts,
+  arrows; a bubble takes the arrow keys to move it. The logic lives in fsm.ts, synth.ts, weft.ts, layout.ts,
   edit.ts and run.ts, all tested.
 
     ::fsm-designer{preset="traffic" n="19.4" caption="…"}
@@ -14,11 +14,11 @@
   import Widget from '$lib/components/ui/Widget.svelte';
   import Segmented from '$lib/components/ui/Segmented.svelte';
   import Button from '$lib/components/ui/Button.svelte';
-  import { highlightDclHtml } from '$lib/hdl/editor/highlightHtml';
+  import { highlightWeftHtml } from '$lib/weft/highlight';
   import { allInputs, guardText, hasErrors, mealyToMoore, mooreToMealy, stateTable, step, validate, type Fsm, type FsmTransition } from './fsm';
   import { PRESETS, presetById, BLANK } from './presets';
   import { ENCODINGS, codeText, compareEncodings, type Encoding } from './synth';
-  import { toDcl } from './dcl';
+  import { toWeft } from './weft';
   import { toCircuit } from './netlist';
   import LiveDag from '../../11-boolean-algebra/widgets/LiveDag.svelte';
   import { clock, outputsNow, resetCode, type Cycle } from './run';
@@ -45,7 +45,7 @@
   const broken = $derived(hasErrors(problems));
   const designs = $derived(broken ? null : compareEncodings(fsm));
   const design = $derived(designs ? designs[enc] : null);
-  const dcl = $derived(broken ? '' : toDcl(fsm, enc));
+  const weft = $derived(broken ? '' : toWeft(fsm, enc));
   const circuit = $derived(design ? toCircuit(design, { title: `${fsm.title}, ${enc} codes` }) : null);
   const positions = $derived.by(() => {
     const base = defaultPositions(fsm.states.map((s) => s.name));
@@ -226,7 +226,7 @@
     { id: 'logic', label: 'Logic' },
     { id: 'circuit', label: 'Circuit' },
     { id: 'cost', label: 'Cost' },
-    { id: 'dcl', label: 'DCL' },
+    { id: 'weft', label: 'Weft' },
   ];
   function tabKey(ev: KeyboardEvent) {
     const i = tabs.findIndex((t) => t.id === tab);
@@ -241,19 +241,23 @@
   let compiled = $state<CompileResult | null>(null);
   let compiling = $state(false);
   $effect(() => {
-    void dcl;
+    void weft;
     compiled = null;
   });
   async function compile() {
     compiling = true;
-    const m = await import('./compile');
-    compiled = m.compileStats(dcl, fsm);
+    const [m, { synthOn }] = await Promise.all([import('./compile'), import('$lib/synth/client')]);
+    try {
+      compiled = await m.compileStats(synthOn('run'), weft, fsm);
+    } catch (e) {
+      compiled = { ok: false, problems: [e instanceof Error ? e.message : String(e)], flipFlops: 0, ands: 0, luts: 0 };
+    }
     compiling = false;
   }
   let copied = $state(false);
   async function copy() {
     try {
-      await navigator.clipboard.writeText(dcl);
+      await navigator.clipboard.writeText(weft);
       copied = true;
       setTimeout(() => (copied = false), 1500);
     } catch {
@@ -517,15 +521,15 @@
               </table>
               <p class="hint">Two-level logic, minimised with the don't-cares of the unused codes (Chapter 12); terms are shared between functions when that saves gates. Click a row to choose that encoding. <b>widest</b> is the largest AND gate, a measure of speed; <b>LUT4</b> is a rough count for an FPGA (Chapter 28).</p>
             {:else}<p class="none">Fix the errors above to compare the encodings.</p>{/if}
-          {:else if tab === 'dcl'}
-            {#if dcl}
-              <div class="code" aria-label="DCL source">{@html highlightDclHtml(dcl)}</div>
+          {:else if tab === 'weft'}
+            {#if weft}
+              <div class="code" aria-label="Weft source">{@html highlightWeftHtml(weft)}</div>
               <div class="add">
                 <Button size="sm" onclick={copy}>{copied ? 'Copied' : 'Copy'}</Button>
                 <Button size="sm" onclick={compile} disabled={compiling}>{compiling ? 'Compiling…' : 'Compile it'}</Button>
               </div>
               {#if compiled}
-                <p class="hint" role="status">{#if compiled.ok}The DCL compiler lowers this to <b>{compiled.flipFlops}</b> flip-flops and <b>{compiled.gates}</b> gates (depth {compiled.depth}), without minimising: it turns each <code>match</code> into decoders and AND–OR gates.{:else}It did not compile: {compiled.problems.join('; ')}{/if}</p>
+                <p class="hint" role="status">{#if compiled.ok}synth builds this as <b>{compiled.flipFlops}</b> flip-flops and <b>{compiled.ands}</b> AND gates (inverters are free), and maps it to <b>{compiled.luts}</b> iCE40 LUTs.{:else}It did not compile: {compiled.problems.join('; ')}{/if}</p>
               {/if}
               <p class="hint">The encoding is one attribute on the <code>enum</code>: none for binary, <code>@gray</code> or <code>@onehot</code>. Change the encoding above and only that line changes.</p>
             {:else}<p class="none">Fix the errors above to get the code.</p>{/if}

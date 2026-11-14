@@ -486,7 +486,7 @@ for (let i = 0; i < steps && !ref.halted; i++) {
 }
 ```
 
-`compareStates` compares every register, flag, byte of memory, device output and the cycle count. The test runs it on the course programs and on 300 random ones: `randomProgram(seed)` generates programs that are random but safe, in which every jump goes forward, every load and store stays in a data window and every CALL has a RET, so that any disagreement is a bug rather than chaos. The ALU is checked exhaustively as well: every pair of operands for ADD, SUB, AND, OR, XOR and CMP, and every operand of the four unary operations, is executed on both and the results and all four flags must agree. The same function is what compares a *gate-level* Octet, or the DCL version of Chapter 31, with the interpreter: **the interpreter is the reference, and everything else must agree with it.**
+`compareStates` compares every register, flag, byte of memory, device output and the cycle count. The test runs it on the course programs and on 300 random ones: `randomProgram(seed)` generates programs that are random but safe, in which every jump goes forward, every load and store stays in a data window and every CALL has a RET, so that any disagreement is a bug rather than chaos. The ALU is checked exhaustively as well: every pair of operands for ADD, SUB, AND, OR, XOR and CMP, and every operand of the four unary operations, is executed on both and the results and all four flags must agree. The same function is what compares a *gate-level* Octet, or the Weft version of Chapter 31, with the interpreter: **the interpreter is the reference, and everything else must agree with it.**
 :::
 
 ## Build it for real

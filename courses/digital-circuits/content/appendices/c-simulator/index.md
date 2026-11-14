@@ -1,12 +1,12 @@
 ---
 number: C
 title: The simulator and toolchain
-summary: "What the three engines, the bench, the checkers and the DCL and programmable-logic toolchains model, how, with which numbers, and, just as important, what they leave out."
+summary: "What the three engines, the bench, the checkers, the programmable-logic fitters and synth, the hardware toolchain, model, how, with which numbers, and, just as important, what they leave out."
 duration: Look things up
 prerequisites: []
 ---
 
-Everything that moves on these pages is computed by code written for the course: no third-party simulator, no server, nothing precomputed. That makes the code part of the subject, and it makes an honest list of its limits part of the course, because a simulator that does not say what it leaves out invites you to believe it puts everything in. This appendix is that list, together with a map of the machinery and the numbers that matter: the constants, the tolerances, the limits.
+Everything that moves on these pages is computed in your browser: no server, and nothing precomputed that a test does not recompute. The engines, the bench and the fitters for the PROM, the PLA, the GAL and the CPLD were written for the course; the hardware language and the FPGA toolchain are synth, the open-source toolchain the course uses from Chapter 29 on, compiled to WebAssembly. That makes the code part of the subject, and it makes an honest list of its limits part of the course, because a simulator that does not say what it leaves out invites you to believe it puts everything in. This appendix is that list, together with a map of the machinery and the numbers that matter: the constants, the tolerances, the limits.
 
 Like the other reference appendices it is checked. The constants quoted from the engines are compared with the source by a test; the behaviours described (a resistor that burns, a flip-flop that goes metastable, a budget for opening gates) are run by the same test. Where a sentence says “the engine does X”, a line of `src/lib/` does X.
 
@@ -16,7 +16,7 @@ Three engines share one circuit model and one interface. The **digital** engine 
 
 ::pipeline-diagram{id="simulator" n="C.1"}
 
-The DCL compiler and the tools for programmable logic sit beside them. Their outputs are ordinary netlists, so the digital engine and the bench run them too.
+synth and the tools for programmable logic sit beside them. synth’s optimised gates and the fitters’ devices are ordinary netlists or models, so the digital engine and the bench run them too.
 
 ::pipeline-diagram{id="toolchain" n="C.2"}
 
@@ -360,16 +360,15 @@ The parts bin has 40 parts, added chapter by chapter, in six groups (transistors
 
 The checkers also report a **cost**: the number of gates, an estimate of the transistors in a static CMOS implementation, and the logic depth, which is what gate golf scores.
 
-## The DCL toolchain
+## Weft and synth
 
-The language is in Appendix F; this is the machinery. Source: `src/lib/hdl/`.
+The language is in Appendix F; this is the machinery. synth is a separate project, a Rust toolchain for iCE40, Artix-7 and ECP5 FPGAs, and the course runs its `synth-playground` crate compiled to WebAssembly. The version is pinned by commit in `synth.json`, and `scripts/synth.mjs` builds it into `static/synth/` (the tests use the same file).
 
-- **Front end.** The lexer produces tokens and comments and decides where statements end. The parser has error recovery (it skips to the end of the statement, so one run reports every independent mistake). The checker works on module *specialisations*: a module with its generic arguments bound, so that every width is a plain number and the width rules are exact. It unrolls `for` loops, evaluates constants, inlines functions, and types every expression bidirectionally (expected types flow into literals). It reports 57 kinds of diagnostic (Appendix F lists them).
-- **Elaboration to RTL.** Every checked expression becomes at most one **RTL cell**, tagged with the source span of the expression and its hierarchical path. RTL is plain data (safe to send to a worker; constants are BigInts), so the same cells serve the simulator, the lowering, and the FPGA flow. Arrays stay lists of element signals, so a register array becomes a register per element and a dynamic index a parallel multiplexer.
-- **RTL simulator.** The design is flattened and turned into **JavaScript source, compiled once with `new Function`** (the approach of Verilator), which the browser’s engine then compiles to machine code. Signals of up to 32 bits are numbers in a `Uint32Array`; wider signals are arrays of 32-bit words, least significant first. Combinational logic is evaluated in topological order (the checker guarantees there are no loops). Registers and memories update in two phases at a clock edge: every next value is sampled first, then all are committed, so they change together. An **interpreted** mode on BigInt values gives the same semantics where `new Function` is not allowed (a strict content-security policy), and is what the compiled code is tested against.
-- **Test runner.** Runs the `test` blocks on the RTL simulator, with seeded random values, and reports a failed `expect` with the values it read and a waveform.
-- **Lowering to gates.** Each RTL cell becomes elements of the course’s own netlist: gates from the digital catalog, `mux` blocks, `dff`s and `ram` blocks (adders can be single `adder` blocks instead of gates). The result is a `FlatNetlist` that runs on the digital engine and agrees with the RTL simulator bit for bit (a test checks random designs and the reference designs). Every element records its RTL cell, path and source span, which is what the hover in the editor reads. Memories larger than 262,144 bits are refused as too large to draw or simulate as gates.
-- **Editor.** CodeMirror, with diagnostics, completions, hover (type, doc comment, hardware cost) and formatting. The analysis runs in a worker. Highlighting uses the compiler’s own lexer, at build time in the Markdown compiler and live in the editor, so there is one grammar.
+- **In the page.** `src/lib/synth/` loads the WebAssembly module in workers (one for checking as you type, one for builds, one for simulation, so that a long build does not stop a running board) and exposes its methods: `analyze` (diagnostics, the outline and hover data for the editor), `format`, `run` (the whole flow, with the RTL, the gates, the placed and routed chip, the timing and the bitstream), testbench sessions (`tb_start`, `tb_run`), and `bram_load`, which rewrites the block RAMs of a bitstream (Chapter 31).
+- **Front end.** synth’s Weft compiler (`synth-weft`) checks types, widths and clock domains and reports every independent mistake in one run, with a help line for most. It elaborates to synth’s word-level RTL, which is optimised (duplicate cells merged, arithmetic shared, multiplexer chains rebuilt as trees) and whose memories are mapped to block RAM where they are read through a register, or to flip-flops where they are not.
+- **Simulation.** synth compiles the elaborated design to a program for its simulator, two-state as Weft defines it: every register updates together at the clock edge. The course’s test blocks (`test "…" { set …; step; expect … }`, parsed in `src/lib/weft/testbench.ts`) run in its testbench sessions, which drive the inputs, step the clock, read signals and load or dump memories. A testbench elaboration makes the top’s inputs synchronous and gives a module without a clock port a clock of its own, so that a combinational module can be stepped too.
+- **Gates.** Lowered to an and-inverter graph and optimised (structural hashing, rewriting, SAT sweeping, balancing), the design is what the Cost tab of the playgrounds counts. `src/lib/weft/gates.ts` turns that graph into a netlist of the course’s digital engine, AND gates and inverters and flip-flops, so that a Weft design can be drawn and run as gates; a test runs it beside synth’s simulator.
+- **Editor.** CodeMirror (`src/lib/weft/editor/`), with synth’s diagnostics, hover (types, doc comments) and its formatter. Highlighting is the course’s (`src/lib/weft/highlight.ts`), at build time in the Markdown compiler and live in the editor.
 
 ## Programmable-logic flows
 
@@ -379,27 +378,25 @@ Source: `src/lib/pld/` for the algorithms and `src/lib/studio/` for the Device S
 
 Truth tables and equations are parsed into cubes and covers (`twolevel/`). Minimisation is exact **Quine–McCluskey** with Petrick’s method for functions of few variables (the fitters use it up to 8 variables the function depends on) and an **Espresso**-style heuristic (expand, irredundant, reduce, last gasp, on the unate recursive paradigm) beyond. A PLA is minimised with product terms shared across outputs; a GAL or CPLD output is minimised in both polarities, since a macrocell can invert. The **GAL22V10 fitter** assigns pins (keeping those the design gives, largest demand first, inputs on the dedicated pins), checks the product-term capacity of each macrocell, and programs the fuses; it writes a **JEDEC file**:cite[jedec-jesd3] whose layout is that of galette.:cite[galette] A test compares the fitter’s JEDEC files byte for byte with galette’s own for galette’s test cases; it is skipped unless a built galette checkout is available (`GALETTE_DIR`). A finite-state machine (states, transitions with guards, Moore and Mealy outputs) can be turned into a GAL design, with the state bits as registered outputs stored so that the power-up state is the reset state. The devices are then simulated **from the fuses alone**.
 
-The inputs are equations or truth tables, with `# @pragma` comment lines for pins, polarity, initial values and don’t cares. **DCL does not lower to these devices in this version**: the PROM, PLA, GAL and CPLD studios take equations, and only the FPGA flow takes DCL (through the RTL) or a gate netlist.
+The inputs are equations or truth tables, with `# @pragma` comment lines for pins, polarity, initial values and don’t cares. **Weft does not reach these devices**: the PROM, PLA, GAL and CPLD studios take equations, and only the iCE40 takes Weft, through synth.
 
 ### The vCPLD-32
 
 The fitter minimises every output in both polarities (and, for registered outputs, in a T flip-flop form, whose input is *f* XOR *Q*, so that a counter bit toggles on one term), then **partitions** the outputs into the four function blocks: a greedy construction (largest support first, into the block that already reads most of its signals) followed by Kernighan–Lin-style refinement of moves and swaps,:cite[kernighan1970] with a cost that counts each block’s distinct inputs, half a point for each borrowed term, and heavy penalties for a block that reads more than 24 signals or cannot be allocated. **Term allocation** in a block is a transportation problem on a path, solved by dynamic programming over the flow between neighbouring macrocells, so that as few terms as possible are borrowed (each adds delay, and the lender loses it). Timing is a table of constants (Appendix G): it does not depend on where the fitter put the logic. The **JTAG** model is a 16-state TAP controller and the programming protocol of Appendix G, driven by a host that records every clock.
 
-### The FPGA flow
+### The iCE40, through synth
 
-Everything runs in plain TypeScript, with typed arrays in the placer and the router, and each stage records a trace that the Studio replays. The stages, and what is real about them:
+The FPGA of Chapters 28 to 31 is a real one, the Lattice iCE40 (the HX1K of the Nandland Go Board, and the HX8K), and the flow is synth’s (`arch-ice40`, `synth-logic`, `synth-route` in its repository). The stages, and what Chapter 30 says about each:
 
-1. **Front end.** From DCL’s RTL (every cell lowered to an **and-inverter graph**, adders as full adders so the carry logic can be found; registers become flip-flops, folding a hold-value multiplexer into the clock enable and a constant-selecting one into set/reset; memories become block RAM) or from a gate-level netlist. Clocks must be input ports: a derived clock is refused.
-2. **Synthesis.** The graph is structurally hashed and constant-propagated as it is built; a sweep removes what no output needs and two passes of **balancing** turn chains of ANDs into trees, lowering the depth the mapper starts from.
-3. **Carry chains** are found by *function* on 3-input cuts (a majority node with its parity sibling), not by structure, and become a column of cells with the dedicated carry wire.
-4. **LUT mapping** by cut enumeration with priority cuts (at most 4 leaves), a depth-optimal labelling in the manner of FlowMap:cite[cong1994] (found by the cut enumeration itself rather than by a max-flow computation), and area recovery by two passes of area flow and two of exact local area.
-5. **Packing** groups cells into tiles that share a clock, a clock enable and a set/reset (8 cells a tile); a carry chain is a rigid vertical macro.
-6. **Placement** by **:term[simulated annealing]{id=simulated-annealing}** in the manner of VPR:cite[betz1997] (bounding-box wirelength with the crossing-count correction, plus a timing term weighted by criticality; a schedule that follows the acceptance rate; a range limiter; seeded, so a run is reproducible).
-7. **Routing** by **:term[PathFinder]{id=pathfinder}**:cite[mcmurchie1995] on the routing-resource graph: negotiated congestion, with node cost = base × history × present, an A* search per net, and re-routing only nets that touch an overused node; the four inputs of an ordinary LUT are interchangeable, so a connection may end at any of them.
-8. **:term[Static timing]{id=static-timing-analysis}** with the published delay model (Appendix G), and the critical path and *f*max.
-9. **:term[Bitstream]{id=bitstream}** generation, and its decoding back to a netlist of LUTs, flip-flops, carry cells, routing multiplexers, pads and block RAMs, which the digital engine runs on the virtual board: the device that runs is what the bits say, not what the source said.
+1. **Synthesis.** The RTL is lowered to an and-inverter graph, with flip-flops, carry chains and memories kept outside it, and optimised; several versions of the logic are kept side by side as *structural choices* for the mapper.
+2. **LUT mapping** with priority cuts:cite[mishchenko2007] (four leaves), a depth-optimal labelling in the manner of FlowMap,:cite[cong1994] and area recovery by area flow and exact area. Adders long enough to deserve it go on the dedicated carry chain; short ones are taken back into LUTs.
+3. **Packing** into logic cells: a LUT with the flip-flop it feeds and its carry; a carry chain becomes a column that moves as one; clocks and busy control nets are promoted to global networks.
+4. **Placement** by **:term[simulated annealing]{id=simulated-annealing}** in the manner of VPR:cite[betz1997]: bounding-box wirelength plus a timing term weighted by criticality, a schedule that follows the acceptance rate, a range limiter, and only legal moves (the eight cells of a tile share their clock, enable and reset). Seeded, so a run is reproducible. A placement that does not route is placed again.
+5. **Routing** by **:term[PathFinder]{id=pathfinder}**:cite[mcmurchie1995] with A* on the chip’s routing graph, from Project IceStorm’s database:cite[prjicestorm]: negotiated congestion, a cost that blends congestion and delay by criticality, and re-routing of only the nets on an overused node; a LUT’s inputs are interchangeable, so a connection may end at any of them, and the truth table is permuted to match.
+6. **:term[Static timing]{id=static-timing-analysis}** with IceStorm’s timing model of the HX parts: the critical path, cell by cell, and *f*max.
+7. **:term[Bitstream]{id=bitstream}** generation, byte for byte what IceStorm’s `icepack` writes, and its **decoding** back into logic cells, block RAMs and pads, which synth’s simulator runs on the board: the device that runs is what the bits say, not what the source said.
 
-**To a real board.** `src/lib/pld/interchange/` writes a DCL design as a Yosys JSON netlist (the DCL playground's *Export JSON* button). It is word-level, taken from the RTL, and keeps the hierarchy, so Yosys does its own LUT mapping, carry chains and block RAM: `yosys -p "read_json design.json; synth_ice40 -json out.json"` and then `nextpnr-ice40` take it to a real iCE40. Tests run every course design from the JSON alone and compare it cycle by cycle with the RTL simulator. One difference: an out-of-range memory address reads 0 in the RTL simulator and is undefined in Yosys. The script `npm run validate:yosys` does the whole trip when Yosys and nextpnr are installed and records utilisation and fmax in a JSON report for Chapter 31; `validate:gal` compares the GAL fuse maps with galette's and `validate:rv32i` runs riscv-arch-test on the RV32I interpreter and core. The three skip, with a message, when their tools are missing.
+**To a real board.** The bitstream that a figure shows is the one that would program the board. On your own machine, `synth build … --board go-board` and `synth prog` do the same from the command line (Chapters 28, 30 and 31 show how), and synth reads Verilog as well as Weft. The script `npm run synth` builds the pinned WebAssembly module from synth’s source; `validate:gal` compares the GAL fuse maps with galette’s and `validate:rv32i` runs riscv-arch-test on the RV32I interpreter. They skip, with a message, when their tools are missing.
 
 ## What the simulator does not model
 
@@ -441,13 +438,13 @@ Every model is a choice about what to leave out. These are the choices, by engin
 - A circuit is checked as a black box with named toggles and indicators; anything not connected through them (an internal net) is not checked.
 - The combinational checker is exhaustive only up to 16 inputs, and the sequential one proves equivalence only for small state spaces (at most 6 inputs and 150,000 machine cycles of search); beyond that they sample, and a pass is evidence, not proof.
 
-**DCL and the toolchain**
+**Weft and synth**
 
-- DCL has no asynchronous logic, latches, gated clocks, tri-states inside a design, delays outside tests, unbounded loops or floating point, on purpose (Appendix F).
-- The RTL simulator is zero-delay and cycle-based: it knows nothing about glitches, set-up or hold. Lowering to gates and running on the digital engine adds delays, but the delays are those of the abstract gates, not of any real technology.
-- **FPGA:** the clock is ideal (no skew, no jitter), there is no power analysis, and the delay model is a published table, not extracted from layout. A design that passes timing analysis here says nothing about a real FPGA.
-- **The DCL, GAL and CPLD paths are separate.** DCL does not reach the PROM, PLA, GAL or CPLD; those take equations.
-- **The real-toolchain export is checked against Yosys only where Yosys is installed**: the Yosys JSON is validated against the documented schema and simulated from the JSON alone in every test run, and a test that runs Yosys itself (synthesis to gates, then the gates against the RTL simulator) is skipped when no Yosys is on the machine.
+- Weft has no latches, no gated or derived clocks without a declared domain, no tri-states inside a design, no delays and no unbounded loops, on purpose (Appendix F). An input from outside a clock domain must be synchronised before it reaches a register.
+- synth’s simulator is two-state, zero-delay and cycle-based: it knows nothing about glitches, set-up or hold, and a value is never unknown. The gate view on the digital engine adds delays, but they are those of the abstract gates, not of any real technology.
+- **FPGA:** the timing model is IceStorm’s, measured on real parts, but clocks are ideal (no skew, no jitter), there is no power analysis, and a design that meets timing here should be timed again by the vendor’s tools before it goes into a product.
+- **The Weft, GAL and CPLD paths are separate.** Weft does not reach the PROM, PLA, GAL or CPLD; those take equations.
+- **The figures run synth in your browser.** A large design (the RV32I core of Chapter 31) takes tens of seconds to place and route there, a few times longer than synth takes natively.
 
 ## Where to look
 
@@ -461,10 +458,12 @@ Every model is a choice about what to leave out. These are the choices, by engin
 | The dial | `src/lib/sim/expand/`, `src/lib/bench/dial.ts` |
 | The bench | `src/lib/bench/` (`editor/`, `instruments/`, `share.ts`, `engines.ts`) |
 | Parts and checkers | `src/lib/partsbin/`, `src/lib/sim/check/` |
-| DCL | `src/lib/hdl/` (`lexer.ts`, `parser.ts`, `check.ts`, `elaborate.ts`, `rtl.ts`, `rtlsim.ts`, `lower/`, `testbench.ts`, `std/`) |
+| synth in the page | `src/lib/synth/` (`api.ts`, `worker.ts`, `client.ts`, `node.ts`) |
+| The pin and the build of synth | `synth.json`, `scripts/synth.mjs` |
+| Weft in the page | `src/lib/weft/` (`editor/`, `highlight.ts`, `testbench.ts`, `gates.ts`) |
 | Two-level logic and the GAL | `src/lib/pld/twolevel/`, `src/lib/pld/devices/gal22v10*.ts` |
 | The CPLD | `src/lib/pld/devices/vcpld32*.ts`, `src/lib/pld/cpld/` |
-| The FPGA | `src/lib/pld/devices/vfpga*.ts`, `src/lib/pld/fpga/` |
+| The FPGA studio and boards | `src/lib/studio/ice40/`; for the flow itself, synth’s own repository (its crates arch-ice40, synth-logic and synth-route) |
 | The Device Studio | `src/lib/studio/` |
 
 `docs/PLAN.md` says what was planned, and this appendix says what exists. Where they differ, this appendix is right about the code.

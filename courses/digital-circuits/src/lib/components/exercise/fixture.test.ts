@@ -12,14 +12,13 @@ import { checkAsm, type AsmInput } from './asm/run';
 import { expectedValue, type MeasureInput } from './measure/probe';
 import { checkMeasurement } from '$lib/sim/check';
 import { checkHdl, type HdlInput } from './hdl/check';
+import { nodeSynth } from '$lib/synth/node';
 import { checkFit, checkFitSource, pinsOf, type FitInput } from './fit/check';
 import { blankPla } from '$lib/studio/adapters/pla';
 import { artifactOf, checkDecode, deviceTruth, type DecodeInput } from './decode/model';
-import { checkRoute, solutionBits, startBits, type RouteInput } from './route/model';
-import { buildProblem, fromNames, score, type PlaceInput } from './place/model';
 
 const root = path.resolve(import.meta.dirname, '../../../..');
-const parse = (md: string) => [...md.matchAll(/```(build|debug|golf|measure|asm|hdl|fit|decode|route|place)\n([\s\S]*?)```/g)].map((m) => ({ kind: m[1]!, data: YAML.parse(m[2]!) as Record<string, unknown> }));
+const parse = (md: string) => [...md.matchAll(/```(build|debug|golf|measure|asm|hdl|fit|decode)\n([\s\S]*?)```/g)].map((m) => ({ kind: m[1]!, data: YAML.parse(m[2]!) as Record<string, unknown> }));
 const parts = partsResolver(false);
 const fixtureBlocks = parse(readFileSync(path.join(root, 'tools/markdown/fixtures/exercises.md'), 'utf8'));
 const blocks = fixtureBlocks;
@@ -27,7 +26,7 @@ const byKind = (k: string, list = fixtureBlocks) => list.filter((b) => b.kind ==
 
 describe('fixture exercises', () => {
   test('all ten kinds are there', () => {
-    expect(new Set(blocks.map((b) => b.kind))).toEqual(new Set(['build', 'debug', 'golf', 'measure', 'asm', 'hdl', 'fit', 'decode', 'route', 'place']));
+    expect(new Set(blocks.map((b) => b.kind))).toEqual(new Set(['build', 'debug', 'golf', 'measure', 'asm', 'hdl', 'fit', 'decode']));
   });
   for (const kind of ['build', 'debug', 'golf']) {
     for (const data of byKind(kind)) {
@@ -57,8 +56,6 @@ describe('fixture exercises', () => {
   for (const data of byKind('hdl')) hdlTests(data as unknown as HdlInput);
   for (const data of byKind('fit')) fitTests(data as unknown as FitInput);
   for (const data of byKind('decode')) decodeTests(data as unknown as DecodeInput);
-  for (const data of byKind('route')) routeTests(data as unknown as RouteInput);
-  for (const data of byKind('place')) placeTests(data as unknown as PlaceInput);
   for (const data of byKind('asm')) {
     const input = data as unknown as AsmInput;
     test(`${input.id}: the solution passes, the starting code does not`, () => {
@@ -74,16 +71,17 @@ describe('fixture exercises', () => {
 
 /** The promises of the hardware exercises: each solution passes, each start fails (and compiles, where it is code). */
 function hdlTests(input: HdlInput) {
-  test(`${input.id}: the solution passes, the starting code compiles and fails`, () => {
+  test(`${input.id}: the solution passes, the starting code compiles and fails`, async () => {
     expect(input.solution, 'exercises need a solution').toBeDefined();
-    const r = checkHdl(input, input.solution!);
+    const synth = nodeSynth();
+    const r = await checkHdl(synth, input, input.solution!);
     expect(r.diagnostics.filter((d) => d.severity === 'error').map((d) => d.message)).toEqual([]);
     expect(r.problems).toEqual([]);
     expect(r.tests.filter((t) => !t.passed)).toEqual([]);
     expect(r.equivalence?.rows ?? []).toEqual([]);
     expect(r.pass).toBe(true);
-    if (input.reference) expect(checkHdl(input, input.reference).pass, 'the reference passes its own exercise').toBe(true);
-    const start = checkHdl(input, input.start);
+    if (input.reference) expect((await checkHdl(synth, input, input.reference)).pass, 'the reference passes its own exercise').toBe(true);
+    const start = await checkHdl(synth, input, input.start);
     expect(start.diagnostics.filter((d) => d.severity === 'error').map((d) => d.message), 'the starting code compiles').toEqual([]);
     expect(start.problems).toEqual([]);
     expect(start.pass).toBe(false);
@@ -132,27 +130,7 @@ function decodeTests(input: DecodeInput) {
   });
 }
 
-function routeTests(input: RouteInput) {
-  test(`${input.id}: the solution routes every net and works, the bare cells do not`, () => {
-    expect(input.solution, 'exercises need a solution').toBeDefined();
-    const r = checkRoute(input, solutionBits(input));
-    expect(r.problems).toEqual([]);
-    expect(r.pass).toBe(true);
-    expect(checkRoute(input, startBits(input)).pass).toBe(false);
-  });
-}
 
-function placeTests(input: PlaceInput) {
-  test(`${input.id}: the solution is legal and beats the annealer, the start does not`, () => {
-    expect(input.solution, 'exercises need a solution').toBeDefined();
-    const p = buildProblem(input);
-    const s = score(input, p, fromNames(p, input.solution!));
-    expect(s.problems).toEqual([]);
-    expect(s.cost, `${s.cost} against the annealer's ${s.annealer}`).toBeLessThan(s.annealer);
-    expect(s.beats).toBe(true);
-    expect(score(input, p, p.start).beats).toBe(false);
-  });
-}
 
 /** The same promises for the exercises of every real chapter, so a broken exercise fails the tests, not the reader. */
 const chaptersDir = path.join(root, 'content/chapters');
@@ -180,8 +158,6 @@ for (const ch of chapters) {
       if (b.kind === 'hdl') hdlTests(data as HdlInput);
       else if (b.kind === 'fit') fitTests(data as FitInput);
       else if (b.kind === 'decode') decodeTests(data as DecodeInput);
-      else if (b.kind === 'route') routeTests(data as RouteInput);
-      else if (b.kind === 'place') placeTests(data as PlaceInput);
     }
     for (const data of list.filter((b) => b.kind === 'asm').map((b) => b.data)) {
       const input = data as unknown as AsmInput;

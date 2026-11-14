@@ -1,0 +1,20 @@
+/// The RV32I register file: 32 registers of 32 bits, two read ports and one write port.
+/// Register x0 always reads as zero.
+module reg_file(
+    in  clk: clock,
+    in  rs1_address: uint<5>,
+    in  rs2_address: uint<5>,
+    in  rd_address: uint<5>,
+    in  rd_write: bool,
+    in  rd_value: uint<32>,
+    out rs1_value: uint<32>,
+    out rs2_value: uint<32>,
+) {
+    reg x: [uint<32>; 32] = [0; 32];
+
+    rs1_value = x[rs1_address];
+    rs2_value = x[rs2_address];
+    if rd_write && rd_address != 0 {
+        x[rd_address] := rd_value;
+    }
+}

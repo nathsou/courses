@@ -23,7 +23,7 @@
     { icon: 'probe', title: 'Live circuits you can poke', text: 'Every figure is a running circuit. Flip the switches, probe the nets, and turn the abstraction dial from logic to transistors to volts over time.' },
     { icon: 'bin', title: 'Your parts bin', text: 'Build an inverter, an adder, a flip-flop. Once a part passes its checker it becomes a black box you reuse: the CPU in Part V is made entirely of your own parts.' },
     { icon: 'bench', title: 'The bench', text: 'A multimeter, a bench supply, an oscilloscope, a function generator and a logic probe. Open any figure on the bench to take it apart.' },
-    { icon: 'studio', title: 'The Device Studio', text: 'Program ROMs, PALs, CPLDs and FPGAs by hand or in DCL, the course’s hardware language, with the logic view and the chip view side by side.' },
+    { icon: 'studio', title: 'The Device Studio', text: 'Program ROMs, PALs and CPLDs by hand, with the logic view and the chip view side by side; then take Weft designs through synth to a real FPGA, the iCE40, in the FPGA studio.' },
     { icon: 'history', title: 'History cards', text: 'Volta’s pile, Shannon’s thesis, the first transistor, the first FPGA. Flip a card for the story; some let you run the original circuit.' },
     { icon: 'real', title: 'Build it for real', text: 'Optional labs with a breadboard, a handful of 74HC chips and a 5 V supply — and, in Part VI, a real FPGA board. Low voltage only.' },
   ];

@@ -1,0 +1,14 @@
+test "counts 0 to 7, restarts on last and holds on halt" {
+    for i in 0..5 {
+        expect stage == i;
+        step;
+    }
+    set last = true;
+    step;
+    expect stage == 0;
+    set last = false;
+    step;
+    set halt = true;
+    step 2;
+    expect stage == 1;
+}

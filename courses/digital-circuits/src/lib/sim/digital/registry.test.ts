@@ -42,7 +42,7 @@ describe('catalog and registry', () => {
   });
 
   test('a model registered later is used by new engines', () => {
-    // A made-up majority gate with its own pin directions, as the parts bin or DCL would add.
+    // A made-up majority gate with its own pin directions, as the parts bin would add.
     registerDigitalModel(
       'test-majority',
       (init: ModelInit) => ({

@@ -1,6 +1,7 @@
 <!--
-  A bouncing push button and the DCL standard library's Debouncer, side by side. The button's waveform is
-  drawn every 0.1 ms; the debouncer, a real DCL module run on the RTL simulator, samples it every millisecond
+  A bouncing push button and the course's Weft debouncer (content/designs/debouncer.weft), side by side. The
+  button's waveform is drawn every 0.1 ms; the debouncer (a model checked against synth's simulation of the
+  Weft module, bounce.test.ts) samples it every millisecond
   and changes its output only after the input has held for the window.
 
     ::debounce-lab{n="17.9" caption="…"}
@@ -41,7 +42,7 @@
   }
 </script>
 
-<Widget title="Debouncing" subtitle="The Debouncer of the standard library, on a bouncing button" {caption} n={fig} onreset={reset}>
+<Widget title="Debouncing" subtitle="A Weft debouncer, on a bouncing button" {caption} n={fig} onreset={reset}>
   {#snippet controls()}
     <div class="ctl">
       <Slider label="Window" bind:value={window} min={2} max={20} step={1} format={(v) => `${v} ms (${v} clock cycles at 1 kHz)`} />
