@@ -302,7 +302,7 @@ The reference allocators set the bar. Here is how they score, with the heap limi
 
 A few moves are worth knowing before you start. Each is a trade between the two terms of the score.
 
-1. **An explicit free list** (chapter 11) stops `malloc` from walking past allocated blocks. It is the single biggest speed-up over the implicit list.
+1. **An explicit free list** (chapter 10) stops `malloc` from walking past allocated blocks. It is the single biggest speed-up over the implicit list.
 2. **Segregated lists** make the search short *and* close to best fit. The reference version uses ten size classes; more classes, or best fit within a class, can push utilisation up.
 3. **Drop the footer from allocated blocks.** A footer exists only so that the *next* block can find this block’s start when it is freed and wants to coalesce backwards, and it only needs to do that if this block is free. Keep a “previous block is allocated” bit in each header, and allocated blocks need no footer at all: on small objects that is 8 bytes in 32. Bryant and O’Hallaron describe this optimisation in their textbook :cite[bryant2016].
 4. **Mind the chunk size.** Growing the heap 4 KiB at a time costs nothing on the big traces and a lot of utilisation on the small ones. Ask for what you need, and coalesce the new space with a free block at the end of the heap.
