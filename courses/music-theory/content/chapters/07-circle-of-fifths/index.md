@@ -66,7 +66,7 @@ Two quick ways to read a signature:
 - **Flats:** the tonic is the second-last flat. Flats :n[Bb] :n[Eb] :n[Ab], so the key is :n[Eb] major.
   (One flat is the exception to learn: :n[F] major.)
 
-```score caption="Signatures from one to four sharps, then one to four flats." play="false"
+```score caption="One sharp (:n[G] major), then two sharps, three sharps and two flats." play="false"
 \key g \major \hidetime s1 |
 ```
 

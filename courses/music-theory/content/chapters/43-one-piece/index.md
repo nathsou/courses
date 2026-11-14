@@ -47,8 +47,8 @@ form and cadence.
 ## The melody
 
 For the first four bars the melody has two notes, :n[B4] and :n[C5]: a long :n[B], then :n[C] as an upper neighbour
-(Chapter 16), three times. In bar 4 the neighbour becomes :n[Bb], and the line sinks a semitone to :n[A]
-and :n[B], then in bar 8 to :n[G#]. After the octave of the upbeat, it moves only by step until bar 9, where it
+(Chapter 16), three times. In bar 4 the neighbour becomes :n[Bb], and through it the line sinks to a long
+:n[A] with :n[B] as its neighbour, then in bar 8 to :n[G#]. After the octave of the upbeat, it moves only by step until bar 9, where it
 rises quickly to :n[D5] and falls away; in bar 12 a little figure leads back to the beginning.
 
 That is the first lesson of the piece. A melody does not need to go anywhere to be expressive: here the expression
@@ -168,10 +168,10 @@ Here is the prelude through the whole course, from the outside in:
 - **Sound and keyboard (Part I).** :n[E] minor, one sharp; *Largo* in 2/2, so two slow beats in a :t[bar], with a
   crotchet upbeat.
 - **Scales and keys (Part I).** :n[E] minor with its raised leading note :n[D#], and chromatic notes almost everywhere.
-- **Chords and function (Parts II and III).** A first phrase that sets off from i6 and stops on V7; a second that ends
+- **Chords and function (Part II).** A first phrase that sets off from i6 and stops on V7; a second that ends
   with an interrupted cadence, an evaded one and a perfect one.
-- **Voice leading (Part IV).** Three left-hand voices moving by semitone, one at a time; a 4–3 suspension at the end.
-- **Chromatic harmony (Part V).** Secondary dominants and a diminished seventh passing by in the descent; a German
+- **Voice leading (Part III).** Three left-hand voices moving by semitone, one at a time; a 4–3 suspension at the end.
+- **Chromatic harmony (Part IV).** Secondary dominants and a diminished seventh passing by in the descent; a German
   sixth in disguise.
 - **Form (Part V).** A period whose consequent is compressed and extended, with its climax just before the end.
 - **Beyond (Parts VI and VII).** The climax chord is a dominant with a ♭9; the left hand’s one-note-at-a-time motion is

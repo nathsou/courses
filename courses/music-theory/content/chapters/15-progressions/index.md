@@ -148,8 +148,8 @@ in :n[D] major. The ground is eight notes long and harmonised by eight chords:
 
 **I – V – vi – iii – IV – I – IV – V**
 
-It starts like the prologue’s loop, but where the loop went from vi to IV, Pachelbel steps down by thirds
-through iii. The bass falls by a fourth and rises by a step, over and over. The progression has outlived
+It starts like the prologue’s loop, but where the loop went straight from vi to IV, Pachelbel passes
+through iii on the way. The bass falls by a fourth and rises by a step, over and over. The progression has outlived
 its canon: pop songs have used it for decades, often without anyone noticing.
 
 ```score caption="Pachelbel’s ground bass in :n[D] major, with its chords: the first appearance of the course’s running progression." tempo="66"

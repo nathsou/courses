@@ -80,8 +80,8 @@ Melodies grow by doing things with motifs:
 - **Sequence:** the motif repeated starting on a different note, usually a step higher or lower (Chapter 22).
 - **Variation:** the motif with a changed interval or rhythm, so that it is related but new.
 
-Korobeiniki shows all three in its first eight :t[bar]s. :t[Bar] 1 states a motif (long note, then a falling
-line of short notes); :t[bar] 2 varies it; the second half of the tune starts the same rhythm on new notes.
+Korobeiniki shows all three in its first eight :t[bar]s. :t[Bar] 1 states a motif (long note, then a
+run of shorter notes); :t[bar] 2 varies it; the second half of the tune starts the same rhythm on new notes.
 
 ```score caption="Korobeiniki, :t[bar]s 1–2: a motif and its variation." tempo="100"
 \time 4/4 \key a \minor e''4 b'8 c''8 d''4 c''8 b'8 | a'4 a'8 c''8 e''4 d''8 c''8 |

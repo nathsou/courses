@@ -50,7 +50,7 @@ V/IV needs its seventh: plain :c[C] is the tonic itself, and only the :n[Bb] mak
 
 ### Spotting them
 
-In a score, look for an accidental. A **raised** note (a sharp in a flat key or a natural, or a natural in a flat
+In a score, look for an accidental. A **raised** note (a sharp, or a natural in a flat
 key) is usually the leading note of a chord a semitone above it: :n[F#] points at :c[G], :n[G#] at :c[Am]. A
 **lowered** note is often the seventh of a secondary dominant: :n[Bb] in :n[C] major turns :c[C] into V7/IV. Then
 check the chord the accidental belongs to, and the chord after it.

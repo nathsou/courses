@@ -18,7 +18,7 @@ options:
   - text: 'The tonic.'
     why: 'In the exposition the second subject is in a new key, usually the dominant; it comes back in the tonic in the recapitulation.'
   - text: 'The relative minor.'
-    why: 'That is the usual destination from a minor key the other way round: a minor-key movement takes its second subject to the relative major.'
+    why: 'It is the other way round: a minor-key movement usually takes its second subject to the relative major.'
 ```
 :::
 
@@ -43,7 +43,7 @@ heightens it, and the recapitulation resolves it by bringing everything home.
 
 A **sonatina** is a small sonata, with a short development. Muzio Clementi’s six Sonatinas, Op. 36 (1797), written
 for his pupils, are still among the first sonatas pianists learn. The first movement of No. 1 is sonata form in
-38 :t[bar]s. The labels mark the sections; listen for :n[F#] arriving at :t[bar] 7 and the music settling in :n[G] major,
+38 :t[bar]s. The labels mark the sections; listen for :n[F#] arriving at :t[bar] 6 and the music settling in :n[G] major,
 and for the second subject coming back in :n[C] in :t[bar] 32.
 
 ```score caption="Clementi, Sonatina in C, Op. 36 No. 1, first movement. Notes from G. Schirmer’s Sonatina Album (1893), via the Mutopia Project (public domain). The repeats are not shown." tempo="66"

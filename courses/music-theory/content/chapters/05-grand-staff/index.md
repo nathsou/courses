@@ -159,7 +159,7 @@ range: [57, 79]
 score: |
   \time 4/4 \key a \minor e''4 b'8 c''8 d''4 c''8 b'8 | a'4 a'8 c''8 e''4 d''8 c''8 | b'4. c''8 d''4 e''4 | c''4 a'4 a'2 |
 hints:
-  - 'After the first :n[E5], the tune steps down: :n[B4] is the middle line, :n[C5] the space above it, :n[D5] the line above that.'
+  - 'After the first :n[E5], the tune drops to :n[B4], the middle line; :n[C5] is the space above it and :n[D5] the line above that.'
 ```
 
 And something for the left hand: a bass line, on the bass staff, written for the course.

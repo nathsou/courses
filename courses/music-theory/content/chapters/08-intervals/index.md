@@ -39,7 +39,7 @@ name every interval in two parts, a **number** and a **quality**, such as *major
 The number counts **letters**, including both ends. From :n[C] up to :n[E] is a third (C, D, E); from :n[C]
 up to :n[G] a fifth (C D E F G); from :n[C] up to the next :n[C] an eighth, the octave. On the staff, the
 number is easy to see: a third goes from a line to the next line (or a space to the next space), a fifth
-skips two lines.
+from a line to the next line but one.
 
 The number ignores sharps and flats. :n[C] to :n[E], :n[C] to :n[Eb] and :n[C#] to :n[E] are all thirds,
 because all three span the letters C, D, E. That is deliberate: the number tells you how the interval looks

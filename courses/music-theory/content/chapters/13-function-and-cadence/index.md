@@ -40,7 +40,8 @@ have jobs. Musicians call those jobs **functions**, and in common practice there
 - **Tonic (T):** home, rest, arrival. Chord **I**, and its close relatives **vi** (and less often **iii**),
   which share two of its notes.
 - **Dominant (D):** tension that wants to resolve to the tonic. Chord **V**, and **vii°**. Both contain the
-  :t[leading note] (degree 7), a semitone below the tonic, and degree 4, which leans down to degree 3.
+  :t[leading note] (degree 7), a semitone below the tonic; vii° (and V7, in Chapter 14) adds degree 4, which
+  leans down to degree 3.
 - **Predominant (PD):** the chords that lead to the dominant, setting up the tension before it arrives.
   Chords **IV** and **ii**, both built on notes a step or so away from the dominant.
 
