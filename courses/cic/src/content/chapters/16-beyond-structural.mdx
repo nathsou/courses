@@ -75,7 +75,7 @@ inductive Acc {α : Sort u} (r : α → α → Prop) : α → Prop where
 An element `x` is **accessible** for a relation `r` if every `y` with `r y x` is accessible. A relation is **well-founded** if every element is accessible.
 </Definition>
 
-Read this inductively: an element with no `r`-predecessors is accessible (vacuously); an element all of whose predecessors are accessible is accessible; and nothing else is. A proof of `Acc r x` is thus a well-founded tree — infinitely branching, like the ordinals of Chapter 12 — whose structure mirrors all the descending chains from `x`. Since the tree is finite in depth, so is every chain.
+Read this inductively: an element with no `r`-predecessors is accessible (vacuously); an element all of whose predecessors are accessible is accessible; and nothing else is. A proof of `Acc r x` is thus a well-founded tree — infinitely branching, like the ordinals of Chapter 12 — whose structure mirrors all the descending chains from `x`. Since every path in the tree is finite, so is every chain.
 
 <RecursorView name="Acc'" code={`inductive Acc' {α : Sort u} (r : α → α → Prop) : α → Prop where
   | intro (x : α) (h : (y : α) → r y x → Acc' r y) : Acc' r x`} />

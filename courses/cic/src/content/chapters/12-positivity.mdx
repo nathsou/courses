@@ -87,7 +87,7 @@ inductive A : Type where
 leads to a contradiction: using impredicativity, $(A \to \mathsf{Prop}) \to \mathsf{Prop}$ is like the powerset of the powerset of $A$, and the constructor gives an injection from it back into $A$ — Cantor's theorem says no such injection exists. Strict positivity is the simple, syntactic criterion that avoids all such problems.
 
 <Theorem title="Strictly positive types are well-founded">
-Every strictly positive inductive type is the least fixed point of a *polynomial functor* — a "shape" of constructors with finitely many holes indexed by sets — and its elements are well-founded trees. Such fixed points exist in every standard model of the theory, and adding them preserves strong normalisation and consistency.
+Every strictly positive inductive type is the least fixed point of a *polynomial functor* — a choice of constructor "shapes", each with a set of positions for subtrees — and its elements are well-founded trees. Such fixed points exist in every standard model of the theory, and adding them preserves strong normalisation and consistency.
 </Theorem>
 
 This is why, with strict positivity enforced, the recursor is safe: each induction hypothesis talks about a strictly smaller subtree, and the recursion it performs terminates.
