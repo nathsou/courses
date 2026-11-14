@@ -324,7 +324,7 @@ Krause’s benchmark started in 2015 as a way to compare Angular, React and Vue-
 :::
 
 :::whatchanged
-Five of the six answers, side by side, with a price attached to each. **Rebuild** costs a parse of everything and wins at creating. **Diff** costs a walk and wins when little changes. **Track** and **compile** cost nothing to find what changed and win at updates, at the price of subscriptions, a compiler, or both. **Skip** is the strategy that keeps work from happening at all and is not in this table, because its costs are paid before the page loads. The table is a map of *where each strategy hurts*, rather than a ranking.
+Five of the six answers, side by side, with a price attached to each. **Rebuild** costs a parse of everything and wins at creating. **Diff** costs a walk and wins when little changes. **Dirty-check**, at the scale of Lit's parts, costs one comparison per hole. **Track** and **compile** cost nothing to find what changed and win at updates, at the price of subscriptions, a compiler, or both. **Skip** is the strategy that keeps work from happening at all and is not in this table, because its costs are paid before the page loads. The table is a map of *where each strategy hurts*, rather than a ranking.
 :::
 
 ## What’s next

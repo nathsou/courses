@@ -64,7 +64,7 @@ Switch the figure to *Topological* and press the button. The log shows `5, 10`.
 
 The price is paid elsewhere. The queue holds every node downstream of the write, and every one of them recomputes, whether anyone reads it or not. The node `x = 100a` has no readers: the effect never sees it, and no one else does. Topological order still computes it on every write. And heights must be kept up to date when dependencies change at run time, which is the case for any `IF` from chapter 9.
 
-Now switch the graph to *:term[Cut-off]{id=cutoff}* and press `n = n + 2`. The value `n` changes, but `even` (the node `p`) does not: it is `true` before and after. Topological order handles this case: `p` recomputes, finds its value unchanged, and does not queue the effect. Keep it in mind, because the next fix loses it.
+Now switch the graph to *:term[Cut-off]{id=cutoff}* and press `n = n + 2`. The value `n` changes, but the parity node `p` does not: it is `"even"` before and after. Topological order handles this case: `p` recomputes, finds its value unchanged, and does not queue the effect. Keep it in mind, because the next fix loses it.
 
 ## Fix 2: mark first, compute on demand
 
