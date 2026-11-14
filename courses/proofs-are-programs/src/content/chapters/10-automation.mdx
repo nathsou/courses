@@ -71,7 +71,7 @@ theorem budget (x y : Nat) (h : 2 * x + 3 * y ≤ 12) (hy : y ≥ 2) : x ≤ 3 :
 theorem sub_trick (n : Nat) (h : n ≥ 5) : n - 5 + 5 = n := by
   omega`} />
 
-`omega` works by contradiction. It negates the goal, collects every hypothesis about numbers, and looks for a way to add up the inequalities (each multiplied by a positive constant) to get `0 < 0`, which is impossible. Here: from `b < a + 1` (the negated goal) and `a < b`, adding gives `a + b + 1 < a + b + 1`.
+`omega` works by contradiction. It negates the goal, collects every hypothesis about numbers, and looks for a way to add up the inequalities (each multiplied by a positive constant) to get `0 < 0`, which is impossible. Here: the negated goal is `b < a + 1`, and for whole numbers the hypothesis `a < b` is the same as `a + 1 ≤ b`; adding the two gives `a + b + 1 < a + b + 1`.
 
 The proof term is more interesting than `simp`'s. `omega` does not rewrite the goal step by step. It translates the hypotheses into *data*: a list of linear forms, each an ordinary inductive value, together with the coefficients it found. Then it applies a lemma from the library, `Omega.contra`, whose statement is roughly "if these forms, evaluated at these numbers, satisfy these inequalities, and the certificate checks, then `False`". The kernel runs the certificate checker, which is a small program, to verify the certificate. The lemmas that make this sound are proved once, in the library, by induction. Chapter 19 explains this technique, called **proof by reflection**, and builds a tactic with it.
 
