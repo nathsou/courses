@@ -59,7 +59,7 @@ The parts the equations need are few. A three-bit **step counter** counts the cy
 
 The last four bits of a jump instruction are the condition: three of them choose one of eight tests of the flags (always, Z, C, N, V, N⊕V, C∨Z, Z∨(N⊕V)), and the lowest one inverts the result, so that the eight tests make sixteen conditions. In hardware that is an 8-to-1 multiplexer whose data inputs are the tests, and an XOR gate.
 
-::circuit{src="22-control/circuits/condition.json" title="The jump condition unit" n="22.2" mode="logic" speed=1e-6 caption="The flags Z, C, N and V go in as data; K3, K2, K1 and K0 are the low four bits of the jump instruction. With K3 K2 K1 K0 = 0011 the multiplexer selects Z and K0 inverts it, which is JNZ: TAKEN is 1 whenever Z is 0. Try 1010 (JNC), 1101 (JGE, N ⊕ V inverted) and 0000 (JMP, which is always taken). Then find the condition that is never taken (JNEVER, 0001)."}
+::circuit{src="22-control/circuits/condition.json" title="The jump condition unit" n="22.2" mode="logic" speed=1e-6 caption="The flags Z, C, N and V go in as data; K3, K2, K1 and K0 are the low four bits of the jump instruction. With K3 K2 K1 K0 = 0011 the multiplexer selects Z and K0 inverts it, which is JNZ: TAKEN is 1 whenever Z is 0. Try 0101 (JNC), 1011 (JGE, N ⊕ V inverted) and 0000 (JMP, which is always taken). Then find the condition that is never taken (JNEVER, 0001)."}
 
 The multiplexer is not a design decision, it is a consequence of the encoding: because the condition is `cccc`, the low bit means “invert”, and the instruction set gets sixteen conditions for the price of eight tests and one XOR. That is the kind of thing you can only see when you know what the decoder will look like.
 

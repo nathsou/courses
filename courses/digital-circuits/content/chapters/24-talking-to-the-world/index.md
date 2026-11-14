@@ -73,7 +73,7 @@ wait:   LD   R0, [BUTTONS]
         JZ   wait           ; not pressed: look again
 ```
 
-This is :term[polling]{id=polling}. It costs nothing in hardware and everything in cycles: while it waits, the CPU does nothing else, and each look takes 23 cycles, so a button held for 100 ms is looked at some 4,000 times. The alternative is to let the device *tell* the CPU. A CPU with :term[**interrupts**]{id=interrupt} has an input pin for the request; at the end of the current instruction it saves the program counter (and the flags), jumps to a fixed address and runs a handler, and a return-from-interrupt instruction resumes the program where it left off.
+This is :term[polling]{id=polling}. It costs nothing in hardware and everything in cycles: while it waits, the CPU does nothing else, and each look takes 22 cycles, so a button held for 100 ms is looked at some 4,500 times. The alternative is to let the device *tell* the CPU. A CPU with :term[**interrupts**]{id=interrupt} has an input pin for the request; at the end of the current instruction it saves the program counter (and the flags), jumps to a fixed address and runs a handler, and a return-from-interrupt instruction resumes the program where it left off.
 
 :::note[Octet has no interrupts]
 Octet’s instruction set has no interrupt pin, no vector and no return-from-interrupt: the only way to notice a button is to look. That is a real limit, and it shapes every program on the board: the reaction timer of Chapter 23 polls the button between the steps of its timing loop, and a program that must do two things at once has to interleave them in one loop. Adding interrupts would take one input to the control unit’s FSM (Chapter 22), a few states to push PC and jump to a vector, and one more instruction; that is the kind of extension Chapter 31 makes easy to try.
@@ -446,7 +446,7 @@ void loop() {
 Now clip the analyser’s channels 0, 1 and 2 to pins 13, 11 and 10 (and its ground to the Arduino’s), and open PulseView. Select the analyser, set the sample rate to at least 2 MHz (four times the 500 kHz clock or more), and start a capture. Add the **SPI** decoder with clock D0, MOSI D1 and chip select D2: it shows the bytes 0x01, 0x02, 0x04 … as boxes, the same as Figure 24.16. Then move the same probes to the Arduino’s TX pin (pin 1) with `Serial.begin(9600); Serial.println("Hi!");` in a sketch, add the **UART** decoder at 9600 baud, and read the letters. If they come out wrong, change the baud rate in the decoder: that is the experiment of Figure 24.13 on real wire.:cite[sparkfun-pulseview]
 :::
 
-:::real{parts="8 × 10 kΩ, 9 × 20 kΩ (or 2 × 10 kΩ each), 5 V USB supply module, multimeter, breadboard, jumper wires"}
+:::real{parts="3 × 10 kΩ, 5 × 20 kΩ (or 2 × 10 kΩ each), 5 V USB supply module, multimeter, breadboard, jumper wires"}
 **An R-2R DAC with resistors.** Build Figure 24.8 with 10 kΩ for R and 20 kΩ (two 10 kΩ in series) for 2R, from a 5 V supply: the four bits are four jumper wires you move between +5 V and ground. Measure the output with the multimeter for all sixteen codes, and compare with 5 V × code / 16. Resistors of 1 % tolerance keep the four-bit steps within a few millivolts; the multimeter’s 10 MΩ input loads the ladder by a part in a thousand. Which code’s step is the worst?
 :::
 

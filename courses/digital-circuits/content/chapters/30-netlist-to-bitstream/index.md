@@ -56,7 +56,7 @@ The graph is simplified as it is built, and again afterwards, by rules any progr
 - **Structural hashing**: an AND of the same two operands is built once, however many times the design asks for it, the hardware version of common-subexpression elimination. Constants propagate as the graph is built: `x & 1` is `x`, `x & !x` is 0.
 - **Rewriting**: for every node, the function of each small cut below it (four inputs or fewer) is looked up in a library of the best small structures for it, and the node’s cone is replaced when a structure needs fewer nodes, counting as free the nodes the graph already has. This is peephole optimisation, done on functions rather than on instructions.
 - **SAT sweeping**: random simulation finds nodes that might compute the same function, and a SAT solver proves it or finds an input that tells them apart. Proved twins are merged.
-- **Balancing**: a chain of ANDs, `(((a·b)·c)·d)·e`, is a tree, `((a·b)·(c·d))·e`, in which the operands that arrive early are combined first. The same nodes, half as deep.
+- **Balancing**: a chain of ANDs, `(((a·b)·c)·d)·e`, is a tree, `((a·b)·(c·d))·e`, in which the operands that arrive early are combined first. The same number of nodes, three levels deep instead of four; on a long chain the depth falls from *n* − 1 to about log₂ *n*.
 
 On the ALU these steps take the graph from 1,770 AND nodes to 1,526. And synth does one more thing that a software compiler rarely does: it keeps several versions of the same logic, from different steps, side by side in the graph (559 such *structural choices* on the ALU), and lets the mapper choose among them, node by node, the one that maps best.:cite[mishchenko2007]
 
