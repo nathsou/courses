@@ -127,7 +127,7 @@ Registers, counters and shift registers, the state of a synchronous circuit, are
 
 The most widely used formal method in chip design asks a simpler question than BMC: are two circuits the same function? A designer writes a register-transfer description; synthesis tools turn it into gates, then optimise, retime and rewrite those gates many times. After each transformation, the new netlist must compute exactly what the old one did.
 
-The construction that turns this into SAT is the **miter**, named by Daniel Brand at IBM in 1993:cite[brand1993] feed the same input variables to both circuits, XOR each pair of corresponding outputs, and OR the XORs together. The miter's output is 1 exactly when the circuits disagree. Ask the SAT solver to make it 1: UNSAT means the circuits are equal on every input, and the DRAT proof certifies it; SAT gives an input on which they differ.
+The construction that turns this into SAT is the **miter**, named by Daniel Brand at IBM in 1993.:cite[brand1993] Feed the same input variables to both circuits, XOR each pair of corresponding outputs, and OR the XORs together. The miter's output is 1 exactly when the circuits disagree. Ask the SAT solver to make it 1: UNSAT means the circuits are equal on every input, and the DRAT proof certifies it; SAT gives an input on which they differ.
 
 Below, a ripple-carry adder is checked against a carry-lookahead adder (4-bit blocks, and a second level of lookahead between blocks). The lookahead adder optionally has a planted bug: the carry into the top block forgets one product term, the one for a carry generated in block 0 and passed on by every block in between.
 

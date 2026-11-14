@@ -75,7 +75,7 @@ GF:
   label: 'G_F, Fermi’s constant'
   what: 1.1664 × 10⁻⁵ GeV⁻², from the muon lifetime (Chapter 22).
   why: The same constant governs every weak decay, including this one.
-  effect: A rate goes as G_F².
+  effect: This width is proportional to G_F, not to G_F² as the muon's rate is, because the W is produced on shell and only one weak vertex is involved.
 mt:
   label: 'm_t, the top-quark mass'
   what: 172.57 GeV.
@@ -367,9 +367,9 @@ solution: |
     return best;
   }
 hints:
-  - 'Four nested loops: b(ℓ), b(h), then a < b for the two light jets, skipping indices already used. For six jets that is 180 assignments, which is nothing.'
-  - 'Compute the leptonic top mass once per b(ℓ): it does not depend on the other three. Build the neutrino with E = √(px² + py² + pz²).'
-  - 'neutrinoPz(lepton, met) returns { pz, complex }. The mismatches: a b-assigned jet with btag ≤ 0.5, or a light-assigned jet with btag > 0.5.'
+  - 'The loops are already there: b(ℓ), b(h), then a < b for the two light jets. Inside them mw, mh and mLep are the three reconstructed masses.'
+  - 'A pull is (measured − expected)/σ: (mw − mW)/sigmaW, (mh − mT)/sigmaT and (mLep − mT)/sigmaT. Square each and add the three.'
+  - 'A larger sigmaW shrinks the W term, so the two top-mass terms decide more of the choice.'
 ```
 
 Run it on the simulated events and the reconstruction pipeline you built, and the figure below uses your function (*use my code*).

@@ -61,7 +61,7 @@ Between the two lies the :term[bandgap]{id=bandgap}, an energy that an electron 
 | Diamond | 5.5 eV | an insulator |
 | Glass (silicon dioxide) | about 9 eV | an insulator |
 
-The electron-volt (eV) is the energy of one electron across one volt, so 1.12 eV is the energy an electron gains falling through 1.12 V. Compare it with the heat in the room. The scale of thermal energy at 300 K is *kT*, only 0.026 eV. A gap of 1.12 eV is 43 times that; a few electrons in a trillion get lifted across it by a chance collision, and that fraction is all that pure silicon has. In pure silicon at room temperature there are about 10¹⁰ free electrons per cubic centimetre against 5 × 10²² atoms: one free electron for every five trillion atoms.:cite[sze2007] The nearly empty conduction band is why silicon is a poor conductor. The gap being *small*, unlike diamond’s, is why it is not a hopeless one. Light lifts electrons across it too: any photon above 1.12 eV (a wavelength under 1,100 nm) does, which is how a solar cell works.
+The electron-volt (eV) is the energy of one electron across one volt, so 1.12 eV is the energy an electron gains falling through 1.12 V. Compare it with the heat in the room. The scale of thermal energy at 300 K is *kT*, only 0.026 eV. A gap of 1.12 eV is 43 times that; only a minute fraction of the electrons get lifted across it by a chance collision, and that fraction is all that pure silicon has. In pure silicon at room temperature there are about 10¹⁰ free electrons per cubic centimetre against 5 × 10²² atoms: one free electron for every five trillion atoms.:cite[sze2007] The nearly empty conduction band is why silicon is a poor conductor. The gap being *small*, unlike diamond’s, is why it is not a hopeless one. Light lifts electrons across it too: any photon above 1.12 eV (a wavelength under 1,100 nm) does, which is how a solar cell works.
 
 Every time an electron leaves a bond it leaves a bond with an electron missing, called a :term[hole]{id=hole}. A neighbouring electron can step into the hole, and then the hole is where that electron was, so holes move, like positive charges. Think of a row of parked cars with one space in it: when a car moves up into the space, the space moves back.
 
@@ -225,7 +225,7 @@ Ohl’s rod, cut from an ingot of the purest silicon he could get, had a crack a
 :::
 
 :::programmer[A function with no guard clause]
-The diode equation is a function `current(voltage)` whose output grows tenfold for every 60 mV of input, with no upper bound in it: feed it 0.6 V and you get 0.1 mA, feed it 0.9 V and (ignoring the series resistance) you get about 8 A. A diode does not decide how much current to carry; it takes whatever the rest of the circuit allows, until it melts. It needs a guard from outside, like an unbounded loop needs a timeout, and the resistor in every LED circuit of this chapter is that guard.
+The diode equation is a function `current(voltage)` whose output grows tenfold for every 60 mV of input, with no upper bound in it: feed it 0.6 V and you get 0.1 mA, feed it 0.9 V and (ignoring the series resistance) you get about 13 A. A diode does not decide how much current to carry; it takes whatever the rest of the circuit allows, until it melts. It needs a guard from outside, like an unbounded loop needs a timeout, and the resistor in every LED circuit of this chapter is that guard.
 :::
 
 ## Light from a junction
@@ -288,7 +288,7 @@ If the LED’s voltage is off by 0.1 V, the current changes by only 0.1 ÷ 470 =
 q: 'In the next figure, a 9 V battery drives a red LED through a 470 Ω resistor, and a switch can short out the resistor. What happens when you close the switch?'
 options:
   - text: 'Nothing much: the LED gets a little brighter.'
-    why: 'Remember the table: 0.15 V more across the LED means a hundred times the current, not a little more.'
+    why: 'Remember the table: 0.15 V more across the LED means nearly twenty times the current, not a little more.'
   - text: 'The LED gets a great deal too much current, and burns out in a fraction of a second.'
     correct: true
     why: 'Without the resistor nothing stands between 9 V and a crystal that will pass whatever current it is given. The simulator’s LED is rated for 30 mA and is asked for amperes, so it fails within a few milliseconds.'
@@ -332,7 +332,7 @@ options:
     why: 'Each gate’s output is a diode drop below its input; nothing puts the drop back.'
   - text: 'About 2.4 V: four diode drops off 5 V, and a 5 V logic gate would call that neither a 0 nor a 1.'
     correct: true
-    why: 'The losses add: 5 V − 4 × 0.65 V ≈ 2.4 V. With a 74HC input, which needs 3.5 V to see a 1, the signal is gone after only two gates.'
+    why: 'The losses add: 5 V − 4 × 0.65 V ≈ 2.4 V. With a 74HC input, which needs 3.5 V to see a 1, the signal is gone after only three gates.'
   - text: '0 V: every diode blocks in the end.'
     why: 'The diodes keep conducting as long as their anode is more than about 0.5 V above their cathode. The level sinks, but not to zero at once.'
 ```

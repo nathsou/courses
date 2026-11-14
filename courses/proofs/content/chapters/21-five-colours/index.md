@@ -4,7 +4,7 @@ title: Euler’s formula and five colours
 summary: V − E + F = 2, its many proofs and its many counterexamples — Lakatos’s story of how mathematics learns by refutation. Then maps and colours; Kempe’s famous flawed proof of the four-colour theorem, and Heawood’s rescue of five.
 duration: About 3 hours
 prerequisites: [invariants, induction]
-theorems: [Euler’s formula V − E + F = 2, There are exactly five Platonic solids, The five-colour theorem (Heawood, 1890)]
+theorems: [Euler’s formula V − E + F = 2, There are exactly five Platonic solids, "The five-colour theorem (Heawood, 1890)"]
 techniques: [induction on edges, counterexamples and monster-barring, double counting, Kempe chains]
 ---
 

@@ -148,7 +148,7 @@ Two cautions when reading PCA plots of embeddings. First, the top two components
 
 ## Tensors
 
-A **tensor**, in deep-learning usage, is simply an array with any number of dimensions. A batch of sequences of embeddings has shape (batch, time, channels); attention scores have shape (batch, heads, time, time). Chapter 4 builds tensors from strided views over flat storage. The linear algebra in this appendix applies along any two chosen dimensions, with the others treated as a batch. A **batched matrix multiplication** $(B, m, k) \times (B, k, n) \to (B, m, n)$ performs $B$ independent products. **Einstein summation** notation writes such operations compactly by naming the indices: `einsum('bmk,bkn->bmn', A, B)` sums over the repeated index $k$. Chapter 10 uses it to describe multi-head attention.
+A **tensor**, in deep-learning usage, is simply an array with any number of dimensions. A batch of sequences of embeddings has shape (batch, time, channels); attention scores have shape (batch, heads, time, time). Chapter 4 builds tensors from strided views over flat storage. The linear algebra in this appendix applies along any two chosen dimensions, with the others treated as a batch. A **batched matrix multiplication** $(B, m, k) \times (B, k, n) \to (B, m, n)$ performs $B$ independent products. **Einstein summation** notation writes such operations compactly by naming the indices: `einsum('bmk,bkn->bmn', A, B)` sums over the repeated index $k$. Multi-head attention (Chapter 10) is a batched product of exactly this kind.
 
 ## Floating point, briefly
 

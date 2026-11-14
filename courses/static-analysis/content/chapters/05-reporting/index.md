@@ -198,7 +198,7 @@ hints:
   - "`fixer.replaceTextRange([start, end], text)` replaces the characters from `start` to `end` (the `for` keyword's start, the parenthesis's end) and `context.sourceCode.getText(forLoop.test)` is the condition's source."
   - "Without `fixable: 'code'` in the rule's meta, ESLint throws when a report carries a fix."
 solution: |
-  This is S1264's implementation. Two points: the fix copies the condition's source text instead of regenerating it, so comments and formatting inside the condition survive; and the report's location is the `for` keyword alone, which is what the `^^` under the second loop checks.
+  This is S1264's implementation. Two points: the fix copies the condition's source text instead of regenerating it, so comments and formatting inside the condition survive; and the report's location is the `for` keyword alone, which is what the `^^^` line under the first loop checks.
 ```
 
 ## Exercise: a suggestion

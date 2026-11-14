@@ -246,5 +246,5 @@ lines: 14
 
 ## Further reading
 
-- Dutertre and de Moura's paper describes the simplex that every modern SMT solver uses, in ten pages.:cite[dutertre2006]
+- Dutertre and de Moura's paper describes the simplex that every modern SMT solver uses.:cite[dutertre2006]
 - Land and Doig's 1960 paper introduced branch and bound, and is readable today.:cite[landdoig1960]

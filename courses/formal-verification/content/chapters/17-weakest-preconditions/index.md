@@ -67,7 +67,7 @@ fn swap_check(x: int, y: int) -> bool
 ```
 :::
 
-The predicates grow as the substitutions pile up: *a − (a − b) = y* says, before the last assignment, what *a = y* will mean after it. At the top, the precondition (here *true*, since there is none) must imply the predicate, and the solver confirms that it does. Press *Show the SMT query* to see exactly what is sent: the negation of the verification condition, which must be unsatisfiable.
+The predicates grow as the substitutions pile up: *a − (a − b) = y* says, before the last two assignments, what *a = y* will mean after them. At the top, the precondition (here *true*, since there is none) must imply the predicate, and the solver confirms that it does. Press *Show the SMT query* to see exactly what is sent: the negation of the verification condition, which must be unsatisfiable.
 
 ```quiz
 q: 'What is wp(x = x + 1; y = 2 * x, y > 10)?'

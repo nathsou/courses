@@ -72,7 +72,7 @@ The alpha is 7,300 times heavier than an electron, so the atom's electrons barel
 
 $$T = \frac{zZ\alpha\hbar c}{d} \quad\Longrightarrow\quad d = \frac{zZ\alpha\hbar c}{T}.$$
 
-For 5.5 MeV alphas (the energy of those from americium-241, a common source) on gold, *d* = 2 × 79 × 1.44 MeV·fm / 5.5 MeV = 41.4 fm. For 7.7 MeV, the top of the range of the alphas from radium and its decay products, it is 29.5 fm. This is the closest an alpha of that energy can get to a gold nucleus. The nucleus itself is about 7 fm across, so the alphas never touch it; they probe the Coulomb field outside it, which is that of a point charge whatever the nucleus is made of.
+For 5.5 MeV alphas (the energy of those from americium-241, a common source) on gold, *d* = 2 × 79 × 1.44 MeV·fm / 5.5 MeV = 41.4 fm. For 7.7 MeV, the top of the range of the alphas from radium and its decay products, it is 29.5 fm. This is the closest an alpha of that energy can get to a gold nucleus. The nucleus itself has a radius of about 7 fm, so the alphas never touch it; they probe the Coulomb field outside it, which is that of a point charge whatever the nucleus is made of.
 
 **The orbit.** A particle that is not aimed straight at the nucleus, but passes with an :term[**impact parameter**]{id=impact-parameter} *b* (the distance by which it would miss if it were not deflected), moves on a hyperbola, the orbit of every inverse-square repulsion. Conservation of energy and of angular momentum determine it, and the angle through which it is bent turns out to depend only on the ratio of the two lengths in the problem:
 

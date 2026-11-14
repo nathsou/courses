@@ -186,7 +186,7 @@ explain: The extra line is the *converse* of the theorem — a different stateme
 
 ## What makes something a proof?
 
-We have seen four different arguments for the same fact. What do they have in common?
+We have seen five different arguments for the same fact. What do they have in common?
 
 Each starts from things we already accept — facts about areas, the angle sum of a triangle, the algebra of brackets — and moves in small steps, each of which follows from what came before, until it reaches the statement to be proved. This is all a proof is:
 
@@ -194,7 +194,7 @@ Each starts from things we already accept — facts about areas, the angle sum o
 A **proof** of a statement is a finite sequence of steps, each of which is an **axiom** (a starting assumption), a previously proved result, or follows from earlier steps by a rule of logic, and whose last step is the statement.
 :::
 
-This definition says nothing about how the proof was *found*, and that is exactly the difficulty. Checking a proof is mechanical: you go through it step by step. Finding one is not. None of the four proofs above is an obvious thing to try. Each depends on an idea — a way of looking at the problem — that makes the rest routine.
+This definition says nothing about how the proof was *found*, and that is exactly the difficulty. Checking a proof is mechanical: you go through it step by step. Finding one is not. None of the five proofs above is an obvious thing to try. Each depends on an idea — a way of looking at the problem — that makes the rest routine.
 
 This course is about those ideas. They are not random flashes of genius. There are recurring techniques — proof by contradiction, induction, counting in two ways, looking for an invariant, the diagonal argument — and the best way to learn them is to see them at work in the proofs that made them famous.
 
@@ -227,7 +227,7 @@ In 1945 the Hungarian mathematician George Pólya published *How to Solve It*, a
 3. **Carry out the plan**, checking each step.
 4. **Look back.** Can you check the result? Can you see it at a glance? Can you use the method for another problem?
 
-The four proofs of Pythagoras' theorem illustrate the last point well. Once you have seen that areas can be counted in two ways, you have a technique, not just a proof.
+The five proofs of Pythagoras' theorem illustrate the last point well. Once you have seen that areas can be counted in two ways, you have a technique, not just a proof.
 
 :::bio{name="George Pólya" born=1887 died=1985 place="Budapest, Zürich and Stanford"}
 Pólya was a leading analyst and probabilist who also cared deeply about how mathematics is learned. His *How to Solve It* has sold over a million copies. He liked to say that if you can't solve a problem, there is an easier problem you *can* solve: find it. He is also the author of the “proof” that all horses are the same colour, which you will take apart in Chapter 5.

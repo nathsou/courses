@@ -137,7 +137,7 @@ paragraphs:
     en: Tomorrow is the Chinese exam. Xiaoming is preparing in the classroom; he's a bit nervous.
   - zh: 他的同学安娜说："别紧张！你汉字写得很好，说得也很好。"小明说："可是我听得不太好，老师说话说得太快了。"
     en: His classmate Anna says, "Don't be nervous! You write characters well, and you speak well too." Xiaoming says, "But my listening isn't great; the teacher speaks too fast."
-  - zh: 安娜说："那我们一起练习吧。我说得慢一点儿。"她们一起练习了两个小时。
+  - zh: 安娜说："那我们一起练习吧。我说得慢一点儿。"他们一起练习了两个小时。
     en: Anna says, "Then let's practise together. I'll speak a bit slower." They practised together for two hours.
   - zh: 第二天，考试的题不太难。小明考得很好，他非常高兴！
     en: The next day, the exam questions weren't too hard. Xiaoming did very well, and was very happy!

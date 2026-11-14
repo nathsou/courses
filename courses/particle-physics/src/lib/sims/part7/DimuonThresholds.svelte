@@ -5,7 +5,7 @@
   pair mass of the events that pass the two cuts you set. Raise the cut on the softer muon and the hump moves to the right: the mass of two
   muons flying back to back, each with transverse momentum pT, is about 2 pT, so a pT threshold is a mass threshold.
 
-    ::dimuon-thresholds{n="27.3" caption="…"}
+    ::dimuon-thresholds{n="27.4" caption="…"}
 
   Everything here is REAL DATA (no simulation). The masses are computed with the library's `pairMass` from the muon four-vectors.
 -->

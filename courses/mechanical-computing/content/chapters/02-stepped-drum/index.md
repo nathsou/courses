@@ -92,7 +92,7 @@ Its cleverest trick is subtraction. The drum carries a second set of steps, the 
 ```answer
 id: stepped-drum/curta-subtract
 title: Inside a subtraction
-prompt: 'An 11-digit Curta result register shows 0 000 000 1000 and the setting is 1. Lifting the crank, the drum adds the nines’ complement of the setting to every place and a 1 at the bottom. What does the register show afterwards?'
+prompt: 'An 11-digit Curta result register shows 00 000 001 000 and the setting is 1. Lifting the crank, the drum adds the nines’ complement of the setting to every place and a 1 at the bottom. What does the register show afterwards?'
 answer: 999
 why: '1 000 + 99 999 999 998 + 1 = 100 000 000 999, and the 1 at the far left falls off the 11 digits: 999 remains. Adding the tens’ complement of 1 has subtracted 1.'
 ```

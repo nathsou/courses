@@ -28,7 +28,8 @@ A **strategy** is a partial function from terms to terms: applied to a term, it 
 | `all(s)` | apply `s` to every argument (fail if it fails on one) |
 | `one(s)` | apply `s` to the first argument where it succeeds (fail if none) |
 | `some(s)` | apply `s` to every argument where it succeeds, at least one |
-| `where(s)`, `not(s)` | test `s` without changing the term; succeed iff `s` fails |
+| `where(s)` | test `s`: succeed, leaving the term unchanged, iff `s` succeeds |
+| `not(s)` | succeed, leaving the term unchanged, iff `s` fails |
 
 The key ingredients are the **one-level traversals** `all`, `one` and `some`: they move the strategy one level down, to the arguments. Everything else is built from them.
 

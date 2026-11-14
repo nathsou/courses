@@ -176,5 +176,5 @@ Equality is the hub that every other theory connects to. [Chapter 13](/chapters/
 
 ## Further reading
 
-- Nelson and Oppen's 1980 paper is four pages on congruence closure, and still the clearest introduction.:cite[nelson1980]
+- Nelson and Oppen's 1980 paper on congruence closure is short, and still the clearest introduction.:cite[nelson1980]
 - Nieuwenhuis, Oliveras and Tinelli's DPLL(T) paper presents the whole architecture as a set of rules.:cite[nieuwenhuis2006]

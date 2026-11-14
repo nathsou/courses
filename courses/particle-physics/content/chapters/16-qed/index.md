@@ -179,7 +179,7 @@ hints:
 explain: "1/√17000 = 0.00767, or 0.77 %. To reach a statistical precision of 0.1 % needs a million events. That is the scale of the samples the LEP experiments collected on the Z peak, and the reason the systematic uncertainties, not the statistical ones, limit the most precise results (Chapters 23 and 28)."
 ```
 
-### Write the differential cross-section
+### The angular shape and the energy
 
 :::note
 **Predict the angular shape.** Compare forward, transverse and backward muons in the angular distribution. The factor 1 + cos²θ gives twice the density at cos θ = ±1 as at 0. Doubling the collision energy makes s four times larger and reduces this massless tree-level cross section by four.
@@ -206,7 +206,7 @@ The collider figure needs to turn a formula into events. Two techniques make thi
 **:term[Unweighting]{id=unweighting}.** Integration gives a cross-section. A generator must also produce *events*, each a full set of particle momenta, distributed as the theory says, so that a detector simulation can process them one at a time. The simplest way is **accept–reject**, which you met in Chapter 4: draw a point *x* uniformly, compute its weight *w* = *f*(*x*), and accept it with probability *w*/*w*<sub>max</sub>, where *w*<sub>max</sub> is at least the largest weight. The accepted points are distributed as *f*, with all weights equal to one. The fraction of points kept, the **efficiency**, is ⟨*w*⟩/*w*<sub>max</sub>: for 1 + cos²θ under a flat bound of 2 it is (4/3)/2 = 2/3, which the test suite checks. A weight much larger than typical makes the efficiency poor, which is why real generators spend effort on importance sampling and on the VEGAS algorithm that learns a good sampling density.
 
 :::note
-**Keep or reject?.** If an event has one quarter of the maximum weight, keep it with probability one quarter. Predict how many of 1,000 such proposals survive, then compare with the generator: about 250, with statistical fluctuations. The supplied accept–reject routine handles the random draws.
+**Keep or reject?** If an event has one quarter of the maximum weight, keep it with probability one quarter. Predict how many of 1,000 such proposals survive, then compare with the generator: about 250, with statistical fluctuations. The supplied accept–reject routine handles the random draws.
 :::
 
 :::programmer
@@ -275,7 +275,7 @@ The first-term-alone estimate is within 0.15 % of the measurement: one diagram. 
 :::history{year=1947 title="The Lamb shift and Kusch's g − 2" people="Willis Lamb, Robert Retherford, Polykarp Kusch, Henry Foley" source="Sources: Lamb and Retherford (1947); Bethe (1947); Kusch and Foley (1948); Nobel Foundation (1955)."}
 Dirac's equation for the hydrogen atom says that the 2S<sub>1/2</sub> and 2P<sub>1/2</sub> levels have exactly the same energy. In 1947, at Columbia University, Willis Lamb and Robert Retherford used a microwave technique to measure the difference and found the 2S level higher, by about 1000 MHz.:cite[p4-lamb1947] The result was discussed at the Shelter Island conference that June (Chapter 15). Hans Bethe calculated, within weeks, a shift of the right size by treating the electron's interaction with the radiation field and discarding the infinite energy that a free electron would have anyway, which is absorbed into its mass.:cite[p4-bethe1947] The modern value of the splitting is 1057.8 MHz, an energy of 4.4 μeV.
 
-In the same months Polykarp Kusch and Henry Foley, also at Columbia, measured the *g*-factors of atoms in a magnetic field, from which the electron's own *g* follows, and found it about 0.1 % above Dirac's value: *g* = 2.00238 ± 0.00006, as they reported it.:cite[p4-kusch1948] Lamb and Kusch shared the 1955 Nobel Prize in Physics for the two measurements.:cite[p4-nobel1955] Both results were effects of the quantum field's loops, which Dirac's equation does not contain.
+In the same months Polykarp Kusch and Henry Foley, also at Columbia, measured the *g*-factors of atoms in a magnetic field, from which the electron's own *g* follows, and found it about 0.1 % above Dirac's value: *g* = 2.00238 ± 0.00010, as they reported it.:cite[p4-kusch1948] Lamb and Kusch shared the 1955 Nobel Prize in Physics for the two measurements.:cite[p4-nobel1955] Both results were effects of the quantum field's loops, which Dirac's equation does not contain.
 :::
 
 :::history{year=1948 title="Schwinger's α/2π" people="Julian Schwinger" source="Source: Schwinger (1948)."}

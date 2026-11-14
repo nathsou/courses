@@ -132,13 +132,13 @@ using isotropy $\langle v_x^2\rangle = \langle v^2\rangle/3$ and equipartition. 
 </Tiers>
 
 <Fermi title="What is the pressure at the centre of the Sun?">
-Standard solar models give $\rho_c \approx 1.5\times10^5$ kg/m³ (about 13 times the density of lead), $T_c \approx 1.57\times10^7$ K and $\mu \approx 0.62$ (hydrogen partly burned to helium makes it higher than the surface value). The ideal gas law gives
+Standard solar models give $\rho_c \approx 1.5\times10^5$ kg/m³ (about 13 times the density of lead), $T_c \approx 1.57\times10^7$ K and $\mu \approx 0.85$ (higher than the surface value of 0.62, because about half the core's hydrogen has already been burned to helium). The ideal gas law gives
 
 $$
-P_c = \frac{\rho k_BT}{\mu m_p} = \frac{(1.5\times10^5)(1.38\times10^{-23})(1.57\times10^{7})}{0.62\times1.67\times10^{-27}} \approx 3\times10^{16}\ \text{Pa}.
+P_c = \frac{\rho k_BT}{\mu m_p} = \frac{(1.5\times10^5)(1.38\times10^{-23})(1.57\times10^{7})}{0.85\times1.67\times10^{-27}} \approx 2.3\times10^{16}\ \text{Pa}.
 $$
 
-That is about 300 billion atmospheres, close to the full solar-model value of $2.5\times10^{16}$ Pa. The ideal gas law works because at 15 million kelvin the atoms are completely ionised, and bare nuclei are 100,000 times smaller than atoms. [Chapter 11](/ch/stellar-structure/) gets the same order of magnitude from hydrostatic equilibrium alone.
+That is over 200 billion atmospheres, close to the full solar-model value of $2.5\times10^{16}$ Pa. The ideal gas law works because at 15 million kelvin the atoms are completely ionised, and bare nuclei are 100,000 times smaller than atoms. [Chapter 11](/ch/stellar-structure/) gets the same order of magnitude from hydrostatic equilibrium alone.
 </Fermi>
 
 ### Equations of state
@@ -343,7 +343,7 @@ $$
 <Fragment slot="where">After <span data-term="Nsteps">N</span> steps of length <span data-term="ell">ℓ</span> in random directions, the root-mean-square distance from the start is <span data-term="dist">d</span>. Turned around, crossing a distance $R$ takes $N \approx (R/\ell)^2$ steps, which is far more than the $R/\ell$ of a straight line.</Fragment>
 </KeyEq>
 
-The step length is the **mean free path**, the typical distance between collisions: $\ell = 1/(n\sigma)$ for particles at number density $n$ with a collision cross-section $\sigma$. In air it is about 70 nanometres. In the Sun's interior photons travel roughly a millimetre to a centimetre between interactions, which is why sunlight takes so long to get out ([Chapter 13](/ch/energy-transport/)).
+The step length is the **mean free path**, the typical distance between collisions: $\ell = 1/(n\sigma)$ for particles at number density $n$ with a collision cross-section $\sigma$. In air it is about 70 nanometres. In the Sun's interior photons travel from a few hundredths of a millimetre (in the core) to around a centimetre between interactions, which is why sunlight takes so long to get out ([Chapter 13](/ch/energy-transport/)).
 </Fragment>
 <Fragment slot="l3">
 Let the steps $\vec s_k$ be independent with $\langle\vec s_k\rangle = 0$ and $\langle|\vec s_k|^2\rangle = \ell^2$. Then

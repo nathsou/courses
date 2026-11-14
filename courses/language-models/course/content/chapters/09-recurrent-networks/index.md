@@ -134,7 +134,7 @@ Now train one. The trainer below runs on your GPU. Each step processes 64 stream
 
 ::rnn-trainer
 
-With 256 hidden units and 2,000 steps, which take a minute or two, the vanilla RNN reaches about **2.32 bits per character**. It is well ahead of the MLP (2.43), with a third of the parameters, but not quite at Kneser–Ney. The LSTM reaches about **2.24**, level with Kneser–Ney. The PyTorch lab below gets the same numbers from `torch.nn.RNN` and `torch.nn.LSTM`, which is a useful check that our GPU backend is right. And with two layers of 512 units and longer training, the lab’s LSTM goes clearly below: **2.10 bits per character**. It is also clearly overfitting — its training loss ends near 1.5 bits — so at this size, the million characters of TinyShakespeare, not the architecture, are the limit.
+With 256 hidden units and 2,000 steps, which take a minute or two, the vanilla RNN reaches about **2.32 bits per character**. It is well ahead of the MLP (2.43), with about two thirds of the parameters, but not quite at Kneser–Ney. The LSTM reaches about **2.24**, level with Kneser–Ney. The PyTorch lab below gets the same numbers from `torch.nn.RNN` and `torch.nn.LSTM`, which is a useful check that our GPU backend is right. And with two layers of 512 units and longer training, the lab’s LSTM goes clearly below: **2.10 bits per character**. It is also clearly overfitting — its training loss ends near 1.5 bits — so at this size, the million characters of TinyShakespeare, not the architecture, are the limit.
 
 | Model | Parameters | Validation bits/char |
 |---|---|---|

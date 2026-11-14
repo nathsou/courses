@@ -178,7 +178,8 @@ tests: |
   test('-1 entries are skipped', () => {
     const seq = [-1, 4, -1, 2, 7, -1, 9];
     const idx = lis(seq);
-    expect(idx.map((i) => seq[i])).toEqual([2, 7, 9]);
+    expect(valid(seq, idx)).toBe(true);
+    expect(idx).toHaveLength(3); // [2, 7, 9] or [4, 7, 9]
   });
 
   test('the result is a valid increasing subsequence of the maximum length, on 300 random inputs', () => {

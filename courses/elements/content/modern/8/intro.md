@@ -11,6 +11,6 @@ The main groups of propositions:
 - **Divisibility inside a progression** ([[8.6]], [[8.7]]). If the first term does not divide the second, no term divides a later one.
 - **Interpolation** ([[8.8]]–[[8.10]]). Whether $n$ means fit between two numbers depends only on their ratio, and in lowest terms both numbers must be $(n+1)$-th powers.
 - **Squares and cubes** ([[8.11]]–[[8.17]]). There is one mean between two squares and two between two cubes. From this follows the number-theoretic core of the book: $c^2 \mid d^2 \iff c \mid d$ and $c^3 \mid d^3 \iff c \mid d$ ([[8.14]], [[8.15]]).
-- **Similar plane and solid numbers** ([[8.18]]–[[8.27]]). Two numbers have one mean between them exactly when they are similar plane numbers, and two means exactly when they are similar solid numbers. A number in the ratio of a square to a square to a square is itself a square.
+- **Similar plane and solid numbers** ([[8.18]]–[[8.27]]). Two numbers have one mean between them exactly when they are similar plane numbers, and two means exactly when they are similar solid numbers. A number that is to a square as a square is to a square is itself a square ([[8.24]]).
 
 Euclid never states that factorization into primes is unique, and this book never uses primes at all. But nearly every result here is transparent once numbers are written as products of prime powers, and the modern versions say so. Book IX uses these results immediately ([[9.1]]–[[9.10]]), and Book X uses [[8.11]] and [[8.26]] to decide when two lengths are commensurable ([[10.9]]).

@@ -97,7 +97,7 @@ The classic example is a 7-segment display. Segment *a*, the top bar, is lit for
 
 a = A + C + B·D + ¬B·¬D
 
-(A is the top bit, the 8s.) The group for A is eight cells, a whole half of the map, and it is that big only because it borrows four don’t-cares; C is another eight, with four of them borrowed. The unused codes have paid for two of the four terms. Here is that circuit:
+(A is the top bit, the 8s.) The group for A is eight cells, a whole half of the map, and it is that big only because it borrows six don’t-cares; C is another eight, with four of them borrowed. The unused codes have paid for two of the four terms. Here is that circuit:
 
 ::circuit{src="12-simplifying-logic/circuits/seg-a.json" title="Segment a of a 7-segment display" n="12.2" mode="logic" speed=1e-6 caption="A, B, C, D are the bits of a decimal digit (A is 8s). Set 0000 (0), 0001 (1) and 0100 (4): the output is 1 for 0 and 0 for 1 and 4. Set 1010 to 1111 and it does whatever it likes: those inputs never occur."}
 

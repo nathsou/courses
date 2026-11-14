@@ -32,7 +32,7 @@ Each cycle prints the next value of x² + x + 41. Nobody chooses what to add, or
 
 ## Tables full of errors
 
-In 1821 the nineteenth century ran on printed tables: logarithms for multiplication, trigonometric tables for surveying and astronomy, tables of the Moon's position for navigation at sea, interest tables for insurance. Each was computed by hand, copied by hand, typeset by hand and proof-read by hand, and every stage introduced errors. A misprinted logarithm was a nuisance; a misprinted lunar position could put a ship on the rocks.
+In 1821 the world ran on printed tables: logarithms for multiplication, trigonometric tables for surveying and astronomy, tables of the Moon's position for navigation at sea, interest tables for insurance. Each was computed by hand, copied by hand, typeset by hand and proof-read by hand, and every stage introduced errors. A misprinted logarithm was a nuisance; a misprinted lunar position could put a ship on the rocks.
 
 :::history{year=1793 title="Making logarithms like pins" people="Gaspard de Prony"}
 After the Revolution the French government wanted new tables for the decimal system: logarithms of the numbers up to 200 000, and of sines in the new decimal division of the circle, to more places than anyone would ever need. Gaspard de Prony organised the work like Adam Smith's pin factory. A few mathematicians chose formulas; a handful of skilled calculators turned them into starting values and differences; and a large room of computers, many of them people with no mathematics beyond addition and subtraction, filled in the tables by adding differences, row after row. The finished tables filled many manuscript volumes. They were never printed in full.:cite[grattan1990]

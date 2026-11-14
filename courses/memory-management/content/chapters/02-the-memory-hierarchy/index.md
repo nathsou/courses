@@ -149,7 +149,7 @@ hints:
   - Which loop variable changes the address by 8, and which by `n * 8`?
   - Make the inner loop the one that moves by 8.
 explain: |
-  Swapping two loops made this about seven times cheaper in simulated cycles. Compilers can sometimes do this *loop interchange* for you, but only when they can prove it does not change the result; with floating point, or when the loop body calls functions, they usually cannot.
+  Swapping two loops made this about three and a half times cheaper in simulated cycles (1,024 misses at 100 cycles each, against 256 misses and 768 hits at 4). Compilers can sometimes do this *loop interchange* for you, but only when they can prove it does not change the result; with floating point, or when the loop body calls functions, they usually cannot.
 ```
 
 ## Down to DRAM

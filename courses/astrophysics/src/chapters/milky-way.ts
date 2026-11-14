@@ -4,8 +4,13 @@ import { fmt } from '../lib/ui/controls';
 
 const G_ASTRO = 4.30091e-6; // kpc (km/s)^2 / Msun
 
-// Escape speed from a point mass approximation of the Galaxy, given its mass within R.
-compute('vesc', ['Mgal'], ({ Mgal }) => `${fmt(Math.sqrt((2 * G_ASTRO * Mgal * 1e12) / 8.2), 3)} km/s`);
+// Escape speed from the Sun's radius for a flat (isothermal) halo with v_c = 230 km/s,
+// truncated at r_max = G M / v_c^2: v_esc = v_c sqrt(2 [1 + ln(r_max / R0)]).
+compute('vesc', ['Mgal'], ({ Mgal }) => {
+  const vc = 230, R0 = 8.2;
+  const rmax = Math.max((G_ASTRO * Mgal * 1e12) / (vc * vc), R0);
+  return `${fmt(vc * Math.sqrt(2 * (1 + Math.log(rmax / R0))), 3)} km/s`;
+});
 
 // Sun's orbital period around the Galactic centre, given R0 and v0.
 compute('Tsun', ['R0', 'v0'], ({ R0, v0 }) => {

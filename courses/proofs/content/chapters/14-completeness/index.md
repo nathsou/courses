@@ -4,7 +4,7 @@ title: Completeness
 summary: What do the real numbers have that the rationals lack? No gaps. The least-upper-bound property, the existence of √2, and Bolzano’s 1817 proof of the intermediate value theorem — plus some surprising consequences for mountains and the weather.
 duration: About 2½ hours
 prerequisites: [epsilon-delta, root-two]
-theorems: [The Archimedean property, √2 exists in ℝ, The monotone convergence theorem, The intermediate value theorem (Bolzano, 1817), The Bolzano–Weierstrass theorem]
+theorems: [The Archimedean property, √2 exists in ℝ, The monotone convergence theorem, "The intermediate value theorem (Bolzano, 1817)", The Bolzano–Weierstrass theorem]
 techniques: [suprema, bisection, nested intervals, proof by contradiction]
 ---
 
@@ -136,7 +136,7 @@ why: |
   In the rationals, $A$ has upper bounds but **no least one** — its least upper bound would be $\sqrt2$. This is exactly the completeness axiom, and it is the only place the proof uses anything special about $\mathbb{R}$.
 ```
 
-## Mountains, pancakes and the weather
+## Mountains, fixed points and the weather
 
 The intermediate value theorem has consequences that sound like magic.
 

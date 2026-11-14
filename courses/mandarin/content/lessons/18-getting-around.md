@@ -124,7 +124,7 @@ items:
 洗手间 | toilet, washroom
 ```
 
-Directions are verb phrases with 往 (towards): 往左走 (go left), 往前走 (go straight ahead), 往右拐 (turn right). Floors are counted with 楼: 三楼 is the third floor (in China, the ground floor is 一楼).
+Directions are verb phrases with 往 (towards): 往左走 (go left), 往前走 (go straight ahead), 往右拐 (turn right). Floors are counted with 楼: 三楼 is floor three (in China the ground floor is 一楼, so 三楼 is what Britain calls the second floor).
 
 ```dialogue
 title: Where's the toilet?

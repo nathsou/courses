@@ -227,7 +227,7 @@ NN:
   label: 'N, the number of points'
   what: The number of measurements along the track.
   why: Averaging more points reduces the error, but only as the square root, so the first points matter more than the last.
-  effect: Going from 10 to 40 points improves the resolution by a factor of about 1.9, not 4.
+  effect: Going from 10 to 40 points improves the resolution by a factor of about 1.8, not 4.
 ```
 :::
 

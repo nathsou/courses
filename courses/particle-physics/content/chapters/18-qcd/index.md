@@ -196,7 +196,7 @@ In the course's own sample of 160 events at 91.2 GeV with a threshold of 5 GeV, 
 
 Things to try:
 
-1. With the shower **off**, step through ten events. All have two jets: a quark pair becomes two strings, which become two sprays. Any third jet in the shower-on events comes from hard gluon radiation.
+1. With the shower **off**, step through ten events. All have two jets: the quark and antiquark stretch one string between them, which breaks into two back-to-back sprays. Any third jet in the shower-on events comes from hard gluon radiation.
 2. With the shower **on**, press **Next three-jet**. Look at the jet table: the two hardest jets are the quark and antiquark, usually, and the third, softer, is the gluon. The three jets are coplanar.
 3. Increase *R* from 0.4 to 1.2. Nearby jets merge, and the fraction of three-jet events falls: whether an event has three jets depends on the *definition*, which is why measurements specify *R*.
 4. Raise the threshold on the jet's p<sub>T</sub>. A fainter gluon jet drops below it and the event becomes a two-jet event.

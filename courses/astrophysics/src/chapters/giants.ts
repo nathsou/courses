@@ -12,6 +12,6 @@ compute('coreMass', ['starMass'], ({ starMass }) => `${fmt(0.47 + 0.02 * Math.lo
 // Degeneracy check: compare thermal energy to Fermi energy for a given core density (toy estimate).
 compute('degen', ['rho7'], ({ rho7 }) => {
   // rho7 = density in units of 1e7 kg/m^3; Fermi energy for non-relativistic e- gas ~ rho^(2/3)
-  const EF_keV = 3.65 * Math.pow(rho7, 2 / 3); // calibrated so rho7=1 -> EF ~ a few keV, illustrative only
+  const EF_keV = 7.6 * Math.pow(rho7, 2 / 3); // (hbar^2/2m_e)(3 pi^2 n_e)^(2/3) with mu_e = 2: 7.6 keV at 1e7 kg/m^3
   return `${fmt(EF_keV, 3)} keV`;
 });

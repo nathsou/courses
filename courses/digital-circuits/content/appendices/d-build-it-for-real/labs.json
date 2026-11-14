@@ -212,7 +212,7 @@
     "n": 2,
     "heading": "build-it-for-real",
     "headingText": "Build it for real",
-    "parts": "8 × 10 kΩ, 9 × 20 kΩ (or 2 × 10 kΩ each), 5 V USB supply module, multimeter, breadboard, jumper wires",
+    "parts": "3 × 10 kΩ, 5 × 20 kΩ (or 2 × 10 kΩ each), 5 V USB supply module, multimeter, breadboard, jumper wires",
     "lead": "An R-2R DAC with resistors."
   },
   {

@@ -57,7 +57,7 @@ The Sun's core has a density around 150 g/cm³ and is ionised hydrogen and heliu
 
 <Tiers>
 <Fragment slot="l1">
-Think of walking through a thick fog: you can only see a short distance before your view is scattered away. A photon deep inside the Sun is in exactly that situation, except the "fog" is ionised gas, and the visibility distance — the **mean free path** — is barely a centimetre. Photons don't fly straight out; they bounce, over and over, in essentially random directions.
+Think of walking through a thick fog: you can only see a short distance before your view is scattered away. A photon deep inside the Sun is in exactly that situation, except the "fog" is ionised gas, and the visibility distance — the **mean free path** — is a small fraction of a millimetre in the core, and no more than a centimetre or so anywhere in the deep interior. Photons don't fly straight out; they bounce, over and over, in essentially random directions.
 </Fragment>
 <Fragment slot="l2">
 <KeyEq title="Photon mean free path">
@@ -77,7 +77,7 @@ $$
 </Fragment>
 </Tiers>
 
-In the solar core, $\kappa \approx 1\text{–}2\ \text{cm}^2/\text{g}$ (mostly electron scattering) and $\rho \approx 150\ \text{g/cm}^3$, giving $\ell \sim 1/(1.5 \times 150) \approx 0.4\ \text{cm}$ — about the width of a fingernail. Deeper still or with heavier-element opacity the mean free path can shrink to millimetres; near the surface, where $\rho$ plummets, it stretches out again. Across the radiative interior, $\ell$ ranges roughly from a millimetre to a centimetre: astronomically minuscule compared to the solar radius $R_\odot = 6.96\times10^{10}\ \text{cm}$.
+In the solar core, $\kappa \approx 1\text{–}2\ \text{cm}^2/\text{g}$ (mostly electron scattering) and $\rho \approx 150\ \text{g/cm}^3$, giving $\ell \sim 1/(1.5 \times 150) \approx 0.004\ \text{cm}$ — a few hundredths of a millimetre, thinner than a hair. Farther out, where $\rho$ falls, it stretches out again. Across the radiative interior, $\ell$ ranges roughly from hundredths of a millimetre to a centimetre: astronomically minuscule compared to the solar radius $R_\odot = 6.96\times10^{10}\ \text{cm}$.
 
 ### The Fermi random-walk estimate
 
@@ -106,7 +106,7 @@ $$
 </Tiers>
 
 <Fermi title="How long does sunlight take to leave the Sun?">
-Take $\ell \approx 1\ \text{cm}$ (a convenient round number inside the true mm–cm range) and $R_\odot = 6.96\times10^{10}\ \text{cm}$:
+Take $\ell \approx 1\ \text{cm}$ (a convenient round number from the top of the true range, so this estimate is if anything too short) and $R_\odot = 6.96\times10^{10}\ \text{cm}$:
 
 $$
 N \sim \left(\frac{6.96\times10^{10}}{1}\right)^2 \approx 5\times10^{21} \text{ scatterings}
@@ -147,14 +147,14 @@ This is one of the four fundamental stellar-structure equations, alongside hydro
 
 <Tiers>
 <Fragment slot="l1">
-The diffusion equation has an immediate, dramatic consequence. Radiation pressure pushes outward on the same gas that gravity pulls inward on. If a star gets too bright for its mass, radiation pressure alone can exceed gravity and blow the outer layers off. There is a maximum steady luminosity a star of a given mass can have, called the **Eddington luminosity**. For the Sun's composition it works out to about 32,000 times the Sun's own luminosity for every solar mass of the star.
+The diffusion equation has an immediate, dramatic consequence. Radiation pressure pushes outward on the same gas that gravity pulls inward on. If a star gets too bright for its mass, radiation pressure alone can exceed gravity and blow the outer layers off. There is a maximum steady luminosity a star of a given mass can have, called the **Eddington luminosity**. For the Sun's composition it works out to about 38,000 times the Sun's own luminosity for every solar mass of the star.
 </Fragment>
 <Fragment slot="l2">
 Setting the outward radiative acceleration equal to gravitational acceleration for fully ionised, electron-scattering-dominated gas gives the **Eddington luminosity**:
 $$
 L_\text{Edd} = \frac{4\pi G M c}{\kappa_\text{es}}
 $$
-For solar composition ($\kappa_\text{es} \approx 0.34\ \text{cm}^2/\text{g}$, including helium), $L_\text{Edd} \approx 3.2\times10^4\,(M/M_\odot)\ L_\odot$.
+For solar composition ($\kappa_\text{es} \approx 0.34\ \text{cm}^2/\text{g}$, including helium), $L_\text{Edd} \approx 3.8\times10^4\,(M/M_\odot)\ L_\odot$.
 </Fragment>
 </Tiers>
 
@@ -163,7 +163,7 @@ No steadily radiating star can exceed it (accreting compact objects and some mas
 <History title="Standing on a limit: Eddington and the internal constitution of the stars" year="1926">
 <Portrait src="/img/people/eddington.jpg" name="Arthur Eddington" years="1882–1944" credit="George Grantham Bain Collection, Library of Congress" license="Public domain" href="https://commons.wikimedia.org/wiki/File:Arthur_Stanley_Eddington.jpg" />
 
-Arthur Eddington was already famous — his 1919 eclipse expedition had provided some of the first strong evidence for general relativity — when he turned to the interiors of stars. His 1926 book *The Internal Constitution of the Stars* worked out, from little more than hydrostatic equilibrium and radiative diffusion, how energy must flow from a stellar core to its surface, decades before anyone knew nuclear fusion powered the furnace. Eddington derived the luminosity limit that bears his name from exactly the balance of forces described above, and used a simplified, still-useful model — the "standard model" (no relation to particle physics) — in which radiation pressure is a fixed fraction of gas pressure everywhere. He was famously sure of his own analysis: when a critic pointed out that stellar interiors, by his own numbers, should be far too hot for known physics to explain how stars keep from immediately fusing all their fuel, Eddington's reply was that the critic should "go and find a hotter place" — a joke that has outlived the specific dispute, since subsequent physics (quantum tunnelling, [Chapter 12](/ch/fusion/)) vindicated his stellar models even though it revised the physics underneath them.
+Arthur Eddington was already famous — his 1919 eclipse expedition had provided some of the first strong evidence for general relativity — when he turned to the interiors of stars. His 1926 book *The Internal Constitution of the Stars* worked out, from little more than hydrostatic equilibrium and radiative diffusion, how energy must flow from a stellar core to its surface, more than a decade before anyone knew which nuclear reactions powered the furnace. Eddington derived the luminosity limit that bears his name from exactly the balance of forces described above, and used a simplified, still-useful model — the "standard model" (no relation to particle physics) — in which radiation pressure is a fixed fraction of gas pressure everywhere. He was famously sure of his own analysis: when critics objected that stellar interiors, by his own numbers, were far too *cool* for protons to overcome their mutual repulsion and fuse, Eddington's reply was that they should "go and find a hotter place" — a joke that has outlived the specific dispute, since subsequent physics (quantum tunnelling, [Chapter 12](/ch/fusion/)) vindicated his stellar models even though it revised the physics underneath them.
 </History>
 
 ## What sets the opacity
@@ -188,7 +188,7 @@ where $X$ is the hydrogen mass fraction (more free electrons per gram when there
 <Fragment slot="l3">
 <KeyEq title="Electron-scattering opacity">
 $$
-\kappa_\text{es} = \frac{\sigma_T}{m_p}(1+X) \approx 0.2\,(1+X)\ \text{cm}^2/\text{g}
+\kappa_\text{es} = \frac{\sigma_T}{2m_p}(1+X) \approx 0.2\,(1+X)\ \text{cm}^2/\text{g}
 $$
 <Fragment slot="where">$\sigma_T$ is the Thomson cross-section <C k="sigmaT" />, $m_p$ the proton mass <C k="mp" />, and $X$ the hydrogen mass fraction.</Fragment>
 </KeyEq>
@@ -227,7 +227,7 @@ Put the slow leak of radiation together with the virial theorem's thermostat ([C
 <Level min={3} title="Combining diffusion with the virial theorem">
 Order-of-magnitude, $dT/dr \sim T/R$ and $\rho \sim M/R^3$, so the diffusion equation gives
 $$
-\frac{T}{R} \sim \frac{\kappa \rho L}{T^3 R^2} \quad\Longrightarrow\quad L \sim \frac{T^4 R^3}{\kappa \rho} \sim \frac{T^4 R^6}{\kappa M}.
+\frac{T}{R} \sim \frac{\kappa \rho L}{T^3 R^2} \quad\Longrightarrow\quad L \sim \frac{T^4 R}{\kappa \rho} \sim \frac{T^4 R^4}{\kappa M}.
 $$
 Hydrostatic equilibrium (virial scaling) separately gives $T \sim GM/R$ (Chapter 11's central-temperature estimate). Carrying the scaling through self-consistently for **constant opacity** (electron-scattering-dominated massive stars) gives the mass–luminosity relation boxed below.
 </Level>
@@ -271,7 +271,7 @@ $$
 </Fragment>
 </Tiers>
 
-<History title="A wartime paper on the solar atmosphere" year="1906">
+<History title="A paper on the solar atmosphere" year="1906">
 <Portrait src="/img/people/schwarzschild.jpg" name="Karl Schwarzschild" years="1873–1916" credit="Unknown photographer" license="Public domain" href="https://commons.wikimedia.org/wiki/File:Karl_schwarzschild.portrait.jpg" />
 
 Karl Schwarzschild is best remembered today for the black-hole solution he derived from Einstein's field equations in 1915, worked out from the trenches of the First World War and mailed to Einstein just months before Schwarzschild died of an autoimmune disease contracted at the front. Nearly a decade earlier, in 1906, he had already made a foundational contribution to a very different problem: in "On the Equilibrium of the Solar Atmosphere," he worked out exactly when radiative equilibrium in a stellar atmosphere becomes unstable to convective overturning — the criterion that carries his name today, still stated in essentially the form he gave it. It is a strange coincidence of the field that one of its most famous names is attached both to the geometry of a collapsed star ([Chapter 19](/ch/black-holes/)) and to the far gentler physics of why the Sun's outer layers churn.

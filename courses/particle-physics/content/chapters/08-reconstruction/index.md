@@ -686,7 +686,7 @@ function seedCombos(nLayers: number, nPix: number): [number, number, number][] {
 }
 ```
 
-The combination (0, 1, 2) is tried first on all the hits; the others, which skip a layer, catch tracks that left no hit in one of the inner layers (a dead channel, an inefficiency) and are run on the hits that are left. For each pair, the library looks up the hits of the next layer in a grid in $(z, \varphi)$, so that the cost of a window is the number of hits *in it* and not the number of hits in the layer. The grid is the spatial index of the chapter's title: without it the triplet loop would be quadratic in the hits per layer and with it, nearly linear for the same windows.
+The combination (0, 1, 2) is tried first on all the hits; the others, which skip a layer, catch tracks that left no hit in one of the inner layers (a dead channel, an inefficiency) and are run on the hits that are left. For each pair, the library looks up the hits of the next layer in a grid in $(z, \varphi)$, so that the cost of a window is the number of hits *in it* and not the number of hits in the layer. The grid is a spatial index: without it the triplet loop would be quadratic in the hits per layer and with it, nearly linear for the same windows.
 
 The update step of the filter is the equations of the chapter, in the library's matrix notation:
 

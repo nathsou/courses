@@ -47,7 +47,7 @@ fn main() {
 ```
 :::
 
-Each tooth of the sawtooth is a minor collection: thousands of `Junk` objects die in the nursery without ever being copied, while the table and its entries are promoted once and then left alone. Try a smaller nursery: more minor collections, each one cheaper, and a few more objects promoted because they had less time to die.
+Each tooth of the sawtooth is a minor collection: more than a thousand `Junk` objects die in the nursery without ever being copied, while the table and its entries are promoted once and then left alone. Try a smaller nursery: more minor collections, each one cheaper, and a few more objects promoted because they had less time to die.
 
 ## The pointer the collector cannot see
 

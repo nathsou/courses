@@ -116,7 +116,7 @@ $$
 
 It is dimensionless, averages to zero, and cannot go below $-1$ (empty space) though it can go as high as it likes. A void has $\delta \approx -0.8$. The inside of a galaxy cluster sits at $\delta \sim 200$ to $1000$. The solar neighbourhood of the Milky Way is at $\delta \sim 10^6$. We use **comoving coordinates** $\vec x$ throughout: positions measured on a grid that expands with the universe, so a particle at rest relative to the Hubble flow keeps the same $\vec x$ forever. Physical distance is $a\vec x$.
 
-<Aside>**Units.** Cosmologists quote lengths in $h^{-1}\,\text{Mpc}$, where $H_0 = 100h$ km/s/Mpc and $h \approx 0.68$. This hides the uncertainty in $H_0$ inside the unit. 1 Mpc = 3.26 million light-years, about 15 Milky Way diameters.</Aside>
+<Aside>**Units.** Cosmologists quote lengths in $h^{-1}\,\text{Mpc}$, where $H_0 = 100h$ km/s/Mpc and $h \approx 0.68$. This hides the uncertainty in $H_0$ inside the unit. 1 Mpc = 3.26 million light-years, about 30 Milky Way diameters.</Aside>
 </Fragment>
 </Tiers>
 
@@ -469,7 +469,7 @@ The power spectrum is cut off exponentially above a wavenumber $\sim 1/\lambda_\
 </Fragment>
 </Tiers>
 
-**A separate simulation session.** Pause here if you have just finished the growth and halo material. On return, predict how changing the initial fluctuation amplitude changes structure at a fixed time. Change only that parameter, compare the result, and distinguish a numerical approximation from the physical assumption it represents.
+
 
 ## Simulating the cosmic web
 
@@ -517,7 +517,7 @@ Periodic boundaries come for free, because the discrete Fourier transform is per
 </Tiers>
 
 <Predict question="The simulation starts at z = 50 with a nearly uniform particle lattice. At what redshift does the cosmic web first become clearly visible?" choices={['Around z = 20', 'Around z = 5', 'Only below z = 1']} answer={1}>
-Around $z \sim 5$ to 3 for this box, with filaments sharpening down to $z \approx 1$. Between $z = 50$ and $z = 10$ the growth factor increases fivefold, but $\delta$ on the scales the grid resolves is still much less than 1, so nothing visibly moves. The action is back-loaded: half of all the growth in $D$ happens after $z \approx 1$. Then Λ takes over and the web nearly freezes, so the last few gigayears look calm. Watch the redshift counter.
+Around $z \sim 5$ to 3 for this box, with filaments sharpening down to $z \approx 1$. Between $z = 50$ and $z = 10$ the growth factor increases fivefold, but $\delta$ on the scales the grid resolves is still much less than 1, so nothing visibly moves. The action is back-loaded: about 40% of all the growth in $D$ happens after $z \approx 1$. Then Λ takes over and the web nearly freezes, so the last few gigayears look calm. Watch the redshift counter.
 </Predict>
 
 <Sim name="structure-pm" size="full" minHeight={560}>
@@ -565,7 +565,7 @@ let green = -P.pois / (k2 * w * w) * exp(-k2 * P.rsm * P.rsm);
 cx[i] = cx[i] * green;
 ```
 
-**Force resolution.** The PM force is accurate for separations of more than about 2–3 cells and softened below that: $2.5$ $h^{-1}$Mpc at $64^3$ and 1.25 at $128^3$ in this box. That is enough for the web but not for the inside of halos, which appear as fuzzy blobs a couple of cells wide. Production codes add a short-range correction: *P³M* sums nearby pairs directly, and *TreePM* (Gadget, used for Millennium and IllustrisTNG) uses a Barnes–Hut tree for the short-range part. Using the same CIC kernel for deposit and interpolation guarantees that a particle exerts no net force on itself, and momentum is conserved to rounding error.
+**Force resolution.** The PM force is accurate for separations of more than about 2–3 cells and softened below that; in this box one cell is $2.5$ $h^{-1}$Mpc at $64^3$ and 1.25 at $128^3$. That is enough for the web but not for the inside of halos, which appear as fuzzy blobs a couple of cells wide. Production codes add a short-range correction: *P³M* sums nearby pairs directly, and *TreePM* (Gadget, used for Millennium and IllustrisTNG) uses a Barnes–Hut tree for the short-range part. Using the same CIC kernel for deposit and interpolation guarantees that a particle exerts no net force on itself, and momentum is conserved to rounding error.
 
 **Complexity.** Deposit and interpolation are $O(N)$ in the number of particles, and the FFTs are $O(M\log M)$ in the number of mesh cells, so a step costs $O(N + M\log M)$ instead of $O(N^2)$. At $N = M = 128^3$ that is about $4\times10^7$ operations versus $4\times10^{12}$.
 
@@ -587,7 +587,7 @@ In 2004 the Virgo Consortium, an Anglo-German collaboration led by Simon White a
 The Millennium Run, published in *Nature* in 2005, did two things. It showed that ΛCDM, with galaxies painted onto halos by a semi-analytic model, could reproduce the web seen by redshift surveys, including rare, massive early quasars. And by releasing its catalogues publicly through an SQL database, it changed how cosmology is done: thousands of papers have been written with its data by people who never ran a simulation.
 </History>
 
-<Aside>**Particles are not dark-matter particles.** A simulation particle of $10^9\,M_\odot$ is a tracer of the phase-space distribution of perhaps $10^{76}$ real particles. Two-body encounters between simulation particles are an artefact, suppressed by softening.</Aside>
+<Aside>**Particles are not dark-matter particles.** A simulation particle of $10^9\,M_\odot$ is a tracer of the phase-space distribution of some $10^{64}$ real particles if they weigh 100 GeV each, and vastly more if they are lighter. Two-body encounters between simulation particles are an artefact, suppressed by softening.</Aside>
 
 ## The cosmic web observed
 

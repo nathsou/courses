@@ -34,7 +34,7 @@ Because the electronvolt measures energy, and energy and mass are two forms of o
 
 ## Short distances need high energies
 
-Why would anyone build a twenty-seven kilometre machine to study things a trillionth of a trillionth the size of a pea? Because looking at something means scattering something off it, and the probe has to be *smaller than what you want to see*. A wave cannot resolve details smaller than its wavelength. A quantum particle of momentum *p* behaves as a wave of wavelength λ = *h*/*p* (Chapter 3), so the smaller the detail, the larger the momentum. For a particle moving near the speed of light, energy and momentum are interchangeable (*E* ≈ *pc*), and the rule of thumb is
+Why would anyone build a twenty-seven kilometre machine to study things ten thousand times smaller than a proton? Because looking at something means scattering something off it, and the probe has to be *smaller than what you want to see*. A wave cannot resolve details smaller than its wavelength. A quantum particle of momentum *p* behaves as a wave of wavelength λ = *h*/*p* (Chapter 3), so the smaller the detail, the larger the momentum. For a particle moving near the speed of light, energy and momentum are interchangeable (*E* ≈ *pc*), and the rule of thumb is
 
 :::equation{#resolution caption="To resolve a length L you need a probe of energy of at least about hc/L."}
 $$\term{E}{E} \;\gtrsim\; \frac{\term{hc}{hc}}{\term{L}{L}}, \qquad hc = 1239.84\ \text{eV·nm} = 1.2398\ \text{GeV·fm}$$

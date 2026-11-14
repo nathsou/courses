@@ -217,7 +217,7 @@ The device is programmed by a JEDEC file (JESD3): the fuses, as text, with two c
 | `*C<hhhh>` | the fuse checksum: the 16-bit sum of the fuses read as bytes, fuse 0 in the least significant bit of the first byte |
 | after the closing `*` | ETX, then four hexadecimal digits: the 16-bit sum of every character from STX to ETX |
 
-This is the file the model writes, with the standard header, for a 3-to-8 line decoder with enables and active-low outputs (the model’s own example design). Only the beginning and the end are shown: the fields in the middle are one for each row that is not all ones.
+This is the file the model writes, with the standard header, for a 3-to-8 line decoder with enables and active-low outputs (the model’s own example design). Only the beginning and the end are shown: the fields in the middle are one for each row that is not all zeros.
 
 ```text
 <STX>

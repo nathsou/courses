@@ -279,7 +279,7 @@ On 12 June 2000 Altera introduced Nios, calling it the industry’s first genera
 |---|---|---|
 | **MicroBlaze**, Xilinx (2002) | 32-bit RISC soft core, Harvard architecture, 32 registers, in the vendor’s tools | A single-issue pipeline, configurable |
 | **Nios II**, Altera (2004) | The 32-bit successor to Nios: three soft cores, all code compatible, one for the smallest size, one for speed, one between:cite[altera-niosii-2004] | Chosen by the designer |
-| **PicoRV32**, Clifford Wolf | An RV32IMC core written for *small size*, open source (ISC licence) | 761 to 2,019 LUTs on Xilinx 7-series, about 4 cycles per instruction, 416 to 769 MHz there:cite[picorv32] |
+| **PicoRV32**, Clifford Wolf | An RV32IMC core written for *small size*, open source (ISC licence) | 761 to 2,019 LUTs on Xilinx 7-series, about 4 cycles per instruction, 250 to 450 MHz there:cite[picorv32] |
 | **VexRiscv**, Charles Papon | A 32-bit RISC-V core written in SpinalHDL, assembled from plugins, with pipelines from 2 to 5 or more stages:cite[vexriscv] | Chosen by the designer when the core is generated |
 | **Zynq-7000**, Xilinx (2011) | A hard dual-core ARM Cortex-A9 processing system, hardwired, beside an FPGA fabric: the processor boots on its own and then configures the fabric:cite[amd-zynq7000] | The processor runs at silicon speed; the fabric is a co-processor |
 

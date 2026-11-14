@@ -112,7 +112,7 @@ $$
 <Fragment slot="where"><span data-term="p">p</span> $= mv$ is the momentum. For an electron with kinetic energy $K$, $\lambda = 1.23\ \text{nm}/\sqrt{K\ \text{in eV}}$. A 1000 kg car at 30 m/s has $\lambda \approx 2\times10^{-38}$ m.</Fragment>
 </KeyEq>
 
-An electron with <Var name="Ke" value={10} min={0.01} max={100000} log /> eV of kinetic energy has a wavelength of <Out name="ldb" />. Electron microscopes use electrons of tens of keV, whose wavelengths are thousands of times shorter than those of visible light.
+An electron with <Var name="Ke" value={10} min={0.01} max={100000} log /> eV of kinetic energy has a wavelength of <Out name="ldb" />. Electron microscopes use electrons of tens of keV, whose wavelengths are tens of thousands of times shorter than those of visible light.
 
 The **uncertainty principle** follows from the wave picture: $\Delta x\,\Delta p \ge \hbar/2$, where $\hbar = h/2\pi$. It is not a statement about clumsy measurement. A wave packet of width $\Delta x$ simply *contains* a spread of wavelengths, and so a spread of momenta, of at least $\hbar/2\Delta x$.
 </Fragment>
@@ -162,7 +162,7 @@ $$
 <Fragment slot="where"><span data-term="n">n</span> counts the half-wavelengths across the box. <span data-term="m">m</span> is the particle's mass and <span data-term="L">L</span> the width of the box. For an electron in a 1 nm box, $E_1 = 0.376$ eV. For a proton in a 5 fm box, the size of a nucleus, $E_1 \approx 8$ MeV.</Fragment>
 </KeyEq>
 
-When the particle drops from level $n$ to a lower level, it emits a photon carrying the energy difference, $hf = E_n - E_{n-1}$. Because the levels are discrete, so are the photon energies: a **line spectrum**.
+When the particle drops from level $n$ to a lower level $m$, it emits a photon carrying the energy difference, $hf = E_n - E_m$. Because the levels are discrete, so are the photon energies: a **line spectrum**.
 </Fragment>
 <Fragment slot="l3">
 The wave nature is made precise by the **Schrödinger equation**. For a particle of mass $m$ in a potential $V(x)$:

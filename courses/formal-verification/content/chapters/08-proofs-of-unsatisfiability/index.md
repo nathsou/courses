@@ -121,6 +121,6 @@ SAT solvers are now a tool you can trust. Part II uses them in two directions. [
 
 ## Further reading
 
-- Haken's paper is the start of proof complexity; Cook's two-page note shows how one new variable per abbreviation changes everything.:cite[haken1985,cook1976]
+- Haken's paper is the start of proof complexity; Cook's short note shows how one new variable per abbreviation changes everything.:cite[haken1985,cook1976]
 - Heule's note on DRAT is a short description of the format real solvers write.:cite[heule2016drat]
 - Heule, Kullmann and Marek tell the story of the Pythagorean triples problem and its proof.:cite[heule2016]

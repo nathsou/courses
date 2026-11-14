@@ -4,7 +4,7 @@
   and what you threw away. The events are toy samples generated in code from simple distributions (see hep/trigger/toy.ts); the trigger
   logic is the library's (`l1Variables`, the HLT selections, `CatalogueEvaluator`).
 
-    ::trigger-game{n="27.4" caption="…"}
+    ::trigger-game{n="27.3" caption="…"}
 -->
 <script lang="ts">
   import { onMount } from 'svelte';

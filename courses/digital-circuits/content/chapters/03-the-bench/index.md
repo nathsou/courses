@@ -272,7 +272,7 @@ q: 'A series chain of R1, R2, R3 and an LED, on 9 V, does not light. With the po
 options:
   - text: 'R2, which is open-circuit.'
     correct: true
-    why: 'If R2 were fine, some current would flow round the loop and lower part would drop some voltage. Nothing flows, so the parts that work drop nothing; the whole battery voltage appears across the one place where the loop is broken.'
+    why: 'If R2 were fine, some current would flow round the loop and every part would drop some voltage. Nothing flows, so the parts that work drop nothing; the whole battery voltage appears across the one place where the loop is broken.'
   - text: 'R1 and R3, which read zero.'
     why: 'Zero volts across a resistor means no current is flowing through it, not that it is faulty. In a broken series loop every good part reads zero.'
   - text: 'The LED, which reads zero.'

@@ -183,7 +183,7 @@ $$
 $$
 :::
 
-The form makes sense. Adding a constant to every $x_i$ changes nothing after normalisation, so $\bar{\mathbf x}$ must have zero mean. Scaling $\mathbf x$ changes nothing either, so $\bar{\mathbf x}$ must be orthogonal to $\hat{\mathbf x}$. The two subtracted terms enforce exactly those constraints. The course’s library composes LayerNorm from primitive operations and lets autograd find this gradient; a fused kernel (Chapter 12) implements the formula directly.
+The form makes sense. Adding a constant to every $x_i$ changes nothing after normalisation, so $\bar{\mathbf x}$ must have zero mean. Scaling $\mathbf x$ changes nothing either, so $\bar{\mathbf x}$ must be orthogonal to $\hat{\mathbf x}$. The two subtracted terms enforce exactly those constraints. The course’s library composes LayerNorm from primitive operations and lets autograd find this gradient; a fused kernel (Chapter 11) implements the formula directly.
 
 ## Integrals, briefly
 

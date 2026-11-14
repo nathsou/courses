@@ -4,7 +4,7 @@ title: Gaussian primes
 summary: "Primes in the Gaussian integers ℤ[i]: unique factorisation, the three kinds of Gaussian primes, Fermat’s two-squares theorem twice (via ℤ[i] and via Zagier’s one-sentence proof), how many ways n is a sum of two squares, why L(1, χ₋₄) = π/4, and the open problem of the Gaussian moat."
 duration: About 1¼ hours
 prerequisites: [unique-factorisation, quadratic-residues, dirichlet]
-theorems: ["ℤ[i] has unique factorisation", "Classification of Gaussian primes", "Fermat’s two-squares theorem", "r₂(n) = 4 Σ χ₋₄(d)", "L(1", "χ₋₄) = π/4"]
+theorems: ["ℤ[i] has unique factorisation", "Classification of Gaussian primes", "Fermat’s two-squares theorem", "r₂(n) = 4 Σ χ₋₄(d)", "L(1, χ₋₄) = π/4"]
 techniques: [Euclidean domains, norms, involutions, lattice point counting]
 ---
 

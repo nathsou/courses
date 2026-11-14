@@ -70,7 +70,7 @@ In [Chapter 2](/ch/orbits/) we solved the two-body problem exactly, and in Chapt
 
 Think of the Milky Way's disk as a gas (a refresher on gases and random motions: [Appendix A7](/ch/primer-thermo/)) whose "molecules" are stars. Two questions decide how the gas behaves: do the molecules collide, and if they do not collide physically, do they scatter each other gravitationally?
 
-Physical collisions are out of the question. A star has a radius of about $R_\odot = 7\times10^{8}$ m. Near the Sun the stars are about 1 pc ($3\times10^{16}$ m) apart. Shrink the Sun to a grain of sand 1 mm across and its nearest neighbour is another grain of sand 40 km away. In the entire history of the disk, only a tiny fraction of stars have ever touched another star. (Dense cluster cores are the exception, and they are where stellar collisions and blue stragglers happen.)
+Physical collisions are out of the question. A star has a radius of about $R_\odot = 7\times10^{8}$ m. Near the Sun the stars are about 1 pc ($3\times10^{16}$ m) apart. Shrink the Sun to a grain of sand 1 mm across and its nearest neighbour is another grain of sand some 20–30 km away. In the entire history of the disk, only a tiny fraction of stars have ever touched another star. (Dense cluster cores are the exception, and they are where stellar collisions and blue stragglers happen.)
 
 Gravitational scattering is subtler. Every time star A passes star B, B nudges A's path a little. One nudge is tiny, but there are many. Do they add up?
 
@@ -195,7 +195,7 @@ $$
 <Fragment slot="where">$\Omega$ is the orbital angular velocity and $\kappa$ the frequency of radial oscillation. For a point mass ($\beta = -\tfrac12$) $\kappa = \Omega$ and the orbit closes: an ellipse. For a flat rotation curve ($\beta = 0$) $\kappa = \sqrt2\,\Omega \approx 1.41\,\Omega$. For a uniform sphere ($\beta = 1$) $\kappa = 2\Omega$.</Fragment>
 </KeyEq>
 
-In a frame rotating with the guiding centre, the star traces a small ellipse, the **epicycle**, backwards. Each radial oscillation, the pericentre advances by $360°\times\Omega/\kappa$: about 255° for a flat rotation curve instead of 360°, which is why the orbit is a rosette.
+In a frame rotating with the guiding centre, the star traces a small ellipse, the **epicycle**, backwards. Between one pericentre and the next, the star moves $360°\times\Omega/\kappa$ round the galaxy: about 255° for a flat rotation curve instead of the 360° of a closed ellipse, which is why the orbit is a rosette.
 </Fragment>
 <Fragment slot="l3">
 For a nearly circular orbit there is a beautiful approximation. Let the star's **guiding centre** move on a circle of radius $R_g$ with angular velocity $\Omega(R_g) = v_c/R_g$. Write the star's radius as $R = R_g + x$ with $x$ small. The radial equation of motion is $\ddot R = -\partial\Phi_\text{eff}/\partial R$, with the effective potential $\Phi_\text{eff} = \Phi + L^2/2R^2$ we met in Chapter 2. Expanding to first order in $x$ gives a harmonic oscillator (see [Appendix A5](/ch/primer-odes/)), $\ddot x = -\kappa^2 x$, with the **epicyclic frequency**
@@ -242,7 +242,7 @@ A spiral or bar is a pattern that rotates rigidly at a **pattern speed** $\Omega
 </Fragment>
 </Tiers>
 
-At resonances, a weak periodic force builds large responses, like pushing a swing in time. Between the ILR and OLR a spiral density wave can propagate; at the resonances it is absorbed. Bars end near their corotation radius, and the Sun sits close to the Milky Way bar's OLR. Gaia DR3's velocity maps of the solar neighbourhood show ridges and moving groups (the Hercules stream is the famous one) sculpted by just these resonances.
+At resonances, a weak periodic force builds large responses, like pushing a swing in time. Between the ILR and OLR a spiral density wave can propagate; at the resonances it is absorbed. Bars end near their corotation radius; for the Milky Way's slowly turning bar that is about 6 kpc, and the Sun lies between corotation and the bar's OLR. Gaia DR3's velocity maps of the solar neighbourhood show ridges and moving groups (the Hercules stream is the famous one) sculpted by just these resonances.
 
 <Aside>**Lindblad.** Bertil Lindblad worked out epicyclic orbits and their resonances in the 1920s–60s, and suggested that spiral arms might be kinematic patterns rather than material ones, an idea Lin and Shu made quantitative.</Aside>
 
@@ -250,7 +250,7 @@ At resonances, a weak periodic force builds large responses, like pushing a swin
 
 ### The winding problem
 
-Galaxies rotate differentially: at a flat rotation curve, a star at 4 kpc laps one at 16 kpc four times. Suppose a spiral arm were made of a fixed set of stars. After one rotation at the Sun ($2\pi \times 8\,\text{kpc}/220\,\text{km/s} \approx 220$ Myr), the inner parts would be ahead by a full turn relative to the outer parts. After 10 Gyr, about 40 turns: the arm would be wound as tightly as a watch spring. Real spirals have **pitch angles** of 10–30°, loosely wound. So arms cannot be material objects that persist. That is the **winding problem**.
+Galaxies rotate differentially: with a flat rotation curve, a star at 4 kpc completes four orbits for every one completed by a star at 16 kpc. Suppose a spiral arm were made of a fixed set of stars. After one rotation at the Sun ($2\pi \times 8\,\text{kpc}/220\,\text{km/s} \approx 220$ Myr), the inner parts would be ahead by a full turn relative to the outer parts. After 10 Gyr, about 40 turns: the arm would be wound as tightly as a watch spring. Real spirals have **pitch angles** of 10–30°, loosely wound. So arms cannot be material objects that persist. That is the **winding problem**.
 
 <Sim name="galactic-dynamics-winding" minHeight={400}>
 **Winding problem vs density wave.** Both disks rotate with the same flat 220 km/s rotation curve. Left: stars painted along a straight bar at t = 0 are carried by differential rotation and quickly wind into a tight spiral. Right: the arm is a pattern that turns rigidly at pattern speed Ω_p; the stars flow through it (they brighten while inside) and the arm keeps its shape forever. Inside the dashed corotation circle stars overtake the pattern; outside, the pattern overtakes the stars. Change the pitch angle and the corotation radius.
@@ -295,7 +295,7 @@ A rough derivation: pressure stabilises scales smaller than the Jeans length $\s
 </Fragment>
 </Tiers>
 
-In the solar neighbourhood $\Sigma_\star \approx 35$ M☉/pc², $\sigma_R \approx 35$ km/s and $\kappa \approx 37$ km/s/kpc, giving $Q \approx 1.5$–2. The Milky Way's disk is just stable enough to avoid fragmenting and just unstable enough to be full of structure. That is not a coincidence: a disk with lower $Q$ grows spirals, which scatter stars, raising $\sigma$ and $Q$, until it settles near marginal stability. Galaxy disks self-regulate.
+In the solar neighbourhood the disk (stars plus gas) has $\Sigma \approx 50$ M☉/pc², $\sigma_R \approx 35$ km/s and $\kappa \approx 37$ km/s/kpc, giving $Q \approx 1.5$–2. The Milky Way's disk is just stable enough to avoid fragmenting and just unstable enough to be full of structure. That is not a coincidence: a disk with lower $Q$ grows spirals, which scatter stars, raising $\sigma$ and $Q$, until it settles near marginal stability. Galaxy disks self-regulate.
 
 <Predict question="A disk with Q = 1.2 is stable according to Toomre's criterion. What will you see when you run it?" choices={['A perfectly smooth disk', 'Spiral arms that come and go', 'Immediate fragmentation into clumps']} answer={1}>
 Toomre's $Q > 1$ guarantees stability only against **axisymmetric** (ring-like) collapse. Non-axisymmetric perturbations get a boost the criterion ignores: as differential rotation shears a leading wavelet into a trailing one, it spends a little time nearly radial, where self-gravity, shear and epicyclic motion conspire to amplify it by a large factor. This **swing amplification** (Goldreich & Lynden-Bell 1965; Julian & Toomre 1966; Toomre 1981) turns the particle noise of the disk into a pattern of multi-armed, trailing, transient spirals. Only above $Q \approx 2$ does it fade.
@@ -307,9 +307,9 @@ Toomre's $Q > 1$ guarantees stability only against **axisymmetric** (ring-like) 
 
 ### Bars
 
-About two-thirds of disk galaxies, the Milky Way included, have a **bar**: a rigidly rotating elongated structure made of stars on elongated orbits (the $x_1$ family) aligned with it. In the late 1960s and early 1970s, the first N-body disk simulations had an embarrassing habit: they all formed bars within a rotation or two. Ostriker and Peebles (1973) argued that real disks must be stabilised by a massive, hot, **dark halo**, one of the earliest theoretical arguments for dark matter. The modern view is subtler: halos exchange angular momentum with bars through resonances, and can even make them grow (Athanassoula 2002). The Milky Way's bar is about 4.5–5 kpc long and turns with $\Omega_p \approx 35$–40 km/s/kpc (from Gaia and APOGEE). Bars funnel gas to the centre, fuelling starbursts and black holes ([Chapter 23](/ch/galaxy-formation/)), and thicken over time into the "boxy/peanut" bulge we see in the Milky Way's infrared images.
+About two-thirds of disk galaxies, the Milky Way included, have a **bar**: a rigidly rotating elongated structure made of stars on elongated orbits (the $x_1$ family) aligned with it. In the late 1960s and early 1970s, the first N-body disk simulations had an embarrassing habit: they all formed bars within a rotation or two. Ostriker and Peebles (1973) argued that real disks must be stabilised by a massive, hot, **dark halo**, one of the earliest theoretical arguments for dark matter. The modern view is subtler: halos exchange angular momentum with bars through resonances, and can even make them grow (Athanassoula 2002). The Milky Way's bar has a half-length of about 4.5–5 kpc and turns with $\Omega_p \approx 35$–40 km/s/kpc (from Gaia and APOGEE). Bars funnel gas to the centre, fuelling starbursts and black holes ([Chapter 23](/ch/galaxy-formation/)), and thicken over time into the "boxy/peanut" bulge we see in the Milky Way's infrared images.
 
-<Aside>**JWST bars.** JWST has found barred disks at redshift $z \approx 3$ and beyond, less than 2 Gyr after the Big Bang, earlier than many simulations predicted. Cold, massive disks must have settled surprisingly early.</Aside>
+<Aside>**JWST bars.** JWST has found barred disks at redshift $z \approx 3$, about 2 Gyr after the Big Bang, earlier than many simulations predicted. Cold, massive disks must have settled surprisingly early.</Aside>
 
 ## When galaxies collide
 
@@ -356,7 +356,7 @@ $$
 </Fragment>
 </Tiers>
 
-The Large Magellanic Cloud ($M \approx 1$–$2\times10^{11}$ M☉ including its own dark halo, at 50 kpc) gives $t_\text{fric} \approx 1$–2 Gyr: it will merge with the Milky Way in about 2.5 Gyr (Cautun et al. 2019). A globular cluster of $10^5$ M☉ at 5 kpc takes much longer than the age of the Universe. Dynamical friction is also what makes galaxies merge at all: two halos passing through each other lose orbital energy to each other's dark matter.
+The Large Magellanic Cloud ($M \approx 1$–$2\times10^{11}$ M☉ including its own dark halo, at 50 kpc) gives $t_\text{fric}$ of well under a billion years for a circular orbit with $\ln\Lambda \approx 2$–3. The real LMC is on an eccentric first approach, and detailed models have it merging with the Milky Way in about 2.5 Gyr (Cautun et al. 2019). A globular cluster of $10^5$ M☉ at 5 kpc takes much longer than the age of the Universe. Dynamical friction is also what makes galaxies merge at all: two halos passing through each other lose orbital energy to each other's dark matter.
 
 <Sim name="galactic-dynamics-friction" minHeight={400}>
 **Sinking by dynamical friction.** A satellite starts on a circular orbit in an isothermal dark halo and feels the Chandrasekhar drag. Right: its radius over time (solid) against the analytic result $r_0\sqrt{1 - t/t_\text{fric}}$ (dashed). Raise the satellite mass or the starting radius and watch $t_\text{fric} \propto r_0^2/M$ at work. An eccentric start sinks faster, because friction is strongest at pericentre, where the density is highest and the satellite is slow relative to the halo.

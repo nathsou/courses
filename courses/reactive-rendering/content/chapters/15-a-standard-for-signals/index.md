@@ -69,7 +69,7 @@ Try it. `count` feeds `parity`, which the effect reads. The scheduler here is a 
 Press `count + 1` three times before running the flush: three writes, **one** notify (the Watcher is silent after the first, until it is re-armed), and then the single flush runs the effect once, with the final value. Now press `count + 2` and run the flush: the Watcher was notified and the flush was queued, but the effect **does not run**, since `parity` recomputed to the same string. The cutoff happens *inside the standard’s graph*, where every framework would get it for free.
 
 :::key
-**The standard stops where frameworks differ.** It standardises *what is a dependency* and *what is stale*, the part the libraries had converged on, and leaves *when to run* and *who cleans up* to the Watcher’s user. That is the same split as the book’s: chapter 10 is the graph, and chapter 11 is the scheduler.
+**The standard stops where frameworks differ.** It standardises *what is a dependency* and *what is stale*, the part the libraries had converged on, and leaves *when to run* and *who cleans up* to the Watcher’s user. That is the same split as this course’s: chapter 10 is the graph, and chapter 11 is the scheduler.
 :::
 
 ## Build an effect

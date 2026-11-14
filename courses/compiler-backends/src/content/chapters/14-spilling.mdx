@@ -33,7 +33,7 @@ Spill everywhere is simple and predictable, but wasteful. A value used five time
 
 ## Choosing what to spill
 
-Both allocators choose by **spill cost**: the number of uses and definitions of a value, each weighted by 10^(loop depth). Graph colouring divides the cost by degree, to prefer values whose removal relieves the most interference. Linear scan prefers the interval whose next use is furthest away. Neither is optimal. Optimal spilling is NP-hard even for straight-line code under realistic cost models, though it becomes tractable in special cases, and ILP formulations can solve moderate functions exactly.
+The graph-colouring allocator chooses by **spill cost**: the number of uses and definitions of a value, each weighted by 10^(loop depth). It divides the cost by degree, to prefer values whose removal relieves the most interference. Kiln’s linear scan does not look at cost at all: it spills the interval that ends last. Neither is optimal. Optimal spilling is NP-hard even for straight-line code under realistic cost models, though it becomes tractable in special cases, and ILP formulations can solve moderate functions exactly.
 
 The loop-depth weighting is what keeps the inner loop fast. A value used once before a loop and once after is spilled long before a loop counter is. The weights could be real profile counts instead of 10^depth guesses; production compilers use branch probabilities and profile data (PGO) exactly this way.
 

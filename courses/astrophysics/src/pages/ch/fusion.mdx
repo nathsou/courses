@@ -37,7 +37,7 @@ import Portrait from '../../components/Portrait.astro';
 ## An accounting problem
 
 <Photo src="/img/fusion/sdo-spicules.jpg" alt="Towering orange jets of plasma, called spicules, rising from the Sun's surface as imaged by the Solar Dynamics Observatory" credit="NASA/SDO/AIA" license="Public domain" href="https://images.nasa.gov/details/GSFC_20171208_Archive_e001831" size="wide" aspect="3 / 2">
-**The Sun's restless surface.** Spicules — jets of plasma up to 32,000 miles high — sway with ripples in the magnetic field, carrying energy up from below. All of that energy, and the light that eventually reaches Earth, was made as gamma rays deep in the core by the reactions in this chapter, tens of thousands of years earlier (Chapter 13's photon random walk).
+**The Sun's restless surface.** Spicules — jets of plasma thousands of kilometres high — sway with ripples in the magnetic field, carrying energy up from below. All of that energy, and the light that eventually reaches Earth, was made as gamma rays deep in the core by the reactions in this chapter, tens of thousands of years earlier (Chapter 13's photon random walk).
 </Photo>
 
 [Chapter 11](/ch/stellar-structure/) showed that a star in hydrostatic equilibrium is a ball of gas held up against its own gravity by pressure, and that the virial theorem ties its internal energy to its gravitational binding energy. That equilibrium is a *statement*, not an *explanation*: it says nothing about where the pressure's energy supply comes from, or how long it can last. The Sun radiates <C k="Lsun" /> — about the light output of four trillion trillion incandescent bulbs — and has apparently done so for at least 4.6 billion years, the age of the oldest meteorites. What is actually burning?
@@ -96,7 +96,7 @@ Converting hydrogen to helium releases $0.007\,c^2$ per kilogram of hydrogen con
 
 $$E_\text{fus} \approx 0.007 \times 0.1\, M_\odot c^2 \approx 1.3\times10^{44}\,\text{J}.$$
 
-Divide by $L_\odot = 3.8\times10^{26}\,\text{W}$: $t \approx 10^{10}$ years — ten billion years, comfortably longer than the age of the Universe and matching the Sun's main-sequence lifetime from stellar models to within a factor of order unity. This is the calculation that finally answered Kelvin.
+Divide by $L_\odot = 3.8\times10^{26}\,\text{W}$: $t \approx 10^{10}$ years — ten billion years, comparable to the age of the Universe and matching the Sun's main-sequence lifetime from stellar models to within a factor of order unity. This is the calculation that finally answered Kelvin.
 </Fermi>
 
 A star of mass <Var name="mass" value={1} min={0.1} max={50} log /> M☉ burning hydrogen with an efficiency of <Var name="eff" value={0.007} min={0.001} max={0.02} log step={0.001} /> (0.7% for H→He) has a main-sequence lifetime of about <Out name="tMS" />.
@@ -145,19 +145,19 @@ $$
 
 <Tiers>
 <Fragment slot="l1">
-Imagine rolling a ball up a hill: the harder you push, the higher up the ball gets before it stops. Two protons pushed together by ordinary heat are like a very gentle push against a very tall electrical "hill" — the mutual repulsion of their positive charges. For two protons just touching (about 2 femtometres apart), that hill is about **1.4 million electron-volts (MeV)** high. The push available from the Sun's 15-million-degree core is only about **1,300 electron-volts** — a thousand times too gentle. Classically, the ball never gets over the hill, and the Sun should not shine at all.
+Imagine rolling a ball up a hill: the harder you push, the higher up the ball gets before it stops. Two protons pushed together by ordinary heat are like a very gentle push against a very tall electrical "hill" — the mutual repulsion of their positive charges. For two protons just touching (about 2 femtometres apart), that hill is about **0.7 million electron-volts (MeV)** high. The push available from the Sun's 15-million-degree core is only about **1,300 electron-volts**, some five hundred times too gentle. Classically, the ball never gets over the hill, and the Sun should not shine at all.
 </Fragment>
 <Fragment slot="l2">
-For two protons ($Z_1=Z_2=1$) meeting at a nuclear radius of $r\approx 2\,\text{fm}$, this evaluates to $V \approx 1.4\,\text{MeV}$ using $e^2/4\pi\varepsilon_0 \approx 1.44\,\text{MeV·fm}$ — a standard combination worth memorising. Compare that to the thermal energy available in the Sun's core, at $T\approx15\times10^6\,\text{K}$: $k_B T \approx 1.3\,\text{keV}$. Thermal energy is three orders of magnitude below the barrier height.
+For two protons ($Z_1=Z_2=1$) meeting at a nuclear radius of $r\approx 2\,\text{fm}$, this evaluates to $V \approx 0.7\,\text{MeV}$ using $e^2/4\pi\varepsilon_0 \approx 1.44\,\text{MeV·fm}$ — a standard combination worth memorising. Compare that to the thermal energy available in the Sun's core, at $T\approx15\times10^6\,\text{K}$: $k_B T \approx 1.3\,\text{keV}$. Thermal energy is nearly three orders of magnitude below the barrier height.
 </Fragment>
 <Fragment slot="l3">
-For two protons ($Z_1=Z_2=1$) meeting at a nuclear radius of $r\approx 2\,\text{fm}$, this evaluates to $V \approx 1.4\,\text{MeV}$ using $e^2/4\pi\varepsilon_0 \approx 1.44\,\text{MeV·fm}$ — a standard combination worth memorising. Compare that to the thermal energy available in the Sun's core, at $T\approx15\times10^6\,\text{K}$:
+For two protons ($Z_1=Z_2=1$) meeting at a nuclear radius of $r\approx 2\,\text{fm}$, this evaluates to $V \approx 0.7\,\text{MeV}$ using $e^2/4\pi\varepsilon_0 \approx 1.44\,\text{MeV·fm}$ — a standard combination worth memorising. Compare that to the thermal energy available in the Sun's core, at $T\approx15\times10^6\,\text{K}$:
 
 $$
 k_B T = (8.617\times10^{-5}\,\text{eV/K})(1.5\times10^7\,\text{K}) \approx 1.3\,\text{keV}.
 $$
 
-Thermal energy is *three orders of magnitude* below the barrier height (new to exponentials and orders of magnitude? see [Appendix A1](/ch/primer-numbers/)).
+Thermal energy is *nearly three orders of magnitude* below the barrier height (new to exponentials and orders of magnitude? see [Appendix A1](/ch/primer-numbers/)).
 </Fragment>
 </Tiers>
 
@@ -226,7 +226,7 @@ Setting the derivative of the exponent to zero gives the peak location and, via 
 $$
 \term{E0term}{E_0} = \left(\frac{E_G\, (k_B\term{Tterm}{T})^2}{4}\right)^{1/3}, \qquad \term{Wterm}{\Delta} = \frac{4}{\sqrt3}\sqrt{E_0\,k_BT}
 $$
-<Fragment slot="where"><span data-term="E0term">$E_0$</span> is the energy where the reaction rate's integrand is largest; <span data-term="Wterm">$\Delta$</span> is its full width. For p+p at <span data-term="Tterm">15 MK</span>: $E_0\approx5.9\,\text{keV}$, $\Delta\approx4.8\,\text{keV}$.</Fragment>
+<Fragment slot="where"><span data-term="E0term">$E_0$</span> is the energy where the reaction rate's integrand is largest; <span data-term="Wterm">$\Delta$</span> is its full width. For p+p at <span data-term="Tterm">15 MK</span>: $E_0\approx5.9\,\text{keV}$, $\Delta\approx6.4\,\text{keV}$.</Fragment>
 </KeyEq>
 </Fragment>
 <Fragment slot="l3">
@@ -236,7 +236,7 @@ Setting $d/dE\left[-E/k_BT - \sqrt{E_G/E}\right]=0$ gives the peak location and,
 $$
 \term{E0term}{E_0} = \left(\frac{E_G\, (k_B\term{Tterm}{T})^2}{4}\right)^{1/3}, \qquad \term{Wterm}{\Delta} = \frac{4}{\sqrt3}\sqrt{E_0\,k_BT}
 $$
-<Fragment slot="where"><span data-term="E0term">$E_0$</span> is the energy where the integrand of the reaction rate is largest; <span data-term="Wterm">$\Delta$</span> is its (Gaussian) full width. For p+p at <span data-term="Tterm">15 MK</span>: $E_0\approx5.9\,\text{keV}$, $\Delta\approx4.8\,\text{keV}$ — a narrow window compared to $E_0$ itself, which is what makes the Gaussian approximation good.</Fragment>
+<Fragment slot="where"><span data-term="E0term">$E_0$</span> is the energy where the integrand of the reaction rate is largest; <span data-term="Wterm">$\Delta$</span> is its (Gaussian) full width. For p+p at <span data-term="Tterm">15 MK</span>: $E_0\approx5.9\,\text{keV}$, $\Delta\approx6.4\,\text{keV}$ — a narrow window compared to $E_0$ itself, which is what makes the Gaussian approximation good.</Fragment>
 </KeyEq>
 </Fragment>
 </Tiers>
@@ -291,19 +291,19 @@ Near any given temperature, the reaction rate behaves like a power law, $\vareps
 Near a reference temperature, the rate is well approximated locally as a power law, $\varepsilon \propto T^\nu$, with
 
 $$
-\nu = \frac{d\ln\langle\sigma v\rangle}{d\ln T} \approx \frac{1}{3}\left(\frac{E_G}{k_BT}\right)^{1/3} - 2.
+\nu = \frac{d\ln\langle\sigma v\rangle}{d\ln T} \approx \left(\frac{E_G}{4k_BT}\right)^{1/3} - \frac23.
 $$
 
-For the **pp reaction** at solar core conditions, $\nu\approx4$: doubling the temperature raises the rate by $2^4=16\times$. For the **CNO cycle** (below), whose slowest step is a proton capture on nitrogen-14 with six times the charge product and correspondingly larger $E_G$, $\nu\approx17$–$20$: doubling the temperature there raises the rate by a factor of $10^5$–$10^6$.
+For the **pp reaction** at solar core conditions, $\nu\approx4$: doubling the temperature raises the rate by $2^4=16\times$. For the **CNO cycle** (below), whose slowest step is a proton capture on nitrogen-14 with seven times the charge product and correspondingly larger $E_G$, $\nu\approx17$–$20$: doubling the temperature there raises the rate by a factor of $10^5$–$10^6$.
 </Fragment>
 <Fragment slot="l3">
 Near a reference temperature, the rate is well approximated locally as a power law, $\varepsilon \propto T^\nu$, with
 
 $$
-\nu = \frac{d\ln\langle\sigma v\rangle}{d\ln T} \approx \frac{1}{3}\left(\frac{E_G}{k_BT}\right)^{1/3} - 2
+\nu = \frac{d\ln\langle\sigma v\rangle}{d\ln T} \approx \left(\frac{E_G}{4k_BT}\right)^{1/3} - \frac23
 $$
 
-(derived by differentiating $\ln\langle\sigma v\rangle$ with the saddle-point integral above; the flagship sim computes it exactly, numerically, by finite-differencing $\ln(\text{rate})$ — see [Appendix A4](/ch/primer-calculus/) for differentiation and [Appendix A2](/ch/primer-functions/) for reading power laws off a log–log plot). For the **pp reaction** at solar core conditions, $\nu\approx4$: doubling the temperature raises the rate by $2^4=16\times$. For the **CNO cycle** (below), whose slowest step is a proton capture on nitrogen-14 with six times the charge product and correspondingly larger $E_G$, $\nu\approx17$–$20$: doubling the temperature there raises the rate by a factor of $10^5$–$10^6$.
+(derived by differentiating $\ln\langle\sigma v\rangle$ with the saddle-point integral above; the flagship sim computes it exactly, numerically, by finite-differencing $\ln(\text{rate})$ — see [Appendix A4](/ch/primer-calculus/) for differentiation and [Appendix A2](/ch/primer-functions/) for reading power laws off a log–log plot). For the **pp reaction** at solar core conditions, $\nu\approx4$: doubling the temperature raises the rate by $2^4=16\times$. For the **CNO cycle** (below), whose slowest step is a proton capture on nitrogen-14 with seven times the charge product and correspondingly larger $E_G$, $\nu\approx17$–$20$: doubling the temperature there raises the rate by a factor of $10^5$–$10^6$.
 </Fragment>
 </Tiers>
 
@@ -320,7 +320,7 @@ Two families of nuclear reactions convert hydrogen to helium in stars, both star
 <History title="Filling in the Sun's actual recipe" year="1939">
 <Portrait src="/img/people/bethe.jpg" name="Hans Bethe" years="1906–2005" credit="Los Alamos National Laboratory" license="CC BY 3.0" href="https://commons.wikimedia.org/wiki/File:Hans_Bethe.jpg">Worked out the pp-chain and CNO cycle within weeks of each other in 1938–39.</Portrait>
 
-By the 1930s, physicists knew fusion had to be the Sun's power source in outline, but not the actual reaction sequence. Hans Bethe, prompted partly by a 1938 Washington conference organised specifically to get astrophysicists and nuclear physicists talking to each other, worked out both the proton–proton chain and (independently, around the same time, also found by Carl von Weizsäcker) the CNO cycle within about a year. Bethe reportedly worked out the CNO cycle's details on a train home from that conference, on the back of an envelope, and initially thought the pp-chain — not CNO — was irrelevant to the Sun, before further calculation showed pp actually dominates at solar core temperatures. He received the 1967 Nobel Prize in Physics "for his contributions to the theory of nuclear reactions, especially his discoveries concerning the energy production in stars" — nearly three decades after doing the work, a common pattern in a field where confirmation takes generations.
+By the 1930s, physicists knew fusion had to be the Sun's power source in outline, but not the actual reaction sequence. Hans Bethe, prompted partly by a 1938 Washington conference organised specifically to get astrophysicists and nuclear physicists talking to each other, worked out both the proton–proton chain and (independently, around the same time, also found by Carl von Weizsäcker) the CNO cycle within about a year. Bethe reportedly had the CNO cycle worked out within weeks of that conference, and at first thought it, rather than the pp-chain, powered the Sun; later models with a cooler solar core showed that pp actually dominates there. He received the 1967 Nobel Prize in Physics "for his contributions to the theory of nuclear reactions, especially his discoveries concerning the energy production in stars" — nearly three decades after doing the work, a common pattern in a field where confirmation takes generations.
 </History>
 
 ### The proton–proton chain
@@ -343,11 +343,11 @@ This reaction *must* proceed via the **weak nuclear interaction** — one proton
 Once deuterium forms, it captures a further proton in about a second (a strong-force reaction, `p + d → 3He + γ`), and the chain branches three ways depending on what happens to the resulting helium-3:
 
 <Sim name="fusion-network" size="wide" minHeight={460}>
-**The pp-chain and CNO cycle, as a clickable reaction network.** Click any step for its energy release, its characteristic timescale in the solar core, and any neutrinos it emits. The pp-I branch (³He+³He, about 83% of the time in the Sun) closes without further weak decays; pp-II and pp-III route through beryllium-7 and boron-8 and are individually rarer but produce the highest-energy solar neutrinos.
+**The pp-chain and CNO cycle, as a clickable reaction network.** Click any step for its energy release, its characteristic timescale in the solar core, and any neutrinos it emits. The pp-I branch (³He+³He, about 85% of the time in the Sun) closes without further weak decays; pp-II and pp-III route through beryllium-7 and boron-8 and are individually rarer but produce the highest-energy solar neutrinos.
 </Sim>
 
-- **pp-I** ($\sim86\%$ in the Sun): $^3\text{He}+\,^3\text{He}\rightarrow\,^4\text{He}+2p$. Clean and direct.
-- **pp-II** ($\sim14\%$): $^3\text{He}+\,^4\text{He}\rightarrow\,^7\text{Be}+\gamma$, then $^7\text{Be}$ captures an electron to become $^7\text{Li}$ (emitting a mono-energetic 0.86 MeV neutrino), then $^7\text{Li}+p\rightarrow2\,^4\text{He}$.
+- **pp-I** ($\sim85\%$ in the Sun): $^3\text{He}+\,^3\text{He}\rightarrow\,^4\text{He}+2p$. Clean and direct.
+- **pp-II** ($\sim15\%$): $^3\text{He}+\,^4\text{He}\rightarrow\,^7\text{Be}+\gamma$, then $^7\text{Be}$ captures an electron to become $^7\text{Li}$ (emitting a mono-energetic 0.86 MeV neutrino), then $^7\text{Li}+p\rightarrow2\,^4\text{He}$.
 - **pp-III** ($\sim0.02\%$): $^7\text{Be}+p\rightarrow\,^8\text{B}+\gamma$, then $^8\text{B}$ beta-decays (emitting a high-energy neutrino, up to 15 MeV) to $^8\text{Be}$, which immediately splits into two $^4\text{He}$.
 
 ### The CNO cycle
@@ -377,7 +377,7 @@ Once core hydrogen is exhausted ([Chapter 15](/ch/giants/) covers this transitio
 <History title="Predicting a nucleus into existence" year="1953">
 <Portrait src="/img/people/hoyle.jpg" name="Fred Hoyle" years="1915–2001" credit="NRAO/AUI/NSF, Woodruff T. Sullivan III" license="CC BY 4.0" href="https://commons.wikimedia.org/wiki/File:Fred_Hoyle.jpg">Argued a specific excited state of carbon-12 had to exist, reasoning from cosmic carbon abundance alone.</Portrait>
 
-Fred Hoyle predicted this excited carbon-12 state should exist, on essentially the anthropic argument above — reasoning backward from the observed cosmic abundance of carbon (if the resonance were absent or badly mismatched, stars could barely make any carbon at all, in flagrant contradiction with the carbon-rich Universe we observe) — *before* it was found experimentally. He persuaded nuclear physicist Willy Fowler's Caltech group to look for the state specifically at the energy his argument demanded, and in 1953 they found it, within about 4% of Hoyle's prediction. It remains one of physics' most-cited examples of an anthropic argument (carbon-based observers exist, therefore whatever nuclear physics is needed for cosmic carbon abundance must hold) successfully predicting a specific, falsifiable, and previously unmeasured number. Hoyle, notably, was passed over for the 1983 Nobel Prize in Physics that went to his collaborator Fowler for exactly this body of work — one of the more debated snubs in the prize's history.
+Fred Hoyle predicted this excited carbon-12 state should exist, on essentially the anthropic argument above — reasoning backward from the observed cosmic abundance of carbon (if the resonance were absent or badly mismatched, stars could barely make any carbon at all, in flagrant contradiction with the carbon-rich Universe we observe) — *before* it was found experimentally. He persuaded nuclear physicist Willy Fowler's Caltech group to look for the state specifically at the energy his argument demanded, and in 1953 they found it, very close to the energy Hoyle had asked for. It remains one of physics' most-cited examples of an anthropic argument (carbon-based observers exist, therefore whatever nuclear physics is needed for cosmic carbon abundance must hold) successfully predicting a specific, falsifiable, and previously unmeasured number. Hoyle, notably, was passed over for the 1983 Nobel Prize in Physics that went to his collaborator Fowler for exactly this body of work — one of the more debated snubs in the prize's history.
 </History>
 
 <Aside>**A close call.** The resonance energy could have been just far enough off to make carbon (and by extension, us) enormously rarer in the Universe. How *finely tuned* this coincidence really is remains debated — some later calculations suggest more room for error than the popular telling implies — but the qualitative point stands: the amount of carbon in the Universe is sensitive to nuclear physics that has nothing obviously to do with chemistry or biology.</Aside>
@@ -407,14 +407,14 @@ For decades the r-process site was uncertain; the 2017 detection of gravitationa
 If 0.7% mass-to-energy conversion sounds efficient, it is worth comparing the Sun's *power density* to something mundane. The Sun generates its entire luminosity within a core roughly a quarter of its radius:
 
 $$
-\bar\varepsilon = \frac{L_\odot}{\tfrac43\pi (0.25R_\odot)^3} \approx 276\,\text{W/m}^3.
+\bar\varepsilon = \frac{L_\odot}{\tfrac43\pi (0.25R_\odot)^3} \approx 17\,\text{W/m}^3.
 $$
 
 <Fermi title="The Sun's power density vs. a compost heap">
-A well-run compost heap, decomposing organic matter aerobically, runs at roughly $10$–$100\,\text{W/m}^3$ of active volume. The solar core's average power density, computed above, is only a few times higher — around 276 W/m³. The Sun is not impressive because its fusion is *fast*; it is impressive because it is *enormous*. A star shines by having an astronomical amount of barely-fusing material, not a small amount of furiously-fusing material.
+A well-run compost heap, decomposing organic matter aerobically, runs at roughly $10$–$100\,\text{W/m}^3$ of active volume. The solar core's average power density, computed above, is no higher: about 17 W/m³, rising to roughly 280 W/m³ at the very centre. The Sun is not impressive because its fusion is *fast*; it is impressive because it is *enormous*. A star shines by having an astronomical amount of barely-fusing material, not a small amount of furiously-fusing material.
 </Fermi>
 
-Human fusion research inverts this trade: since we cannot build a star-sized reactor, we compensate with much higher density and temperature than any stellar core. **ITER**, the international tokamak under construction in France, aims to confine a deuterium–tritium plasma at $\sim150$ million K — ten times the Sun's core temperature — using magnetic fields, to reach fusion power densities of order $10^5$–$10^6\,\text{W/m}^3$, and targets a fusion power gain (output over input heating power) around 10. **NIF** (the National Ignition Facility) instead uses powerful lasers to compress a tiny deuterium–tritium pellet to extreme density for a few nanoseconds — inertial confinement rather than magnetic — and in December 2022 achieved **ignition**: more fusion energy released than laser energy delivered to the target, for the first time in a laboratory. Both approaches use deuterium–tritium fusion rather than the Sun's proton–proton chain, because $d+t\rightarrow{}^4\text{He}+n$ has a far lower Gamow energy (smaller $Z_1Z_2$, no weak-interaction bottleneck) and a resonance that makes it, by a wide margin, the easiest fusion reaction to ignite at all — every trick this chapter described (lowering $E_G$, exploiting resonances) shows up again as an engineering choice on Earth.
+Human fusion research inverts this trade: since we cannot build a star-sized reactor, we compensate with much higher density and temperature than any stellar core. **ITER**, the international tokamak under construction in France, aims to confine a deuterium–tritium plasma at $\sim150$ million K — ten times the Sun's core temperature — using magnetic fields, to reach fusion power densities of order $10^5$–$10^6\,\text{W/m}^3$, and targets a fusion power gain (output over input heating power) around 10. **NIF** (the National Ignition Facility) instead uses powerful lasers to compress a tiny deuterium–tritium pellet to extreme density for a few nanoseconds — inertial confinement rather than magnetic — and in December 2022 achieved **ignition**: more fusion energy released than laser energy delivered to the target, for the first time in a laboratory. Both approaches use deuterium–tritium fusion rather than the Sun's proton–proton chain, because $d+t\rightarrow{}^4\text{He}+n$ has the same small charge product as p+p but no weak-interaction bottleneck, and a resonance that makes it, by a wide margin, the easiest fusion reaction to ignite at all — every trick this chapter described (keeping $Z_1Z_2$ small, avoiding the weak interaction, exploiting resonances) shows up again as an engineering choice on Earth.
 
 ## Where we go from here
 

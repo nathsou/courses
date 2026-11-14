@@ -190,7 +190,7 @@ hints:
 :::
 
 :::exercises
-1. Run completion on the axioms of commutative groups without commutativity itself but with the extra axiom $x \cdot x = e$ (groups of exponent 2). What happens? (Chapter 20 completes the story.)
+1. Run completion on the three group axioms with the extra axiom $x \cdot x = e$ (groups of exponent 2, which are always commutative, although commutativity is not among the axioms). What happens? (Chapter 20 completes the story.)
 2. Complete $A \cdot B = B \cdot A$, $A \cdot A = E$, $B \cdot B = E$ with associativity and two-sided identity, using the precedence $\cdot \succ B \succ A \succ E$. How many elements does the group they present have, and how can you read that off the rules?
 3. Explain why Collapse requires the rewriting rule to be strictly more general than the collapsed rule (consider a rule rewriting its own left side).
 4. Show that the infinite system $F(G^n(F(x))) \to F(G^n(x))$ for $n \ge 1$ is convergent and equivalent to $F(G(F(x))) = F(G(x))$, so that the word problem is decidable even though completion never stops.

@@ -135,14 +135,14 @@ $$
 \frac{1}{H_0} = \frac{3.09\times10^{19}\,\text{km/Mpc}}{70\,\text{km/s/Mpc}} \approx 4.4\times10^{17}\,\text{s} \approx 14\,\text{Gyr}.
 $$
 
-That is suspiciously close to the actual age of 13.8 Gyr from the full Friedmann integration below — matter and dark energy happen to make the two nearly coincide for our particular universe, a coincidence explored later in this chapter. The handy shortcut $t_H[\text{Gyr}] \approx 978/H_0[\text{km/s/Mpc}]$ is worth memorising.
+That is suspiciously close to the actual age of 13.8 Gyr from the full Friedmann integration below — matter and dark energy happen to make the two nearly coincide for our particular universe at our particular epoch. The handy shortcut $t_H[\text{Gyr}] \approx 978/H_0[\text{km/s/Mpc}]$ is worth memorising.
 </Fermi>
 
 <Aside>**Superluminal recession is fine.** For $d > c/H_0$ (about 4,300 Mpc today), the naive $v=H_0 d$ exceeds $c$. This does not violate relativity: $v$ here is the rate of change of *proper distance* between comoving points, not the velocity of anything moving through local space. Special relativity's speed limit applies locally, not to the expansion of space itself. (New to this distinction? See [Appendix A3](/ch/primer-vectors/) on coordinates and frames, and Chapter 17 on why $c$ is only a *local* speed limit.)</Aside>
 
 ## The Friedmann equations
 
-<Predict question="A closed universe with no dark energy is bound to eventually recollapse — true or false?" choices={['True', 'False, curvature alone never guarantees recollapse', 'False, only if it also contains radiation']} answer={1}>
+<Predict question="A closed universe with no dark energy is bound to eventually recollapse — true or false?" choices={['True', 'False, curvature alone never guarantees recollapse', 'False, only if it also contains radiation']} answer={0}>
 True, for ordinary matter and radiation (which always have $\rho + 3p>0$): with $\Lambda=0$, a positively curved (closed) universe *always* turns around and recollapses, no matter how close to flat it is, because gravity is purely attractive and eventually wins against the fixed positive-curvature "energy" term. Add a positive cosmological constant, though, and a closed universe can expand forever, or even have no Big Bang at all — Λ can outrun both matter's dilution and curvature. Play with the flagship simulation below and watch the Ωm–ΩΛ plane: the "closed but eternal" region really exists.
 </Predict>
 
@@ -151,13 +151,13 @@ True, for ordinary matter and radiation (which always have $\rho + 3p>0$): with 
 <Level min={2} title="An energy argument for the first Friedmann equation">
 <Tiers>
 <Fragment slot="l1">
-Picture a large sphere of uniform matter, centred on you, of comoving radius $\chi$ and physical radius $r=a\chi$. By a classical result (Newton's "iron sphere" theorem — the same one used for gravity inside the Earth in [Appendix A6](/ch/primer-mechanics/)), the gravitational pull on a test galaxy at the sphere's edge depends only on the mass *inside* that radius, not on anything outside it. That turns "the whole universe's gravity" into an ordinary one-body problem: a test particle held back by the mass enclosed within its own comoving sphere. Energy conservation for that one particle, worked through, reproduces the real general-relativistic Friedmann equation almost exactly (with $kc^2$ standing in for a genuine spatial-curvature term GR adds).
+Picture a large sphere of uniform matter, centred on you, of comoving radius $\chi$ and physical radius $r=a\chi$. By a classical result (Newton's shell theorem — the same one used for gravity inside the Earth in [Appendix A6](/ch/primer-mechanics/)), the gravitational pull on a test galaxy at the sphere's edge depends only on the mass *inside* that radius, not on anything outside it. That turns "the whole universe's gravity" into an ordinary one-body problem: a test particle held back by the mass enclosed within its own comoving sphere. Energy conservation for that one particle, worked through, reproduces the real general-relativistic Friedmann equation almost exactly (with $kc^2$ standing in for a genuine spatial-curvature term GR adds).
 </Fragment>
 <Fragment slot="l2">
 Take a test mass $m$ at physical radius $r=a\chi$ from the centre of a uniform sphere of density $\rho(t)$. The enclosed mass is $M = \tfrac43\pi r^3\rho$, fixed in comoving terms ($\propto \chi^3$) as the sphere expands. Newtonian energy conservation for the test mass:
 
 $$
-E = \tfrac12 m\dot r^2 - \frac{GMm}{r} = \tfrac12 m a^2\dot\chi^2\cdot\frac{1}{\chi^2}\cdot\chi^2\Big|_{\dot\chi=0} \;\Rightarrow\; \tfrac12\dot a^2\chi^2 - \frac{4}{3}\pi G\rho a^2\chi^2 = \frac{E}{m}.
+E = \tfrac12 m\dot r^2 - \frac{GMm}{r}, \qquad \dot r = \dot a\chi, \quad \frac{GM}{r} = \frac43\pi G\rho\,a^2\chi^2 \;\Rightarrow\; \tfrac12\dot a^2\chi^2 - \frac{4}{3}\pi G\rho a^2\chi^2 = \frac{E}{m}.
 $$
 
 Divide by $\tfrac12 a^2\chi^2$ and absorb constants into a curvature parameter $k$:
@@ -265,7 +265,7 @@ $$
 <Fragment slot="where">$d_C$ (comoving distance) is what you'd measure with a tape strung along a constant-time slice today. $d_L$ is what a standard candle's flux implies via $F=L/4\pi d_L^2$. $d_A$ is what a standard ruler's angular size implies via $\theta=\ell/d_A$. All three coincide only for $z\ll1$.</Fragment>
 </KeyEq>
 
-The $d_A$ turnover happens because at high $z$ you are looking at light emitted when the universe — and the object's true comoving distance divided among a proportionally smaller sky — was much more compact; the extra $(1+z)^{-1}$ shrinks faster than $d_C$ grows past $z\sim1.5$.
+The $d_A$ turnover happens because the light we see from a very distant object left it when the universe was much smaller, so the object was then physically much closer to us than its comoving distance today suggests. Past $z\sim1.6$ the extra factor $(1+z)^{-1}$ shrinks faster than $d_C$ grows.
 </Fragment>
 </Tiers>
 
@@ -333,16 +333,16 @@ For a **closed, recollapsing** universe, the boundary scan finds the turnaround 
 Two independent ways of measuring today's expansion rate disagree by more than their stated uncertainties allow. One method (the "distance ladder": nearby stars, then Cepheid variable stars, then supernovae) gives about 73 km/s/Mpc. The other (fitting the pattern of the cosmic microwave background, assuming standard cosmology) gives about 67 km/s/Mpc. Either there's a subtle, still-unidentified measurement error in one of the two methods, or the standard cosmological model itself is missing something. This is the **Hubble tension**, one of the liveliest open problems in cosmology as of the mid-2020s.
 </Fragment>
 <Fragment slot="l2">
-The tension is currently about $4$–$6\sigma$ depending on exactly which datasets are combined: SH0ES-calibrated Cepheid + Type Ia supernova distance ladders give $H_0 \approx 73.0 \pm 1.0$ km/s/Mpc; Planck CMB analysis (assuming flat ΛCDM) gives $H_0 \approx 67.4 \pm 0.5$ km/s/Mpc; DESI baryon acoustic oscillation data land close to the Planck value when combined with a CMB prior. JWST-era re-measurements of the Cepheid rungs (2023–2025) have, if anything, *reinforced* the higher local value rather than resolving the discrepancy by finding a calibration error, though the debate is very much live.
+The tension is currently about $4$–$6\sigma$ depending on exactly which datasets are combined: SH0ES-calibrated Cepheid + Type Ia supernova distance ladders give $H_0 \approx 73.0 \pm 1.0$ km/s/Mpc; Planck CMB analysis (assuming flat ΛCDM) gives $H_0 \approx 67.4 \pm 0.5$ km/s/Mpc; DESI baryon acoustic oscillation data land close to the Planck value when combined with a CMB prior. JWST-era re-measurements of the Cepheid rungs (2023–2025) found no calibration error large enough to remove the discrepancy, although an independent JWST analysis based on other stellar distance indicators (the CCHP team) obtains about 70 km/s/Mpc. The debate is very much live.
 </Fragment>
 </Tiers>
 
 ### The distance ladder, rung by rung
 
-<History title="A variable star, a servant's job, and a Nobel Prize she never got" year="1908–1912">
+<History title="A variable star, a computer's job, and a Nobel Prize she never got" year="1908–1912">
 <Portrait src="/img/people/leavitt.jpg" name="Henrietta Swan Leavitt" years="1868–1921" credit="Wikimedia Commons" license="Public domain" href="https://commons.wikimedia.org/wiki/File:Henrietta_Swan_Leavitt.jpg" />
 
-Henrietta Swan Leavitt worked as a "computer" at the Harvard College Observatory, one of many women hired at low wages to measure and catalogue photographic plates because the work was considered unsuitable for men to do by hand. Cataloguing thousands of variable stars in the Magellanic Clouds, she noticed in 1908 (and firmly established in 1912) that brighter Cepheid variables pulsate more slowly — a tight period–luminosity relation. Because all the Clouds' stars are at essentially the same distance, this meant *period alone* reveals true luminosity, and comparing true to apparent brightness gives distance. Leavitt's law became the first rung stable enough to reach other galaxies; Hubble used it directly to show that the "spiral nebulae" were external galaxies, and later to build the redshift–distance relation above. The Swedish Academy considered nominating her for a Nobel Prize in 1924, only to learn she had died of cancer three years earlier — the prize cannot be awarded posthumously.
+Henrietta Swan Leavitt worked as a "computer" at the Harvard College Observatory, one of many women hired to measure and catalogue photographic plates, partly because they could be paid far less than men. Cataloguing thousands of variable stars in the Magellanic Clouds, she noticed in 1908 (and firmly established in 1912) that brighter Cepheid variables pulsate more slowly — a tight period–luminosity relation. Because all the Clouds' stars are at essentially the same distance, this meant *period alone* reveals true luminosity, and comparing true to apparent brightness gives distance. Leavitt's law became the first rung stable enough to reach other galaxies; Hubble used it directly to show that the "spiral nebulae" were external galaxies, and later to build the redshift–distance relation above. In 1925 the Swedish mathematician Gösta Mittag-Leffler wrote to her intending to nominate her for a Nobel Prize, only to learn she had died of cancer four years earlier — the prize is not awarded posthumously.
 </History>
 
 <Tiers>

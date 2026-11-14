@@ -202,7 +202,7 @@ The coefficient of $X^k$ in $(X + a)^n - (X^n + a)$ is $\binom nk a^{n-k}$ for $
 This identity characterises primes exactly, but checking it means computing $n + 1$ coefficients, which is exponential in the number of digits. AKS check it modulo $X^r - 1$ for a small $r$ (of size about $(\log n)^5$), and for a range of values of $a$ up to about $\sqrt r \log n$. The hard part of the proof, which we only state, is that if all these reduced identities hold and $n$ is not a perfect power, then $n$ must be a prime: otherwise a certain group of polynomials would have to be simultaneously large and small.
 
 :::theorem{name="Agrawal, Kayal and Saxena" year=2002 status=sketched}
-There is a deterministic algorithm that decides whether $n$ is prime in time polynomial in $\log n$. The version in the published paper runs in time $\tilde O((\log n)^{10.5})$; Lenstra and Pomerance improved this to $\tilde O((\log n)^6)$.
+There is a deterministic algorithm that decides whether $n$ is prime in time polynomial in $\log n$. The published paper proves a running time of $\tilde O((\log n)^{10.5})$ by elementary means and $\tilde O((\log n)^{7.5})$ with the help of a deeper theorem about primes; Lenstra and Pomerance improved this to $\tilde O((\log n)^6)$.
 :::
 
 The paper won the Gödel Prize in 2006. In practice AKS is far slower than ECPP, and much slower than Miller–Rabin, so it is not what anyone runs; its importance is theoretical. It showed that primality, the problem Gauss called one of the most important and useful in arithmetic, is easy in the strongest sense complexity theory has, while factoring, as far as anyone knows, is not.

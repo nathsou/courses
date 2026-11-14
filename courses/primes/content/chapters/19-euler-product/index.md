@@ -106,7 +106,7 @@ Euler used the product to prove, again, that there are infinitely many primes: i
 
 **The Möbius function.** The reciprocal of the Euler product is
 $$\frac1{\zeta(s)} = \prod_p\left(1 - \frac1{p^s}\right) = \sum_{n=1}^\infty \frac{\mu(n)}{n^s},$$
-by the theorem applied to the multiplicative function $\mu$ with $\mu(p) = -1$ and $\mu(p^a) = 0$ for $a \ge 2$. This is the **Möbius function** of Chapter 17: $\mu(n) = (-1)^k$ if $n$ is a product of $k$ distinct primes, and $0$ if $n$ has a square factor. Since $\zeta(s) \cdot \frac1{\zeta(s)} = 1$, uniqueness gives $\mu * 1 = \varepsilon$:
+by the theorem applied to the multiplicative function $\mu$ with $\mu(p) = -1$ and $\mu(p^a) = 0$ for $a \ge 2$. This is the **Möbius function** of Chapter 15: $\mu(n) = (-1)^k$ if $n$ is a product of $k$ distinct primes, and $0$ if $n$ has a square factor. Since $\zeta(s) \cdot \frac1{\zeta(s)} = 1$, uniqueness gives $\mu * 1 = \varepsilon$:
 $$\sum_{d \mid n}\mu(d) = \begin{cases} 1 & n = 1, \\ 0 & n > 1. \end{cases}$$
 (This can also be checked directly: for $n > 1$ with $k$ distinct prime factors, the square-free divisors with an even number of primes and those with an odd number are equally many, $2^{k-1}$ each.) In particular **$\zeta(s) \ne 0$ for $s > 1$**: it has a multiplicative inverse. The same holds for complex $s$ with $\operatorname{Re} s > 1$, and that is the first fact about the zeros of zeta.
 

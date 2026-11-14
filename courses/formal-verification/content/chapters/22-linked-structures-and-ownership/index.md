@@ -255,7 +255,7 @@ Behind them is a result about Rust itself. Rust's guarantees hold for safe code,
 
 ## What comes next
 
-Part IV ends here: programs with loops, specifications, data and heaps, verified one function at a time. Part V turns back to systems that run forever, the subject of Part II, with the proof techniques built since. [Chapter 23](/chapters/inductive-invariants/) asks what makes an invariant of a whole system provable, and what to do when it is true but not inductive.
+Part IV ends here: programs with loops, specifications, data and heaps, verified one function at a time. Part V turns back to systems that run forever, the subject of Part I, with the proof techniques built since. [Chapter 23](/chapters/inductive-invariants/) asks what makes an invariant of a whole system provable, and what to do when it is true but not inductive.
 
 ## Further reading
 

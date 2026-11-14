@@ -62,7 +62,7 @@ q: 'The two jugs could in principle hold 4 × 6 = 24 combinations of whole gallo
 options:
   - text: All 24.
     why: 'Pouring always fills one jug or empties the other, so states such as (1, 1), where both jugs are partly full, cannot be reached.'
-  - text: About half.
+  - text: About two thirds.
     correct: true
     why: 'After every step at least one jug is full or empty. The 16 reachable states are exactly those combinations; states like (1, 2) are unreachable.'
   - text: Only the 8 with a full or an empty jug.

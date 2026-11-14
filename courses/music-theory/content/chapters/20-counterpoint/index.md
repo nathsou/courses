@@ -92,7 +92,7 @@ dissonance tonal music tames, and the rule behind it, *dissonance on the weak be
 centuries of music after Fux.
 
 ```score caption="Second species over the same cantus firmus. P marks a passing dissonance; every strong beat is a consonance." tempo="88"
-\time 4/4 \staff treble c'2 b2^"P" | a2 b2 | c'2 d'2 | e'2 d'2^"P" | c'2 f'2 | e'2 d'2 | a2 b2^"P" | c'2 g2 | a2 b2 | c'1 | \staff bass c1 | d1 | f1 | e1 | a1 | g1 | f1 | e1 | d1 | c1 |
+\time 4/4 \staff treble c'2 b2^"P" | a2 b2 | d'2 c'2 | e'2 d'2^"P" | c'2 f'2 | e'2 d'2 | a2 b2^"P" | c'2 g2 | a2 b2 | c'1 | \staff bass c1 | d1 | f1 | e1 | a1 | g1 | f1 | e1 | d1 | c1 |
 ```
 
 ```analyse
@@ -102,7 +102,7 @@ prompt: 'Label each note of the upper voice: C if it makes a consonance with the
 instruction: 'One label per note: C or P.'
 per: note
 score: |
-  \time 4/4 \staff treble c'2 b2 | a2 b2 | c'2 d'2 | e'2 d'2 | c'2 f'2 | e'2 d'2 | a2 b2 | c'2 g2 | a2 b2 | c'1 | \staff bass c1 | d1 | f1 | e1 | a1 | g1 | f1 | e1 | d1 | c1 |
+  \time 4/4 \staff treble c'2 b2 | a2 b2 | d'2 c'2 | e'2 d'2 | c'2 f'2 | e'2 d'2 | a2 b2 | c'2 g2 | a2 b2 | c'1 | \staff bass c1 | d1 | f1 | e1 | a1 | g1 | f1 | e1 | d1 | c1 |
 answers: [C, P, C, C, C, C, C, P, C, C, C, C, C, P, C, C, C, C, C]
 hints:
   - 'Work out the interval above the lower note, counting letters: :n[B3] over :n[C3] is a seventh, a dissonance; :n[A3] over :n[D3] is a fifth.'

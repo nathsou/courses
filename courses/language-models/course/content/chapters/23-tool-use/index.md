@@ -10,7 +10,7 @@ builds:
   - Retrieval by cosine similarity
 ---
 
-The models of this book can do one thing: read text and predict what comes next. Everything else has been a matter of what text we give them and what we do with what they write. This chapter pushes that idea to its end. If a model writes a request in a format a program can read — *compute 357 + 6789*, *search for “Mixture-of-Experts”*, *run these tests* — the program can carry it out and write its answer back into the model’s context, and the model continues from there. The model has gained a **tool**.
+The models of this course can do one thing: read text and predict what comes next. Everything else has been a matter of what text we give them and what we do with what they write. This chapter pushes that idea to its end. If a model writes a request in a format a program can read — *compute 357 + 6789*, *search for “Mixture-of-Experts”*, *run these tests* — the program can carry it out and write its answer back into the model’s context, and the model continues from there. The model has gained a **tool**.
 
 Tools cover a model’s weaknesses. Language models are unreliable at exact arithmetic, their knowledge stops at their training data, and they cannot act on the world. A calculator, a search engine and a code interpreter fix each of these. An **agent** is a model that uses tools in a loop — deciding what to do next from the results of what it did before — until a task is done.
 

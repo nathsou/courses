@@ -122,7 +122,7 @@ if write {
 
 ### The counters
 
-Two of the registers can also count. The :term[program counter]{id=program-counter} (PC) is Chapter 18’s counter with load: `PC_INC` adds one, `PC_LD` loads a new address from the bus. Every byte of an instruction that is fetched bumps it, and a jump loads it. The **stack pointer** (SP) needs to count *both* ways, so it is a plain register whose input comes from an adder: B is 0000 0001 for `SP_INC` and 1111 1111 (that is, −1) for `SP_DEC`, so the same adder does both, and the register’s enable is `SP_INC` or `SP_DEC`. On reset it loads 0xF0. Neither the SP nor the flags has a bus driver of its own: SP reaches the bus through `OE_SP`, and the flags never do.
+Two of the registers can also count. The :term[program counter]{id=program-counter} (PC) is Chapter 18’s counter with load: `PC_INC` adds one, `PC_LD` loads a new address from the bus. Every byte of an instruction that is fetched bumps it, and a jump loads it. The **stack pointer** (SP) needs to count *both* ways, so it is a plain register whose input comes from an adder: B is 0000 0001 for `SP_INC` and 1111 1111 (that is, −1) for `SP_DEC`, so the same adder does both, and the register’s enable is `SP_INC` or `SP_DEC`. On reset it loads 0xF0. Neither the SP nor the flags can be loaded from the bus. SP can be put on the bus, through `OE_SP`; the flags cannot.
 
 ## The ALU
 
@@ -292,7 +292,7 @@ Here is the whole datapath, gate by gate: about 3,100 gates (from your own parts
 :::
 
 :::note[Why the fetch is separate from the instruction]
-The two fetch cycles happen for every instruction, whatever it is. Nothing in them depends on IR, because IR is what they are *loading*. That is why the control unit of Chapter 22 needs a step counter as well as the instruction: the steps 0 and 1 are the same for every instruction, and only from step 3 do the instructions differ.
+The two fetch cycles happen for every instruction, whatever it is. Nothing in them depends on IR, because IR is what they are *loading*. That is why the control unit of Chapter 22 needs a step counter as well as the instruction: the steps 0 and 1 (and step 2, a decode cycle that Chapter 22 adds) are the same for every instruction, and only from step 3 do the instructions differ.
 :::
 
 ### The whole of the datapath in gates

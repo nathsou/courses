@@ -5,10 +5,10 @@
   import Slider from '$lib/components/ui/Slider.svelte';
 
   const B = $derived(params.get('shape.B', 32));
-  const T = $derived(params.get('shape.T', 256));
-  const C = $derived(params.get('shape.C', 384));
+  const T = $derived(params.get('shape.T', 512));
+  const C = $derived(params.get('shape.C', 512));
   const V = $derived(params.get('shape.V', 8192));
-  let H = $state(6);
+  let H = $state(8);
 
   const rows = $derived([
     { name: 'Token ids', shape: ['B', 'T'], dims: [B, T], note: 'integers: one id per position' },

@@ -47,7 +47,7 @@ Each is small; together they are a good part of the difference between `-O1` and
 
 ## Superoptimisation
 
-What if, instead of hand-writing peephole rules, we *searched* for the shortest instruction sequence equivalent to a given one? Henry Massalin’s **superoptimizer** (1987) enumerated all short 68020 programs and found astonishing branch-free idioms, such as a sign function in three instructions. Later work made the search practical:
+What if, instead of hand-writing peephole rules, we *searched* for the shortest instruction sequence equivalent to a given one? Henry Massalin’s **superoptimizer** (1987) enumerated all short 68020 programs and found astonishing branch-free idioms, such as a sign function in four instructions. Later work made the search practical:
 - **STOKE** (Schkufza, Sharma and Aiken, 2013) uses stochastic search to optimise x86-64 loops;
 - **Souper** (2017) finds missing peepholes in LLVM IR with an SMT solver, and many of its discoveries became new InstCombine rules.
 

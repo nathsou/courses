@@ -49,7 +49,7 @@ import Portrait from '../../components/Portrait.astro';
 ## Halos first, galaxies second
 
 <Photo src="/img/galaxy-formation/antennae.jpg" alt="Two colliding spiral galaxies, the Antennae, with tangled dust lanes and bright pink and blue knots of new stars" credit="NASA, ESA, and the Hubble Heritage Team (STScI/AURA)-ESA/Hubble Collaboration" license="CC BY 4.0" href="https://esahubble.org/images/heic0615a/" size="wide" aspect="1 / 1">
-**Galaxy formation in the act.** The Antennae (NGC 4038/4039), about 45 million light-years away, are two spiral galaxies partway through a merger. The collision squeezes their gas into thousands of bright blue star clusters, and pink regions glow with hydrogen lit by newborn stars. In a few hundred million years the pair will probably settle into a single elliptical galaxy.
+**Galaxy formation in the act.** The Antennae (NGC 4038/4039), about 70 million light-years away, are two spiral galaxies partway through a merger. The collision squeezes their gas into thousands of bright blue star clusters, and pink regions glow with hydrogen lit by newborn stars. In a few hundred million years the pair will probably settle into a single elliptical galaxy.
 </Photo>
 
 <Level max={1}>
@@ -222,7 +222,7 @@ Galaxies come in a remarkably small number of shapes. Edwin Hubble's classificat
 <History title="Sorting the nebulae" year="1926">
 <Portrait src="/img/people/hubble-edwin.jpg" name="Edwin Hubble" years="1889–1953" credit="Johan Hagemeyer, 1931" license="Public domain" href="https://commons.wikimedia.org/wiki/File:Studio_portrait_photograph_of_Edwin_Powell_Hubble_(cropped).JPG" />
 
-In 1924 Edwin Hubble found Cepheid variables in the Andromeda "nebula" on plates from the 100-inch Hooker telescope. That settled the Great Debate: the spiral nebulae were galaxies far outside our own. Two years later he published a classification of about 400 of them, sorted by how smooth or knotty they looked. He called ellipticals "early" and spirals "late", borrowing the language of stellar spectral types, and he was careful to say the words implied no evolution. Readers ignored the caveat for decades. The scheme itself survived almost untouched, and Hubble's real legacy, the expanding universe, came three years later ([Chapter 25](/ch/expansion/)).
+In 1923 Edwin Hubble found a Cepheid variable in the Andromeda "nebula" on plates from the 100-inch Hooker telescope. That settled the Great Debate: the spiral nebulae were galaxies far outside our own. Two years later he published a classification of about 400 of them, sorted by how smooth or knotty they looked. He called ellipticals "early" and spirals "late", borrowing the language of stellar spectral types, and he was careful to say the words implied no evolution. Readers ignored the caveat for decades. The scheme itself survived almost untouched, and Hubble's real legacy, the expanding universe, came three years later ([Chapter 25](/ch/expansion/)).
 </History>
 
 ### Red sequence and blue cloud
@@ -232,7 +232,7 @@ A more physical classification comes from colour. Plot the optical colour of gal
 - the **blue cloud**: star-forming disk galaxies, whose light is dominated by short-lived hot, blue O and B stars; and
 - the **red sequence**: *quiescent* galaxies, mostly ellipticals and S0s, whose stars are old and red, with a tight colour–mass relation set mostly by metallicity.
 
-Between them lies a sparsely populated **green valley**. The small number of galaxies there tells us galaxies cross it quickly, in about 1 Gyr. Something *quenches* star formation, and it acts fast. Above about $3\times10^{10}$ M☉ most galaxies are red, and below it most are blue. Since $z \approx 2$ the mass in the red sequence has roughly doubled, while the blue cloud's has changed little: galaxies keep moving from blue to red.
+Between them lies a sparsely populated **green valley**. The small number of galaxies there tells us galaxies cross it quickly, in about 1 Gyr. Something *quenches* star formation, and it acts fast. Above about $3\times10^{10}$ M☉ most galaxies are red, and below it most are blue. Since $z \approx 1$ the mass in the red sequence has roughly doubled, while the blue cloud's has changed little: galaxies keep moving from blue to red.
 
 ### Morphology–density relation
 
@@ -252,9 +252,9 @@ Here is the most important plot in the subject. Count halos by mass in a simulat
 
 Every halo starts with the cosmic baryon fraction $f_b = \Omega_b/\Omega_m \approx 0.157$. If all of it became stars, the curve would be a flat line at 0.157. Instead it is a sharp peak, with efficiencies falling to below 1% at both ends. Two different physical processes cut off the two sides.
 
-**Small halos: supernova feedback (and reionisation).** A $10^{10}$ M☉ halo has an escape speed of about 60 km/s. A single supernova releases about $10^{51}$ erg, and about one supernova forms for every 100 M☉ of stars. That gives $10^{49}$ erg per solar mass of stars formed, or a speed of about 700 km/s if all of it went into kinetic energy. Even if 90% of the energy is radiated away, supernovae can easily expel the gas of a dwarf. The ratio of gas ejected to stars formed, the *mass loading* $\eta$, scales as $V_c^{-2}$ if the winds are energy-driven, or $V_c^{-1}$ if momentum-driven. Reionisation adds a second effect: after $z \approx 6$, the UV background heats the intergalactic medium to about $10^4$ K, and halos with $V_c \lesssim 20$–30 km/s can no longer hold onto their gas at all. This is why the smallest dwarfs, like the ultra-faint satellites of the Milky Way, have only a few thousand M☉ of stars in $10^{8}$–$10^{9}$ M☉ halos.
+**Small halos: supernova feedback (and reionisation).** A $10^{10}$ M☉ halo has an escape speed of about 60 km/s. A single supernova releases about $10^{51}$ erg, and about one supernova forms for every 100 M☉ of stars. That gives $10^{49}$ erg per solar mass of stars formed, or a speed of about 1000 km/s if all of it went into kinetic energy. Even if 90% of the energy is radiated away, supernovae can easily expel the gas of a dwarf. The ratio of gas ejected to stars formed, the *mass loading* $\eta$, scales as $V_c^{-2}$ if the winds are energy-driven, or $V_c^{-1}$ if momentum-driven. Reionisation adds a second effect: after $z \approx 6$, the UV background heats the intergalactic medium to about $10^4$ K, and halos with $V_c \lesssim 20$–30 km/s can no longer hold onto their gas at all. This is why the smallest dwarfs, like the ultra-faint satellites of the Milky Way, have only a few thousand M☉ of stars in $10^{8}$–$10^{9}$ M☉ halos.
 
-**Big halos: long cooling times and AGN feedback.** Above $10^{12}$ M☉ the Rees–Ostriker argument already means cooling is slow. But not slow *enough*: X-ray observations show that cluster cores should cool at hundreds of M☉/yr (the "cooling flow" problem), yet they form far fewer stars. Something keeps adding heat. The culprit is the central supermassive black hole. X-ray images of Perseus and other clusters show cavities hundreds of kpc across, inflated by radio jets, with enough $PV$ work to offset the cooling. That is the subject of the next section.
+**Big halos: long cooling times and AGN feedback.** Above $10^{12}$ M☉ the Rees–Ostriker argument already means cooling is slow. But not slow *enough*: X-ray observations show that cluster cores should cool at hundreds of M☉/yr (the "cooling flow" problem), yet they form far fewer stars. Something keeps adding heat. The culprit is the central supermassive black hole. X-ray images of Perseus and other clusters show cavities tens of kpc across (hundreds in the most extreme systems), inflated by radio jets, with enough $PV$ work to offset the cooling. That is the subject of the next section.
 
 <Fermi title="Can a black hole unbind its galaxy's gas?">
 A black hole growing to mass $M_\text{BH}$ radiates about $\epsilon M_\text{BH} c^2$ with $\epsilon \approx 0.1$. For $M_\text{BH} = 10^8$ M☉ that is $10^{-1} \times 2\times10^{38}\,\text{kg}\times 9\times10^{16}\,\text{m}^2\text{s}^{-2} \approx 2\times10^{54}$ J.
@@ -271,7 +271,7 @@ Every massive galaxy seems to host a central black hole of $10^6$–$10^{10}$ M�
 ### The Eddington limit
 
 <Level max={1}>
-There is a speed limit on how fast a black hole can feed. Gas falling in gets very hot and shines, and that light pushes outward on the gas. The more gas falls in, the brighter it shines and the harder it pushes back. At some brightness, the **Eddington limit**, the push of light balances the pull of gravity, and extra gas gets blown away instead of swallowed. The limit is about 30,000 times the Sun's brightness for every Sun's worth of black-hole mass. A billion-Sun black hole shining at its limit outshines a whole galaxy of a hundred billion stars about a hundred times over.
+There is a speed limit on how fast a black hole can feed. Gas falling in gets very hot and shines, and that light pushes outward on the gas. The more gas falls in, the brighter it shines and the harder it pushes back. At some brightness, the **Eddington limit**, the push of light balances the pull of gravity, and extra gas gets blown away instead of swallowed. The limit is about 30,000 times the Sun's brightness for every Sun's worth of black-hole mass. A billion-Sun black hole shining at its limit outshines a whole galaxy of a hundred billion stars several hundred times over.
 </Level>
 
 <Level min={2} title="Radiation pressure against gravity">
@@ -293,14 +293,14 @@ $$
 <Fragment slot="where"><span data-term="Ledd">$L_\text{Edd}$</span> is the luminosity at which radiation pressure on electrons balances gravity on protons. <span data-term="Mbh">$M$</span> is the central mass, $m_p$ the proton mass <C k="mp" /> and <span data-term="sigT">$\sigma_T$</span> the Thomson cross-section <C k="sigmaT" />. Spherically accreting gas cannot shine brighter than this for long; disks and beaming allow modest super-Eddington phases.</Fragment>
 </KeyEq>
 
-A black hole of <Var name="Mbh" value={1e9} min={1e2} max={1e11} log digits={2} /> M☉ has $L_\text{Edd} =$ <Out name="LEdd" />. A bright quasar at $10^{9}$ M☉ outshines its entire host galaxy of $10^{11}$ stars by a factor of about 100.
+A black hole of <Var name="Mbh" value={1e9} min={1e2} max={1e11} log digits={2} /> M☉ has $L_\text{Edd} =$ <Out name="LEdd" />. A bright quasar at $10^{9}$ M☉ outshines its entire host galaxy of $10^{11}$ stars by a factor of several hundred.
 
 ### Accretion efficiency and the Salpeter time
 
 Gas spiralling in through a thin disk radiates the binding energy at its innermost stable circular orbit (ISCO, [Chapter 19](/ch/black-holes/)). That efficiency $\epsilon = L/\dot M c^2$ is 5.7% for a non-spinning black hole and up to 42% for a maximally spinning one. The usual fiducial value is $\epsilon \approx 0.1$, about 15 times more efficient than hydrogen fusion. To sustain $L_\text{Edd}$ with efficiency <Var name="eff" value={0.1} min={0.04} max={0.42} digits={2} />, our black hole must swallow <Out name="Mdot" />.
 
 <Level max={1}>
-Because the feeding limit grows with the black hole's mass, a black hole feeding at the limit grows by the same *percentage* every so often, like money earning compound interest. It roughly triples every 50 million years or so. That sounds fast, but going from 100 Suns to a billion Suns takes about 16 of those triplings: roughly 800 million years of nonstop feeding.
+Because the feeding limit grows with the black hole's mass, a black hole feeding at the limit grows by the same *percentage* every so often, like money earning compound interest. It roughly triples every 50 million years or so. That sounds fast, but going from 100 Suns to a billion Suns takes about 15 of those triplings: roughly 800 million years of nonstop feeding.
 </Level>
 
 <Level min={2} title="The Salpeter growth law">

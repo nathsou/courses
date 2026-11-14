@@ -66,7 +66,7 @@ Nicolaas de Bruijn proposed replacing each bound variable by a number: how many 
 
 ## Explicit substitutions
 
-The last step makes substitution itself a set of rewrite rules. In the **λυ-calculus** of Pierre Lescanne (1994),:cite[lescanne1994] terms use de Bruijn indices, and a substitution is an explicit term constructor `Sub(a, s)`, with substitutions built from `Slash(b)` (replace index 1 by $b$), `Lift(s)` (pass under a binder) and `Shift` (add one to every index). β-reduction just creates a substitution, and eight first-order rules carry it out:
+The last step makes substitution itself a set of rewrite rules. In the **λυ-calculus** of Pierre Lescanne (1994),:cite[lescanne1994] terms use de Bruijn indices, and a substitution is an explicit term constructor `Sub(a, s)`, with substitutions built from `Slash(b)` (replace index 1 by $b$), `Lift(s)` (pass under a binder) and `Shift` (add one to every index). β-reduction just creates a substitution, and seven more first-order rules carry it out:
 
 ```girafe title="The λυ-calculus" tools="trace,run" strategy="outermost"
 App(Lam(a), b) -> Sub(a, Slash(b))

@@ -12,7 +12,7 @@ Chapter 24 reduced the prime number theorem to one fact about $\zeta$: it has no
 
 ## The idea
 
-On the line $\sigma > 1$, taking logarithms in the Euler product (Chapter 19),
+For $\sigma > 1$, taking logarithms in the Euler product (Chapter 19),
 $$\log|\zeta(\sigma + it)| = \operatorname{Re}\log\zeta(\sigma + it) = \sum_p\sum_{k \ge 1}\frac{\cos(kt\log p)}{k\,p^{k\sigma}}.$$
 The dominant terms are $\sum_p\frac{\cos(t\log p)}{p^\sigma}$. Think of each prime as casting a vote $\cos(t\log p)$, weighted by $1/p^\sigma$. For $\zeta(1 + it)$ to be $0$, the sum would have to tend to $-\infty$ as $\sigma \to 1^+$: the primes would have to vote $-1$ (angle $t\log p$ close to $\pi$ modulo $2\pi$) in a strong majority. But then the doubled angles $2t\log p$ would be close to $0$, the votes at $2t$ would be close to $+1$, and $\log|\zeta(\sigma + 2it)|$ would tend to $+\infty$: $\zeta$ would have a pole at $1 + 2it$. It has only one pole, at $1$.
 

@@ -1,7 +1,7 @@
 ---
 number: 25
 title: Evaluation
-summary: How do we know a model is better? We build a small benchmark from TinyStories and score every model of the book on it; put error bars on the scores; check whether CourseGPT’s confidence means anything; contaminate a model on purpose to watch a score lie; and survey how frontier models are evaluated — benchmarks, human preferences and models judging models.
+summary: How do we know a model is better? We build a small benchmark from TinyStories and score every model of the course on it; put error bars on the scores; check whether CourseGPT’s confidence means anything; contaminate a model on purpose to watch a score lie; and survey how frontier models are evaluated — benchmarks, human preferences and models judging models.
 duration: About 1½ hours
 prerequisites: [scaling-laws, preference-learning]
 builds:
@@ -10,7 +10,7 @@ builds:
   - Calibration error
 ---
 
-Every chapter of this book has measured something: bits per token, accuracy on held-out problems, how often a story uses the required words. Those measurements were easy to trust because we controlled everything — the data, the model, the test set, and what counted as right. Evaluating a general-purpose model is harder. There is no single number for “good at language”, the test sets are public and leak into training data, small differences are noise, and for most of what people ask assistants there is no right answer to compare with.
+Every chapter of this course has measured something: bits per token, accuracy on held-out problems, how often a story uses the required words. Those measurements were easy to trust because we controlled everything — the data, the model, the test set, and what counted as right. Evaluating a general-purpose model is harder. There is no single number for “good at language”, the test sets are public and leak into training data, small differences are noise, and for most of what people ask assistants there is no right answer to compare with.
 
 This chapter goes through the problems one at a time, on a benchmark small enough to build and run in minutes.
 
@@ -99,14 +99,14 @@ uv run lmc ch25 contaminate   # train on the test stories, then score again
 
 :::exercises
 1. **Harder distractors.** Generate the distractors with CourseGPT itself (sample a next sentence) and keep only those it scores above the true sentence’s. How low can you push its accuracy, and how does the 2 × 256 model do on the result?
-2. **Scaling curve.** Plot accuracy against validation bits per token for the models of the book. Is the relationship smooth?
+2. **Scaling curve.** Plot accuracy against validation bits per token for the models of the course. Is the relationship smooth?
 3. **Temperature scaling.** Find the temperature that minimises the benchmark choice ECE on half the items, and check it on the other half.
 4. **Detection.** For the contaminated model, compare the loss on the test stories with the loss on fresh stories. How small can the contamination be and still be detectable this way?
 :::
 
 :::challenge
 1. **A judge.** Use a larger open model as a judge of pairs of CourseGPT stories for the same prompt. Measure its position bias by swapping the order of every pair.
-2. **An arena for the book.** Collect your own preferences between stories from the draft model, CourseGPT and the instruction-tuned model, and fit Bradley–Terry ratings with confidence intervals.
+2. **An arena for the course.** Collect your own preferences between stories from the draft model, CourseGPT and the instruction-tuned model, and fit Bradley–Terry ratings with confidence intervals.
 3. **Error bars everywhere.** Go back through the measured widgets of Chapters 17–22 and estimate which differences would survive a second seed.
 :::
 

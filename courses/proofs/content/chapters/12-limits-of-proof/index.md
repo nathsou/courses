@@ -4,7 +4,7 @@ title: The limits of proof
 summary: Cantor’s diagonal returns three times — as a paradox that shook the foundations of mathematics, as a program no computer can run, and as a true statement no proof can reach. Russell, Turing and Gödel, and what incompleteness does and does not say.
 duration: About 2½ hours
 prerequisites: [sizes-of-infinity, truth-and-consequence]
-theorems: [Russell’s paradox, The halting problem is undecidable (Turing, 1936), Gödel’s first incompleteness theorem (1931)]
+theorems: [Russell’s paradox, "The halting problem is undecidable (Turing, 1936)", Gödel’s first incompleteness theorem (1931)]
 techniques: [diagonalisation, self-reference, reduction, proof by contradiction]
 ---
 
@@ -49,7 +49,7 @@ why: |
 
 ## Paradoxes of language
 
-The ancient Greeks knew the **liar**: *this sentence is false*. If it is true, then it is false; if it is false, then it is true. A subtler relative, which Russell published in 1906 and credited to an Oxford librarian named G. G. Berry, goes like this. There are only finitely many English phrases of fewer than sixty letters, so only finitely many numbers can be described by them. So there is a smallest number *not* describable in fewer than sixty letters. But “the smallest positive integer not definable in fewer than sixty letters” describes it — in fewer than sixty letters.
+The ancient Greeks knew the **liar**: *this sentence is false*. If it is true, then it is false; if it is false, then it is true. A subtler relative, which Russell published in 1906 and credited to an Oxford librarian named G. G. Berry, goes like this. There are only finitely many English phrases of fewer than sixty letters, so only finitely many numbers can be described by them. So there is a smallest number *not* describable in fewer than sixty letters. But “the smallest positive integer not definable in under sixty letters” describes it — in fifty-seven letters.
 
 These paradoxes do not show that mathematics is inconsistent. They show that “true”, “describable” and “definable” are dangerous words when a sentence may talk about itself. The achievement of Turing and Gödel was to capture self-reference *precisely*, inside mathematics, where it produces not paradoxes but theorems.
 

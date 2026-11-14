@@ -57,7 +57,7 @@ Linux has used a buddy allocator for physical pages since its early days. Its fr
 id: the-kernels-allocators/buddy
 title: Split and merge
 prompt: |
-  Implement `alloc(order)` and `free(frame)` for a buddy allocator over `frames` frames (a power of two). `free[k]` is the list of free blocks of order `k`, as start frames, kept in increasing order. `alloc` takes the lowest-addressed block of the smallest sufficient order, splits it as needed (keeping the lower half each time), and returns its first frame, or `-1`. `free` merges with free buddies for as long as it can. The class remembers each allocated block’s order in `allocated`. JavaScript arrays and maps are fine here: this is the kernel’s own bookkeeping, not data in the simulated heap.
+  Implement `alloc(order)` and `free_(frame)` for a buddy allocator over `frames` frames (a power of two). `free[k]` is the list of free blocks of order `k`, as start frames, kept in increasing order (the method is spelled `free_` so that it does not clash with these lists). `alloc` takes the lowest-addressed block of the smallest sufficient order, splits it as needed (keeping the lower half each time), and returns its first frame, or `-1`. `free_` merges with free buddies for as long as it can. The class remembers each allocated block’s order in `allocated`. JavaScript arrays and maps are fine here: this is the kernel’s own bookkeeping, not data in the simulated heap.
 starter: |
   export class Buddy {
     free: number[][];

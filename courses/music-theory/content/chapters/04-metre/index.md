@@ -65,7 +65,7 @@ So 3/4 means three :t[crotchet] beats in every :t[bar], 2/4 two, and 4/4 four. 4
 a sign of its own, a large C. It is read as “common time”, but the sign is older than the phrase: it comes
 from the broken circle that medieval notation used for this metre.
 
-```score caption="The same four notes in 2/4, 3/4 and 4/4: only the grouping changes." play="false"
+```score caption="The same five notes in 2/4, 3/4 and 4/4: only the grouping changes." play="false"
 \time 2/4 c''4 d''4 | e''4 f''4 | g''2 |
 ```
 

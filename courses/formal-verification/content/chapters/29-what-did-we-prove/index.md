@@ -17,7 +17,7 @@ A fourth limit is not a hypothesis but a theorem: no tool can decide every inter
 
 ## The trusted computing base
 
-The **trusted computing base** (TCB) of a result is everything that must work correctly for the result to mean what it says. Some components are in it because nothing checks them; others are kept out of it by a certificate that something small and independent re-checks. This course was built around that second idea. The SAT solver of Part II is about 1,500 lines of optimised search, and it is not trusted: every UNSAT answer comes with a DRAT proof, and the checker that re-checks it is under 200 lines. A proof assistant built so that its proofs can be re-checked by a small independent kernel satisfies what is called the *de Bruijn criterion*.
+The **trusted computing base** (TCB) of a result is everything that must work correctly for the result to mean what it says. Some components are in it because nothing checks them; others are kept out of it by a certificate that something small and independent re-checks. This course was built around that second idea. The SAT solver of Part II is about 700 lines of optimised search, and it is not trusted: every UNSAT answer comes with a DRAT proof, and the checker that re-checks it is under 200 lines. A proof assistant built so that its proofs can be re-checked by a small independent kernel satisfies what is called the *de Bruijn criterion*.
 
 :::bridge{course=cic chapter=intro}
 *The Calculus of Inductive Constructions* starts from the de Bruijn criterion: a proof assistant whose proofs are terms, re-checked by a small type checker, so that the large, clever parts of the system need not be trusted.

@@ -75,7 +75,7 @@ explain: "The first read finds nothing invalidated, so it is answered at once. I
 
 ## What is cheap and what is not
 
-This gives a rough ordering, from cheap to expensive. It is a guide to thinking about writes, not a table to memoise.
+This gives a rough ordering, from cheap to expensive. It is a guide to thinking about writes, not a table to memorise.
 
 - **Writes to detached nodes** cost allocation and nothing else.
 - **Compositor-only properties** (`transform`, `opacity`) skip layout. This is why animations should use them instead of `left` or `width`.

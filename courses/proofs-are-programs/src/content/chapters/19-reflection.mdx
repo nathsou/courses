@@ -214,7 +214,7 @@ theorem peirce (p q : Prop) : ((p → q) → p) → p :=
 #print axioms peirce
 ```
 
-Peirce's law was the example of Chapter 7 of a statement true in every truth table but unprovable without classical logic; `#print axioms` shows where the classical axiom came in. And a statement that is *not* a tautology fails at `rfl`: the kernel computes `taut f`, finds `false`, and rejects the proof.
+Peirce's law was one of Chapter 7's examples of a statement true in every truth table but unprovable without classical logic; `#print axioms` shows where the classical axiom came in. And a statement that is *not* a tautology fails at `rfl`: the kernel computes `taut f`, finds `false`, and rejects the proof.
 
 ```lean errors
 theorem converse (p q : Prop) : (p → q) → q → p :=

@@ -24,7 +24,7 @@ the top of the page): note names in letters, solfège or German, terms in Britis
 
 ## Note values and rests
 
-```score caption="From the top: :t[semibreve], :t[minim], :t[crotchet], :t[quaver] and :t[semiquaver], each followed by its rest." play="false"
+```score caption="A :t[minim], :t[crotchet], :t[quaver] and :t[semiquaver], each followed by its rest; then a :t[semibreve] and its rest." play="false"
 \time 4/4 c''2 r2 | c''4 r4 c''8 r8 c''16 r16 r8 | c''1 | r1 |
 ```
 
