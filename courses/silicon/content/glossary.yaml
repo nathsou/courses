@@ -1,1 +1,29 @@
-{}
+# Glossary: id → term, definition (Markdown), chapter that introduces it.
+band-gap:
+  term: band gap
+  definition: The range of energies with no allowed electron states between the valence band and the conduction band; the least energy needed to free an electron from a bond. 1.12 eV for silicon at 300 K.
+  chapter: bands
+valence-band:
+  term: valence band
+  definition: The band of states of the electrons in bonds; full in a perfect crystal at absolute zero.
+  chapter: bands
+conduction-band:
+  term: conduction band
+  definition: The band of states of electrons free to move through the crystal; empty in a perfect crystal at absolute zero.
+  chapter: bands
+hole:
+  term: hole
+  definition: A missing electron in a bond (an empty state in the valence band). It moves as neighbouring electrons hop into it, and behaves as a mobile positive charge.
+  chapter: bands
+intrinsic:
+  term: intrinsic carrier concentration
+  definition: 'The number of free electrons (equal to the number of holes) per cm³ in a pure semiconductor, $n_i = \sqrt{N_c N_v}\, e^{-E_g/2k_\mathrm{B}T}$; about 10¹⁰ cm⁻³ for silicon at room temperature.'
+  chapter: bands
+fermi-level:
+  term: Fermi level
+  definition: The energy at which a state has a probability of one half of being occupied, in the Fermi–Dirac distribution.
+  chapter: bands
+electronvolt:
+  term: electronvolt (eV)
+  definition: The energy an electron gains falling through one volt, 1.602 × 10⁻¹⁹ J.
+  chapter: bands

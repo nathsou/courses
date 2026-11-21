@@ -1,1 +1,29 @@
-{}
+# Sources cited in the course (key: entry). Every cited key must exist; the content tests check.
+sze2007:
+  authors: S. M. Sze and Kwok K. Ng
+  year: 2007
+  title: Physics of Semiconductor Devices
+  venue: 3rd ed., Wiley
+  note: The standard reference for device physics; the material constants in Appendix B are from its tables.
+pierret1996:
+  authors: Robert F. Pierret
+  year: 1996
+  title: Semiconductor Device Fundamentals
+  venue: Addison-Wesley
+wilson1931:
+  authors: A. H. Wilson
+  year: 1931
+  title: The theory of electronic semi-conductors
+  venue: Proceedings of the Royal Society of London A 133, 458–491
+  url: https://doi.org/10.1098/rspa.1931.0162
+riordan1997:
+  authors: Michael Riordan and Lillian Hoddeson
+  year: 1997
+  title: 'Crystal Fire: The Invention of the Transistor and the Birth of the Information Age'
+  venue: W. W. Norton
+haynes2016:
+  authors: W. M. Haynes (ed.)
+  year: 2016
+  title: CRC Handbook of Chemistry and Physics
+  venue: 97th ed., CRC Press
+  note: Abundance of the elements in the Earth’s crust.

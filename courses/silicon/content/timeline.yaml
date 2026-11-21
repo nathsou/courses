@@ -1,1 +1,21 @@
-[]
+# Timeline: year, title, people, chapter, text (Markdown).
+- year: 1928
+  title: Electrons in crystals
+  people: Felix Bloch
+  chapter: bands
+  text: Bloch shows that electrons in a periodic lattice occupy bands of allowed energy.
+- year: 1931
+  title: The theory of semiconductors
+  people: Alan Herries Wilson
+  chapter: bands
+  text: Wilson uses band theory to explain metals, insulators and semiconductors.
+- year: 1947
+  title: The point-contact transistor
+  people: John Bardeen, Walter Brattain
+  chapter: bands
+  text: At Bell Labs, two gold contacts on a slab of germanium amplify a signal.
+- year: 1954
+  title: The silicon transistor
+  people: Gordon Teal
+  chapter: bands
+  text: Texas Instruments announces the first commercial silicon transistor.
