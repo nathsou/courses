@@ -55,3 +55,45 @@ hisamoto2000:
   title: FinFET — a self-aligned double-gate MOSFET scalable to 20 nm
   venue: IEEE Transactions on Electron Devices 47(12), 2320–2325
   url: https://doi.org/10.1109/16.887014
+wanlass1963:
+  authors: F. M. Wanlass and C. T. Sah
+  year: 1963
+  title: Nanowatt logic using field-effect metal-oxide semiconductor triodes
+  venue: IEEE International Solid-State Circuits Conference, Digest of Technical Papers, 32–33
+  url: https://doi.org/10.1109/ISSCC.1963.1157450
+weste2010:
+  authors: Neil H. E. Weste and David Money Harris
+  year: 2010
+  title: 'CMOS VLSI Design: A Circuits and Systems Perspective'
+  venue: 4th ed., Addison-Wesley
+rabaey2003:
+  authors: Jan M. Rabaey, Anantha Chandrakasan and Borivoje Nikolić
+  year: 2003
+  title: 'Digital Integrated Circuits: A Design Perspective'
+  venue: 2nd ed., Prentice Hall
+moore1965:
+  authors: Gordon E. Moore
+  year: 1965
+  title: Cramming more components onto integrated circuits
+  venue: Electronics 38(8), 114–117
+dennard1974:
+  authors: R. H. Dennard, F. H. Gaensslen, H.-N. Yu, V. L. Rideout, E. Bassous and A. R. LeBlanc
+  year: 1974
+  title: Design of ion-implanted MOSFET’s with very small physical dimensions
+  venue: IEEE Journal of Solid-State Circuits 9(5), 256–268
+  url: https://doi.org/10.1109/JSSC.1974.1050511
+sutherland1999:
+  authors: Ivan Sutherland, Bob Sproull and David Harris
+  year: 1999
+  title: 'Logical Effort: Designing Fast CMOS Circuits'
+  venue: Morgan Kaufmann
+sutter2005:
+  authors: Herb Sutter
+  year: 2005
+  title: 'The free lunch is over: a fundamental turn toward concurrency in software'
+  venue: Dr. Dobb’s Journal 30(3)
+dennard1968:
+  authors: Robert H. Dennard
+  year: 1968
+  title: Field-effect transistor memory
+  venue: US patent 3,387,286 (filed 1967)

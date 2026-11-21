@@ -83,3 +83,55 @@ finfet:
   term: FinFET
   definition: A transistor whose channel is a thin vertical fin with the gate wrapped over three sides; used from 2011 until gate-all-around nanosheets replaced it.
   chapter: mosfet
+cmos:
+  term: CMOS
+  definition: Complementary MOS logic. Each gate has a pull-down network of nMOS transistors and a dual pull-up network of pMOS transistors, so that exactly one of them conducts and the gate draws current only while switching.
+  chapter: cmos
+noise-margin:
+  term: noise margin
+  definition: How far a logic level can be disturbed before the next gate misreads it, from the points where the transfer curve’s slope is −1.
+  chapter: cmos
+standard-cell:
+  term: standard cell
+  definition: A pre-designed, pre-characterised gate (inverter, NAND, flip-flop, …) of fixed height, from a library supplied with a process; cells abut in rows and share their supply rails.
+  chapter: cmos
+fo4:
+  term: FO4 delay
+  definition: The delay of an inverter driving four copies of itself; a process’s speed in one number.
+  chapter: speed-power
+dynamic-power:
+  term: dynamic power
+  definition: 'Power spent charging and discharging capacitance as nodes switch: $\alpha C V^2 f$.'
+  chapter: speed-power
+leakage:
+  term: leakage
+  definition: Current that flows through transistors that are off (mostly subthreshold current), and through junctions and gate oxides, whether or not anything switches.
+  chapter: speed-power
+dennard-scaling:
+  term: Dennard scaling
+  definition: Shrinking every length and voltage of a transistor by the same factor, which keeps power per area constant while density doubles; it ended in the mid-2000s when threshold and supply voltages stopped falling.
+  chapter: speed-power
+flip-flop:
+  term: flip-flop
+  definition: A one-bit storage element that samples its input at a clock edge and holds it for a cycle; usually two latches back to back.
+  chapter: memory
+latch:
+  term: latch
+  definition: A one-bit storage element that follows its input while its clock (enable) is active and holds the last value when it is not.
+  chapter: memory
+setup-time:
+  term: setup and hold times
+  definition: How long a flip-flop’s input must be stable before (setup) and after (hold) the clock edge for it to be captured reliably.
+  chapter: memory
+metastability:
+  term: metastability
+  definition: A storage loop caught near its balance point, taking an unbounded (logarithmically growing) time to resolve to 0 or 1.
+  chapter: memory
+sram:
+  term: SRAM
+  definition: Static RAM; each bit is a loop of two inverters with two access transistors (six transistors), holding its value while powered.
+  chapter: memory
+dram:
+  term: DRAM
+  definition: Dynamic RAM; each bit is charge on a capacitor behind one access transistor, read by charge sharing and refreshed every few tens of milliseconds.
+  chapter: memory

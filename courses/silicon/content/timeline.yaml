@@ -47,3 +47,31 @@
   title: FinFETs
   chapter: mosfet
   text: The first production transistors with the channel raised into a fin, gated on three sides.
+- year: 1963
+  title: CMOS
+  people: Frank Wanlass, Chih-Tang Sah
+  chapter: cmos
+  text: A logic gate of one p-channel and one n-channel transistor draws only nanowatts in either state.
+- year: 1965
+  title: Moore’s law
+  people: Gordon Moore
+  chapter: speed-power
+  text: Moore predicts that the number of components per chip will keep doubling every year; in 1975 he revises it to every two years.
+- year: 1974
+  title: Dennard scaling
+  people: Robert Dennard and colleagues
+  chapter: speed-power
+  text: The rules for shrinking a MOSFET while keeping power per area constant.
+- year: 2005
+  title: The power wall
+  chapter: speed-power
+  text: Processor clock speeds stop rising; the extra transistors go into more cores.
+- year: 1966
+  title: The one-transistor DRAM cell
+  people: Robert Dennard
+  chapter: memory
+  text: Dennard proposes storing a bit as charge on a capacitor behind a single transistor.
+- year: 1970
+  title: The Intel 1103
+  chapter: memory
+  text: The first commercially successful DRAM chip, 1 024 bits; it begins the end of magnetic-core memory.
