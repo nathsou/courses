@@ -2,3 +2,4 @@
 export { default as ZoomScale } from './ZoomScale.svelte';
 export { default as BondLattice } from './BondLattice.svelte';
 export { default as MosfetLab } from './MosfetLab.svelte';
+export { default as RtlPlayground } from './RtlPlayground.svelte';

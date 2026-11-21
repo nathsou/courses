@@ -75,3 +75,32 @@
   title: The Intel 1103
   chapter: memory
   text: The first commercially successful DRAM chip, 1 024 bits; it begins the end of magnetic-core memory.
+- year: 1980
+  title: Introduction to VLSI Systems
+  people: Carver Mead, Lynn Conway
+  chapter: rtl
+  text: A textbook that teaches chip design as a discipline anyone can learn, with simple design rules.
+- year: 1984
+  title: Verilog
+  chapter: rtl
+  text: Gateway Design Automation creates the Verilog hardware description language; VHDL becomes an IEEE standard in 1987.
+- year: 1994
+  title: The Pentium division bug
+  people: Thomas Nicely
+  chapter: verification
+  text: Five missing table entries make a processor divide wrongly; the recall costs Intel $475 million.
+- year: 1961
+  title: The maze router
+  people: C. Y. Lee
+  chapter: physical-design
+  text: A wavefront spreading over a grid finds the shortest connection between two points around obstacles.
+- year: 1971
+  title: The Intel 4004
+  people: Federico Faggin, Ted Hoff, Stan Mazor, Masatoshi Shima
+  chapter: signoff
+  text: The first commercial microprocessor, about 2 300 transistors, laid out by hand.
+- year: 1983
+  title: Simulated annealing
+  people: Scott Kirkpatrick, Daniel Gelatt, Mario Vecchi
+  chapter: physical-design
+  text: Optimisation by analogy with slowly cooling metal, applied at once to placing chips.

@@ -97,3 +97,66 @@ dennard1968:
   year: 1968
   title: Field-effect transistor memory
   venue: US patent 3,387,286 (filed 1967)
+mead1980:
+  authors: Carver Mead and Lynn Conway
+  year: 1980
+  title: Introduction to VLSI Systems
+  venue: Addison-Wesley
+edelman1997:
+  authors: Alan Edelman
+  year: 1997
+  title: The mathematics of the Pentium division bug
+  venue: SIAM Review 39(1), 54–67
+  url: https://doi.org/10.1137/S0036144595293959
+foster2022:
+  authors: Harry D. Foster
+  year: 2022
+  title: 2022 Wilson Research Group IC/ASIC functional verification trend report
+  venue: Siemens EDA
+  note: A survey of chip projects; fewer than a third reported functionally correct silicon from their first tape-out.
+aho1989:
+  authors: Alfred V. Aho, Mahadevan Ganapathi and Steven W. K. Tjiang
+  year: 1989
+  title: Code generation using tree matching and dynamic programming
+  venue: ACM Transactions on Programming Languages and Systems 11(4), 491–516
+  url: https://doi.org/10.1145/69558.75700
+brayton1984:
+  authors: Robert K. Brayton, Gary D. Hachtel, Curtis T. McMullen and Alberto L. Sangiovanni-Vincentelli
+  year: 1984
+  title: Logic Minimization Algorithms for VLSI Synthesis
+  venue: Kluwer Academic Publishers
+karnaugh1953:
+  authors: M. Karnaugh
+  year: 1953
+  title: The map method for synthesis of combinational logic circuits
+  venue: Transactions of the AIEE, Part I 72(5), 593–599
+  url: https://doi.org/10.1109/TCE.1953.6371932
+keutzer1987:
+  authors: Kurt Keutzer
+  year: 1987
+  title: 'DAGON: technology binding and local optimization by DAG matching'
+  venue: 24th ACM/IEEE Design Automation Conference, 341–347
+  url: https://doi.org/10.1145/37888.37939
+kirkpatrick1983:
+  authors: S. Kirkpatrick, C. D. Gelatt and M. P. Vecchi
+  year: 1983
+  title: Optimization by simulated annealing
+  venue: Science 220(4598), 671–680
+  url: https://doi.org/10.1126/science.220.4598.671
+sechen1985:
+  authors: Carl Sechen and Alberto Sangiovanni-Vincentelli
+  year: 1985
+  title: The TimberWolf placement and routing package
+  venue: IEEE Journal of Solid-State Circuits 20(2), 510–522
+  url: https://doi.org/10.1109/JSSC.1985.1052337
+lee1961:
+  authors: C. Y. Lee
+  year: 1961
+  title: An algorithm for path connections and its applications
+  venue: IRE Transactions on Electronic Computers EC-10(3), 346–365
+  url: https://doi.org/10.1109/TEC.1961.5219222
+kahng2011:
+  authors: Andrew B. Kahng, Jens Lienig, Igor L. Markov and Jin Hu
+  year: 2011
+  title: 'VLSI Physical Design: From Graph Partitioning to Timing Closure'
+  venue: Springer

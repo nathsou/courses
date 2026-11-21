@@ -135,3 +135,87 @@ dram:
   term: DRAM
   definition: Dynamic RAM; each bit is charge on a capacitor behind one access transistor, read by charge sharing and refreshed every few tens of milliseconds.
   chapter: memory
+rtl:
+  term: RTL
+  definition: Register-transfer level; a description of a synchronous design as registers and the combinational logic that computes their next values and the outputs.
+  chapter: rtl
+testbench:
+  term: test bench
+  definition: A program that drives a design with stimulus and checks its behaviour, typically against a reference model (a scoreboard) and with assertions.
+  chapter: verification
+coverage:
+  term: coverage
+  definition: A measure of what a set of tests exercised; functional coverage counts behaviours from the verification plan (bins) that were reached.
+  chapter: verification
+assertion:
+  term: assertion
+  definition: A condition that must hold in every cycle, checked during simulation and the subject of formal proofs.
+  chapter: verification
+model-checking:
+  term: model checking
+  definition: Proving a property of a design by exploring all its reachable states, explicitly or symbolically (with SAT solvers or BDDs).
+  chapter: verification
+equivalence-checking:
+  term: equivalence checking
+  definition: Proving that two versions of a design (for example the RTL and the synthesised netlist) produce the same outputs for every input.
+  chapter: verification
+netlist:
+  term: netlist
+  definition: A list of cell instances and the nets (wires) that connect their pins; the output of synthesis.
+  chapter: synthesis
+dont-care:
+  term: don’t-care
+  definition: An input combination whose output does not matter (because it never occurs or is never observed), which a minimiser may treat as 0 or 1.
+  chapter: synthesis
+technology-mapping:
+  term: technology mapping
+  definition: Covering optimised logic with cells from a library, choosing patterns for least area or delay; usually by dynamic programming over trees.
+  chapter: synthesis
+placement:
+  term: placement
+  definition: Choosing a legal position for every cell (in a row, without overlap) to minimise wirelength, delay and congestion.
+  chapter: physical-design
+hpwl:
+  term: half-perimeter wirelength (HPWL)
+  definition: For a net, half the perimeter of the smallest rectangle containing its pins; the usual estimate of its routed length.
+  chapter: physical-design
+simulated-annealing:
+  term: simulated annealing
+  definition: An optimisation method that makes random moves, always accepting improvements and accepting worsenings with probability e^(−Δ/T) at a slowly falling temperature T.
+  chapter: physical-design
+routing:
+  term: routing
+  definition: Turning each net into wires on the metal layers and vias between them; global routing assigns regions, detailed routing assigns tracks.
+  chapter: physical-design
+via:
+  term: via
+  definition: A vertical connection between two metal layers (a contact joins the first metal to the transistors).
+  chapter: physical-design
+clock-skew:
+  term: clock skew
+  definition: The difference in arrival time of the clock edge at two flip-flops.
+  chapter: physical-design
+sta:
+  term: static timing analysis
+  definition: Checking every path of a netlist for timing without test vectors, by propagating arrival and required times through the circuit graph.
+  chapter: signoff
+slack:
+  term: slack
+  definition: Required time minus arrival time at a point in a circuit; negative slack is a timing violation.
+  chapter: signoff
+critical-path:
+  term: critical path
+  definition: The path with the least slack; it limits the clock frequency.
+  chapter: signoff
+drc:
+  term: design-rule check (DRC)
+  definition: Checking a layout’s polygons against the fab’s rules of minimum width, spacing, extension and enclosure.
+  chapter: signoff
+lvs:
+  term: layout versus schematic (LVS)
+  definition: Extracting the circuit from a layout (transistors where poly crosses active, connections through contacts) and comparing it with the netlist.
+  chapter: signoff
+tape-out:
+  term: tape-out
+  definition: Sending a finished layout (a file of polygons per layer, such as GDSII) to the fab.
+  chapter: signoff
