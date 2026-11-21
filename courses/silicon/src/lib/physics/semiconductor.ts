@@ -93,13 +93,17 @@ export const diffusivity = (mu: number, T = 300): number => mu * kT(T);
 export function sci(v: number, digits = 2): string {
   if (v === 0) return '0';
   if (!Number.isFinite(v)) return '∞';
-  const e = Math.floor(Math.log10(Math.abs(v)));
-  if (e >= -2 && e <= 3) return v.toPrecision(digits + 1).replace(/\.?0+$/, '');
-  const m = v / 10 ** e;
+  let e = Math.floor(Math.log10(Math.abs(v)));
+  if (e >= -2 && e <= 3) return String(Number(v.toPrecision(Math.max(digits + 1, e + 1))));
+  let ms = (v / 10 ** e).toFixed(digits - 1);
+  if (Math.abs(Number(ms)) >= 10) {
+    e += 1;
+    ms = (v / 10 ** e).toFixed(digits - 1);
+  }
+  ms = ms.replace(/\.?0+$/, '');
   const sup = String(e)
     .split('')
     .map((c) => (c === '-' ? '⁻' : '⁰¹²³⁴⁵⁶⁷⁸⁹'[Number(c)]))
     .join('');
-  const ms = m.toFixed(digits - 1).replace(/\.?0+$/, '');
   return ms === '1' ? `10${sup}` : `${ms} × 10${sup}`;
 }

@@ -47,10 +47,10 @@
     age: number;
   }
 
-  let T = $state(temperature);
+  let T = $state(untrack(() => temperature));
   let field = $state(false);
   let running = $state(true);
-  let dope = $state<'none' | 'n' | 'p'>(doping);
+  let dope = $state<'none' | 'n' | 'p'>(untrack(() => doping));
   let tick = $state(0);
 
   let bonds: Bond[] = [];
@@ -188,7 +188,7 @@
         loop(performance.now());
       });
   });
-  let builtFor = doping;
+  let builtFor = untrack(() => doping);
   $effect(() => {
     if (dope !== builtFor) {
       builtFor = dope;

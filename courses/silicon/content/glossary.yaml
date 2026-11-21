@@ -27,3 +27,59 @@ electronvolt:
   term: electronvolt (eV)
   definition: The energy an electron gains falling through one volt, 1.602 × 10⁻¹⁹ J.
   chapter: bands
+donor:
+  term: donor
+  definition: An impurity atom with one more valence electron than silicon (phosphorus, arsenic, antimony), which gives that electron to the conduction band. Donors make silicon n-type.
+  chapter: doping
+acceptor:
+  term: acceptor
+  definition: An impurity atom with one valence electron fewer than silicon (boron), which takes an electron from a bond and so creates a hole. Acceptors make silicon p-type.
+  chapter: doping
+mass-action:
+  term: mass-action law
+  definition: 'In equilibrium the product of the electron and hole concentrations is fixed by the material and temperature: $np = n_i^2$.'
+  chapter: doping
+mobility:
+  term: mobility
+  definition: 'The drift velocity per unit electric field, $\mu = v/E$, in cm²/V·s: about 1400 for electrons and 470 for holes in pure silicon at room temperature.'
+  chapter: doping
+diffusion:
+  term: diffusion
+  definition: Net flow of carriers from where they are crowded to where they are sparse, proportional to the concentration gradient.
+  chapter: doping
+depletion-region:
+  term: depletion region
+  definition: The region around a p–n junction (or under a MOS gate) emptied of mobile carriers, leaving the fixed charge of ionised dopants.
+  chapter: junction
+built-in-potential:
+  term: built-in potential
+  definition: 'The voltage across a p–n junction in equilibrium, $V_{bi} = (k_\mathrm{B}T/q)\ln(N_A N_D/n_i^2)$.'
+  chapter: junction
+saturation-current:
+  term: saturation current
+  definition: The small, nearly constant reverse current of a p–n junction, carried by minority carriers; proportional to $n_i^2$.
+  chapter: junction
+mosfet:
+  term: MOSFET
+  definition: Metal–oxide–semiconductor field-effect transistor. A gate, insulated from the silicon by a thin oxide, controls a channel of carriers between a source and a drain.
+  chapter: mosfet
+threshold-voltage:
+  term: threshold voltage
+  definition: 'The gate voltage $V_T$ at which a MOS surface reaches strong inversion and a conducting channel forms.'
+  chapter: mosfet
+inversion:
+  term: inversion
+  definition: The state of a silicon surface whose minority carriers, drawn by the gate, outnumber the majority carriers of the bulk; the inversion layer is a MOSFET's channel.
+  chapter: mosfet
+subthreshold-swing:
+  term: subthreshold swing
+  definition: 'The gate voltage needed to change a transistor’s current tenfold below threshold, $n\,(k_\mathrm{B}T/q)\ln 10$: at least 60 mV at room temperature.'
+  chapter: mosfet
+saturation-region:
+  term: saturation (of a MOSFET)
+  definition: 'The region where the channel is pinched off at the drain, $V_{DS} \geq V_{GS} - V_T$, and the drain current barely depends on the drain voltage.'
+  chapter: mosfet
+finfet:
+  term: FinFET
+  definition: A transistor whose channel is a thin vertical fin with the gate wrapped over three sides; used from 2011 until gate-all-around nanosheets replaced it.
+  chapter: mosfet

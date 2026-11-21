@@ -51,6 +51,7 @@
     height = 240,
     label,
     legend = true,
+    left = 54,
     overlay,
   }: {
     x: Axis;
@@ -62,11 +63,13 @@
     height?: number;
     label: string;
     legend?: boolean;
+    /** Left margin in pixels (room for the y tick labels). */
+    left?: number;
     overlay?: Snippet<[{ sx: (v: number) => number; sy: (v: number) => number; w: number; h: number }]>;
   } = $props();
 
   let width = $state(600);
-  const m = { l: 54, r: 14, t: 10, b: 38 };
+  const m = $derived({ l: left, r: 14, t: 10, b: 38 });
   const iw = $derived(Math.max(10, width - m.l - m.r));
   const ih = $derived(height - m.t - m.b);
 
@@ -102,9 +105,9 @@
   const clipId = `clip-${Math.random().toString(36).slice(2, 9)}`;
 </script>
 
-<div class="plot ui" bind:clientWidth={width}>
+<div class="plot ui" bind:clientWidth={width} style:--left="{left}px">
   <svg {width} {height} role="img" aria-label={label}>
-    <defs><clipPath id={clipId}><rect x={m.l} y={m.t} width={iw} height={ih} /></clipPath></defs>
+    <defs><clipPath id={clipId}><rect x={m.l} y={m.t - 2} width={iw} height={ih + 4} /></clipPath></defs>
     {#each yticks as t (t)}
       <line class="grid" x1={m.l} x2={m.l + iw} y1={sy(t)} y2={sy(t)} />
       <text class="tick" x={m.l - 6} y={sy(t) + 3.5} text-anchor="end">{fy(t)}</text>
@@ -183,7 +186,7 @@
     gap: 0.2rem 1rem;
     list-style: none;
     margin: 0.25rem 0 0;
-    padding: 0 0 0 54px;
+    padding: 0 0 0 var(--left);
     font-size: 0.78rem;
     color: var(--ink-2);
   }

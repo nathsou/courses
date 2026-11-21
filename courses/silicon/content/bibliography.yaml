@@ -27,3 +27,31 @@ haynes2016:
   title: CRC Handbook of Chemistry and Physics
   venue: 97th ed., CRC Press
   note: Abundance of the elements in the Earth’s crust.
+shockley1949:
+  authors: W. Shockley
+  year: 1949
+  title: The theory of p-n junctions in semiconductors and p-n junction transistors
+  venue: Bell System Technical Journal 28(3), 435–489
+  url: https://doi.org/10.1002/j.1538-7305.1949.tb03645.x
+lilienfeld1930:
+  authors: J. E. Lilienfeld
+  year: 1930
+  title: Method and apparatus for controlling electric currents
+  venue: US patent 1,745,175 (filed 1926)
+kahng1960:
+  authors: D. Kahng and M. M. Atalla
+  year: 1960
+  title: Silicon–silicon dioxide field induced surface devices
+  venue: IRE–AIEE Solid-State Device Research Conference, Pittsburgh
+mistry2007:
+  authors: K. Mistry et al.
+  year: 2007
+  title: 'A 45nm logic technology with high-k + metal gate transistors, strained silicon, 9 Cu interconnect layers, 193nm dry patterning, and 100% Pb-free packaging'
+  venue: IEEE International Electron Devices Meeting, 247–250
+  url: https://doi.org/10.1109/IEDM.2007.4418914
+hisamoto2000:
+  authors: D. Hisamoto et al.
+  year: 2000
+  title: FinFET — a self-aligned double-gate MOSFET scalable to 20 nm
+  venue: IEEE Transactions on Electron Devices 47(12), 2320–2325
+  url: https://doi.org/10.1109/16.887014

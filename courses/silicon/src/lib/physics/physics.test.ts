@@ -136,4 +136,7 @@ test('scientific formatting', () => {
   expect(sci(2.4e13)).toBe('2.4 × 10¹³');
   expect(sci(0.0259)).toBe('0.0259');
   expect(sci(3.2e-15)).toBe('3.2 × 10⁻¹⁵');
+  expect(sci(9.99999e15)).toBe('10¹⁶');
+  expect(sci(9776)).toBe('9776');
+  expect(sci(0.5273, 3)).toBe('0.5273');
 });

@@ -19,3 +19,31 @@
   people: Gordon Teal
   chapter: bands
   text: Texas Instruments announces the first commercial silicon transistor.
+- year: 1940
+  title: The p–n junction
+  people: Russell Ohl
+  chapter: junction
+  text: A cracked rod of silicon, p-type on one side and n-type on the other, produces half a volt under a flashlight.
+- year: 1949
+  title: Theory of the junction
+  people: William Shockley
+  chapter: junction
+  text: Shockley publishes the theory of p–n junctions and of the junction transistor.
+- year: 1925
+  title: The field-effect transistor, on paper
+  people: Julius Edgar Lilienfeld
+  chapter: mosfet
+  text: Lilienfeld files the first patent for a field-effect transistor; nobody can make one work for decades.
+- year: 1959
+  title: The MOSFET
+  people: Mohamed Atalla, Dawon Kahng
+  chapter: mosfet
+  text: At Bell Labs, a thermally grown oxide under an aluminium gate makes the field-effect transistor work.
+- year: 2007
+  title: High-k metal gates
+  chapter: mosfet
+  text: Hafnium-based gate dielectrics and metal gates replace silicon dioxide and polysilicon in leading processes.
+- year: 2011
+  title: FinFETs
+  chapter: mosfet
+  text: The first production transistors with the channel raised into a fin, gated on three sides.

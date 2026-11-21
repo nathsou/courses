@@ -107,11 +107,14 @@ export function mosStatic(p: MosParams): MosStatic {
   return { cox, phiF, phiMS, vfb: phiMS, vt: phiMS + 2 * phiF - qdepT / cox, qdepT };
 }
 
-/** Total semiconductor charge per area (C/cm²) for surface potential ψ (V), from Poisson's equation. */
-export function surfaceCharge(p: MosParams, psi: number): number {
+/**
+ * Total semiconductor charge per area (C/cm²) for surface potential ψ (V), from Poisson's equation. With
+ * `electrons` false, the minority electrons are left out (holes and ionised acceptors only).
+ */
+export function surfaceCharge(p: MosParams, psi: number, electrons = true): number {
   const ut = kT(p.T ?? 300);
   const u = psi / ut;
-  const ratio = (NI_SI / p.na) ** 2;
+  const ratio = electrons ? (NI_SI / p.na) ** 2 : 0;
   const f = Math.sqrt(Math.max(0, Math.exp(-u) + u - 1 + ratio * (Math.exp(u) - u - 1)));
   return -Math.sign(psi) * Math.sqrt(2 * EPS_SI * Q * p.na * ut) * f;
 }
@@ -146,7 +149,8 @@ export function mosState(p: MosParams, vg: number): MosState {
   const qs = surfaceCharge(p, psi);
   const w = psi > 0 ? Math.sqrt((2 * EPS_SI * psi) / (Q * p.na)) : 0;
   const qdep = -Q * p.na * w;
-  const qinv = psi > 0 ? Math.min(0, qs - qdep) : 0;
+  // The electrons' share: the exact charge minus the exact charge without electrons.
+  const qinv = psi > 0 ? Math.min(0, qs - surfaceCharge(p, psi, false)) : 0;
   const ut = kT(p.T ?? 300);
   const nSurface = ((NI_SI * NI_SI) / p.na) * Math.exp(psi / ut);
   const regime = psi < 0 ? 'accumulation' : psi < s.phiF ? 'depletion' : psi < 2 * s.phiF ? 'weak inversion' : 'strong inversion';
