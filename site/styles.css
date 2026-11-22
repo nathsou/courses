@@ -1038,6 +1038,25 @@ h1 {
 .redex .tree .arrow { fill:none; stroke:light-dark(#5f636c,#a19d92); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .redex .tree .node { fill:light-dark(#f5f4ef,#111819); stroke:light-dark(#1b1d22,#e9e4d7); stroke-width:1.6; }
 .redex .tree .node.hot { fill:light-dark(#f3d9cc,#4a2c22); stroke:light-dark(#c4572a,#f08a5d); }
+/* Sand to Silicon: "Yellow Room" — the lithography bay's yellow light by day, a dark clean room by night; a wafer and an inverter's layout. */
+.card.yellowroom {
+  --cbg: light-dark(#f6f2e7, #10121c);
+  --cfg: light-dark(#1a1c24, #e9e7f0);
+  --cmute: light-dark(#5b5e68, #a9a7b8);
+  --cac: light-dark(#8a3f17, #f0c35a);
+  background: var(--cbg);
+}
+.yellowroom .chip { width:200px; height:76px; margin-bottom:14px; display:block; }
+.yellowroom .chip .wafer { fill:light-dark(#d9d3c6,#2a2d3a); stroke:light-dark(#5b5e68,#a9a7b8); stroke-width:1.4; }
+.yellowroom .chip .dies { fill:none; stroke:light-dark(#f6f2e7,#10121c); stroke-width:1.6; }
+.yellowroom .chip .hot { fill:light-dark(#b0731b,#f0c35a); }
+.yellowroom .chip .zoom { fill:none; stroke:light-dark(#b0731b,#f0c35a); stroke-width:1; stroke-dasharray:3 3; }
+.yellowroom .chip .well { fill:light-dark(#c99a2e,#d7ab45); opacity:.25; }
+.yellowroom .chip .rail { fill:light-dark(#4a74c9,#6f96e6); opacity:.6; }
+.yellowroom .chip .active { fill:light-dark(#3e9b55,#4fb56a); opacity:.75; }
+.yellowroom .chip .poly { fill:light-dark(#c4544a,#c4594f); opacity:.9; }
+.yellowroom .chip .metal { fill:none; stroke:light-dark(#4a74c9,#6f96e6); stroke-width:6; opacity:.55; }
+.yellowroom .chip .contact { fill:light-dark(#1a1c24,#e9e7f0); }
 .redex .tree .node.nf { fill:light-dark(#d5ebe6,#1f3d38); stroke:light-dark(#12695e,#7fd1c0); }
 /* 11 · For All Inputs: "The Notary" — certificate paper, a seal, red pencil */
 .notary {

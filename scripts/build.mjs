@@ -127,6 +127,14 @@ const courses = [
       NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
     }),
   },
+  {
+    // Sand to Silicon: the same single-package SvelteKit setup.
+    name: 'silicon',
+    env: (base) => ({
+      BASE_PATH: `${base}/silicon`,
+      NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-strip-types`.trim(),
+    }),
+  },
 ];
 const repository = process.env.GITHUB_REPOSITORY?.split('/')[1];
 const basePath = (process.env.COURSES_BASE_PATH ?? (repository ? `/${repository}` : '')).replace(/\/$/, '');

@@ -1,10 +1,11 @@
-# Mechanical Computing
+# Sand to Silicon
 
-*How machines computed before electronics, and why electronics won.* An interactive course for software engineers:
-the Pascaline, stepped drums from Leibniz to the Curta, Babbage's Difference Engine No. 2 and Analytical Engine,
-Lovelace's Note G, the Antikythera mechanism, the slide rule, integrators, tide predictors, the differential
-analyser, Zuse's Z1, computers of marbles, water and air, and why computers are electronic. Every machine runs in the
-browser, most of them in 3D, on the course's own WebGL2 renderer.
+*How a chip is made, from the physics of the transistor to the packaged die.* An interactive course for software
+engineers: why silicon, doping, the p–n junction and the MOSFET; CMOS logic, delay, power, scaling and memory; a
+small design (one digit of a clock) taken from RTL through verification, synthesis, placement, routing, timing and
+sign-off; then the fab: crystal growth, lithography, oxidation, implantation, etching and deposition, the full
+process flow of an inverter, yield, test and packaging. Every device, circuit, design tool and process step runs in
+the browser from the course's own models.
 
 Plan and status: [docs/PLAN.md](docs/PLAN.md).
 
@@ -23,17 +24,18 @@ npm run check
 NODE_OPTIONS=--experimental-strip-types npm run build
 ```
 
-`npm test` runs the machine libraries' tests, the 3D models' pose tests, the compiler's tests and the content
-tests, which compile every chapter and check every exercise (solution decks must pass their tests; starting decks
-must not).
+`npm test` runs the libraries' tests (device physics, circuits, the design tools, the process models), the
+compiler's tests and the content tests, which compile every chapter and check every exercise (every HDL solution
+passes its check and every starting design fails it).
 
 ## Layout
 
 | Path | What |
 |---|---|
 | `content/` | Chapters, appendices, outline, glossary, timeline, bibliography |
-| `src/lib/mech/` | The machines as logical models (pure TypeScript, tested) |
-| `src/lib/models/` | The machines as 3D models (meshes, parts, pose functions) |
-| `src/lib/gl/` | The WebGL2 renderer, procedural meshes, picking, context pool, `MachineView` |
-| `src/lib/components/` | Exercise frames, the card editor, content components |
-| `tools/markdown/` | The Markdown-with-directives compiler |
+| `src/lib/physics/` | Carriers, the junction, the MOS capacitor and transistor, the inverter, delay, memory cells |
+| `src/lib/eda/` | The HDL, simulator and model checker, synthesis and technology mapping, placement, routing, timing, faults, layout rules and extraction |
+| `src/lib/fab/` | Crystal growth, yield, oxidation, implantation, etching, lithography imaging, the process-flow cross-section |
+| `src/lib/widgets/` | Widgets shared by several chapters (bond lattice, MOSFET lab, HDL playground, wafer map, the home page's zoom) |
+| `src/lib/components/` | Exercise frames, the HDL editor and waveform viewer, the netlist view, plots, content components |
+| `tools/markdown/` | The Markdown-with-directives compiler (maths rendered with KaTeX at build time) |

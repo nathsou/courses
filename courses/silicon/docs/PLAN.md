@@ -1,137 +1,120 @@
-# Course plan: *Mechanical Computing*
+# Course plan: *Sand to Silicon*
 
-The working plan for the course: decisions, through-lines, curriculum, the simulations, exercises, milestones and
-risks. Update it when a decision changes or a chapter lands.
+The working plan for the course: decisions, through-lines, curriculum, the simulations, exercises and risks. Update
+it when a decision changes or a chapter lands.
 
-The course explains how mechanical, and more generally non-electronic, computing devices work at the fundamental
-level, and why computers became electronic. It is written for software engineers. Every machine is simulated in
-the browser from the course's own models, most of them in 3D, and every chapter follows the same order:
-**problem → algorithm → mechanism**, with history as a core part rather than decoration, and a mapping from each
-mechanism to its counterpart in a modern computer.
+The course explains how a chip is made, from first principles: the physics that makes silicon a switch, the
+circuits that make switches logic, the flow that turns a description of a design into a layout, and the process
+steps that turn a layout into working dies. It is written for software engineers with school physics and no
+electronics. Every device, circuit, design tool and process step is simulated in the browser from the course's own
+models, and every chapter opens on a working simulation before the explanation.
 
-## Status (6 November 2026)
+## Status (22 November 2026)
 
-**Done: M0–M5.** Eleven chapters in four parts; appendices A–C; home page; collection integration (build script,
-index card, README, CI workflow, deploy workflow, navigation check).
+**Done.** Seventeen chapters in four parts; appendices A–C; home page (with a zoom from the wafer to the atoms);
+collection integration (build script, index card, README, CI workflow, deploy workflow, navigation check).
 
-- Libraries (`src/lib/mech/`): Pascaline, stepped drum (Leibniz, arithmometer, Curta), method of differences and
-  Difference Engine No. 2 (two half-cycles, staggered set-up, spiral carry), carry lookahead and barrels, the
-  Analytical Engine emulator and Note G, gear trains and pin-and-slot, integrators, planimeter and tides,
-  differential analyser, Z1 logic and floating point. All pure TypeScript and tested (129 tests at the time of
-  writing, including machine-checked exercises).
-- 3D models (`src/lib/models/`): Pascaline, stepped drum, Difference Engine slice, barrel, Antikythera lunar
-  gearing, wheel-and-disc integrator, Z1 switching elements.
-- Renderer (`src/lib/gl/`): WebGL2, instanced batches, shadow map with filtered soft shadows, a fading floor,
-  brass/steel/wood materials, ink-outline "drawing" look, glyph decals, CPU picking, context pool, render on
-  demand, adaptive resolution, stats on `window.__mcStats`.
-- Checks run: `npm test`, `npm run check` (0 errors, 0 warnings), `npm run build`; the collection's link audit on a
-  prefixed build (no problems in the course's 15 pages); every page at 390, 768 and 1440 px in both themes (no
-  horizontal overflow, no console errors); WebGL contexts released off-screen (at most 2 live while scrolling).
-
-**Not yet done:** testing on a real iPhone 17 (the frame-rate target); so far only Chromium with software WebGL
-(SwiftShader) and Playwright's iPhone emulation have been used. Measured on that setup: the busiest view (the
-accounting Pascaline) issues 45 draw calls per frame including its shadow pass and draws about 47 000 triangles; the
-slowest mesh builds in about 8 ms once the code is warm. A page's first builds also pay for JIT warm-up (20–30 ms),
-so every view builds its meshes in idle time while it is still 1 500 px off-screen.
-
-Where the course differs from the plan below, the difference is recorded here:
-
-- **Mesh building in a Worker** was planned for meshes slower than 10 ms. After lowering the tooth sampling of very
-  large gears no warm build exceeds 10 ms, so meshes are pre-built in idle time instead (`prebuild` in
-  `src/lib/gl/cache.ts`) and there is no Worker.
-- **Card language:** one chain of cards, not Babbage's separate operation, variable and number chains (Appendix A
-  says so).
-- **Z1 word format:** the widget follows Rojas's description of the reconstruction (sign, 7-bit exponent, 16-bit
-  fraction with a hidden bit); the chapter notes that sources differ.
+- Libraries, all pure TypeScript and tested: `src/lib/physics/` (band gaps, carriers, mobility, the junction, the
+  exact MOS charge, an EKV-style MOSFET, the inverter's transfer curve, switching transients, logical effort,
+  SRAM, latches), `src/lib/eda/` (the HDL, cycle simulation, explicit-state model checking and sequential
+  equivalence, bit-blasting, technology mapping, Karnaugh maps, placement by annealing, maze routing, static timing,
+  stuck-at faults and ATPG, layout rules, DRC and LVS), `src/lib/fab/` (Scheil segregation, dies per wafer and
+  yield, Deal–Grove, implant profiles, etch fronts, one- and two-dimensional imaging, the process-flow
+  cross-section).
+- Checks run: `npm test`, `npm run check` (0 errors, 0 warnings), `npm run build`; every page at 390 and 1440 px in
+  both themes (no horizontal overflow, no console errors).
 
 ## 1. Decisions
 
-| Topic | Decision | Status | Notes |
-|---|---|---|---|
-| Title | **Mechanical Computing** | agreed | Subtitle: *How machines computed before electronics, and why electronics won*. Slug `mechanical-computing`. |
-| Reader | **A software engineer** | agreed | Comfortable with code, binary and complexity; no mechanical-engineering background: gears, ratchets, cams are explained from scratch. |
-| Scope | Digital calculators, Babbage, analog machines, other substrates; only the most interesting representatives | agreed | Relays and valves appear only as the bridge in chapter 11. |
-| Order | Problem → algorithm → mechanism; history core | agreed | Every chapter opens on a working machine before the history (CONTRIBUTING). |
-| Activities | Operate machines, "be the machine" exercises, design puzzles | agreed | No free-form mechanism builder. |
-| Fidelity | Idealised principle first, then the real machine as faithfully as sources allow | agreed | Simplifications and conjectures are named in "How do we know?" callouts. |
-| Modern analogies | A recurring "In your computer" callout | agreed | Ripple carry, complements, Booth, pipelining, carry lookahead, store/mill/bus, microcode, flags and branches, floating point, Fourier, gain. |
-| Limits ledger | Every chapter ends with a ledger entry; chapter 11 collects them | agreed | Data in `src/lib/ledger.ts`. |
-| Running computations | Euler's x² + x + 41 (digital chapters); the Moon (analog chapters) | agreed | |
-| Code exercises | Analytical Engine card programs only, run on the course's emulator | agreed | No general-purpose code runner; no CodeMirror (plain textarea editor). |
-| Rendering | WebGL2 only, own renderer, no 3D library | agreed | WebGPU not needed: no compute. |
-| Simulation | Kinematic, driven by pure logical models; no physics engine | agreed | |
-| Large machines | Hand calculators part for part; for big machines one faithful slice | agreed | DE2: three columns of five wheels; Analytical Engine: one barrel; analyser: one integrator (chapter 7). |
-| Performance | 60 fps on an iPhone 17; render on demand; ≤ 4 live contexts; no per-frame allocation; DPR ≤ 2, adaptive; 3D code ≤ 150 kB gzipped | agreed | The engine's shared chunk is about 13 kB gzipped. |
-| Self-contained | No content references to other courses | agreed | The collection's "All courses" header link stays (site chrome). |
-| Design | **"Cyanotype"** | agreed | Day: Victorian drawing office (cream, blue-black ink, brass). Night: cyanotype (white on Prussian blue). Fonts: Playfair Display, Source Serif 4, IBM Plex Sans, IBM Plex Mono. |
-| Language | British English | agreed | |
-| Site | SvelteKit 2 + Svelte 5, adapter-static, the Markdown-with-directives compiler from the collection | agreed | |
+| Topic | Decision | Notes |
+|---|---|---|
+| Title | **Sand to Silicon** | Subtitle: *How a chip is made, from the physics of the transistor to the packaged die*. Slug `silicon`. |
+| Reader | **A software engineer** | Comfortable with code and binary; school physics; no electronics. Every device is explained from scratch. |
+| Scope | Physics → devices → circuits → design flow → fab → test and packaging | Only what is needed to follow one inverter and one small design all the way through. |
+| Order | Simulation first, then physics → device → engineering | CONTRIBUTING: each chapter opens on a working model. |
+| Callouts | `:::fab` (In the fab), `:::know` (How do we know?), `:::scale` (Sense of scale), `:::software` (In software terms) | Plus the collection's `:::history`, `:::key`, `:::note`, `:::check`. |
+| Maths | KaTeX at build time | Equations are shown when they carry the idea (Boltzmann factor, square law, Deal–Grove, Poisson yield); every one is also simulated. |
+| HDL | A small Verilog-like language of the course's own | Registers, wires, outputs, `assert` and `assume`; widths up to 32 bits; one clock. Appendix A. No CodeMirror: a textarea over a highlighted copy. |
+| Verification | Exhaustive model checking of small designs | Explicit-state search with shortest counterexamples; equivalence against a reference by product machine. |
+| Cell library | Illustrative, round numbers | Transistor counts real; delays in the right proportions, not any foundry's. |
+| Fab models | First-order, named simplifications | Appendix B lists every model and what it leaves out. |
+| Self-contained | No content references to other courses | The collection's "All courses" header link stays (site chrome). |
+| Design | **"Yellow Room"** | The lithography bay's yellow light by day; a dark clean room by night. Material tokens `--m-*` shared by every cross-section and layout; carriers `--electron`/`--hole`. Fonts: Space Grotesk, Source Serif 4, IBM Plex Sans, IBM Plex Mono. |
+| Language | British English | |
+| Site | SvelteKit 2 + Svelte 5, adapter-static, the Markdown-with-directives compiler from the collection | |
 
 ## 2. Through-lines
 
-1. **The carry.** Pascal's sautoir (ripple, constant effort), Leibniz's unfinished carry, the difference engine's
-   spiral, Babbage's anticipating carriage (lookahead), the marble counter, the Z1's binary adder.
-2. **x² + x + 41.** Additions of differences on the Pascaline (ch. 1), direct multiplication on a Curta, failing at
-   x = 40 (ch. 2), printed by Difference Engine No. 2 (ch. 3), programmed with a loop on the Analytical Engine
-   (ch. 5).
-3. **The Moon.** The Antikythera mechanism's lunar train and pin-and-slot (ch. 6), the lunar tides (ch. 7), the
-   orbit from Binet's equation on the differential analyser (ch. 8).
-4. **In your computer.** One callout per mechanism (§1).
-5. **The limits ledger.** Precision, speed, size, failure modes; collected in ch. 11.
+1. **The inverter.** Two transistors (ch. 4) become a gate with a transfer curve (ch. 5) and a delay (ch. 6); its
+   layout is checked against the design rules and extracted (ch. 12); its gate is printed (ch. 14); its whole
+   process flow runs in cross-section (ch. 16). The home page zooms into the same cell.
+2. **One digit of a clock.** A decade counter written in RTL (ch. 8), verified by tests and by proof (ch. 9),
+   synthesised to 25 cells and 4 flip-flops (ch. 10), placed and routed (ch. 11), timed (ch. 12) and tested for
+   manufacturing faults with scan (ch. 17).
+3. **How small?** `:::scale` callouts: wavelengths against line widths, atoms per channel, impurities per million.
+4. **In software terms.** Synthesis as compilation, verification as testing with a proof attached, DRC as a linter
+   that can stop a release, fault coverage as mutation testing.
 
 ## 3. Curriculum
 
-### Part I: Calculators
-1. **Counting and the carry: the Pascaline** (1642). 3D Pascaline (decimal and accounting), carry race (geared vs
-   sautoir), nines' complement subtraction, livres/sols/deniers, a table by differences.
-2. **The stepped drum: Leibniz to the Curta.** 3D stepped drum; registers of Leibniz's reckoner (pending carries),
-   arithmometer and Curta; multiplication by turns and shifts, 198 = 200 − 2, restoring division.
+### Part I: The physics of a switch
+1. **Why silicon: atoms, bonds and bands.** Bond lattice with thermal carriers; levels to bands; band gaps of Ge,
+   Si, GaAs and SiO₂ against temperature.
+2. **Doping: electrons and holes to order.** Bond lattice with donors and acceptors; the doping lab (mass action,
+   Fermi level, mobility, resistivity); drift and diffusion.
+3. **The p–n junction.** Junction lab (depletion, built-in field, bands, bias); the diode's exponential curve.
+4. **The MOSFET: a switch made of a field.** MOS capacitor from accumulation to inversion (exact charge); the
+   MOSFET lab (output and transfer curves, subthreshold slope; planar and FinFET-like).
 
-### Part II: Babbage
-3. **Differences: Difference Engine No. 2.** Prony, the method of differences, a misprint hunt, DE1 and Clement,
-   the Scheutz engine, DE2's two half-cycles and staggered set-up (pipelining), the spiral carry. 3D slice; the
-   eight columns at the level of numbers.
-4. **The Analytical Engine: store, mill and barrels.** Store/mill/racks animated on a small deck; the anticipating
-   carriage against ripple; a 3D barrel running the addition and multiplication microprograms.
-5. **The Analytical Engine: cards and Note G.** The card language; programs (Euler, a table by a loop, Euclid);
-   Lovelace and the Notes; Note G run, and its operation-4 slip found and fixed.
+### Part II: From switches to logic
+5. **CMOS logic: the inverter and its family.** Inverter lab (transfer curve, noise margins); gate builder (series
+   and parallel networks, duals, truth tables).
+6. **Delay, power and scaling.** Switching transient; sizing a chain (logical effort); Dennard scaling and its end.
+7. **Memory: latches, flip-flops and SRAM.** Latch loop and metastability; flip-flop setup and hold; the 6T SRAM
+   cell (read, write, read upset with mismatch); DRAM charge sharing.
 
-### Part III: Analog
-6. **Numbers as angles: Antikythera and the slide rule.** 3D lunar gearing with pin-and-slot; gear-train
-   design puzzle (235/19); slide rule.
-7. **Integrating with a wheel.** 3D wheel-and-disc integrator; polar planimeter; Kelvin's harmonic analyser and
-   tide predictor.
-8. **The differential analyser.** Integrators in a loop (oscillator, damped spring, the Moon's orbit), slip and
-   analog error, the torque amplifier, wiring puzzle, Hartree's Meccano, Shannon's GPAC.
+### Part III: Designing a chip
+8. **From a specification to RTL.** RTL blocks; the HDL playground; exercises (the tens of seconds, seconds from
+   00 to 59, seeing a button go down).
+9. **Verification.** Bug hunt (tests and random stimulus against a buggy counter); state space and proof;
+   exercises (an assertion that catches the bug; fix the counter).
+10. **Synthesis.** Karnaugh maps with don't-cares; synthesis lab (bit-blasting, mapping for area or delay).
+11. **Place and route.** Annealing placer; maze router (order matters on one layer; two layers and vias).
+12. **Timing and sign-off.** Static timing (critical path, clock period, skew, hold, upsizing); layout editor
+    (DRC, LVS) on the inverter.
 
-### Part IV: Beyond gears
-9. **Zuse's Z1: binary in sheet metal.** 3D plate-and-pin elements (AND, AND NOT), XOR puzzle, binary addition,
-   floating point with a hidden bit.
-10. **Computing with anything.** Marble counter, the ingredients of computation (state, switching, composition,
-    gain, repeatability), water (MONIAC), fluidics, rod logic, billiard balls, dominoes.
-11. **Why computers are electronic.** Relays and valves; inertia (t = √(2md/F) ∝ size), friction and Landauer,
-    gain, wiring, manufacture by printing; the switch race; the collected ledger; what survived.
+### Part IV: Making a chip
+13. **From sand to wafer.** Reduction and purification; Czochralski pull and segregation (ingot lab); wafer map
+    (dies per wafer).
+14. **Lithography.** Aerial image of a grating (wavelength, NA, illumination, focus); OPC lab (2D imaging,
+    proximity correction); EUV.
+15. **Adding and removing.** Oxidation (Deal–Grove), deposition (sputter, CVD, ALD conformality), etching
+    (isotropic and anisotropic), implantation and annealing.
+16. **Building the inverter, step by step.** 28-step process flow in cross-section through both transistors.
+17. **Yield, test and packaging.** Yield models and the cost of a good die; scan test and ATPG; packaging and
+    connection density.
 
 ### Appendices
-A. The card language. B. How the simulations work. C. Glossary, timeline and bibliography.
+A. The HDL reference (with a playground). B. Models, constants and simplifications. C. Glossary, timeline and
+bibliography.
 
 ## 4. Exercises
 
-Feedback says what was established ("Answer checked", "Order checked", "Tests passed", "Registers checked",
-"Ratio checked", "Wiring checked", "Truth table checked"), never "correct" for anything not checked.
+Feedback says what was established ("Answer checked", "Order checked", "Checked" for a design proved or shown
+equivalent, "DRC clean", "Coverage checked"), never "correct" for anything not checked.
 
-- `answer` (typed number or word, with tolerance and per-answer feedback), `order` (put steps in order), `quiz`.
-- `cards`: a deck run against tests on the emulator; the content tests check that every solution deck passes and
-  every starting deck fails.
-- Widget exercises: the Reckoner (registers goals), the misprint hunt, the gear-train designer, the wiring puzzle,
-  the gate chooser.
+- `answer` (typed number or word, with tolerance), `order` (put steps in order), `quiz`.
+- `rtl`: an HDL design checked by simulation and exhaustive proof against a reference, tests or its own
+  assertions; the content tests check that every solution passes and every starting design fails.
+- Widget goals, recorded in progress: the gate builder (NAND2 to AOI22), minimal covers on the Karnaugh map, placing
+  by hand, the router's ordering puzzle, timing closure, fixing the layout's design-rule errors, proximity
+  correction, the process-flow walk-through, full fault coverage by hand.
 
 ## 5. Risks
 
-1. **Historical accuracy.** Mitigation: claims cited; contested points called contested (the Antikythera
-   differential, Note G authorship, the Z1's word length); unverified numbers left out (e.g. tooth counts not in
-   the sources consulted).
-2. **3D performance on phones.** Mitigation: render on demand, context pool, instancing, shadow map of 1536²,
-   adaptive resolution. Still to test on a real iPhone 17.
-3. **Legibility of the models.** Mitigation: every model reviewed in screenshots at desktop and phone widths, both
-   looks, both themes; every view has a text readout.
+1. **Numerical accuracy.** Mitigation: models tested against textbook values; illustrative parameters say so;
+   Appendix B lists every simplification.
+2. **Depth for the reader.** The course spans a whole industry. Mitigation: one inverter and one small design
+   carried all the way through; every chapter states what it leaves out.
+3. **Performance on phones.** Mitigation: models run on demand, when a slider or button changes; the slowest
+   (proximity correction, annealing) run one step per frame rather than blocking the page.
