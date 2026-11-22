@@ -1,0 +1,247 @@
+# Sources cited in the course (key: entry). Every cited key must exist; the content tests check.
+sze2007:
+  authors: S. M. Sze and Kwok K. Ng
+  year: 2007
+  title: Physics of Semiconductor Devices
+  venue: 3rd ed., Wiley
+  note: The standard reference for device physics; the material constants in Appendix B are from its tables.
+pierret1996:
+  authors: Robert F. Pierret
+  year: 1996
+  title: Semiconductor Device Fundamentals
+  venue: Addison-Wesley
+wilson1931:
+  authors: A. H. Wilson
+  year: 1931
+  title: The theory of electronic semi-conductors
+  venue: Proceedings of the Royal Society of London A 133, 458–491
+  url: https://doi.org/10.1098/rspa.1931.0162
+riordan1997:
+  authors: Michael Riordan and Lillian Hoddeson
+  year: 1997
+  title: 'Crystal Fire: The Invention of the Transistor and the Birth of the Information Age'
+  venue: W. W. Norton
+haynes2016:
+  authors: W. M. Haynes (ed.)
+  year: 2016
+  title: CRC Handbook of Chemistry and Physics
+  venue: 97th ed., CRC Press
+  note: Abundance of the elements in the Earth’s crust.
+shockley1949:
+  authors: W. Shockley
+  year: 1949
+  title: The theory of p-n junctions in semiconductors and p-n junction transistors
+  venue: Bell System Technical Journal 28(3), 435–489
+  url: https://doi.org/10.1002/j.1538-7305.1949.tb03645.x
+lilienfeld1930:
+  authors: J. E. Lilienfeld
+  year: 1930
+  title: Method and apparatus for controlling electric currents
+  venue: US patent 1,745,175 (filed 1926)
+kahng1960:
+  authors: D. Kahng and M. M. Atalla
+  year: 1960
+  title: Silicon–silicon dioxide field induced surface devices
+  venue: IRE–AIEE Solid-State Device Research Conference, Pittsburgh
+mistry2007:
+  authors: K. Mistry et al.
+  year: 2007
+  title: 'A 45nm logic technology with high-k + metal gate transistors, strained silicon, 9 Cu interconnect layers, 193nm dry patterning, and 100% Pb-free packaging'
+  venue: IEEE International Electron Devices Meeting, 247–250
+  url: https://doi.org/10.1109/IEDM.2007.4418914
+hisamoto2000:
+  authors: D. Hisamoto et al.
+  year: 2000
+  title: FinFET — a self-aligned double-gate MOSFET scalable to 20 nm
+  venue: IEEE Transactions on Electron Devices 47(12), 2320–2325
+  url: https://doi.org/10.1109/16.887014
+wanlass1963:
+  authors: F. M. Wanlass and C. T. Sah
+  year: 1963
+  title: Nanowatt logic using field-effect metal-oxide semiconductor triodes
+  venue: IEEE International Solid-State Circuits Conference, Digest of Technical Papers, 32–33
+  url: https://doi.org/10.1109/ISSCC.1963.1157450
+weste2010:
+  authors: Neil H. E. Weste and David Money Harris
+  year: 2010
+  title: 'CMOS VLSI Design: A Circuits and Systems Perspective'
+  venue: 4th ed., Addison-Wesley
+rabaey2003:
+  authors: Jan M. Rabaey, Anantha Chandrakasan and Borivoje Nikolić
+  year: 2003
+  title: 'Digital Integrated Circuits: A Design Perspective'
+  venue: 2nd ed., Prentice Hall
+moore1965:
+  authors: Gordon E. Moore
+  year: 1965
+  title: Cramming more components onto integrated circuits
+  venue: Electronics 38(8), 114–117
+dennard1974:
+  authors: R. H. Dennard, F. H. Gaensslen, H.-N. Yu, V. L. Rideout, E. Bassous and A. R. LeBlanc
+  year: 1974
+  title: Design of ion-implanted MOSFET’s with very small physical dimensions
+  venue: IEEE Journal of Solid-State Circuits 9(5), 256–268
+  url: https://doi.org/10.1109/JSSC.1974.1050511
+sutherland1999:
+  authors: Ivan Sutherland, Bob Sproull and David Harris
+  year: 1999
+  title: 'Logical Effort: Designing Fast CMOS Circuits'
+  venue: Morgan Kaufmann
+sutter2005:
+  authors: Herb Sutter
+  year: 2005
+  title: 'The free lunch is over: a fundamental turn toward concurrency in software'
+  venue: Dr. Dobb’s Journal 30(3)
+dennard1968:
+  authors: Robert H. Dennard
+  year: 1968
+  title: Field-effect transistor memory
+  venue: US patent 3,387,286 (filed 1967)
+mead1980:
+  authors: Carver Mead and Lynn Conway
+  year: 1980
+  title: Introduction to VLSI Systems
+  venue: Addison-Wesley
+edelman1997:
+  authors: Alan Edelman
+  year: 1997
+  title: The mathematics of the Pentium division bug
+  venue: SIAM Review 39(1), 54–67
+  url: https://doi.org/10.1137/S0036144595293959
+foster2022:
+  authors: Harry D. Foster
+  year: 2022
+  title: 2022 Wilson Research Group IC/ASIC functional verification trend report
+  venue: Siemens EDA
+  note: A survey of chip projects; fewer than a third reported functionally correct silicon from their first tape-out.
+aho1989:
+  authors: Alfred V. Aho, Mahadevan Ganapathi and Steven W. K. Tjiang
+  year: 1989
+  title: Code generation using tree matching and dynamic programming
+  venue: ACM Transactions on Programming Languages and Systems 11(4), 491–516
+  url: https://doi.org/10.1145/69558.75700
+brayton1984:
+  authors: Robert K. Brayton, Gary D. Hachtel, Curtis T. McMullen and Alberto L. Sangiovanni-Vincentelli
+  year: 1984
+  title: Logic Minimization Algorithms for VLSI Synthesis
+  venue: Kluwer Academic Publishers
+karnaugh1953:
+  authors: M. Karnaugh
+  year: 1953
+  title: The map method for synthesis of combinational logic circuits
+  venue: Transactions of the AIEE, Part I 72(5), 593–599
+  url: https://doi.org/10.1109/TCE.1953.6371932
+keutzer1987:
+  authors: Kurt Keutzer
+  year: 1987
+  title: 'DAGON: technology binding and local optimization by DAG matching'
+  venue: 24th ACM/IEEE Design Automation Conference, 341–347
+  url: https://doi.org/10.1145/37888.37939
+kirkpatrick1983:
+  authors: S. Kirkpatrick, C. D. Gelatt and M. P. Vecchi
+  year: 1983
+  title: Optimization by simulated annealing
+  venue: Science 220(4598), 671–680
+  url: https://doi.org/10.1126/science.220.4598.671
+sechen1985:
+  authors: Carl Sechen and Alberto Sangiovanni-Vincentelli
+  year: 1985
+  title: The TimberWolf placement and routing package
+  venue: IEEE Journal of Solid-State Circuits 20(2), 510–522
+  url: https://doi.org/10.1109/JSSC.1985.1052337
+lee1961:
+  authors: C. Y. Lee
+  year: 1961
+  title: An algorithm for path connections and its applications
+  venue: IRE Transactions on Electronic Computers EC-10(3), 346–365
+  url: https://doi.org/10.1109/TEC.1961.5219222
+kahng2011:
+  authors: Andrew B. Kahng, Jens Lienig, Igor L. Markov and Jin Hu
+  year: 2011
+  title: 'VLSI Physical Design: From Graph Partitioning to Timing Closure'
+  venue: Springer
+czochralski1918:
+  authors: J. Czochralski
+  year: 1918
+  title: Ein neues Verfahren zur Messung der Kristallisationsgeschwindigkeit der Metalle
+  venue: Zeitschrift für physikalische Chemie 92, 219–221
+teal1950:
+  authors: G. K. Teal and J. B. Little
+  year: 1950
+  title: Growth of germanium single crystals
+  venue: Physical Review 78, 647
+dash1959:
+  authors: W. C. Dash
+  year: 1959
+  title: Growth of silicon crystals free from dislocations
+  venue: Journal of Applied Physics 30(4), 459–474
+  url: https://doi.org/10.1063/1.1702390
+plummer2000:
+  authors: James D. Plummer, Michael D. Deal and Peter B. Griffin
+  year: 2000
+  title: 'Silicon VLSI Technology: Fundamentals, Practice and Modeling'
+  venue: Prentice Hall
+  note: The reference for the process models of chapters 13 to 16.
+levenson1982:
+  authors: M. D. Levenson, N. S. Viswanathan and R. A. Simpson
+  year: 1982
+  title: Improving resolution in photolithography with a phase-shifting mask
+  venue: IEEE Transactions on Electron Devices 29(12), 1828–1836
+  url: https://doi.org/10.1109/T-ED.1982.21037
+mack2007:
+  authors: Chris Mack
+  year: 2007
+  title: 'Fundamental Principles of Optical Lithography: The Science of Microfabrication'
+  venue: Wiley
+dealgrove1965:
+  authors: B. E. Deal and A. S. Grove
+  year: 1965
+  title: General relationship for the thermal oxidation of silicon
+  venue: Journal of Applied Physics 36(12), 3770–3778
+  url: https://doi.org/10.1063/1.1713945
+edelstein1997:
+  authors: D. Edelstein et al.
+  year: 1997
+  title: Full copper wiring in a sub-0.25 µm CMOS ULSI technology
+  venue: IEEE International Electron Devices Meeting, 773–776
+  url: https://doi.org/10.1109/IEDM.1997.650496
+kilby1976:
+  authors: Jack S. Kilby
+  year: 1976
+  title: Invention of the integrated circuit
+  venue: IEEE Transactions on Electron Devices 23(7), 648–654
+  url: https://doi.org/10.1109/T-ED.1976.18467
+murphy1964:
+  authors: B. T. Murphy
+  year: 1964
+  title: Cost-size optima of monolithic integrated circuits
+  venue: Proceedings of the IEEE 52(12), 1537–1545
+  url: https://doi.org/10.1109/PROC.1964.3442
+eichelberger1977:
+  authors: E. B. Eichelberger and T. W. Williams
+  year: 1977
+  title: A logic design structure for LSI testability
+  venue: 14th Design Automation Conference, 462–468
+roth1966:
+  authors: J. P. Roth
+  year: 1966
+  title: 'Diagnosis of automata failures: a calculus and a method'
+  venue: IBM Journal of Research and Development 10(4), 278–291
+  url: https://doi.org/10.1147/rd.104.0278
+elmore1948:
+  authors: W. C. Elmore
+  year: 1948
+  title: The transient response of damped linear networks with particular regard to wideband amplifiers
+  venue: Journal of Applied Physics 19, 55–63
+henke1993:
+  authors: B. L. Henke, E. M. Gullikson and J. C. Davis
+  year: 1993
+  title: 'X-ray interactions: photoabsorption, scattering, transmission, and reflection at E = 50–30,000 eV, Z = 1–92'
+  venue: Atomic Data and Nuclear Data Tables 54, 181–342
+  note: The optical constants of molybdenum and silicon at 13.5 nm used by the EUV mirror widget.
+stine1998:
+  authors: B. E. Stine, D. O. Ouma, R. R. Divecha, D. S. Boning, J. E. Chung and others
+  year: 1998
+  title: Rapid characterization and modeling of pattern-dependent variation in chemical-mechanical polishing
+  venue: IEEE Transactions on Semiconductor Manufacturing 11(1)
+  note: The pattern-density model of polishing behind the polishing widget.

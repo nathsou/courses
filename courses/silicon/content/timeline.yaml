@@ -1,0 +1,172 @@
+# Timeline: year, title, people, chapter, text (Markdown).
+- year: 1928
+  title: Electrons in crystals
+  people: Felix Bloch
+  chapter: bands
+  text: Bloch shows that electrons in a periodic lattice occupy bands of allowed energy.
+- year: 1931
+  title: The theory of semiconductors
+  people: Alan Herries Wilson
+  chapter: bands
+  text: Wilson uses band theory to explain metals, insulators and semiconductors.
+- year: 1947
+  title: The point-contact transistor
+  people: John Bardeen, Walter Brattain
+  chapter: bands
+  text: At Bell Labs, two gold contacts on a slab of germanium amplify a signal.
+- year: 1954
+  title: The silicon transistor
+  people: Gordon Teal
+  chapter: bands
+  text: Texas Instruments announces the first commercial silicon transistor.
+- year: 1940
+  title: The p–n junction
+  people: Russell Ohl
+  chapter: junction
+  text: A cracked rod of silicon, p-type on one side and n-type on the other, produces half a volt under a flashlight.
+- year: 1949
+  title: Theory of the junction
+  people: William Shockley
+  chapter: junction
+  text: Shockley publishes the theory of p–n junctions and of the junction transistor.
+- year: 1925
+  title: The field-effect transistor, on paper
+  people: Julius Edgar Lilienfeld
+  chapter: mosfet
+  text: Lilienfeld files the first patent for a field-effect transistor; nobody can make one work for decades.
+- year: 1959
+  title: The MOSFET
+  people: Mohamed Atalla, Dawon Kahng
+  chapter: mosfet
+  text: At Bell Labs, a thermally grown oxide under an aluminium gate makes the field-effect transistor work.
+- year: 2007
+  title: High-k metal gates
+  chapter: mosfet
+  text: Hafnium-based gate dielectrics and metal gates replace silicon dioxide and polysilicon in leading processes.
+- year: 2011
+  title: FinFETs
+  chapter: mosfet
+  text: The first production transistors with the channel raised into a fin, gated on three sides.
+- year: 1963
+  title: CMOS
+  people: Frank Wanlass, Chih-Tang Sah
+  chapter: cmos
+  text: A logic gate of one p-channel and one n-channel transistor draws only nanowatts in either state.
+- year: 1965
+  title: Moore’s law
+  people: Gordon Moore
+  chapter: speed-power
+  text: Moore predicts that the number of components per chip will keep doubling every year; in 1975 he revises it to every two years.
+- year: 1974
+  title: Dennard scaling
+  people: Robert Dennard and colleagues
+  chapter: speed-power
+  text: The rules for shrinking a MOSFET while keeping power per area constant.
+- year: 2005
+  title: The power wall
+  chapter: speed-power
+  text: Processor clock speeds stop rising; the extra transistors go into more cores.
+- year: 1966
+  title: The one-transistor DRAM cell
+  people: Robert Dennard
+  chapter: memory
+  text: Dennard proposes storing a bit as charge on a capacitor behind a single transistor.
+- year: 1970
+  title: The Intel 1103
+  chapter: memory
+  text: The first commercially successful DRAM chip, 1 024 bits; it begins the end of magnetic-core memory.
+- year: 1980
+  title: Introduction to VLSI Systems
+  people: Carver Mead, Lynn Conway
+  chapter: rtl
+  text: A textbook that teaches chip design as a discipline anyone can learn, with simple design rules.
+- year: 1984
+  title: Verilog
+  chapter: rtl
+  text: Gateway Design Automation creates the Verilog hardware description language; VHDL becomes an IEEE standard in 1987.
+- year: 1994
+  title: The Pentium division bug
+  people: Thomas Nicely
+  chapter: verification
+  text: Five missing table entries make a processor divide wrongly; the recall costs Intel $475 million.
+- year: 1961
+  title: The maze router
+  people: C. Y. Lee
+  chapter: physical-design
+  text: A wavefront spreading over a grid finds the shortest connection between two points around obstacles.
+- year: 1971
+  title: The Intel 4004
+  people: Federico Faggin, Ted Hoff, Stan Mazor, Masatoshi Shima
+  chapter: signoff
+  text: The first commercial microprocessor, about 2 300 transistors, laid out by hand.
+- year: 1983
+  title: Simulated annealing
+  people: Scott Kirkpatrick, Daniel Gelatt, Mario Vecchi
+  chapter: physical-design
+  text: Optimisation by analogy with slowly cooling metal, applied at once to placing chips.
+- year: 1916
+  title: Crystal pulling
+  people: Jan Czochralski
+  chapter: wafer
+  text: Czochralski draws a single crystal of tin from its melt; the method now grows nearly all chip silicon.
+- year: 1959
+  title: Dislocation-free silicon
+  people: William Dash
+  chapter: wafer
+  text: A thin neck grown first lets dislocations escape, giving perfect crystals.
+- year: 2000
+  title: 300 mm wafers
+  chapter: wafer
+  text: The first factories for 300 mm wafers open; the size is still the standard.
+- year: 1957
+  title: Photolithography
+  people: Jay Lathrop, James Nall
+  chapter: lithography
+  text: Photoresist and a microscope used backwards pattern tiny transistors; the method gets its name.
+- year: 2007
+  title: Immersion lithography
+  chapter: lithography
+  text: Water between lens and wafer lifts the numerical aperture of 193 nm scanners above 1.
+- year: 2019
+  title: EUV in production
+  chapter: lithography
+  text: Extreme-ultraviolet lithography at 13.5 nm enters volume manufacturing.
+- year: 1965
+  title: The Deal–Grove model
+  people: Bruce Deal, Andrew Grove
+  chapter: etch-deposit-dope
+  text: A model of thermal oxidation, linear then parabolic, still in use.
+- year: 1974
+  title: Atomic layer deposition
+  people: Tuomo Suntola
+  chapter: etch-deposit-dope
+  text: Films built one self-limiting atomic layer at a time; decades later, the way gate dielectrics are made.
+- year: 1958
+  title: The integrated circuit
+  people: Jack Kilby
+  chapter: process-flow
+  text: Several components on one piece of germanium, joined by hand-bonded wires.
+- year: 1959
+  title: The planar process
+  people: Jean Hoerni, Robert Noyce
+  chapter: process-flow
+  text: Oxide kept on the wafer protects the junctions and carries the wiring; the monolithic integrated circuit follows.
+- year: 1968
+  title: The self-aligned silicon gate
+  people: Federico Faggin, Tom Klein
+  chapter: process-flow
+  text: A polysilicon gate made first masks its own source and drain.
+- year: 1997
+  title: Copper wiring
+  chapter: process-flow
+  text: IBM replaces aluminium wires with copper inlaid by the damascene process.
+- year: 1964
+  title: Yield and die size
+  people: B. T. Murphy
+  chapter: yield-test-package
+  text: A model of how yield, and the cost per circuit, depend on die size.
+- year: 1977
+  title: Scan design
+  people: Edward Eichelberger, Thomas Williams
+  chapter: yield-test-package
+  text: Flip-flops chained into shift registers make large chips testable.

@@ -51,6 +51,7 @@ jobs:
             courses/music-theory/package-lock.json
             courses/mechanical-computing/package-lock.json
             courses/term-rewriting/package-lock.json
+            courses/silicon/package-lock.json
 
       - name: Install dependencies
         run: |
@@ -73,6 +74,7 @@ jobs:
           npm ci --prefix courses/music-theory
           npm ci --prefix courses/mechanical-computing
           npm ci --prefix courses/term-rewriting
+          npm ci --prefix courses/silicon
           pnpm --dir courses/language-models install --frozen-lockfile
 
       # Digital Circuits needs synth, built to WebAssembly from the commit pinned in its synth.json.

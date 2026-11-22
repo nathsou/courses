@@ -1,0 +1,545 @@
+@import '@fontsource-variable/source-serif-4/opsz.css';
+@import '@fontsource-variable/source-serif-4/opsz-italic.css';
+@import '@fontsource-variable/ibm-plex-sans';
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/600.css';
+@import 'katex/dist/katex.min.css';
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   "Yellow Room". By day, the lithography bay of a fab: photoresist is blind to yellow light, so the rooms where
+   wafers are coated and exposed are lit amber; paper, near-black ink and a copper accent. By night, a wafer
+   under the inspection lamp: near-black silicon and the teal and gold of thin-film interference. Core tokens:
+   --bg --fg --mute --ac --pn; the others are aliases or the course's own (carriers, materials), so that every
+   component re-skins from here. */
+
+:root {
+  color-scheme: light;
+  --font-display: 'Space Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Source Serif 4 Variable', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'IBM Plex Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --bg: #f6f2e7;
+  --fg: #1a1c24;
+  --mute: #5b5e68;
+  --ac: #b0731b;
+  --pn: #ede6d4;
+
+  --page: var(--bg);
+  --surface: #fbf8f0;
+  --surface-2: var(--pn);
+  --surface-3: #dcd3bd;
+  --ink: var(--fg);
+  --ink-2: #363944;
+  --ink-3: #585b66;
+  --line: #ddd4bf;
+  --line-strong: #b5aa90;
+  --ruling: #d8cfb9;
+  --rule: var(--line);
+  --rule-strong: var(--line-strong);
+  --shadow: 0 1px 2px rgba(26, 28, 36, 0.06), 0 6px 18px -10px rgba(26, 28, 36, 0.22);
+
+  --accent: #8a3f17;
+  --accent-soft: color-mix(in srgb, #8a3f17 10%, var(--bg));
+  --accent-ink: #6e3010;
+  --on-accent: #fbf8f0;
+  --focus: #1f6fd0;
+
+  --ok: #2b6a47;
+  --ok-soft: color-mix(in srgb, #2b6a47 12%, var(--bg));
+  --bad: #a3302a;
+  --bad-soft: color-mix(in srgb, #a3302a 12%, var(--bg));
+  --maybe: #7f5300;
+  --maybe-soft: color-mix(in srgb, #d9a400 18%, var(--bg));
+
+  --fx-red: #a3392f;
+  --fx-blue: #2a5ba0;
+  --fx-yellow: #c88f12;
+  --fx-ink: #1a1c24;
+  --fx-cream: #fbf8f0;
+  --history: #7f5300;
+  --history-soft: color-mix(in srgb, #d9a400 14%, var(--bg));
+  --term-hl: rgba(217, 164, 0, 0.22);
+  --term-hl-strong: rgba(217, 164, 0, 0.42);
+
+  /* Plots: electrons are blue and holes red throughout; series 3 and 4 for everything else. */
+  --electron: #2a5ba0;
+  --hole: #b2342b;
+  --series-1: #2a5ba0;
+  --series-2: #b2342b;
+  --series-3: #b0731b;
+  --series-4: #2b7a55;
+  --series-5: #7a4a9a;
+
+  /* Materials, for cross-sections, layouts and masks. */
+  --m-si: #c9c3b6;
+  --m-p: #e8c4bd;
+  --m-pplus: #cf8577;
+  --m-n: #bfd0e8;
+  --m-nplus: #7f9fd3;
+  --m-oxide: #eef3ee;
+  --m-oxide-edge: #9fb3a6;
+  --m-nitride: #a9bb84;
+  --m-poly: #c4544a;
+  --m-metal: #c27a35;
+  --m-tungsten: #6f7480;
+  --m-silicide: #565c68;
+  --m-resist: #e5b638;
+  --m-resist-exposed: #f3dc95;
+  --m-active: #3e9b55;
+  --m-well: #c99a2e;
+  --m-contact: #24262d;
+  --m-metal1: #4a74c9;
+  --m-metal2: #9a5bb5;
+
+  --chart-surface: var(--surface);
+  --grid: var(--line);
+  --axis: var(--line-strong);
+  --radius: 6px;
+  --radius-sm: 4px;
+  --sidebar-w: 18rem;
+  --main-w: 42rem;
+  --margin-w: 17rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) {
+    color-scheme: dark;
+    --bg: #10121c;
+    --fg: #e9e7f0;
+    --mute: #a9a7b8;
+    --ac: #f0c35a;
+    --pn: #181b29;
+    --surface: #141725;
+    --surface-3: #262a3d;
+    --ink-2: #d5d3e0;
+    --ink-3: #a9a7b8;
+    --line: #272b3f;
+    --line-strong: #3e4460;
+    --ruling: #272b3f;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 22px -12px rgba(0, 0, 0, 0.6);
+    --accent: #7fd6c8;
+    --accent-soft: color-mix(in srgb, #7fd6c8 12%, var(--bg));
+    --accent-ink: #b5ece3;
+    --on-accent: #10121c;
+    --focus: #f0c35a;
+    --ok: #86d6a7;
+    --ok-soft: color-mix(in srgb, #4fae7e 18%, var(--bg));
+    --bad: #ff9c8c;
+    --bad-soft: color-mix(in srgb, #e06a5a 18%, var(--bg));
+    --maybe: #f0c26a;
+    --maybe-soft: color-mix(in srgb, #f0c35a 16%, var(--bg));
+    --fx-red: #ff9c8c;
+    --fx-blue: #8fb8ff;
+    --fx-yellow: #f0c35a;
+    --fx-ink: #10121c;
+    --fx-cream: #10121c;
+    --history: #f0c26a;
+    --history-soft: color-mix(in srgb, #f0c35a 10%, var(--bg));
+    --term-hl: rgba(240, 195, 90, 0.2);
+    --term-hl-strong: rgba(240, 195, 90, 0.38);
+    --electron: #8fb8ff;
+    --hole: #ff9c8c;
+    --series-1: #8fb8ff;
+    --series-2: #ff9c8c;
+    --series-3: #f0c35a;
+    --series-4: #86d6a7;
+    --series-5: #e0a0f0;
+    --m-si: #4a4855;
+    --m-p: #5e3a44;
+    --m-pplus: #93505a;
+    --m-n: #2f4366;
+    --m-nplus: #4f6fa8;
+    --m-oxide: #2b3a3c;
+    --m-oxide-edge: #6c8c88;
+    --m-nitride: #5d6d3f;
+    --m-poly: #c4594f;
+    --m-metal: #d28c48;
+    --m-tungsten: #8a8f9c;
+    --m-silicide: #9aa0ad;
+    --m-resist: #c9982a;
+    --m-resist-exposed: #6e5a28;
+    --m-active: #4fb56a;
+    --m-well: #d7ab45;
+    --m-contact: #e9e7f0;
+    --m-metal1: #6f96e6;
+    --m-metal2: #c084dc;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #10121c;
+  --fg: #e9e7f0;
+  --mute: #a9a7b8;
+  --ac: #f0c35a;
+  --pn: #181b29;
+  --surface: #141725;
+  --surface-3: #262a3d;
+  --ink-2: #d5d3e0;
+  --ink-3: #a9a7b8;
+  --line: #272b3f;
+  --line-strong: #3e4460;
+  --ruling: #272b3f;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 22px -12px rgba(0, 0, 0, 0.6);
+  --accent: #7fd6c8;
+  --accent-soft: color-mix(in srgb, #7fd6c8 12%, var(--bg));
+  --accent-ink: #b5ece3;
+  --on-accent: #10121c;
+  --focus: #f0c35a;
+  --ok: #86d6a7;
+  --ok-soft: color-mix(in srgb, #4fae7e 18%, var(--bg));
+  --bad: #ff9c8c;
+  --bad-soft: color-mix(in srgb, #e06a5a 18%, var(--bg));
+  --maybe: #f0c26a;
+  --maybe-soft: color-mix(in srgb, #f0c35a 16%, var(--bg));
+  --fx-red: #ff9c8c;
+  --fx-blue: #8fb8ff;
+  --fx-yellow: #f0c35a;
+  --fx-ink: #10121c;
+  --fx-cream: #10121c;
+  --history: #f0c26a;
+  --history-soft: color-mix(in srgb, #f0c35a 10%, var(--bg));
+  --term-hl: rgba(240, 195, 90, 0.2);
+  --term-hl-strong: rgba(240, 195, 90, 0.38);
+  --electron: #8fb8ff;
+  --hole: #ff9c8c;
+  --series-1: #8fb8ff;
+  --series-2: #ff9c8c;
+  --series-3: #f0c35a;
+  --series-4: #86d6a7;
+  --series-5: #e0a0f0;
+  --m-si: #4a4855;
+  --m-p: #5e3a44;
+  --m-pplus: #93505a;
+  --m-n: #2f4366;
+  --m-nplus: #4f6fa8;
+  --m-oxide: #2b3a3c;
+  --m-oxide-edge: #6c8c88;
+  --m-nitride: #5d6d3f;
+  --m-poly: #c4594f;
+  --m-metal: #d28c48;
+  --m-tungsten: #8a8f9c;
+  --m-silicide: #9aa0ad;
+  --m-resist: #c9982a;
+  --m-resist-exposed: #6e5a28;
+  --m-active: #4fb56a;
+  --m-well: #d7ab45;
+  --m-contact: #e9e7f0;
+  --m-metal1: #6f96e6;
+  --m-metal2: #c084dc;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.1875rem;
+  line-height: 1.62;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+  opacity: 0.8;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--term-hl-strong);
+}
+
+.ui {
+  font-family: var(--font-ui);
+}
+
+/* ───────────────────────── Article grid ─────────────────────────
+   main column for prose; `wide` spans into the right margin; `full` spans the viewport.
+   Sidenotes float into the margin on wide screens. */
+
+.article {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(1rem, 1fr)
+    [wide-start main-start] minmax(0, var(--main-w))
+    [main-end] minmax(0, calc(var(--margin-w) + 2.5rem))
+    [wide-end] minmax(1rem, 1fr) [full-end];
+  counter-reset: sidenote;
+}
+.article > * {
+  grid-column: main;
+  min-width: 0;
+}
+.article > .wide {
+  grid-column: wide;
+}
+.article > .full {
+  grid-column: full;
+}
+@media (max-width: 1279px) {
+  .article {
+    grid-template-columns: [full-start] minmax(1rem, 1fr) [wide-start main-start] minmax(0, 46rem) [main-end wide-end] minmax(1rem, 1fr) [full-end];
+  }
+}
+
+/* ───────────────────────── Prose ───────────────────────── */
+
+.article h2,
+.article h3,
+.article h4 {
+  color: var(--ink);
+}
+.article h2 {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.6vw, 2.3rem);
+  letter-spacing: -0.005em;
+  line-height: 1.12;
+  margin: 4rem 0 1.1rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line-strong);
+}
+/* A row of bond pads sits on the section line. */
+.article h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 3.6rem;
+  height: 7px;
+  background: repeating-linear-gradient(to right, var(--ac) 0 7px, transparent 7px 0.75rem);
+}
+.article h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 2.5rem 0 0.6rem;
+}
+.article h4 {
+  font-family: var(--font-ui);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 1.75rem 0 0.4rem;
+}
+.article p,
+.article ul,
+.article ol {
+  margin: 0 0 1.1rem;
+}
+.article li + li {
+  margin-top: 0.3rem;
+}
+.article li > p {
+  margin-bottom: 0.4rem;
+}
+.article strong {
+  font-weight: 700;
+}
+.article hr {
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+  margin: 2.75rem 0;
+}
+.article blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  border-left: 3px solid var(--ruling);
+  color: var(--ink-2);
+  font-style: italic;
+}
+/* Markdown lists only (widget and exercise lists are left alone): accent numerals and small dots. */
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ol {
+  list-style: none;
+  counter-reset: item;
+  padding-left: 2rem;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ol > li {
+  counter-increment: item;
+  position: relative;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ol > li::before {
+  content: counter(item);
+  position: absolute;
+  left: -2rem;
+  width: 1.5rem;
+  text-align: right;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.82em;
+  line-height: inherit;
+  padding-top: 0.12em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ul {
+  list-style: none;
+  padding-left: 1.4rem;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ul > li {
+  position: relative;
+}
+:is(.article, .article > .docs, .callout > .body, .details > .body) > ul > li::before {
+  content: '';
+  position: absolute;
+  left: -1.05rem;
+  top: 0.66em;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--ac);
+}
+.article .table-scroll { overflow-x: auto; min-width: 0; }
+.article .table-scroll > table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+.article .table-scroll th,
+.article .table-scroll td {
+  text-align: left;
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid var(--ruling);
+  vertical-align: top;
+}
+.article th {
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line-strong);
+}
+.article :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--surface-2);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+.article img {
+  max-width: 100%;
+  height: auto;
+}
+
+pre.plain {
+  margin: 1.4rem 0;
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+/* Footnotes (GFM). */
+.article .footnotes {
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+
+/* ───────────────────────── Utility ───────────────────────── */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ───────────────────────── Maths ───────────────────────── */
+
+.math-display {
+  display: block;
+  margin: 1.1rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+.katex {
+  font-size: 1.05em;
+}
+.math-display .katex {
+  font-size: 1.15em;
+}
+.math-display > .katex-display {
+  margin: 0;
+}
+
+/* ───────────────────────── HDL code ───────────────────────── */
+
+pre.hdl-code {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--ac);
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+.hdl-code .kw {
+  color: var(--accent);
+  font-weight: 600;
+}
+.hdl-code .num {
+  color: var(--series-3);
+}
+.hdl-code .com {
+  color: var(--ink-3);
+  font-style: italic;
+}
+.hdl-code .op {
+  color: var(--ink-2);
+}

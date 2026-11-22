@@ -1,0 +1,329 @@
+# Glossary: id → term, definition (Markdown), chapter that introduces it.
+band-gap:
+  term: band gap
+  definition: The range of energies with no allowed electron states between the valence band and the conduction band; the least energy needed to free an electron from a bond. 1.12 eV for silicon at 300 K.
+  chapter: bands
+valence-band:
+  term: valence band
+  definition: The band of states of the electrons in bonds; full in a perfect crystal at absolute zero.
+  chapter: bands
+conduction-band:
+  term: conduction band
+  definition: The band of states of electrons free to move through the crystal; empty in a perfect crystal at absolute zero.
+  chapter: bands
+hole:
+  term: hole
+  definition: A missing electron in a bond (an empty state in the valence band). It moves as neighbouring electrons hop into it, and behaves as a mobile positive charge.
+  chapter: bands
+intrinsic:
+  term: intrinsic carrier concentration
+  definition: 'The number of free electrons (equal to the number of holes) per cm³ in a pure semiconductor, $n_i = \sqrt{N_c N_v}\, e^{-E_g/2k_\mathrm{B}T}$; about 10¹⁰ cm⁻³ for silicon at room temperature.'
+  chapter: bands
+fermi-level:
+  term: Fermi level
+  definition: The energy at which a state has a probability of one half of being occupied, in the Fermi–Dirac distribution.
+  chapter: bands
+electronvolt:
+  term: electronvolt (eV)
+  definition: The energy an electron gains falling through one volt, 1.602 × 10⁻¹⁹ J.
+  chapter: bands
+donor:
+  term: donor
+  definition: An impurity atom with one more valence electron than silicon (phosphorus, arsenic, antimony), which gives that electron to the conduction band. Donors make silicon n-type.
+  chapter: doping
+acceptor:
+  term: acceptor
+  definition: An impurity atom with one valence electron fewer than silicon (boron), which takes an electron from a bond and so creates a hole. Acceptors make silicon p-type.
+  chapter: doping
+mass-action:
+  term: mass-action law
+  definition: 'In equilibrium the product of the electron and hole concentrations is fixed by the material and temperature: $np = n_i^2$.'
+  chapter: doping
+mobility:
+  term: mobility
+  definition: 'The drift velocity per unit electric field, $\mu = v/E$, in cm²/V·s: about 1400 for electrons and 470 for holes in pure silicon at room temperature.'
+  chapter: doping
+diffusion:
+  term: diffusion
+  definition: Net flow of carriers from where they are crowded to where they are sparse, proportional to the concentration gradient.
+  chapter: doping
+depletion-region:
+  term: depletion region
+  definition: The region around a p–n junction (or under a MOS gate) emptied of mobile carriers, leaving the fixed charge of ionised dopants.
+  chapter: junction
+built-in-potential:
+  term: built-in potential
+  definition: 'The voltage across a p–n junction in equilibrium, $V_{bi} = (k_\mathrm{B}T/q)\ln(N_A N_D/n_i^2)$.'
+  chapter: junction
+saturation-current:
+  term: saturation current
+  definition: The small, nearly constant reverse current of a p–n junction, carried by minority carriers; proportional to $n_i^2$.
+  chapter: junction
+mosfet:
+  term: MOSFET
+  definition: Metal–oxide–semiconductor field-effect transistor. A gate, insulated from the silicon by a thin oxide, controls a channel of carriers between a source and a drain.
+  chapter: mosfet
+threshold-voltage:
+  term: threshold voltage
+  definition: 'The gate voltage $V_T$ at which a MOS surface reaches strong inversion and a conducting channel forms.'
+  chapter: mosfet
+inversion:
+  term: inversion
+  definition: The state of a silicon surface whose minority carriers, drawn by the gate, outnumber the majority carriers of the bulk; the inversion layer is a MOSFET's channel.
+  chapter: mosfet
+subthreshold-swing:
+  term: subthreshold swing
+  definition: 'The gate voltage needed to change a transistor’s current tenfold below threshold, $n\,(k_\mathrm{B}T/q)\ln 10$: at least 60 mV at room temperature.'
+  chapter: mosfet
+saturation-region:
+  term: saturation (of a MOSFET)
+  definition: 'The region where the channel is pinched off at the drain, $V_{DS} \geq V_{GS} - V_T$, and the drain current barely depends on the drain voltage.'
+  chapter: mosfet
+finfet:
+  term: FinFET
+  definition: A transistor whose channel is a thin vertical fin with the gate wrapped over three sides; used from 2011 until gate-all-around nanosheets replaced it.
+  chapter: mosfet
+cmos:
+  term: CMOS
+  definition: Complementary MOS logic. Each gate has a pull-down network of nMOS transistors and a dual pull-up network of pMOS transistors, so that exactly one of them conducts and the gate draws current only while switching.
+  chapter: cmos
+noise-margin:
+  term: noise margin
+  definition: How far a logic level can be disturbed before the next gate misreads it, from the points where the transfer curve’s slope is −1.
+  chapter: cmos
+standard-cell:
+  term: standard cell
+  definition: A pre-designed, pre-characterised gate (inverter, NAND, flip-flop, …) of fixed height, from a library supplied with a process; cells abut in rows and share their supply rails.
+  chapter: cmos
+fo4:
+  term: FO4 delay
+  definition: The delay of an inverter driving four copies of itself; a process’s speed in one number.
+  chapter: speed-power
+dynamic-power:
+  term: dynamic power
+  definition: 'Power spent charging and discharging capacitance as nodes switch: $\alpha C V^2 f$.'
+  chapter: speed-power
+leakage:
+  term: leakage
+  definition: Current that flows through transistors that are off (mostly subthreshold current), and through junctions and gate oxides, whether or not anything switches.
+  chapter: speed-power
+dennard-scaling:
+  term: Dennard scaling
+  definition: Shrinking every length and voltage of a transistor by the same factor, which keeps power per area constant while density doubles; it ended in the mid-2000s when threshold and supply voltages stopped falling.
+  chapter: speed-power
+flip-flop:
+  term: flip-flop
+  definition: A one-bit storage element that samples its input at a clock edge and holds it for a cycle; usually two latches back to back.
+  chapter: memory
+latch:
+  term: latch
+  definition: A one-bit storage element that follows its input while its clock (enable) is active and holds the last value when it is not.
+  chapter: memory
+setup-time:
+  term: setup and hold times
+  definition: How long a flip-flop’s input must be stable before (setup) and after (hold) the clock edge for it to be captured reliably.
+  chapter: memory
+metastability:
+  term: metastability
+  definition: A storage loop caught near its balance point, taking an unbounded (logarithmically growing) time to resolve to 0 or 1.
+  chapter: memory
+sram:
+  term: SRAM
+  definition: Static RAM; each bit is a loop of two inverters with two access transistors (six transistors), holding its value while powered.
+  chapter: memory
+dram:
+  term: DRAM
+  definition: Dynamic RAM; each bit is charge on a capacitor behind one access transistor, read by charge sharing and refreshed every few tens of milliseconds.
+  chapter: memory
+rtl:
+  term: RTL
+  definition: Register-transfer level; a description of a synchronous design as registers and the combinational logic that computes their next values and the outputs.
+  chapter: rtl
+testbench:
+  term: test bench
+  definition: A program that drives a design with stimulus and checks its behaviour, typically against a reference model (a scoreboard) and with assertions.
+  chapter: verification
+coverage:
+  term: coverage
+  definition: A measure of what a set of tests exercised; functional coverage counts behaviours from the verification plan (bins) that were reached.
+  chapter: verification
+assertion:
+  term: assertion
+  definition: A condition that must hold in every cycle, checked during simulation and the subject of formal proofs.
+  chapter: verification
+model-checking:
+  term: model checking
+  definition: Proving a property of a design by exploring all its reachable states, explicitly or symbolically (with SAT solvers or BDDs).
+  chapter: verification
+equivalence-checking:
+  term: equivalence checking
+  definition: Proving that two versions of a design (for example the RTL and the synthesised netlist) produce the same outputs for every input.
+  chapter: verification
+netlist:
+  term: netlist
+  definition: A list of cell instances and the nets (wires) that connect their pins; the output of synthesis.
+  chapter: synthesis
+dont-care:
+  term: don’t-care
+  definition: An input combination whose output does not matter (because it never occurs or is never observed), which a minimiser may treat as 0 or 1.
+  chapter: synthesis
+technology-mapping:
+  term: technology mapping
+  definition: Covering optimised logic with cells from a library, choosing patterns for least area or delay; usually by dynamic programming over trees.
+  chapter: synthesis
+placement:
+  term: placement
+  definition: Choosing a legal position for every cell (in a row, without overlap) to minimise wirelength, delay and congestion.
+  chapter: physical-design
+hpwl:
+  term: half-perimeter wirelength (HPWL)
+  definition: For a net, half the perimeter of the smallest rectangle containing its pins; the usual estimate of its routed length.
+  chapter: physical-design
+simulated-annealing:
+  term: simulated annealing
+  definition: An optimisation method that makes random moves, always accepting improvements and accepting worsenings with probability e^(−Δ/T) at a slowly falling temperature T.
+  chapter: physical-design
+routing:
+  term: routing
+  definition: Turning each net into wires on the metal layers and vias between them; global routing assigns regions, detailed routing assigns tracks.
+  chapter: physical-design
+via:
+  term: via
+  definition: A vertical connection between two metal layers (a contact joins the first metal to the transistors).
+  chapter: physical-design
+clock-skew:
+  term: clock skew
+  definition: The difference in arrival time of the clock edge at two flip-flops.
+  chapter: physical-design
+sta:
+  term: static timing analysis
+  definition: Checking every path of a netlist for timing without test vectors, by propagating arrival and required times through the circuit graph.
+  chapter: signoff
+slack:
+  term: slack
+  definition: Required time minus arrival time at a point in a circuit; negative slack is a timing violation.
+  chapter: signoff
+critical-path:
+  term: critical path
+  definition: The path with the least slack; it limits the clock frequency.
+  chapter: signoff
+drc:
+  term: design-rule check (DRC)
+  definition: Checking a layout’s polygons against the fab’s rules of minimum width, spacing, extension and enclosure.
+  chapter: signoff
+lvs:
+  term: layout versus schematic (LVS)
+  definition: Extracting the circuit from a layout (transistors where poly crosses active, connections through contacts) and comparing it with the netlist.
+  chapter: signoff
+tape-out:
+  term: tape-out
+  definition: Sending a finished layout (a file of polygons per layer, such as GDSII) to the fab.
+  chapter: signoff
+polysilicon:
+  term: polysilicon
+  definition: Silicon made of many small crystals. Purified polysilicon is the raw material for crystal growth; doped polysilicon was for decades the gate material of MOSFETs.
+  chapter: wafer
+czochralski:
+  term: Czochralski growth
+  definition: Growing a single crystal by slowly pulling a rotating seed out of a melt; how nearly all chip-grade silicon is made.
+  chapter: wafer
+segregation:
+  term: segregation coefficient
+  definition: The ratio of a dopant’s concentration in a crystal to its concentration in the melt it grows from; below 1, the melt (and the later crystal) grows richer in dopant.
+  chapter: wafer
+photoresist:
+  term: photoresist
+  definition: A light-sensitive polymer film; where exposed, a positive resist dissolves in the developer and a negative resist stays.
+  chapter: lithography
+numerical-aperture:
+  term: numerical aperture (NA)
+  definition: 'The sine of the widest angle a lens collects, times the refractive index of the medium: the measure of a lens’s resolving power.'
+  chapter: lithography
+rayleigh:
+  term: Rayleigh criterion
+  definition: 'The smallest printable half-pitch, $k_1 \lambda/\mathrm{NA}$, with $k_1 \geq 0.25$ for a single exposure.'
+  chapter: lithography
+opc:
+  term: optical proximity correction (OPC)
+  definition: Distorting a mask’s shapes, guided by a model of the optics and resist, so that the printed pattern matches the intended one.
+  chapter: lithography
+euv:
+  term: extreme ultraviolet (EUV)
+  definition: Lithography at 13.5 nm, with a tin-plasma source, multilayer mirrors and reflective masks in vacuum; in volume production since 2019.
+  chapter: lithography
+cvd:
+  term: chemical vapour deposition (CVD)
+  definition: Depositing a film by letting gases react on the hot wafer; with a plasma (PECVD), at lower temperatures.
+  chapter: etch-deposit-dope
+ald:
+  term: atomic layer deposition (ALD)
+  definition: Depositing a film one self-limiting atomic layer at a time, from alternating precursor gases, uniformly on every surface.
+  chapter: etch-deposit-dope
+anisotropic:
+  term: anisotropic etch
+  definition: An etch that removes material in one direction (downwards) much faster than sideways; plasma etches are, wet etches are not.
+  chapter: etch-deposit-dope
+selectivity:
+  term: selectivity
+  definition: How much faster an etch removes the intended material than another (the mask, or the layer beneath).
+  chapter: etch-deposit-dope
+implantation:
+  term: ion implantation
+  definition: Doping by firing ions of chosen energy and dose into the wafer through openings in a mask; followed by an anneal.
+  chapter: etch-deposit-dope
+cmp:
+  term: chemical-mechanical polishing (CMP)
+  definition: Planarising a wafer with a rotating pad and a chemically active abrasive slurry.
+  chapter: etch-deposit-dope
+sti:
+  term: shallow trench isolation (STI)
+  definition: Oxide-filled trenches etched around each active region to isolate neighbouring transistors.
+  chapter: process-flow
+self-aligned:
+  term: self-alignment
+  definition: Using a structure already made (the gate) as the mask for the next step (the source and drain implants), so the two line up exactly.
+  chapter: process-flow
+damascene:
+  term: damascene
+  definition: Making wires by etching trenches into insulator, filling them with copper and polishing the excess away.
+  chapter: process-flow
+feol:
+  term: front end and back end of the line
+  definition: The front end (FEOL) makes the transistors in the silicon; the back end (BEOL) makes the contacts and the layers of wiring above them.
+  chapter: process-flow
+yield:
+  term: yield
+  definition: The fraction of dies on a wafer that work; for randomly placed defects of density D, about e^(−AD) for dies of area A.
+  chapter: yield-test-package
+stuck-at:
+  term: stuck-at fault
+  definition: The standard fault model of manufacturing test, a wire permanently at 0 or at 1.
+  chapter: yield-test-package
+scan:
+  term: scan design
+  definition: Linking a chip’s flip-flops into shift registers in test mode, so that a tester can set and read every one of them directly.
+  chapter: yield-test-package
+atpg:
+  term: automatic test-pattern generation (ATPG)
+  definition: Finding, for each modelled fault, an input vector whose outputs differ between the good and the faulty circuit.
+  chapter: yield-test-package
+flip-chip:
+  term: flip chip
+  definition: Mounting a die face down, connected to its package by solder bumps over its whole surface.
+  chapter: yield-test-package
+chiplet:
+  term: chiplet
+  definition: One of several smaller dies packaged together to act as one large chip, for better yield and to mix processes.
+  chapter: yield-test-package
+h-tree:
+  term: H-tree
+  definition: A clock network shaped like a fractal letter H, each branch splitting into four equal arms, so that every leaf is the same wire length from the source.
+  chapter: physical-design
+multilayer-mirror:
+  term: multilayer mirror
+  definition: A mirror for extreme ultraviolet light made of dozens of alternating thin layers (molybdenum and silicon), whose many weak reflections add in phase; about 70 % reflective at 13.5 nm.
+  chapter: lithography
+dummy-fill:
+  term: dummy fill
+  definition: Shapes with no electrical purpose added to empty areas of a layout so that every region has a similar density of material and polishes evenly.
+  chapter: etch-deposit-dope
