@@ -251,3 +251,43 @@ euv:
   term: extreme ultraviolet (EUV)
   definition: Lithography at 13.5 nm, with a tin-plasma source, multilayer mirrors and reflective masks in vacuum; in volume production since 2019.
   chapter: lithography
+cvd:
+  term: chemical vapour deposition (CVD)
+  definition: Depositing a film by letting gases react on the hot wafer; with a plasma (PECVD), at lower temperatures.
+  chapter: etch-deposit-dope
+ald:
+  term: atomic layer deposition (ALD)
+  definition: Depositing a film one self-limiting atomic layer at a time, from alternating precursor gases, uniformly on every surface.
+  chapter: etch-deposit-dope
+anisotropic:
+  term: anisotropic etch
+  definition: An etch that removes material in one direction (downwards) much faster than sideways; plasma etches are, wet etches are not.
+  chapter: etch-deposit-dope
+selectivity:
+  term: selectivity
+  definition: How much faster an etch removes the intended material than another (the mask, or the layer beneath).
+  chapter: etch-deposit-dope
+implantation:
+  term: ion implantation
+  definition: Doping by firing ions of chosen energy and dose into the wafer through openings in a mask; followed by an anneal.
+  chapter: etch-deposit-dope
+cmp:
+  term: chemical-mechanical polishing (CMP)
+  definition: Planarising a wafer with a rotating pad and a chemically active abrasive slurry.
+  chapter: etch-deposit-dope
+sti:
+  term: shallow trench isolation (STI)
+  definition: Oxide-filled trenches etched around each active region to isolate neighbouring transistors.
+  chapter: process-flow
+self-aligned:
+  term: self-alignment
+  definition: Using a structure already made (the gate) as the mask for the next step (the source and drain implants), so the two line up exactly.
+  chapter: process-flow
+damascene:
+  term: damascene
+  definition: Making wires by etching trenches into insulator, filling them with copper and polishing the excess away.
+  chapter: process-flow
+feol:
+  term: front end and back end of the line
+  definition: The front end (FEOL) makes the transistors in the silicon; the back end (BEOL) makes the contacts and the layers of wiring above them.
+  chapter: process-flow

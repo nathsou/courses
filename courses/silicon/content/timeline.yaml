@@ -131,3 +131,32 @@
   title: EUV in production
   chapter: lithography
   text: Extreme-ultraviolet lithography at 13.5 nm enters volume manufacturing.
+- year: 1965
+  title: The Deal–Grove model
+  people: Bruce Deal, Andrew Grove
+  chapter: etch-deposit-dope
+  text: A model of thermal oxidation, linear then parabolic, still in use.
+- year: 1974
+  title: Atomic layer deposition
+  people: Tuomo Suntola
+  chapter: etch-deposit-dope
+  text: Films built one self-limiting atomic layer at a time; decades later, the way gate dielectrics are made.
+- year: 1958
+  title: The integrated circuit
+  people: Jack Kilby
+  chapter: process-flow
+  text: Several components on one piece of germanium, joined by hand-bonded wires.
+- year: 1959
+  title: The planar process
+  people: Jean Hoerni, Robert Noyce
+  chapter: process-flow
+  text: Oxide kept on the wafer protects the junctions and carries the wiring; the monolithic integrated circuit follows.
+- year: 1968
+  title: The self-aligned silicon gate
+  people: Federico Faggin, Tom Klein
+  chapter: process-flow
+  text: A polysilicon gate made first masks its own source and drain.
+- year: 1997
+  title: Copper wiring
+  chapter: process-flow
+  text: IBM replaces aluminium wires with copper inlaid by the damascene process.

@@ -193,3 +193,21 @@ mack2007:
   year: 2007
   title: 'Fundamental Principles of Optical Lithography: The Science of Microfabrication'
   venue: Wiley
+dealgrove1965:
+  authors: B. E. Deal and A. S. Grove
+  year: 1965
+  title: General relationship for the thermal oxidation of silicon
+  venue: Journal of Applied Physics 36(12), 3770–3778
+  url: https://doi.org/10.1063/1.1713945
+edelstein1997:
+  authors: D. Edelstein et al.
+  year: 1997
+  title: Full copper wiring in a sub-0.25 µm CMOS ULSI technology
+  venue: IEEE International Electron Devices Meeting, 773–776
+  url: https://doi.org/10.1109/IEDM.1997.650496
+kilby1976:
+  authors: Jack S. Kilby
+  year: 1976
+  title: Invention of the integrated circuit
+  venue: IEEE Transactions on Electron Devices 23(7), 648–654
+  url: https://doi.org/10.1109/T-ED.1976.18467
