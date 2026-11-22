@@ -104,3 +104,30 @@
   people: Scott Kirkpatrick, Daniel Gelatt, Mario Vecchi
   chapter: physical-design
   text: Optimisation by analogy with slowly cooling metal, applied at once to placing chips.
+- year: 1916
+  title: Crystal pulling
+  people: Jan Czochralski
+  chapter: wafer
+  text: Czochralski draws a single crystal of tin from its melt; the method now grows nearly all chip silicon.
+- year: 1959
+  title: Dislocation-free silicon
+  people: William Dash
+  chapter: wafer
+  text: A thin neck grown first lets dislocations escape, giving perfect crystals.
+- year: 2000
+  title: 300 mm wafers
+  chapter: wafer
+  text: The first factories for 300 mm wafers open; the size is still the standard.
+- year: 1957
+  title: Photolithography
+  people: Jay Lathrop, James Nall
+  chapter: lithography
+  text: Photoresist and a microscope used backwards pattern tiny transistors; the method gets its name.
+- year: 2007
+  title: Immersion lithography
+  chapter: lithography
+  text: Water between lens and wafer lifts the numerical aperture of 193 nm scanners above 1.
+- year: 2019
+  title: EUV in production
+  chapter: lithography
+  text: Extreme-ultraviolet lithography at 13.5 nm enters volume manufacturing.

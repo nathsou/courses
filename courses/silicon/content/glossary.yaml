@@ -219,3 +219,35 @@ tape-out:
   term: tape-out
   definition: Sending a finished layout (a file of polygons per layer, such as GDSII) to the fab.
   chapter: signoff
+polysilicon:
+  term: polysilicon
+  definition: Silicon made of many small crystals. Purified polysilicon is the raw material for crystal growth; doped polysilicon was for decades the gate material of MOSFETs.
+  chapter: wafer
+czochralski:
+  term: Czochralski growth
+  definition: Growing a single crystal by slowly pulling a rotating seed out of a melt; how nearly all chip-grade silicon is made.
+  chapter: wafer
+segregation:
+  term: segregation coefficient
+  definition: The ratio of a dopant’s concentration in a crystal to its concentration in the melt it grows from; below 1, the melt (and the later crystal) grows richer in dopant.
+  chapter: wafer
+photoresist:
+  term: photoresist
+  definition: A light-sensitive polymer film; where exposed, a positive resist dissolves in the developer and a negative resist stays.
+  chapter: lithography
+numerical-aperture:
+  term: numerical aperture (NA)
+  definition: 'The sine of the widest angle a lens collects, times the refractive index of the medium: the measure of a lens’s resolving power.'
+  chapter: lithography
+rayleigh:
+  term: Rayleigh criterion
+  definition: 'The smallest printable half-pitch, $k_1 \lambda/\mathrm{NA}$, with $k_1 \geq 0.25$ for a single exposure.'
+  chapter: lithography
+opc:
+  term: optical proximity correction (OPC)
+  definition: Distorting a mask’s shapes, guided by a model of the optics and resist, so that the printed pattern matches the intended one.
+  chapter: lithography
+euv:
+  term: extreme ultraviolet (EUV)
+  definition: Lithography at 13.5 nm, with a tin-plasma source, multilayer mirrors and reflective masks in vacuum; in volume production since 2019.
+  chapter: lithography

@@ -160,3 +160,36 @@ kahng2011:
   year: 2011
   title: 'VLSI Physical Design: From Graph Partitioning to Timing Closure'
   venue: Springer
+czochralski1918:
+  authors: J. Czochralski
+  year: 1918
+  title: Ein neues Verfahren zur Messung der Kristallisationsgeschwindigkeit der Metalle
+  venue: Zeitschrift für physikalische Chemie 92, 219–221
+teal1950:
+  authors: G. K. Teal and J. B. Little
+  year: 1950
+  title: Growth of germanium single crystals
+  venue: Physical Review 78, 647
+dash1959:
+  authors: W. C. Dash
+  year: 1959
+  title: Growth of silicon crystals free from dislocations
+  venue: Journal of Applied Physics 30(4), 459–474
+  url: https://doi.org/10.1063/1.1702390
+plummer2000:
+  authors: James D. Plummer, Michael D. Deal and Peter B. Griffin
+  year: 2000
+  title: 'Silicon VLSI Technology: Fundamentals, Practice and Modeling'
+  venue: Prentice Hall
+  note: The reference for the process models of chapters 13 to 16.
+levenson1982:
+  authors: M. D. Levenson, N. S. Viswanathan and R. A. Simpson
+  year: 1982
+  title: Improving resolution in photolithography with a phase-shifting mask
+  venue: IEEE Transactions on Electron Devices 29(12), 1828–1836
+  url: https://doi.org/10.1109/T-ED.1982.21037
+mack2007:
+  authors: Chris Mack
+  year: 2007
+  title: 'Fundamental Principles of Optical Lithography: The Science of Microfabrication'
+  venue: Wiley
