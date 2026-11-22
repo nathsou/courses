@@ -228,3 +228,20 @@ roth1966:
   title: 'Diagnosis of automata failures: a calculus and a method'
   venue: IBM Journal of Research and Development 10(4), 278–291
   url: https://doi.org/10.1147/rd.104.0278
+elmore1948:
+  authors: W. C. Elmore
+  year: 1948
+  title: The transient response of damped linear networks with particular regard to wideband amplifiers
+  venue: Journal of Applied Physics 19, 55–63
+henke1993:
+  authors: B. L. Henke, E. M. Gullikson and J. C. Davis
+  year: 1993
+  title: 'X-ray interactions: photoabsorption, scattering, transmission, and reflection at E = 50–30,000 eV, Z = 1–92'
+  venue: Atomic Data and Nuclear Data Tables 54, 181–342
+  note: The optical constants of molybdenum and silicon at 13.5 nm used by the EUV mirror widget.
+stine1998:
+  authors: B. E. Stine, D. O. Ouma, R. R. Divecha, D. S. Boning, J. E. Chung and others
+  year: 1998
+  title: Rapid characterization and modeling of pattern-dependent variation in chemical-mechanical polishing
+  venue: IEEE Transactions on Semiconductor Manufacturing 11(1)
+  note: The pattern-density model of polishing behind the polishing widget.

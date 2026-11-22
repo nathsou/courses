@@ -110,6 +110,22 @@ The leap the industry spent twenty years and billions of dollars on was **extrem
 - **The optics.** Every element is a mirror, coated with dozens of alternating layers of molybdenum and silicon, each pair a few nanometres thick, which reflect about 70 % at best. After a dozen or so reflections only a few per cent of the light reaches the wafer.
 - **The mask.** A reflective mask too: the pattern is an absorbing layer on top of a similar multilayer mirror.
 
+How can a stack of layers reflect what no single surface does? Each interface between molybdenum and silicon reflects a tiny fraction of the light, because their refractive indices at 13.5 nm differ slightly (both are a little below 1). If the layers repeat every half wavelength or so, the reflections from all the interfaces leave in step and add up, as the planes of atoms in a crystal reflect X-rays. Build one:
+
+::euv-mirror
+
+```answer
+id: lithography/euv-period
+title: Tuning the mirror
+prompt: 'Set 40 pairs. What period puts the peak of reflectivity at 13.5 nm? Give it in nanometres, to two decimal places.'
+answer: 6.92
+tolerance: 0.03
+unit: nm
+why: 'The reflections add in phase when one pair is about half a wavelength thick: 2 × 6.92 nm = 13.84 nm, a little more than 13.5 nm because the light travels through materials whose refractive indices are slightly below 1. A period 1 % off moves the peak by about 1 %, far enough to lose much of the light: the layers must be made to a few hundredths of a nanometre, a fraction of an atom, over mirrors tens of centimetres across.'
+```
+
+The reflectivity grows with every pair until the light no longer reaches the bottom of the stack, around forty pairs, at a little under 75 % in this model of perfect layers.:cite[henke1993] Real mirrors reach about 70 %, the difference lost to rough and intermixed interfaces. Each mirror passes on less than three quarters of the light, so the dozen or so in a scanner pass on only a few per cent of what the source emits. That is why the tin-plasma source must be so powerful, and why its power, for years, limited how many wafers an EUV scanner could expose in an hour.
+
 One company, ASML, makes all the EUV scanners in use; each costs well over a hundred million euros. The newest generation, with a numerical aperture of 0.55 instead of 0.33 (**high-NA EUV**), is entering production in the mid-2020s.
 
 :::scale[Counting photons]

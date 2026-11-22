@@ -315,3 +315,15 @@ chiplet:
   term: chiplet
   definition: One of several smaller dies packaged together to act as one large chip, for better yield and to mix processes.
   chapter: yield-test-package
+h-tree:
+  term: H-tree
+  definition: A clock network shaped like a fractal letter H, each branch splitting into four equal arms, so that every leaf is the same wire length from the source.
+  chapter: physical-design
+multilayer-mirror:
+  term: multilayer mirror
+  definition: A mirror for extreme ultraviolet light made of dozens of alternating thin layers (molybdenum and silicon), whose many weak reflections add in phase; about 70 % reflective at 13.5 nm.
+  chapter: lithography
+dummy-fill:
+  term: dummy fill
+  definition: Shapes with no electrical purpose added to empty areas of a layout so that every region has a similar density of material and polishes evenly.
+  chapter: etch-deposit-dope

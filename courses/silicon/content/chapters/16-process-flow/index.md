@@ -46,7 +46,21 @@ Transistors must be electrically separated from their neighbours. Older processe
 
 ## The gate, and self-alignment
 
-The gate is made before the source and drain, and that order is the most important trick in the flow. When the arsenic or boron ions arrive, the gate blocks them, so the source and drain begin exactly at the gate's edges: they are **self-aligned**. Without it, a separate mask would have to place them, with an overlay error on each side.
+The gate is made before the source and drain, and that order is the most important trick in the flow. When the arsenic or boron ions arrive, the gate blocks them, so the source and drain begin exactly at the gate's edges: they are **self-aligned**. Without it, a separate mask would have to place them, with an overlay error on each side. Compare the two orders, and misalign the gate's mask:
+
+::self-align
+
+With the source and drain made first, a misplaced gate leaves a strip of channel uncovered at one end, where no inversion layer can form, and the transistor never turns on. The only defence is to draw the gate longer than the channel, overlapping the source and the drain, and every micrometre of overlap adds capacitance that must be charged at every switching: the overlap with the drain counts double, because the drain swings the opposite way to the gate (the Miller effect). With the gate made first, misalignment shifts the whole transistor slightly, and nothing else.
+
+```answer
+id: process-flow/overlap
+title: The price of alignment
+prompt: 'Switch to the aluminium gate and choose the smallest overlap with which 99 % of transistors work (the mask lands with a random error of standard deviation 1 µm). How much larger is the gate capacitance than the channel''s alone, in per cent?'
+answer: 52
+tolerance: 3
+unit: '%'
+why: 'For 99 % of a normal distribution to fall within ±o, o must be 2.58 standard deviations: 2.6 µm on each side of a 10 µm channel, so the gate is 15.2 µm long and its capacitance 52 % larger. The self-aligned gate needs no margin at all; its only overlap is the few tenths of a micrometre by which the implanted dopant spreads under the gate''s edges.'
+```
 
 :::history{year=1968 title="The silicon gate" people="Federico Faggin, Tom Klein"}
 The first MOS chips had aluminium gates, deposited after the sources and drains, which could not survive the high temperatures needed to make them; the gate had to be aligned to them, and overlap them generously. In 1968 at Fairchild, Federico Faggin, building on work by Tom Klein and others, developed a process with a gate of polysilicon, which tolerates the heat, made first and then used as the mask for the sources and drains. Self-aligned silicon gates made MOS chips smaller, faster and more reliable; Faggin used the process at Intel to build the 4004 three years later.

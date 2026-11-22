@@ -79,7 +79,8 @@ collection integration (build script, index card, README, CI workflow, deploy wo
 9. **Verification.** Bug hunt (tests and random stimulus against a buggy counter); state space and proof;
    exercises (an assertion that catches the bug; fix the counter).
 10. **Synthesis.** Karnaugh maps with don't-cares; synthesis lab (bit-blasting, mapping for area or delay).
-11. **Place and route.** Annealing placer; maze router (order matters on one layer; two layers and vias).
+11. **Place and route.** Annealing placer; clock distribution (least wire, spine, H-tree; skew by Elmore delay);
+    maze router (order matters on one layer; two layers and vias).
 12. **Timing and sign-off.** Static timing (critical path, clock period, skew, hold, upsizing); layout editor
     (DRC, LVS) on the inverter.
 
@@ -87,10 +88,12 @@ collection integration (build script, index card, README, CI workflow, deploy wo
 13. **From sand to wafer.** Reduction and purification; Czochralski pull and segregation (ingot lab); wafer map
     (dies per wafer).
 14. **Lithography.** Aerial image of a grating (wavelength, NA, illumination, focus); OPC lab (2D imaging,
-    proximity correction); EUV.
+    proximity correction); EUV multilayer mirrors (transfer-matrix reflectivity, light left after a dozen mirrors).
 15. **Adding and removing.** Oxidation (Deal–Grove), deposition (sputter, CVD, ALD conformality), etching
-    (isotropic and anisotropic), implantation and annealing.
-16. **Building the inverter, step by step.** 28-step process flow in cross-section through both transistors.
+    (isotropic and anisotropic), implantation and annealing, polishing flat (pattern density, dummy fill, depth of
+    focus).
+16. **Building the inverter, step by step.** 28-step process flow in cross-section through both transistors;
+    self-alignment (aluminium gate placed after the source and drain against a self-aligned silicon gate).
 17. **Yield, test and packaging.** Yield models and the cost of a good die; scan test and ATPG; packaging and
     connection density.
 
@@ -108,7 +111,7 @@ equivalent, "DRC clean", "Coverage checked"), never "correct" for anything not c
   assertions; the content tests check that every solution passes and every starting design fails.
 - Widget goals, recorded in progress: the gate builder (NAND2 to AOI22), minimal covers on the Karnaugh map, placing
   by hand, the router's ordering puzzle, timing closure, fixing the layout's design-rule errors, proximity
-  correction, the process-flow walk-through, full fault coverage by hand.
+  correction, polishing within the depth of focus, the process-flow walk-through, full fault coverage by hand.
 
 ## 5. Risks
 

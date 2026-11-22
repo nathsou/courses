@@ -56,7 +56,25 @@ Placement is an optimisation: put every cell in a legal site to minimise wirelen
 
 ## The clock tree
 
-One net is special: the clock, which must reach every flip-flop at the same moment. If it arrives at one flip-flop earlier than at another, the difference, the **clock skew**, eats into the time available for logic between them, or worse (chapter 12). After placement, **clock tree synthesis** builds a tree of buffers whose branches are balanced in delay, often shaped like a fractal H that splits into four equal arms again and again, so that the path from the clock source to every leaf is as long as every other. On large chips the clock network can draw a large share of the total power, since it switches every cycle.
+One net is special: the clock, which must reach every flip-flop at the same moment. If it arrives at one flip-flop earlier than at another, the difference, the **clock skew**, eats into the time available for logic between them, or worse (chapter 12). A wire is not instantaneous: it has resistance along its length and capacitance to everything around it, so a clock edge reaches the far end of a long wire later than the near end, and later still if the wire also has many flip-flops to charge. Here is a block with 64 flip-flops and one clock source; the delays come from Elmore's formula for a tree of resistances and capacitances.:cite[elmore1948]
+
+::clock-tree
+
+The tree with the least wire is the worst: flip-flops near the source receive the edge tens of picoseconds before those at the end of a long chain, a large slice of a 250 ps clock period. A spine is fairer, but a flip-flop at the end of the trunk still waits for everything before it. The **H-tree** gives every leaf the same path: a fractal H that splits into four equal arms, again and again. Over a regular array of flip-flops, one under each leaf, its skew is exactly zero; over scattered flip-flops, what remains comes from the short local wires at the leaves and their uneven loads. The price is wire, two or three times as much as the least, and the clock charges all of it every cycle: on large chips the clock network can draw a large share of the total power.
+
+After placement, **clock tree synthesis** builds such a tree from buffers and wires, balancing each branch's delay by sizing its buffers and, where needed, adding detours of wire. Buffers also cut the long RC delays into short ones and shield each branch from the others' loads, which the unbuffered wires in the widget do not. Good trees hold the skew to a few picoseconds across a whole block.
+
+```quiz
+q: In the widget, why does the H-tree use more wire than the least-wire tree, and why is it worth it?
+options:
+  - text: Its branches go out to fixed points of the H whether or not a flip-flop is nearby, so it is longer; in exchange every leaf is the same distance from the source, and skew costs clock period on the paths it hurts.
+    correct: true
+    why: 'Skew is lost from the clock period of the paths it hurts (chapter 12), all the time; the extra wire costs some power and area once. The least-wire tree minimises the wrong thing.'
+  - text: Longer wires are faster, because they have more capacitance.
+    why: 'More capacitance makes a wire slower: the delay grows with resistance times capacitance, which for a wire grows with the square of its length.'
+  - text: The H-tree uses more wire only because it is drawn larger; electrically it is the same.
+    why: 'The wire lengths are real and so are their capacitances: compare the clock power of the trees.'
+```
 
 ## Routing
 
