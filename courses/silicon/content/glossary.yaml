@@ -291,3 +291,27 @@ feol:
   term: front end and back end of the line
   definition: The front end (FEOL) makes the transistors in the silicon; the back end (BEOL) makes the contacts and the layers of wiring above them.
   chapter: process-flow
+yield:
+  term: yield
+  definition: The fraction of dies on a wafer that work; for randomly placed defects of density D, about e^(−AD) for dies of area A.
+  chapter: yield-test-package
+stuck-at:
+  term: stuck-at fault
+  definition: The standard fault model of manufacturing test, a wire permanently at 0 or at 1.
+  chapter: yield-test-package
+scan:
+  term: scan design
+  definition: Linking a chip’s flip-flops into shift registers in test mode, so that a tester can set and read every one of them directly.
+  chapter: yield-test-package
+atpg:
+  term: automatic test-pattern generation (ATPG)
+  definition: Finding, for each modelled fault, an input vector whose outputs differ between the good and the faulty circuit.
+  chapter: yield-test-package
+flip-chip:
+  term: flip chip
+  definition: Mounting a die face down, connected to its package by solder bumps over its whole surface.
+  chapter: yield-test-package
+chiplet:
+  term: chiplet
+  definition: One of several smaller dies packaged together to act as one large chip, for better yield and to mix processes.
+  chapter: yield-test-package

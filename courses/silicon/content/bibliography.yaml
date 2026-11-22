@@ -211,3 +211,20 @@ kilby1976:
   title: Invention of the integrated circuit
   venue: IEEE Transactions on Electron Devices 23(7), 648–654
   url: https://doi.org/10.1109/T-ED.1976.18467
+murphy1964:
+  authors: B. T. Murphy
+  year: 1964
+  title: Cost-size optima of monolithic integrated circuits
+  venue: Proceedings of the IEEE 52(12), 1537–1545
+  url: https://doi.org/10.1109/PROC.1964.3442
+eichelberger1977:
+  authors: E. B. Eichelberger and T. W. Williams
+  year: 1977
+  title: A logic design structure for LSI testability
+  venue: 14th Design Automation Conference, 462–468
+roth1966:
+  authors: J. P. Roth
+  year: 1966
+  title: 'Diagnosis of automata failures: a calculus and a method'
+  venue: IBM Journal of Research and Development 10(4), 278–291
+  url: https://doi.org/10.1147/rd.104.0278

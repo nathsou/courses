@@ -160,3 +160,13 @@
   title: Copper wiring
   chapter: process-flow
   text: IBM replaces aluminium wires with copper inlaid by the damascene process.
+- year: 1964
+  title: Yield and die size
+  people: B. T. Murphy
+  chapter: yield-test-package
+  text: A model of how yield, and the cost per circuit, depend on die size.
+- year: 1977
+  title: Scan design
+  people: Edward Eichelberger, Thomas Williams
+  chapter: yield-test-package
+  text: Flip-flops chained into shift registers make large chips testable.
